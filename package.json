@@ -1,7 +1,16 @@
 {
   "name": "react-realtime-markup-editor",
-  "version": "0.0.1",
-  "description": "A text document editor which is syntactically formattable in place",
+  "version": "0.1.0",
+  "description": "A text document editor which is syntactically formattable in real time",
+  "keywords": [
+    "document",
+    "editor",
+    "real time",
+    "syntactic"
+  ],
+  "files": [
+    "dist/**/*"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -10,7 +19,7 @@
   },
   "author": "Yuya Suwa (@kumachan-mis)",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "devDependencies": {
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
@@ -37,6 +46,7 @@
     "start": "rm -Rf sample/dist && mkdir sample/dist && parcel sample/src/index.html --out-dir sample/dist --open",
     "typecheck": "tsc --build tsconfig.json",
     "lint-fix": "eslint \"{src,sample}/**/*.{ts,tsx}\" --fix",
-    "prettier": "prettier --write \"**/*.{css,html,json,scss,ts,tsx,}\""
+    "prettier": "prettier --write \"**/*.{css,html,json,scss,ts,tsx,}\"",
+    "prepublishOnly": "yarn build"
   }
 }
