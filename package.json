@@ -1,0 +1,42 @@
+{
+  "name": "react-realtime-markup-editor",
+  "version": "0.0.1",
+  "description": "A text document editor which is syntactically formattable in place",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumachan-mis/react-realtime-markup-editor.git"
+  },
+  "author": "Yuya Suwa (@kumachan-mis)",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "eslint": "^7.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.13",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typescript": "^4.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start-sample": "rm -Rf sample/dist && mkdir sample/dist && parcel sample/src/index.html --out-dir sample/dist --open",
+    "typecheck": "tsc --build tsconfig.json",
+    "lint-fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "prettier": "prettier --write \"**/*.{css,html,json,scss,ts,tsx,}\""
+  }
+}
