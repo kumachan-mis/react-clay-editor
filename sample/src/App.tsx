@@ -4,6 +4,7 @@ import { Editor } from "../../src";
 
 const defaultText = [
   "[*** Realtime Markup Editor Example]",
+  "[** What's this?]",
   "A text document editor which is syntactically formattable in place",
   "",
   " can use itemizations",
@@ -21,6 +22,7 @@ const defaultText = [
   "can combine these text decorations",
   " [*/ bold italic]",
   " [*_ bold underline]",
+  "and so on...",
 ].join("\n");
 
 export const App: React.FC = () => {
