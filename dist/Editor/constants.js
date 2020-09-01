@@ -1,7 +1,7 @@
 export const EditorConstants = {
     moveCountThreshold: 6,
     editor: {
-        id: `React-SyntacticFormattableEditor-rootDiv`,
+        className: `React-Realtime-Markup-Editor-rootDiv`,
         style: { userSelect: "none" },
     },
 };

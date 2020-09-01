@@ -21,9 +21,7 @@ export class Editor extends React.Component {
             if (this.props.disabled)
                 return;
             const elements = document.elementsFromPoint(event.clientX, event.clientY);
-            const editorId = EditorConstants.editor.id;
-            const editor = elements.find((element) => element.id == editorId);
-            if (!editor)
+            if (this.root && !elements.includes(this.root))
                 this.setState({ cursorCoordinate: undefined });
         };
         this.state = {
@@ -32,6 +30,7 @@ export class Editor extends React.Component {
             textSelection: undefined,
             moveCount: 0,
         };
+        this.root = null;
     }
     componentDidMount() {
         document.addEventListener("mousedown", this.handleOnEditorBlur);
@@ -42,7 +41,7 @@ export class Editor extends React.Component {
         document.removeEventListener("mousedown", this.handleOnEditorBlur);
     }
     render() {
-        return (React.createElement("div", { id: EditorConstants.editor.id, onMouseDown: (event) => {
+        return (React.createElement("div", { className: EditorConstants.editor.className, onMouseDown: (event) => {
                 if (this.props.disabled || event.button != 0)
                     return;
                 const { clientX: x, clientY: y } = event;
@@ -78,7 +77,7 @@ export class Editor extends React.Component {
                     this.setState(state);
                 if (text != this.props.text)
                     this.props.onChangeText(text);
-            }, style: this.props.style },
+            }, style: this.props.style, ref: (root) => (this.root = root) },
             React.createElement("div", { style: EditorConstants.editor.style },
                 React.createElement(Cursor, { coordinate: this.state.cursorCoordinate, onTextCompositionStart: () => {
                         const [text, state] = handleOnCompositionStart(this.props.text, this.state);

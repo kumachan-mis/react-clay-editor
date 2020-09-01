@@ -2,7 +2,7 @@
 export declare const EditorConstants: {
     moveCountThreshold: number;
     editor: {
-        id: string;
+        className: string;
         style: import("react").CSSProperties;
     };
 };

@@ -214,20 +214,22 @@ function moveCursor(text: string, coordinate: CursorCoordinate, amount: number):
 }
 
 function positionToCursorCoordinate(text: string, position: [number, number]): CursorCoordinate {
+  type Groups = Record<string, string>;
+
   const [x, y] = position;
   const elements = document.elementsFromPoint(x, y);
-  const charIdRegex = TextLinesConstants.char.idRegex;
-  const charElement = elements.find((element) => charIdRegex.test(element.id));
-  const lineIdRegex = TextLinesConstants.line.idRegex;
-  const lineElement = elements.find((element) => lineIdRegex.test(element.id));
+  const charClassNameRegex = TextLinesConstants.char.classNameRegex;
+  const charElement = elements.find((element) => charClassNameRegex.test(element.className));
+  const lineClassNameRegex = TextLinesConstants.line.classNameRegex;
+  const lineElement = elements.find((element) => lineClassNameRegex.test(element.className));
   const lines = text.split("\n");
   if (charElement) {
-    const groups = charElement.id.match(charIdRegex)?.groups as Record<string, string>;
+    const groups = charElement.className.match(charClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     const charIndex = Number.parseInt(groups["charIndex"], 10);
     return { lineIndex, charIndex };
   } else if (lineElement) {
-    const groups = lineElement.id.match(lineIdRegex)?.groups as Record<string, string>;
+    const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
   } else {

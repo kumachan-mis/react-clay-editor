@@ -1,5 +1,5 @@
-import { TextLinesConstants } from "../TextLines/constants";
-export function selectionPropsToState(props) {
+import { getTextLineElementAt, getTextCharElementAt } from "../TextLines/utils";
+export function selectionPropsToState(props, element) {
     if (props.selection === undefined) {
         return {
             topDivPosition: undefined,
@@ -18,9 +18,7 @@ export function selectionPropsToState(props) {
         else
             return { start: free, end: fixed };
     })();
-    const idsToPosition = (startId, endId) => {
-        const startElement = document.getElementById(startId);
-        const endElement = document.getElementById(endId);
+    const getPosition = (startElement, endElement) => {
         if (!startElement || !endElement)
             return undefined;
         const startRect = startElement.getBoundingClientRect();
@@ -34,32 +32,32 @@ export function selectionPropsToState(props) {
     };
     const lineNum = end.lineIndex - start.lineIndex + 1;
     if (lineNum == 1) {
-        const startId = TextLinesConstants.char.id(start.lineIndex, start.charIndex);
-        const endId = TextLinesConstants.char.id(end.lineIndex, end.charIndex - 1);
+        const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
+        const endElement = getTextCharElementAt(end.lineIndex, end.charIndex - 1, element);
         return {
             topDivPosition: undefined,
-            centerDivPosition: idsToPosition(startId, endId),
+            centerDivPosition: getPosition(startElement, endElement),
             bottomDivPosition: undefined,
         };
     }
     const topDivPosition = (() => {
-        const startId = TextLinesConstants.char.id(start.lineIndex, start.charIndex);
-        const endId = TextLinesConstants.line.id(start.lineIndex);
-        return idsToPosition(startId, endId);
+        const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
+        const endElement = getTextLineElementAt(start.lineIndex, element);
+        return getPosition(startElement, endElement);
     })();
     const bottomDivPosition = (() => {
         if (end.charIndex == 0)
             return undefined;
-        const startId = TextLinesConstants.line.id(end.lineIndex);
-        const endId = TextLinesConstants.char.id(end.lineIndex, end.charIndex - 1);
-        return idsToPosition(startId, endId);
+        const startElement = getTextLineElementAt(end.lineIndex, element);
+        const endElement = getTextCharElementAt(end.lineIndex, end.charIndex - 1, element);
+        return getPosition(startElement, endElement);
     })();
     const centerDivPosition = (() => {
         if (lineNum == 2)
             return undefined;
-        const startId = TextLinesConstants.line.id(start.lineIndex + 1);
-        const endId = TextLinesConstants.line.id(end.lineIndex - 1);
-        return idsToPosition(startId, endId);
+        const startElement = getTextLineElementAt(start.lineIndex + 1, element);
+        const endElement = getTextLineElementAt(end.lineIndex - 1, element);
+        return getPosition(startElement, endElement);
     })();
     return { topDivPosition, centerDivPosition, bottomDivPosition };
 }

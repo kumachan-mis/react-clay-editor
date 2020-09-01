@@ -1,8 +1,8 @@
 export const TextLinesConstants = {
-  id: `React-SyntacticFormattableEditor-textlinesdiv`,
+  className: `React-Realtime-Markup-Editor-textlinesdiv`,
   line: {
-    id: (lineIndex: number): string => `React-SyntacticFormattableEditor-linediv-L${lineIndex}`,
-    idRegex: /^React-SyntacticFormattableEditor-linediv-L(?<lineIndex>\d+)$/,
+    className: (lineIndex: number): string => `React-Realtime-Markup-Editor-linediv-L${lineIndex}`,
+    classNameRegex: /^React-Realtime-Markup-Editor-linediv-L(?<lineIndex>\d+)$/,
     indent: {
       dot: {
         style: {
@@ -59,9 +59,9 @@ export const TextLinesConstants = {
     }),
   },
   char: {
-    id: (lineIndex: number, charIndex: number): string =>
-      `React-SyntacticFormattableEditor-charspan-L${lineIndex}C${charIndex}`,
-    idRegex: /^React-SyntacticFormattableEditor-charspan-L(?<lineIndex>\d+)C(?<charIndex>\d+)$/,
+    className: (lineIndex: number, charIndex: number): string =>
+      `React-Realtime-Markup-Editor-charspan-L${lineIndex}C${charIndex}`,
+    classNameRegex: /^React-Realtime-Markup-Editor-charspan-L(?<lineIndex>\d+)C(?<charIndex>\d+)$/,
   },
   syntaxRegex: {
     indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,

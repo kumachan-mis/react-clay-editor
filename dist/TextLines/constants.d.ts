@@ -1,9 +1,9 @@
 /// <reference types="react" />
 export declare const TextLinesConstants: {
-    id: string;
+    className: string;
     line: {
-        id: (lineIndex: number) => string;
-        idRegex: RegExp;
+        className: (lineIndex: number) => string;
+        classNameRegex: RegExp;
         indent: {
             dot: {
                 style: import("react").CSSProperties;
@@ -22,8 +22,8 @@ export declare const TextLinesConstants: {
         style: (defaultFontSize: number) => React.CSSProperties;
     };
     char: {
-        id: (lineIndex: number, charIndex: number) => string;
-        idRegex: RegExp;
+        className: (lineIndex: number, charIndex: number) => string;
+        classNameRegex: RegExp;
     };
     syntaxRegex: {
         indent: RegExp;

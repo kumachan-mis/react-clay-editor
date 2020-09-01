@@ -9,15 +9,17 @@ export class Selection extends React.Component {
             centerDivPosition: undefined,
             bottomDivPosition: undefined,
         };
+        this.root = null;
     }
     componentDidUpdate(prevProps) {
-        if (prevProps == this.props)
+        if (!this.root || prevProps == this.props)
             return;
-        const state = selectionPropsToState(this.props);
-        this.setState(state);
+        const state = selectionPropsToState(this.props, this.root);
+        if (this.state != state)
+            this.setState(state);
     }
     render() {
-        return (React.createElement(React.Fragment, null,
+        return (React.createElement("span", { ref: (root) => (this.root = root) },
             this.state.topDivPosition && (React.createElement("div", { style: SelectionConstants.div.style(this.state.topDivPosition) })),
             this.state.centerDivPosition && (React.createElement("div", { style: SelectionConstants.div.style(this.state.centerDivPosition) })),
             this.state.bottomDivPosition && (React.createElement("div", { style: SelectionConstants.div.style(this.state.bottomDivPosition) }))));

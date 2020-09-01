@@ -1,44 +1,43 @@
 import * as React from "react";
 import { CursorConstants } from "./constants";
 import { cursorPropsToState, handleOnEditorScroll, cursorIn } from "./utils";
-import { TextLinesConstants } from "../TextLines/constants";
+import { getTextLinesRoot } from "../TextLines/utils";
 export class Cursor extends React.Component {
     constructor(props) {
         super(props);
         this.state = { position: [0, 0], textAreaValue: "", cursorSize: 0 };
         this.root = null;
         this.textArea = null;
-        this.handleOnEditorScroll = () => {
-            /* do nothing */
-        };
-    }
-    componentDidMount() {
-        this.root = document.getElementById(TextLinesConstants.id);
     }
     componentDidUpdate(prevProps) {
-        if (prevProps == this.props)
+        if (!this.root || prevProps == this.props)
             return;
-        const state = cursorPropsToState(this.props, this.state);
+        const state = cursorPropsToState(this.props, this.state, this.root);
         if (state != this.state)
             this.setState(state);
         if (this.props.coordinate)
             this.textArea?.focus();
-        if (this.root) {
-            this.root.removeEventListener("scroll", this.handleOnEditorScroll);
+        const textLinesRoot = getTextLinesRoot(this.root);
+        if (textLinesRoot) {
+            if (this.handleOnEditorScroll) {
+                textLinesRoot.removeEventListener("scroll", this.handleOnEditorScroll);
+            }
             this.handleOnEditorScroll = () => {
-                const state = handleOnEditorScroll(this.props, this.state);
+                if (!this.root)
+                    return;
+                const state = handleOnEditorScroll(this.props, this.state, this.root);
                 if (state != this.state)
                     this.setState(state);
             };
-            this.root.addEventListener("scroll", this.handleOnEditorScroll);
+            textLinesRoot.addEventListener("scroll", this.handleOnEditorScroll);
         }
     }
     render() {
         const [top, left] = this.state.position;
         const { cursorSize } = this.state;
-        const hidden = this.state.position === undefined || !cursorIn([top, left], cursorSize);
+        const hidden = !this.root || !cursorIn([top, left], cursorSize, this.root);
         const textLength = this.state.textAreaValue.length;
-        return (React.createElement(React.Fragment, null,
+        return (React.createElement("span", { ref: (root) => (this.root = root) },
             React.createElement("div", { style: CursorConstants.rootDiv.style(top, left, cursorSize, hidden) },
                 React.createElement("svg", { width: CursorConstants.svg.width, height: cursorSize },
                     React.createElement("rect", { x: CursorConstants.rect.x, y: CursorConstants.rect.y, width: CursorConstants.rect.width, height: CursorConstants.rect.height }))),
