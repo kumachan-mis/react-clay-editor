@@ -1,0 +1,76 @@
+export const TextLinesConstants = {
+  id: `React-SyntacticFormattableEditor-textlinesdiv`,
+  line: {
+    id: (lineIndex: number): string => `React-SyntacticFormattableEditor-linediv-L${lineIndex}`,
+    idRegex: /^React-SyntacticFormattableEditor-linediv-L(?<lineIndex>\d+)$/,
+    indent: {
+      dot: {
+        style: {
+          top: "0.5em",
+          right: "0.75em",
+          position: "absolute",
+          display: "block",
+          width: "5px",
+          height: "5px",
+          borderRadius: "50%",
+          backgroundColor: "#000000",
+        } as React.CSSProperties,
+      },
+      pad: {
+        style: {
+          display: "inline-block",
+          width: "1.5em",
+          overflow: "hidden",
+        } as React.CSSProperties,
+      },
+      style: (indentDepth: number): React.CSSProperties => ({
+        width: `${1.5 * indentDepth}em`,
+        left: "0px",
+        top: "0px",
+        position: "absolute",
+      }),
+    },
+    content: {
+      section: {
+        style: (
+          fontSize?: number,
+          bold?: boolean,
+          italic?: boolean,
+          underline?: boolean
+        ): React.CSSProperties => ({
+          lineHeight: fontSize !== undefined ? `${fontSize}px` : "inherit",
+          fontSize: fontSize !== undefined ? `${fontSize}px` : "inherit",
+          fontWeight: bold ? "bold" : "normal",
+          fontStyle: italic ? "italic" : "normal",
+          textDecoration: underline ? "underline" : "none",
+        }),
+      },
+      style: (indentDepth: number): React.CSSProperties => ({
+        marginLeft: `${1.5 * indentDepth}em`,
+        display: "block",
+      }),
+    },
+    style: (defaultFontSize: number): React.CSSProperties => ({
+      lineHeight: `${defaultFontSize}px`,
+      fontSize: `${defaultFontSize}px`,
+      minHeight: `${defaultFontSize}px`,
+      display: "block",
+      position: "relative",
+    }),
+  },
+  char: {
+    id: (lineIndex: number, charIndex: number): string =>
+      `React-SyntacticFormattableEditor-charspan-L${lineIndex}C${charIndex}`,
+    idRegex: /^React-SyntacticFormattableEditor-charspan-L(?<lineIndex>\d+)C(?<charIndex>\d+)$/,
+  },
+  syntaxRegex: {
+    indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
+    bracket: /\[(?<option>([*/_]+\s)?)(?<body>[^\]]*[^\s\]][^\]]*)\]/g,
+  },
+  style: {
+    whiteSpace: "pre-wrap",
+    wordWrap: "break-word",
+    height: "100%",
+    overflowY: "scroll",
+  } as React.CSSProperties,
+};
