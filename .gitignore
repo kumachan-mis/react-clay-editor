@@ -1,5 +1,5 @@
 ### Project Specific Settings ###
-sample/dist
+dist
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,node,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,visualstudiocode,node,react
