@@ -19,7 +19,7 @@
   },
   "author": "Yuya Suwa (@kumachan-mis)",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "devDependencies": {
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
