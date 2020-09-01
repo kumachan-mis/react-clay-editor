@@ -1,6 +1,8 @@
 import { TextLinesConstants } from "./constants";
 import { TextStyle, TextWithFont, LineWithIndent } from "./types";
 
+import { EditorConstants } from "../Editor/constants";
+
 export function analyzeLine(line: string): LineWithIndent {
   const regex = TextLinesConstants.syntaxRegex.indent;
   const { indent, content } = line.match(regex)?.groups as Record<string, string>;
@@ -58,4 +60,25 @@ export function analyzeFontOfContent(content: string, textStyle: TextStyle): Tex
     textsWithFont.push({ text: subText, offset, section: [0, subText.length] });
   }
   return textsWithFont;
+}
+
+export function getTextLinesRoot(element: HTMLElement): HTMLElement | null {
+  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  if (rootElement == null) return null;
+  return rootElement.querySelector(`.${TextLinesConstants.className}`);
+}
+export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
+  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  if (rootElement == null) return null;
+  return rootElement.querySelector(`.${TextLinesConstants.line.className(lineIndex)}`);
+}
+
+export function getTextCharElementAt(
+  lineIndex: number,
+  charIndex: number,
+  element: HTMLElement
+): HTMLElement | null {
+  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  if (rootElement == null) return null;
+  return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
 }

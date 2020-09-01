@@ -1,5 +1,6 @@
 import { Props, State, CursorCoordinate } from "./types";
-import { TextLinesConstants } from "../TextLines/constants";
+
+import { getTextLinesRoot, getTextLineElementAt, getTextCharElementAt } from "../TextLines/utils";
 
 interface CursorDrawInfo {
   position: [number, number];
@@ -7,11 +8,13 @@ interface CursorDrawInfo {
   elementCursorOn: HTMLElement | null;
 }
 
-export function cursorPropsToState(props: Props, state: State): State {
-  const rootId = TextLinesConstants.id;
-  const rootRect = document.getElementById(rootId)?.getBoundingClientRect();
+export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
+  const rootRect = getTextLinesRoot(element)?.getBoundingClientRect();
   if (!props.coordinate || !rootRect) return { ...state, position: [0, 0], cursorSize: 0 };
-  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(props.coordinate);
+  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(
+    props.coordinate,
+    element
+  );
   if (!elementCursorOn) return { ...state, position: [0, 0], cursorSize: 0 };
 
   const [cursorTop] = position;
@@ -25,29 +28,35 @@ export function cursorPropsToState(props: Props, state: State): State {
   return { ...state, position, cursorSize };
 }
 
-export function handleOnEditorScroll(props: Props, state: State): State {
-  const rootId = TextLinesConstants.id;
-  const rootRect = document.getElementById(rootId)?.getBoundingClientRect();
+export function handleOnEditorScroll(props: Props, state: State, element: HTMLElement): State {
+  const rootRect = getTextLinesRoot(element)?.getBoundingClientRect();
   if (!props.coordinate || !rootRect) return { ...state, position: [0, 0], cursorSize: 0 };
-  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(props.coordinate);
+  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(
+    props.coordinate,
+    element
+  );
   if (!elementCursorOn) return { ...state, position: [0, 0], cursorSize: 0 };
   return { ...state, position, cursorSize };
 }
 
-export function cursorIn(position: [number, number], cursorSize: number): boolean {
-  const rootId = TextLinesConstants.id;
-  const rootRect = document.getElementById(rootId)?.getBoundingClientRect();
+export function cursorIn(
+  position: [number, number],
+  cursorSize: number,
+  element: HTMLElement
+): boolean {
+  const rootRect = getTextLinesRoot(element)?.getBoundingClientRect();
   if (!rootRect) return false;
   const [cursorTop] = position;
   return rootRect.top <= cursorTop && cursorTop + cursorSize <= rootRect.bottom;
 }
 
-function coordinateToCursorDrawInfo(coordinate: CursorCoordinate): CursorDrawInfo {
+function coordinateToCursorDrawInfo(
+  coordinate: CursorCoordinate,
+  element: HTMLElement
+): CursorDrawInfo {
   const { lineIndex, charIndex } = coordinate;
-  const charId = TextLinesConstants.char.id(lineIndex, charIndex - 1);
-  const charElement = document.getElementById(charId);
-  const lineId = TextLinesConstants.line.id(lineIndex);
-  const lineElement = document.getElementById(lineId);
+  const charElement = getTextCharElementAt(lineIndex, charIndex - 1, element);
+  const lineElement = getTextLineElementAt(lineIndex, element);
   if (charElement) {
     const charRect = charElement.getBoundingClientRect();
     return {
@@ -56,11 +65,10 @@ function coordinateToCursorDrawInfo(coordinate: CursorCoordinate): CursorDrawInf
       elementCursorOn: charElement,
     };
   } else if (lineElement) {
-    const nextCharId = TextLinesConstants.char.id(lineIndex, charIndex);
-    const nextCharElement = document.getElementById(nextCharId);
-    const element = nextCharElement?.textContent ? nextCharElement : lineElement;
-    const rect = element.getBoundingClientRect();
-    return { position: [rect.top, rect.left], cursorSize: rect.height, elementCursorOn: element };
+    const nextCharElement = getTextCharElementAt(lineIndex, charIndex, element);
+    const elementCursorOn = nextCharElement?.textContent ? nextCharElement : lineElement;
+    const rect = elementCursorOn.getBoundingClientRect();
+    return { position: [rect.top, rect.left], cursorSize: rect.height, elementCursorOn };
   }
   return { position: [0, 0], cursorSize: 0, elementCursorOn: null };
 }

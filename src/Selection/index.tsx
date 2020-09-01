@@ -5,6 +5,8 @@ import { SelectionConstants } from "./constants";
 import { selectionPropsToState } from "./utils";
 
 export class Selection extends React.Component<Props, State> {
+  private root: HTMLSpanElement | null;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -12,17 +14,18 @@ export class Selection extends React.Component<Props, State> {
       centerDivPosition: undefined,
       bottomDivPosition: undefined,
     };
+    this.root = null;
   }
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
-    if (prevProps == this.props) return;
-    const state = selectionPropsToState(this.props);
-    this.setState(state);
+    if (!this.root || prevProps == this.props) return;
+    const state = selectionPropsToState(this.props, this.root);
+    if (this.state != state) this.setState(state);
   }
 
   render(): JSX.Element {
     return (
-      <>
+      <span ref={(root) => (this.root = root)}>
         {this.state.topDivPosition && (
           <div style={SelectionConstants.div.style(this.state.topDivPosition)} />
         )}
@@ -32,7 +35,7 @@ export class Selection extends React.Component<Props, State> {
         {this.state.bottomDivPosition && (
           <div style={SelectionConstants.div.style(this.state.bottomDivPosition)} />
         )}
-      </>
+      </span>
     );
   }
 }

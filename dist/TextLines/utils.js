@@ -1,4 +1,5 @@
 import { TextLinesConstants } from "./constants";
+import { EditorConstants } from "../Editor/constants";
 export function analyzeLine(line) {
     const regex = TextLinesConstants.syntaxRegex.indent;
     const { indent, content } = line.match(regex)?.groups;
@@ -54,4 +55,22 @@ export function analyzeFontOfContent(content, textStyle) {
         textsWithFont.push({ text: subText, offset, section: [0, subText.length] });
     }
     return textsWithFont;
+}
+export function getTextLinesRoot(element) {
+    const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+    if (rootElement == null)
+        return null;
+    return rootElement.querySelector(`.${TextLinesConstants.className}`);
+}
+export function getTextLineElementAt(lineIndex, element) {
+    const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+    if (rootElement == null)
+        return null;
+    return rootElement.querySelector(`.${TextLinesConstants.line.className(lineIndex)}`);
+}
+export function getTextCharElementAt(lineIndex, charIndex, element) {
+    const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+    if (rootElement == null)
+        return null;
+    return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
 }

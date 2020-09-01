@@ -6,16 +6,15 @@ import { analyzeLine, analyzeFontOfContent } from "./utils";
 
 export class TextLines extends React.Component<Props> {
   render(): JSX.Element {
-    const constants = TextLinesConstants.line;
     return (
-      <div id={TextLinesConstants.id} style={TextLinesConstants.style}>
+      <div className={TextLinesConstants.className} style={TextLinesConstants.style}>
         {this.props.text.split("\n").map((line: string, index: number) => {
           const { indent, content } = analyzeLine(line);
           return (
             <div
-              id={constants.id(index)}
+              className={TextLinesConstants.line.className(index)}
               key={index}
-              style={constants.style(this.props.textStyle.fontSizes.level1)}
+              style={TextLinesConstants.line.style(this.props.textStyle.fontSizes.level1)}
             >
               <this.Indent indent={indent} content={content} lineIndex={index} />
               <this.Content indent={indent} content={content} lineIndex={index} />
@@ -35,7 +34,7 @@ export class TextLines extends React.Component<Props> {
         {[...props.indent].map((char: string, charIndex: number) => (
           <span
             key={charIndex}
-            id={TextLinesConstants.char.id(props.lineIndex, charIndex)}
+            className={TextLinesConstants.char.className(props.lineIndex, charIndex)}
             style={constants.pad.style}
           >
             {char}
@@ -54,7 +53,7 @@ export class TextLines extends React.Component<Props> {
     const textsWithFont = analyzeFontOfContent(content, this.props.textStyle);
     const cursorOn = cursorCoordinate && cursorCoordinate.lineIndex == lineIndex;
     const lineLength = indent.length + content.length;
-    const { id: charId } = TextLinesConstants.char;
+    const { className: charClassName } = TextLinesConstants.char;
 
     return (
       <span style={constants.style(indent.length)}>
@@ -66,24 +65,30 @@ export class TextLines extends React.Component<Props> {
           return (
             <span key={withFontIndex} style={style}>
               {[...text.substring(0, start)].map((char: string, charIndex: number) => (
-                <span key={charIndex} id={charId(lineIndex, offset + charIndex)}>
+                <span key={charIndex} className={charClassName(lineIndex, offset + charIndex)}>
                   {cursorOn ? char : ""}
                 </span>
               ))}
               {[...text.substring(start, end)].map((char: string, charIndex: number) => (
-                <span key={charIndex} id={charId(lineIndex, offset + start + charIndex)}>
+                <span
+                  key={charIndex}
+                  className={charClassName(lineIndex, offset + start + charIndex)}
+                >
                   {char}
                 </span>
               ))}
               {[...text.substring(end)].map((char: string, charIndex: number) => (
-                <span key={charIndex} id={charId(lineIndex, offset + end + charIndex)}>
+                <span
+                  key={charIndex}
+                  className={charClassName(lineIndex, offset + end + charIndex)}
+                >
                   {cursorOn ? char : ""}
                 </span>
               ))}
             </span>
           );
         })}
-        <span id={charId(lineIndex, lineLength)} />
+        <span className={charClassName(lineIndex, lineLength)} />
       </span>
     );
   };

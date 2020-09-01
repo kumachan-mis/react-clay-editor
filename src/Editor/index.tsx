@@ -22,6 +22,7 @@ export class Editor extends React.Component<Props, State> {
       fontSizes: { level1: 16, level2: 20, level3: 24 },
     },
   };
+  private root: HTMLDivElement | null;
 
   constructor(props: Props) {
     super(props);
@@ -31,6 +32,7 @@ export class Editor extends React.Component<Props, State> {
       textSelection: undefined,
       moveCount: 0,
     };
+    this.root = null;
   }
 
   componentDidMount(): void {
@@ -46,7 +48,7 @@ export class Editor extends React.Component<Props, State> {
   render(): JSX.Element {
     return (
       <div
-        id={EditorConstants.editor.id}
+        className={EditorConstants.editor.className}
         onMouseDown={(event) => {
           if (this.props.disabled || event.button != 0) return;
           const { clientX: x, clientY: y } = event;
@@ -76,6 +78,7 @@ export class Editor extends React.Component<Props, State> {
           if (text != this.props.text) this.props.onChangeText(text);
         }}
         style={this.props.style}
+        ref={(root) => (this.root = root)}
       >
         <div style={EditorConstants.editor.style}>
           <Cursor
@@ -113,8 +116,6 @@ export class Editor extends React.Component<Props, State> {
   private handleOnEditorBlur = (event: MouseEvent) => {
     if (this.props.disabled) return;
     const elements = document.elementsFromPoint(event.clientX, event.clientY);
-    const editorId = EditorConstants.editor.id;
-    const editor = elements.find((element) => element.id == editorId);
-    if (!editor) this.setState({ cursorCoordinate: undefined });
+    if (this.root && !elements.includes(this.root)) this.setState({ cursorCoordinate: undefined });
   };
 }
