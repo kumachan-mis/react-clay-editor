@@ -5,7 +5,7 @@ import { Editor } from "../../src";
 const defaultText = [
   "[*** Realtime Markup Editor]",
   "[** What's this?]",
-  "A text document editor which is syntactically formattable in place",
+  "A text document editor which is syntactically formattable in real time",
   "",
   " You can use itemizations",
   " by just typing a space",
