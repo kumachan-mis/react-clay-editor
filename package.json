@@ -34,9 +34,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "start-sample": "rm -Rf sample/dist && mkdir sample/dist && parcel sample/src/index.html --out-dir sample/dist --open",
+    "start": "rm -Rf sample/dist && mkdir sample/dist && parcel sample/src/index.html --out-dir sample/dist --open",
     "typecheck": "tsc --build tsconfig.json",
-    "lint-fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "lint-fix": "eslint \"{src,sample}/**/*.{ts,tsx}\" --fix",
     "prettier": "prettier --write \"**/*.{css,html,json,scss,ts,tsx,}\""
   }
 }
