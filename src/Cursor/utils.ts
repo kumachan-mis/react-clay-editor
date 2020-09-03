@@ -1,6 +1,7 @@
 import { Props, State, CursorCoordinate } from "./types";
 
-import { getTextLinesRoot, getTextLineElementAt, getTextCharElementAt } from "../TextLines/utils";
+import { getTextLineElementAt, getTextCharElementAt } from "../TextLines/utils";
+import { getRoot, getEditor } from "../Editor/utils";
 
 interface CursorDrawInfo {
   position: [number, number];
@@ -9,8 +10,11 @@ interface CursorDrawInfo {
 }
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
-  const rootRect = getTextLinesRoot(element)?.getBoundingClientRect();
-  if (!props.coordinate || !rootRect) return { ...state, position: [0, 0], cursorSize: 0 };
+  const rootRect = getRoot(element)?.getBoundingClientRect();
+  const editorRect = getEditor(element)?.getBoundingClientRect();
+  if (!props.coordinate || !editorRect || !rootRect) {
+    return { ...state, position: [0, 0], cursorSize: 0 };
+  }
   const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(
     props.coordinate,
     element
@@ -18,19 +22,18 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   if (!elementCursorOn) return { ...state, position: [0, 0], cursorSize: 0 };
 
   const [cursorTop] = position;
-  if (cursorTop - rootRect.top < 0) {
-    elementCursorOn.scrollIntoView(true);
+  if (cursorTop + editorRect.top - rootRect.top < 0) {
+    elementCursorOn.scrollIntoView({ block: "start" });
     return state;
-  } else if (cursorTop + cursorSize > rootRect.bottom) {
-    elementCursorOn.scrollIntoView(false);
+  } else if (cursorTop + cursorSize + editorRect.top - rootRect.top > rootRect.height) {
+    elementCursorOn.scrollIntoView({ block: "end" });
     return state;
   }
   return { ...state, position, cursorSize };
 }
 
 export function handleOnEditorScroll(props: Props, state: State, element: HTMLElement): State {
-  const rootRect = getTextLinesRoot(element)?.getBoundingClientRect();
-  if (!props.coordinate || !rootRect) return { ...state, position: [0, 0], cursorSize: 0 };
+  if (!props.coordinate) return { ...state, position: [0, 0], cursorSize: 0 };
   const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(
     props.coordinate,
     element
@@ -39,28 +42,20 @@ export function handleOnEditorScroll(props: Props, state: State, element: HTMLEl
   return { ...state, position, cursorSize };
 }
 
-export function cursorIn(
-  position: [number, number],
-  cursorSize: number,
-  element: HTMLElement
-): boolean {
-  const rootRect = getTextLinesRoot(element)?.getBoundingClientRect();
-  if (!rootRect) return false;
-  const [cursorTop] = position;
-  return rootRect.top <= cursorTop && cursorTop + cursorSize <= rootRect.bottom;
-}
-
 function coordinateToCursorDrawInfo(
   coordinate: CursorCoordinate,
   element: HTMLElement
 ): CursorDrawInfo {
+  const editorRect = getEditor(element)?.getBoundingClientRect();
+  if (!editorRect) return { position: [0, 0], cursorSize: 0, elementCursorOn: null };
+
   const { lineIndex, charIndex } = coordinate;
   const charElement = getTextCharElementAt(lineIndex, charIndex - 1, element);
   const lineElement = getTextLineElementAt(lineIndex, element);
   if (charElement) {
     const charRect = charElement.getBoundingClientRect();
     return {
-      position: [charRect.top, charRect.right],
+      position: [charRect.top - editorRect.top, charRect.right - editorRect.left],
       cursorSize: charRect.height,
       elementCursorOn: charElement,
     };
@@ -68,7 +63,11 @@ function coordinateToCursorDrawInfo(
     const nextCharElement = getTextCharElementAt(lineIndex, charIndex, element);
     const elementCursorOn = nextCharElement?.textContent ? nextCharElement : lineElement;
     const rect = elementCursorOn.getBoundingClientRect();
-    return { position: [rect.top, rect.left], cursorSize: rect.height, elementCursorOn };
+    return {
+      position: [rect.top - editorRect.top, rect.left - editorRect.left],
+      cursorSize: rect.height,
+      elementCursorOn,
+    };
   }
   return { position: [0, 0], cursorSize: 0, elementCursorOn: null };
 }

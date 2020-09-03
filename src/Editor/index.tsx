@@ -47,59 +47,64 @@ export class Editor extends React.Component<Props, State> {
 
   render(): JSX.Element {
     return (
-      <div
-        className={EditorConstants.editor.className}
-        onMouseDown={(event) => {
-          if (this.props.disabled || event.button != 0) return;
-          const { clientX: x, clientY: y } = event;
-          const [text, state] = handleOnMouseDown(this.props.text, this.state, [x, y]);
-          if (state != this.state) this.setState(state);
-          if (text != this.props.text) this.props.onChangeText(text);
-        }}
-        onMouseMove={(event) => {
-          if (this.props.disabled) return;
-          const { clientX: x, clientY: y } = event;
-          const [text, state] = handleOnMouseMove(this.props.text, this.state, [x, y]);
-          if (state != this.state) this.setState(state);
-          if (text != this.props.text) this.props.onChangeText(text);
-        }}
-        onMouseUp={(event) => {
-          if (this.props.disabled || event.button != 0) return;
-          const { clientX: x, clientY: y } = event;
-          const [text, state] = handleOnMouseUp(this.props.text, this.state, [x, y]);
-          if (state != this.state) this.setState(state);
-          if (text != this.props.text) this.props.onChangeText(text);
-        }}
-        onMouseLeave={(event) => {
-          if (this.props.disabled || event.button != 0) return;
-          const { clientX: x, clientY: y } = event;
-          const [text, state] = handleOnMouseLeave(this.props.text, this.state, [x, y]);
-          if (state != this.state) this.setState(state);
-          if (text != this.props.text) this.props.onChangeText(text);
-        }}
-        style={this.props.style}
-        ref={(root) => (this.root = root)}
-      >
-        <div style={EditorConstants.editor.style}>
-          <Cursor
-            coordinate={this.state.cursorCoordinate}
-            onTextCompositionStart={() => {
-              const [text, state] = handleOnCompositionStart(this.props.text, this.state);
+      <div style={this.props.style}>
+        <div
+          className={EditorConstants.root.className}
+          style={EditorConstants.root.style}
+          ref={(root) => (this.root = root)}
+        >
+          <div
+            className={EditorConstants.editor.className}
+            onMouseDown={(event) => {
+              if (this.props.disabled || event.button != 0) return;
+              const pos: [number, number] = [event.clientX, event.clientY];
+              const [text, state] = handleOnMouseDown(this.props.text, this.state, pos, this.root);
               if (state != this.state) this.setState(state);
               if (text != this.props.text) this.props.onChangeText(text);
             }}
-            onTextCompositionEnd={(dataText) => {
-              const [text, state] = handleOnCompositionEnd(this.props.text, this.state, dataText);
+            onMouseMove={(event) => {
+              if (this.props.disabled) return;
+              const pos: [number, number] = [event.clientX, event.clientY];
+              const [text, state] = handleOnMouseMove(this.props.text, this.state, pos, this.root);
               if (state != this.state) this.setState(state);
               if (text != this.props.text) this.props.onChangeText(text);
             }}
-          />
-          <Selection selection={this.state.textSelection} />
-          <TextLines
-            text={this.props.text}
-            textStyle={this.props.textStyle as TextStyle}
-            cursorCoordinate={this.state.cursorCoordinate}
-          />
+            onMouseUp={(event) => {
+              if (this.props.disabled || event.button != 0) return;
+              const pos: [number, number] = [event.clientX, event.clientY];
+              const [text, state] = handleOnMouseUp(this.props.text, this.state, pos, this.root);
+              if (state != this.state) this.setState(state);
+              if (text != this.props.text) this.props.onChangeText(text);
+            }}
+            onMouseLeave={(event) => {
+              if (this.props.disabled || event.button != 0) return;
+              const pos: [number, number] = [event.clientX, event.clientY];
+              const [text, state] = handleOnMouseLeave(this.props.text, this.state, pos, this.root);
+              if (state != this.state) this.setState(state);
+              if (text != this.props.text) this.props.onChangeText(text);
+            }}
+            style={EditorConstants.editor.style}
+          >
+            <Cursor
+              coordinate={this.state.cursorCoordinate}
+              onTextCompositionStart={() => {
+                const [text, state] = handleOnCompositionStart(this.props.text, this.state);
+                if (state != this.state) this.setState(state);
+                if (text != this.props.text) this.props.onChangeText(text);
+              }}
+              onTextCompositionEnd={(dataText) => {
+                const [text, state] = handleOnCompositionEnd(this.props.text, this.state, dataText);
+                if (state != this.state) this.setState(state);
+                if (text != this.props.text) this.props.onChangeText(text);
+              }}
+            />
+            <Selection selection={this.state.textSelection} />
+            <TextLines
+              text={this.props.text}
+              textStyle={this.props.textStyle as TextStyle}
+              cursorCoordinate={this.state.cursorCoordinate}
+            />
+          </div>
         </div>
       </div>
     );

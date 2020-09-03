@@ -1,8 +1,16 @@
 import { State } from "./types";
-import { EditorConstants as Constants } from "./constants";
+import { EditorConstants } from "./constants";
 
 import { CursorCoordinate } from "../Cursor/types";
 import { TextLinesConstants } from "../TextLines/constants";
+
+export function getRoot(element: HTMLElement): HTMLElement | null {
+  return element.closest(`.${EditorConstants.root.className}`);
+}
+
+export function getEditor(element: HTMLElement): HTMLElement | null {
+  return element.closest(`.${EditorConstants.editor.className}`);
+}
 
 export function handleOnKeyDown(text: string, state: State, key: string): [string, State] {
   if (!state.cursorCoordinate || state.isComposing) return [text, state];
@@ -82,22 +90,25 @@ export function handleOnKeyDown(text: string, state: State, key: string): [strin
 export function handleOnMouseDown(
   text: string,
   state: State,
-  position: [number, number]
+  position: [number, number],
+  element: HTMLElement | null
 ): [string, State] {
-  const cursorCoordinate = positionToCursorCoordinate(text, position);
+  if (!element) return [text, state];
+  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   return [text, { ...state, cursorCoordinate, textSelection: undefined, moveCount: 1 }];
 }
 
 export function handleOnMouseMove(
   text: string,
   state: State,
-  position: [number, number]
+  position: [number, number],
+  element: HTMLElement | null
 ): [string, State] {
-  if (state.moveCount == 0 || !state.cursorCoordinate) return [text, state];
-  if (state.moveCount < Constants.moveCountThreshold) {
+  if (state.moveCount == 0 || !state.cursorCoordinate || !element) return [text, state];
+  if (state.moveCount < EditorConstants.moveCountThreshold) {
     return [text, { ...state, moveCount: state.moveCount + 1 }];
   }
-  const cursorCoordinate = positionToCursorCoordinate(text, position);
+  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   if (coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state];
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
@@ -108,13 +119,14 @@ export function handleOnMouseMove(
 export function handleOnMouseUp(
   text: string,
   state: State,
-  position: [number, number]
+  position: [number, number],
+  element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.moveCount == 0) return [text, state];
-  if (state.moveCount < Constants.moveCountThreshold) {
+  if (!state.cursorCoordinate || state.moveCount == 0 || !element) return [text, state];
+  if (state.moveCount < EditorConstants.moveCountThreshold) {
     return [text, { ...state, moveCount: 0 }];
   }
-  const cursorCoordinate = positionToCursorCoordinate(text, position);
+  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
@@ -213,15 +225,24 @@ function moveCursor(text: string, coordinate: CursorCoordinate, amount: number):
   return { lineIndex, charIndex };
 }
 
-function positionToCursorCoordinate(text: string, position: [number, number]): CursorCoordinate {
+function positionToCursorCoordinate(
+  text: string,
+  state: State,
+  position: [number, number],
+  element: HTMLElement
+): CursorCoordinate {
   type Groups = Record<string, string>;
 
   const [x, y] = position;
   const elements = document.elementsFromPoint(x, y);
   const charClassNameRegex = TextLinesConstants.char.classNameRegex;
-  const charElement = elements.find((element) => charClassNameRegex.test(element.className));
+  const charElement = elements.find(
+    (charEl) => charClassNameRegex.test(charEl.className) && element.contains(charEl)
+  );
   const lineClassNameRegex = TextLinesConstants.line.classNameRegex;
-  const lineElement = elements.find((element) => lineClassNameRegex.test(element.className));
+  const lineElement = elements.find(
+    (lineEl) => lineClassNameRegex.test(lineEl.className) && element.contains(lineEl)
+  );
   const lines = text.split("\n");
   if (charElement) {
     const groups = charElement.className.match(charClassNameRegex)?.groups as Groups;
@@ -232,6 +253,8 @@ function positionToCursorCoordinate(text: string, position: [number, number]): C
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
+  } else if (state.moveCount >= EditorConstants.moveCountThreshold && state.cursorCoordinate) {
+    return { ...state.cursorCoordinate };
   } else {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
   }

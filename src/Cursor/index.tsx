@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { Props, State } from "./types";
 import { CursorConstants } from "./constants";
-import { cursorPropsToState, handleOnEditorScroll, cursorIn } from "./utils";
+import { cursorPropsToState, handleOnEditorScroll } from "./utils";
 
-import { getTextLinesRoot } from "../TextLines/utils";
+import { getRoot } from "../Editor/utils";
 
 export class Cursor extends React.Component<Props, State> {
   private root: HTMLSpanElement | null;
@@ -23,28 +23,27 @@ export class Cursor extends React.Component<Props, State> {
     const state = cursorPropsToState(this.props, this.state, this.root);
     if (state != this.state) this.setState(state);
     if (this.props.coordinate) this.textArea?.focus();
-    const textLinesRoot = getTextLinesRoot(this.root);
-    if (textLinesRoot) {
+    const editorRoot = getRoot(this.root);
+    if (editorRoot) {
       if (this.handleOnEditorScroll) {
-        textLinesRoot.removeEventListener("scroll", this.handleOnEditorScroll);
+        editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
       }
       this.handleOnEditorScroll = () => {
         if (!this.root) return;
         const state = handleOnEditorScroll(this.props, this.state, this.root);
         if (state != this.state) this.setState(state);
       };
-      textLinesRoot.addEventListener("scroll", this.handleOnEditorScroll);
+      editorRoot.addEventListener("scroll", this.handleOnEditorScroll);
     }
   }
 
   render(): JSX.Element {
     const [top, left] = this.state.position;
     const { cursorSize } = this.state;
-    const hidden = !this.root || !cursorIn([top, left], cursorSize, this.root);
     const textLength = this.state.textAreaValue.length;
     return (
       <span ref={(root) => (this.root = root)}>
-        <div style={CursorConstants.rootDiv.style(top, left, cursorSize, hidden)}>
+        <div style={CursorConstants.rootDiv.style(top, left, cursorSize)}>
           <svg width={CursorConstants.svg.width} height={cursorSize}>
             <rect
               x={CursorConstants.rect.x}
