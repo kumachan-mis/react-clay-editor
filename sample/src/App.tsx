@@ -26,7 +26,7 @@ const defaultText = [
   "",
 ].join("\n");
 
-const defaultSubText = "More features is comming soon...";
+const defaultSubText = "More features are comming soon...";
 
 const style: React.CSSProperties = { width: "800px", height: "500px" };
 const sunStyle: React.CSSProperties = { width: "800px", height: "100px" };
