@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "A text document editor which is syntactically formattable in real time",
   "keywords": [
+    "react",
     "document",
     "editor",
     "real time",
@@ -50,7 +51,7 @@
     "lint-fix": "eslint \"{src,sample}/**/*.{ts,tsx}\" --fix",
     "prettier": "prettier --write \"**/*.{css,html,json,scss,ts,tsx,}\"",
     "prepublishOnly": "yarn build",
-    "predeploy": "rm -Rf sample/dist && mkdir sample/dist && parcel build sample/src/index.html --out-dir sample/dist",
+    "predeploy": "rm -Rf sample/dist && mkdir sample/dist && parcel build sample/src/index.html --out-dir sample/dist --public-url https://kumachan-mis.github.io/react-realtime-markup-editor",
     "deploy": "gh-pages -d sample/dist"
   }
 }
