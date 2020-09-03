@@ -62,13 +62,8 @@ export function analyzeFontOfContent(content: string, textStyle: TextStyle): Tex
   return textsWithFont;
 }
 
-export function getTextLinesRoot(element: HTMLElement): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
-  if (rootElement == null) return null;
-  return rootElement.querySelector(`.${TextLinesConstants.className}`);
-}
 export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  const rootElement = element.closest(`.${EditorConstants.root.className}`);
   if (rootElement == null) return null;
   return rootElement.querySelector(`.${TextLinesConstants.line.className(lineIndex)}`);
 }
@@ -78,7 +73,7 @@ export function getTextCharElementAt(
   charIndex: number,
   element: HTMLElement
 ): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  const rootElement = element.closest(`.${EditorConstants.root.className}`);
   if (rootElement == null) return null;
   return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
 }

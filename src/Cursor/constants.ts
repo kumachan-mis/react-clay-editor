@@ -1,16 +1,10 @@
 export const CursorConstants = {
   rootDiv: {
-    style: (
-      top: number,
-      left: number,
-      cursorSize: number,
-      hidden: boolean
-    ): React.CSSProperties => ({
+    style: (top: number, left: number, cursorSize: number): React.CSSProperties => ({
       top: `${top}px`,
       left: `${left}px`,
       height: `${cursorSize}px`,
       position: "absolute",
-      display: hidden ? "none" : undefined,
     }),
   },
   svg: { width: "2px" },

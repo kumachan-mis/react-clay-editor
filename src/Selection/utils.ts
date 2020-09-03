@@ -1,9 +1,11 @@
 import { Props, State } from "./types";
 
+import { getEditor } from "../Editor/utils";
 import { getTextLineElementAt, getTextCharElementAt } from "../TextLines/utils";
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
-  if (props.selection === undefined) {
+  const editorRect = getEditor(element)?.getBoundingClientRect();
+  if (props.selection === undefined || !editorRect) {
     return {
       topDivPosition: undefined,
       centerDivPosition: undefined,
@@ -24,8 +26,8 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     const startRect = startElement.getBoundingClientRect();
     const endRect = endElement.getBoundingClientRect();
     return {
-      top: startRect.top,
-      left: startRect.left,
+      top: startRect.top - editorRect.top,
+      left: startRect.left - editorRect.left,
       width: endRect.left - startRect.left + endRect.width,
       height: endRect.top - startRect.top + endRect.height,
     };

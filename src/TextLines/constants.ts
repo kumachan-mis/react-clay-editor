@@ -70,7 +70,6 @@ export const TextLinesConstants = {
   style: {
     whiteSpace: "pre-wrap",
     wordWrap: "break-word",
-    height: "100%",
-    overflowY: "scroll",
+    position: "absolute",
   } as React.CSSProperties,
 };
