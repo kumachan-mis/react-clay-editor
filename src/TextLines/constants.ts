@@ -68,6 +68,7 @@ export const TextLinesConstants = {
     bracket: /\[(?<option>([*/_]+\s)?)(?<body>[^\]]*[^\s\]][^\]]*)\]/g,
   },
   style: {
+    width: "100%",
     whiteSpace: "pre-wrap",
     wordWrap: "break-word",
     position: "absolute",
