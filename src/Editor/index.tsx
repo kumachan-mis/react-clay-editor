@@ -30,7 +30,7 @@ export class Editor extends React.Component<Props, State> {
       cursorCoordinate: undefined,
       isComposing: false,
       textSelection: undefined,
-      selectionWithMouse: SelectionWithMouse.SelectionInactive,
+      selectionWithMouse: SelectionWithMouse.Inactive,
     };
     this.root = null;
   }

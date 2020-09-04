@@ -3,9 +3,9 @@ import { Selection } from "../Selection/types";
 import { TextStyle } from "../TextLines/types";
 
 export const enum SelectionWithMouse {
-  SelectionInactive,
-  SelectionStarted,
-  SelectionActive,
+  Inactive,
+  Started,
+  Active,
 }
 
 export interface Props {

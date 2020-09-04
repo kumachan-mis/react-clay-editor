@@ -101,7 +101,7 @@ export function handleOnMouseDown(
       ...state,
       cursorCoordinate,
       textSelection: undefined,
-      selectionWithMouse: SelectionWithMouse.SelectionStarted,
+      selectionWithMouse: SelectionWithMouse.Started,
     },
   ];
 }
@@ -114,13 +114,13 @@ export function handleOnMouseMove(
 ): [string, State] {
   if (
     !state.cursorCoordinate ||
-    state.selectionWithMouse == SelectionWithMouse.SelectionInactive ||
+    state.selectionWithMouse == SelectionWithMouse.Inactive ||
     !element
   ) {
     return [text, state];
   }
-  if (state.selectionWithMouse == SelectionWithMouse.SelectionStarted) {
-    return [text, { ...state, selectionWithMouse: SelectionWithMouse.SelectionActive }];
+  if (state.selectionWithMouse == SelectionWithMouse.Started) {
+    return [text, { ...state, selectionWithMouse: SelectionWithMouse.Active }];
   }
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   if (coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state];
@@ -138,13 +138,13 @@ export function handleOnMouseUp(
 ): [string, State] {
   if (
     !state.cursorCoordinate ||
-    state.selectionWithMouse == SelectionWithMouse.SelectionInactive ||
+    state.selectionWithMouse == SelectionWithMouse.Inactive ||
     !element
   ) {
     return [text, state];
   }
-  if (state.selectionWithMouse != SelectionWithMouse.SelectionActive) {
-    return [text, { ...state, selectionWithMouse: SelectionWithMouse.SelectionInactive }];
+  if (state.selectionWithMouse != SelectionWithMouse.Active) {
+    return [text, { ...state, selectionWithMouse: SelectionWithMouse.Inactive }];
   }
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
@@ -156,7 +156,7 @@ export function handleOnMouseUp(
       ...state,
       cursorCoordinate,
       textSelection,
-      selectionWithMouse: SelectionWithMouse.SelectionInactive,
+      selectionWithMouse: SelectionWithMouse.Inactive,
     },
   ];
 }
@@ -281,10 +281,7 @@ function positionToCursorCoordinate(
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
-  } else if (
-    state.selectionWithMouse == SelectionWithMouse.SelectionActive &&
-    state.cursorCoordinate
-  ) {
+  } else if (state.selectionWithMouse == SelectionWithMouse.Active && state.cursorCoordinate) {
     return { ...state.cursorCoordinate };
   } else {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
