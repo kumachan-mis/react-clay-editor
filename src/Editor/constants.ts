@@ -1,5 +1,4 @@
 export const EditorConstants = {
-  moveCountThreshold: 2,
   root: {
     className: `React-Realtime-Markup-Editor-rootDiv`,
     style: {

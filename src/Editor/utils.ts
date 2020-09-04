@@ -1,4 +1,4 @@
-import { State } from "./types";
+import { State, SelectionWithMouse } from "./types";
 import { EditorConstants } from "./constants";
 
 import { CursorCoordinate } from "../Cursor/types";
@@ -95,7 +95,15 @@ export function handleOnMouseDown(
 ): [string, State] {
   if (!element) return [text, state];
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
-  return [text, { ...state, cursorCoordinate, textSelection: undefined, moveCount: 1 }];
+  return [
+    text,
+    {
+      ...state,
+      cursorCoordinate,
+      textSelection: undefined,
+      selectionWithMouse: SelectionWithMouse.SelectionStarted,
+    },
+  ];
 }
 
 export function handleOnMouseMove(
@@ -104,9 +112,15 @@ export function handleOnMouseMove(
   position: [number, number],
   element: HTMLElement | null
 ): [string, State] {
-  if (state.moveCount == 0 || !state.cursorCoordinate || !element) return [text, state];
-  if (state.moveCount < EditorConstants.moveCountThreshold) {
-    return [text, { ...state, moveCount: state.moveCount + 1 }];
+  if (
+    !state.cursorCoordinate ||
+    state.selectionWithMouse == SelectionWithMouse.SelectionInactive ||
+    !element
+  ) {
+    return [text, state];
+  }
+  if (state.selectionWithMouse == SelectionWithMouse.SelectionStarted) {
+    return [text, { ...state, selectionWithMouse: SelectionWithMouse.SelectionActive }];
   }
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   if (coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state];
@@ -122,15 +136,29 @@ export function handleOnMouseUp(
   position: [number, number],
   element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.moveCount == 0 || !element) return [text, state];
-  if (state.moveCount < EditorConstants.moveCountThreshold) {
-    return [text, { ...state, moveCount: 0 }];
+  if (
+    !state.cursorCoordinate ||
+    state.selectionWithMouse == SelectionWithMouse.SelectionInactive ||
+    !element
+  ) {
+    return [text, state];
+  }
+  if (state.selectionWithMouse != SelectionWithMouse.SelectionActive) {
+    return [text, { ...state, selectionWithMouse: SelectionWithMouse.SelectionInactive }];
   }
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection, moveCount: 0 }];
+  return [
+    text,
+    {
+      ...state,
+      cursorCoordinate,
+      textSelection,
+      selectionWithMouse: SelectionWithMouse.SelectionInactive,
+    },
+  ];
 }
 
 export const handleOnMouseLeave = handleOnMouseUp;
@@ -253,7 +281,10 @@ function positionToCursorCoordinate(
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
-  } else if (state.moveCount >= EditorConstants.moveCountThreshold && state.cursorCoordinate) {
+  } else if (
+    state.selectionWithMouse == SelectionWithMouse.SelectionActive &&
+    state.cursorCoordinate
+  ) {
     return { ...state.cursorCoordinate };
   } else {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };

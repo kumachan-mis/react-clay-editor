@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State } from "./types";
+import { Props, State, SelectionWithMouse } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -30,7 +30,7 @@ export class Editor extends React.Component<Props, State> {
       cursorCoordinate: undefined,
       isComposing: false,
       textSelection: undefined,
-      moveCount: 0,
+      selectionWithMouse: SelectionWithMouse.SelectionInactive,
     };
     this.root = null;
   }
