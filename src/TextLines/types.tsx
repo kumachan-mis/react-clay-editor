@@ -21,7 +21,7 @@ export interface LineWithIndent {
   content: string;
 }
 
-export interface TextWithFont {
+export interface TextWithStyle {
   text: string;
   offset: number;
   section: [number, number];

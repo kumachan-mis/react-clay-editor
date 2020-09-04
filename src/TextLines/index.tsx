@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { Props, TextLineProps, TextWithFont } from "./types";
+import { Props, TextLineProps, TextWithStyle } from "./types";
 import { TextLinesConstants } from "./constants";
-import { analyzeLine, analyzeFontOfContent } from "./utils";
+import { analyzeLine, analyzeContentStyle } from "./utils";
 
 export class TextLines extends React.Component<Props> {
   render(): JSX.Element {
@@ -50,17 +50,17 @@ export class TextLines extends React.Component<Props> {
     const { indent, content, lineIndex } = props;
     const { cursorCoordinate } = this.props;
 
-    const textsWithFont = analyzeFontOfContent(content, this.props.textStyle);
+    const textsWithStyle = analyzeContentStyle(content, this.props.textStyle);
     const cursorOn = cursorCoordinate && cursorCoordinate.lineIndex == lineIndex;
     const lineLength = indent.length + content.length;
     const { className: charClassName } = TextLinesConstants.char;
 
     return (
       <span style={constants.style(indent.length)}>
-        {textsWithFont.map((textWithFont: TextWithFont, withFontIndex: number) => {
-          const { text, section, fontSize, bold, italic, underline } = textWithFont;
+        {textsWithStyle.map((textWithStyle: TextWithStyle, withFontIndex: number) => {
+          const { text, section, fontSize, bold, italic, underline } = textWithStyle;
           const [start, end] = section;
-          const offset = indent.length + textWithFont.offset;
+          const offset = indent.length + textWithStyle.offset;
           const style = constants.section.style(fontSize, bold, italic, underline);
           return (
             <span key={withFontIndex} style={style}>

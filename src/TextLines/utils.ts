@@ -1,7 +1,23 @@
 import { TextLinesConstants } from "./constants";
-import { TextStyle, TextWithFont, LineWithIndent } from "./types";
+import { TextStyle, TextWithStyle, LineWithIndent } from "./types";
 
 import { EditorConstants } from "../Editor/constants";
+
+export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
+  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  if (rootElement == null) return null;
+  return rootElement.querySelector(`.${TextLinesConstants.line.className(lineIndex)}`);
+}
+
+export function getTextCharElementAt(
+  lineIndex: number,
+  charIndex: number,
+  element: HTMLElement
+): HTMLElement | null {
+  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  if (rootElement == null) return null;
+  return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
+}
 
 export function analyzeLine(line: string): LineWithIndent {
   const regex = TextLinesConstants.syntaxRegex.indent;
@@ -9,49 +25,26 @@ export function analyzeLine(line: string): LineWithIndent {
   return { indent, content };
 }
 
-export function analyzeFontOfContent(content: string, textStyle: TextStyle): TextWithFont[] {
+export function analyzeContentStyle(content: string, textStyle: TextStyle): TextWithStyle[] {
   const regex = TextLinesConstants.syntaxRegex.bracket;
   let match: RegExpExecArray | null = null;
   let offset = 0;
-  const textsWithFont: TextWithFont[] = [];
+  const textsWithFont: TextWithStyle[] = [];
   while ((match = regex.exec(content))) {
     if (match.index - offset > 0) {
       const text = content.substring(offset, match.index);
       textsWithFont.push({ text, offset, section: [0, text.length] });
       offset = match.index;
     }
-
     const text = match[0];
     const option = match.groups?.option || "";
     if (option == "") {
       textsWithFont.push({ text: text, offset, section: [0, text.length] });
-      offset = regex.lastIndex;
-      continue;
+    } else {
+      const section: [number, number] = [option.length + 1, text.length - 1];
+      const style = analyzeBracketOption(option, textStyle);
+      textsWithFont.push({ text: text, offset, section, ...style });
     }
-
-    const { level1, level2, level3 } = textStyle.fontSizes;
-    const section: [number, number] = [option.length + 1, text.length - 1];
-    const style = { bold: false, italic: false, underline: false, fontSize: level1 };
-    for (let i = 0; i < option.length; i++) {
-      switch (option[i]) {
-        case "*":
-          if (!style.bold) {
-            style.bold = true;
-          } else if (style.fontSize == level1) {
-            style.fontSize = level2;
-          } else {
-            style.fontSize = level3;
-          }
-          break;
-        case "/":
-          style.italic = true;
-          break;
-        case "_":
-          style.underline = true;
-          break;
-      }
-    }
-    textsWithFont.push({ text: text, offset, section, ...style });
     offset = regex.lastIndex;
   }
 
@@ -62,18 +55,26 @@ export function analyzeFontOfContent(content: string, textStyle: TextStyle): Tex
   return textsWithFont;
 }
 
-export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.root.className}`);
-  if (rootElement == null) return null;
-  return rootElement.querySelector(`.${TextLinesConstants.line.className(lineIndex)}`);
-}
-
-export function getTextCharElementAt(
-  lineIndex: number,
-  charIndex: number,
-  element: HTMLElement
-): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.root.className}`);
-  if (rootElement == null) return null;
-  return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
+function analyzeBracketOption(
+  option: string,
+  textStyle: TextStyle
+): Required<Pick<TextWithStyle, "bold" | "italic" | "underline" | "fontSize">> {
+  const { level1, level2, level3 } = textStyle.fontSizes;
+  const style = { bold: false, italic: false, underline: false, fontSize: level1 };
+  for (let i = 0; i < option.length - 1; i++) {
+    switch (option[i]) {
+      case "*":
+        if (!style.bold) style.bold = true;
+        else if (style.fontSize == level1) style.fontSize = level2;
+        else if (style.fontSize == level2) style.fontSize = level3;
+        break;
+      case "/":
+        style.italic = true;
+        break;
+      case "_":
+        style.underline = true;
+        break;
+    }
+  }
+  return style;
 }
