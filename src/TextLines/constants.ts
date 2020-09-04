@@ -38,8 +38,7 @@ export const TextLinesConstants = {
           italic?: boolean,
           underline?: boolean
         ): React.CSSProperties => ({
-          lineHeight: fontSize !== undefined ? `${fontSize}px` : "inherit",
-          fontSize: fontSize !== undefined ? `${fontSize}px` : "inherit",
+          fontSize: fontSize !== undefined ? `${fontSize}px` : "100%",
           fontWeight: bold ? "bold" : "normal",
           fontStyle: italic ? "italic" : "normal",
           textDecoration: underline ? "underline" : "none",
@@ -51,7 +50,6 @@ export const TextLinesConstants = {
       }),
     },
     style: (defaultFontSize: number): React.CSSProperties => ({
-      lineHeight: `${defaultFontSize}px`,
       fontSize: `${defaultFontSize}px`,
       minHeight: `${defaultFontSize}px`,
       display: "block",
@@ -68,6 +66,7 @@ export const TextLinesConstants = {
     bracket: /\[(?<option>([*/_]+\s)?)(?<body>[^\]]*[^\s\]][^\]]*)\]/g,
   },
   style: {
+    width: "100%",
     whiteSpace: "pre-wrap",
     wordWrap: "break-word",
     position: "absolute",

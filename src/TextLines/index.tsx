@@ -88,7 +88,7 @@ export class TextLines extends React.Component<Props> {
             </span>
           );
         })}
-        <span className={charClassName(lineIndex, lineLength)} />
+        <span className={charClassName(lineIndex, lineLength)}> </span>
       </span>
     );
   };
