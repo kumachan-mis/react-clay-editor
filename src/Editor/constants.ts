@@ -2,11 +2,11 @@ export const EditorConstants = {
   root: {
     className: `React-Realtime-Markup-Editor-rootDiv`,
     style: {
-      userSelect: "none",
       width: "100%",
       height: "100%",
       overflowY: "scroll",
       position: "relative",
+      userSelect: "none",
     } as React.CSSProperties,
   },
   editor: {
