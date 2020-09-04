@@ -1,7 +1,7 @@
 import { Props, State } from "./types";
 
 import { getEditor } from "../Editor/utils";
-import { getTextLineElementAt, getTextCharElementAt } from "../TextLines/utils";
+import { getTextCharElementAt } from "../TextLines/utils";
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
   const editorRect = getEditor(element)?.getBoundingClientRect();
@@ -12,6 +12,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       bottomDivPosition: undefined,
     };
   }
+
   const { fixed, free } = props.selection;
   const { start, end } = (() => {
     if (fixed.lineIndex < free.lineIndex) return { start: fixed, end: free };
@@ -20,49 +21,47 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     else return { start: free, end: fixed };
   })();
 
-  const getPosition = (startElement: HTMLElement | null, endElement: HTMLElement | null) => {
-    if (!startElement || !endElement) return undefined;
-
-    const startRect = startElement.getBoundingClientRect();
-    const endRect = endElement.getBoundingClientRect();
-    return {
-      top: startRect.top - editorRect.top,
-      left: startRect.left - editorRect.left,
-      width: endRect.left - startRect.left + endRect.width,
-      height: endRect.top - startRect.top + endRect.height,
-    };
-  };
-
-  const lineNum = end.lineIndex - start.lineIndex + 1;
-  if (lineNum == 1) {
-    const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
-    const endElement = getTextCharElementAt(end.lineIndex, end.charIndex - 1, element);
+  const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
+  const endElement = getTextCharElementAt(end.lineIndex, end.charIndex, element);
+  const startRect = startElement?.getBoundingClientRect();
+  const endRect = endElement?.getBoundingClientRect();
+  if (!startRect || !endRect) {
     return {
       topDivPosition: undefined,
-      centerDivPosition: getPosition(startElement, endElement),
+      centerDivPosition: undefined,
       bottomDivPosition: undefined,
     };
   }
 
-  const topDivPosition = (() => {
-    const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
-    const endElement = getTextLineElementAt(start.lineIndex, element);
-    return getPosition(startElement, endElement);
-  })();
-
-  const bottomDivPosition = (() => {
-    if (end.charIndex == 0) return undefined;
-    const startElement = getTextLineElementAt(end.lineIndex, element);
-    const endElement = getTextCharElementAt(end.lineIndex, end.charIndex - 1, element);
-    return getPosition(startElement, endElement);
-  })();
-
-  const centerDivPosition = (() => {
-    if (lineNum == 2) return undefined;
-    const startElement = getTextLineElementAt(start.lineIndex + 1, element);
-    const endElement = getTextLineElementAt(end.lineIndex - 1, element);
-    return getPosition(startElement, endElement);
-  })();
-
-  return { topDivPosition, centerDivPosition, bottomDivPosition };
+  if (startRect.top == endRect.top) {
+    const topDivPosition = undefined;
+    const centerDivPosition = {
+      top: startRect.top - editorRect.top,
+      left: startRect.left - editorRect.left,
+      width: endRect.left - startRect.left,
+      height: endRect.bottom - startRect.top,
+    };
+    const bottomDivPosition = undefined;
+    return { topDivPosition, centerDivPosition, bottomDivPosition };
+  } else {
+    const topDivPosition = {
+      top: startRect.top - editorRect.top,
+      left: startRect.left - editorRect.left,
+      width: editorRect.right - startRect.left,
+      height: startRect.height,
+    };
+    const centerDivPosition = {
+      top: startRect.bottom - editorRect.top,
+      left: 0,
+      width: editorRect.width,
+      height: endRect.top - startRect.bottom,
+    };
+    const bottomDivPosition = {
+      top: endRect.top - editorRect.top,
+      left: 0,
+      width: endRect.left - editorRect.left,
+      height: endRect.height,
+    };
+    return { topDivPosition, centerDivPosition, bottomDivPosition };
+  }
 }

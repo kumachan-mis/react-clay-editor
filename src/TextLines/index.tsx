@@ -54,6 +54,7 @@ export class TextLines extends React.Component<Props> {
     const cursorOn = cursorCoordinate && cursorCoordinate.lineIndex == lineIndex;
     const lineLength = indent.length + content.length;
     const { className: charClassName } = TextLinesConstants.char;
+    const defaultFontSize = this.props.textStyle.fontSizes.level1;
 
     return (
       <span style={constants.style(indent.length)}>
@@ -88,7 +89,7 @@ export class TextLines extends React.Component<Props> {
             </span>
           );
         })}
-        <span className={charClassName(lineIndex, lineLength)} />
+        <span className={charClassName(lineIndex, lineLength)}> </span>
       </span>
     );
   };
