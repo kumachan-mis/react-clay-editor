@@ -41,6 +41,20 @@ export const TextLinesConstants = {
           textDecoration: decorationStyle.underline ? "underline" : "none",
         }),
       },
+      linkTag: {
+        style: {
+          color: "#5E8AF7",
+          textDecoration: "none",
+          cursor: "pointer",
+        } as React.CSSProperties,
+      },
+      hashTag: {
+        style: {
+          color: "#5E8AF7",
+          textDecoration: "none",
+          cursor: "pointer",
+        } as React.CSSProperties,
+      },
       style: (indentDepth: number): React.CSSProperties => ({
         marginLeft: `${1.5 * indentDepth}em`,
         display: "block",
@@ -62,13 +76,15 @@ export const TextLinesConstants = {
     indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     link: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-    hashTag: /^(?<left>(.*?\s+)())(?<hashTag>#\S+)(?<right>.*)$/,
+    hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },
   style: {
     width: "100%",
+    height: "100%",
     whiteSpace: "pre-wrap",
     wordWrap: "break-word",
     position: "absolute",
+    cursor: "text",
   } as React.CSSProperties,
 };

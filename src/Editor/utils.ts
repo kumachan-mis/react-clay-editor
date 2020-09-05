@@ -23,7 +23,7 @@ export function handleOnKeyDown(text: string, state: State, key: string): [strin
 
       const newLines = newText.split("\n");
       const prevLine = newLines[newState.cursorCoordinate.lineIndex - 1];
-      const regex = TextLinesConstants.syntaxRegex.indent;
+      const regex = TextLinesConstants.regexes.indent;
       const { indent, content } = prevLine.match(regex)?.groups as Record<string, string>;
       if (indent.length == 0) {
         return [newText, newState];

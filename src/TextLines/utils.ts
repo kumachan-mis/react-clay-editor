@@ -68,6 +68,10 @@ export function getDecorationStyle(
   return style;
 }
 
+export function getHashTagName(hashTag: string): string {
+  return hashTag.substring(1);
+}
+
 function parseText(text: string, option: ParseOption): Node[] {
   const { regexes } = TextLinesConstants;
   if (regexes.decoration.test(text)) return parseDecoration(text, option);

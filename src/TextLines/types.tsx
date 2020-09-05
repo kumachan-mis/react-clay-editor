@@ -7,6 +7,8 @@ export interface DecorationSetting {
 export interface Props {
   text: string;
   decoration: DecorationSetting;
+  linkProps: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  hashTagProps: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   cursorCoordinate: CursorCoordinate | undefined;
 }
 

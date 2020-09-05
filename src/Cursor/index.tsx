@@ -37,7 +37,7 @@ export class Cursor extends React.Component<Props, State> {
     }
   }
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     const [top, left] = this.state.position;
     const { cursorSize } = this.state;
     const textLength = this.state.textAreaValue.length;

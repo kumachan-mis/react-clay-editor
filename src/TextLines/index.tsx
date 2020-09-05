@@ -2,10 +2,10 @@ import * as React from "react";
 
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
 import { TextLinesConstants } from "./constants";
-import { parseLine, parseContent, getDecorationStyle } from "./utils";
+import { parseLine, parseContent, getDecorationStyle, getHashTagName } from "./utils";
 
 export class TextLines extends React.Component<Props> {
-  render(): JSX.Element {
+  render(): React.ReactElement {
     return (
       <div className={TextLinesConstants.className} style={TextLinesConstants.style}>
         {this.props.text.split("\n").map((line: string, index: number) => {
@@ -27,7 +27,7 @@ export class TextLines extends React.Component<Props> {
     );
   }
 
-  private Indent = (props: IndentProps): JSX.Element => {
+  private Indent = (props: IndentProps): React.ReactElement => {
     if (props.indent.length == 0) return <></>;
 
     const constants = TextLinesConstants.line.indent;
@@ -47,7 +47,7 @@ export class TextLines extends React.Component<Props> {
     );
   };
 
-  private Content = (props: ContentProps): JSX.Element => {
+  private Content = (props: ContentProps): React.ReactElement => {
     const constants = TextLinesConstants.line.content;
     const charConstants = TextLinesConstants.char;
     const { indent, content, lineIndex, cursorOn } = props;
@@ -63,7 +63,7 @@ export class TextLines extends React.Component<Props> {
     );
   };
 
-  private Node = (props: NodeProps): JSX.Element => {
+  private Node = (props: NodeProps): React.ReactElement => {
     const constants = TextLinesConstants.line.content;
     const charConstants = TextLinesConstants.char;
 
@@ -99,7 +99,7 @@ export class TextLines extends React.Component<Props> {
       case "link": {
         const { facingMeta, linkName, trailingMeta } = props.node;
         return (
-          <span>
+          <a style={constants.hashTag.style} {...this.props.linkProps(linkName)}>
             {[...facingMeta].map((char: string, index: number) => (
               <span key={index} className={charConstants.className(lineIndex, from + index)}>
                 {cursorOn ? char : ""}
@@ -118,19 +118,21 @@ export class TextLines extends React.Component<Props> {
                 {cursorOn ? char : ""}
               </span>
             ))}
-          </span>
+          </a>
         );
       }
-      case "hashTag":
+      case "hashTag": {
+        const hashTagName = getHashTagName(props.node.hashTag);
         return (
-          <span>
+          <a style={constants.hashTag.style} {...this.props.hashTagProps(hashTagName)}>
             {[...props.node.hashTag].map((char: string, index: number) => (
               <span key={index} className={charConstants.className(lineIndex, from + index)}>
                 {char}
               </span>
             ))}
-          </span>
+          </a>
         );
+      }
       case "normal":
         return (
           <span>

@@ -16,11 +16,17 @@ import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
 import { DecorationSetting } from "../TextLines/types";
 
+type AnnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
 export class Editor extends React.Component<Props, State> {
-  static readonly defaultProps: Required<Pick<Props, "declration">> = {
-    declration: {
+  static readonly defaultProps: Required<
+    Pick<Props, "decoration" | "linkProps" | "hashTagProps">
+  > = {
+    decoration: {
       fontSizes: { level1: 16, level2: 20, level3: 24 },
     },
+    linkProps: () => ({}),
+    hashTagProps: () => ({}),
   };
   private root: HTMLDivElement | null;
 
@@ -45,7 +51,7 @@ export class Editor extends React.Component<Props, State> {
     document.removeEventListener("mousedown", this.handleOnEditorBlur);
   }
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     return (
       <div style={this.props.style}>
         <div
@@ -101,7 +107,9 @@ export class Editor extends React.Component<Props, State> {
             <Selection selection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
-              decoration={this.props.declration as DecorationSetting}
+              decoration={this.props.decoration as DecorationSetting}
+              linkProps={this.props.linkProps as (linkName: string) => AnnchorProps}
+              hashTagProps={this.props.hashTagProps as (hashTagName: string) => AnnchorProps}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>
