@@ -96,44 +96,52 @@ export class TextLines extends React.Component<Props> {
           </span>
         );
       }
-      case "link": {
+      case "bracketLink": {
         const { facingMeta, linkName, trailingMeta } = props.node;
-        return (
-          <a style={constants.hashTag.style} {...this.props.linkProps(linkName)}>
-            {[...facingMeta].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                {cursorOn ? char : ""}
-              </span>
-            ))}
-            {[...linkName].map((char: string, index: number) => (
-              <span
-                key={index}
-                className={charConstants.className(lineIndex, from + facingMeta.length + index)}
-              >
-                {char}
-              </span>
-            ))}
-            {[...trailingMeta].map((char: string, index: number, array: string[]) => (
-              <span
-                key={index}
-                className={charConstants.className(lineIndex, to - array.length + index)}
-              >
-                {cursorOn ? char : ""}
-              </span>
-            ))}
+        const bracketLinkCharSpans = [
+          ...[...facingMeta].map((char: string, index: number) => (
+            <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
+              {cursorOn ? char : ""}
+            </span>
+          )),
+          ...[...linkName].map((char: string, index: number) => (
+            <span
+              key={from + facingMeta.length + index}
+              className={charConstants.className(lineIndex, from + facingMeta.length + index)}
+            >
+              {char}
+            </span>
+          )),
+          ...[...trailingMeta].map((char: string, index: number, array: string[]) => (
+            <span
+              key={to - array.length + index}
+              className={charConstants.className(lineIndex, to - array.length + index)}
+            >
+              {cursorOn ? char : ""}
+            </span>
+          )),
+        ];
+        return !this.props.bracketLinkDisabled ? (
+          <a style={constants.hashTag.style} {...this.props.bracketLinkProps(linkName)}>
+            {bracketLinkCharSpans}
           </a>
+        ) : (
+          <span>{bracketLinkCharSpans}</span>
         );
       }
       case "hashTag": {
         const hashTagName = getHashTagName(props.node.hashTag);
-        return (
+        const hashTagCharSpans = [...props.node.hashTag].map((char: string, index: number) => (
+          <span key={index} className={charConstants.className(lineIndex, from + index)}>
+            {char}
+          </span>
+        ));
+        return !this.props.hashTagDisabled ? (
           <a style={constants.hashTag.style} {...this.props.hashTagProps(hashTagName)}>
-            {[...props.node.hashTag].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                {char}
-              </span>
-            ))}
+            {hashTagCharSpans}
           </a>
+        ) : (
+          <span>{hashTagCharSpans}</span>
         );
       }
       case "normal":

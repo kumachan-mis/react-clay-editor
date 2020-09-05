@@ -30,7 +30,11 @@ const defaultText = [
   "",
 ].join("\n");
 
-const defaultSubText = "More features are comming soon...";
+const defaultSubText = [
+  "[disabled-bracket-link]",
+  "#disabled-hashtag-link",
+  "More features are comming soon...",
+].join("\n");
 
 const style: React.CSSProperties = { width: "800px", height: "500px" };
 const sunStyle: React.CSSProperties = { width: "800px", height: "100px" };
@@ -43,11 +47,17 @@ export const App: React.FC = () => {
       <Editor
         text={text}
         onChangeText={setText}
-        linkProps={(linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` })}
+        bracketLinkProps={(linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` })}
         hashTagProps={(hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` })}
         style={style}
       />
-      <Editor text={subText} onChangeText={setSubText} style={sunStyle} />
+      <Editor
+        text={subText}
+        onChangeText={setSubText}
+        bracketLinkDisabled
+        hashTagDisabled
+        style={sunStyle}
+      />
     </>
   );
 };

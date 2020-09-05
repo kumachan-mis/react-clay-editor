@@ -7,8 +7,10 @@ export interface DecorationSetting {
 export interface Props {
   text: string;
   decoration: DecorationSetting;
-  linkProps: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  bracketLinkProps: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  bracketLinkDisabled?: boolean;
   hashTagProps: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  hashTagDisabled?: boolean;
   cursorCoordinate: CursorCoordinate | undefined;
 }
 
@@ -43,7 +45,7 @@ export interface DecorationStyle {
   underline: boolean;
 }
 
-export type Node = DecorationNode | HashTagNode | LinkNode | NormalNode;
+export type Node = DecorationNode | HashTagNode | BracketLinkNode | NormalNode;
 
 export interface DecorationNode {
   type: "decoration";
@@ -53,8 +55,8 @@ export interface DecorationNode {
   trailingMeta: string;
 }
 
-export interface LinkNode {
-  type: "link";
+export interface BracketLinkNode {
+  type: "bracketLink";
   range: [number, number];
   facingMeta: string;
   linkName: string;

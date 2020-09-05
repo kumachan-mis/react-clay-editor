@@ -12,8 +12,10 @@ export interface Props {
   text: string;
   onChangeText: (text: string) => void;
   decoration?: Decoration;
-  linkProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  bracketLinkProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  bracketLinkDisabled?: boolean;
   hashTagProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  hashTagDisabled?: boolean;
   disabled?: boolean;
   style?: React.CSSProperties;
 }
