@@ -33,13 +33,16 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     };
   }
 
-  if (startRect.top == endRect.top) {
+  if (
+    (startRect.top <= endRect.top && startRect.bottom >= endRect.bottom) ||
+    (startRect.top >= endRect.top && startRect.bottom <= endRect.bottom)
+  ) {
     const topDivPosition = undefined;
     const centerDivPosition = {
-      top: startRect.top - editorRect.top,
+      top: Math.min(startRect.top, endRect.top) - editorRect.top,
       left: startRect.left - editorRect.left,
       width: endRect.left - startRect.left,
-      height: endRect.bottom - startRect.top,
+      height: Math.max(startRect.bottom, endRect.bottom) - Math.min(startRect.top, endRect.top),
     };
     const bottomDivPosition = undefined;
     return { topDivPosition, centerDivPosition, bottomDivPosition };
