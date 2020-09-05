@@ -1,5 +1,15 @@
 import { TextLinesConstants } from "./constants";
-import { TextStyle, TextWithStyle, LineWithIndent } from "./types";
+import {
+  DecorationSetting,
+  ContentWithIndent,
+  DecorationStyle,
+  Node,
+  DecorationNode,
+  LinkNode,
+  HashTagNode,
+  NormalNode,
+  ParseOption,
+} from "./types";
 
 import { EditorConstants } from "../Editor/constants";
 
@@ -19,54 +29,32 @@ export function getTextCharElementAt(
   return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
 }
 
-export function analyzeLine(line: string): LineWithIndent {
-  const regex = TextLinesConstants.syntaxRegex.indent;
+export function parseLine(line: string): ContentWithIndent {
+  const regex = TextLinesConstants.regexes.indent;
   const { indent, content } = line.match(regex)?.groups as Record<string, string>;
   return { indent, content };
 }
 
-export function analyzeContentStyle(content: string, textStyle: TextStyle): TextWithStyle[] {
-  const regex = TextLinesConstants.syntaxRegex.bracket;
-  let match: RegExpExecArray | null = null;
-  let offset = 0;
-  const textsWithFont: TextWithStyle[] = [];
-  while ((match = regex.exec(content))) {
-    if (match.index - offset > 0) {
-      const text = content.substring(offset, match.index);
-      textsWithFont.push({ text, offset, section: [0, text.length] });
-      offset = match.index;
-    }
-    const text = match[0];
-    const option = match.groups?.option || "";
-    if (option == "") {
-      textsWithFont.push({ text: text, offset, section: [0, text.length] });
-    } else {
-      const section: [number, number] = [option.length + 1, text.length - 1];
-      const style = analyzeBracketOption(option, textStyle);
-      textsWithFont.push({ text: text, offset, section, ...style });
-    }
-    offset = regex.lastIndex;
-  }
-
-  if (content.length - offset > 0) {
-    const subText = content.substring(offset, content.length);
-    textsWithFont.push({ text: subText, offset, section: [0, subText.length] });
-  }
-  return textsWithFont;
+export function parseContent(content: string): Node[] {
+  return parseText(content, { offset: 0, nested: false });
 }
 
-function analyzeBracketOption(
-  option: string,
-  textStyle: TextStyle
-): Required<Pick<TextWithStyle, "bold" | "italic" | "underline" | "fontSize">> {
-  const { level1, level2, level3 } = textStyle.fontSizes;
+export function getDecorationStyle(
+  decoration: string,
+  setting: DecorationSetting
+): DecorationStyle {
+  const { level1, level2, level3 } = setting.fontSizes;
   const style = { bold: false, italic: false, underline: false, fontSize: level1 };
-  for (let i = 0; i < option.length - 1; i++) {
-    switch (option[i]) {
+  for (let i = 0; i < decoration.length; i++) {
+    switch (decoration[i]) {
       case "*":
-        if (!style.bold) style.bold = true;
-        else if (style.fontSize == level1) style.fontSize = level2;
-        else if (style.fontSize == level2) style.fontSize = level3;
+        if (!style.bold) {
+          style.bold = true;
+        } else if (style.fontSize == level1) {
+          style.fontSize = level2;
+        } else if (style.fontSize == level2) {
+          style.fontSize = level3;
+        }
         break;
       case "/":
         style.italic = true;
@@ -77,4 +65,59 @@ function analyzeBracketOption(
     }
   }
   return style;
+}
+
+function parseText(text: string, option: ParseOption): Node[] {
+  const { regexes } = TextLinesConstants;
+  if (regexes.decoration.test(text)) return parseDecoration(text, option);
+  else if (regexes.link.test(text)) return parseLink(text, option);
+  else if (regexes.hashTag.test(text)) return parseHashTag(text, option);
+  else if (regexes.normal.test(text)) return parseNormal(text, option);
+  else return [];
+}
+
+function parseDecoration(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.decoration;
+  const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+
+  const node: DecorationNode | LinkNode = !option.nested
+    ? {
+        type: "decoration",
+        decoration,
+        children: parseText(body, { offset: from + decoration.length + 2, nested: true }),
+        range: [from, to],
+      }
+    : {
+        type: "link",
+        linkName: `${decoration} ${body}`,
+        range: [from, to],
+      };
+
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
+
+function parseLink(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.link;
+  const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+
+  const node: LinkNode = { type: "link", linkName, range: [from, to] };
+
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
+
+function parseHashTag(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.hashTag;
+  const { left, hashTagName, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const node: HashTagNode = { type: "hashTag", hashTagName, range: [from, to] };
+
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
+
+function parseNormal(text: string, option: ParseOption): Node[] {
+  const [from, to] = [option.offset, option.offset + text.length];
+  const node: NormalNode = { type: "normal", text, range: [from, to] };
+  return [node];
 }

@@ -14,11 +14,11 @@ import {
 import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
-import { TextStyle } from "../TextLines/types";
+import { DecorationSetting } from "../TextLines/types";
 
 export class Editor extends React.Component<Props, State> {
-  static readonly defaultProps: Required<Pick<Props, "textStyle">> = {
-    textStyle: {
+  static readonly defaultProps: Required<Pick<Props, "declration">> = {
+    declration: {
       fontSizes: { level1: 16, level2: 20, level3: 24 },
     },
   };
@@ -101,7 +101,7 @@ export class Editor extends React.Component<Props, State> {
             <Selection selection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
-              textStyle={this.props.textStyle as TextStyle}
+              decoration={this.props.declration as DecorationSetting}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>

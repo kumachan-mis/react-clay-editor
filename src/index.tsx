@@ -1,2 +1,2 @@
 export { Editor } from "./Editor";
-export { TextStyle } from "./TextLines/types";
+export { DecorationSetting } from "./TextLines/types";

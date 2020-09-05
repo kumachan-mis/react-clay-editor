@@ -1,6 +1,6 @@
 import { CursorCoordinate } from "../Cursor/types";
 import { Selection } from "../Selection/types";
-import { TextStyle } from "../TextLines/types";
+import { DecorationSetting } from "../TextLines/types";
 
 export const enum SelectionWithMouse {
   Inactive,
@@ -11,7 +11,7 @@ export const enum SelectionWithMouse {
 export interface Props {
   text: string;
   onChangeText: (text: string) => void;
-  textStyle?: TextStyle;
+  declration?: DecorationSetting;
   disabled?: boolean;
   style?: React.CSSProperties;
 }
