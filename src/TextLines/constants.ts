@@ -75,7 +75,7 @@ export const TextLinesConstants = {
   regexes: {
     indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
-    link: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
+    bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
     hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },

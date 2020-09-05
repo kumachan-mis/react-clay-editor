@@ -75,7 +75,7 @@ export function getHashTagName(hashTag: string): string {
 function parseText(text: string, option: ParseOption): Node[] {
   const { regexes } = TextLinesConstants;
   if (regexes.decoration.test(text)) return parseDecoration(text, option);
-  else if (regexes.link.test(text)) return parseLink(text, option);
+  else if (regexes.bracketLink.test(text)) return parseBracketLink(text, option);
   else if (regexes.hashTag.test(text)) return parseHashTag(text, option);
   else if (regexes.normal.test(text)) return parseNormal(text, option);
   else return [];
@@ -105,8 +105,8 @@ function parseDecoration(text: string, option: ParseOption): Node[] {
   return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
 }
 
-function parseLink(text: string, option: ParseOption): Node[] {
-  const regex = TextLinesConstants.regexes.link;
+function parseBracketLink(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.bracketLink;
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
