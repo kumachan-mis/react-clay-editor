@@ -35,8 +35,8 @@ export function parseLine(line: string): ContentWithIndent {
   return { indent, content };
 }
 
-export function parseContent(content: string): Node[] {
-  return parseText(content, { offset: 0, nested: false });
+export function parseContent(content: string, indentDepth: number): Node[] {
+  return parseText(content, { offset: indentDepth, nested: false });
 }
 
 export function getDecorationStyle(

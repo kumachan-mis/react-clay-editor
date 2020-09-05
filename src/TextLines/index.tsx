@@ -53,7 +53,7 @@ export class TextLines extends React.Component<Props> {
     const { indent, content, lineIndex, cursorOn } = props;
     return (
       <span style={constants.style(indent.length)}>
-        {parseContent(content).map((node: Node, index: number) => (
+        {parseContent(content, indent.length).map((node: Node, index: number) => (
           <this.Node key={index} node={node} lineIndex={lineIndex} cursorOn={cursorOn} />
         ))}
         <span className={charConstants.className(lineIndex, indent.length + content.length)}>
@@ -106,7 +106,10 @@ export class TextLines extends React.Component<Props> {
               </span>
             ))}
             {[...linkName].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
+              <span
+                key={index}
+                className={charConstants.className(lineIndex, from + facingMeta.length + index)}
+              >
                 {char}
               </span>
             ))}
