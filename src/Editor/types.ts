@@ -1,17 +1,19 @@
 import { CursorCoordinate } from "../Cursor/types";
 import { Selection } from "../Selection/types";
-import { TextStyle } from "../TextLines/types";
+import { DecorationSetting as Decoration } from "../TextLines/types";
 
 export const enum SelectionWithMouse {
-  SelectionInactive,
-  SelectionStarted,
-  SelectionActive,
+  Inactive,
+  Started,
+  Active,
 }
 
 export interface Props {
   text: string;
   onChangeText: (text: string) => void;
-  textStyle?: TextStyle;
+  decoration?: Decoration;
+  linkProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  hashTagProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   disabled?: boolean;
   style?: React.CSSProperties;
 }

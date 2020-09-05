@@ -1,69 +1,20 @@
 import { TextLinesConstants } from "./constants";
-import { TextStyle, TextWithFont, LineWithIndent } from "./types";
+import {
+  DecorationSetting,
+  ContentWithIndent,
+  DecorationStyle,
+  Node,
+  DecorationNode,
+  LinkNode,
+  HashTagNode,
+  NormalNode,
+  ParseOption,
+} from "./types";
 
 import { EditorConstants } from "../Editor/constants";
 
-export function analyzeLine(line: string): LineWithIndent {
-  const regex = TextLinesConstants.syntaxRegex.indent;
-  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
-  return { indent, content };
-}
-
-export function analyzeFontOfContent(content: string, textStyle: TextStyle): TextWithFont[] {
-  const regex = TextLinesConstants.syntaxRegex.bracket;
-  let match: RegExpExecArray | null = null;
-  let offset = 0;
-  const textsWithFont: TextWithFont[] = [];
-  while ((match = regex.exec(content))) {
-    if (match.index - offset > 0) {
-      const text = content.substring(offset, match.index);
-      textsWithFont.push({ text, offset, section: [0, text.length] });
-      offset = match.index;
-    }
-
-    const text = match[0];
-    const option = match.groups?.option || "";
-    if (option == "") {
-      textsWithFont.push({ text: text, offset, section: [0, text.length] });
-      offset = regex.lastIndex;
-      continue;
-    }
-
-    const { level1, level2, level3 } = textStyle.fontSizes;
-    const section: [number, number] = [option.length + 1, text.length - 1];
-    const style = { bold: false, italic: false, underline: false, fontSize: level1 };
-    for (let i = 0; i < option.length; i++) {
-      switch (option[i]) {
-        case "*":
-          if (!style.bold) {
-            style.bold = true;
-          } else if (style.fontSize == level1) {
-            style.fontSize = level2;
-          } else {
-            style.fontSize = level3;
-          }
-          break;
-        case "/":
-          style.italic = true;
-          break;
-        case "_":
-          style.underline = true;
-          break;
-      }
-    }
-    textsWithFont.push({ text: text, offset, section, ...style });
-    offset = regex.lastIndex;
-  }
-
-  if (content.length - offset > 0) {
-    const subText = content.substring(offset, content.length);
-    textsWithFont.push({ text: subText, offset, section: [0, subText.length] });
-  }
-  return textsWithFont;
-}
-
 export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.root.className}`);
+  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
   if (rootElement == null) return null;
   return rootElement.querySelector(`.${TextLinesConstants.line.className(lineIndex)}`);
 }
@@ -73,7 +24,113 @@ export function getTextCharElementAt(
   charIndex: number,
   element: HTMLElement
 ): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.root.className}`);
+  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
   if (rootElement == null) return null;
   return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
+}
+
+export function parseLine(line: string): ContentWithIndent {
+  const regex = TextLinesConstants.regexes.indent;
+  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+  return { indent, content };
+}
+
+export function parseContent(content: string, indentDepth: number): Node[] {
+  return parseText(content, { offset: indentDepth, nested: false });
+}
+
+export function getDecorationStyle(
+  facingMeta: string,
+  trailingMeta: string,
+  setting: DecorationSetting
+): DecorationStyle {
+  const { level1, level2, level3 } = setting.fontSizes;
+  const style = { bold: false, italic: false, underline: false, fontSize: level1 };
+  for (let i = 1; i < facingMeta.length - 1; i++) {
+    switch (facingMeta[i]) {
+      case "*":
+        if (!style.bold) {
+          style.bold = true;
+        } else if (style.fontSize == level1) {
+          style.fontSize = level2;
+        } else if (style.fontSize == level2) {
+          style.fontSize = level3;
+        }
+        break;
+      case "/":
+        style.italic = true;
+        break;
+      case "_":
+        style.underline = true;
+        break;
+    }
+  }
+  return style;
+}
+
+export function getHashTagName(hashTag: string): string {
+  return hashTag.substring(1);
+}
+
+function parseText(text: string, option: ParseOption): Node[] {
+  const { regexes } = TextLinesConstants;
+  if (regexes.decoration.test(text)) return parseDecoration(text, option);
+  else if (regexes.link.test(text)) return parseLink(text, option);
+  else if (regexes.hashTag.test(text)) return parseHashTag(text, option);
+  else if (regexes.normal.test(text)) return parseNormal(text, option);
+  else return [];
+}
+
+function parseDecoration(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.decoration;
+  const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+
+  const node: DecorationNode | LinkNode = !option.nested
+    ? {
+        type: "decoration",
+        range: [from, to],
+        facingMeta: `[${decoration} `,
+        children: parseText(body, { offset: from + decoration.length + 2, nested: true }),
+        trailingMeta: "]",
+      }
+    : {
+        type: "link",
+        range: [from, to],
+        facingMeta: "[",
+        linkName: `${decoration} ${body}`,
+        trailingMeta: "]",
+      };
+
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
+
+function parseLink(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.link;
+  const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+
+  const node: LinkNode = {
+    type: "link",
+    range: [from, to],
+    facingMeta: "[",
+    linkName,
+    trailingMeta: "]",
+  };
+
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
+
+function parseHashTag(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.hashTag;
+  const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const node: HashTagNode = { type: "hashTag", range: [from, to], hashTag };
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
+
+function parseNormal(text: string, option: ParseOption): Node[] {
+  const [from, to] = [option.offset, option.offset + text.length];
+  const node: NormalNode = { type: "normal", text, range: [from, to] };
+  return [node];
 }

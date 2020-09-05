@@ -23,7 +23,7 @@ export class Selection extends React.Component<Props, State> {
     if (this.state != state) this.setState(state);
   }
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     return (
       <span ref={(root) => (this.root = root)}>
         {this.state.topDivPosition && (

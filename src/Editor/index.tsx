@@ -14,13 +14,19 @@ import {
 import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
-import { TextStyle } from "../TextLines/types";
+import { DecorationSetting } from "../TextLines/types";
+
+type AnnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export class Editor extends React.Component<Props, State> {
-  static readonly defaultProps: Required<Pick<Props, "textStyle">> = {
-    textStyle: {
+  static readonly defaultProps: Required<
+    Pick<Props, "decoration" | "linkProps" | "hashTagProps">
+  > = {
+    decoration: {
       fontSizes: { level1: 16, level2: 20, level3: 24 },
     },
+    linkProps: () => ({}),
+    hashTagProps: () => ({}),
   };
   private root: HTMLDivElement | null;
 
@@ -30,7 +36,7 @@ export class Editor extends React.Component<Props, State> {
       cursorCoordinate: undefined,
       isComposing: false,
       textSelection: undefined,
-      selectionWithMouse: SelectionWithMouse.SelectionInactive,
+      selectionWithMouse: SelectionWithMouse.Inactive,
     };
     this.root = null;
   }
@@ -45,7 +51,7 @@ export class Editor extends React.Component<Props, State> {
     document.removeEventListener("mousedown", this.handleOnEditorBlur);
   }
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     return (
       <div style={this.props.style}>
         <div
@@ -101,7 +107,9 @@ export class Editor extends React.Component<Props, State> {
             <Selection selection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
-              textStyle={this.props.textStyle as TextStyle}
+              decoration={this.props.decoration as DecorationSetting}
+              linkProps={this.props.linkProps as (linkName: string) => AnnchorProps}
+              hashTagProps={this.props.hashTagProps as (hashTagName: string) => AnnchorProps}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>

@@ -1,3 +1,5 @@
+import { DecorationStyle } from "./types";
+
 export const TextLinesConstants = {
   className: `React-Realtime-Markup-Editor-textlinesdiv`,
   line: {
@@ -31,18 +33,27 @@ export const TextLinesConstants = {
       }),
     },
     content: {
-      section: {
-        style: (
-          fontSize?: number,
-          bold?: boolean,
-          italic?: boolean,
-          underline?: boolean
-        ): React.CSSProperties => ({
-          fontSize: fontSize !== undefined ? `${fontSize}px` : "100%",
-          fontWeight: bold ? "bold" : "normal",
-          fontStyle: italic ? "italic" : "normal",
-          textDecoration: underline ? "underline" : "none",
+      decoration: {
+        style: (decorationStyle: DecorationStyle): React.CSSProperties => ({
+          fontSize: `${decorationStyle.fontSize}px`,
+          fontWeight: decorationStyle.bold ? "bold" : "normal",
+          fontStyle: decorationStyle.italic ? "italic" : "normal",
+          textDecoration: decorationStyle.underline ? "underline" : "none",
         }),
+      },
+      linkTag: {
+        style: {
+          color: "#5E8AF7",
+          textDecoration: "none",
+          cursor: "pointer",
+        } as React.CSSProperties,
+      },
+      hashTag: {
+        style: {
+          color: "#5E8AF7",
+          textDecoration: "none",
+          cursor: "pointer",
+        } as React.CSSProperties,
       },
       style: (indentDepth: number): React.CSSProperties => ({
         marginLeft: `${1.5 * indentDepth}em`,
@@ -61,14 +72,19 @@ export const TextLinesConstants = {
       `React-Realtime-Markup-Editor-charspan-L${lineIndex}C${charIndex}`,
     classNameRegex: /^React-Realtime-Markup-Editor-charspan-L(?<lineIndex>\d+)C(?<charIndex>\d+)$/,
   },
-  syntaxRegex: {
+  regexes: {
     indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
-    bracket: /\[(?<option>([*/_]+\s)?)(?<body>[^\]]*[^\s\]][^\]]*)\]/g,
+    decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
+    link: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
+    hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
+    normal: /^(?<text>.+)$/,
   },
   style: {
     width: "100%",
+    height: "100%",
     whiteSpace: "pre-wrap",
     wordWrap: "break-word",
     position: "absolute",
+    cursor: "text",
   } as React.CSSProperties,
 };

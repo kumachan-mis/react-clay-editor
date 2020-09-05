@@ -3,7 +3,7 @@ import * as React from "react";
 import { Editor } from "../../src";
 
 const defaultText = [
-  "[*** Realtime Markup Editor]",
+  "[*** React Realtime Markup Editor]",
   "[** What's this?]",
   "A text document editor which is syntactically formattable in real time",
   "",
@@ -23,6 +23,10 @@ const defaultText = [
   " [*/ bold italic]",
   " [*_ bold underline]",
   "and so on",
+
+  "[** Links are supported]",
+  " bracket-link: [react-realtime-markup-editor]",
+  " hash-tag-link: #react-realtime-markup-editor",
   "",
 ].join("\n");
 
@@ -36,7 +40,13 @@ export const App: React.FC = () => {
   const [subText, setSubText] = React.useState(defaultSubText);
   return (
     <>
-      <Editor text={text} onChangeText={setText} style={style} />
+      <Editor
+        text={text}
+        onChangeText={setText}
+        linkProps={(linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` })}
+        hashTagProps={(hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` })}
+        style={style}
+      />
       <Editor text={subText} onChangeText={setSubText} style={sunStyle} />
     </>
   );
