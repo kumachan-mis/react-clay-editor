@@ -96,10 +96,10 @@ export class TextLines extends React.Component<Props> {
           </span>
         );
       }
-      case "link": {
+      case "bracketLink": {
         const { facingMeta, linkName, trailingMeta } = props.node;
         return (
-          <a style={constants.hashTag.style} {...this.props.linkProps(linkName)}>
+          <a style={constants.hashTag.style} {...this.props.bracketLinkProps(linkName)}>
             {[...facingMeta].map((char: string, index: number) => (
               <span key={index} className={charConstants.className(lineIndex, from + index)}>
                 {cursorOn ? char : ""}

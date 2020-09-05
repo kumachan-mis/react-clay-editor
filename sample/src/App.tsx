@@ -43,7 +43,7 @@ export const App: React.FC = () => {
       <Editor
         text={text}
         onChangeText={setText}
-        linkProps={(linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` })}
+        bracketLinkProps={(linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` })}
         hashTagProps={(hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` })}
         style={style}
       />

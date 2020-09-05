@@ -5,7 +5,7 @@ import {
   DecorationStyle,
   Node,
   DecorationNode,
-  LinkNode,
+  BracketLinkNode,
   HashTagNode,
   NormalNode,
   ParseOption,
@@ -86,7 +86,7 @@ function parseDecoration(text: string, option: ParseOption): Node[] {
   const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
-  const node: DecorationNode | LinkNode = !option.nested
+  const node: DecorationNode | BracketLinkNode = !option.nested
     ? {
         type: "decoration",
         range: [from, to],
@@ -95,7 +95,7 @@ function parseDecoration(text: string, option: ParseOption): Node[] {
         trailingMeta: "]",
       }
     : {
-        type: "link",
+        type: "bracketLink",
         range: [from, to],
         facingMeta: "[",
         linkName: `${decoration} ${body}`,
@@ -110,8 +110,8 @@ function parseLink(text: string, option: ParseOption): Node[] {
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
-  const node: LinkNode = {
-    type: "link",
+  const node: BracketLinkNode = {
+    type: "bracketLink",
     range: [from, to],
     facingMeta: "[",
     linkName,
