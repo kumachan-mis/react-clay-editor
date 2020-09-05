@@ -40,13 +40,14 @@ export function parseContent(content: string): Node[] {
 }
 
 export function getDecorationStyle(
-  decoration: string,
+  facingMeta: string,
+  trailingMeta: string,
   setting: DecorationSetting
 ): DecorationStyle {
   const { level1, level2, level3 } = setting.fontSizes;
   const style = { bold: false, italic: false, underline: false, fontSize: level1 };
-  for (let i = 0; i < decoration.length; i++) {
-    switch (decoration[i]) {
+  for (let i = 1; i < facingMeta.length - 1; i++) {
+    switch (facingMeta[i]) {
       case "*":
         if (!style.bold) {
           style.bold = true;
@@ -84,14 +85,17 @@ function parseDecoration(text: string, option: ParseOption): Node[] {
   const node: DecorationNode | LinkNode = !option.nested
     ? {
         type: "decoration",
-        decoration,
-        children: parseText(body, { offset: from + decoration.length + 2, nested: true }),
         range: [from, to],
+        facingMeta: `[${decoration} `,
+        children: parseText(body, { offset: from + decoration.length + 2, nested: true }),
+        trailingMeta: "]",
       }
     : {
         type: "link",
-        linkName: `${decoration} ${body}`,
         range: [from, to],
+        facingMeta: "[",
+        linkName: `${decoration} ${body}`,
+        trailingMeta: "]",
       };
 
   return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
@@ -102,17 +106,22 @@ function parseLink(text: string, option: ParseOption): Node[] {
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
-  const node: LinkNode = { type: "link", linkName, range: [from, to] };
+  const node: LinkNode = {
+    type: "link",
+    range: [from, to],
+    facingMeta: "[",
+    linkName,
+    trailingMeta: "]",
+  };
 
   return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
 }
 
 function parseHashTag(text: string, option: ParseOption): Node[] {
   const regex = TextLinesConstants.regexes.hashTag;
-  const { left, hashTagName, right } = text.match(regex)?.groups as Record<string, string>;
+  const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
-  const node: HashTagNode = { type: "hashTag", hashTagName, range: [from, to] };
-
+  const node: HashTagNode = { type: "hashTag", range: [from, to], hashTag };
   return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
 }
 

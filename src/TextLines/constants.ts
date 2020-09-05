@@ -62,7 +62,7 @@ export const TextLinesConstants = {
     indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     link: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-    hashTag: /^(?<left>(.*?\s+)())#(?<hashTagName>\S+)(?<right>.*)$/,
+    hashTag: /^(?<left>(.*?\s+)())(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },
   style: {

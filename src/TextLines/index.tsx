@@ -68,49 +68,79 @@ export class TextLines extends React.Component<Props> {
     const charConstants = TextLinesConstants.char;
 
     const { lineIndex, cursorOn } = props;
+    const [from, to] = props.node.range;
 
     switch (props.node.type) {
       case "decoration": {
-        const { decoration, children, range } = props.node;
-        const [from, to] = range;
-        const decorationStyle = getDecorationStyle(decoration, this.props.decoration);
+        const { children } = props.node;
+        const { facingMeta, trailingMeta } = props.node;
+        const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, this.props.decoration);
         return (
           <span style={constants.decoration.style(decorationStyle)}>
-            <span className={charConstants.className(lineIndex, from)}>{cursorOn ? "[" : ""}</span>
-            {[...decoration].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index + 1)}>
+            {[...facingMeta].map((char: string, index: number) => (
+              <span key={index} className={charConstants.className(lineIndex, from + index)}>
                 {cursorOn ? char : ""}
               </span>
             ))}
-            <span className={charConstants.className(lineIndex, from + decoration.length + 1)}>
-              {cursorOn ? " " : ""}
-            </span>
             {children.map((child: Node, index: number) => (
               <this.Node key={index} node={child} lineIndex={lineIndex} cursorOn={cursorOn} />
             ))}
-            <span className={charConstants.className(lineIndex, to - 1)}>
-              {cursorOn ? "]" : ""}
-            </span>
+            {[...trailingMeta].map((char: string, index: number, array: string[]) => (
+              <span
+                key={index}
+                className={charConstants.className(lineIndex, to - array.length + index)}
+              >
+                {cursorOn ? char : ""}
+              </span>
+            ))}
           </span>
         );
       }
-      case "link":
-        return <></>;
-      case "hashTag":
-        return <></>;
-      case "normal": {
-        const { text, range } = props.node;
-        const [from] = range;
+      case "link": {
+        const { facingMeta, linkName, trailingMeta } = props.node;
         return (
           <span>
-            {[...text].map((char: string, index: number) => (
+            {[...facingMeta].map((char: string, index: number) => (
+              <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                {cursorOn ? char : ""}
+              </span>
+            ))}
+            {[...linkName].map((char: string, index: number) => (
+              <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                {char}
+              </span>
+            ))}
+            {[...trailingMeta].map((char: string, index: number, array: string[]) => (
+              <span
+                key={index}
+                className={charConstants.className(lineIndex, to - array.length + index)}
+              >
+                {cursorOn ? char : ""}
+              </span>
+            ))}
+          </span>
+        );
+      }
+      case "hashTag":
+        return (
+          <span>
+            {[...props.node.hashTag].map((char: string, index: number) => (
               <span key={index} className={charConstants.className(lineIndex, from + index)}>
                 {char}
               </span>
             ))}
           </span>
         );
-      }
+      case "normal":
+        return (
+          <span>
+            {[...props.node.text].map((char: string, index: number) => (
+              <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                {char}
+              </span>
+            ))}
+          </span>
+        );
     }
   };
 }

@@ -45,27 +45,30 @@ export type Node = DecorationNode | HashTagNode | LinkNode | NormalNode;
 
 export interface DecorationNode {
   type: "decoration";
-  decoration: string;
-  children: Node[];
   range: [number, number];
+  facingMeta: string;
+  children: Node[];
+  trailingMeta: string;
 }
 
 export interface LinkNode {
   type: "link";
-  linkName: string;
   range: [number, number];
+  facingMeta: string;
+  linkName: string;
+  trailingMeta: string;
 }
 
 export interface HashTagNode {
   type: "hashTag";
-  hashTagName: string;
   range: [number, number];
+  hashTag: string;
 }
 
 export interface NormalNode {
   type: "normal";
-  text: string;
   range: [number, number];
+  text: string;
 }
 
 export interface ParseOption {
