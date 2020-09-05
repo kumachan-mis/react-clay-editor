@@ -31,14 +31,14 @@ const defaultText = [
 ].join("\n");
 
 const defaultSubText = [
-  "[*** Of course, you can use multiple editors]",
+  "[** Of course, you can use multiple editors]",
   "[disabled-bracket-link]",
   "#disabled-hashtag-link",
   "More features are comming soon...",
 ].join("\n");
 
-const style: React.CSSProperties = { width: "800px", height: "500px", margin: "10px" };
-const sunStyle: React.CSSProperties = { width: "800px", height: "100px", margin: "10px" };
+const style: React.CSSProperties = { width: "800px", height: "500px", margin: "20px" };
+const sunStyle: React.CSSProperties = { width: "800px", height: "100px", margin: "20px" };
 
 export const App: React.FC = () => {
   const [text, setText] = React.useState(defaultText);
