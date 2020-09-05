@@ -109,7 +109,9 @@ export class Editor extends React.Component<Props, State> {
               text={this.props.text}
               decoration={this.props.decoration as DecorationSetting}
               bracketLinkProps={this.props.bracketLinkProps as (linkName: string) => AnnchorProps}
+              bracketLinkDisabled={this.props.bracketLinkDisabled}
               hashTagProps={this.props.hashTagProps as (hashTagName: string) => AnnchorProps}
+              hashTagDisabled={this.props.hashTagDisabled}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>

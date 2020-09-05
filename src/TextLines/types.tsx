@@ -8,7 +8,9 @@ export interface Props {
   text: string;
   decoration: DecorationSetting;
   bracketLinkProps: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  bracketLinkDisabled?: boolean;
   hashTagProps: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  hashTagDisabled?: boolean;
   cursorCoordinate: CursorCoordinate | undefined;
 }
 
