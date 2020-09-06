@@ -3,11 +3,12 @@ import * as React from "react";
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
 import { TextLinesConstants } from "./constants";
 import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
+import "../style.css";
 
 export class TextLines extends React.Component<Props> {
   render(): React.ReactElement {
     return (
-      <div className={TextLinesConstants.className} style={TextLinesConstants.style}>
+      <div className={TextLinesConstants.className}>
         {this.props.text.split("\n").map((line: string, index: number) => {
           const { indent, content } = parseLine(line);
           const defaultFontSize = this.props.decoration.fontSizes.level1;
@@ -32,17 +33,16 @@ export class TextLines extends React.Component<Props> {
 
     const constants = TextLinesConstants.line.indent;
     return (
-      <span style={constants.style(props.indent.length)}>
-        {[...props.indent].map((char: string, charIndex: number) => (
-          <span
-            key={charIndex}
-            className={TextLinesConstants.char.className(props.lineIndex, charIndex)}
-            style={constants.pad.style}
-          >
-            {char}
-          </span>
-        ))}
-        <span style={constants.dot.style} />
+      <span className={constants.className} style={constants.style(props.indent.length)}>
+        {[...props.indent].map((char: string, charIndex: number) => {
+          const charClassName = TextLinesConstants.char.className(props.lineIndex, charIndex);
+          return (
+            <span key={charIndex} className={`${constants.pad.className} ${charClassName}`}>
+              {char}
+            </span>
+          );
+        })}
+        <span className={constants.dot.className} />
       </span>
     );
   };
@@ -53,7 +53,7 @@ export class TextLines extends React.Component<Props> {
     const { taggedLinkMap } = this.props;
     const { indent, content, lineIndex, cursorOn } = props;
     return (
-      <span style={constants.style(indent.length)}>
+      <span className={constants.className} style={constants.style(indent.length)}>
         {parseContent(content, taggedLinkMap, indent.length).map((node: Node, index: number) => (
           <this.Node key={index} node={node} lineIndex={lineIndex} cursorOn={cursorOn} />
         ))}

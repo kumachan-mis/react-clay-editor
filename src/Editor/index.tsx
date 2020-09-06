@@ -11,6 +11,8 @@ import {
   handleOnCompositionStart,
   handleOnCompositionEnd,
 } from "./utils";
+import "../style.css";
+
 import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
@@ -55,11 +57,7 @@ export class Editor extends React.Component<Props, State> {
   render(): React.ReactElement {
     return (
       <div style={this.props.style}>
-        <div
-          className={EditorConstants.root.className}
-          style={EditorConstants.root.style}
-          ref={(root) => (this.root = root)}
-        >
+        <div className={EditorConstants.root.className} ref={(root) => (this.root = root)}>
           <div
             className={EditorConstants.editor.className}
             onMouseDown={(event) => {
@@ -90,7 +88,6 @@ export class Editor extends React.Component<Props, State> {
               if (state != this.state) this.setState(state);
               if (text != this.props.text) this.props.onChangeText(text);
             }}
-            style={EditorConstants.editor.style}
           >
             <Cursor
               coordinate={this.state.cursorCoordinate}

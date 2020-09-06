@@ -1,5 +1,6 @@
 export const SelectionConstants = {
   div: {
+    className: "React-Realtime-Markup-Editor-selection",
     style: (position: {
       top: number;
       left: number;
@@ -10,9 +11,6 @@ export const SelectionConstants = {
       left: `${position.left}px`,
       width: `${position.width}px`,
       height: `${position.height}px`,
-      position: "absolute",
-      backgroundColor: "#accef7",
-      opacity: 0.5,
     }),
   },
 };

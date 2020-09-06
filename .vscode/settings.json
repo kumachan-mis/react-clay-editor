@@ -11,6 +11,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  "[css]": {
+    "editor.formatOnSave": true
+  },
   "[json]": {
     "editor.formatOnSave": true
   }

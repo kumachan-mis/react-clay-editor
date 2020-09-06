@@ -3,6 +3,7 @@ import * as React from "react";
 import { Props, State } from "./types";
 import { CursorConstants } from "./constants";
 import { cursorPropsToState, handleOnEditorScroll } from "./utils";
+import "../style.css";
 
 import { getRoot } from "../Editor/utils";
 
@@ -43,7 +44,10 @@ export class Cursor extends React.Component<Props, State> {
     const textLength = this.state.textAreaValue.length;
     return (
       <span ref={(root) => (this.root = root)}>
-        <div style={CursorConstants.rootDiv.style(top, left, cursorSize)}>
+        <div
+          className={CursorConstants.rootDiv.className}
+          style={CursorConstants.rootDiv.style(top, left, cursorSize)}
+        >
           <svg width={CursorConstants.svg.width} height={cursorSize}>
             <rect
               x={CursorConstants.rect.x}
@@ -54,6 +58,7 @@ export class Cursor extends React.Component<Props, State> {
           </svg>
         </div>
         <textarea
+          className={CursorConstants.textArea.className}
           value={this.state.textAreaValue}
           wrap={CursorConstants.textArea.wrap}
           spellCheck={CursorConstants.textArea.spellCheck}

@@ -45,7 +45,7 @@
     "react-dom": ">=16.0.0"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/style.css dist/style.css",
     "start": "rm -Rf sample/dist && mkdir sample/dist && parcel sample/src/index.html --out-dir sample/dist --open",
     "typecheck": "tsc --build tsconfig.json",
     "lint-fix": "eslint \"{src,sample}/**/*.{ts,tsx}\" --fix",
