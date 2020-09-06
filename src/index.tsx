@@ -1,2 +1,3 @@
 export { Editor } from "./Editor";
-export { DecorationSetting } from "./TextLines/types";
+export { Props, Decoration, TaggedLink } from "./Editor/types";
+export { defaultLinkNameRegex, defaultLinkStyle } from "./TextLines/constants";

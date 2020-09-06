@@ -1,8 +1,11 @@
+import { TaggedLink } from "../Editor/types";
 import { CursorCoordinate } from "../Cursor/types";
 
 export interface DecorationSetting {
   fontSizes: Record<"level1" | "level2" | "level3", number>;
 }
+
+export type TaggedLinkMap = { [tagName: string]: TaggedLink };
 
 export interface Props {
   text: string;
@@ -11,6 +14,7 @@ export interface Props {
   bracketLinkDisabled?: boolean;
   hashTagProps: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   hashTagDisabled?: boolean;
+  taggedLinkMap: TaggedLinkMap;
   cursorCoordinate: CursorCoordinate | undefined;
 }
 
@@ -45,13 +49,22 @@ export interface DecorationStyle {
   underline: boolean;
 }
 
-export type Node = DecorationNode | HashTagNode | BracketLinkNode | NormalNode;
+export type Node = DecorationNode | TaggedLinkNode | BracketLinkNode | HashTagNode | NormalNode;
 
 export interface DecorationNode {
   type: "decoration";
   range: [number, number];
   facingMeta: string;
   children: Node[];
+  trailingMeta: string;
+}
+
+export interface TaggedLinkNode {
+  type: "taggedLink";
+  range: [number, number];
+  facingMeta: string;
+  tag: string;
+  linkName: string;
   trailingMeta: string;
 }
 
@@ -78,4 +91,5 @@ export interface NormalNode {
 export interface ParseOption {
   offset: number;
   nested: boolean;
+  taggedLinkRegexes: RegExp[];
 }

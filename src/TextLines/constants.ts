@@ -1,5 +1,13 @@
 import { DecorationStyle } from "./types";
 
+export const defaultLinkNameRegex = /[^[\]]+/;
+
+export const defaultLinkStyle = {
+  color: "#5E8AF7",
+  textDecoration: "none",
+  cursor: "pointer",
+} as React.CSSProperties;
+
 export const TextLinesConstants = {
   className: `React-Realtime-Markup-Editor-textlinesdiv`,
   line: {
@@ -36,24 +44,19 @@ export const TextLinesConstants = {
       decoration: {
         style: (decorationStyle: DecorationStyle): React.CSSProperties => ({
           fontSize: `${decorationStyle.fontSize}px`,
-          fontWeight: decorationStyle.bold ? "bold" : "normal",
-          fontStyle: decorationStyle.italic ? "italic" : "normal",
-          textDecoration: decorationStyle.underline ? "underline" : "none",
+          fontWeight: decorationStyle.bold ? "bold" : undefined,
+          fontStyle: decorationStyle.italic ? "italic" : undefined,
+          textDecoration: decorationStyle.underline ? "underline" : undefined,
         }),
       },
-      linkTag: {
-        style: {
-          color: "#5E8AF7",
-          textDecoration: "none",
-          cursor: "pointer",
-        } as React.CSSProperties,
+      taggedLink: {
+        style: defaultLinkStyle,
+      },
+      bracketLink: {
+        style: defaultLinkStyle,
       },
       hashTag: {
-        style: {
-          color: "#5E8AF7",
-          textDecoration: "none",
-          cursor: "pointer",
-        } as React.CSSProperties,
+        style: defaultLinkStyle,
       },
       style: (indentDepth: number): React.CSSProperties => ({
         marginLeft: `${1.5 * indentDepth}em`,
@@ -75,7 +78,12 @@ export const TextLinesConstants = {
   regexes: {
     indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
-    link: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
+    taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {
+      const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const linkName = linkNameRegex.source;
+      return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
+    },
+    bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
     hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },

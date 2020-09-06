@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, SelectionWithMouse } from "./types";
+import { Props, State, TaggedLink, SelectionWithMouse } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -20,13 +20,14 @@ type AnnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export class Editor extends React.Component<Props, State> {
   static readonly defaultProps: Required<
-    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps">
+    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkMap">
   > = {
     decoration: {
       fontSizes: { level1: 16, level2: 20, level3: 24 },
     },
     bracketLinkProps: () => ({}),
     hashTagProps: () => ({}),
+    taggedLinkMap: {},
   };
   private root: HTMLDivElement | null;
 
@@ -112,6 +113,7 @@ export class Editor extends React.Component<Props, State> {
               bracketLinkDisabled={this.props.bracketLinkDisabled}
               hashTagProps={this.props.hashTagProps as (hashTagName: string) => AnnchorProps}
               hashTagDisabled={this.props.hashTagDisabled}
+              taggedLinkMap={this.props.taggedLinkMap as { [tag: string]: TaggedLink }}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>
