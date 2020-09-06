@@ -1,3 +1,4 @@
+import { TaggedLink } from "../Editor/types";
 import { CursorCoordinate } from "../Cursor/types";
 
 export interface DecorationSetting {
@@ -11,6 +12,7 @@ export interface Props {
   bracketLinkDisabled?: boolean;
   hashTagProps: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   hashTagDisabled?: boolean;
+  taggedLinks: TaggedLink[];
   cursorCoordinate: CursorCoordinate | undefined;
 }
 

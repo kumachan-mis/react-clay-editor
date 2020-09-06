@@ -36,9 +36,9 @@ export const TextLinesConstants = {
       decoration: {
         style: (decorationStyle: DecorationStyle): React.CSSProperties => ({
           fontSize: `${decorationStyle.fontSize}px`,
-          fontWeight: decorationStyle.bold ? "bold" : "normal",
-          fontStyle: decorationStyle.italic ? "italic" : "normal",
-          textDecoration: decorationStyle.underline ? "underline" : "none",
+          fontWeight: decorationStyle.bold ? "bold" : undefined,
+          fontStyle: decorationStyle.italic ? "italic" : undefined,
+          textDecoration: decorationStyle.underline ? "underline" : undefined,
         }),
       },
       linkTag: {
