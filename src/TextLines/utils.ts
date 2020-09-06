@@ -1,10 +1,12 @@
 import { TextLinesConstants } from "./constants";
 import {
   DecorationSetting,
+  TaggedLinkMap,
   ContentWithIndent,
   DecorationStyle,
   Node,
   DecorationNode,
+  TaggedLinkNode,
   BracketLinkNode,
   HashTagNode,
   NormalNode,
@@ -35,8 +37,15 @@ export function parseLine(line: string): ContentWithIndent {
   return { indent, content };
 }
 
-export function parseContent(content: string, indentDepth: number): Node[] {
-  return parseText(content, { offset: indentDepth, nested: false });
+export function parseContent(
+  content: string,
+  taggedLinkMap: TaggedLinkMap,
+  indentDepth: number
+): Node[] {
+  const taggedLinkRegexes = Object.entries(taggedLinkMap).map(([tagName, link]) =>
+    TextLinesConstants.regexes.taggedLink(tagName, link.linkNameRegex)
+  );
+  return parseText(content, { offset: indentDepth, nested: false, taggedLinkRegexes });
 }
 
 export function getDecorationStyle(
@@ -68,17 +77,31 @@ export function getDecorationStyle(
   return style;
 }
 
+export function getTagName(tag: string): string {
+  return tag.substring(0, tag.length - 2);
+}
+
 export function getHashTagName(hashTag: string): string {
   return hashTag.substring(1);
 }
 
 function parseText(text: string, option: ParseOption): Node[] {
-  const { regexes } = TextLinesConstants;
-  if (regexes.decoration.test(text)) return parseDecoration(text, option);
-  else if (regexes.bracketLink.test(text)) return parseBracketLink(text, option);
-  else if (regexes.hashTag.test(text)) return parseHashTag(text, option);
-  else if (regexes.normal.test(text)) return parseNormal(text, option);
-  else return [];
+  const { decoration, bracketLink, hashTag, normal } = TextLinesConstants.regexes;
+  const taggedLink = option.taggedLinkRegexes.find((regex) => regex.test(text));
+
+  if (decoration.test(text)) {
+    return parseDecoration(text, option);
+  } else if (taggedLink) {
+    return parseTaggedLink(text, option, taggedLink);
+  } else if (bracketLink.test(text)) {
+    return parseBracketLink(text, option);
+  } else if (hashTag.test(text)) {
+    return parseHashTag(text, option);
+  } else if (normal.test(text)) {
+    return parseNormal(text, option);
+  } else {
+    return [];
+  }
 }
 
 function parseDecoration(text: string, option: ParseOption): Node[] {
@@ -91,7 +114,11 @@ function parseDecoration(text: string, option: ParseOption): Node[] {
         type: "decoration",
         range: [from, to],
         facingMeta: `[${decoration} `,
-        children: parseText(body, { offset: from + decoration.length + 2, nested: true }),
+        children: parseText(body, {
+          ...option,
+          offset: from + decoration.length + 2,
+          nested: true,
+        }),
         trailingMeta: "]",
       }
     : {
@@ -101,6 +128,22 @@ function parseDecoration(text: string, option: ParseOption): Node[] {
         linkName: `${decoration} ${body}`,
         trailingMeta: "]",
       };
+
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
+
+function parseTaggedLink(text: string, option: ParseOption, regex: RegExp): Node[] {
+  const { left, tag, linkName, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+
+  const node: TaggedLinkNode = {
+    type: "taggedLink",
+    range: [from, to],
+    facingMeta: "[",
+    tag,
+    linkName,
+    trailingMeta: "]",
+  };
 
   return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
 }

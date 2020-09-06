@@ -20,14 +20,14 @@ type AnnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export class Editor extends React.Component<Props, State> {
   static readonly defaultProps: Required<
-    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinks">
+    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkMap">
   > = {
     decoration: {
       fontSizes: { level1: 16, level2: 20, level3: 24 },
     },
     bracketLinkProps: () => ({}),
     hashTagProps: () => ({}),
-    taggedLinks: [],
+    taggedLinkMap: {},
   };
   private root: HTMLDivElement | null;
 
@@ -113,7 +113,7 @@ export class Editor extends React.Component<Props, State> {
               bracketLinkDisabled={this.props.bracketLinkDisabled}
               hashTagProps={this.props.hashTagProps as (hashTagName: string) => AnnchorProps}
               hashTagDisabled={this.props.hashTagDisabled}
-              taggedLinks={this.props.taggedLinks as TaggedLink[]}
+              taggedLinkMap={this.props.taggedLinkMap as { [tag: string]: TaggedLink }}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>

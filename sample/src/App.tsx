@@ -27,13 +27,16 @@ const defaultText = [
   "[** Links are supported]",
   " bracket-link: [react-realtime-markup-editor]",
   " hash-tag-link: #react-realtime-markup-editor",
+  " tagged-link",
+  "  [github: @kumachan-mis/react-realtime-markup-editor]",
+  "  [npm: react-realtime-markup-editor]",
   "",
 ].join("\n");
 
 const defaultSubText = [
   "[** Of course, you can use multiple editors]",
   "[disabled-bracket-link]",
-  "#disabled-hashtag-link",
+  "#disabled-hash-tag-link",
   "More features are comming soon...",
 ].join("\n");
 
@@ -50,6 +53,21 @@ export const App: React.FC = () => {
         onChangeText={setText}
         bracketLinkProps={(linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` })}
         hashTagProps={(hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` })}
+        taggedLinkMap={{
+          github: {
+            linkNameRegex: /@[^[\]]+\/[^[\]]+/,
+            props: (linkName) => ({
+              href: `https://github.com/${linkName.substring(1)}`,
+              style: { color: "#121B31", textDecoration: "underline" },
+            }),
+          },
+          npm: {
+            props: (linkName) => ({
+              href: `https://www.npmjs.com/package/${linkName}`,
+              style: { color: "#F75E8A", textDecoration: "underline" },
+            }),
+          },
+        }}
         style={style}
       />
       <Editor

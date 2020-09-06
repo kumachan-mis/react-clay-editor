@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
 import { TextLinesConstants } from "./constants";
-import { parseLine, parseContent, getDecorationStyle, getHashTagName } from "./utils";
+import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
 
 export class TextLines extends React.Component<Props> {
   render(): React.ReactElement {
@@ -50,10 +50,11 @@ export class TextLines extends React.Component<Props> {
   private Content = (props: ContentProps): React.ReactElement => {
     const constants = TextLinesConstants.line.content;
     const charConstants = TextLinesConstants.char;
+    const { taggedLinkMap } = this.props;
     const { indent, content, lineIndex, cursorOn } = props;
     return (
       <span style={constants.style(indent.length)}>
-        {parseContent(content, indent.length).map((node: Node, index: number) => (
+        {parseContent(content, taggedLinkMap, indent.length).map((node: Node, index: number) => (
           <this.Node key={index} node={node} lineIndex={lineIndex} cursorOn={cursorOn} />
         ))}
         <span className={charConstants.className(lineIndex, indent.length + content.length)}>
@@ -96,6 +97,46 @@ export class TextLines extends React.Component<Props> {
           </span>
         );
       }
+      case "taggedLink": {
+        const { facingMeta, tag, linkName, trailingMeta } = props.node;
+        const taggedLink = this.props.taggedLinkMap[getTagName(tag)];
+        return (
+          <a style={constants.taggedLink.style} {...(taggedLink.props?.(linkName) || {})}>
+            {[...facingMeta].map((char: string, index: number) => (
+              <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
+                {cursorOn ? char : ""}
+              </span>
+            ))}
+            {[...tag].map((char: string, index: number) => (
+              <span
+                key={from + index}
+                className={charConstants.className(lineIndex, from + facingMeta.length + index)}
+              >
+                {cursorOn || !taggedLink.tagHidden ? char : ""}
+              </span>
+            ))}
+            {[...linkName].map((char: string, index: number) => (
+              <span
+                key={from + facingMeta.length + index}
+                className={charConstants.className(
+                  lineIndex,
+                  from + facingMeta.length + tag.length + index
+                )}
+              >
+                {char}
+              </span>
+            ))}
+            {[...trailingMeta].map((char: string, index: number, array: string[]) => (
+              <span
+                key={to - array.length + index}
+                className={charConstants.className(lineIndex, to - array.length + index)}
+              >
+                {cursorOn ? char : ""}
+              </span>
+            ))}
+          </a>
+        );
+      }
       case "bracketLink": {
         const { facingMeta, linkName, trailingMeta } = props.node;
         const bracketLinkCharSpans = [
@@ -122,7 +163,7 @@ export class TextLines extends React.Component<Props> {
           )),
         ];
         return !this.props.bracketLinkDisabled ? (
-          <a style={constants.hashTag.style} {...this.props.bracketLinkProps(linkName)}>
+          <a style={constants.bracketLink.style} {...this.props.bracketLinkProps(linkName)}>
             {bracketLinkCharSpans}
           </a>
         ) : (

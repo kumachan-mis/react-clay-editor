@@ -5,9 +5,9 @@ import { DecorationSetting as Decoration } from "../TextLines/types";
 export { Decoration };
 
 export interface TaggedLink {
-  tag: string;
-  contentRegex?: RegExp;
-  props?: (content: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  linkNameRegex?: RegExp;
+  props?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  tagHidden?: boolean;
 }
 
 export interface Props {
@@ -18,7 +18,7 @@ export interface Props {
   bracketLinkDisabled?: boolean;
   hashTagProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   hashTagDisabled?: boolean;
-  taggedLinks?: TaggedLink[];
+  taggedLinkMap?: { [tagName: string]: TaggedLink };
   disabled?: boolean;
   style?: React.CSSProperties;
 }
