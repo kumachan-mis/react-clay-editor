@@ -9,38 +9,22 @@ export const defaultLinkStyle = {
 } as React.CSSProperties;
 
 export const TextLinesConstants = {
-  className: `React-Realtime-Markup-Editor-textlinesdiv`,
+  className: "React-Realtime-Markup-Editor-textlines",
   line: {
-    className: (lineIndex: number): string => `React-Realtime-Markup-Editor-linediv-L${lineIndex}`,
-    classNameRegex: /^React-Realtime-Markup-Editor-linediv-L(?<lineIndex>\d+)$/,
+    className: (lineIndex: number): string => `React-Realtime-Markup-Editor-line L${lineIndex}`,
+    classNameRegex: /^.*React-Realtime-Markup-Editor-line L(?<lineIndex>\d+).*$/,
     indent: {
+      className: `React-Realtime-Markup-Editor-textlines-indent`,
       dot: {
-        style: {
-          top: "0.5em",
-          right: "0.75em",
-          position: "absolute",
-          display: "block",
-          width: "5px",
-          height: "5px",
-          borderRadius: "50%",
-          backgroundColor: "#000000",
-        } as React.CSSProperties,
+        className: `React-Realtime-Markup-Editor-textlines-indent-dot`,
       },
       pad: {
-        style: {
-          display: "inline-block",
-          width: "1.5em",
-          overflow: "hidden",
-        } as React.CSSProperties,
+        className: `React-Realtime-Markup-Editor-textlines-indent-pad`,
       },
-      style: (indentDepth: number): React.CSSProperties => ({
-        width: `${1.5 * indentDepth}em`,
-        left: "0px",
-        top: "0px",
-        position: "absolute",
-      }),
+      style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
     },
     content: {
+      className: "React-Realtime-Markup-Editor-textlines-content",
       decoration: {
         style: (decorationStyle: DecorationStyle): React.CSSProperties => ({
           fontSize: `${decorationStyle.fontSize}px`,
@@ -60,20 +44,17 @@ export const TextLinesConstants = {
       },
       style: (indentDepth: number): React.CSSProperties => ({
         marginLeft: `${1.5 * indentDepth}em`,
-        display: "block",
       }),
     },
     style: (defaultFontSize: number): React.CSSProperties => ({
       fontSize: `${defaultFontSize}px`,
       minHeight: `${defaultFontSize}px`,
-      display: "block",
-      position: "relative",
     }),
   },
   char: {
     className: (lineIndex: number, charIndex: number): string =>
-      `React-Realtime-Markup-Editor-charspan-L${lineIndex}C${charIndex}`,
-    classNameRegex: /^React-Realtime-Markup-Editor-charspan-L(?<lineIndex>\d+)C(?<charIndex>\d+)$/,
+      `React-Realtime-Markup-Editor-char L${lineIndex}C${charIndex}`,
+    classNameRegex: /^.*React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<charIndex>\d+).*$/,
   },
   regexes: {
     indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
@@ -87,12 +68,4 @@ export const TextLinesConstants = {
     hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },
-  style: {
-    width: "100%",
-    height: "100%",
-    whiteSpace: "pre-wrap",
-    wordWrap: "break-word",
-    position: "absolute",
-    cursor: "text",
-  } as React.CSSProperties,
 };

@@ -16,9 +16,11 @@ import {
 import { EditorConstants } from "../Editor/constants";
 
 export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  const rootSelector = classNameToSelector(EditorConstants.editor.className);
+  const rootElement = element.closest(rootSelector);
   if (rootElement == null) return null;
-  return rootElement.querySelector(`.${TextLinesConstants.line.className(lineIndex)}`);
+  const lineSelector = classNameToSelector(TextLinesConstants.line.className(lineIndex));
+  return rootElement.querySelector(lineSelector);
 }
 
 export function getTextCharElementAt(
@@ -26,9 +28,11 @@ export function getTextCharElementAt(
   charIndex: number,
   element: HTMLElement
 ): HTMLElement | null {
-  const rootElement = element.closest(`.${EditorConstants.editor.className}`);
+  const rootSelector = classNameToSelector(EditorConstants.editor.className);
+  const rootElement = element.closest(rootSelector);
   if (rootElement == null) return null;
-  return rootElement.querySelector(`.${TextLinesConstants.char.className(lineIndex, charIndex)}`);
+  const charSelector = classNameToSelector(TextLinesConstants.char.className(lineIndex, charIndex));
+  return rootElement.querySelector(charSelector);
 }
 
 export function parseLine(line: string): ContentWithIndent {
@@ -83,6 +87,13 @@ export function getTagName(tag: string): string {
 
 export function getHashTagName(hashTag: string): string {
   return hashTag.substring(1);
+}
+
+function classNameToSelector(className: string): string {
+  return className
+    .split(" ")
+    .map((name) => `.${name}`)
+    .join("");
 }
 
 function parseText(text: string, option: ParseOption): Node[] {

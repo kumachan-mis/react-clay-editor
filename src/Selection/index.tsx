@@ -3,6 +3,7 @@ import * as React from "react";
 import { Props, State } from "./types";
 import { SelectionConstants } from "./constants";
 import { selectionPropsToState } from "./utils";
+import "../style.css";
 
 export class Selection extends React.Component<Props, State> {
   private root: HTMLSpanElement | null;
@@ -27,13 +28,22 @@ export class Selection extends React.Component<Props, State> {
     return (
       <span ref={(root) => (this.root = root)}>
         {this.state.topDivPosition && (
-          <div style={SelectionConstants.div.style(this.state.topDivPosition)} />
+          <div
+            className={SelectionConstants.div.className}
+            style={SelectionConstants.div.style(this.state.topDivPosition)}
+          />
         )}
         {this.state.centerDivPosition && (
-          <div style={SelectionConstants.div.style(this.state.centerDivPosition)} />
+          <div
+            className={SelectionConstants.div.className}
+            style={SelectionConstants.div.style(this.state.centerDivPosition)}
+          />
         )}
         {this.state.bottomDivPosition && (
-          <div style={SelectionConstants.div.style(this.state.bottomDivPosition)} />
+          <div
+            className={SelectionConstants.div.className}
+            style={SelectionConstants.div.style(this.state.bottomDivPosition)}
+          />
         )}
       </span>
     );
