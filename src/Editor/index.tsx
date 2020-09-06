@@ -128,8 +128,13 @@ export class Editor extends React.Component<Props, State> {
   };
 
   private handleOnEditorBlur = (event: MouseEvent) => {
-    if (this.props.disabled) return;
-    const elements = document.elementsFromPoint(event.clientX, event.clientY);
-    if (this.root && !elements.includes(this.root)) this.setState({ cursorCoordinate: undefined });
+    if (
+      !this.props.disabled &&
+      this.state.cursorCoordinate &&
+      this.root &&
+      !this.root.contains(event.target as Node)
+    ) {
+      this.setState({ cursorCoordinate: undefined });
+    }
   };
 }
