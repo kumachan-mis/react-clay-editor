@@ -70,7 +70,6 @@ export class Cursor extends React.Component<Props, State> {
           }}
           onChange={(event) => this.props.onTextChange(event.target.value)}
           onCompositionStart={() => this.props.onTextCompositionStart()}
-          onCompositionEnd={() => this.props.onTextCompositionEnd()}
           style={CursorConstants.textArea.style(top, left, cursorSize, textLength)}
           ref={(textArea) => (this.textArea = textArea)}
         />

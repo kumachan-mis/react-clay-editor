@@ -10,7 +10,6 @@ export interface Props {
   onKeyDown: (key: string) => void;
   onTextChange: (value: string) => void;
   onTextCompositionStart: () => void;
-  onTextCompositionEnd: () => void;
 }
 
 export interface State {

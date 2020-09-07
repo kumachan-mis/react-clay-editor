@@ -172,12 +172,6 @@ export function handleOnCompositionStart(text: string, state: State): [string, S
   return [text, { ...state, isComposing: true }];
 }
 
-export function handleOnCompositionEnd(text: string, state: State): [string, State] {
-  if (!state.cursorCoordinate || !state.isComposing) return [text, state];
-  const [newText, newState] = insertText(text, state, state.textAreaValue);
-  return [newText, { ...newState, textAreaValue: "", isComposing: false }];
-}
-
 function insertText(
   text: string,
   state: State,

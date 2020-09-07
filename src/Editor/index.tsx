@@ -10,7 +10,6 @@ import {
   handleOnKeyDown,
   handleOnChange,
   handleOnCompositionStart,
-  handleOnCompositionEnd,
 } from "./utils";
 import "../style.css";
 
@@ -108,12 +107,6 @@ export class Editor extends React.Component<Props, State> {
               onTextCompositionStart={() => {
                 if (this.props.disabled) return;
                 const [text, state] = handleOnCompositionStart(this.props.text, this.state);
-                if (state != this.state) this.setState(state);
-                if (text != this.props.text) this.props.onChangeText(text);
-              }}
-              onTextCompositionEnd={() => {
-                if (this.props.disabled) return;
-                const [text, state] = handleOnCompositionEnd(this.props.text, this.state);
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
