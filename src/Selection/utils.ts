@@ -33,9 +33,11 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     };
   }
 
+  const startRectCenter = startRect.bottom - (startRect.bottom - startRect.top) / 2;
+  const endRectCenter = endRect.bottom - (endRect.bottom - endRect.top) / 2;
   if (
-    (startRect.top <= endRect.top && startRect.bottom >= endRect.bottom) ||
-    (startRect.top >= endRect.top && startRect.bottom <= endRect.bottom)
+    (startRect.top <= endRectCenter && endRectCenter <= startRect.bottom) ||
+    (endRect.top <= startRectCenter && startRectCenter <= endRect.bottom)
   ) {
     const topDivPosition = undefined;
     const centerDivPosition = {
