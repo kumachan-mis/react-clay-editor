@@ -67,6 +67,7 @@ textarea.React-Realtime-Markup-Editor-cursor {
   outline: none;
   resize: none;
   padding: 0px;
+  user-select: text;
 }
 
 /* Selection */
