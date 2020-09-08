@@ -36,3 +36,5 @@ export interface State {
   textSelection: TextSelection | undefined;
   selectionWithMouse: SelectionWithMouse;
 }
+
+export type ShortcutCommand = "selectAll";

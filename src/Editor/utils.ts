@@ -1,4 +1,4 @@
-import { State, SelectionWithMouse } from "./types";
+import { State, SelectionWithMouse, ShortcutCommand } from "./types";
 import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
@@ -296,9 +296,11 @@ function positionToCursorCoordinate(
   }
 }
 
-function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>): "selectAll" | "" {
+function shortcutCommand(
+  event: React.KeyboardEvent<HTMLTextAreaElement>
+): ShortcutCommand | undefined {
   if (selectAllTriggered(event)) return "selectAll";
-  return "";
+  return undefined;
 }
 
 function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
@@ -310,7 +312,11 @@ function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): bo
   );
 }
 
-function handleOnShortcut(text: string, state: State, command: "selectAll" | ""): [string, State] {
+function handleOnShortcut(
+  text: string,
+  state: State,
+  command: ShortcutCommand | undefined
+): [string, State] {
   if (command == "selectAll") return handleOnSelectAll(text, state);
   return [text, state];
 }
