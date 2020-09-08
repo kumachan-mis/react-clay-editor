@@ -11,7 +11,6 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       topDivPosition: undefined,
       centerDivPosition: undefined,
       bottomDivPosition: undefined,
-      textAreaPosition: { top: 0, left: 0, width: 0, height: 0 },
     };
   }
 
@@ -25,7 +24,6 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       topDivPosition: undefined,
       centerDivPosition: undefined,
       bottomDivPosition: undefined,
-      textAreaPosition: { top: 0, left: 0, width: 0, height: 0 },
     };
   }
 
@@ -43,8 +41,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       height: Math.max(startRect.bottom, endRect.bottom) - Math.min(startRect.top, endRect.top),
     };
     const bottomDivPosition = undefined;
-    const textAreaPosition = { ...centerDivPosition };
-    return { topDivPosition, centerDivPosition, bottomDivPosition, textAreaPosition };
+    return { topDivPosition, centerDivPosition, bottomDivPosition };
   } else {
     const topDivPosition = {
       top: startRect.top - editorRect.top,
@@ -64,18 +61,11 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       width: endRect.left - editorRect.left,
       height: endRect.height,
     };
-    const textAreaPosition = {
-      top: startRect.top - editorRect.top,
-      left: 0,
-      width: editorRect.width,
-      height: endRect.bottom - startRect.top,
-    };
-    return { topDivPosition, centerDivPosition, bottomDivPosition, textAreaPosition };
+    return { topDivPosition, centerDivPosition, bottomDivPosition };
   }
 }
 
-export function getSelectedText(props: Props): string {
-  const { textSelection, text } = props;
+export function getSelectedText(textSelection: TextSelection | undefined, text: string): string {
   if (!textSelection) return "";
   const { start, end } = selectionToRange(textSelection);
   const startIndex = cursorCoordinateToTextIndex(text, start);

@@ -2,10 +2,10 @@ import { State, SelectionWithMouse } from "./types";
 import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
-import { selectionToRange } from "../Selection/utils";
+import { selectionToRange, getSelectedText } from "../Selection/utils";
 import { CursorCoordinate } from "../Cursor/types";
 import { TextLinesConstants } from "../TextLines/constants";
-import { classNameToSelector } from "../common";
+import { classNameToSelector, isMacOS } from "../common";
 
 export function getRoot(element: HTMLElement): HTMLElement | null {
   return element.closest(`div${classNameToSelector(EditorConstants.root.className)}`);
@@ -13,115 +13,6 @@ export function getRoot(element: HTMLElement): HTMLElement | null {
 
 export function getEditor(element: HTMLElement): HTMLElement | null {
   return element.closest(`div${classNameToSelector(EditorConstants.editor.className)}`);
-}
-
-export function handleOnKeyDown(
-  text: string,
-  state: State,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || state.isComposing || event.key.length == 1) return [text, state];
-  event.preventDefault();
-
-  switch (event.key) {
-    case "Enter": {
-      const [newText, newState] = insertText(text, state, "\n");
-      if (!newState.cursorCoordinate) return [newText, newState];
-
-      const newLines = newText.split("\n");
-      const prevLine = newLines[newState.cursorCoordinate.lineIndex - 1];
-      const regex = TextLinesConstants.regexes.indent;
-      const { indent, content } = prevLine.match(regex)?.groups as Record<string, string>;
-      if (indent.length == 0) {
-        return [newText, newState];
-      } else if (content.length > 0) {
-        return insertText(newText, newState, indent);
-      } else {
-        const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -indent.length - 1);
-        const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
-        return insertText(newText, { ...newState, textSelection }, "");
-      }
-    }
-    case "Tab": {
-      const [newText, newState] = insertText(text, state, "\t");
-      if (!newState.cursorCoordinate) return [newText, newState];
-
-      const newLines = newText.split("\n");
-      const { lineIndex, charIndex } = newState.cursorCoordinate;
-      const currentLine = newLines[lineIndex];
-      if (!/^ *$/.test(currentLine.substring(0, charIndex - 1))) return [newText, newState];
-
-      const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -1);
-      const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
-      return insertText(newText, { ...newState, textSelection }, " ");
-    }
-    case "Backspace": {
-      if (state.textSelection) return insertText(text, state, "");
-      const backCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      const textSelection = { fixed: state.cursorCoordinate, free: backCoordinate };
-      return insertText(text, { ...state, textSelection }, "");
-    }
-    case "ArrowUp": {
-      const lines = text.split("\n");
-      const prevLine = lines[state.cursorCoordinate.lineIndex - 1];
-      if (prevLine === undefined) return [text, state];
-      const cursorCoordinate = {
-        lineIndex: state.cursorCoordinate.lineIndex - 1,
-        charIndex: Math.min(state.cursorCoordinate.charIndex, prevLine.length),
-      };
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
-    }
-    case "ArrowDown": {
-      const lines = text.split("\n");
-      const nextLine = lines[state.cursorCoordinate.lineIndex + 1];
-      if (nextLine === undefined) return [text, state];
-      const cursorCoordinate = {
-        lineIndex: state.cursorCoordinate.lineIndex + 1,
-        charIndex: Math.min(state.cursorCoordinate.charIndex, nextLine.length),
-      };
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
-    }
-    case "ArrowLeft": {
-      const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
-    }
-    case "ArrowRight": {
-      const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
-    }
-    default:
-      return [text, state];
-  }
-}
-
-export function handleOnChange(
-  text: string,
-  state: State,
-  event: React.ChangeEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate) return [text, state];
-  if (state.isComposing) return [text, { ...state, textAreaValue: event.target.value }];
-  const [newText, newState] = insertText(text, state, event.target.value);
-  return [newText, newState];
-}
-
-export function handleOnCompositionStart(
-  text: string,
-  state: State,
-  event: React.CompositionEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || state.isComposing) return [text, state];
-  return [text, { ...state, isComposing: true }];
-}
-
-export function handleOnCompositionEnd(
-  text: string,
-  state: State,
-  event: React.CompositionEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || !state.isComposing) return [text, state];
-  const [newText, newState] = insertText(text, state, event.data);
-  return [newText, { ...newState, textAreaValue: "", isComposing: false }];
 }
 
 export function handleOnMouseDown(
@@ -200,6 +91,151 @@ export function handleOnMouseUp(
 
 export const handleOnMouseLeave = handleOnMouseUp;
 
+export function handleOnKeyDown(
+  text: string,
+  state: State,
+  event: React.KeyboardEvent<HTMLTextAreaElement>
+): [string, State] {
+  const command = shortcutCommand(event);
+  if (!state.cursorCoordinate || state.isComposing || !command) return [text, state];
+  event.preventDefault();
+
+  switch (event.key) {
+    case "Enter": {
+      const [newText, newState] = insertText(text, state, "\n");
+      if (!newState.cursorCoordinate) return [newText, newState];
+
+      const newLines = newText.split("\n");
+      const prevLine = newLines[newState.cursorCoordinate.lineIndex - 1];
+      const regex = TextLinesConstants.regexes.indent;
+      const { indent, content } = prevLine.match(regex)?.groups as Record<string, string>;
+      if (indent.length == 0) {
+        return [newText, newState];
+      } else if (content.length > 0) {
+        return insertText(newText, newState, indent);
+      } else {
+        const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -indent.length - 1);
+        const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
+        return insertText(newText, { ...newState, textSelection }, "");
+      }
+    }
+    case "Tab": {
+      const [newText, newState] = insertText(text, state, "\t");
+      if (!newState.cursorCoordinate) return [newText, newState];
+
+      const newLines = newText.split("\n");
+      const { lineIndex, charIndex } = newState.cursorCoordinate;
+      const currentLine = newLines[lineIndex];
+      if (!/^ *$/.test(currentLine.substring(0, charIndex - 1))) return [newText, newState];
+
+      const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -1);
+      const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
+      return insertText(newText, { ...newState, textSelection }, " ");
+    }
+    case "Backspace": {
+      if (state.textSelection) return insertText(text, state, "");
+      const backCoordinate = moveCursor(text, state.cursorCoordinate, -1);
+      const textSelection = { fixed: state.cursorCoordinate, free: backCoordinate };
+      return insertText(text, { ...state, textSelection }, "");
+    }
+    case "ArrowUp": {
+      const lines = text.split("\n");
+      const prevLine = lines[state.cursorCoordinate.lineIndex - 1];
+      if (prevLine === undefined) return [text, state];
+      const cursorCoordinate = {
+        lineIndex: state.cursorCoordinate.lineIndex - 1,
+        charIndex: Math.min(state.cursorCoordinate.charIndex, prevLine.length),
+      };
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+    }
+    case "ArrowDown": {
+      const lines = text.split("\n");
+      const nextLine = lines[state.cursorCoordinate.lineIndex + 1];
+      if (nextLine === undefined) return [text, state];
+      const cursorCoordinate = {
+        lineIndex: state.cursorCoordinate.lineIndex + 1,
+        charIndex: Math.min(state.cursorCoordinate.charIndex, nextLine.length),
+      };
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+    }
+    case "ArrowLeft": {
+      const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+    }
+    case "ArrowRight": {
+      const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+    }
+    default:
+      return handleOnShortcut(text, state, command);
+  }
+}
+
+export function handleOnChange(
+  text: string,
+  state: State,
+  event: React.ChangeEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate) return [text, state];
+  if (state.isComposing) return [text, { ...state, textAreaValue: event.target.value }];
+  const [newText, newState] = insertText(text, state, event.target.value);
+  return [newText, newState];
+}
+
+export function handleOnCompositionStart(
+  text: string,
+  state: State,
+  event: React.CompositionEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate || state.isComposing) return [text, state];
+  return [text, { ...state, isComposing: true }];
+}
+
+export function handleOnCompositionEnd(
+  text: string,
+  state: State,
+  event: React.CompositionEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate || !state.isComposing) return [text, state];
+  const [newText, newState] = insertText(text, state, event.data);
+  return [newText, { ...newState, textAreaValue: "", isComposing: false }];
+}
+
+export function handleOnCut(
+  text: string,
+  state: State,
+  event: React.ClipboardEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate || !state.textSelection) return [text, state];
+  event.preventDefault();
+  const selectedText = getSelectedText(state.textSelection, text);
+  event.clipboardData.setData("text/plain", selectedText);
+  return insertText(text, state, "");
+}
+
+export function handleOnCopy(
+  text: string,
+  state: State,
+  event: React.ClipboardEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate || !state.textSelection) return [text, state];
+  event.preventDefault();
+  const selectedText = getSelectedText(state.textSelection, text);
+  event.clipboardData.setData("text/plain", selectedText);
+  return [text, state];
+}
+
+export function handleOnPaste(
+  text: string,
+  state: State,
+  event: React.ClipboardEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate) return [text, state];
+  event.preventDefault();
+  const textToPaste = event.clipboardData.getData("text");
+  return insertText(text, state, textToPaste);
+}
+
 function insertText(
   text: string,
   state: State,
@@ -256,4 +292,33 @@ function positionToCursorCoordinate(
   } else {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
   }
+}
+
+function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>): "selectAll" | "" {
+  if (selectAllTriggered(event)) return "selectAll";
+  return "";
+}
+
+function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
+  return (
+    (!isMacOS() ? event.ctrlKey : event.metaKey) &&
+    !event.altKey &&
+    !event.shiftKey &&
+    event.key == "a"
+  );
+}
+
+function handleOnShortcut(text: string, state: State, command: "selectAll"): [string, State] {
+  if (command == "selectAll") return handleOnSelectAll(text, state);
+  return [text, state];
+}
+
+function handleOnSelectAll(text: string, state: State): [string, State] {
+  if (!state.cursorCoordinate) return [text, state];
+  const lines = text.split("\n");
+  const textSelection = {
+    fixed: { lineIndex: 0, charIndex: 0 },
+    free: { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length },
+  };
+  return [text, { textSelection, ...state }];
 }
