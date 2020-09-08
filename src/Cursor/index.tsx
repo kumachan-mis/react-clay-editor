@@ -64,12 +64,10 @@ export class Cursor extends React.Component<Props, State> {
           wrap={CursorConstants.textArea.wrap}
           spellCheck={CursorConstants.textArea.spellCheck}
           autoCapitalize={CursorConstants.textArea.autoCapitalize}
-          onKeyDown={(event) => {
-            event.preventDefault();
-            this.props.onKeyDown(event.key);
-          }}
-          onChange={(event) => this.props.onTextChange(event.target.value)}
+          onKeyDown={(event) => this.props.onKeyDown(event)}
+          onChange={(event) => this.props.onTextChange(event)}
           onCompositionStart={() => this.props.onTextCompositionStart()}
+          onCompositionEnd={(event) => this.props.onTextCompositionEnd(event)}
           style={CursorConstants.textArea.style(top, left, cursorSize, textLength)}
           ref={(textArea) => (this.textArea = textArea)}
         />

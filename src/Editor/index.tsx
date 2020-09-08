@@ -10,6 +10,7 @@ import {
   handleOnKeyDown,
   handleOnChange,
   handleOnCompositionStart,
+  handleOnCompositionEnd,
 } from "./utils";
 import "../style.css";
 
@@ -92,21 +93,27 @@ export class Editor extends React.Component<Props, State> {
               coordinate={this.state.cursorCoordinate}
               textAreaValue={this.state.textAreaValue}
               isComposing={this.state.isComposing}
-              onKeyDown={(key) => {
+              onKeyDown={(event) => {
                 if (this.props.disabled) return;
-                const [text, state] = handleOnKeyDown(this.props.text, this.state, key);
+                const [text, state] = handleOnKeyDown(this.props.text, this.state, event);
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
-              onTextChange={(value) => {
+              onTextChange={(event) => {
                 if (this.props.disabled) return;
-                const [text, state] = handleOnChange(this.props.text, this.state, value);
+                const [text, state] = handleOnChange(this.props.text, this.state, event);
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
               onTextCompositionStart={() => {
                 if (this.props.disabled) return;
                 const [text, state] = handleOnCompositionStart(this.props.text, this.state);
+                if (state != this.state) this.setState(state);
+                if (text != this.props.text) this.props.onChangeText(text);
+              }}
+              onTextCompositionEnd={(event) => {
+                if (this.props.disabled) return;
+                const [text, state] = handleOnCompositionEnd(this.props.text, this.state, event);
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}

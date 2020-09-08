@@ -68,6 +68,7 @@ textarea.React-Realtime-Markup-Editor-cursor {
   resize: none;
   padding: 0px;
   user-select: text;
+  z-index: 1;
 }
 
 /* Selection */
