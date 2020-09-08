@@ -1,4 +1,4 @@
-import { State, SelectionWithMouse, ShortcutCommand } from "./types";
+import { State, OptionState, SelectionWithMouse, ShortcutCommand } from "./types";
 import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
@@ -18,74 +18,70 @@ export function getEditor(element: HTMLElement): HTMLElement | null {
 export function handleOnMouseDown(
   text: string,
   state: State,
+  option: OptionState,
   position: [number, number],
   element: HTMLElement | null
-): [string, State] {
-  if (!element) return [text, state];
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
+): [string, State, OptionState] {
+  if (!element) return [text, state, option];
+  const cursorCoordinate = positionToCursorCoordinate(text, state, option, position, element);
+
   return [
     text,
-    {
-      ...state,
-      cursorCoordinate,
-      textSelection: undefined,
-      selectionWithMouse: SelectionWithMouse.Started,
-    },
+    { ...state, cursorCoordinate, textSelection: undefined },
+    { ...option, selectionWithMouse: SelectionWithMouse.Started },
   ];
 }
 
 export function handleOnMouseMove(
   text: string,
   state: State,
+  option: OptionState,
   position: [number, number],
   element: HTMLElement | null
-): [string, State] {
+): [string, State, OptionState] {
   if (
     !state.cursorCoordinate ||
-    state.selectionWithMouse == SelectionWithMouse.Inactive ||
+    option.selectionWithMouse == SelectionWithMouse.Inactive ||
     !element
   ) {
-    return [text, state];
+    return [text, state, option];
   }
-  if (state.selectionWithMouse == SelectionWithMouse.Started) {
-    return [text, { ...state, selectionWithMouse: SelectionWithMouse.Active }];
+  if (option.selectionWithMouse == SelectionWithMouse.Started) {
+    return [text, state, { ...option, selectionWithMouse: SelectionWithMouse.Active }];
   }
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
-  if (coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state];
+  const cursorCoordinate = positionToCursorCoordinate(text, state, option, position, element);
+  if (coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state, option];
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, { ...state, cursorCoordinate, textSelection }, option];
 }
 
 export function handleOnMouseUp(
   text: string,
   state: State,
+  option: OptionState,
   position: [number, number],
   element: HTMLElement | null
-): [string, State] {
+): [string, State, OptionState] {
   if (
     !state.cursorCoordinate ||
-    state.selectionWithMouse == SelectionWithMouse.Inactive ||
+    option.selectionWithMouse == SelectionWithMouse.Inactive ||
     !element
   ) {
-    return [text, state];
+    return [text, state, option];
   }
-  if (state.selectionWithMouse != SelectionWithMouse.Active) {
-    return [text, { ...state, selectionWithMouse: SelectionWithMouse.Inactive }];
+  if (option.selectionWithMouse != SelectionWithMouse.Active) {
+    return [text, state, { ...option, selectionWithMouse: SelectionWithMouse.Inactive }];
   }
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
+  const cursorCoordinate = positionToCursorCoordinate(text, state, option, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   return [
     text,
-    {
-      ...state,
-      cursorCoordinate,
-      textSelection,
-      selectionWithMouse: SelectionWithMouse.Inactive,
-    },
+    { ...state, cursorCoordinate, textSelection },
+    { ...option, selectionWithMouse: SelectionWithMouse.Inactive },
   ];
 }
 
@@ -264,6 +260,7 @@ function insertText(
 function positionToCursorCoordinate(
   text: string,
   state: State,
+  option: OptionState,
   position: [number, number],
   element: HTMLElement
 ): CursorCoordinate {
@@ -289,7 +286,7 @@ function positionToCursorCoordinate(
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
-  } else if (state.selectionWithMouse == SelectionWithMouse.Active && state.cursorCoordinate) {
+  } else if (option.selectionWithMouse == SelectionWithMouse.Active && state.cursorCoordinate) {
     return { ...state.cursorCoordinate };
   } else {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };

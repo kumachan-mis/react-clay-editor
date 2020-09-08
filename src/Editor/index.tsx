@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, TaggedLink, SelectionWithMouse } from "./types";
+import { Props, State, TaggedLink, OptionState, SelectionWithMouse } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -35,6 +35,7 @@ export class Editor extends React.Component<Props, State> {
     hashTagProps: () => ({}),
     taggedLinkMap: {},
   };
+  private option: OptionState;
   private root: HTMLDivElement | null;
 
   constructor(props: Props) {
@@ -44,7 +45,10 @@ export class Editor extends React.Component<Props, State> {
       textAreaValue: "",
       isComposing: false,
       textSelection: undefined,
+    };
+    this.option = {
       selectionWithMouse: SelectionWithMouse.Inactive,
+      editActionHistory: [],
     };
     this.root = null;
   }
@@ -102,16 +106,19 @@ export class Editor extends React.Component<Props, State> {
     handler: (
       text: string,
       state: State,
+      option: OptionState,
       pos: [number, number],
       root: HTMLElement | null
-    ) => [string, State]
+    ) => [string, State, OptionState]
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
-      const pos: [number, number] = [event.clientX, event.clientY];
-      const [text, state] = handler(this.props.text, this.state, pos, this.root);
-      if (state != this.state) this.setState(state);
+      const position: [number, number] = [event.clientX, event.clientY];
+      const { state, root } = this;
+      const [text, newState, option] = handler(this.props.text, state, this.option, position, root);
+      if (newState != state) this.setState(newState);
       if (text != this.props.text) this.props.onChangeText(text);
+      this.option = option;
     };
   };
 

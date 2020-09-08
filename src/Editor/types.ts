@@ -23,18 +23,34 @@ export interface Props {
   style?: React.CSSProperties;
 }
 
+export interface State {
+  cursorCoordinate: CursorCoordinate | undefined;
+  textAreaValue: string;
+  isComposing: boolean;
+  textSelection: TextSelection | undefined;
+}
+
 export const enum SelectionWithMouse {
   Inactive,
   Started,
   Active,
 }
 
-export interface State {
-  cursorCoordinate: CursorCoordinate | undefined;
-  textAreaValue: string;
-  isComposing: boolean;
-  textSelection: TextSelection | undefined;
+export type EditAction =
+  | {
+      actionType: "add";
+      textIndex: number;
+      text: string;
+    }
+  | {
+      actionType: "delete";
+      fromTextIndex: number;
+      toTextIndex: string;
+    };
+
+export interface OptionState {
   selectionWithMouse: SelectionWithMouse;
+  editActionHistory: EditAction[];
 }
 
 export type ShortcutCommand = "selectAll";
