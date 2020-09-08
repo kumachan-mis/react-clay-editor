@@ -9,6 +9,9 @@ import {
   handleOnMouseLeave,
   handleOnKeyDown,
   handleOnChange,
+  handleOnCut,
+  handleOnCopy,
+  handleOnPaste,
   handleOnCompositionStart,
   handleOnCompositionEnd,
 } from "./utils";
@@ -60,65 +63,25 @@ export class Editor extends React.Component<Props, State> {
         <div className={EditorConstants.root.className} ref={(root) => (this.root = root)}>
           <div
             className={EditorConstants.editor.className}
-            onMouseDown={(event) => {
-              if (this.props.disabled || event.button != 0) return;
-              const pos: [number, number] = [event.clientX, event.clientY];
-              const [text, state] = handleOnMouseDown(this.props.text, this.state, pos, this.root);
-              if (state != this.state) this.setState(state);
-              if (text != this.props.text) this.props.onChangeText(text);
-            }}
-            onMouseMove={(event) => {
-              if (this.props.disabled) return;
-              const pos: [number, number] = [event.clientX, event.clientY];
-              const [text, state] = handleOnMouseMove(this.props.text, this.state, pos, this.root);
-              if (state != this.state) this.setState(state);
-              if (text != this.props.text) this.props.onChangeText(text);
-            }}
-            onMouseUp={(event) => {
-              if (this.props.disabled || event.button != 0) return;
-              const pos: [number, number] = [event.clientX, event.clientY];
-              const [text, state] = handleOnMouseUp(this.props.text, this.state, pos, this.root);
-              if (state != this.state) this.setState(state);
-              if (text != this.props.text) this.props.onChangeText(text);
-            }}
-            onMouseLeave={(event) => {
-              if (this.props.disabled || event.button != 0) return;
-              const pos: [number, number] = [event.clientX, event.clientY];
-              const [text, state] = handleOnMouseLeave(this.props.text, this.state, pos, this.root);
-              if (state != this.state) this.setState(state);
-              if (text != this.props.text) this.props.onChangeText(text);
-            }}
+            onMouseDown={this.createMouseEventHandler(handleOnMouseDown)}
+            onMouseMove={this.createMouseEventHandler(handleOnMouseMove)}
+            onMouseUp={this.createMouseEventHandler(handleOnMouseUp)}
+            onMouseLeave={this.createMouseEventHandler(handleOnMouseLeave)}
           >
             <Cursor
               coordinate={this.state.cursorCoordinate}
+              textSelection={this.state.textSelection}
               textAreaValue={this.state.textAreaValue}
               isComposing={this.state.isComposing}
-              onKeyDown={(event) => {
-                if (this.props.disabled) return;
-                const [text, state] = handleOnKeyDown(this.props.text, this.state, event);
-                if (state != this.state) this.setState(state);
-                if (text != this.props.text) this.props.onChangeText(text);
-              }}
-              onTextChange={(event) => {
-                if (this.props.disabled) return;
-                const [text, state] = handleOnChange(this.props.text, this.state, event);
-                if (state != this.state) this.setState(state);
-                if (text != this.props.text) this.props.onChangeText(text);
-              }}
-              onTextCompositionStart={() => {
-                if (this.props.disabled) return;
-                const [text, state] = handleOnCompositionStart(this.props.text, this.state);
-                if (state != this.state) this.setState(state);
-                if (text != this.props.text) this.props.onChangeText(text);
-              }}
-              onTextCompositionEnd={(event) => {
-                if (this.props.disabled) return;
-                const [text, state] = handleOnCompositionEnd(this.props.text, this.state, event);
-                if (state != this.state) this.setState(state);
-                if (text != this.props.text) this.props.onChangeText(text);
-              }}
+              onKeyDown={this.createCursorEventHandler(handleOnKeyDown)}
+              onTextChange={this.createCursorEventHandler(handleOnChange)}
+              onTextCompositionStart={this.createCursorEventHandler(handleOnCompositionStart)}
+              onTextCompositionEnd={this.createCursorEventHandler(handleOnCompositionEnd)}
+              onTextCut={this.createCursorEventHandler(handleOnCut)}
+              onTextCopy={this.createCursorEventHandler(handleOnCopy)}
+              onTextPaste={this.createCursorEventHandler(handleOnPaste)}
             />
-            <Selection selection={this.state.textSelection} />
+            <Selection textSelection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
               decoration={this.props.decoration as DecorationSetting}
@@ -134,6 +97,34 @@ export class Editor extends React.Component<Props, State> {
       </div>
     );
   }
+
+  private createMouseEventHandler = (
+    handler: (
+      text: string,
+      state: State,
+      pos: [number, number],
+      root: HTMLElement | null
+    ) => [string, State]
+  ): ((event: React.MouseEvent) => void) => {
+    return (event) => {
+      if (this.props.disabled || event.button != 0) return;
+      const pos: [number, number] = [event.clientX, event.clientY];
+      const [text, state] = handler(this.props.text, this.state, pos, this.root);
+      if (state != this.state) this.setState(state);
+      if (text != this.props.text) this.props.onChangeText(text);
+    };
+  };
+
+  private createCursorEventHandler = <Event,>(
+    handler: (text: string, state: State, event: Event) => [string, State]
+  ): ((event: Event) => void) => {
+    return (event) => {
+      if (this.props.disabled) return;
+      const [text, state] = handler(this.props.text, this.state, event);
+      if (state != this.state) this.setState(state);
+      if (text != this.props.text) this.props.onChangeText(text);
+    };
+  };
 
   private handleOnEditorBlur = (event: MouseEvent) => {
     if (

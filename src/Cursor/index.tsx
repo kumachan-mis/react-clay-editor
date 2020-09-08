@@ -9,19 +9,16 @@ import { getRoot } from "../Editor/utils";
 
 export class Cursor extends React.Component<Props, State> {
   private root: HTMLSpanElement | null;
-  private textArea: HTMLTextAreaElement | null;
   private handleOnEditorScroll?: () => void;
 
   constructor(props: Props) {
     super(props);
     this.state = { position: [0, 0], cursorSize: 0 };
     this.root = null;
-    this.textArea = null;
   }
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
     if (!this.root || prevProps == this.props) return;
-    if (this.props.coordinate) this.textArea?.focus();
 
     const state = cursorPropsToState(this.props, this.state, this.root);
     if (state != this.state) this.setState(state);
@@ -66,10 +63,12 @@ export class Cursor extends React.Component<Props, State> {
           autoCapitalize={CursorConstants.textArea.autoCapitalize}
           onKeyDown={(event) => this.props.onKeyDown(event)}
           onChange={(event) => this.props.onTextChange(event)}
-          onCompositionStart={() => this.props.onTextCompositionStart()}
+          onCut={(event) => this.props.onTextCut(event)}
+          onCopy={(event) => this.props.onTextCopy(event)}
+          onPaste={(event) => this.props.onTextPaste(event)}
+          onCompositionStart={(event) => this.props.onTextCompositionStart(event)}
           onCompositionEnd={(event) => this.props.onTextCompositionEnd(event)}
           style={CursorConstants.textArea.style(top, left, cursorSize, textLength)}
-          ref={(textArea) => (this.textArea = textArea)}
         />
       </span>
     );

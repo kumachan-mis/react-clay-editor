@@ -1,11 +1,12 @@
-import { Props, State } from "./types";
+import { Props, State, TextSelection, TextRange } from "./types";
 
 import { getEditor } from "../Editor/utils";
 import { getTextCharElementAt } from "../TextLines/utils";
+import { cursorCoordinateToTextIndex } from "../Cursor/utils";
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
   const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (props.selection === undefined || !editorRect) {
+  if (!props.textSelection || !editorRect) {
     return {
       topDivPosition: undefined,
       centerDivPosition: undefined,
@@ -13,14 +14,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     };
   }
 
-  const { fixed, free } = props.selection;
-  const { start, end } = (() => {
-    if (fixed.lineIndex < free.lineIndex) return { start: fixed, end: free };
-    else if (fixed.lineIndex > free.lineIndex) return { start: free, end: fixed };
-    else if (fixed.charIndex <= free.charIndex) return { start: fixed, end: free };
-    else return { start: free, end: fixed };
-  })();
-
+  const { start, end } = selectionToRange(props.textSelection);
   const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
   const endElement = getTextCharElementAt(end.lineIndex, end.charIndex, element);
   const startRect = startElement?.getBoundingClientRect();
@@ -69,4 +63,20 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     };
     return { topDivPosition, centerDivPosition, bottomDivPosition };
   }
+}
+
+export function getSelectedText(textSelection: TextSelection | undefined, text: string): string {
+  if (!textSelection) return "";
+  const { start, end } = selectionToRange(textSelection);
+  const startIndex = cursorCoordinateToTextIndex(text, start);
+  const endIndex = cursorCoordinateToTextIndex(text, end);
+  return text.substring(startIndex, endIndex);
+}
+
+export function selectionToRange(textSelection: TextSelection): TextRange {
+  const { fixed, free } = textSelection;
+  if (fixed.lineIndex < free.lineIndex) return { start: fixed, end: free };
+  else if (fixed.lineIndex > free.lineIndex) return { start: free, end: fixed };
+  else if (fixed.charIndex <= free.charIndex) return { start: fixed, end: free };
+  else return { start: free, end: fixed };
 }

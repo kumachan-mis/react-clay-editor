@@ -1,5 +1,5 @@
 import { CursorCoordinate } from "../Cursor/types";
-import { Selection } from "../Selection/types";
+import { TextSelection } from "../Selection/types";
 import { DecorationSetting as Decoration } from "../TextLines/types";
 
 export { Decoration };
@@ -33,6 +33,8 @@ export interface State {
   cursorCoordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   isComposing: boolean;
-  textSelection: Selection | undefined;
+  textSelection: TextSelection | undefined;
   selectionWithMouse: SelectionWithMouse;
 }
+
+export type ShortcutCommand = "selectAll";

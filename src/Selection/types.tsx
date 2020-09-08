@@ -1,15 +1,20 @@
 import { CursorCoordinate } from "../Cursor/types";
 
-export interface Selection {
+export interface TextSelection {
   fixed: CursorCoordinate;
   free: CursorCoordinate;
 }
 
-export interface Props {
-  selection: Selection | undefined;
+export interface TextRange {
+  start: CursorCoordinate;
+  end: CursorCoordinate;
 }
 
-export interface DivPosition {
+export interface Props {
+  textSelection: TextSelection | undefined;
+}
+
+export interface Position {
   top: number;
   left: number;
   width: number;
@@ -17,7 +22,7 @@ export interface DivPosition {
 }
 
 export interface State {
-  topDivPosition: DivPosition | undefined;
-  centerDivPosition: DivPosition | undefined;
-  bottomDivPosition: DivPosition | undefined;
+  topDivPosition: Position | undefined;
+  centerDivPosition: Position | undefined;
+  bottomDivPosition: Position | undefined;
 }
