@@ -91,6 +91,7 @@ export class Editor extends React.Component<Props, State> {
           >
             <Cursor
               coordinate={this.state.cursorCoordinate}
+              textSelection={this.state.textSelection}
               textAreaValue={this.state.textAreaValue}
               isComposing={this.state.isComposing}
               onKeyDown={(event) => {
@@ -118,7 +119,7 @@ export class Editor extends React.Component<Props, State> {
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
             />
-            <Selection selection={this.state.textSelection} />
+            <Selection textSelection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
               decoration={this.props.decoration as DecorationSetting}

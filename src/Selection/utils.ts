@@ -5,7 +5,7 @@ import { getTextCharElementAt } from "../TextLines/utils";
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
   const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (props.selection === undefined || !editorRect) {
+  if (props.textSelection === undefined || !editorRect) {
     return {
       topDivPosition: undefined,
       centerDivPosition: undefined,
@@ -13,7 +13,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     };
   }
 
-  const { fixed, free } = props.selection;
+  const { fixed, free } = props.textSelection;
   const { start, end } = (() => {
     if (fixed.lineIndex < free.lineIndex) return { start: fixed, end: free };
     else if (fixed.lineIndex > free.lineIndex) return { start: free, end: fixed };

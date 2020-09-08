@@ -1,12 +1,12 @@
 import { CursorCoordinate } from "../Cursor/types";
 
-export interface Selection {
+export interface TextSelection {
   fixed: CursorCoordinate;
   free: CursorCoordinate;
 }
 
 export interface Props {
-  selection: Selection | undefined;
+  textSelection: TextSelection | undefined;
 }
 
 export interface DivPosition {
