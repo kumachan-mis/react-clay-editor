@@ -13,6 +13,7 @@ import {
   ParseOption,
 } from "./types";
 
+import { classNameToSelector } from "../common";
 import { EditorConstants } from "../Editor/constants";
 
 export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
@@ -87,13 +88,6 @@ export function getTagName(tag: string): string {
 
 export function getHashTagName(hashTag: string): string {
   return hashTag.substring(1);
-}
-
-function classNameToSelector(className: string): string {
-  return className
-    .split(" ")
-    .map((name) => `.${name}`)
-    .join("");
 }
 
 function parseText(text: string, option: ParseOption): Node[] {

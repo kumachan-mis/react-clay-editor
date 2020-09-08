@@ -5,7 +5,6 @@ import { getTextCharElementAt } from "../TextLines/utils";
 import { cursorCoordinateToTextIndex } from "../Cursor/utils";
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
-  const defaultTextAreaPosition = { top: 0, left: 0, width: 0, height: 0 };
   const editorRect = getEditor(element)?.getBoundingClientRect();
   if (!props.textSelection || !editorRect) {
     return {

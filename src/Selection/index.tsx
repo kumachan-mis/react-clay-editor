@@ -7,7 +7,6 @@ import "../style.css";
 
 export class Selection extends React.Component<Props, State> {
   private root: HTMLSpanElement | null;
-  private textArea: HTMLTextAreaElement | null;
 
   constructor(props: Props) {
     super(props);
@@ -18,7 +17,6 @@ export class Selection extends React.Component<Props, State> {
       textAreaPosition: { top: 0, left: 0, width: 0, height: 0 },
     };
     this.root = null;
-    this.textArea = null;
   }
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
@@ -53,12 +51,11 @@ export class Selection extends React.Component<Props, State> {
         {
           <textarea
             className={SelectionConstants.textArea.className}
-            value={textAreaValue}
+            defaultValue={textAreaValue}
             wrap={SelectionConstants.textArea.wrap}
             spellCheck={SelectionConstants.textArea.spellCheck}
             autoCapitalize={SelectionConstants.textArea.autoCapitalize}
             style={SelectionConstants.textArea.style(this.state.textAreaPosition)}
-            ref={(textArea) => (this.textArea = textArea)}
           />
         }
       </span>

@@ -5,13 +5,14 @@ import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "..
 import { selectionToRange } from "../Selection/utils";
 import { CursorCoordinate } from "../Cursor/types";
 import { TextLinesConstants } from "../TextLines/constants";
+import { classNameToSelector } from "../common";
 
 export function getRoot(element: HTMLElement): HTMLElement | null {
-  return element.closest(`.${EditorConstants.root.className}`);
+  return element.closest(`div${classNameToSelector(EditorConstants.root.className)}`);
 }
 
 export function getEditor(element: HTMLElement): HTMLElement | null {
-  return element.closest(`.${EditorConstants.editor.className}`);
+  return element.closest(`div${classNameToSelector(EditorConstants.editor.className)}`);
 }
 
 export function handleOnKeyDown(

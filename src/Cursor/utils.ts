@@ -1,7 +1,9 @@
 import { Props, State, CursorCoordinate } from "./types";
+import { CursorConstants } from "./constants";
 
 import { getTextCharElementAt } from "../TextLines/utils";
 import { getRoot, getEditor } from "../Editor/utils";
+import { classNameToSelector } from "../common";
 
 interface CursorDrawInfo {
   position: [number, number];
@@ -15,6 +17,11 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   if (!props.coordinate || !editorRect || !rootRect) {
     return { ...state, position: [0, 0], cursorSize: 0 };
   }
+
+  const selector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
+  const textArea = getRoot(element)?.querySelector(selector) as HTMLTextAreaElement;
+  textArea.focus();
+
   const { coordinate } = props;
   const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
   if (!elementCursorOn) return { ...state, position: [0, 0], cursorSize: 0 };
