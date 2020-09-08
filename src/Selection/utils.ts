@@ -10,6 +10,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       topDivPosition: undefined,
       centerDivPosition: undefined,
       bottomDivPosition: undefined,
+      textAreaPosition: undefined,
     };
   }
 
@@ -30,6 +31,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       topDivPosition: undefined,
       centerDivPosition: undefined,
       bottomDivPosition: undefined,
+      textAreaPosition: undefined,
     };
   }
 
@@ -47,7 +49,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       height: Math.max(startRect.bottom, endRect.bottom) - Math.min(startRect.top, endRect.top),
     };
     const bottomDivPosition = undefined;
-    return { topDivPosition, centerDivPosition, bottomDivPosition };
+    return { topDivPosition, centerDivPosition, bottomDivPosition, textAreaPosition: undefined };
   } else {
     const topDivPosition = {
       top: startRect.top - editorRect.top,
@@ -67,6 +69,11 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
       width: endRect.left - editorRect.left,
       height: endRect.height,
     };
-    return { topDivPosition, centerDivPosition, bottomDivPosition };
+    return { topDivPosition, centerDivPosition, bottomDivPosition, textAreaPosition: undefined };
   }
+}
+
+export function getSelectedText(props: Props): string {
+  if (!props.textSelection) return "";
+  return "";
 }

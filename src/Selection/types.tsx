@@ -7,9 +7,10 @@ export interface TextSelection {
 
 export interface Props {
   textSelection: TextSelection | undefined;
+  text: string;
 }
 
-export interface DivPosition {
+export interface Position {
   top: number;
   left: number;
   width: number;
@@ -17,7 +18,8 @@ export interface DivPosition {
 }
 
 export interface State {
-  topDivPosition: DivPosition | undefined;
-  centerDivPosition: DivPosition | undefined;
-  bottomDivPosition: DivPosition | undefined;
+  topDivPosition: Position | undefined;
+  centerDivPosition: Position | undefined;
+  bottomDivPosition: Position | undefined;
+  textAreaPosition: Position | undefined;
 }

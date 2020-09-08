@@ -67,7 +67,6 @@ textarea.React-Realtime-Markup-Editor-cursor {
   outline: none;
   resize: none;
   padding: 0px;
-  user-select: text;
   z-index: 1;
 }
 
@@ -76,4 +75,15 @@ div.React-Realtime-Markup-Editor-selection {
   position: absolute;
   background-color: #accef7;
   opacity: 0.5;
+}
+
+textarea.React-Realtime-Markup-Editor-selection {
+  position: absolute;
+  overflow: hidden;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 0px;
+  opacity: 0;
+  user-select: text;
 }

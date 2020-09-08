@@ -119,7 +119,7 @@ export class Editor extends React.Component<Props, State> {
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
             />
-            <Selection textSelection={this.state.textSelection} />
+            <Selection textSelection={this.state.textSelection} text={this.props.text} />
             <TextLines
               text={this.props.text}
               decoration={this.props.decoration as DecorationSetting}
