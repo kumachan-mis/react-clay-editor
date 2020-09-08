@@ -12,7 +12,6 @@ export interface TextRange {
 
 export interface Props {
   textSelection: TextSelection | undefined;
-  text: string;
 }
 
 export interface Position {
