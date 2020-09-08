@@ -63,7 +63,7 @@ export class Cursor extends React.Component<Props, State> {
           autoCapitalize={CursorConstants.textArea.autoCapitalize}
           onKeyDown={(event) => this.props.onKeyDown(event)}
           onChange={(event) => this.props.onTextChange(event)}
-          onCompositionStart={() => this.props.onTextCompositionStart()}
+          onCompositionStart={(event) => this.props.onTextCompositionStart(event)}
           onCompositionEnd={(event) => this.props.onTextCompositionEnd(event)}
           style={CursorConstants.textArea.style(top, left, cursorSize, textLength)}
         />

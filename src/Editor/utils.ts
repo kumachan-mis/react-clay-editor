@@ -105,7 +105,11 @@ export function handleOnChange(
   return [newText, newState];
 }
 
-export function handleOnCompositionStart(text: string, state: State): [string, State] {
+export function handleOnCompositionStart(
+  text: string,
+  state: State,
+  event: React.CompositionEvent<HTMLTextAreaElement>
+): [string, State] {
   if (!state.cursorCoordinate || state.isComposing) return [text, state];
   return [text, { ...state, isComposing: true }];
 }

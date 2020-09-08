@@ -106,9 +106,9 @@ export class Editor extends React.Component<Props, State> {
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
-              onTextCompositionStart={() => {
+              onTextCompositionStart={(event) => {
                 if (this.props.disabled) return;
-                const [text, state] = handleOnCompositionStart(this.props.text, this.state);
+                const [text, state] = handleOnCompositionStart(this.props.text, this.state, event);
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
