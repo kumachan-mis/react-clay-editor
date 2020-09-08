@@ -1,6 +1,8 @@
 import { State, SelectionWithMouse } from "./types";
 import { EditorConstants } from "./constants";
 
+import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
+import { selectionToRange } from "../Selection/utils";
 import { CursorCoordinate } from "../Cursor/types";
 import { TextLinesConstants } from "../TextLines/constants";
 
@@ -208,58 +210,12 @@ function insertText(
     return [newText, { ...state, cursorCoordinate, textSelection: undefined }];
   }
 
-  const { fixed, free } = state.textSelection;
-  const { start, end } = (() => {
-    if (fixed.lineIndex < free.lineIndex) return { start: fixed, end: free };
-    else if (fixed.lineIndex > free.lineIndex) return { start: free, end: fixed };
-    else if (fixed.charIndex <= free.charIndex) return { start: fixed, end: free };
-    else return { start: free, end: fixed };
-  })();
+  const { start, end } = selectionToRange(state.textSelection);
   const startIndex = cursorCoordinateToTextIndex(text, start);
   const endIndex = cursorCoordinateToTextIndex(text, end);
   const newText = text.substring(0, startIndex) + insertedText + text.substring(endIndex);
   const cursorCoordinate = moveCursor(newText, start, cursourMoveAmount);
   return [newText, { ...state, cursorCoordinate, textSelection: undefined }];
-}
-
-function moveCursor(text: string, coordinate: CursorCoordinate, amount: number): CursorCoordinate {
-  if (amount == 0) return coordinate;
-
-  const lines = text.split("\n");
-  let { lineIndex, charIndex } = { ...coordinate };
-  if (amount > 0) {
-    while (amount > 0) {
-      if (lineIndex == lines.length - 1) {
-        charIndex += Math.min(amount, lines[lineIndex].length - charIndex);
-        break;
-      }
-      if (charIndex + amount <= lines[lineIndex].length) {
-        charIndex += amount;
-        amount = 0;
-      } else {
-        amount -= lines[lineIndex].length - charIndex + 1;
-        lineIndex++;
-        charIndex = 0;
-      }
-    }
-  } else {
-    amount = -amount;
-    while (amount > 0) {
-      if (lineIndex == 0) {
-        charIndex -= Math.min(amount, charIndex);
-        break;
-      }
-      if (charIndex - amount >= 0) {
-        charIndex -= amount;
-        amount = 0;
-      } else {
-        amount -= charIndex + 1;
-        lineIndex--;
-        charIndex = lines[lineIndex].length;
-      }
-    }
-  }
-  return { lineIndex, charIndex };
 }
 
 function positionToCursorCoordinate(
@@ -295,18 +251,4 @@ function positionToCursorCoordinate(
   } else {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
   }
-}
-
-function cursorCoordinateToTextIndex(text: string, coordinate: CursorCoordinate): number {
-  const lines = text.split("\n");
-  let textIndex = 0;
-  for (let lineIndex = 0; lineIndex < coordinate.lineIndex; lineIndex++) {
-    textIndex += lines[lineIndex].length + 1;
-  }
-  textIndex += coordinate.charIndex;
-  return textIndex;
-}
-
-function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): boolean {
-  return a.lineIndex == b.lineIndex && a.charIndex == b.charIndex;
 }

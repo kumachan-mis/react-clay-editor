@@ -5,6 +5,11 @@ export interface TextSelection {
   free: CursorCoordinate;
 }
 
+export interface TextRange {
+  start: CursorCoordinate;
+  end: CursorCoordinate;
+}
+
 export interface Props {
   textSelection: TextSelection | undefined;
   text: string;
@@ -21,5 +26,5 @@ export interface State {
   topDivPosition: Position | undefined;
   centerDivPosition: Position | undefined;
   bottomDivPosition: Position | undefined;
-  textAreaPosition: Position | undefined;
+  textAreaPosition: Position;
 }
