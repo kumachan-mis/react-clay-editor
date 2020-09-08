@@ -12,11 +12,15 @@ export function getEditor(element: HTMLElement): HTMLElement | null {
   return element.closest(`.${EditorConstants.editor.className}`);
 }
 
-export function handleOnKeyDown(text: string, state: State, key: string): [string, State] {
-  if (!state.cursorCoordinate || state.isComposing) return [text, state];
-  if (key.length == 1) return insertText(text, state, key);
+export function handleOnKeyDown(
+  text: string,
+  state: State,
+  event: React.KeyboardEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate || state.isComposing || event.key.length == 1) return [text, state];
+  event.preventDefault();
 
-  switch (key) {
+  switch (event.key) {
     case "Enter": {
       const [newText, newState] = insertText(text, state, "\n");
       if (!newState.cursorCoordinate) return [newText, newState];
@@ -85,6 +89,32 @@ export function handleOnKeyDown(text: string, state: State, key: string): [strin
     default:
       return [text, state];
   }
+}
+
+export function handleOnChange(
+  text: string,
+  state: State,
+  event: React.ChangeEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate) return [text, state];
+  if (state.isComposing) return [text, { ...state, textAreaValue: event.target.value }];
+  const [newText, newState] = insertText(text, state, event.target.value);
+  return [newText, newState];
+}
+
+export function handleOnCompositionStart(text: string, state: State): [string, State] {
+  if (!state.cursorCoordinate || state.isComposing) return [text, state];
+  return [text, { ...state, isComposing: true }];
+}
+
+export function handleOnCompositionEnd(
+  text: string,
+  state: State,
+  event: React.CompositionEvent<HTMLTextAreaElement>
+): [string, State] {
+  if (!state.cursorCoordinate || !state.isComposing) return [text, state];
+  const [newText, newState] = insertText(text, state, event.data);
+  return [newText, { ...newState, textAreaValue: "", isComposing: false }];
 }
 
 export function handleOnMouseDown(
@@ -162,27 +192,6 @@ export function handleOnMouseUp(
 }
 
 export const handleOnMouseLeave = handleOnMouseUp;
-
-export function handleOnCompositionStart(text: string, state: State): [string, State] {
-  if (!state.cursorCoordinate || state.isComposing) return [text, state];
-
-  const textSelection = {
-    fixed: state.cursorCoordinate,
-    free: moveCursor(text, state.cursorCoordinate, -1),
-  };
-  const [newText, newState] = insertText(text, { ...state, textSelection }, "");
-  return [newText, { ...newState, isComposing: true }];
-}
-
-export function handleOnCompositionEnd(
-  text: string,
-  state: State,
-  dataText: string
-): [string, State] {
-  if (!state.cursorCoordinate || !state.isComposing) return [text, state];
-  const [newText, newState] = insertText(text, state, dataText);
-  return [newText, { ...newState, isComposing: false }];
-}
 
 function insertText(
   text: string,

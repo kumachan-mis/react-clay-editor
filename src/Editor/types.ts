@@ -31,7 +31,8 @@ export const enum SelectionWithMouse {
 
 export interface State {
   cursorCoordinate: CursorCoordinate | undefined;
-  selectionWithMouse: SelectionWithMouse;
+  textAreaValue: string;
   isComposing: boolean;
   textSelection: Selection | undefined;
+  selectionWithMouse: SelectionWithMouse;
 }

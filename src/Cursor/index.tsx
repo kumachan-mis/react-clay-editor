@@ -14,34 +14,35 @@ export class Cursor extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { position: [0, 0], textAreaValue: "", cursorSize: 0 };
+    this.state = { position: [0, 0], cursorSize: 0 };
     this.root = null;
     this.textArea = null;
   }
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
     if (!this.root || prevProps == this.props) return;
+    if (this.props.coordinate) this.textArea?.focus();
+
     const state = cursorPropsToState(this.props, this.state, this.root);
     if (state != this.state) this.setState(state);
-    if (this.props.coordinate) this.textArea?.focus();
+
     const editorRoot = getRoot(this.root);
-    if (editorRoot) {
-      if (this.handleOnEditorScroll) {
-        editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
-      }
-      this.handleOnEditorScroll = () => {
-        if (!this.root) return;
-        const state = handleOnEditorScroll(this.props, this.state, this.root);
-        if (state != this.state) this.setState(state);
-      };
-      editorRoot.addEventListener("scroll", this.handleOnEditorScroll);
+    if (!editorRoot) return;
+    if (this.handleOnEditorScroll) {
+      editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
     }
+    this.handleOnEditorScroll = () => {
+      if (!this.root) return;
+      const state = handleOnEditorScroll(this.props, this.state, this.root);
+      if (state != this.state) this.setState(state);
+    };
+    editorRoot.addEventListener("scroll", this.handleOnEditorScroll);
   }
 
   render(): React.ReactElement {
     const [top, left] = this.state.position;
     const { cursorSize } = this.state;
-    const textLength = this.state.textAreaValue.length;
+    const textLength = this.props.textAreaValue.length;
     return (
       <span ref={(root) => (this.root = root)}>
         <div
@@ -59,16 +60,14 @@ export class Cursor extends React.Component<Props, State> {
         </div>
         <textarea
           className={CursorConstants.textArea.className}
-          value={this.state.textAreaValue}
+          value={this.props.textAreaValue}
           wrap={CursorConstants.textArea.wrap}
           spellCheck={CursorConstants.textArea.spellCheck}
           autoCapitalize={CursorConstants.textArea.autoCapitalize}
-          onChange={(event) => this.setState({ textAreaValue: event.target.value })}
+          onKeyDown={(event) => this.props.onKeyDown(event)}
+          onChange={(event) => this.props.onTextChange(event)}
           onCompositionStart={() => this.props.onTextCompositionStart()}
-          onCompositionEnd={() => {
-            this.props.onTextCompositionEnd(this.state.textAreaValue);
-            this.setState({ textAreaValue: "" });
-          }}
+          onCompositionEnd={(event) => this.props.onTextCompositionEnd(event)}
           style={CursorConstants.textArea.style(top, left, cursorSize, textLength)}
           ref={(textArea) => (this.textArea = textArea)}
         />

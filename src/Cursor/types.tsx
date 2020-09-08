@@ -5,12 +5,15 @@ export interface CursorCoordinate {
 
 export interface Props {
   coordinate: CursorCoordinate | undefined;
+  textAreaValue: string;
+  isComposing: boolean;
+  onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onTextCompositionStart: () => void;
-  onTextCompositionEnd: (dataText: string) => void;
+  onTextCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
 }
 
 export interface State {
   position: [number, number];
   cursorSize: number;
-  textAreaValue: string;
 }

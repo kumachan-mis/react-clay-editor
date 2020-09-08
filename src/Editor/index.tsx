@@ -8,6 +8,7 @@ import {
   handleOnMouseUp,
   handleOnMouseLeave,
   handleOnKeyDown,
+  handleOnChange,
   handleOnCompositionStart,
   handleOnCompositionEnd,
 } from "./utils";
@@ -37,6 +38,7 @@ export class Editor extends React.Component<Props, State> {
     super(props);
     this.state = {
       cursorCoordinate: undefined,
+      textAreaValue: "",
       isComposing: false,
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Inactive,
@@ -46,11 +48,9 @@ export class Editor extends React.Component<Props, State> {
 
   componentDidMount(): void {
     document.addEventListener("mousedown", this.handleOnEditorBlur);
-    document.addEventListener("keydown", this.handleOnKeyDown);
   }
 
   componentWillUnmount(): void {
-    document.removeEventListener("keydown", this.handleOnKeyDown);
     document.removeEventListener("mousedown", this.handleOnEditorBlur);
   }
 
@@ -91,13 +91,29 @@ export class Editor extends React.Component<Props, State> {
           >
             <Cursor
               coordinate={this.state.cursorCoordinate}
+              textAreaValue={this.state.textAreaValue}
+              isComposing={this.state.isComposing}
+              onKeyDown={(event) => {
+                if (this.props.disabled) return;
+                const [text, state] = handleOnKeyDown(this.props.text, this.state, event);
+                if (state != this.state) this.setState(state);
+                if (text != this.props.text) this.props.onChangeText(text);
+              }}
+              onTextChange={(event) => {
+                if (this.props.disabled) return;
+                const [text, state] = handleOnChange(this.props.text, this.state, event);
+                if (state != this.state) this.setState(state);
+                if (text != this.props.text) this.props.onChangeText(text);
+              }}
               onTextCompositionStart={() => {
+                if (this.props.disabled) return;
                 const [text, state] = handleOnCompositionStart(this.props.text, this.state);
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
-              onTextCompositionEnd={(dataText) => {
-                const [text, state] = handleOnCompositionEnd(this.props.text, this.state, dataText);
+              onTextCompositionEnd={(event) => {
+                if (this.props.disabled) return;
+                const [text, state] = handleOnCompositionEnd(this.props.text, this.state, event);
                 if (state != this.state) this.setState(state);
                 if (text != this.props.text) this.props.onChangeText(text);
               }}
@@ -119,17 +135,14 @@ export class Editor extends React.Component<Props, State> {
     );
   }
 
-  private handleOnKeyDown = (event: KeyboardEvent) => {
-    if (this.props.disabled || !this.state.cursorCoordinate) return;
-    event.preventDefault();
-    const [text, state] = handleOnKeyDown(this.props.text, this.state, event.key);
-    if (state != this.state) this.setState(state);
-    if (text != this.props.text) this.props.onChangeText(text);
-  };
-
   private handleOnEditorBlur = (event: MouseEvent) => {
-    if (this.props.disabled) return;
-    const elements = document.elementsFromPoint(event.clientX, event.clientY);
-    if (this.root && !elements.includes(this.root)) this.setState({ cursorCoordinate: undefined });
+    if (
+      !this.props.disabled &&
+      this.state.cursorCoordinate &&
+      this.root &&
+      !this.root.contains(event.target as Node)
+    ) {
+      this.setState({ cursorCoordinate: undefined });
+    }
   };
 }
