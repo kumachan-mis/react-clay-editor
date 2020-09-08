@@ -57,7 +57,7 @@ export class Cursor extends React.Component<Props, State> {
         </div>
         <textarea
           className={CursorConstants.textArea.className}
-          defaultValue={this.props.textAreaValue}
+          value={this.props.textAreaValue}
           wrap={CursorConstants.textArea.wrap}
           spellCheck={CursorConstants.textArea.spellCheck}
           autoCapitalize={CursorConstants.textArea.autoCapitalize}
