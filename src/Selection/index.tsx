@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Props, State } from "./types";
 import { SelectionConstants } from "./constants";
-import { selectionPropsToState, getSelectedText } from "./utils";
+import { selectionPropsToState } from "./utils";
 import "../style.css";
 
 export class Selection extends React.Component<Props, State> {
@@ -14,7 +14,6 @@ export class Selection extends React.Component<Props, State> {
       topDivPosition: undefined,
       centerDivPosition: undefined,
       bottomDivPosition: undefined,
-      textAreaPosition: { top: 0, left: 0, width: 0, height: 0 },
     };
     this.root = null;
   }
@@ -26,8 +25,6 @@ export class Selection extends React.Component<Props, State> {
   }
 
   render(): React.ReactElement {
-    const textAreaValue = getSelectedText(this.props);
-
     return (
       <span ref={(root) => (this.root = root)}>
         {this.state.topDivPosition && (
@@ -48,16 +45,6 @@ export class Selection extends React.Component<Props, State> {
             style={SelectionConstants.div.style(this.state.bottomDivPosition)}
           />
         )}
-        {
-          <textarea
-            className={SelectionConstants.textArea.className}
-            defaultValue={textAreaValue}
-            wrap={SelectionConstants.textArea.wrap}
-            spellCheck={SelectionConstants.textArea.spellCheck}
-            autoCapitalize={SelectionConstants.textArea.autoCapitalize}
-            style={SelectionConstants.textArea.style(this.state.textAreaPosition)}
-          />
-        }
       </span>
     );
   }

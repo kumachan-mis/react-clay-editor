@@ -26,5 +26,4 @@ export interface State {
   topDivPosition: Position | undefined;
   centerDivPosition: Position | undefined;
   bottomDivPosition: Position | undefined;
-  textAreaPosition: Position;
 }
