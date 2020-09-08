@@ -97,7 +97,9 @@ export function handleOnKeyDown(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   const command = shortcutCommand(event);
-  if (!state.cursorCoordinate || state.isComposing || !command) return [text, state];
+  if (!state.cursorCoordinate || state.isComposing || (event.key.length == 1 && !command)) {
+    return [text, state];
+  }
   event.preventDefault();
 
   switch (event.key) {
@@ -301,24 +303,25 @@ function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>): "sele
 
 function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
-    (!isMacOS() ? event.ctrlKey : event.metaKey) &&
+    (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
     !event.altKey &&
     !event.shiftKey &&
     event.key == "a"
   );
 }
 
-function handleOnShortcut(text: string, state: State, command: "selectAll"): [string, State] {
+function handleOnShortcut(text: string, state: State, command: "selectAll" | ""): [string, State] {
   if (command == "selectAll") return handleOnSelectAll(text, state);
   return [text, state];
 }
 
 function handleOnSelectAll(text: string, state: State): [string, State] {
+  console.log("handleOnSelectAll");
   if (!state.cursorCoordinate) return [text, state];
   const lines = text.split("\n");
   const textSelection = {
     fixed: { lineIndex: 0, charIndex: 0 },
     free: { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length },
   };
-  return [text, { textSelection, ...state }];
+  return [text, { ...state, textSelection }];
 }
