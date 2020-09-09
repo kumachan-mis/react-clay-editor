@@ -23,13 +23,6 @@ export interface Props {
   style?: React.CSSProperties;
 }
 
-export interface State {
-  cursorCoordinate: CursorCoordinate | undefined;
-  textAreaValue: string;
-  isComposing: boolean;
-  textSelection: TextSelection | undefined;
-}
-
 export const enum SelectionWithMouse {
   Inactive,
   Started,
@@ -48,7 +41,11 @@ export type EditAction =
       text: string;
     };
 
-export interface OptionState {
+export interface State {
+  cursorCoordinate: CursorCoordinate | undefined;
+  textAreaValue: string;
+  isComposing: boolean;
+  textSelection: TextSelection | undefined;
   selectionWithMouse: SelectionWithMouse;
   historyHead: number;
   editActionHistory: EditAction[];

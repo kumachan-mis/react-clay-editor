@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, TaggedLink, OptionState, SelectionWithMouse } from "./types";
+import { Props, State, TaggedLink, SelectionWithMouse } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -35,7 +35,6 @@ export class Editor extends React.Component<Props, State> {
     hashTagProps: () => ({}),
     taggedLinkMap: {},
   };
-  private option: OptionState;
   private root: HTMLDivElement | null;
 
   constructor(props: Props) {
@@ -45,9 +44,6 @@ export class Editor extends React.Component<Props, State> {
       textAreaValue: "",
       isComposing: false,
       textSelection: undefined,
-    };
-
-    this.option = {
       selectionWithMouse: SelectionWithMouse.Inactive,
       historyHead: -1,
       editActionHistory: [],
@@ -109,33 +105,25 @@ export class Editor extends React.Component<Props, State> {
     handler: (
       text: string,
       state: State,
-      option: OptionState,
       pos: [number, number],
       root: HTMLElement | null
-    ) => [string, State, OptionState]
+    ) => [string, State]
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
       const position: [number, number] = [event.clientX, event.clientY];
-      const { state, root } = this;
-      const [text, newState, option] = handler(this.props.text, state, this.option, position, root);
-      if (newState != state) this.setState(newState);
+      const [text, state] = handler(this.props.text, this.state, position, this.root);
+      if (state != this.state) this.setState(state);
       if (text != this.props.text) this.props.onChangeText(text);
-      this.option = option;
     };
   };
 
   private createCursorEventHandler = <Event,>(
-    handler: (
-      text: string,
-      state: State,
-      option: OptionState,
-      event: Event
-    ) => [string, State, OptionState]
+    handler: (text: string, state: State, event: Event) => [string, State]
   ): ((event: Event) => void) => {
     return (event) => {
       if (this.props.disabled) return;
-      const [text, state] = handler(this.props.text, this.state, this.option, event);
+      const [text, state] = handler(this.props.text, this.state, event);
       if (state != this.state) this.setState(state);
       if (text != this.props.text) this.props.onChangeText(text);
     };
