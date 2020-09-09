@@ -4,7 +4,6 @@ import { Editor } from "../../src";
 
 const defaultText = [
   "[*** React Realtime Markup Editor]",
-  "[** What's this?]",
   "A text document editor which is syntactically formattable in real time",
   "",
   " You can use itemizations",
@@ -13,6 +12,14 @@ const defaultText = [
   "  You can also use nested itemizations",
   "  by just typing multiple spaces",
   "  like this",
+  "",
+  "[** Some shortcut commands are supported]",
+  " select all",
+  " cut",
+  " copy",
+  " paste",
+  " undo",
+  " redo",
   "",
   "[** Some text decorations are supported]",
   " [* bold]",
@@ -25,8 +32,10 @@ const defaultText = [
   "and so on",
   "",
   "[** Links are supported]",
-  " bracket-link: [react-realtime-markup-editor]",
-  " hash-tag-link: #react-realtime-markup-editor",
+  " bracket-link",
+  "  [react-realtime-markup-editor]",
+  " hash-tag-link",
+  "  #react-realtime-markup-editor",
   " tagged-link",
   "  [github: @kumachan-mis/react-realtime-markup-editor]",
   "  [npm: react-realtime-markup-editor]",
@@ -35,13 +44,14 @@ const defaultText = [
 
 const defaultSubText = [
   "[** Of course, you can use multiple editors]",
-  "[disabled-bracket-link]",
-  "#disabled-hash-tag-link",
+  "[* Links can be disabled]",
+  " [disabled-bracket-link]",
+  " #disabled-hash-tag-link",
   "More features are comming soon...",
 ].join("\n");
 
 const style: React.CSSProperties = { width: "800px", height: "500px", margin: "20px" };
-const sunStyle: React.CSSProperties = { width: "800px", height: "100px", margin: "20px" };
+const sunStyle: React.CSSProperties = { width: "800px", height: "150px", margin: "20px" };
 
 export const App: React.FC = () => {
   const [text, setText] = React.useState(defaultText);

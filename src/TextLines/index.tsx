@@ -142,7 +142,7 @@ export class TextLines extends React.Component<Props> {
         const bracketLinkCharSpans = [
           ...[...facingMeta].map((char: string, index: number) => (
             <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-              {cursorOn ? char : ""}
+              {this.props.bracketLinkDisabled || cursorOn ? char : ""}
             </span>
           )),
           ...[...linkName].map((char: string, index: number) => (
@@ -158,7 +158,7 @@ export class TextLines extends React.Component<Props> {
               key={to - array.length + index}
               className={charConstants.className(lineIndex, to - array.length + index)}
             >
-              {cursorOn ? char : ""}
+              {this.props.bracketLinkDisabled || cursorOn ? char : ""}
             </span>
           )),
         ];
