@@ -6,7 +6,7 @@ const defaultText = [
   "[*** React Realtime Markup Editor]",
   "A text document editor which is syntactically formattable in real time",
   "",
-  "[** itemizations]",
+  "[** Itemizations]",
   " You can use itemizations",
   " by just typing a space",
   " like this",
