@@ -29,12 +29,26 @@ export const enum SelectionWithMouse {
   Active,
 }
 
+export type EditAction =
+  | {
+      actionType: "insert";
+      coordinate: CursorCoordinate;
+      text: string;
+    }
+  | {
+      actionType: "delete";
+      coordinate: CursorCoordinate;
+      text: string;
+    };
+
 export interface State {
   cursorCoordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   isComposing: boolean;
   textSelection: TextSelection | undefined;
   selectionWithMouse: SelectionWithMouse;
+  historyHead: number;
+  editActionHistory: EditAction[];
 }
 
-export type ShortcutCommand = "selectAll";
+export type ShortcutCommand = "selectAll" | "undo" | "redo";

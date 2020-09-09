@@ -57,7 +57,7 @@ export const TextLinesConstants = {
     classNameRegex: /^.*React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<charIndex>\d+).*$/,
   },
   regexes: {
-    indent: /^(?<indent>[ ]*)(?<content>([^ ].*)?)$/,
+    indent: /^(?<indent>[ \t]*)(?<content>([^ ].*)?)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {
       const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

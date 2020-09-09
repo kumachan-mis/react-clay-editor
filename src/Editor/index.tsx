@@ -45,7 +45,10 @@ export class Editor extends React.Component<Props, State> {
       isComposing: false,
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Inactive,
+      historyHead: -1,
+      editActionHistory: [],
     };
+
     this.root = null;
   }
 
@@ -108,8 +111,8 @@ export class Editor extends React.Component<Props, State> {
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
-      const pos: [number, number] = [event.clientX, event.clientY];
-      const [text, state] = handler(this.props.text, this.state, pos, this.root);
+      const position: [number, number] = [event.clientX, event.clientY];
+      const [text, state] = handler(this.props.text, this.state, position, this.root);
       if (state != this.state) this.setState(state);
       if (text != this.props.text) this.props.onChangeText(text);
     };
