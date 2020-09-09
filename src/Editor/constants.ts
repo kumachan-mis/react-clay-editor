@@ -5,4 +5,5 @@ export const EditorConstants = {
   editor: {
     className: "React-Realtime-Markup-Editor-editor",
   },
+  historyMaxLength: 50,
 };

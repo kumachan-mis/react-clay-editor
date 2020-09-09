@@ -90,163 +90,171 @@ export const handleOnMouseLeave = handleOnMouseUp;
 export function handleOnKeyDown(
   text: string,
   state: State,
+  option: OptionState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, State, OptionState] {
   const command = shortcutCommand(event);
   if (!state.cursorCoordinate || state.isComposing || (event.key.length == 1 && !command)) {
-    return [text, state];
+    return [text, state, option];
   }
   event.preventDefault();
 
   switch (event.key) {
     case "Enter": {
-      const [newText, newState] = insertText(text, state, "\n");
-      if (!newState.cursorCoordinate) return [newText, newState];
+      const [newText, newState, newOption] = insertText(text, state, option, "\n");
+      if (!newState.cursorCoordinate) return [newText, newState, newOption];
 
       const newLines = newText.split("\n");
       const prevLine = newLines[newState.cursorCoordinate.lineIndex - 1];
       const regex = TextLinesConstants.regexes.indent;
       const { indent, content } = prevLine.match(regex)?.groups as Record<string, string>;
       if (indent.length == 0) {
-        return [newText, newState];
+        return [newText, newState, newOption];
       } else if (content.length > 0) {
-        return insertText(newText, newState, indent);
+        return insertText(newText, newState, newOption, indent);
       } else {
         const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -indent.length - 1);
         const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
-        return insertText(newText, { ...newState, textSelection }, "");
+        return insertText(newText, { ...newState, textSelection }, newOption, "");
       }
     }
     case "Tab": {
-      const [newText, newState] = insertText(text, state, "\t");
-      if (!newState.cursorCoordinate) return [newText, newState];
+      const [newText, newState, newOption] = insertText(text, state, option, "\t");
+      if (!newState.cursorCoordinate) return [newText, newState, newOption];
 
       const newLines = newText.split("\n");
       const { lineIndex, charIndex } = newState.cursorCoordinate;
       const currentLine = newLines[lineIndex];
-      if (!/^ *$/.test(currentLine.substring(0, charIndex - 1))) return [newText, newState];
-
+      if (!/^ *$/.test(currentLine.substring(0, charIndex - 1))) {
+        return [newText, newState, newOption];
+      }
       const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -1);
       const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
-      return insertText(newText, { ...newState, textSelection }, " ");
+      return insertText(newText, { ...newState, textSelection }, newOption, " ");
     }
     case "Backspace": {
-      if (state.textSelection) return insertText(text, state, "");
+      if (state.textSelection) return insertText(text, state, option, "");
       const backCoordinate = moveCursor(text, state.cursorCoordinate, -1);
       const textSelection = { fixed: state.cursorCoordinate, free: backCoordinate };
-      return insertText(text, { ...state, textSelection }, "");
+      return insertText(text, { ...state, textSelection }, option, "");
     }
     case "ArrowUp": {
       const lines = text.split("\n");
       const prevLine = lines[state.cursorCoordinate.lineIndex - 1];
-      if (prevLine === undefined) return [text, state];
+      if (prevLine === undefined) return [text, state, option];
       const cursorCoordinate = {
         lineIndex: state.cursorCoordinate.lineIndex - 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, prevLine.length),
       };
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }, option];
     }
     case "ArrowDown": {
       const lines = text.split("\n");
       const nextLine = lines[state.cursorCoordinate.lineIndex + 1];
-      if (nextLine === undefined) return [text, state];
+      if (nextLine === undefined) return [text, state, option];
       const cursorCoordinate = {
         lineIndex: state.cursorCoordinate.lineIndex + 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, nextLine.length),
       };
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }, option];
     }
     case "ArrowLeft": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }, option];
     }
     case "ArrowRight": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [text, { ...state, cursorCoordinate, textSelection: undefined }, option];
     }
     default:
-      return handleOnShortcut(text, state, command);
+      return handleOnShortcut(text, state, option, command);
   }
 }
 
 export function handleOnChange(
   text: string,
   state: State,
+  option: OptionState,
   event: React.ChangeEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate) return [text, state];
-  if (state.isComposing) return [text, { ...state, textAreaValue: event.target.value }];
-  const [newText, newState] = insertText(text, state, event.target.value);
-  return [newText, newState];
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate) return [text, state, option];
+  if (state.isComposing) return [text, { ...state, textAreaValue: event.target.value }, option];
+  return insertText(text, state, option, event.target.value);
 }
 
 export function handleOnCompositionStart(
   text: string,
   state: State,
+  option: OptionState,
   event: React.CompositionEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || state.isComposing) return [text, state];
-  return [text, { ...state, isComposing: true }];
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate || state.isComposing) return [text, state, option];
+  return [text, { ...state, isComposing: true }, option];
 }
 
 export function handleOnCompositionEnd(
   text: string,
   state: State,
+  option: OptionState,
   event: React.CompositionEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || !state.isComposing) return [text, state];
-  const [newText, newState] = insertText(text, state, event.data);
-  return [newText, { ...newState, textAreaValue: "", isComposing: false }];
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate || !state.isComposing) return [text, state, option];
+  const [newText, newState, newOption] = insertText(text, state, option, event.data);
+  return [newText, { ...newState, textAreaValue: "", isComposing: false }, newOption];
 }
 
 export function handleOnCut(
   text: string,
   state: State,
+  option: OptionState,
   event: React.ClipboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || !state.textSelection) return [text, state];
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate || !state.textSelection) return [text, state, option];
   event.preventDefault();
   const selectedText = getSelectedText(state.textSelection, text);
   event.clipboardData.setData("text/plain", selectedText);
-  return insertText(text, state, "");
+  return insertText(text, state, option, "");
 }
 
 export function handleOnCopy(
   text: string,
   state: State,
+  option: OptionState,
   event: React.ClipboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || !state.textSelection) return [text, state];
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate || !state.textSelection) return [text, state, option];
   event.preventDefault();
   const selectedText = getSelectedText(state.textSelection, text);
   event.clipboardData.setData("text/plain", selectedText);
-  return [text, state];
+  return [text, state, option];
 }
 
 export function handleOnPaste(
   text: string,
   state: State,
+  option: OptionState,
   event: React.ClipboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate) return [text, state];
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate) return [text, state, option];
   event.preventDefault();
   const textToPaste = event.clipboardData.getData("text");
-  return insertText(text, state, textToPaste);
+  return insertText(text, state, option, textToPaste);
 }
 
 function insertText(
   text: string,
   state: State,
+  option: OptionState,
   insertedText: string,
   cursourMoveAmount = insertedText.length
-): [string, State] {
-  if (!state.cursorCoordinate) return [text, state];
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate) return [text, state, option];
 
   if (!state.textSelection) {
     const insertIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
     const newText = text.substring(0, insertIndex) + insertedText + text.substring(insertIndex);
     const cursorCoordinate = moveCursor(newText, state.cursorCoordinate, cursourMoveAmount);
-    return [newText, { ...state, cursorCoordinate, textSelection: undefined }];
+    return [newText, { ...state, cursorCoordinate, textSelection: undefined }, option];
   }
 
   const { start, end } = selectionToRange(state.textSelection);
@@ -254,7 +262,7 @@ function insertText(
   const endIndex = cursorCoordinateToTextIndex(text, end);
   const newText = text.substring(0, startIndex) + insertedText + text.substring(endIndex);
   const cursorCoordinate = moveCursor(newText, start, cursourMoveAmount);
-  return [newText, { ...state, cursorCoordinate, textSelection: undefined }];
+  return [newText, { ...state, cursorCoordinate, textSelection: undefined }, option];
 }
 
 function positionToCursorCoordinate(
@@ -297,34 +305,75 @@ function shortcutCommand(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): ShortcutCommand | undefined {
   if (selectAllTriggered(event)) return "selectAll";
+  if (undoTriggered(event)) return "undo";
+  if (redoTriggered(event)) return "redo";
   return undefined;
 }
 
 function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
     (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
+    event.key == "a" &&
     !event.altKey &&
-    !event.shiftKey &&
-    event.key == "a"
+    !event.shiftKey
+  );
+}
+
+function undoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
+  return (
+    (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
+    event.key == "z" &&
+    !event.altKey &&
+    !event.shiftKey
+  );
+}
+
+function redoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
+  return (
+    (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
+    ((event.shiftKey && event.key == "z") || (!event.shiftKey && event.key == "y")) &&
+    !event.altKey
   );
 }
 
 function handleOnShortcut(
   text: string,
   state: State,
+  option: OptionState,
   command: ShortcutCommand | undefined
-): [string, State] {
-  if (command == "selectAll") return handleOnSelectAll(text, state);
-  return [text, state];
+): [string, State, OptionState] {
+  if (command == "selectAll") return handleOnSelectAll(text, state, option);
+  if (command == "undo") return handleOnUndo(text, state, option);
+  if (command == "redo") return handleOnRedo(text, state, option);
+  return [text, state, option];
 }
 
-function handleOnSelectAll(text: string, state: State): [string, State] {
-  console.log("handleOnSelectAll");
-  if (!state.cursorCoordinate) return [text, state];
+function handleOnSelectAll(
+  text: string,
+  state: State,
+  option: OptionState
+): [string, State, OptionState] {
+  if (!state.cursorCoordinate) return [text, state, option];
   const lines = text.split("\n");
   const textSelection = {
     fixed: { lineIndex: 0, charIndex: 0 },
     free: { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length },
   };
-  return [text, { ...state, textSelection }];
+  return [text, { ...state, textSelection }, option];
+}
+
+function handleOnUndo(
+  text: string,
+  state: State,
+  option: OptionState
+): [string, State, OptionState] {
+  return [text, state, option];
+}
+
+function handleOnRedo(
+  text: string,
+  state: State,
+  option: OptionState
+): [string, State, OptionState] {
+  return [text, state, option];
 }

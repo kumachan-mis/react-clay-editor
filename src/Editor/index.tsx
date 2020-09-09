@@ -46,10 +46,13 @@ export class Editor extends React.Component<Props, State> {
       isComposing: false,
       textSelection: undefined,
     };
+
     this.option = {
       selectionWithMouse: SelectionWithMouse.Inactive,
+      historyHead: undefined,
       editActionHistory: [],
     };
+
     this.root = null;
   }
 
@@ -123,11 +126,16 @@ export class Editor extends React.Component<Props, State> {
   };
 
   private createCursorEventHandler = <Event,>(
-    handler: (text: string, state: State, event: Event) => [string, State]
+    handler: (
+      text: string,
+      state: State,
+      option: OptionState,
+      event: Event
+    ) => [string, State, OptionState]
   ): ((event: Event) => void) => {
     return (event) => {
       if (this.props.disabled) return;
-      const [text, state] = handler(this.props.text, this.state, event);
+      const [text, state] = handler(this.props.text, this.state, this.option, event);
       if (state != this.state) this.setState(state);
       if (text != this.props.text) this.props.onChangeText(text);
     };

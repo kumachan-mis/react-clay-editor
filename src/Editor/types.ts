@@ -44,13 +44,14 @@ export type EditAction =
     }
   | {
       actionType: "delete";
-      fromTextIndex: number;
-      toTextIndex: string;
+      textIndex: number;
+      text: string;
     };
 
 export interface OptionState {
   selectionWithMouse: SelectionWithMouse;
+  historyHead: number | undefined;
   editActionHistory: EditAction[];
 }
 
-export type ShortcutCommand = "selectAll";
+export type ShortcutCommand = "selectAll" | "undo" | "redo";
