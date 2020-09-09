@@ -49,7 +49,7 @@ export class Editor extends React.Component<Props, State> {
 
     this.option = {
       selectionWithMouse: SelectionWithMouse.Inactive,
-      historyHead: undefined,
+      historyHead: -1,
       editActionHistory: [],
     };
 

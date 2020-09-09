@@ -1,4 +1,4 @@
-import { State, OptionState, SelectionWithMouse, ShortcutCommand } from "./types";
+import { State, OptionState, SelectionWithMouse, EditAction, ShortcutCommand } from "./types";
 import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
@@ -98,8 +98,12 @@ export function handleOnKeyDown(
     return [text, state, option];
   }
   event.preventDefault();
+  console.log("handleOnKeyDown");
 
   switch (event.key) {
+    case "Tab": {
+      return insertText(text, state, option, "\t");
+    }
     case "Enter": {
       const [newText, newState, newOption] = insertText(text, state, option, "\n");
       if (!newState.cursorCoordinate) return [newText, newState, newOption];
@@ -117,20 +121,6 @@ export function handleOnKeyDown(
         const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
         return insertText(newText, { ...newState, textSelection }, newOption, "");
       }
-    }
-    case "Tab": {
-      const [newText, newState, newOption] = insertText(text, state, option, "\t");
-      if (!newState.cursorCoordinate) return [newText, newState, newOption];
-
-      const newLines = newText.split("\n");
-      const { lineIndex, charIndex } = newState.cursorCoordinate;
-      const currentLine = newLines[lineIndex];
-      if (!/^ *$/.test(currentLine.substring(0, charIndex - 1))) {
-        return [newText, newState, newOption];
-      }
-      const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -1);
-      const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
-      return insertText(newText, { ...newState, textSelection }, newOption, " ");
     }
     case "Backspace": {
       if (state.textSelection) return insertText(text, state, option, "");
@@ -254,15 +244,36 @@ function insertText(
     const insertIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
     const newText = text.substring(0, insertIndex) + insertedText + text.substring(insertIndex);
     const cursorCoordinate = moveCursor(newText, state.cursorCoordinate, cursourMoveAmount);
-    return [newText, { ...state, cursorCoordinate, textSelection: undefined }, option];
+    const newOption = addEditActions(option, [
+      { actionType: "insert", coordinate: state.cursorCoordinate, text: insertedText },
+    ]);
+    return [newText, { ...state, cursorCoordinate, textSelection: undefined }, newOption];
   }
 
   const { start, end } = selectionToRange(state.textSelection);
   const startIndex = cursorCoordinateToTextIndex(text, start);
   const endIndex = cursorCoordinateToTextIndex(text, end);
+  const deletedText = text.substring(startIndex, endIndex);
   const newText = text.substring(0, startIndex) + insertedText + text.substring(endIndex);
   const cursorCoordinate = moveCursor(newText, start, cursourMoveAmount);
-  return [newText, { ...state, cursorCoordinate, textSelection: undefined }, option];
+  const newOption = addEditActions(option, [
+    { actionType: "delete", coordinate: start, text: deletedText },
+    { actionType: "insert", coordinate: start, text: insertedText },
+  ]);
+  return [newText, { ...state, cursorCoordinate, textSelection: undefined }, newOption];
+}
+
+function addEditActions(option: OptionState, actions: EditAction[]): OptionState {
+  if (option.historyHead === undefined) {
+    return { ...option, editActionHistory: actions, historyHead: actions.length - 1 };
+  }
+  const { editActionHistory, historyHead } = option;
+  const concatedHistory = [...editActionHistory.slice(0, historyHead + 1), ...actions];
+  const newHistory = concatedHistory.slice(
+    Math.max(0, concatedHistory.length - EditorConstants.historyMaxLength),
+    concatedHistory.length
+  );
+  return { ...option, editActionHistory: newHistory, historyHead: newHistory.length - 1 };
 }
 
 function positionToCursorCoordinate(
@@ -342,10 +353,16 @@ function handleOnShortcut(
   option: OptionState,
   command: ShortcutCommand | undefined
 ): [string, State, OptionState] {
-  if (command == "selectAll") return handleOnSelectAll(text, state, option);
-  if (command == "undo") return handleOnUndo(text, state, option);
-  if (command == "redo") return handleOnRedo(text, state, option);
-  return [text, state, option];
+  switch (command) {
+    case "selectAll":
+      return handleOnSelectAll(text, state, option);
+    case "undo":
+      return handleOnUndo(text, state, option);
+    case "redo":
+      return handleOnRedo(text, state, option);
+    default:
+      return [text, state, option];
+  }
 }
 
 function handleOnSelectAll(
@@ -367,6 +384,29 @@ function handleOnUndo(
   state: State,
   option: OptionState
 ): [string, State, OptionState] {
+  const { editActionHistory, historyHead } = option;
+  if (historyHead == -1 || state.textAreaValue != "") return [text, state, option];
+
+  const action = editActionHistory[historyHead];
+  if (action.actionType == "insert") {
+    const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+    const endIndex = startIndex + action.text.length;
+    const newText = text.substring(0, startIndex) + text.substring(endIndex);
+    return [
+      newText,
+      { ...state, cursorCoordinate: action.coordinate, textSelection: undefined },
+      { ...option, historyHead: historyHead - 1 },
+    ];
+  } else if (action.actionType == "delete") {
+    const insertIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+    const newText = text.substring(0, insertIndex) + action.text + text.substring(insertIndex);
+    const cursorCoordinate = moveCursor(newText, action.coordinate, action.text.length);
+    return [
+      newText,
+      { ...state, cursorCoordinate, textSelection: undefined },
+      { ...option, historyHead: historyHead - 1 },
+    ];
+  }
   return [text, state, option];
 }
 
@@ -375,5 +415,31 @@ function handleOnRedo(
   state: State,
   option: OptionState
 ): [string, State, OptionState] {
+  const { editActionHistory, historyHead } = option;
+  if (historyHead == editActionHistory.length - 1 || state.textAreaValue != "") {
+    return [text, state, option];
+  }
+
+  const action = editActionHistory[historyHead + 1];
+  if (action.actionType == "insert") {
+    const insertIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+    const newText = text.substring(0, insertIndex) + action.text + text.substring(insertIndex);
+    const cursorCoordinate = moveCursor(newText, action.coordinate, action.text.length);
+    return [
+      newText,
+      { ...state, cursorCoordinate, textSelection: undefined },
+      { ...option, historyHead: historyHead + 1 },
+    ];
+  } else if (action.actionType == "delete") {
+    const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+    const endIndex = startIndex + action.text.length;
+    const newText = text.substring(0, startIndex) + text.substring(endIndex);
+    return [
+      newText,
+      { ...state, cursorCoordinate: action.coordinate, textSelection: undefined },
+      { ...option, historyHead: historyHead + 1 },
+    ];
+  }
+
   return [text, state, option];
 }

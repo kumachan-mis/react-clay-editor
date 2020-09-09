@@ -38,19 +38,19 @@ export const enum SelectionWithMouse {
 
 export type EditAction =
   | {
-      actionType: "add";
-      textIndex: number;
+      actionType: "insert";
+      coordinate: CursorCoordinate;
       text: string;
     }
   | {
       actionType: "delete";
-      textIndex: number;
+      coordinate: CursorCoordinate;
       text: string;
     };
 
 export interface OptionState {
   selectionWithMouse: SelectionWithMouse;
-  historyHead: number | undefined;
+  historyHead: number;
   editActionHistory: EditAction[];
 }
 
