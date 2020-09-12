@@ -6,20 +6,20 @@ export { Decoration };
 
 export interface BracketLinkProps {
   anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  suggestions?: [];
+  suggestions?: string[];
   disabled?: boolean;
 }
 
 export interface HashTagProps {
   anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  suggestions?: [];
+  suggestions?: string[];
   disabled?: boolean;
 }
 
 export interface TaggedLinkProps {
   linkNameRegex?: RegExp;
   anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  suggestions?: [];
+  suggestions?: string[];
   tagHidden?: boolean;
 }
 
