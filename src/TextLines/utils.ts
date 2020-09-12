@@ -1,7 +1,7 @@
 import { TextLinesConstants } from "./constants";
 import {
   DecorationSetting,
-  TaggedLinkMap,
+  TaggedLinkPropsMap,
   ContentWithIndent,
   DecorationStyle,
   Node,
@@ -44,11 +44,11 @@ export function parseLine(line: string): ContentWithIndent {
 
 export function parseContent(
   content: string,
-  taggedLinkMap: TaggedLinkMap,
+  taggedLinkPropsMap: TaggedLinkPropsMap,
   indentDepth: number
 ): Node[] {
-  const taggedLinkRegexes = Object.entries(taggedLinkMap).map(([tagName, link]) =>
-    TextLinesConstants.regexes.taggedLink(tagName, link.linkNameRegex)
+  const taggedLinkRegexes = Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
+    TextLinesConstants.regexes.taggedLink(tagName, linkProps.linkNameRegex)
   );
   return parseText(content, { offset: indentDepth, nested: false, taggedLinkRegexes });
 }

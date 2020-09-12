@@ -4,9 +4,22 @@ import { DecorationSetting as Decoration } from "../TextLines/types";
 
 export { Decoration };
 
-export interface TaggedLink {
+export interface BracketLinkProps {
+  anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  suggestions?: [];
+  disabled?: boolean;
+}
+
+export interface HashTagProps {
+  anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  suggestions?: [];
+  disabled?: boolean;
+}
+
+export interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  props?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  suggestions?: [];
   tagHidden?: boolean;
 }
 
@@ -14,11 +27,9 @@ export interface Props {
   text: string;
   onChangeText: (text: string) => void;
   decoration?: Decoration;
-  bracketLinkProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  bracketLinkDisabled?: boolean;
-  hashTagProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  hashTagDisabled?: boolean;
-  taggedLinkMap?: { [tagName: string]: TaggedLink };
+  bracketLinkProps?: BracketLinkProps;
+  hashTagProps?: HashTagProps;
+  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
   disabled?: boolean;
   style?: React.CSSProperties;
 }

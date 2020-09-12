@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, TaggedLink } from "./types";
+import { Props, State, BracketLinkProps, HashTagProps, TaggedLinkProps } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -23,18 +23,16 @@ import { TextLines } from "../TextLines";
 import { SelectionWithMouse } from "../Selection/types";
 import { DecorationSetting } from "../TextLines/types";
 
-type AnnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
-
 export class Editor extends React.Component<Props, State> {
   static readonly defaultProps: Required<
-    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkMap">
+    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkPropsMap">
   > = {
     decoration: {
       fontSizes: { level1: 16, level2: 20, level3: 24 },
     },
-    bracketLinkProps: () => ({}),
-    hashTagProps: () => ({}),
-    taggedLinkMap: {},
+    bracketLinkProps: {},
+    hashTagProps: {},
+    taggedLinkPropsMap: {},
   };
   private root: HTMLDivElement | null;
 
@@ -89,11 +87,11 @@ export class Editor extends React.Component<Props, State> {
             <TextLines
               text={this.props.text}
               decoration={this.props.decoration as DecorationSetting}
-              bracketLinkProps={this.props.bracketLinkProps as (linkName: string) => AnnchorProps}
-              bracketLinkDisabled={this.props.bracketLinkDisabled}
-              hashTagProps={this.props.hashTagProps as (hashTagName: string) => AnnchorProps}
-              hashTagDisabled={this.props.hashTagDisabled}
-              taggedLinkMap={this.props.taggedLinkMap as { [tag: string]: TaggedLink }}
+              bracketLinkProps={this.props.bracketLinkProps as BracketLinkProps}
+              hashTagProps={this.props.hashTagProps as HashTagProps}
+              taggedLinkPropsMap={
+                this.props.taggedLinkPropsMap as { [tag: string]: TaggedLinkProps }
+              }
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>

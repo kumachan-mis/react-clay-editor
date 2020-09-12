@@ -1,20 +1,18 @@
-import { TaggedLink } from "../Editor/types";
+import { BracketLinkProps, HashTagProps, TaggedLinkProps } from "../Editor/types";
 import { CursorCoordinate } from "../Cursor/types";
 
 export interface DecorationSetting {
   fontSizes: Record<"level1" | "level2" | "level3", number>;
 }
 
-export type TaggedLinkMap = { [tagName: string]: TaggedLink };
+export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };
 
 export interface Props {
   text: string;
   decoration: DecorationSetting;
-  bracketLinkProps: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  bracketLinkDisabled?: boolean;
-  hashTagProps: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  hashTagDisabled?: boolean;
-  taggedLinkMap: TaggedLinkMap;
+  bracketLinkProps: BracketLinkProps;
+  hashTagProps: HashTagProps;
+  taggedLinkPropsMap: TaggedLinkPropsMap;
   cursorCoordinate: CursorCoordinate | undefined;
 }
 
