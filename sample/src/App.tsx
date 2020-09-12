@@ -62,18 +62,22 @@ export const App: React.FC = () => {
       <Editor
         text={text}
         onChangeText={setText}
-        bracketLinkProps={(linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` })}
-        hashTagProps={(hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` })}
-        taggedLinkMap={{
+        bracketLinkProps={{
+          anchorProps: (linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` }),
+        }}
+        hashTagProps={{
+          anchorProps: (hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` }),
+        }}
+        taggedLinkPropsMap={{
           github: {
             linkNameRegex: /@[^[\]]+\/[^[\]]+/,
-            props: (linkName) => ({
+            anchorProps: (linkName) => ({
               href: `https://github.com/${linkName.substring(1)}`,
               style: { color: "#121B31", textDecoration: "underline" },
             }),
           },
           npm: {
-            props: (linkName) => ({
+            anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,
               style: { color: "#F75E8A", textDecoration: "underline" },
             }),
@@ -84,8 +88,8 @@ export const App: React.FC = () => {
       <Editor
         text={subText}
         onChangeText={setSubText}
-        bracketLinkDisabled
-        hashTagDisabled
+        bracketLinkProps={{ disabled: true }}
+        hashTagProps={{ disabled: true }}
         style={sunStyle}
       />
     </>
