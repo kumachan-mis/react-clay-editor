@@ -19,7 +19,12 @@ export interface Props {
   onTextCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
 }
 
+export interface Position {
+  top: number;
+  left: number;
+}
+
 export interface State {
-  position: [number, number];
+  position: Position;
   cursorSize: number;
 }

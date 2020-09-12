@@ -13,7 +13,7 @@ export class Cursor extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { position: [0, 0], cursorSize: 0 };
+    this.state = { position: { top: 0, left: 0 }, cursorSize: 0 };
     this.root = null;
   }
 
@@ -37,7 +37,7 @@ export class Cursor extends React.Component<Props, State> {
   }
 
   render(): React.ReactElement {
-    const [top, left] = this.state.position;
+    const { top, left } = this.state.position;
     const { cursorSize } = this.state;
     const textLength = this.props.textAreaValue.length;
     return (
