@@ -44,6 +44,7 @@ export interface State {
   cursorCoordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   isComposing: boolean;
+  suggections: string[];
   textSelection: TextSelection | undefined;
   selectionWithMouse: SelectionWithMouse;
   historyHead: number;

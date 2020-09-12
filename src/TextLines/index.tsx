@@ -1,11 +1,20 @@
 import * as React from "react";
 
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
-import { TextLinesConstants } from "./constants";
+import { TextLinesConstants, defaultDecoration } from "./constants";
 import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
 import "../style.css";
 
 export class TextLines extends React.Component<Props> {
+  static readonly defaultProps: Required<
+    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkPropsMap">
+  > = {
+    decoration: defaultDecoration,
+    bracketLinkProps: {},
+    hashTagProps: {},
+    taggedLinkPropsMap: {},
+  };
+
   render(): React.ReactElement {
     return (
       <div className={TextLinesConstants.className}>

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, BracketLinkProps, HashTagProps, TaggedLinkProps } from "./types";
+import { Props, State } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -21,19 +21,8 @@ import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
 import { SelectionWithMouse } from "../Selection/types";
-import { DecorationSetting } from "../TextLines/types";
 
 export class Editor extends React.Component<Props, State> {
-  static readonly defaultProps: Required<
-    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkPropsMap">
-  > = {
-    decoration: {
-      fontSizes: { level1: 16, level2: 20, level3: 24 },
-    },
-    bracketLinkProps: {},
-    hashTagProps: {},
-    taggedLinkPropsMap: {},
-  };
   private root: HTMLDivElement | null;
 
   constructor(props: Props) {
@@ -42,6 +31,7 @@ export class Editor extends React.Component<Props, State> {
       cursorCoordinate: undefined,
       textAreaValue: "",
       isComposing: false,
+      suggections: [],
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Inactive,
       historyHead: -1,
@@ -84,12 +74,10 @@ export class Editor extends React.Component<Props, State> {
             <Selection textSelection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
-              decoration={this.props.decoration as DecorationSetting}
-              bracketLinkProps={this.props.bracketLinkProps as BracketLinkProps}
-              hashTagProps={this.props.hashTagProps as HashTagProps}
-              taggedLinkPropsMap={
-                this.props.taggedLinkPropsMap as { [tag: string]: TaggedLinkProps }
-              }
+              decoration={this.props.decoration}
+              bracketLinkProps={this.props.bracketLinkProps}
+              hashTagProps={this.props.hashTagProps}
+              taggedLinkPropsMap={this.props.taggedLinkPropsMap}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>

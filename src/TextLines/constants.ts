@@ -1,12 +1,16 @@
-import { DecorationStyle } from "./types";
+import { DecorationSetting, DecorationStyle } from "./types";
+
+export const defaultDecoration: DecorationSetting = {
+  fontSizes: { level1: 16, level2: 20, level3: 24 },
+};
 
 export const defaultLinkNameRegex = /[^[\]]+/;
 
-export const defaultLinkStyle = {
+export const defaultLinkStyle: React.CSSProperties = {
   color: "#5E8AF7",
   textDecoration: "none",
   cursor: "pointer",
-} as React.CSSProperties;
+};
 
 export const TextLinesConstants = {
   className: "React-Realtime-Markup-Editor-textlines",
