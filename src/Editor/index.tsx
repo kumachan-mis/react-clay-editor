@@ -72,9 +72,7 @@ export class Editor extends React.Component<Props, State> {
           >
             <Cursor
               coordinate={this.state.cursorCoordinate}
-              textSelection={this.state.textSelection}
               textAreaValue={this.state.textAreaValue}
-              isComposing={this.state.isComposing}
               onKeyDown={this.createCursorEventHandler(handleOnKeyDown)}
               onTextChange={this.createCursorEventHandler(handleOnChange)}
               onTextCompositionStart={this.createCursorEventHandler(handleOnCompositionStart)}
