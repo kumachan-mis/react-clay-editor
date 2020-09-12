@@ -1,5 +1,5 @@
 import { CursorCoordinate } from "../Cursor/types";
-import { TextSelection } from "../Selection/types";
+import { TextSelection, SelectionWithMouse } from "../Selection/types";
 import { DecorationSetting as Decoration } from "../TextLines/types";
 
 export { Decoration };
@@ -23,23 +23,11 @@ export interface Props {
   style?: React.CSSProperties;
 }
 
-export const enum SelectionWithMouse {
-  Inactive,
-  Started,
-  Active,
+export interface EditAction {
+  actionType: "insert" | "delete";
+  coordinate: CursorCoordinate;
+  text: string;
 }
-
-export type EditAction =
-  | {
-      actionType: "insert";
-      coordinate: CursorCoordinate;
-      text: string;
-    }
-  | {
-      actionType: "delete";
-      coordinate: CursorCoordinate;
-      text: string;
-    };
 
 export interface State {
   cursorCoordinate: CursorCoordinate | undefined;

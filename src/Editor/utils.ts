@@ -1,9 +1,11 @@
-import { State, SelectionWithMouse, EditAction, ShortcutCommand } from "./types";
+import { State, EditAction, ShortcutCommand } from "./types";
 import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
 import { selectionToRange, getSelectedText } from "../Selection/utils";
+import { parseLine } from "../TextLines/utils";
 import { CursorCoordinate } from "../Cursor/types";
+import { SelectionWithMouse } from "../Selection/types";
 import { TextLinesConstants } from "../TextLines/constants";
 import { classNameToSelector, isMacOS } from "../common";
 
@@ -106,9 +108,7 @@ export function handleOnKeyDown(
       if (!newState.cursorCoordinate) return [newText, newState];
 
       const newLines = newText.split("\n");
-      const prevLine = newLines[newState.cursorCoordinate.lineIndex - 1];
-      const regex = TextLinesConstants.regexes.indent;
-      const { indent, content } = prevLine.match(regex)?.groups as Record<string, string>;
+      const { indent, content } = parseLine(newLines[newState.cursorCoordinate.lineIndex - 1]);
       if (indent.length == 0) {
         return [newText, newState];
       } else if (content.length > 0) {

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, TaggedLink, SelectionWithMouse } from "./types";
+import { Props, State, TaggedLink } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -20,6 +20,7 @@ import "../style.css";
 import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
+import { SelectionWithMouse } from "../Selection/types";
 import { DecorationSetting } from "../TextLines/types";
 
 type AnnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;

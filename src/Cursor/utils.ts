@@ -5,12 +5,6 @@ import { getTextCharElementAt } from "../TextLines/utils";
 import { getRoot, getEditor } from "../Editor/utils";
 import { classNameToSelector } from "../common";
 
-interface CursorDrawInfo {
-  position: Position;
-  cursorSize: number;
-  elementCursorOn: HTMLElement | null;
-}
-
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
   const rootRect = getRoot(element)?.getBoundingClientRect();
   const editorRect = getEditor(element)?.getBoundingClientRect();
@@ -106,7 +100,7 @@ export function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): b
 function coordinateToCursorDrawInfo(
   coordinate: CursorCoordinate,
   element: HTMLElement
-): CursorDrawInfo {
+): { position: Position; cursorSize: number; elementCursorOn: HTMLElement | null } {
   const editorRect = getEditor(element)?.getBoundingClientRect();
   const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
