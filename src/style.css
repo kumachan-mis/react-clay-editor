@@ -70,6 +70,35 @@ textarea.React-Realtime-Markup-Editor-cursor {
   z-index: 1;
 }
 
+ul.React-Realtime-Markup-Editor-cursor {
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 6px;
+  box-shadow: 0px 1px 2px #cccccc;
+  background-color: #ffffff;
+  z-index: 1;
+}
+
+li.React-Realtime-Markup-Editor-cursor {
+  list-style-type: none;
+  cursor: pointer;
+  width: 150px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #eaecef;
+}
+
+li.React-Realtime-Markup-Editor-cursor:hover {
+  background-color: #cce6ff;
+}
+
+li.React-Realtime-Markup-Editor-cursor[aria-selected="true"] {
+  background-color: #cce6ff;
+}
+
 /* Selection */
 div.React-Realtime-Markup-Editor-selection {
   position: absolute;

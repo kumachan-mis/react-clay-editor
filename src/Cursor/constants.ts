@@ -1,9 +1,10 @@
+import { Position } from "./types";
 export const CursorConstants = {
   rootDiv: {
     className: "React-Realtime-Markup-Editor-cursor",
-    style: (top: number, left: number, cursorSize: number): React.CSSProperties => ({
-      top: `${top}px`,
-      left: `${left}px`,
+    style: (position: Position, cursorSize: number): React.CSSProperties => ({
+      top: `${position.top}px`,
+      left: `${position.left}px`,
       height: `${cursorSize}px`,
     }),
   },
@@ -14,18 +15,20 @@ export const CursorConstants = {
     wrap: "off",
     spellCheck: false,
     autoCapitalize: "none",
-    style: (
-      top: number,
-      left: number,
-      cursorSize: number,
-      length: number
-    ): React.CSSProperties => ({
-      top: `${top}px`,
-      left: `${left}px`,
+    style: (position: Position, cursorSize: number, length: number): React.CSSProperties => ({
+      top: `${position.top}px`,
+      left: `${position.left}px`,
       width: `${Math.min(length, 10) * cursorSize}px`,
       height: `${cursorSize}px`,
       minHeight: `${cursorSize}px`,
       fontSize: `${cursorSize}px`,
+    }),
+  },
+  suggestionList: {
+    className: "React-Realtime-Markup-Editor-cursor",
+    style: (position: Position, cursorSize: number): React.CSSProperties => ({
+      top: `${position.top + cursorSize + 2}px`,
+      left: `${position.left}px`,
     }),
   },
 };

@@ -8,18 +8,20 @@ import {
   handleOnMouseUp,
   handleOnMouseLeave,
   handleOnKeyDown,
-  handleOnChange,
-  handleOnCut,
-  handleOnCopy,
-  handleOnPaste,
-  handleOnCompositionStart,
-  handleOnCompositionEnd,
+  handleOnTextChange,
+  handleOnTextCut,
+  handleOnTextCopy,
+  handleOnTextPaste,
+  handleOnTextCompositionStart,
+  handleOnTextCompositionEnd,
+  handleOnSuggectionMouseDown,
 } from "./utils";
 import "../style.css";
 
 import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
+import { SuggestionType } from "../Cursor/types";
 import { SelectionWithMouse } from "../Selection/types";
 
 export class Editor extends React.Component<Props, State> {
@@ -31,7 +33,9 @@ export class Editor extends React.Component<Props, State> {
       cursorCoordinate: undefined,
       textAreaValue: "",
       isComposing: false,
-      suggections: [],
+      suggestionType: SuggestionType.None,
+      suggestions: [],
+      suggectionIndex: -1,
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Inactive,
       historyHead: -1,
@@ -63,13 +67,17 @@ export class Editor extends React.Component<Props, State> {
             <Cursor
               coordinate={this.state.cursorCoordinate}
               textAreaValue={this.state.textAreaValue}
+              suggestionType={this.state.suggestionType}
+              suggestions={this.state.suggestions}
+              suggestionIndex={this.state.suggectionIndex}
               onKeyDown={this.createCursorEventHandler(handleOnKeyDown)}
-              onTextChange={this.createCursorEventHandler(handleOnChange)}
-              onTextCompositionStart={this.createCursorEventHandler(handleOnCompositionStart)}
-              onTextCompositionEnd={this.createCursorEventHandler(handleOnCompositionEnd)}
-              onTextCut={this.createCursorEventHandler(handleOnCut)}
-              onTextCopy={this.createCursorEventHandler(handleOnCopy)}
-              onTextPaste={this.createCursorEventHandler(handleOnPaste)}
+              onTextChange={this.createCursorEventHandler(handleOnTextChange)}
+              onTextCompositionStart={this.createCursorEventHandler(handleOnTextCompositionStart)}
+              onTextCompositionEnd={this.createCursorEventHandler(handleOnTextCompositionEnd)}
+              onTextCut={this.createCursorEventHandler(handleOnTextCut)}
+              onTextCopy={this.createCursorEventHandler(handleOnTextCopy)}
+              onTextPaste={this.createCursorEventHandler(handleOnTextPaste)}
+              onSuggectionMouseDown={this.createCursorEventHandler(handleOnSuggectionMouseDown)}
             />
             <Selection textSelection={this.state.textSelection} />
             <TextLines

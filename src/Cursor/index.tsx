@@ -37,14 +37,13 @@ export class Cursor extends React.Component<Props, State> {
   }
 
   render(): React.ReactElement {
-    const { top, left } = this.state.position;
-    const { cursorSize } = this.state;
+    const { position, cursorSize } = this.state;
     const textLength = this.props.textAreaValue.length;
     return (
       <span ref={(root) => (this.root = root)}>
         <div
           className={CursorConstants.rootDiv.className}
-          style={CursorConstants.rootDiv.style(top, left, cursorSize)}
+          style={CursorConstants.rootDiv.style(position, cursorSize)}
         >
           <svg width={CursorConstants.svg.width} height={cursorSize}>
             <rect
@@ -68,8 +67,25 @@ export class Cursor extends React.Component<Props, State> {
           onPaste={(event) => this.props.onTextPaste(event)}
           onCompositionStart={(event) => this.props.onTextCompositionStart(event)}
           onCompositionEnd={(event) => this.props.onTextCompositionEnd(event)}
-          style={CursorConstants.textArea.style(top, left, cursorSize, textLength)}
+          style={CursorConstants.textArea.style(position, cursorSize, textLength)}
         />
+        <ul
+          className={CursorConstants.suggestionList.className}
+          style={CursorConstants.suggestionList.style(position, cursorSize)}
+        >
+          <li
+            className={CursorConstants.suggestionList.className}
+            onMouseDown={(event) => this.props.onSuggectionMouseDown(event)}
+          >
+            {"test1"}
+          </li>
+          <li
+            className={CursorConstants.suggestionList.className}
+            onMouseDown={(event) => this.props.onSuggectionMouseDown(event)}
+          >
+            {"test2"}
+          </li>
+        </ul>
       </span>
     );
   }

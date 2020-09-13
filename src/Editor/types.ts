@@ -1,4 +1,4 @@
-import { CursorCoordinate } from "../Cursor/types";
+import { CursorCoordinate, SuggestionType } from "../Cursor/types";
 import { TextSelection, SelectionWithMouse } from "../Selection/types";
 import { DecorationSetting as Decoration } from "../TextLines/types";
 
@@ -44,7 +44,9 @@ export interface State {
   cursorCoordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   isComposing: boolean;
-  suggections: string[];
+  suggestionType: SuggestionType;
+  suggestions: string[];
+  suggectionIndex: number;
   textSelection: TextSelection | undefined;
   selectionWithMouse: SelectionWithMouse;
   historyHead: number;

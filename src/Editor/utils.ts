@@ -158,7 +158,7 @@ export function handleOnKeyDown(
   }
 }
 
-export function handleOnChange(
+export function handleOnTextChange(
   text: string,
   state: State,
   event: React.ChangeEvent<HTMLTextAreaElement>
@@ -168,7 +168,7 @@ export function handleOnChange(
   return insertText(text, state, event.target.value);
 }
 
-export function handleOnCompositionStart(
+export function handleOnTextCompositionStart(
   text: string,
   state: State,
   event: React.CompositionEvent<HTMLTextAreaElement>
@@ -177,7 +177,7 @@ export function handleOnCompositionStart(
   return [text, { ...state, isComposing: true }];
 }
 
-export function handleOnCompositionEnd(
+export function handleOnTextCompositionEnd(
   text: string,
   state: State,
   event: React.CompositionEvent<HTMLTextAreaElement>
@@ -187,7 +187,7 @@ export function handleOnCompositionEnd(
   return [newText, { ...newState, textAreaValue: "", isComposing: false }];
 }
 
-export function handleOnCut(
+export function handleOnTextCut(
   text: string,
   state: State,
   event: React.ClipboardEvent<HTMLTextAreaElement>
@@ -199,7 +199,7 @@ export function handleOnCut(
   return insertText(text, state, "");
 }
 
-export function handleOnCopy(
+export function handleOnTextCopy(
   text: string,
   state: State,
   event: React.ClipboardEvent<HTMLTextAreaElement>
@@ -211,7 +211,7 @@ export function handleOnCopy(
   return [text, state];
 }
 
-export function handleOnPaste(
+export function handleOnTextPaste(
   text: string,
   state: State,
   event: React.ClipboardEvent<HTMLTextAreaElement>
@@ -220,6 +220,16 @@ export function handleOnPaste(
   event.preventDefault();
   const textToPaste = event.clipboardData.getData("text");
   return insertText(text, state, textToPaste);
+}
+
+export function handleOnSuggectionMouseDown(
+  text: string,
+  state: State,
+  event: React.MouseEvent<HTMLLIElement>
+): [string, State] {
+  event.preventDefault();
+  event.stopPropagation();
+  return [text, state];
 }
 
 function insertText(
