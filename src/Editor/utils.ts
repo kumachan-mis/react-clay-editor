@@ -317,7 +317,7 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
     case "[": {
       const suggestions = props.bracketLinkProps?.suggestions;
       const suggestionState =
-        suggestions && suggestions.length > 0
+        suggestions && suggestions.length > 0 && !props.bracketLinkProps?.disabled
           ? { suggestionType: SuggestionType.BracketLink, suggestions, suggectionIndex: 0 }
           : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
@@ -325,7 +325,7 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
     case "#": {
       const suggestions = props.hashTagProps?.suggestions;
       const suggestionState =
-        suggestions && suggestions.length > 0
+        suggestions && suggestions.length > 0 && !props.hashTagProps?.disabled
           ? { suggestionType: SuggestionType.HashTag, suggestions, suggectionIndex: 0 }
           : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
