@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, TaggedLink, SelectionWithMouse } from "./types";
+import { Props, State } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -8,33 +8,22 @@ import {
   handleOnMouseUp,
   handleOnMouseLeave,
   handleOnKeyDown,
-  handleOnChange,
-  handleOnCut,
-  handleOnCopy,
-  handleOnPaste,
-  handleOnCompositionStart,
-  handleOnCompositionEnd,
+  handleOnTextChange,
+  handleOnTextCut,
+  handleOnTextCopy,
+  handleOnTextPaste,
+  handleOnTextCompositionStart,
+  handleOnTextCompositionEnd,
+  handleOnSuggectionMouseDown,
 } from "./utils";
 import "../style.css";
 
 import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
-import { DecorationSetting } from "../TextLines/types";
-
-type AnnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+import { SelectionWithMouse } from "../Selection/types";
 
 export class Editor extends React.Component<Props, State> {
-  static readonly defaultProps: Required<
-    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkMap">
-  > = {
-    decoration: {
-      fontSizes: { level1: 16, level2: 20, level3: 24 },
-    },
-    bracketLinkProps: () => ({}),
-    hashTagProps: () => ({}),
-    taggedLinkMap: {},
-  };
   private root: HTMLDivElement | null;
 
   constructor(props: Props) {
@@ -47,6 +36,7 @@ export class Editor extends React.Component<Props, State> {
       selectionWithMouse: SelectionWithMouse.Inactive,
       historyHead: -1,
       editActionHistory: [],
+      ...EditorConstants.defaultSuggestionState,
     };
 
     this.root = null;
@@ -73,26 +63,27 @@ export class Editor extends React.Component<Props, State> {
           >
             <Cursor
               coordinate={this.state.cursorCoordinate}
-              textSelection={this.state.textSelection}
               textAreaValue={this.state.textAreaValue}
-              isComposing={this.state.isComposing}
-              onKeyDown={this.createCursorEventHandler(handleOnKeyDown)}
-              onTextChange={this.createCursorEventHandler(handleOnChange)}
-              onTextCompositionStart={this.createCursorEventHandler(handleOnCompositionStart)}
-              onTextCompositionEnd={this.createCursorEventHandler(handleOnCompositionEnd)}
-              onTextCut={this.createCursorEventHandler(handleOnCut)}
-              onTextCopy={this.createCursorEventHandler(handleOnCopy)}
-              onTextPaste={this.createCursorEventHandler(handleOnPaste)}
+              suggestionType={this.state.suggestionType}
+              suggestions={this.state.suggestions}
+              suggestionIndex={this.state.suggectionIndex}
+              suggestionListDecoration={this.props.decoration?.suggestionList}
+              onKeyDown={this.createCursorEventHandlerWithProps(handleOnKeyDown)}
+              onTextChange={this.createCursorEventHandlerWithProps(handleOnTextChange)}
+              onTextCompositionStart={this.createCursorEventHandler(handleOnTextCompositionStart)}
+              onTextCompositionEnd={this.createCursorEventHandler(handleOnTextCompositionEnd)}
+              onTextCut={this.createCursorEventHandler(handleOnTextCut)}
+              onTextCopy={this.createCursorEventHandler(handleOnTextCopy)}
+              onTextPaste={this.createCursorEventHandler(handleOnTextPaste)}
+              onSuggectionMouseDown={this.createCursorEventHandler(handleOnSuggectionMouseDown)}
             />
             <Selection textSelection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
-              decoration={this.props.decoration as DecorationSetting}
-              bracketLinkProps={this.props.bracketLinkProps as (linkName: string) => AnnchorProps}
-              bracketLinkDisabled={this.props.bracketLinkDisabled}
-              hashTagProps={this.props.hashTagProps as (hashTagName: string) => AnnchorProps}
-              hashTagDisabled={this.props.hashTagDisabled}
-              taggedLinkMap={this.props.taggedLinkMap as { [tag: string]: TaggedLink }}
+              textDecoration={this.props.decoration?.text}
+              bracketLinkProps={this.props.bracketLinkProps}
+              hashTagProps={this.props.hashTagProps}
+              taggedLinkPropsMap={this.props.taggedLinkPropsMap}
               cursorCoordinate={this.state.cursorCoordinate}
             />
           </div>
@@ -124,6 +115,17 @@ export class Editor extends React.Component<Props, State> {
     return (event) => {
       if (this.props.disabled) return;
       const [text, state] = handler(this.props.text, this.state, event);
+      if (state != this.state) this.setState(state);
+      if (text != this.props.text) this.props.onChangeText(text);
+    };
+  };
+
+  private createCursorEventHandlerWithProps = <Event,>(
+    handler: (text: string, props: Props, state: State, event: Event) => [string, State]
+  ): ((event: Event) => void) => {
+    return (event) => {
+      if (this.props.disabled) return;
+      const [text, state] = handler(this.props.text, this.props, this.state, event);
       if (state != this.state) this.setState(state);
       if (text != this.props.text) this.props.onChangeText(text);
     };

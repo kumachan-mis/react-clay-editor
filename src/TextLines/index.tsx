@@ -1,17 +1,26 @@
 import * as React from "react";
 
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
-import { TextLinesConstants } from "./constants";
+import { TextLinesConstants, defaultTextDecoration } from "./constants";
 import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
 import "../style.css";
 
 export class TextLines extends React.Component<Props> {
+  static readonly defaultProps: Required<
+    Pick<Props, "textDecoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkPropsMap">
+  > = {
+    textDecoration: defaultTextDecoration,
+    bracketLinkProps: {},
+    hashTagProps: {},
+    taggedLinkPropsMap: {},
+  };
+
   render(): React.ReactElement {
     return (
       <div className={TextLinesConstants.className}>
         {this.props.text.split("\n").map((line: string, index: number) => {
           const { indent, content } = parseLine(line);
-          const defaultFontSize = this.props.decoration.fontSizes.level1;
+          const defaultFontSize = this.props.textDecoration.fontSizes.level1;
           const on = index == this.props.cursorCoordinate?.lineIndex;
           return (
             <div
@@ -50,13 +59,14 @@ export class TextLines extends React.Component<Props> {
   private Content = (props: ContentProps): React.ReactElement => {
     const constants = TextLinesConstants.line.content;
     const charConstants = TextLinesConstants.char;
-    const { taggedLinkMap } = this.props;
     const { indent, content, lineIndex, cursorOn } = props;
     return (
       <span className={constants.className} style={constants.style(indent.length)}>
-        {parseContent(content, taggedLinkMap, indent.length).map((node: Node, index: number) => (
-          <this.Node key={index} node={node} lineIndex={lineIndex} cursorOn={cursorOn} />
-        ))}
+        {parseContent(content, this.props.taggedLinkPropsMap, indent.length).map(
+          (node: Node, index: number) => (
+            <this.Node key={index} node={node} lineIndex={lineIndex} cursorOn={cursorOn} />
+          )
+        )}
         <span className={charConstants.className(lineIndex, indent.length + content.length)}>
           {" "}
         </span>
@@ -73,9 +83,9 @@ export class TextLines extends React.Component<Props> {
 
     switch (props.node.type) {
       case "decoration": {
-        const { children } = props.node;
-        const { facingMeta, trailingMeta } = props.node;
-        const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, this.props.decoration);
+        const { facingMeta, trailingMeta, children } = props.node;
+        const { textDecoration } = this.props;
+        const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, textDecoration);
         return (
           <span style={constants.decoration.style(decorationStyle)}>
             {[...facingMeta].map((char: string, index: number) => (
@@ -99,9 +109,9 @@ export class TextLines extends React.Component<Props> {
       }
       case "taggedLink": {
         const { facingMeta, tag, linkName, trailingMeta } = props.node;
-        const taggedLink = this.props.taggedLinkMap[getTagName(tag)];
+        const { anchorProps, tagHidden } = this.props.taggedLinkPropsMap[getTagName(tag)];
         return (
-          <a style={constants.taggedLink.style} {...(taggedLink.props?.(linkName) || {})}>
+          <a style={constants.taggedLink.style} {...(anchorProps?.(linkName) || {})}>
             {[...facingMeta].map((char: string, index: number) => (
               <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
                 {cursorOn ? char : ""}
@@ -112,7 +122,7 @@ export class TextLines extends React.Component<Props> {
                 key={from + index}
                 className={charConstants.className(lineIndex, from + facingMeta.length + index)}
               >
-                {cursorOn || !taggedLink.tagHidden ? char : ""}
+                {cursorOn || !tagHidden ? char : ""}
               </span>
             ))}
             {[...linkName].map((char: string, index: number) => (
@@ -139,10 +149,11 @@ export class TextLines extends React.Component<Props> {
       }
       case "bracketLink": {
         const { facingMeta, linkName, trailingMeta } = props.node;
+        const { disabled, anchorProps } = this.props.bracketLinkProps;
         const bracketLinkCharSpans = [
           ...[...facingMeta].map((char: string, index: number) => (
             <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-              {this.props.bracketLinkDisabled || cursorOn ? char : ""}
+              {disabled || cursorOn ? char : ""}
             </span>
           )),
           ...[...linkName].map((char: string, index: number) => (
@@ -158,12 +169,12 @@ export class TextLines extends React.Component<Props> {
               key={to - array.length + index}
               className={charConstants.className(lineIndex, to - array.length + index)}
             >
-              {this.props.bracketLinkDisabled || cursorOn ? char : ""}
+              {disabled || cursorOn ? char : ""}
             </span>
           )),
         ];
-        return !this.props.bracketLinkDisabled ? (
-          <a style={constants.bracketLink.style} {...this.props.bracketLinkProps(linkName)}>
+        return !disabled ? (
+          <a style={constants.bracketLink.style} {...(anchorProps?.(linkName) || {})}>
             {bracketLinkCharSpans}
           </a>
         ) : (
@@ -172,13 +183,14 @@ export class TextLines extends React.Component<Props> {
       }
       case "hashTag": {
         const hashTagName = getHashTagName(props.node.hashTag);
+        const { disabled, anchorProps } = this.props.hashTagProps;
         const hashTagCharSpans = [...props.node.hashTag].map((char: string, index: number) => (
           <span key={index} className={charConstants.className(lineIndex, from + index)}>
             {char}
           </span>
         ));
-        return !this.props.hashTagDisabled ? (
-          <a style={constants.hashTag.style} {...this.props.hashTagProps(hashTagName)}>
+        return !disabled ? (
+          <a style={constants.hashTag.style} {...(anchorProps?.(hashTagName) || {})}>
             {hashTagCharSpans}
           </a>
         ) : (

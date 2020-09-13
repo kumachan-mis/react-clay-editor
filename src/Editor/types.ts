@@ -1,12 +1,28 @@
-import { CursorCoordinate } from "../Cursor/types";
-import { TextSelection } from "../Selection/types";
-import { DecorationSetting as Decoration } from "../TextLines/types";
+import { CursorCoordinate, SuggestionType, SuggestionListDecoration } from "../Cursor/types";
+import { TextSelection, SelectionWithMouse } from "../Selection/types";
+import { TextDecoration } from "../TextLines/types";
 
-export { Decoration };
+export interface Decoration {
+  text?: TextDecoration;
+  suggestionList?: SuggestionListDecoration;
+}
 
-export interface TaggedLink {
+export interface BracketLinkProps {
+  anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  suggestions?: string[];
+  disabled?: boolean;
+}
+
+export interface HashTagProps {
+  anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  suggestions?: string[];
+  disabled?: boolean;
+}
+
+export interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  props?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  suggestions?: string[];
   tagHidden?: boolean;
 }
 
@@ -14,32 +30,18 @@ export interface Props {
   text: string;
   onChangeText: (text: string) => void;
   decoration?: Decoration;
-  bracketLinkProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  bracketLinkDisabled?: boolean;
-  hashTagProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
-  hashTagDisabled?: boolean;
-  taggedLinkMap?: { [tagName: string]: TaggedLink };
+  bracketLinkProps?: BracketLinkProps;
+  hashTagProps?: HashTagProps;
+  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
   disabled?: boolean;
   style?: React.CSSProperties;
 }
 
-export const enum SelectionWithMouse {
-  Inactive,
-  Started,
-  Active,
+export interface EditAction {
+  actionType: "insert" | "delete";
+  coordinate: CursorCoordinate;
+  text: string;
 }
-
-export type EditAction =
-  | {
-      actionType: "insert";
-      coordinate: CursorCoordinate;
-      text: string;
-    }
-  | {
-      actionType: "delete";
-      coordinate: CursorCoordinate;
-      text: string;
-    };
 
 export interface State {
   cursorCoordinate: CursorCoordinate | undefined;
@@ -49,6 +51,9 @@ export interface State {
   selectionWithMouse: SelectionWithMouse;
   historyHead: number;
   editActionHistory: EditAction[];
+  suggestionType: SuggestionType;
+  suggestions: string[];
+  suggectionIndex: number;
 }
 
 export type ShortcutCommand = "selectAll" | "undo" | "redo";

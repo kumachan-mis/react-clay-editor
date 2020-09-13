@@ -1,3 +1,8 @@
 export { Editor } from "./Editor";
-export { Props, Decoration, TaggedLink } from "./Editor/types";
-export { defaultLinkNameRegex, defaultLinkStyle } from "./TextLines/constants";
+export { Props, Decoration, BracketLinkProps, HashTagProps, TaggedLinkProps } from "./Editor/types";
+export { defaultSuggestionListDecoration } from "./Cursor/constants";
+export {
+  defaultTextDecoration,
+  defaultLinkNameRegex,
+  defaultLinkStyle,
+} from "./TextLines/constants";

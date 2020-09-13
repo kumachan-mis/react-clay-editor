@@ -1,21 +1,15 @@
-import { Props, State, CursorCoordinate } from "./types";
+import { Props, State, CursorCoordinate, Position } from "./types";
 import { CursorConstants } from "./constants";
 
 import { getTextCharElementAt } from "../TextLines/utils";
 import { getRoot, getEditor } from "../Editor/utils";
 import { classNameToSelector } from "../common";
 
-interface CursorDrawInfo {
-  position: [number, number];
-  cursorSize: number;
-  elementCursorOn: HTMLElement | null;
-}
-
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
   const rootRect = getRoot(element)?.getBoundingClientRect();
   const editorRect = getEditor(element)?.getBoundingClientRect();
   if (!props.coordinate || !editorRect || !rootRect) {
-    return { ...state, position: [0, 0], cursorSize: 0 };
+    return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
   const selector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
@@ -24,9 +18,9 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const { coordinate } = props;
   const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
-  if (!elementCursorOn) return { ...state, position: [0, 0], cursorSize: 0 };
+  if (!elementCursorOn) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const [cursorTop] = position;
+  const { top: cursorTop } = position;
   if (cursorTop + editorRect.top - rootRect.top < 0) {
     elementCursorOn.scrollIntoView({ block: "start" });
     return state;
@@ -38,10 +32,10 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 }
 
 export function handleOnEditorScroll(props: Props, state: State, element: HTMLElement): State {
-  if (!props.coordinate) return { ...state, position: [0, 0], cursorSize: 0 };
+  if (!props.coordinate) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   const { coordinate } = props;
   const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
-  if (!elementCursorOn) return { ...state, position: [0, 0], cursorSize: 0 };
+  if (!elementCursorOn) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   return { ...state, position, cursorSize };
 }
 
@@ -106,14 +100,16 @@ export function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): b
 function coordinateToCursorDrawInfo(
   coordinate: CursorCoordinate,
   element: HTMLElement
-): CursorDrawInfo {
+): { position: Position; cursorSize: number; elementCursorOn: HTMLElement | null } {
   const editorRect = getEditor(element)?.getBoundingClientRect();
   const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
-  if (!editorRect || !charRect) return { position: [0, 0], cursorSize: 0, elementCursorOn: null };
+  if (!editorRect || !charRect) {
+    return { position: { top: 0, left: 0 }, cursorSize: 0, elementCursorOn: null };
+  }
 
   return {
-    position: [charRect.top - editorRect.top, charRect.left - editorRect.left],
+    position: { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left },
     cursorSize: charRect.height,
     elementCursorOn: charElement,
   };

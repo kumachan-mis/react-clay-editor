@@ -1,9 +1,11 @@
-import { State, SelectionWithMouse, EditAction, ShortcutCommand } from "./types";
+import { Props, State, EditAction, ShortcutCommand } from "./types";
 import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
 import { selectionToRange, getSelectedText } from "../Selection/utils";
-import { CursorCoordinate } from "../Cursor/types";
+import { parseLine } from "../TextLines/utils";
+import { CursorCoordinate, SuggestionType } from "../Cursor/types";
+import { SelectionWithMouse } from "../Selection/types";
 import { TextLinesConstants } from "../TextLines/constants";
 import { classNameToSelector, isMacOS } from "../common";
 
@@ -22,6 +24,7 @@ export function handleOnMouseDown(
   element: HTMLElement | null
 ): [string, State] {
   if (!element) return [text, state];
+
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   return [
     text,
@@ -30,6 +33,7 @@ export function handleOnMouseDown(
       cursorCoordinate,
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Started,
+      ...EditorConstants.defaultSuggestionState,
     },
   ];
 }
@@ -88,6 +92,7 @@ export const handleOnMouseLeave = handleOnMouseUp;
 
 export function handleOnKeyDown(
   text: string,
+  props: Props,
   state: State,
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
@@ -99,16 +104,20 @@ export function handleOnKeyDown(
 
   switch (event.key) {
     case "Tab": {
+      if (state.suggestionType != SuggestionType.None) {
+        return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
+      }
       return insertText(text, state, "\t");
     }
     case "Enter": {
+      if (state.suggestionType != SuggestionType.None) {
+        return insertSuggestion(text, state, state.suggestions[state.suggectionIndex]);
+      }
       const [newText, newState] = insertText(text, state, "\n");
       if (!newState.cursorCoordinate) return [newText, newState];
 
       const newLines = newText.split("\n");
-      const prevLine = newLines[newState.cursorCoordinate.lineIndex - 1];
-      const regex = TextLinesConstants.regexes.indent;
-      const { indent, content } = prevLine.match(regex)?.groups as Record<string, string>;
+      const { indent, content } = parseLine(newLines[newState.cursorCoordinate.lineIndex - 1]);
       if (indent.length == 0) {
         return [newText, newState];
       } else if (content.length > 0) {
@@ -123,9 +132,14 @@ export function handleOnKeyDown(
       if (state.textSelection) return insertText(text, state, "");
       const backCoordinate = moveCursor(text, state.cursorCoordinate, -1);
       const textSelection = { fixed: state.cursorCoordinate, free: backCoordinate };
-      return insertText(text, { ...state, textSelection }, "");
+      const [newText, newState] = insertText(text, { ...state, textSelection }, "");
+      return showSuggestion(newText, props, newState);
     }
     case "ArrowUp": {
+      if (state.suggestions.length > 0) {
+        const suggectionIndex = Math.max(state.suggectionIndex - 1, 0);
+        return [text, { ...state, suggectionIndex }];
+      }
       const lines = text.split("\n");
       const prevLine = lines[state.cursorCoordinate.lineIndex - 1];
       if (prevLine === undefined) return [text, state];
@@ -136,6 +150,10 @@ export function handleOnKeyDown(
       return [text, { ...state, cursorCoordinate, textSelection: undefined }];
     }
     case "ArrowDown": {
+      if (state.suggestions.length > 0) {
+        const suggectionIndex = Math.min(state.suggectionIndex + 1, state.suggestions.length - 1);
+        return [text, { ...state, suggectionIndex }];
+      }
       const lines = text.split("\n");
       const nextLine = lines[state.cursorCoordinate.lineIndex + 1];
       if (nextLine === undefined) return [text, state];
@@ -147,37 +165,60 @@ export function handleOnKeyDown(
     }
     case "ArrowLeft": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [
+        text,
+        {
+          ...state,
+          cursorCoordinate,
+          textSelection: undefined,
+          ...EditorConstants.defaultSuggestionState,
+        },
+      ];
     }
     case "ArrowRight": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [
+        text,
+        {
+          ...state,
+          cursorCoordinate,
+          textSelection: undefined,
+          ...EditorConstants.defaultSuggestionState,
+        },
+      ];
     }
     default:
       return handleOnShortcut(text, state, command);
   }
 }
 
-export function handleOnChange(
+export function handleOnTextChange(
   text: string,
+  props: Props,
   state: State,
   event: React.ChangeEvent<HTMLTextAreaElement>
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
-  if (state.isComposing) return [text, { ...state, textAreaValue: event.target.value }];
-  return insertText(text, state, event.target.value);
+  if (state.isComposing) {
+    return [
+      text,
+      { ...state, textAreaValue: event.target.value, ...EditorConstants.defaultSuggestionState },
+    ];
+  }
+  const [newText, newState] = insertText(text, state, event.target.value);
+  return showSuggestion(newText, props, newState);
 }
 
-export function handleOnCompositionStart(
+export function handleOnTextCompositionStart(
   text: string,
   state: State,
   event: React.CompositionEvent<HTMLTextAreaElement>
 ): [string, State] {
   if (!state.cursorCoordinate || state.isComposing) return [text, state];
-  return [text, { ...state, isComposing: true }];
+  return [text, { ...state, isComposing: true, ...EditorConstants.defaultSuggestionState }];
 }
 
-export function handleOnCompositionEnd(
+export function handleOnTextCompositionEnd(
   text: string,
   state: State,
   event: React.CompositionEvent<HTMLTextAreaElement>
@@ -187,7 +228,7 @@ export function handleOnCompositionEnd(
   return [newText, { ...newState, textAreaValue: "", isComposing: false }];
 }
 
-export function handleOnCut(
+export function handleOnTextCut(
   text: string,
   state: State,
   event: React.ClipboardEvent<HTMLTextAreaElement>
@@ -199,7 +240,7 @@ export function handleOnCut(
   return insertText(text, state, "");
 }
 
-export function handleOnCopy(
+export function handleOnTextCopy(
   text: string,
   state: State,
   event: React.ClipboardEvent<HTMLTextAreaElement>
@@ -211,7 +252,7 @@ export function handleOnCopy(
   return [text, state];
 }
 
-export function handleOnPaste(
+export function handleOnTextPaste(
   text: string,
   state: State,
   event: React.ClipboardEvent<HTMLTextAreaElement>
@@ -220,6 +261,18 @@ export function handleOnPaste(
   event.preventDefault();
   const textToPaste = event.clipboardData.getData("text");
   return insertText(text, state, textToPaste);
+}
+
+export function handleOnSuggectionMouseDown(
+  text: string,
+  state: State,
+  event: React.MouseEvent<HTMLLIElement>
+): [string, State] {
+  event.preventDefault();
+  event.stopPropagation();
+  const suggestion = event.currentTarget.textContent;
+  if (!suggestion) return [text, state];
+  return insertSuggestion(text, state, suggestion);
 }
 
 function insertText(
@@ -251,6 +304,76 @@ function insertText(
     { actionType: "insert", coordinate: start, text: insertedText },
   ]);
   return [newText, { ...newState, cursorCoordinate, textSelection: undefined }];
+}
+
+function showSuggestion(text: string, props: Props, state: State): [string, State] {
+  if (!state.cursorCoordinate) {
+    return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
+  }
+
+  const { lineIndex, charIndex } = state.cursorCoordinate;
+  const currentLine = text.split("\n")[lineIndex];
+  switch (currentLine[charIndex - 1]) {
+    case "[": {
+      const suggestions = props.bracketLinkProps?.suggestions;
+      const suggestionState =
+        suggestions && suggestions.length > 0
+          ? { suggestionType: SuggestionType.BracketLink, suggestions, suggectionIndex: 0 }
+          : EditorConstants.defaultSuggestionState;
+      return [text, { ...state, ...suggestionState }];
+    }
+    case "#": {
+      const suggestions = props.hashTagProps?.suggestions;
+      const suggestionState =
+        suggestions && suggestions.length > 0
+          ? { suggestionType: SuggestionType.HashTag, suggestions, suggectionIndex: 0 }
+          : EditorConstants.defaultSuggestionState;
+      return [text, { ...state, ...suggestionState }];
+    }
+    case ":": {
+      if (!props.taggedLinkPropsMap) {
+        return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
+      }
+
+      const tagName = (() => {
+        for (const tagName of Object.keys(props.taggedLinkPropsMap)) {
+          const pattern = `[${tagName}:`;
+          const target = currentLine.substring(Math.max(charIndex - pattern.length, 0), charIndex);
+          if (target == pattern) return tagName;
+        }
+        return undefined;
+      })();
+      const suggestions = tagName ? props.taggedLinkPropsMap[tagName].suggestions : undefined;
+      const suggestionState =
+        suggestions && suggestions.length > 0
+          ? { suggestionType: SuggestionType.TaggedLink, suggestions, suggectionIndex: 0 }
+          : EditorConstants.defaultSuggestionState;
+      return [text, { ...state, ...suggestionState }];
+    }
+    default: {
+      return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
+    }
+  }
+}
+
+function insertSuggestion(text: string, state: State, suggestion: string): [string, State] {
+  switch (state.suggestionType) {
+    case SuggestionType.BracketLink: {
+      const [newText, newState] = insertText(text, state, `${suggestion}]`);
+      return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
+    }
+    case SuggestionType.HashTag: {
+      const [newText, newState] = insertText(text, state, `${suggestion} `);
+      return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
+    }
+    case SuggestionType.TaggedLink: {
+      const [newText, newState] = insertText(text, state, ` ${suggestion}]`);
+      return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
+    }
+    case SuggestionType.None:
+    default:
+      return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
+  }
 }
 
 function addEditActions(state: State, actions: EditAction[]): State {
@@ -364,7 +487,7 @@ function handleOnSelectAll(text: string, state: State): [string, State] {
     fixed: { lineIndex: 0, charIndex: 0 },
     free: { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length },
   };
-  return [text, { ...state, textSelection }];
+  return [text, { ...state, textSelection, ...EditorConstants.defaultSuggestionState }];
 }
 
 function handleOnUndo(text: string, state: State): [string, State] {
@@ -379,7 +502,13 @@ function handleOnUndo(text: string, state: State): [string, State] {
     const cursorCoordinate = action.coordinate;
     return [
       newText,
-      { ...state, cursorCoordinate, textSelection: undefined, historyHead: historyHead - 1 },
+      {
+        ...state,
+        cursorCoordinate,
+        textSelection: undefined,
+        historyHead: historyHead - 1,
+        ...EditorConstants.defaultSuggestionState,
+      },
     ];
   } else if (action.actionType == "delete") {
     const insertIndex = cursorCoordinateToTextIndex(text, action.coordinate);
@@ -387,7 +516,13 @@ function handleOnUndo(text: string, state: State): [string, State] {
     const cursorCoordinate = moveCursor(newText, action.coordinate, action.text.length);
     return [
       newText,
-      { ...state, cursorCoordinate, textSelection: undefined, historyHead: historyHead - 1 },
+      {
+        ...state,
+        cursorCoordinate,
+        textSelection: undefined,
+        historyHead: historyHead - 1,
+        ...EditorConstants.defaultSuggestionState,
+      },
     ];
   }
   return [text, state];
@@ -406,7 +541,13 @@ function handleOnRedo(text: string, state: State): [string, State] {
     const cursorCoordinate = moveCursor(newText, action.coordinate, action.text.length);
     return [
       newText,
-      { ...state, cursorCoordinate, textSelection: undefined, historyHead: historyHead + 1 },
+      {
+        ...state,
+        cursorCoordinate,
+        textSelection: undefined,
+        historyHead: historyHead + 1,
+        ...EditorConstants.defaultSuggestionState,
+      },
     ];
   } else if (action.actionType == "delete") {
     const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
@@ -415,7 +556,13 @@ function handleOnRedo(text: string, state: State): [string, State] {
     const cursorCoordinate = action.coordinate;
     return [
       newText,
-      { ...state, cursorCoordinate, textSelection: undefined, historyHead: historyHead + 1 },
+      {
+        ...state,
+        cursorCoordinate,
+        textSelection: undefined,
+        historyHead: historyHead + 1,
+        ...EditorConstants.defaultSuggestionState,
+      },
     ];
   }
 
