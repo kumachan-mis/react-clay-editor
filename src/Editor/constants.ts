@@ -11,6 +11,6 @@ export const EditorConstants = {
   defaultSuggestionState: {
     suggestionType: SuggestionType.None,
     suggestions: [],
-    suggectionIndex: -1,
+    suggestionIndex: -1,
   },
 };

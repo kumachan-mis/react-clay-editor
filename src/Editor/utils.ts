@@ -25,17 +25,14 @@ export function handleOnMouseDown(
 ): [string, State] {
   if (!element) return [text, state];
 
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
-  return [
-    text,
-    {
-      ...state,
-      cursorCoordinate,
-      textSelection: undefined,
-      selectionWithMouse: SelectionWithMouse.Started,
-      ...EditorConstants.defaultSuggestionState,
-    },
-  ];
+  const newState = {
+    ...state,
+    cursorCoordinate: positionToCursorCoordinate(text, state, position, element),
+    textSelection: undefined,
+    selectionWithMouse: SelectionWithMouse.Started,
+    ...EditorConstants.defaultSuggestionState,
+  };
+  return [text, newState];
 }
 
 export function handleOnMouseMove(
@@ -111,7 +108,7 @@ export function handleOnKeyDown(
     }
     case "Enter": {
       if (state.suggestionType != SuggestionType.None) {
-        return insertSuggestion(text, state, state.suggestions[state.suggectionIndex]);
+        return insertSuggestion(text, state, state.suggestions[state.suggestionIndex]);
       }
       const [newText, newState] = insertText(text, state, "\n");
       if (!newState.cursorCoordinate) return [newText, newState];
@@ -137,8 +134,8 @@ export function handleOnKeyDown(
     }
     case "ArrowUp": {
       if (state.suggestions.length > 0) {
-        const suggectionIndex = Math.max(state.suggectionIndex - 1, 0);
-        return [text, { ...state, suggectionIndex }];
+        const suggestionIndex = Math.max(state.suggestionIndex - 1, 0);
+        return [text, { ...state, suggestionIndex: suggestionIndex }];
       }
       const lines = text.split("\n");
       const prevLine = lines[state.cursorCoordinate.lineIndex - 1];
@@ -151,8 +148,8 @@ export function handleOnKeyDown(
     }
     case "ArrowDown": {
       if (state.suggestions.length > 0) {
-        const suggectionIndex = Math.min(state.suggectionIndex + 1, state.suggestions.length - 1);
-        return [text, { ...state, suggectionIndex }];
+        const suggestionIndex = Math.min(state.suggestionIndex + 1, state.suggestions.length - 1);
+        return [text, { ...state, suggestionIndex: suggestionIndex }];
       }
       const lines = text.split("\n");
       const nextLine = lines[state.cursorCoordinate.lineIndex + 1];
@@ -165,27 +162,13 @@ export function handleOnKeyDown(
     }
     case "ArrowLeft": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      return [
-        text,
-        {
-          ...state,
-          cursorCoordinate,
-          textSelection: undefined,
-          ...EditorConstants.defaultSuggestionState,
-        },
-      ];
+      const newState = { ...state, cursorCoordinate, textSelection: undefined };
+      return showSuggestion(text, props, newState);
     }
     case "ArrowRight": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
-      return [
-        text,
-        {
-          ...state,
-          cursorCoordinate,
-          textSelection: undefined,
-          ...EditorConstants.defaultSuggestionState,
-        },
-      ];
+      const newState = { ...state, cursorCoordinate, textSelection: undefined };
+      return showSuggestion(text, props, newState);
     }
     default:
       return handleOnShortcut(text, state, command);
@@ -199,13 +182,12 @@ export function handleOnTextChange(
   event: React.ChangeEvent<HTMLTextAreaElement>
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
+
+  const textAreaValue = event.target.value;
   if (state.isComposing) {
-    return [
-      text,
-      { ...state, textAreaValue: event.target.value, ...EditorConstants.defaultSuggestionState },
-    ];
+    return [text, { ...state, textAreaValue, ...EditorConstants.defaultSuggestionState }];
   }
-  const [newText, newState] = insertText(text, state, event.target.value);
+  const [newText, newState] = insertText(text, state, textAreaValue);
   return showSuggestion(newText, props, newState);
 }
 
@@ -316,17 +298,19 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
   switch (currentLine[charIndex - 1]) {
     case "[": {
       const suggestions = props.bracketLinkProps?.suggestions;
+      const suggestionIndex = props.bracketLinkProps?.initialSuggestionIndex || 0;
       const suggestionState =
         suggestions && suggestions.length > 0 && !props.bracketLinkProps?.disabled
-          ? { suggestionType: SuggestionType.BracketLink, suggestions, suggectionIndex: 0 }
+          ? { suggestionType: SuggestionType.BracketLink, suggestions, suggestionIndex }
           : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
     }
     case "#": {
       const suggestions = props.hashTagProps?.suggestions;
+      const suggestionIndex = props.hashTagProps?.initialSuggestionIndex || 0;
       const suggestionState =
         suggestions && suggestions.length > 0 && !props.hashTagProps?.disabled
-          ? { suggestionType: SuggestionType.HashTag, suggestions, suggectionIndex: 0 }
+          ? { suggestionType: SuggestionType.HashTag, suggestions, suggestionIndex }
           : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
     }
@@ -343,16 +327,18 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
         }
         return undefined;
       })();
-      const suggestions = tagName ? props.taggedLinkPropsMap[tagName].suggestions : undefined;
+      const taggedLinkProps = tagName ? props.taggedLinkPropsMap[tagName] : undefined;
+
+      const suggestions = taggedLinkProps?.suggestions;
+      const suggestionIndex = taggedLinkProps?.initialSuggestionIndex || 0;
       const suggestionState =
         suggestions && suggestions.length > 0
-          ? { suggestionType: SuggestionType.TaggedLink, suggestions, suggectionIndex: 0 }
+          ? { suggestionType: SuggestionType.TaggedLink, suggestions, suggestionIndex }
           : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
     }
-    default: {
+    default:
       return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
-    }
   }
 }
 
