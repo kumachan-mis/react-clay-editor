@@ -1,6 +1,6 @@
 import { TextLinesConstants } from "./constants";
 import {
-  DecorationSetting,
+  TextDecoration,
   TaggedLinkPropsMap,
   ContentWithIndent,
   DecorationStyle,
@@ -56,7 +56,7 @@ export function parseContent(
 export function getDecorationStyle(
   facingMeta: string,
   trailingMeta: string,
-  setting: DecorationSetting
+  setting: TextDecoration
 ): DecorationStyle {
   const { level1, level2, level3 } = setting.fontSizes;
   const style = { bold: false, italic: false, underline: false, fontSize: level1 };

@@ -1,8 +1,11 @@
-import { CursorCoordinate, SuggestionType } from "../Cursor/types";
+import { CursorCoordinate, SuggestionType, SuggestionListDecoration } from "../Cursor/types";
 import { TextSelection, SelectionWithMouse } from "../Selection/types";
-import { DecorationSetting as Decoration } from "../TextLines/types";
+import { TextDecoration } from "../TextLines/types";
 
-export { Decoration };
+export interface Decoration {
+  text?: TextDecoration;
+  suggestionList?: SuggestionListDecoration;
+}
 
 export interface BracketLinkProps {
   anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
@@ -44,13 +47,13 @@ export interface State {
   cursorCoordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   isComposing: boolean;
-  suggestionType: SuggestionType;
-  suggestions: string[];
-  suggectionIndex: number;
   textSelection: TextSelection | undefined;
   selectionWithMouse: SelectionWithMouse;
   historyHead: number;
   editActionHistory: EditAction[];
+  suggestionType: SuggestionType;
+  suggestions: string[];
+  suggectionIndex: number;
 }
 
 export type ShortcutCommand = "selectAll" | "undo" | "redo";

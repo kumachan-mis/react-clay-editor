@@ -64,9 +64,11 @@ export const App: React.FC = () => {
         onChangeText={setText}
         bracketLinkProps={{
           anchorProps: (linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` }),
+          suggestions: ["react-realtime-markup-editor"],
         }}
         hashTagProps={{
           anchorProps: (hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` }),
+          suggestions: ["react-realtime-markup-editor"],
         }}
         taggedLinkPropsMap={{
           github: {

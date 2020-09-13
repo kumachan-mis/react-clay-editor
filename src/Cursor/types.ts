@@ -10,12 +10,19 @@ export const enum SuggestionType {
   None,
 }
 
+export interface SuggestionListDecoration {
+  width: number;
+  maxHeight: number;
+  fontSize: number;
+}
+
 export interface Props {
   coordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   suggestionType: SuggestionType;
   suggestions: string[];
   suggestionIndex: number;
+  suggestionListDecoration: SuggestionListDecoration;
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;

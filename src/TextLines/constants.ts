@@ -1,6 +1,6 @@
-import { DecorationSetting, DecorationStyle } from "./types";
+import { TextDecoration, DecorationStyle } from "./types";
 
-export const defaultDecoration: DecorationSetting = {
+export const defaultTextDecoration: TextDecoration = {
   fontSizes: { level1: 16, level2: 20, level3: 24 },
 };
 

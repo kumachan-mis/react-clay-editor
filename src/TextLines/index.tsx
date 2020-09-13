@@ -1,15 +1,15 @@
 import * as React from "react";
 
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
-import { TextLinesConstants, defaultDecoration } from "./constants";
+import { TextLinesConstants, defaultTextDecoration } from "./constants";
 import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
 import "../style.css";
 
 export class TextLines extends React.Component<Props> {
   static readonly defaultProps: Required<
-    Pick<Props, "decoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkPropsMap">
+    Pick<Props, "textDecoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkPropsMap">
   > = {
-    decoration: defaultDecoration,
+    textDecoration: defaultTextDecoration,
     bracketLinkProps: {},
     hashTagProps: {},
     taggedLinkPropsMap: {},
@@ -20,7 +20,7 @@ export class TextLines extends React.Component<Props> {
       <div className={TextLinesConstants.className}>
         {this.props.text.split("\n").map((line: string, index: number) => {
           const { indent, content } = parseLine(line);
-          const defaultFontSize = this.props.decoration.fontSizes.level1;
+          const defaultFontSize = this.props.textDecoration.fontSizes.level1;
           const on = index == this.props.cursorCoordinate?.lineIndex;
           return (
             <div
@@ -83,9 +83,9 @@ export class TextLines extends React.Component<Props> {
 
     switch (props.node.type) {
       case "decoration": {
-        const { children } = props.node;
-        const { facingMeta, trailingMeta } = props.node;
-        const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, this.props.decoration);
+        const { facingMeta, trailingMeta, children } = props.node;
+        const { textDecoration } = this.props;
+        const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, textDecoration);
         return (
           <span style={constants.decoration.style(decorationStyle)}>
             {[...facingMeta].map((char: string, index: number) => (

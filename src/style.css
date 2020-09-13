@@ -70,7 +70,7 @@ textarea.React-Realtime-Markup-Editor-cursor {
   z-index: 1;
 }
 
-ul.React-Realtime-Markup-Editor-cursor {
+ul.React-Realtime-Markup-Editor-cursor-suggestion-list {
   position: absolute;
   margin: 0px;
   padding: 0px;
@@ -80,22 +80,25 @@ ul.React-Realtime-Markup-Editor-cursor {
   z-index: 1;
 }
 
-li.React-Realtime-Markup-Editor-cursor {
+li.React-Realtime-Markup-Editor-cursor-suggestion-item {
   list-style-type: none;
   cursor: pointer;
-  width: 150px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 2px;
   padding-bottom: 2px;
   border-bottom: 1px solid #eaecef;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow-y: scroll;
+  text-overflow: ellipsis;
 }
 
-li.React-Realtime-Markup-Editor-cursor:hover {
+li.React-Realtime-Markup-Editor-cursor-suggestion-item:hover {
   background-color: #cce6ff;
 }
 
-li.React-Realtime-Markup-Editor-cursor[aria-selected="true"] {
+li.React-Realtime-Markup-Editor-cursor-suggestion-item[aria-selected="true"] {
   background-color: #cce6ff;
 }
 

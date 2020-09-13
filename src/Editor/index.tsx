@@ -21,7 +21,6 @@ import "../style.css";
 import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
-import { SuggestionType } from "../Cursor/types";
 import { SelectionWithMouse } from "../Selection/types";
 
 export class Editor extends React.Component<Props, State> {
@@ -33,13 +32,11 @@ export class Editor extends React.Component<Props, State> {
       cursorCoordinate: undefined,
       textAreaValue: "",
       isComposing: false,
-      suggestionType: SuggestionType.None,
-      suggestions: [],
-      suggectionIndex: -1,
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Inactive,
       historyHead: -1,
       editActionHistory: [],
+      ...EditorConstants.defaultSuggestionState,
     };
 
     this.root = null;
@@ -70,8 +67,9 @@ export class Editor extends React.Component<Props, State> {
               suggestionType={this.state.suggestionType}
               suggestions={this.state.suggestions}
               suggestionIndex={this.state.suggectionIndex}
-              onKeyDown={this.createCursorEventHandler(handleOnKeyDown)}
-              onTextChange={this.createCursorEventHandler(handleOnTextChange)}
+              suggestionListDecoration={this.props.decoration?.suggestionList}
+              onKeyDown={this.createCursorEventHandlerWithProps(handleOnKeyDown)}
+              onTextChange={this.createCursorEventHandlerWithProps(handleOnTextChange)}
               onTextCompositionStart={this.createCursorEventHandler(handleOnTextCompositionStart)}
               onTextCompositionEnd={this.createCursorEventHandler(handleOnTextCompositionEnd)}
               onTextCut={this.createCursorEventHandler(handleOnTextCut)}
@@ -82,7 +80,7 @@ export class Editor extends React.Component<Props, State> {
             <Selection textSelection={this.state.textSelection} />
             <TextLines
               text={this.props.text}
-              decoration={this.props.decoration}
+              textDecoration={this.props.decoration?.text}
               bracketLinkProps={this.props.bracketLinkProps}
               hashTagProps={this.props.hashTagProps}
               taggedLinkPropsMap={this.props.taggedLinkPropsMap}
@@ -117,6 +115,17 @@ export class Editor extends React.Component<Props, State> {
     return (event) => {
       if (this.props.disabled) return;
       const [text, state] = handler(this.props.text, this.state, event);
+      if (state != this.state) this.setState(state);
+      if (text != this.props.text) this.props.onChangeText(text);
+    };
+  };
+
+  private createCursorEventHandlerWithProps = <Event,>(
+    handler: (text: string, props: Props, state: State, event: Event) => [string, State]
+  ): ((event: Event) => void) => {
+    return (event) => {
+      if (this.props.disabled) return;
+      const [text, state] = handler(this.props.text, this.props, this.state, event);
       if (state != this.state) this.setState(state);
       if (text != this.props.text) this.props.onChangeText(text);
     };

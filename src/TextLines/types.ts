@@ -1,7 +1,7 @@
 import { BracketLinkProps, HashTagProps, TaggedLinkProps } from "../Editor/types";
 import { CursorCoordinate } from "../Cursor/types";
 
-export interface DecorationSetting {
+export interface TextDecoration {
   fontSizes: Record<"level1" | "level2" | "level3", number>;
 }
 
@@ -9,7 +9,7 @@ export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };
 
 export interface Props {
   text: string;
-  decoration: DecorationSetting;
+  textDecoration: TextDecoration;
   bracketLinkProps: BracketLinkProps;
   hashTagProps: HashTagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
