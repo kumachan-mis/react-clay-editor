@@ -307,12 +307,13 @@ function insertText(
 }
 
 function showSuggestion(text: string, props: Props, state: State): [string, State] {
-  if (!state.cursorCoordinate || state.cursorCoordinate.charIndex == 0) {
+  if (!state.cursorCoordinate) {
     return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
   }
 
-  const char = text[cursorCoordinateToTextIndex(text, state.cursorCoordinate) - 1];
-  switch (char) {
+  const { lineIndex, charIndex } = state.cursorCoordinate;
+  const currentLine = text.split("\n")[lineIndex];
+  switch (currentLine[charIndex - 1]) {
     case "[": {
       const suggestions = props.bracketLinkProps?.suggestions;
       const suggestionState =
@@ -330,7 +331,23 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
       return [text, { ...state, ...suggestionState }];
     }
     case ":": {
-      const suggestionState = EditorConstants.defaultSuggestionState;
+      if (!props.taggedLinkPropsMap) {
+        return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
+      }
+
+      const tagName = (() => {
+        for (const tagName of Object.keys(props.taggedLinkPropsMap)) {
+          const pattern = `[${tagName}:`;
+          const target = currentLine.substring(Math.max(charIndex - pattern.length, 0), charIndex);
+          if (target == pattern) return tagName;
+        }
+        return undefined;
+      })();
+      const suggestions = tagName ? props.taggedLinkPropsMap[tagName].suggestions : undefined;
+      const suggestionState =
+        suggestions && suggestions.length > 0
+          ? { suggestionType: SuggestionType.TaggedLink, suggestions, suggectionIndex: 0 }
+          : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
     }
     default: {
@@ -350,7 +367,8 @@ function insertSuggestion(text: string, state: State, suggestion: string): [stri
       return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
     }
     case SuggestionType.TaggedLink: {
-      return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
+      const [newText, newState] = insertText(text, state, ` ${suggestion}]`);
+      return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
     }
     case SuggestionType.None:
     default:

@@ -77,6 +77,7 @@ export const App: React.FC = () => {
               href: `https://github.com/${linkName.substring(1)}`,
               style: { color: "#121B31", textDecoration: "underline" },
             }),
+            suggestions: ["@kumachan-mis/react-realtime-markup-editor"],
           },
           npm: {
             anchorProps: (linkName) => ({
