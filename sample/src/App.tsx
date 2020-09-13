@@ -64,7 +64,6 @@ export const App: React.FC = () => {
         onChangeText={setText}
         bracketLinkProps={{
           anchorProps: (linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` }),
-          suggestions: ["react-realtime-markup-editor"],
         }}
         hashTagProps={{
           anchorProps: (hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` }),
@@ -84,6 +83,7 @@ export const App: React.FC = () => {
               href: `https://www.npmjs.com/package/${linkName}`,
               style: { color: "#F75E8A", textDecoration: "underline" },
             }),
+            suggestions: ["react-realtime-markup-editor"],
           },
         }}
         style={style}
