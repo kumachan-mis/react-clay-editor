@@ -66,7 +66,7 @@ export class Editor extends React.Component<Props, State> {
               textAreaValue={this.state.textAreaValue}
               suggestionType={this.state.suggestionType}
               suggestions={this.state.suggestions}
-              suggestionIndex={this.state.suggectionIndex}
+              suggestionIndex={this.state.suggestionIndex}
               suggestionListDecoration={this.props.decoration?.suggestionList}
               onKeyDown={this.createCursorEventHandlerWithProps(handleOnKeyDown)}
               onTextChange={this.createCursorEventHandlerWithProps(handleOnTextChange)}

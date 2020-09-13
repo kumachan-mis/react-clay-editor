@@ -10,12 +10,14 @@ export interface Decoration {
 export interface BracketLinkProps {
   anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   suggestions?: string[];
+  initialSuggestionIndex?: number;
   disabled?: boolean;
 }
 
 export interface HashTagProps {
   anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   suggestions?: string[];
+  initialSuggestionIndex?: number;
   disabled?: boolean;
 }
 
@@ -23,6 +25,7 @@ export interface TaggedLinkProps {
   linkNameRegex?: RegExp;
   anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   suggestions?: string[];
+  initialSuggestionIndex?: number;
   tagHidden?: boolean;
 }
 
@@ -53,7 +56,7 @@ export interface State {
   editActionHistory: EditAction[];
   suggestionType: SuggestionType;
   suggestions: string[];
-  suggectionIndex: number;
+  suggestionIndex: number;
 }
 
 export type ShortcutCommand = "selectAll" | "undo" | "redo";
