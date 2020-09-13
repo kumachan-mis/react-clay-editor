@@ -95,11 +95,11 @@ li.React-Realtime-Markup-Editor-cursor-suggestion-item {
 }
 
 li.React-Realtime-Markup-Editor-cursor-suggestion-item:hover {
-  background-color: #cce6ff;
+  background-color: #f6f8fa;
 }
 
 li.React-Realtime-Markup-Editor-cursor-suggestion-item[aria-selected="true"] {
-  background-color: #cce6ff;
+  background-color: #f6f8fa;
 }
 
 /* Selection */
