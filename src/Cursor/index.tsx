@@ -105,7 +105,7 @@ export class Cursor extends React.Component<Props, State> {
           <li
             key={index}
             aria-selected={this.props.suggestionIndex == index}
-            className={constants.item.className}
+            className={constants.item.className(index)}
             onMouseDown={(event) => this.props.onSuggectionMouseDown(event)}
             style={constants.item.style(fontSize)}
           >
