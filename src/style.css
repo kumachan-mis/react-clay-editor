@@ -77,6 +77,7 @@ ul.React-Realtime-Markup-Editor-cursor-suggestion-list {
   border-radius: 6px;
   box-shadow: 0px 1px 2px #cccccc;
   background-color: #ffffff;
+  overflow-y: scroll;
   z-index: 1;
 }
 

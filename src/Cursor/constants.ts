@@ -49,7 +49,8 @@ export const CursorConstants = {
       }),
     },
     item: {
-      className: "React-Realtime-Markup-Editor-cursor-suggestion-item",
+      className: (index: number): string =>
+        `React-Realtime-Markup-Editor-cursor-suggestion-item Item${index}`,
       style: (fontSize: number): React.CSSProperties => ({
         fontSize: `${fontSize}px`,
       }),

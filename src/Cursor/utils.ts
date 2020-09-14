@@ -12,9 +12,24 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const selector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
-  const textArea = getRoot(element)?.querySelector(selector) as HTMLTextAreaElement;
-  textArea.focus();
+  const root = getRoot(element);
+  const textAreaSelector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
+  const textArea = root?.querySelector(textAreaSelector) as HTMLTextAreaElement | null;
+  textArea?.focus();
+  if (props.suggestions.length > 0) {
+    const index = props.suggestionIndex;
+    const className = classNameToSelector(CursorConstants.suggestion.item.className(index));
+    const listItemSelector = `li${className}`;
+    const listItem = root?.querySelector(listItemSelector) as HTMLLIElement | null;
+    const list = listItem?.parentElement;
+    if (list && listItem) {
+      if (listItem.offsetTop < list.scrollTop) {
+        list.scrollTop = listItem.offsetTop;
+      } else if (listItem.offsetTop + listItem.clientHeight > list.scrollTop + list.clientHeight) {
+        list.scrollTop = listItem.offsetTop + listItem.clientHeight - list.clientHeight;
+      }
+    }
+  }
 
   const { coordinate } = props;
   const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
