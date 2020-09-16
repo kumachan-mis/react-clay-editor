@@ -48,8 +48,8 @@ Multiple spaces will provide nested itemizations.
 | style            | syntax          |
 | ---------------- | --------------- |
 | <b>bold</b>      | `[* bold]`      |
-| <h4>larger</h4>  | `[** larger]`   |
-| <h3>largest</h3> | `[*** largest]` |
+| <h3>larger</h3>  | `[** larger]`   |
+| <h2>largest</h2> | `[*** largest]` |
 | <i>italic</i>    | `[/ italic]`    |
 | <u>underline</u> | `[_ underline]` |
 
