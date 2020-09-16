@@ -45,23 +45,23 @@ Multiple spaces will provide nested itemizations.
 
 ### Text Decorations
 
-| style            | syntax          |
-| ---------------- | --------------- |
-| <b>bold</b>      | `[* bold]`      |
-| <h3>larger</h3>  | `[** larger]`   |
-| <h2>largest</h2> | `[*** largest]` |
-| <i>italic</i>    | `[/ italic]`    |
-| <u>underline</u> | `[_ underline]` |
+| style                                                     | syntax          |
+| --------------------------------------------------------- | --------------- |
+| <b>bold</b>                                               | `[* bold]`      |
+| <h3>larger</h3>                                           | `[** larger]`   |
+| <h2>largest</h2>                                          | `[*** largest]` |
+| <i>italic</i>                                             | `[/ italic]`    |
+| <span style="text-decoration: underline">underline</span> | `[_ underline]` |
 
 **Note**  
 Combinations of `*`, `/` and `_` are available.  
 Here are some examples:
 
-| style                          | syntax                                             |
-| ------------------------------ | -------------------------------------------------- |
-| <b><i>bold italic</i></b>      | `[*/ bold italic]` or `[/* bold italic]`           |
-| <b><u>bold underline</u></b>   | `[*_ bold underline]` or `[_* bold underline]`     |
-| <i><u>italic underline</u></i> | `[/_ italic underline]` or `[_/ italic underline]` |
+| style                                                                   | syntax                                             |
+| ----------------------------------------------------------------------- | -------------------------------------------------- |
+| <b><i>bold italic</i></b>                                               | `[*/ bold italic]` or `[/* bold italic]`           |
+| <b><span style="text-decoration: underline">bold underline</span></b>   | `[*_ bold underline]` or `[_* bold underline]`     |
+| <i><span style="text-decoration: underline">italic underline</span></i> | `[/_ italic underline]` or `[_/ italic underline]` |
 
 ### Links
 
