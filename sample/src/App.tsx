@@ -52,7 +52,7 @@ const defaultSubText = [
 ].join("\n");
 
 const style: React.CSSProperties = { width: "800px", height: "500px", margin: "20px" };
-const sunStyle: React.CSSProperties = { width: "800px", height: "150px", margin: "20px" };
+const subStyle: React.CSSProperties = { width: "800px", height: "150px", margin: "20px" };
 
 export const App: React.FC = () => {
   const [text, setText] = React.useState(defaultText);
@@ -93,7 +93,7 @@ export const App: React.FC = () => {
         onChangeText={setSubText}
         bracketLinkProps={{ disabled: true }}
         hashTagProps={{ disabled: true }}
-        style={sunStyle}
+        style={subStyle}
       />
     </>
   );
