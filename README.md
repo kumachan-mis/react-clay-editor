@@ -36,8 +36,8 @@ const App: React.FC = () => {
 
 ### Itemizations
 
-| style         | syntax  | 　  |
-| ------------- | ------- | --- |
+| style         | syntax  |
+| ------------- | ------- |
 | <li>item</li> | `␣item` |
 
 **Note**  
@@ -45,8 +45,8 @@ Multiple spaces will provide nested itemizations.
 
 ### Text Decorations
 
-| style            | syntax          | 　  |
-| ---------------- | --------------- | --- |
+| style            | syntax          |
+| ---------------- | --------------- |
 | <b>bold</b>      | `[* bold]`      |
 | <h4>larger</h4>  | `[** larger]`   |
 | <h3>largest</h3> | `[*** largest]` |
@@ -57,16 +57,16 @@ Multiple spaces will provide nested itemizations.
 Combinations of `*`, `/` and `_` are available.  
 Here are some examples:
 
-| style                          | syntax                                             | 　  |
-| ------------------------------ | -------------------------------------------------- | --- |
+| style                          | syntax                                             |
+| ------------------------------ | -------------------------------------------------- |
 | <b><i>bold italic</i></b>      | `[*/ bold italic]` or `[/* bold italic]`           |
 | <b><u>bold underline</u></b>   | `[*_ bold underline]` or `[_* bold underline]`     |
 | <i><u>italic underline</u></i> | `[/_ italic underline]` or `[_/ italic underline]` |
 
 ### Links
 
-| style               | syntax               | 　  |
-| ------------------- | -------------------- | --- |
+| style               | syntax               |
+| ------------------- | -------------------- |
 | <a>blacket link</a> | `[blacket link]`     |
 | <a>tagged link</a>  | `[tag: tagged link]` |
 | <a>#hash-tag</a>    | `#hash-tag`          |
