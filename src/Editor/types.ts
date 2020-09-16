@@ -8,7 +8,7 @@ export interface Decoration {
 }
 
 export interface BracketLinkProps {
-  anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
