@@ -264,8 +264,8 @@ same as `BracketLinkProps` except `linkNameRegex`
 
 **Attributes**
 
-- linkNameRegex: regular expression of link names. This must be a subset of `defaultLinkNameRegex = /[^[\]]+/`  
-  If `linkName` does not match the pattern, `[tag: ${linkName}]` will be a BRACKET LINK whose link name is `"tag: ${linkName}"`  
+- linkNameRegex: regular expression of link names. This **MUST** be a subset of `defaultLinkNameRegex = /[^[\]]+/`  
+  If `linkName` does not match the pattern, `[tag: ${linkName}]` will be a BRACKET LINK whose name is `"tag: ${linkName}"`  
   default: `defaultLinkNameRegex`
 
 **Default**
