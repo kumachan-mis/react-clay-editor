@@ -55,11 +55,12 @@ Multiple spaces will provide nested itemizations.
 
 **Note**  
 Combinations of `*`, `/` and `_` are available.  
-Here are some examples:  
-| style | syntax |　
-| ----- | ------ |
-| <b><i>bold italic</i></b> | `[*/ bold italic]` or `[/* bold italic]` |
-| <b><u>bold underline</u></b> | `[*_ bold underline]` or `[_* bold underline]` |
+Here are some examples:
+
+| style                          | syntax                                             | 　  |
+| ------------------------------ | -------------------------------------------------- | --- |
+| <b><i>bold italic</i></b>      | `[*/ bold italic]` or `[/* bold italic]`           |
+| <b><u>bold underline</u></b>   | `[*_ bold underline]` or `[_* bold underline]`     |
 | <i><u>italic underline</u></i> | `[/_ italic underline]` or `[_/ italic underline]` |
 
 ### Links
@@ -134,7 +135,7 @@ interface TextDecoration {
   - level1: font size \[px\] of normal-sized text
   - level2: font size \[px\] of larger-sized text  
     c.f. `[** larger]`
-  - level3: font size \[px\] of largest-sized text
+  - level3: font size \[px\] of largest-sized text  
     c.f. `[*** largest]`
 
 **Default**
