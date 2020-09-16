@@ -65,11 +65,11 @@ Here are some examples:
 
 ### Links
 
-| style               | syntax               |
-| ------------------- | -------------------- |
-| <a>blacket link</a> | `[blacket link]`     |
-| <a>tagged link</a>  | `[tag: tagged link]` |
-| <a>#hash-tag</a>    | `#hash-tag`          |
+| style                   | syntax               |
+| ----------------------- | -------------------- |
+| <a>blacket link</a>     | `[blacket link]`     |
+| <a>tag: tagged link</a> | `[tag: tagged link]` |
+| <a>#hash-tag</a>        | `#hash-tag`          |
 
 **Note**
 
@@ -260,13 +260,15 @@ interface TaggedLinkProps {
 }
 ```
 
-same as `BracketLinkProps` except `linkNameRegex`
+same as `BracketLinkProps` except `linkNameRegex` and `tagHidden`  
+`disabled` property doesn't exist since you don't define a tag if you don't need it
 
 **Attributes**
 
 - linkNameRegex: regular expression of link names. This **MUST** be a subset of `defaultLinkNameRegex = /[^[\]]+/`  
-  If `linkName` does not match the pattern, `[tag: ${linkName}]` will be a BRACKET LINK whose name is `"tag: ${linkName}"`  
+  If `tagged link` does not match the pattern, `[tag: tagged link]` will be a BRACKET LINK whose name is `"tag: tagged link"`  
   default: `defaultLinkNameRegex`
+- tagHidden: if `true`, `[tag: tagged link]` goes to `<a>tagged link</a>` instead of `<a>tag: tagged link</a>`
 
 **Default**
 
