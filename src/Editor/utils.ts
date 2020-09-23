@@ -402,7 +402,13 @@ function positionToCursorCoordinate(
     const groups = charElement.className.match(charClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     const charIndex = Number.parseInt(groups["charIndex"], 10);
-    return { lineIndex, charIndex };
+    if (charIndex == lines[lineIndex].length) return { lineIndex, charIndex };
+    const charRect = charElement.getBoundingClientRect();
+    if (x <= charRect.left + charRect.width / 2) {
+      return { lineIndex, charIndex };
+    } else {
+      return { lineIndex, charIndex: charIndex + 1 };
+    }
   } else if (lineElement) {
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
