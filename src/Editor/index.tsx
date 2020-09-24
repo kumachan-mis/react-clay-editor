@@ -158,7 +158,15 @@ export class Editor extends React.Component<Props, State> {
       this.root &&
       !this.root.contains(event.target as Node)
     ) {
-      this.setState({ cursorCoordinate: undefined });
+      this.setState({
+        cursorCoordinate: undefined,
+        textAreaValue: "",
+        isComposing: false,
+        textSelection: undefined,
+        selectionWithMouse: SelectionWithMouse.Inactive,
+        ...EditorConstants.defaultSuggestionState,
+        modeCursorOn: this.props.initialModeCursorOn ?? "edit",
+      });
     }
   };
 }
