@@ -3,7 +3,6 @@ import * as React from "react";
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
 import { TextLinesConstants, defaultTextDecoration } from "./constants";
 import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
-import { Mode } from "../Editor/types";
 import "../style.css";
 
 export class TextLines extends React.Component<Props> {
@@ -23,9 +22,7 @@ export class TextLines extends React.Component<Props> {
           const { indent, content } = parseLine(line);
           const defaultFontSize = this.props.textDecoration.fontSizes.level1;
           const mode =
-            index == this.props.cursorCoordinate?.lineIndex
-              ? this.props.modeCursorOn
-              : Mode.VIEW_MODE;
+            index == this.props.cursorCoordinate?.lineIndex ? this.props.modeCursorOn : "view";
           return (
             <div
               className={TextLinesConstants.line.className(index)}
@@ -84,7 +81,7 @@ export class TextLines extends React.Component<Props> {
 
     const { lineIndex } = props;
     const [from, to] = props.node.range;
-    const editMode = props.mode == Mode.EDIT_MODE;
+    const editMode = props.mode == "edit";
 
     switch (props.node.type) {
       case "decoration": {

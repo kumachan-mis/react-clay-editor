@@ -1,4 +1,4 @@
-import { BracketLinkProps, HashTagProps, TaggedLinkProps, Mode } from "../Editor/types";
+import { BracketLinkProps, HashTagProps, TaggedLinkProps } from "../Editor/types";
 import { CursorCoordinate } from "../Cursor/types";
 
 export interface TextDecoration {
@@ -14,7 +14,7 @@ export interface Props {
   hashTagProps: HashTagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
   cursorCoordinate: CursorCoordinate | undefined;
-  modeCursorOn: Mode;
+  modeCursorOn: "view" | "edit";
 }
 
 export interface IndentProps {
@@ -27,13 +27,13 @@ export interface ContentProps {
   indent: string;
   content: string;
   lineIndex: number;
-  mode: Mode;
+  mode: "view" | "edit";
 }
 
 export interface NodeProps {
   node: Node;
   lineIndex: number;
-  mode: Mode;
+  mode: "view" | "edit";
 }
 
 export interface ContentWithIndent {

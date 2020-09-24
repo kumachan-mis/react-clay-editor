@@ -1,4 +1,4 @@
-import { Props, State, EditAction, ShortcutCommand, Mode } from "./types";
+import { Props, State, EditAction, ShortcutCommand } from "./types";
 import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
@@ -36,7 +36,7 @@ export function handleOnMouseDown(
     modeCursorOn:
       cursorCoordinate.lineIndex == state.cursorCoordinate?.lineIndex
         ? state.modeCursorOn
-        : props.defaultModeCursorOn ?? Mode.EDIT_MODE,
+        : props.initialModeCursorOn ?? "edit",
   };
   return [text, newState];
 }
@@ -582,10 +582,10 @@ function handleOnRedo(text: string, state: State): [string, State] {
 function handleOnToggleMode(text: string, state: State): [string, State] {
   const modeCursorOn = (() => {
     switch (state.modeCursorOn) {
-      case Mode.EDIT_MODE:
-        return Mode.VIEW_MODE;
-      case Mode.VIEW_MODE:
-        return Mode.EDIT_MODE;
+      case "edit":
+        return "view";
+      case "view":
+        return "edit";
     }
   })();
   return [text, { ...state, modeCursorOn }];

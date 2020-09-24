@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Props, State, Mode } from "./types";
+import { Props, State } from "./types";
 import { EditorConstants } from "./constants";
 import {
   handleOnMouseDown,
@@ -37,7 +37,7 @@ export class Editor extends React.Component<Props, State> {
       historyHead: -1,
       editActionHistory: [],
       ...EditorConstants.defaultSuggestionState,
-      modeCursorOn: this.props.defaultModeCursorOn ?? Mode.EDIT_MODE,
+      modeCursorOn: this.props.initialModeCursorOn ?? "edit",
     };
 
     this.root = null;

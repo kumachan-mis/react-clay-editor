@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Editor, Mode } from "../../src";
+import { Editor } from "../../src";
 
 const defaultText = [
   "[*** React Realtime Markup Editor]",
@@ -100,7 +100,7 @@ export const App: React.FC = () => {
         onChangeText={setSubText}
         bracketLinkProps={{ disabled: true }}
         hashTagProps={{ disabled: true }}
-        defaultModeCursorOn={Mode.VIEW_MODE}
+        initialModeCursorOn="view"
         style={subStyle}
       />
     </>

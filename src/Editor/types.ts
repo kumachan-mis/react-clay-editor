@@ -29,11 +29,6 @@ export interface TaggedLinkProps {
   tagHidden?: boolean;
 }
 
-export const enum Mode {
-  EDIT_MODE = "EDIT_MODE",
-  VIEW_MODE = "VIEW_MODE",
-}
-
 export interface Props {
   text: string;
   onChangeText: (text: string) => void;
@@ -41,7 +36,7 @@ export interface Props {
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
-  defaultModeCursorOn?: Mode;
+  initialModeCursorOn?: "view" | "edit";
   disabled?: boolean;
   style?: React.CSSProperties;
 }
@@ -63,7 +58,7 @@ export interface State {
   suggestionType: SuggestionType;
   suggestions: string[];
   suggestionIndex: number;
-  modeCursorOn: Mode;
+  modeCursorOn: "view" | "edit";
 }
 
 export type ShortcutCommand = "selectAll" | "undo" | "redo" | "toggleMode";
