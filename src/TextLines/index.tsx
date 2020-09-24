@@ -3,6 +3,7 @@ import * as React from "react";
 import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
 import { TextLinesConstants, defaultTextDecoration } from "./constants";
 import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
+import { Mode } from "../Editor/types";
 import "../style.css";
 
 export class TextLines extends React.Component<Props> {
@@ -21,7 +22,10 @@ export class TextLines extends React.Component<Props> {
         {this.props.text.split("\n").map((line: string, index: number) => {
           const { indent, content } = parseLine(line);
           const defaultFontSize = this.props.textDecoration.fontSizes.level1;
-          const on = index == this.props.cursorCoordinate?.lineIndex;
+          const mode =
+            index == this.props.cursorCoordinate?.lineIndex
+              ? this.props.modeCursorOn
+              : Mode.VIEW_MODE;
           return (
             <div
               className={TextLinesConstants.line.className(index)}
@@ -29,7 +33,7 @@ export class TextLines extends React.Component<Props> {
               style={TextLinesConstants.line.style(defaultFontSize)}
             >
               <this.Indent indent={indent} content={content} lineIndex={index} />
-              <this.Content indent={indent} content={content} lineIndex={index} cursorOn={on} />
+              <this.Content indent={indent} content={content} lineIndex={index} mode={mode} />
             </div>
           );
         })}
@@ -59,12 +63,12 @@ export class TextLines extends React.Component<Props> {
   private Content = (props: ContentProps): React.ReactElement => {
     const constants = TextLinesConstants.line.content;
     const charConstants = TextLinesConstants.char;
-    const { indent, content, lineIndex, cursorOn } = props;
+    const { indent, content, lineIndex, mode } = props;
     return (
       <span className={constants.className} style={constants.style(indent.length)}>
         {parseContent(content, this.props.taggedLinkPropsMap, indent.length).map(
           (node: Node, index: number) => (
-            <this.Node key={index} node={node} lineIndex={lineIndex} cursorOn={cursorOn} />
+            <this.Node key={index} node={node} lineIndex={lineIndex} mode={mode} />
           )
         )}
         <span className={charConstants.className(lineIndex, indent.length + content.length)}>
@@ -78,8 +82,9 @@ export class TextLines extends React.Component<Props> {
     const constants = TextLinesConstants.line.content;
     const charConstants = TextLinesConstants.char;
 
-    const { lineIndex, cursorOn } = props;
+    const { lineIndex } = props;
     const [from, to] = props.node.range;
+    const editMode = props.mode == Mode.EDIT_MODE;
 
     switch (props.node.type) {
       case "decoration": {
@@ -90,18 +95,18 @@ export class TextLines extends React.Component<Props> {
           <span style={constants.decoration.style(decorationStyle)}>
             {[...facingMeta].map((char: string, index: number) => (
               <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                {cursorOn ? char : ""}
+                {editMode ? char : ""}
               </span>
             ))}
             {children.map((child: Node, index: number) => (
-              <this.Node key={index} node={child} lineIndex={lineIndex} cursorOn={cursorOn} />
+              <this.Node key={index} node={child} lineIndex={lineIndex} mode={props.mode} />
             ))}
             {[...trailingMeta].map((char: string, index: number, array: string[]) => (
               <span
                 key={index}
                 className={charConstants.className(lineIndex, to - array.length + index)}
               >
-                {cursorOn ? char : ""}
+                {editMode ? char : ""}
               </span>
             ))}
           </span>
@@ -114,7 +119,7 @@ export class TextLines extends React.Component<Props> {
           <a style={constants.taggedLink.style} {...(anchorProps?.(linkName) || {})}>
             {[...facingMeta].map((char: string, index: number) => (
               <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                {cursorOn ? char : ""}
+                {editMode ? char : ""}
               </span>
             ))}
             {[...tag].map((char: string, index: number) => (
@@ -122,7 +127,7 @@ export class TextLines extends React.Component<Props> {
                 key={from + index}
                 className={charConstants.className(lineIndex, from + facingMeta.length + index)}
               >
-                {cursorOn || !tagHidden ? char : ""}
+                {editMode || !tagHidden ? char : ""}
               </span>
             ))}
             {[...linkName].map((char: string, index: number) => (
@@ -141,7 +146,7 @@ export class TextLines extends React.Component<Props> {
                 key={to - array.length + index}
                 className={charConstants.className(lineIndex, to - array.length + index)}
               >
-                {cursorOn ? char : ""}
+                {editMode ? char : ""}
               </span>
             ))}
           </a>
@@ -153,7 +158,7 @@ export class TextLines extends React.Component<Props> {
         const bracketLinkCharSpans = [
           ...[...facingMeta].map((char: string, index: number) => (
             <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-              {disabled || cursorOn ? char : ""}
+              {disabled || editMode ? char : ""}
             </span>
           )),
           ...[...linkName].map((char: string, index: number) => (
@@ -169,7 +174,7 @@ export class TextLines extends React.Component<Props> {
               key={to - array.length + index}
               className={charConstants.className(lineIndex, to - array.length + index)}
             >
-              {disabled || cursorOn ? char : ""}
+              {disabled || editMode ? char : ""}
             </span>
           )),
         ];

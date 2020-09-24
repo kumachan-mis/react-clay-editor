@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Editor } from "../../src";
+import { Editor, Mode } from "../../src";
 
 const defaultText = [
   "[*** React Realtime Markup Editor]",
@@ -15,12 +15,13 @@ const defaultText = [
   "  like this",
   "",
   "[** Shortcut commands]",
-  " select all",
-  " cut",
-  " copy",
-  " paste",
-  " undo",
-  " redo",
+  " select all (ctrl + a)",
+  " cut (ctrl + x)",
+  " copy (ctrl + c)",
+  " paste (ctrl + v)",
+  " undo (ctrl + z)",
+  " redo (ctrl + shift + z / ctrl + y)",
+  " toggle view/edit mode (ctrl + /)",
   "",
   "[** Text decorations]",
   " [* bold]",
@@ -48,6 +49,12 @@ const defaultSubText = [
   "[* Links can be disabled]",
   " [disabled-bracket-link]",
   " #disabled-hash-tag-link",
+  "",
+  "[* Default mode can be consomized]",
+  " default mode of the editor above is 'edit'",
+  " default mode of this editor is 'view'",
+  " mode can be toggled by ctrl + /",
+  "",
   "More features are comming soon...",
 ].join("\n");
 
@@ -93,6 +100,7 @@ export const App: React.FC = () => {
         onChangeText={setSubText}
         bracketLinkProps={{ disabled: true }}
         hashTagProps={{ disabled: true }}
+        defaultModeCursorOn={Mode.VIEW_MODE}
         style={subStyle}
       />
     </>

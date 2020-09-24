@@ -1,5 +1,12 @@
 export { Editor } from "./Editor";
-export { Props, Decoration, BracketLinkProps, HashTagProps, TaggedLinkProps } from "./Editor/types";
+export {
+  Props,
+  Decoration,
+  BracketLinkProps,
+  HashTagProps,
+  TaggedLinkProps,
+  Mode,
+} from "./Editor/types";
 export { defaultSuggestionListDecoration } from "./Cursor/constants";
 export {
   defaultTextDecoration,
