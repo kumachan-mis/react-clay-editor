@@ -19,18 +19,24 @@ export function getEditor(element: HTMLElement): HTMLElement | null {
 
 export function handleOnMouseDown(
   text: string,
+  props: Props,
   state: State,
   position: [number, number],
   element: HTMLElement | null
 ): [string, State] {
   if (!element) return [text, state];
 
+  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   const newState = {
     ...state,
-    cursorCoordinate: positionToCursorCoordinate(text, state, position, element),
+    cursorCoordinate,
     textSelection: undefined,
     selectionWithMouse: SelectionWithMouse.Started,
     ...EditorConstants.defaultSuggestionState,
+    modeCursorOn:
+      cursorCoordinate.lineIndex == state.cursorCoordinate?.lineIndex
+        ? state.modeCursorOn
+        : props.initialModeCursorOn ?? "edit",
   };
   return [text, newState];
 }
@@ -426,6 +432,7 @@ function shortcutCommand(
   if (selectAllTriggered(event)) return "selectAll";
   if (undoTriggered(event)) return "undo";
   if (redoTriggered(event)) return "redo";
+  if (toggleModeTriggered(event)) return "toggleMode";
   return undefined;
 }
 
@@ -455,6 +462,15 @@ function redoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean
   );
 }
 
+function toggleModeTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
+  return (
+    (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
+    event.key == "/" &&
+    !event.altKey &&
+    !event.shiftKey
+  );
+}
+
 function handleOnShortcut(
   text: string,
   state: State,
@@ -467,6 +483,8 @@ function handleOnShortcut(
       return handleOnUndo(text, state);
     case "redo":
       return handleOnRedo(text, state);
+    case "toggleMode":
+      return handleOnToggleMode(text, state);
     default:
       return [text, state];
   }
@@ -559,4 +577,16 @@ function handleOnRedo(text: string, state: State): [string, State] {
   }
 
   return [text, state];
+}
+
+function handleOnToggleMode(text: string, state: State): [string, State] {
+  const modeCursorOn = (() => {
+    switch (state.modeCursorOn) {
+      case "edit":
+        return "view";
+      case "view":
+        return "edit";
+    }
+  })();
+  return [text, { ...state, modeCursorOn }];
 }

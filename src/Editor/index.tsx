@@ -37,6 +37,7 @@ export class Editor extends React.Component<Props, State> {
       historyHead: -1,
       editActionHistory: [],
       ...EditorConstants.defaultSuggestionState,
+      modeCursorOn: this.props.initialModeCursorOn ?? "edit",
     };
 
     this.root = null;
@@ -56,7 +57,7 @@ export class Editor extends React.Component<Props, State> {
         <div className={EditorConstants.root.className} ref={(root) => (this.root = root)}>
           <div
             className={EditorConstants.editor.className}
-            onMouseDown={this.createMouseEventHandler(handleOnMouseDown)}
+            onMouseDown={this.createMouseEventHandlerWithProps(handleOnMouseDown)}
             onMouseMove={this.createMouseEventHandler(handleOnMouseMove)}
             onMouseUp={this.createMouseEventHandler(handleOnMouseUp)}
             onMouseLeave={this.createMouseEventHandler(handleOnMouseLeave)}
@@ -85,6 +86,7 @@ export class Editor extends React.Component<Props, State> {
               hashTagProps={this.props.hashTagProps}
               taggedLinkPropsMap={this.props.taggedLinkPropsMap}
               cursorCoordinate={this.state.cursorCoordinate}
+              modeCursorOn={this.state.modeCursorOn}
             />
           </div>
         </div>
@@ -104,6 +106,24 @@ export class Editor extends React.Component<Props, State> {
       if (this.props.disabled || event.button != 0) return;
       const position: [number, number] = [event.clientX, event.clientY];
       const [text, state] = handler(this.props.text, this.state, position, this.root);
+      if (state != this.state) this.setState(state);
+      if (text != this.props.text) this.props.onChangeText(text);
+    };
+  };
+
+  private createMouseEventHandlerWithProps = (
+    handler: (
+      text: string,
+      props: Props,
+      state: State,
+      pos: [number, number],
+      root: HTMLElement | null
+    ) => [string, State]
+  ): ((event: React.MouseEvent) => void) => {
+    return (event) => {
+      if (this.props.disabled || event.button != 0) return;
+      const position: [number, number] = [event.clientX, event.clientY];
+      const [text, state] = handler(this.props.text, this.props, this.state, position, this.root);
       if (state != this.state) this.setState(state);
       if (text != this.props.text) this.props.onChangeText(text);
     };

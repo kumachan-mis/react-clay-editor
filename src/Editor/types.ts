@@ -36,6 +36,7 @@ export interface Props {
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
+  initialModeCursorOn?: "view" | "edit";
   disabled?: boolean;
   style?: React.CSSProperties;
 }
@@ -57,6 +58,7 @@ export interface State {
   suggestionType: SuggestionType;
   suggestions: string[];
   suggestionIndex: number;
+  modeCursorOn: "view" | "edit";
 }
 
-export type ShortcutCommand = "selectAll" | "undo" | "redo";
+export type ShortcutCommand = "selectAll" | "undo" | "redo" | "toggleMode";

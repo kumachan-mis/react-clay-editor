@@ -14,6 +14,7 @@ export interface Props {
   hashTagProps: HashTagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
   cursorCoordinate: CursorCoordinate | undefined;
+  modeCursorOn: "view" | "edit";
 }
 
 export interface IndentProps {
@@ -26,13 +27,13 @@ export interface ContentProps {
   indent: string;
   content: string;
   lineIndex: number;
-  cursorOn: boolean;
+  mode: "view" | "edit";
 }
 
 export interface NodeProps {
   node: Node;
   lineIndex: number;
-  cursorOn: boolean;
+  mode: "view" | "edit";
 }
 
 export interface ContentWithIndent {
