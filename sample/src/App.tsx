@@ -58,8 +58,20 @@ const defaultSubText = [
   "More features are comming soon...",
 ].join("\n");
 
-const style: React.CSSProperties = { width: "800px", height: "500px", margin: "20px" };
-const subStyle: React.CSSProperties = { width: "800px", height: "150px", margin: "20px" };
+const style: React.CSSProperties = {
+  width: "800px",
+  height: "500px",
+  margin: "20px",
+  border: "solid 1px",
+  padding: "10px",
+};
+const subStyle: React.CSSProperties = {
+  width: "800px",
+  height: "150px",
+  margin: "20px",
+  border: "solid 1px",
+  padding: "10px",
+};
 
 export const App: React.FC = () => {
   const [text, setText] = React.useState(defaultText);
