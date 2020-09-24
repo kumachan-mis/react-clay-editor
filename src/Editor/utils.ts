@@ -103,7 +103,9 @@ export function handleOnKeyDown(
   if (!state.cursorCoordinate || state.isComposing || (event.key.length == 1 && !command)) {
     return [text, state];
   }
+
   event.preventDefault();
+  event.nativeEvent.stopImmediatePropagation();
 
   switch (event.key) {
     case "Tab": {
@@ -258,6 +260,8 @@ export function handleOnSuggectionMouseDown(
 ): [string, State] {
   event.preventDefault();
   event.stopPropagation();
+  event.nativeEvent.stopImmediatePropagation();
+
   const suggestion = event.currentTarget.textContent;
   if (!suggestion) return [text, state];
   return insertSuggestion(text, state, suggestion);
