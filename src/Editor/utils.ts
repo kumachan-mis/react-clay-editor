@@ -33,10 +33,6 @@ export function handleOnMouseDown(
     textSelection: undefined,
     selectionWithMouse: SelectionWithMouse.Started,
     ...EditorConstants.defaultSuggestionState,
-    modeCursorOn:
-      cursorCoordinate.lineIndex == state.cursorCoordinate?.lineIndex
-        ? state.modeCursorOn
-        : props.initialModeCursorOn ?? "edit",
   };
   return [text, newState];
 }

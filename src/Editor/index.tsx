@@ -165,7 +165,6 @@ export class Editor extends React.Component<Props, State> {
         textSelection: undefined,
         selectionWithMouse: SelectionWithMouse.Inactive,
         ...EditorConstants.defaultSuggestionState,
-        modeCursorOn: this.props.initialModeCursorOn ?? "edit",
       });
     }
   };
