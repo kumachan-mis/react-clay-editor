@@ -93,17 +93,16 @@ Here are some examples:
 
 ## Public API
 
-| name                  | type                                     | requried/optional | default                                   | description                                                                                                         |
-| --------------------- | ---------------------------------------- | ----------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `text`                | `string`                                 | requried          | -                                         | syntactic text in `Editor`<br>you will use this like<br>`text={this.state.text}`                                    |
-| `onChangeText`        | `(text: string) => void`                 | requried          | -                                         | callback function on `text` changed<br>you will use this like<br>`onChangeText={(text) => this.setState({ text })}` |
-| `decoration`          | `Decoration`                             | optional          | see [Decoration](#Decoration)             | settings of decorations<br>details: [Decoration](#Decoration)                                                       |
-| `bracketLinkProps`    | `BracketLinkProps`                       | optional          | see [BracketLinkProps](#BracketLinkProps) | settings of bracket links<br>details: [BracketLinkProps](#BracketLinkProps)                                         |
-| `hashTagProps`        | `HashTagProps`                           | optional          | see [HashTagProps](#HashTagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashTagProps)                                                 |
-| `taggedLinkPropsMap`  | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
-| `initialModeCursorOn` | `"edit"` or `"view"`                     | optional          | `"edit"`                                  | initial visualization mode of line which cursor is on                                                               |
-| `disabled`            | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
-| `style`               | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
+| name                 | type                                     | requried/optional | default                                   | description                                                                                                         |
+| -------------------- | ---------------------------------------- | ----------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `text`               | `string`                                 | requried          | -                                         | syntactic text in `Editor`<br>you will use this like<br>`text={this.state.text}`                                    |
+| `onChangeText`       | `(text: string) => void`                 | requried          | -                                         | callback function on `text` changed<br>you will use this like<br>`onChangeText={(text) => this.setState({ text })}` |
+| `decoration`         | `Decoration`                             | optional          | see [Decoration](#Decoration)             | settings of decorations<br>details: [Decoration](#Decoration)                                                       |
+| `bracketLinkProps`   | `BracketLinkProps`                       | optional          | see [BracketLinkProps](#BracketLinkProps) | settings of bracket links<br>details: [BracketLinkProps](#BracketLinkProps)                                         |
+| `hashTagProps`       | `HashTagProps`                           | optional          | see [HashTagProps](#HashTagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashTagProps)                                                 |
+| `taggedLinkPropsMap` | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
+| `disabled`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
+| `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
 ### Decoration
 
@@ -198,7 +197,7 @@ settings of bracket links
 
 ```ts
 interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (linkName: string) => React.ComponentProps<"a">;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -238,7 +237,7 @@ settings of hash tags
 
 ```ts
 interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (hashTagName: string) => React.ComponentProps<"a">;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -254,7 +253,7 @@ settings of tagged links
 ```ts
 interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (linkName: string) => React.ComponentProps<"a">;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;

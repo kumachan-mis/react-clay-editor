@@ -16,13 +16,12 @@ A text document editor which is syntactically formattable in real time
   like this
 
 [** Shortcut commands]
- select all (ctrl + a)
- cut (ctrl + x)
- copy (ctrl + c)
- paste (ctrl + v)
- undo (ctrl + z)
- redo (ctrl + shift + z / ctrl + y)
- toggle view/edit mode (ctrl + /)
+ select all
+ cut
+ copy
+ paste
+ undo
+ redo
 
 [** Text decorations]
  [* bold]
@@ -50,11 +49,6 @@ const defaultSubText = String.raw
 [* Links can be disabled]
  [disabled-bracket-link]
  #disabled-hash-tag-link
-
-[* Initial mode can be customized]
- initial mode of the editor above is 'edit'
- initial mode of this editor is 'view'
- mode can be toggled by ctrl + /
 
 More features are comming soon...
 `;
@@ -113,7 +107,6 @@ export const App: React.FC = () => {
         onChangeText={setSubText}
         bracketLinkProps={{ disabled: true }}
         hashTagProps={{ disabled: true }}
-        initialModeCursorOn="view"
         style={subStyle}
       />
     </>

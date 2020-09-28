@@ -23,6 +23,7 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@types/katex": "^0.11.0",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
@@ -53,5 +54,8 @@
     "prepublishOnly": "yarn build",
     "predeploy": "rm -Rf sample/dist && mkdir sample/dist && parcel build sample/src/index.html --out-dir sample/dist --public-url https://kumachan-mis.github.io/react-realtime-markup-editor",
     "deploy": "gh-pages -d sample/dist"
+  },
+  "dependencies": {
+    "katex": "^0.12.0"
   }
 }

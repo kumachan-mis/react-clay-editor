@@ -16,7 +16,7 @@ export const TextLinesConstants = {
   className: "React-Realtime-Markup-Editor-textlines",
   line: {
     className: (lineIndex: number): string => `React-Realtime-Markup-Editor-line L${lineIndex}`,
-    classNameRegex: /^.*React-Realtime-Markup-Editor-line L(?<lineIndex>\d+).*$/,
+    classNameRegex: /React-Realtime-Markup-Editor-line L(?<lineIndex>\d+)/,
     indent: {
       className: `React-Realtime-Markup-Editor-textlines-indent`,
       dot: {
@@ -58,7 +58,12 @@ export const TextLinesConstants = {
   char: {
     className: (lineIndex: number, charIndex: number): string =>
       `React-Realtime-Markup-Editor-char L${lineIndex}C${charIndex}`,
-    classNameRegex: /^.*React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<charIndex>\d+).*$/,
+    classNameRegex: /React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<charIndex>\d+)/,
+  },
+  charGroup: {
+    className: (lineIndex: number, from: number, to: number): string =>
+      `React-Realtime-Markup-Editor-char L${lineIndex}C${from}-C${to}`,
+    classNameRegex: /React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<from>\d+)-C(?<to>\d+)/,
   },
   regexes: {
     indent: /^(?<indent>[ \t]*)(?<content>([^ ].*)?)$/,
@@ -69,6 +74,8 @@ export const TextLinesConstants = {
       return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
     },
     bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
+    blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
+    inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
     hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },

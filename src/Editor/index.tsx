@@ -37,7 +37,6 @@ export class Editor extends React.Component<Props, State> {
       historyHead: -1,
       editActionHistory: [],
       ...EditorConstants.defaultSuggestionState,
-      modeCursorOn: this.props.initialModeCursorOn ?? "edit",
     };
 
     this.root = null;
@@ -86,7 +85,6 @@ export class Editor extends React.Component<Props, State> {
               hashTagProps={this.props.hashTagProps}
               taggedLinkPropsMap={this.props.taggedLinkPropsMap}
               cursorCoordinate={this.state.cursorCoordinate}
-              modeCursorOn={this.state.modeCursorOn}
             />
           </div>
         </div>
@@ -104,6 +102,7 @@ export class Editor extends React.Component<Props, State> {
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
+      event.nativeEvent.stopImmediatePropagation();
       const position: [number, number] = [event.clientX, event.clientY];
       const [text, state] = handler(this.props.text, this.state, position, this.root);
       if (state != this.state) this.setState(state);
@@ -122,6 +121,7 @@ export class Editor extends React.Component<Props, State> {
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
+      event.nativeEvent.stopImmediatePropagation();
       const position: [number, number] = [event.clientX, event.clientY];
       const [text, state] = handler(this.props.text, this.props, this.state, position, this.root);
       if (state != this.state) this.setState(state);

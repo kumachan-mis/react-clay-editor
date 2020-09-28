@@ -55,6 +55,12 @@ span.React-Realtime-Markup-Editor-textlines-content {
   display: block;
 }
 
+span.katex-display {
+  display: inline-block !important;
+  margin: 0 !important;
+  text-align: inherit !important;
+}
+
 /* Cursor */
 div.React-Realtime-Markup-Editor-cursor {
   position: absolute;
