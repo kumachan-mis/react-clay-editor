@@ -2,17 +2,14 @@ import * as React from "react";
 
 import { Props, State } from "./types";
 import { CursorConstants, defaultSuggestionListDecoration } from "./constants";
-import { cursorPropsToState, handleOnEditorScroll } from "./utils";
+import { cursorPropsToState } from "./utils";
 import "../style.css";
-
-import { getRoot } from "../Editor/utils";
 
 export class Cursor extends React.Component<Props, State> {
   static readonly defaultProps: Required<Pick<Props, "suggestionListDecoration">> = {
     suggestionListDecoration: defaultSuggestionListDecoration,
   };
   private root: HTMLSpanElement | null;
-  private handleOnEditorScroll?: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -22,21 +19,8 @@ export class Cursor extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
     if (!this.root || prevProps == this.props) return;
-
     const state = cursorPropsToState(this.props, this.state, this.root);
     if (state != this.state) this.setState(state);
-
-    const editorRoot = getRoot(this.root);
-    if (!editorRoot) return;
-    if (this.handleOnEditorScroll) {
-      editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
-    }
-    this.handleOnEditorScroll = () => {
-      if (!this.root) return;
-      const state = handleOnEditorScroll(this.props, this.state, this.root);
-      if (state != this.state) this.setState(state);
-    };
-    editorRoot.addEventListener("scroll", this.handleOnEditorScroll);
   }
 
   render(): React.ReactElement {
