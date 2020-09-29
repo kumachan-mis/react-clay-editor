@@ -1,4 +1,4 @@
-import { Props, State, CursorCoordinate, Position } from "./types";
+import { Props, State, CursorCoordinate } from "./types";
 import { CursorConstants } from "./constants";
 
 import { getTextCharElementAt } from "../TextLines/utils";
@@ -31,26 +31,21 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
     }
   }
 
-  const { coordinate } = props;
-  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
-  if (!elementCursorOn) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+  const { lineIndex, charIndex } = props.coordinate;
+  const charElement = getTextCharElementAt(lineIndex, charIndex, element);
+  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+  if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
+  const position = { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left };
+  const cursorSize = charRect.height;
   const { top: cursorTop } = position;
   if (cursorTop + editorRect.top - rootRect.top < 0) {
-    elementCursorOn.scrollIntoView({ block: "start" });
+    charElement.scrollIntoView({ block: "start" });
     return state;
   } else if (cursorTop + cursorSize + editorRect.top - rootRect.top > rootRect.height) {
-    elementCursorOn.scrollIntoView({ block: "end" });
+    charElement.scrollIntoView({ block: "end" });
     return state;
   }
-  return { ...state, position, cursorSize };
-}
-
-export function handleOnEditorScroll(props: Props, state: State, element: HTMLElement): State {
-  if (!props.coordinate) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
-  const { coordinate } = props;
-  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
-  if (!elementCursorOn) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   return { ...state, position, cursorSize };
 }
 
@@ -110,22 +105,4 @@ export function cursorCoordinateToTextIndex(text: string, coordinate: CursorCoor
 
 export function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): boolean {
   return a.lineIndex == b.lineIndex && a.charIndex == b.charIndex;
-}
-
-function coordinateToCursorDrawInfo(
-  coordinate: CursorCoordinate,
-  element: HTMLElement
-): { position: Position; cursorSize: number; elementCursorOn: HTMLElement | null } {
-  const editorRect = getEditor(element)?.getBoundingClientRect();
-  const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
-  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
-  if (!editorRect || !charRect) {
-    return { position: { top: 0, left: 0 }, cursorSize: 0, elementCursorOn: null };
-  }
-
-  return {
-    position: { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left },
-    cursorSize: charRect.height,
-    elementCursorOn: charElement,
-  };
 }
