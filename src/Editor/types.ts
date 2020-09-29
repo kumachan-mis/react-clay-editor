@@ -8,14 +8,14 @@ export interface Decoration {
 }
 
 export interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (linkName: string) => React.ComponentProps<"a">;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
 }
 
 export interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (hashTagName: string) => React.ComponentProps<"a">;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -23,10 +23,14 @@ export interface HashTagProps {
 
 export interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  anchorProps?: (linkName: string) => React.ComponentProps<"a">;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;
+}
+
+export interface FormulaProps {
+  disabled?: boolean;
 }
 
 export interface Props {
@@ -36,7 +40,7 @@ export interface Props {
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
-  initialModeCursorOn?: "view" | "edit";
+  formulaProps?: FormulaProps;
   disabled?: boolean;
   style?: React.CSSProperties;
 }
@@ -58,7 +62,6 @@ export interface State {
   suggestionType: SuggestionType;
   suggestions: string[];
   suggestionIndex: number;
-  modeCursorOn: "view" | "edit";
 }
 
-export type ShortcutCommand = "selectAll" | "undo" | "redo" | "toggleMode";
+export type ShortcutCommand = "selectAll" | "undo" | "redo";

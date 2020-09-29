@@ -1,4 +1,4 @@
-import { BracketLinkProps, HashTagProps, TaggedLinkProps } from "../Editor/types";
+import { BracketLinkProps, HashTagProps, TaggedLinkProps, FormulaProps } from "../Editor/types";
 import { CursorCoordinate } from "../Cursor/types";
 
 export interface TextDecoration {
@@ -13,8 +13,8 @@ export interface Props {
   bracketLinkProps: BracketLinkProps;
   hashTagProps: HashTagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
+  formulaProps: FormulaProps;
   cursorCoordinate: CursorCoordinate | undefined;
-  modeCursorOn: "view" | "edit";
 }
 
 export interface IndentProps {
@@ -27,13 +27,13 @@ export interface ContentProps {
   indent: string;
   content: string;
   lineIndex: number;
-  mode: "view" | "edit";
+  cursorOn: boolean;
 }
 
 export interface NodeProps {
   node: Node;
   lineIndex: number;
-  mode: "view" | "edit";
+  cursorOn: boolean;
 }
 
 export interface ContentWithIndent {
@@ -48,7 +48,14 @@ export interface DecorationStyle {
   underline: boolean;
 }
 
-export type Node = DecorationNode | TaggedLinkNode | BracketLinkNode | HashTagNode | NormalNode;
+export type Node =
+  | DecorationNode
+  | TaggedLinkNode
+  | BracketLinkNode
+  | BlockFormulaNode
+  | InlineFormulaNode
+  | HashTagNode
+  | NormalNode;
 
 export interface DecorationNode {
   type: "decoration";
@@ -72,6 +79,22 @@ export interface BracketLinkNode {
   range: [number, number];
   facingMeta: string;
   linkName: string;
+  trailingMeta: string;
+}
+
+export interface BlockFormulaNode {
+  type: "blockFormula";
+  range: [number, number];
+  facingMeta: string;
+  formula: string;
+  trailingMeta: string;
+}
+
+export interface InlineFormulaNode {
+  type: "inlineFormula";
+  range: [number, number];
+  facingMeta: string;
+  formula: string;
   trailingMeta: string;
 }
 
