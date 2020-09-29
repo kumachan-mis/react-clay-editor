@@ -199,7 +199,7 @@ export class TextLines extends React.Component<Props> {
               from + facingMeta.length,
               to - trailingMeta.length
             )}
-            options={{ displayMode: true }}
+            options={{ displayMode: true, throwOnError: false }}
           >
             {formula}
           </KaTeX>
@@ -224,6 +224,7 @@ export class TextLines extends React.Component<Props> {
               from + facingMeta.length,
               to - trailingMeta.length
             )}
+            options={{ throwOnError: false }}
           >
             {formula}
           </KaTeX>

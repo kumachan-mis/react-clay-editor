@@ -1,8 +1,5 @@
-import { ParseError, KatexOptions } from "katex";
+import { KatexOptions } from "katex";
 
 export interface Props {
-  renderError?: (error: ParseError | TypeError) => React.ReactElement;
-  options?: Omit<KatexOptions, "throwOnError">;
+  options?: KatexOptions;
 }
-
-export type State = { innerHtml: string } | { errorElement: React.ReactElement };

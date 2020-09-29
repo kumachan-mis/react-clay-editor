@@ -1,30 +1,20 @@
 import * as React from "react";
-import { renderToString, ParseError } from "katex";
+import { renderToString } from "katex";
 
-import { Props, State } from "./types";
+import { Props } from "./types";
 
-const KaTeXComponent: React.FC<Props & React.ComponentProps<"span">> = ({
-  children,
-  renderError,
+export const KaTeX: React.FC<Props & React.ComponentProps<"span">> = ({
   options,
+  children,
   ...props
 }) => {
-  const formula = (children ?? "") as string;
-  const [state, setState] = React.useState<State>({ innerHtml: "" });
-
-  React.useEffect(() => {
+  const innerHtml = (() => {
     try {
-      const innerHtml = renderToString(formula, { throwOnError: !!renderError, ...options });
-      setState({ innerHtml });
+      const formula = (children ?? "") as string;
+      return React.useMemo(() => renderToString(formula, options), [options, children]);
     } catch (error) {
-      if (!(error instanceof ParseError) || !(error instanceof TypeError)) throw error;
-      if (renderError) setState({ errorElement: renderError(error) });
-      else setState({ innerHtml: error.message });
+      return error.message;
     }
-  }, [renderError, options]);
-
-  if ("errorElement" in state) return state.errorElement;
-  return <span {...props} dangerouslySetInnerHTML={{ __html: state.innerHtml }} />;
+  })();
+  return <span {...props} dangerouslySetInnerHTML={{ __html: innerHtml }} />;
 };
-
-export const KaTeX = React.memo(KaTeXComponent);
