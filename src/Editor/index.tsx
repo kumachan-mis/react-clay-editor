@@ -23,6 +23,7 @@ import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
 import { SelectionWithMouse } from "../Selection/types";
 import { defaultTextDecoration } from "../TextLines/constants";
+import { defaultSuggestionListDecoration } from "../Cursor/constants";
 
 export const Editor: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({
@@ -134,7 +135,9 @@ export const Editor: React.FC<Props> = (props) => {
             suggestionType={state.suggestionType}
             suggestions={state.suggestions}
             suggestionIndex={state.suggestionIndex}
-            suggestionListDecoration={props.decoration?.suggestionList}
+            suggestionListDecoration={
+              props.decoration?.suggestionList ?? defaultSuggestionListDecoration
+            }
             onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
             onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
             onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}

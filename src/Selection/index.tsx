@@ -11,7 +11,7 @@ export const Selection: React.FC<Props> = (props) => {
     centerDivPosition: undefined,
     bottomDivPosition: undefined,
   });
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
   React.useEffect(() => {
     const newState = selectionPropsToState(props, rootRef.current);

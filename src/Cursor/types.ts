@@ -42,3 +42,31 @@ export interface State {
   position: Position;
   cursorSize: number;
 }
+
+export interface CursorBarProps {
+  position: Position;
+  cursorSize: number;
+}
+
+export interface HiddenTextAreaProps {
+  position: Position;
+  cursorSize: number;
+  textAreaValue: string;
+  onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  onTextCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  onTextPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  onTextCompositionStart: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
+  onTextCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
+}
+
+export interface SuggestionListProps {
+  position: Position;
+  cursorSize: number;
+  suggestionType: SuggestionType;
+  suggestions: string[];
+  suggestionIndex: number;
+  suggestionListDecoration: SuggestionListDecoration;
+  onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
+}
