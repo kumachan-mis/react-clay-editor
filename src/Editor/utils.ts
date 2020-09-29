@@ -395,13 +395,13 @@ function positionToCursorCoordinate(
 
   const [x, y] = position;
   const elements = document.elementsFromPoint(x, y);
-  const charGroupClassNameRegex = TextLinesConstants.charGroup.classNameRegex;
-  const charGroupElement = elements.find(
-    (charGrpEl) => charGroupClassNameRegex.test(charGrpEl.className) && element.contains(charGrpEl)
-  );
   const charClassNameRegex = TextLinesConstants.char.classNameRegex;
   const charElement = elements.find(
     (charEl) => charClassNameRegex.test(charEl.className) && element.contains(charEl)
+  );
+  const charGroupClassNameRegex = TextLinesConstants.charGroup.classNameRegex;
+  const charGroupElement = elements.find(
+    (charGrpEl) => charGroupClassNameRegex.test(charGrpEl.className) && element.contains(charGrpEl)
   );
   const lineClassNameRegex = TextLinesConstants.line.classNameRegex;
   const lineElement = elements.find(
@@ -409,18 +409,7 @@ function positionToCursorCoordinate(
   );
 
   const lines = text.split("\n");
-  if (charGroupElement) {
-    const groups = charGroupElement.className.match(charGroupClassNameRegex)?.groups as Groups;
-    const lineIndex = Number.parseInt(groups["lineIndex"], 10);
-    const fromCharIndex = Number.parseInt(groups["from"], 10);
-    const toCharIndex = Number.parseInt(groups["to"], 10);
-    const charGroupRect = charGroupElement.getBoundingClientRect();
-    if (x <= charGroupRect.left + charGroupRect.width / 2) {
-      return { lineIndex, charIndex: fromCharIndex };
-    } else {
-      return { lineIndex, charIndex: toCharIndex };
-    }
-  } else if (charElement) {
+  if (charElement) {
     const groups = charElement.className.match(charClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     const charIndex = Number.parseInt(groups["charIndex"], 10);
@@ -430,6 +419,17 @@ function positionToCursorCoordinate(
       return { lineIndex, charIndex };
     } else {
       return { lineIndex, charIndex: charIndex + 1 };
+    }
+  } else if (charGroupElement) {
+    const groups = charGroupElement.className.match(charGroupClassNameRegex)?.groups as Groups;
+    const lineIndex = Number.parseInt(groups["lineIndex"], 10);
+    const fromCharIndex = Number.parseInt(groups["from"], 10);
+    const toCharIndex = Number.parseInt(groups["to"], 10);
+    const charGroupRect = charGroupElement.getBoundingClientRect();
+    if (x <= charGroupRect.left + charGroupRect.width / 2) {
+      return { lineIndex, charIndex: fromCharIndex };
+    } else {
+      return { lineIndex, charIndex: toCharIndex };
     }
   } else if (lineElement) {
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;

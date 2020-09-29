@@ -188,53 +188,29 @@ export class TextLines extends React.Component<Props> {
           <span>{bracketLinkCharSpans}</span>
         );
       }
-      case "blockFormula": {
-        const { facingMeta, formula, trailingMeta } = props.node;
-        const { disabled } = this.props.formulaProps;
-
-        return !disabled && !cursorOn ? (
-          <KaTeX
-            className={charGroupConstants.className(
-              lineIndex,
-              from + facingMeta.length,
-              to - trailingMeta.length
-            )}
-            options={{ displayMode: true, throwOnError: false }}
-          >
-            {formula}
-          </KaTeX>
-        ) : (
-          <span>
-            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-              <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                {char}
-              </span>
-            ))}
-          </span>
-        );
-      }
+      case "blockFormula":
       case "inlineFormula": {
         const { facingMeta, formula, trailingMeta } = props.node;
+        const displayMode = props.node.type == "blockFormula";
         const { disabled } = this.props.formulaProps;
 
-        return !disabled && !cursorOn ? (
-          <KaTeX
+        return (
+          <span
             className={charGroupConstants.className(
               lineIndex,
               from + facingMeta.length,
               to - trailingMeta.length
             )}
-            options={{ throwOnError: false }}
           >
-            {formula}
-          </KaTeX>
-        ) : (
-          <span>
-            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                {char}
-              </span>
-            ))}
+            {!disabled && !cursorOn ? (
+              <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
+            ) : (
+              [...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
+                <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                  {char}
+                </span>
+              ))
+            )}
           </span>
         );
       }
