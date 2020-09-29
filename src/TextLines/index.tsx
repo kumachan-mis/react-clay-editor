@@ -203,7 +203,12 @@ export class TextLines extends React.Component<Props> {
             )}
           >
             {!disabled && !cursorOn ? (
-              <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
+              <KaTeX
+                options={{ throwOnError: false, displayMode }}
+                onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
+              >
+                {formula}
+              </KaTeX>
             ) : (
               [...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
                 <span key={index} className={charConstants.className(lineIndex, from + index)}>
