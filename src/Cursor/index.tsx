@@ -27,7 +27,7 @@ export const Cursor: React.FC<Props> = (props) => {
       if (newState != state) setState(newState);
     };
     editorRoot.addEventListener("scroll", handleOnScroll);
-  });
+  }, [props]);
 
   return (
     <span ref={rootRef}>
