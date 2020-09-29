@@ -22,6 +22,7 @@ import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
 import { SelectionWithMouse } from "../Selection/types";
+import { defaultTextDecoration } from "../TextLines/constants";
 
 export const Editor: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({
@@ -146,10 +147,11 @@ export const Editor: React.FC<Props> = (props) => {
           <Selection textSelection={state.textSelection} />
           <TextLines
             text={props.text}
-            textDecoration={props.decoration?.text}
-            bracketLinkProps={props.bracketLinkProps}
-            hashTagProps={props.hashTagProps}
-            taggedLinkPropsMap={props.taggedLinkPropsMap}
+            textDecoration={props.decoration?.text ?? defaultTextDecoration}
+            bracketLinkProps={props.bracketLinkProps ?? {}}
+            hashTagProps={props.hashTagProps ?? {}}
+            taggedLinkPropsMap={props.taggedLinkPropsMap ?? {}}
+            formulaProps={props.formulaProps ?? {}}
             cursorCoordinate={state.cursorCoordinate}
           />
         </div>

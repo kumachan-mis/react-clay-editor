@@ -2,7 +2,7 @@ import * as React from "react";
 import "katex/dist/katex.min.css";
 
 import { Props, IndentProps, ContentProps, NodeProps, CharProps, Node } from "./types";
-import { TextLinesConstants, defaultTextDecoration } from "./constants";
+import { TextLinesConstants } from "./constants";
 import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
 import { KaTeX } from "../KaTeX";
 import "../style.css";
@@ -227,11 +227,3 @@ export const Char: React.FC<CharProps> = (props) => (
     <span>{props.char}</span>
   </span>
 );
-
-TextLines.defaultProps = {
-  textDecoration: defaultTextDecoration,
-  bracketLinkProps: {},
-  hashTagProps: {},
-  taggedLinkPropsMap: {},
-  formulaProps: {},
-};
