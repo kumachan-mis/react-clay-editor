@@ -115,9 +115,9 @@ export const Editor: React.FC<Props> = (props) => {
   };
 
   React.useEffect(() => {
+    document.removeEventListener("mousedown", handleOnEditorBlur);
     document.addEventListener("mousedown", handleOnEditorBlur);
-    return () => document.removeEventListener("mousedown", handleOnEditorBlur);
-  }, []);
+  }, [props.disabled, state.cursorCoordinate]);
 
   return (
     <div style={props.style}>
