@@ -102,7 +102,6 @@ export class Editor extends React.Component<Props, State> {
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
-      event.nativeEvent.stopImmediatePropagation();
       const position: [number, number] = [event.clientX, event.clientY];
       const [text, state] = handler(this.props.text, this.state, position, this.root);
       if (state != this.state) this.setState(state);
@@ -121,7 +120,6 @@ export class Editor extends React.Component<Props, State> {
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
-      event.nativeEvent.stopImmediatePropagation();
       const position: [number, number] = [event.clientX, event.clientY];
       const [text, state] = handler(this.props.text, this.props, this.state, position, this.root);
       if (state != this.state) this.setState(state);
