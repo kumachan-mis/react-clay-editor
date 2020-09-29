@@ -41,7 +41,12 @@ and so on
  tagged-link
   [github: @kumachan-mis/react-realtime-markup-editor]
   [npm: react-realtime-markup-editor]
-`;
+
+[** Math formulas]
+ inline mode
+  $f(x)$
+ display mode
+  $$\int_a^b f(x) \mathrm{d}x$$`;
 
 // eslint-disable-next-line prettier/prettier
 const defaultSubText = String.raw
@@ -50,8 +55,7 @@ const defaultSubText = String.raw
  [disabled-bracket-link]
  #disabled-hash-tag-link
 
-More features are comming soon...
-`;
+More features are comming soon...`;
 
 const mainStyle: React.CSSProperties = {
   width: "800px",
