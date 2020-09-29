@@ -17,23 +17,27 @@ export interface Props {
   cursorCoordinate: CursorCoordinate | undefined;
 }
 
-export interface IndentProps {
+export interface IndentProps extends Props {
   indent: string;
   content: string;
   lineIndex: number;
 }
 
-export interface ContentProps {
+export interface ContentProps extends Props {
   indent: string;
   content: string;
   lineIndex: number;
-  cursorOn: boolean;
 }
 
-export interface NodeProps {
+export interface NodeProps extends Props {
   node: Node;
   lineIndex: number;
-  cursorOn: boolean;
+}
+
+export interface CharProps {
+  lineIndex: number;
+  charIndex: number;
+  char: string;
 }
 
 export interface ContentWithIndent {
