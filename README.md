@@ -71,6 +71,13 @@ Here are some examples:
 | <a>tag: tagged link</a> | `[tag: tagged link]` |
 | <a>#hash-tag</a>        | `#hash-tag`          |
 
+### Math Formulas
+
+| style                                     | syntax                          |
+| ----------------------------------------- | ------------------------------- |
+| ![inline-mode](figures/inline-mode.png)   | `$\int_a^b f(x) \mathrm{d}x$`   |
+| ![display-mode](figures/display-mode.png) | `$$\int_a^b f(x) \mathrm{d}x$$` |
+
 **Note**
 
 1. Tagged links are useful when you want to make some link groups  
@@ -101,6 +108,7 @@ Here are some examples:
 | `bracketLinkProps`   | `BracketLinkProps`                       | optional          | see [BracketLinkProps](#BracketLinkProps) | settings of bracket links<br>details: [BracketLinkProps](#BracketLinkProps)                                         |
 | `hashTagProps`       | `HashTagProps`                           | optional          | see [HashTagProps](#HashTagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashTagProps)                                                 |
 | `taggedLinkPropsMap` | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
+| `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
 | `disabled`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
@@ -281,3 +289,18 @@ you can import `defaultLinkNameRegex` by adding
 ```ts
 import { defaultLinkNameRegex } from "react-realtime-markup-editor";
 ```
+
+### FormulaProps
+
+settings of math formulas
+
+```ts
+export interface FormulaProps {
+  disabled?: boolean;
+}
+```
+
+**Attributes**
+
+- disabled: if `true`, math formulas behave in the same way as plain texts  
+  default: `undefined` (falsy)
