@@ -118,7 +118,7 @@ function coordinateToCursorDrawInfo(
 ): { position: Position; cursorSize: number; elementCursorOn: HTMLElement | null } {
   const editorRect = getEditor(element)?.getBoundingClientRect();
   const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
-  const charRect = charElement?.getBoundingClientRect();
+  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
   if (!editorRect || !charRect) {
     return { position: { top: 0, left: 0 }, cursorSize: 0, elementCursorOn: null };
   }

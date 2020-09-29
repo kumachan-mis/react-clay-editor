@@ -28,6 +28,14 @@ div.React-Realtime-Markup-Editor-line {
   position: relative;
 }
 
+span.React-Realtime-Markup-Editor-group {
+  display: inline-block;
+}
+
+span.React-Realtime-Markup-Editor-char {
+  display: inline-block;
+}
+
 span.React-Realtime-Markup-Editor-textlines-indent {
   left: 0px;
   top: 0px;

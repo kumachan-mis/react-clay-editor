@@ -74,7 +74,7 @@ export class TextLines extends React.Component<Props> {
           )
         )}
         <span className={charConstants.className(lineIndex, indent.length + content.length)}>
-          {" "}
+          <span> </span>
         </span>
       </span>
     );
@@ -97,7 +97,7 @@ export class TextLines extends React.Component<Props> {
           <span style={constants.decoration.style(decorationStyle)}>
             {[...facingMeta].map((char: string, index: number) => (
               <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                {cursorOn ? char : ""}
+                <span>{cursorOn ? char : ""}</span>
               </span>
             ))}
             {children.map((child: Node, index: number) => (
@@ -108,7 +108,7 @@ export class TextLines extends React.Component<Props> {
                 key={to - trailingMeta.length + index}
                 className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
               >
-                {cursorOn ? char : ""}
+                <span>{cursorOn ? char : ""}</span>
               </span>
             ))}
           </span>
@@ -121,7 +121,7 @@ export class TextLines extends React.Component<Props> {
           <a style={constants.taggedLink.style} {...(anchorProps?.(linkName) || {})}>
             {[...facingMeta].map((char: string, index: number) => (
               <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                {cursorOn ? char : ""}
+                <span>{cursorOn ? char : ""}</span>
               </span>
             ))}
             {[...tag].map((char: string, index: number) => (
@@ -129,7 +129,7 @@ export class TextLines extends React.Component<Props> {
                 key={from + facingMeta.length + index}
                 className={charConstants.className(lineIndex, from + facingMeta.length + index)}
               >
-                {cursorOn || !tagHidden ? char : ""}
+                <span>{cursorOn || !tagHidden ? char : ""}</span>
               </span>
             ))}
             {[...linkName].map((char: string, index: number) => (
@@ -140,7 +140,7 @@ export class TextLines extends React.Component<Props> {
                   from + facingMeta.length + tag.length + index
                 )}
               >
-                {char}
+                <span>{char}</span>
               </span>
             ))}
             {[...trailingMeta].map((char: string, index: number) => (
@@ -148,7 +148,7 @@ export class TextLines extends React.Component<Props> {
                 key={to - trailingMeta.length + index}
                 className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
               >
-                {cursorOn ? char : ""}
+                <span>{cursorOn ? char : ""}</span>
               </span>
             ))}
           </a>
@@ -160,7 +160,7 @@ export class TextLines extends React.Component<Props> {
         const bracketLinkCharSpans = [
           ...[...facingMeta].map((char: string, index: number) => (
             <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-              {disabled || cursorOn ? char : ""}
+              <span>{disabled || cursorOn ? char : ""}</span>
             </span>
           )),
           ...[...linkName].map((char: string, index: number) => (
@@ -168,7 +168,7 @@ export class TextLines extends React.Component<Props> {
               key={from + facingMeta.length + index}
               className={charConstants.className(lineIndex, from + facingMeta.length + index)}
             >
-              {char}
+              <span>{char}</span>
             </span>
           )),
           ...[...trailingMeta].map((char: string, index: number) => (
@@ -176,7 +176,7 @@ export class TextLines extends React.Component<Props> {
               key={to - trailingMeta.length + index}
               className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
             >
-              {disabled || cursorOn ? char : ""}
+              <span>{disabled || cursorOn ? char : ""}</span>
             </span>
           )),
         ];
@@ -188,53 +188,34 @@ export class TextLines extends React.Component<Props> {
           <span>{bracketLinkCharSpans}</span>
         );
       }
-      case "blockFormula": {
-        const { facingMeta, formula, trailingMeta } = props.node;
-        const { disabled } = this.props.formulaProps;
-
-        return !disabled && !cursorOn ? (
-          <KaTeX
-            className={charGroupConstants.className(
-              lineIndex,
-              from + facingMeta.length,
-              to - trailingMeta.length
-            )}
-            options={{ displayMode: true, throwOnError: false }}
-          >
-            {formula}
-          </KaTeX>
-        ) : (
-          <span>
-            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-              <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                {char}
-              </span>
-            ))}
-          </span>
-        );
-      }
+      case "blockFormula":
       case "inlineFormula": {
         const { facingMeta, formula, trailingMeta } = props.node;
+        const displayMode = props.node.type == "blockFormula";
         const { disabled } = this.props.formulaProps;
 
-        return !disabled && !cursorOn ? (
-          <KaTeX
+        return (
+          <span
             className={charGroupConstants.className(
               lineIndex,
               from + facingMeta.length,
               to - trailingMeta.length
             )}
-            options={{ throwOnError: false }}
           >
-            {formula}
-          </KaTeX>
-        ) : (
-          <span>
-            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                {char}
-              </span>
-            ))}
+            {!disabled && !cursorOn ? (
+              <KaTeX
+                options={{ throwOnError: false, displayMode }}
+                onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
+              >
+                {formula}
+              </KaTeX>
+            ) : (
+              [...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
+                <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                  <span>{char}</span>
+                </span>
+              ))
+            )}
           </span>
         );
       }
@@ -243,7 +224,7 @@ export class TextLines extends React.Component<Props> {
         const { disabled, anchorProps } = this.props.hashTagProps;
         const hashTagCharSpans = [...props.node.hashTag].map((char: string, index: number) => (
           <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-            {char}
+            <span>{char}</span>
           </span>
         ));
         return !disabled ? (
@@ -259,7 +240,7 @@ export class TextLines extends React.Component<Props> {
           <span>
             {[...props.node.text].map((char: string, index: number) => (
               <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                {char}
+                <span>{char}</span>
               </span>
             ))}
           </span>

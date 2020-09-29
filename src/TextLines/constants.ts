@@ -62,8 +62,8 @@ export const TextLinesConstants = {
   },
   charGroup: {
     className: (lineIndex: number, from: number, to: number): string =>
-      `React-Realtime-Markup-Editor-char L${lineIndex}C${from}-C${to}`,
-    classNameRegex: /React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<from>\d+)-C(?<to>\d+)/,
+      `React-Realtime-Markup-Editor-group L${lineIndex}C${from}-${to}`,
+    classNameRegex: /React-Realtime-Markup-Editor-group L(?<lineIndex>\d+)C(?<from>\d+)-(?<to>\d+)/,
   },
   regexes: {
     indent: /^(?<indent>[ \t]*)(?<content>([^ ].*)?)$/,
