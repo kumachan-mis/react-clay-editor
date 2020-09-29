@@ -4,9 +4,9 @@ import { getEditor } from "../Editor/utils";
 import { getTextCharElementAt } from "../TextLines/utils";
 import { cursorCoordinateToTextIndex } from "../Cursor/utils";
 
-export function selectionPropsToState(props: Props, element: HTMLElement): State {
-  const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (!props.textSelection || !editorRect) {
+export function selectionPropsToState(props: Props, element: HTMLElement | null): State {
+  const editorRect = element ? getEditor(element)?.getBoundingClientRect() : undefined;
+  if (!props.textSelection || !element || !editorRect) {
     return {
       topDivPosition: undefined,
       centerDivPosition: undefined,

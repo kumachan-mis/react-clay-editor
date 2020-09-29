@@ -66,7 +66,6 @@ const Content: React.FC<ContentProps> = (props) => (
 
 const Node: React.FC<NodeProps> = (props) => {
   const constants = TextLinesConstants.line.content;
-  const charConstants = TextLinesConstants.char;
   const charGroupConstants = TextLinesConstants.charGroup;
 
   const cursorOn = props.lineIndex == props.cursorCoordinate?.lineIndex;

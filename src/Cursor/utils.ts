@@ -5,10 +5,10 @@ import { getTextCharElementAt } from "../TextLines/utils";
 import { getRoot, getEditor } from "../Editor/utils";
 import { classNameToSelector } from "../common";
 
-export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
-  const rootRect = getRoot(element)?.getBoundingClientRect();
-  const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (!props.coordinate || !editorRect || !rootRect) {
+export function cursorPropsToState(props: Props, state: State, element: HTMLElement | null): State {
+  const rootRect = element ? getRoot(element)?.getBoundingClientRect() : undefined;
+  const editorRect = element ? getEditor(element)?.getBoundingClientRect() : undefined;
+  if (!props.coordinate || !element || !editorRect || !rootRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
