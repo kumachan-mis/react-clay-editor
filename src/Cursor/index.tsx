@@ -2,31 +2,18 @@ import * as React from "react";
 
 import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from "./types";
 import { CursorConstants } from "./constants";
-import { cursorPropsToState, handleOnEditorScroll } from "./utils";
+import { cursorPropsToState } from "./utils";
 import "../style.css";
-
-import { getRoot } from "../Editor/utils";
 
 export const Cursor: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({ position: { top: 0, left: 0 }, cursorSize: 0 });
   const rootRef = React.useRef<HTMLSpanElement | null>(null);
-  let handleOnScroll: (() => void) | undefined = undefined;
 
   React.useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
     const newState = cursorPropsToState(props, state, root);
     if (newState != state) setState(newState);
-
-    const editorRoot = getRoot(root);
-    if (!editorRoot) return;
-    if (handleOnScroll) editorRoot.removeEventListener("scroll", handleOnScroll);
-    handleOnScroll = () => {
-      if (!root) return;
-      const newState = handleOnEditorScroll(props, state, root);
-      if (newState != state) setState(newState);
-    };
-    editorRoot.addEventListener("scroll", handleOnScroll);
   }, [props]);
 
   return (
