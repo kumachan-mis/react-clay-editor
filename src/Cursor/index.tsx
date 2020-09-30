@@ -10,9 +10,8 @@ export const Cursor: React.FC<Props> = (props) => {
   const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
   React.useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    const newState = cursorPropsToState(props, state, root);
+    if (!rootRef.current) return;
+    const newState = cursorPropsToState(props, state, rootRef.current);
     if (newState != state) setState(newState);
   }, [props]);
 

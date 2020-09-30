@@ -5,14 +5,14 @@ import { getTextCharElementAt } from "../TextLines/utils";
 import { getRoot, getEditor } from "../Editor/utils";
 import { classNameToSelector } from "../common";
 
-export function cursorPropsToState(props: Props, state: State, element: HTMLElement | null): State {
-  const rootRect = element ? getRoot(element)?.getBoundingClientRect() : undefined;
-  const editorRect = element ? getEditor(element)?.getBoundingClientRect() : undefined;
-  if (!props.coordinate || !element || !editorRect || !rootRect) {
+export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
+  const root = getRoot(element);
+  const rootRect = root?.getBoundingClientRect();
+  const editorRect = getEditor(element)?.getBoundingClientRect();
+  if (!props.coordinate || !editorRect || !rootRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const root = getRoot(element);
   const textAreaSelector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
   const textArea = root?.querySelector(textAreaSelector) as HTMLTextAreaElement | null;
   textArea?.focus();
@@ -37,6 +37,7 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const position = { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left };
+  console.log(position);
   const cursorSize = charRect.height;
   const { top: cursorTop } = position;
   if (cursorTop + editorRect.top - rootRect.top < 0) {

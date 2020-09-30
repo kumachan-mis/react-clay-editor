@@ -14,6 +14,7 @@ export const Selection: React.FC<Props> = (props) => {
   const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
   React.useEffect(() => {
+    if (!rootRef.current) return;
     const newState = selectionPropsToState(props, rootRef.current);
     if (newState != state) setState(newState);
   }, [props]);
