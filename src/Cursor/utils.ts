@@ -1,4 +1,4 @@
-import { Props, State, CursorCoordinate, Position } from "./types";
+import { Props, State, CursorCoordinate } from "./types";
 import { CursorConstants } from "./constants";
 
 import { getTextCharElementAt } from "../TextLines/utils";
@@ -6,13 +6,13 @@ import { getRoot, getEditor } from "../Editor/utils";
 import { classNameToSelector } from "../common";
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
-  const rootRect = getRoot(element)?.getBoundingClientRect();
+  const root = getRoot(element);
+  const rootRect = root?.getBoundingClientRect();
   const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (!props.coordinate || !editorRect || !rootRect) {
+  if (!props.coordinate || !editorRect || !root || !rootRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const root = getRoot(element);
   const textAreaSelector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
   const textArea = root?.querySelector(textAreaSelector) as HTMLTextAreaElement | null;
   textArea?.focus();
@@ -32,25 +32,35 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   }
 
   const { coordinate } = props;
-  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
-  if (!elementCursorOn) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+  const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
+  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+  if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const { top: cursorTop } = position;
-  if (cursorTop + editorRect.top - rootRect.top < 0) {
-    elementCursorOn.scrollIntoView({ block: "start" });
+  const position = { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left };
+  const cursorSize = charRect.height;
+  if (charRect.top - rootRect.top < 0) {
+    root.scrollTop += charRect.top - rootRect.top;
     return state;
-  } else if (cursorTop + cursorSize + editorRect.top - rootRect.top > rootRect.height) {
-    elementCursorOn.scrollIntoView({ block: "end" });
+  } else if (charRect.top + cursorSize - rootRect.top > rootRect.height) {
+    root.scrollTop += charRect.top - rootRect.top + cursorSize - rootRect.height;
     return state;
   }
   return { ...state, position, cursorSize };
 }
 
 export function handleOnEditorScroll(props: Props, state: State, element: HTMLElement): State {
-  if (!props.coordinate) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+  const editorRect = getEditor(element)?.getBoundingClientRect();
+  if (!props.coordinate || !editorRect) {
+    return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+  }
+
   const { coordinate } = props;
-  const { position, cursorSize, elementCursorOn } = coordinateToCursorDrawInfo(coordinate, element);
-  if (!elementCursorOn) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+  const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
+  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+  if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+
+  const position = { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left };
+  const cursorSize = charRect.height;
   return { ...state, position, cursorSize };
 }
 
@@ -110,22 +120,4 @@ export function cursorCoordinateToTextIndex(text: string, coordinate: CursorCoor
 
 export function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): boolean {
   return a.lineIndex == b.lineIndex && a.charIndex == b.charIndex;
-}
-
-function coordinateToCursorDrawInfo(
-  coordinate: CursorCoordinate,
-  element: HTMLElement
-): { position: Position; cursorSize: number; elementCursorOn: HTMLElement | null } {
-  const editorRect = getEditor(element)?.getBoundingClientRect();
-  const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
-  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
-  if (!editorRect || !charRect) {
-    return { position: { top: 0, left: 0 }, cursorSize: 0, elementCursorOn: null };
-  }
-
-  return {
-    position: { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left },
-    cursorSize: charRect.height,
-    elementCursorOn: charElement,
-  };
 }

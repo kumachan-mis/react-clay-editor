@@ -12,7 +12,6 @@ export class Cursor extends React.Component<Props, State> {
     suggestionListDecoration: defaultSuggestionListDecoration,
   };
   private root: HTMLSpanElement | null;
-  private handleOnEditorScroll?: () => void;
 
   constructor(props: Props) {
     super(props);
@@ -20,23 +19,24 @@ export class Cursor extends React.Component<Props, State> {
     this.root = null;
   }
 
-  componentDidUpdate(prevProps: Readonly<Props>): void {
-    if (!this.root || prevProps == this.props) return;
-
-    const state = cursorPropsToState(this.props, this.state, this.root);
-    if (state != this.state) this.setState(state);
-
+  componentDidMount(): void {
+    if (!this.root) return;
     const editorRoot = getRoot(this.root);
     if (!editorRoot) return;
-    if (this.handleOnEditorScroll) {
-      editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
-    }
-    this.handleOnEditorScroll = () => {
-      if (!this.root) return;
-      const state = handleOnEditorScroll(this.props, this.state, this.root);
-      if (state != this.state) this.setState(state);
-    };
     editorRoot.addEventListener("scroll", this.handleOnEditorScroll);
+  }
+
+  componentWillUnmount(): void {
+    if (!this.root) return;
+    const editorRoot = getRoot(this.root);
+    if (!editorRoot) return;
+    editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (!this.root || prevProps == this.props) return;
+    const state = cursorPropsToState(this.props, this.state, this.root);
+    if (state != this.state) this.setState(state);
   }
 
   render(): React.ReactElement {
@@ -114,5 +114,11 @@ export class Cursor extends React.Component<Props, State> {
         ))}
       </ul>
     );
+  };
+
+  private handleOnEditorScroll = (): void => {
+    if (!this.root) return;
+    const state = handleOnEditorScroll(this.props, this.state, this.root);
+    if (state != this.state) this.setState(state);
   };
 }

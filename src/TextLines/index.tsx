@@ -53,7 +53,7 @@ export class TextLines extends React.Component<Props> {
           const charClassName = TextLinesConstants.char.className(props.lineIndex, charIndex);
           return (
             <span key={charIndex} className={`${constants.pad.className} ${charClassName}`}>
-              {" "}
+              <span> </span>
             </span>
           );
         })}
