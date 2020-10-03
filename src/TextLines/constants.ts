@@ -34,7 +34,7 @@ export const TextLinesConstants = {
           fontSize: `${decorationStyle.fontSize}px`,
           fontWeight: decorationStyle.bold ? "bold" : undefined,
           fontStyle: decorationStyle.italic ? "italic" : undefined,
-          textDecoration: decorationStyle.underline ? "underline" : undefined,
+          borderBottom: decorationStyle.underline ? "solid 1px" : undefined,
         }),
       },
       taggedLink: {
