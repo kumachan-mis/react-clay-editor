@@ -5,7 +5,7 @@ import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "..
 import { selectionToRange, getSelectedText } from "../Selection/utils";
 import { parseLine } from "../TextLines/utils";
 import { CursorCoordinate, SuggestionType } from "../Cursor/types";
-import { SelectionWithMouse, TextSelection } from "../Selection/types";
+import { SelectionWithMouse } from "../Selection/types";
 import { TextLinesConstants } from "../TextLines/constants";
 import { classNameToSelector, isMacOS } from "../common";
 
