@@ -175,7 +175,7 @@ export function handleOnKeyDown(
         lineIndex: state.cursorCoordinate.lineIndex - 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, prevLine.length),
       };
-      return showSuggestion(text, props, arrowState(cursorCoordinate));
+      return [text, arrowState(cursorCoordinate)];
     }
     case "ArrowDown": {
       if (state.suggestions.length > 0) {
@@ -189,7 +189,7 @@ export function handleOnKeyDown(
         lineIndex: state.cursorCoordinate.lineIndex + 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, nextLine.length),
       };
-      return showSuggestion(text, props, arrowState(cursorCoordinate));
+      return [text, arrowState(cursorCoordinate)];
     }
     case "ArrowLeft": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
