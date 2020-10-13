@@ -103,6 +103,16 @@ export function handleOnKeyDown(
   event.preventDefault();
   event.nativeEvent.stopImmediatePropagation();
 
+  const arrowState = (cursorCoordinate: CursorCoordinate): State => {
+    if (!state.cursorCoordinate) return state;
+    if (!event.shiftKey) return { ...state, cursorCoordinate, textSelection: undefined };
+
+    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
+    const free = { ...cursorCoordinate };
+    const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+    return { ...state, cursorCoordinate, textSelection };
+  };
+
   switch (event.key) {
     case "Tab": {
       if (state.suggestionType != SuggestionType.None) {
@@ -164,7 +174,7 @@ export function handleOnKeyDown(
         lineIndex: state.cursorCoordinate.lineIndex - 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, prevLine.length),
       };
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [text, arrowState(cursorCoordinate)];
     }
     case "ArrowDown": {
       if (state.suggestions.length > 0) {
@@ -178,17 +188,15 @@ export function handleOnKeyDown(
         lineIndex: state.cursorCoordinate.lineIndex + 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, nextLine.length),
       };
-      return [text, { ...state, cursorCoordinate, textSelection: undefined }];
+      return [text, arrowState(cursorCoordinate)];
     }
     case "ArrowLeft": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      const newState = { ...state, cursorCoordinate, textSelection: undefined };
-      return showSuggestion(text, props, newState);
+      return showSuggestion(text, props, arrowState(cursorCoordinate));
     }
     case "ArrowRight": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
-      const newState = { ...state, cursorCoordinate, textSelection: undefined };
-      return showSuggestion(text, props, newState);
+      return showSuggestion(text, props, arrowState(cursorCoordinate));
     }
     default:
       return handleOnShortcut(text, state, command);
