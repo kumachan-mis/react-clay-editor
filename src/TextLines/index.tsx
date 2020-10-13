@@ -194,7 +194,7 @@ export class TextLines extends React.Component<Props> {
         const displayMode = props.node.type == "blockFormula";
         const { disabled } = this.props.formulaProps;
 
-        return (
+        return !disabled && !cursorOn ? (
           <span
             className={charGroupConstants.className(
               lineIndex,
@@ -202,20 +202,20 @@ export class TextLines extends React.Component<Props> {
               to - trailingMeta.length
             )}
           >
-            {!disabled && !cursorOn ? (
-              <KaTeX
-                options={{ throwOnError: false, displayMode }}
-                onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
-              >
-                {formula}
-              </KaTeX>
-            ) : (
-              [...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-                <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                  <span>{char}</span>
-                </span>
-              ))
-            )}
+            <KaTeX
+              options={{ throwOnError: false, displayMode }}
+              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
+            >
+              {formula}
+            </KaTeX>
+          </span>
+        ) : (
+          <span>
+            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
+              <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                <span>{char}</span>
+              </span>
+            ))}
           </span>
         );
       }

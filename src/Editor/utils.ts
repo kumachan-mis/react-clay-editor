@@ -131,9 +131,25 @@ export function handleOnKeyDown(
     }
     case "Backspace": {
       if (state.textSelection) return insertText(text, state, "");
-      const backCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      const textSelection = { fixed: state.cursorCoordinate, free: backCoordinate };
-      const [newText, newState] = insertText(text, { ...state, textSelection }, "");
+
+      const [newText, newState] = (() => {
+        const free = moveCursor(text, state.cursorCoordinate, -1);
+        const fixed = moveCursor(text, state.cursorCoordinate, 1);
+        const textMayDelete = getSelectedText({ fixed, free }, text);
+        switch (textMayDelete) {
+          case "[]":
+          case "{}":
+          case "()": {
+            const textSelection = { fixed, free };
+            return insertText(text, { ...state, textSelection }, "");
+          }
+          default: {
+            const textSelection = { fixed: state.cursorCoordinate, free };
+            return insertText(text, { ...state, textSelection }, "");
+          }
+        }
+      })();
+
       return showSuggestion(newText, props, newState);
     }
     case "ArrowUp": {
@@ -191,7 +207,31 @@ export function handleOnTextChange(
   if (state.isComposing) {
     return [text, { ...state, textAreaValue, ...EditorConstants.defaultSuggestionState }];
   }
-  const [newText, newState] = insertText(text, state, textAreaValue);
+
+  const [newText, newState] = (() => {
+    switch (textAreaValue) {
+      case "[": {
+        const textIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
+        return textIndex == text.length || text[textIndex].match(/^\s$/)
+          ? insertText(text, state, "[]", 1)
+          : insertText(text, state, "[");
+      }
+      case "{": {
+        const textIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
+        return textIndex == text.length || text[textIndex].match(/^\s$/)
+          ? insertText(text, state, "{}", 1)
+          : insertText(text, state, "{");
+      }
+      case "(": {
+        const textIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
+        return textIndex == text.length || text[textIndex].match(/^\s$/)
+          ? insertText(text, state, "()", 1)
+          : insertText(text, state, "(");
+      }
+      default:
+        return insertText(text, state, textAreaValue);
+    }
+  })();
   return showSuggestion(newText, props, newState);
 }
 
@@ -351,7 +391,7 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
 function insertSuggestion(text: string, state: State, suggestion: string): [string, State] {
   switch (state.suggestionType) {
     case SuggestionType.BracketLink: {
-      const [newText, newState] = insertText(text, state, `${suggestion}]`);
+      const [newText, newState] = insertText(text, state, suggestion);
       return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
     }
     case SuggestionType.HashTag: {
@@ -359,7 +399,7 @@ function insertSuggestion(text: string, state: State, suggestion: string): [stri
       return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
     }
     case SuggestionType.TaggedLink: {
-      const [newText, newState] = insertText(text, state, ` ${suggestion}]`);
+      const [newText, newState] = insertText(text, state, ` ${suggestion}`);
       return [newText, { ...newState, ...EditorConstants.defaultSuggestionState }];
     }
     case SuggestionType.None:
