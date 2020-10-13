@@ -108,9 +108,8 @@ export function handleOnKeyDown(
     if (!event.shiftKey) return { ...state, cursorCoordinate, textSelection: undefined };
 
     const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const textSelection = !coordinatesAreEqual(fixed, cursorCoordinate)
-      ? { fixed, free: cursorCoordinate }
-      : undefined;
+    const free = { ...cursorCoordinate };
+    const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
     return { ...state, cursorCoordinate, textSelection };
   };
 
