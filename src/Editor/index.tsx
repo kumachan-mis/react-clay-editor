@@ -22,141 +22,88 @@ import { Cursor } from "../Cursor";
 import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
 import { SelectionWithMouse } from "../Selection/types";
+import { defaultTextDecoration } from "../TextLines/constants";
+import { defaultSuggestionListDecoration } from "../Cursor/constants";
 
-export class Editor extends React.Component<Props, State> {
-  private root: HTMLDivElement | null;
+export const Editor: React.FC<Props> = (props) => {
+  const [state, setState] = React.useState<State>({
+    cursorCoordinate: undefined,
+    textAreaValue: "",
+    isComposing: false,
+    textSelection: undefined,
+    selectionWithMouse: SelectionWithMouse.Inactive,
+    historyHead: -1,
+    editActionHistory: [],
+    ...EditorConstants.defaultSuggestionState,
+  });
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      cursorCoordinate: undefined,
-      textAreaValue: "",
-      isComposing: false,
-      textSelection: undefined,
-      selectionWithMouse: SelectionWithMouse.Inactive,
-      historyHead: -1,
-      editActionHistory: [],
-      ...EditorConstants.defaultSuggestionState,
-    };
-
-    this.root = null;
-  }
-
-  componentDidMount(): void {
-    document.addEventListener("mousedown", this.handleOnEditorBlur);
-  }
-
-  componentWillUnmount(): void {
-    document.removeEventListener("mousedown", this.handleOnEditorBlur);
-  }
-
-  render(): React.ReactElement {
-    return (
-      <div style={this.props.style}>
-        <div className={EditorConstants.root.className} ref={(root) => (this.root = root)}>
-          <div
-            className={EditorConstants.editor.className}
-            onMouseDown={this.createMouseEventHandlerWithProps(handleOnMouseDown)}
-            onMouseMove={this.createMouseEventHandler(handleOnMouseMove)}
-            onMouseUp={this.createMouseEventHandler(handleOnMouseUp)}
-            onMouseLeave={this.createMouseEventHandler(handleOnMouseLeave)}
-          >
-            <Cursor
-              coordinate={this.state.cursorCoordinate}
-              textAreaValue={this.state.textAreaValue}
-              suggestionType={this.state.suggestionType}
-              suggestions={this.state.suggestions}
-              suggestionIndex={this.state.suggestionIndex}
-              suggestionListDecoration={this.props.decoration?.suggestionList}
-              onKeyDown={this.createCursorEventHandlerWithProps(handleOnKeyDown)}
-              onTextChange={this.createCursorEventHandlerWithProps(handleOnTextChange)}
-              onTextCompositionStart={this.createCursorEventHandler(handleOnTextCompositionStart)}
-              onTextCompositionEnd={this.createCursorEventHandler(handleOnTextCompositionEnd)}
-              onTextCut={this.createCursorEventHandler(handleOnTextCut)}
-              onTextCopy={this.createCursorEventHandler(handleOnTextCopy)}
-              onTextPaste={this.createCursorEventHandler(handleOnTextPaste)}
-              onSuggectionMouseDown={this.createCursorEventHandler(handleOnSuggectionMouseDown)}
-            />
-            <Selection textSelection={this.state.textSelection} />
-            <TextLines
-              text={this.props.text}
-              textDecoration={this.props.decoration?.text}
-              bracketLinkProps={this.props.bracketLinkProps}
-              hashTagProps={this.props.hashTagProps}
-              taggedLinkPropsMap={this.props.taggedLinkPropsMap}
-              cursorCoordinate={this.state.cursorCoordinate}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  private createMouseEventHandler = (
-    handler: (
-      text: string,
-      state: State,
-      pos: [number, number],
-      root: HTMLElement | null
-    ) => [string, State]
-  ): ((event: React.MouseEvent) => void) => {
-    return (event) => {
-      if (this.props.disabled || event.button != 0) return;
-      const position: [number, number] = [event.clientX, event.clientY];
-      const [text, state] = handler(this.props.text, this.state, position, this.root);
-      if (state != this.state) this.setState(state);
-      if (text != this.props.text) this.props.onChangeText(text);
-    };
-  };
-
-  private createMouseEventHandlerWithProps = (
+  function createMouseEventHandlerWithProps(
     handler: (
       text: string,
       props: Props,
       state: State,
-      pos: [number, number],
+      position: [number, number],
+      root: HTMLElement | null
+    ) => [string, State]
+  ): (event: React.MouseEvent) => void {
+    return (event) => {
+      if (props.disabled || event.button != 0) return;
+      const position: [number, number] = [event.clientX, event.clientY];
+      const [newText, newState] = handler(props.text, props, state, position, rootRef.current);
+      if (newState != state) setState(newState);
+      if (newText != props.text) props.onChangeText(newText);
+    };
+  }
+
+  const createMouseEventHandler = (
+    handler: (
+      text: string,
+      state: State,
+      position: [number, number],
       root: HTMLElement | null
     ) => [string, State]
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
-      if (this.props.disabled || event.button != 0) return;
+      if (props.disabled || event.button != 0) return;
       const position: [number, number] = [event.clientX, event.clientY];
-      const [text, state] = handler(this.props.text, this.props, this.state, position, this.root);
-      if (state != this.state) this.setState(state);
-      if (text != this.props.text) this.props.onChangeText(text);
+      const [newText, newState] = handler(props.text, state, position, rootRef.current);
+      if (newState != state) setState(newState);
+      if (newText != props.text) props.onChangeText(newText);
     };
   };
 
-  private createCursorEventHandler = <Event,>(
+  const createCursorEventHandler = <Event,>(
     handler: (text: string, state: State, event: Event) => [string, State]
   ): ((event: Event) => void) => {
     return (event) => {
-      if (this.props.disabled) return;
-      const [text, state] = handler(this.props.text, this.state, event);
-      if (state != this.state) this.setState(state);
-      if (text != this.props.text) this.props.onChangeText(text);
+      if (props.disabled) return;
+      const [newText, newState] = handler(props.text, state, event);
+      if (newState != state) setState(newState);
+      if (newText != props.text) props.onChangeText(newText);
     };
   };
 
-  private createCursorEventHandlerWithProps = <Event,>(
+  const createCursorEventHandlerWithProps = <Event,>(
     handler: (text: string, props: Props, state: State, event: Event) => [string, State]
   ): ((event: Event) => void) => {
     return (event) => {
-      if (this.props.disabled) return;
-      const [text, state] = handler(this.props.text, this.props, this.state, event);
-      if (state != this.state) this.setState(state);
-      if (text != this.props.text) this.props.onChangeText(text);
+      if (props.disabled) return;
+      const [newText, newState] = handler(props.text, props, state, event);
+      if (newState != state) setState(newState);
+      if (newText != props.text) props.onChangeText(newText);
     };
   };
 
-  private handleOnEditorBlur = (event: MouseEvent) => {
+  const handleOnEditorBlur = (event: MouseEvent) => {
     if (
-      !this.props.disabled &&
-      this.state.cursorCoordinate &&
-      this.root &&
-      !this.root.contains(event.target as Node)
+      !props.disabled &&
+      state.cursorCoordinate &&
+      rootRef.current &&
+      !rootRef.current.contains(event.target as Node)
     ) {
-      this.setState({
+      setState({
+        ...state,
         cursorCoordinate: undefined,
         textAreaValue: "",
         isComposing: false,
@@ -166,4 +113,52 @@ export class Editor extends React.Component<Props, State> {
       });
     }
   };
-}
+
+  React.useEffect(() => {
+    document.removeEventListener("mousedown", handleOnEditorBlur);
+    document.addEventListener("mousedown", handleOnEditorBlur);
+  }, [props.disabled, state.cursorCoordinate]);
+
+  return (
+    <div style={props.style}>
+      <div className={EditorConstants.root.className} ref={rootRef}>
+        <div
+          className={EditorConstants.editor.className}
+          onMouseDown={createMouseEventHandlerWithProps(handleOnMouseDown)}
+          onMouseMove={createMouseEventHandler(handleOnMouseMove)}
+          onMouseUp={createMouseEventHandler(handleOnMouseUp)}
+          onMouseLeave={createMouseEventHandler(handleOnMouseLeave)}
+        >
+          <Cursor
+            coordinate={state.cursorCoordinate}
+            textAreaValue={state.textAreaValue}
+            suggestionType={state.suggestionType}
+            suggestions={state.suggestions}
+            suggestionIndex={state.suggestionIndex}
+            suggestionListDecoration={
+              props.decoration?.suggestionList ?? defaultSuggestionListDecoration
+            }
+            onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
+            onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
+            onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
+            onTextCompositionEnd={createCursorEventHandler(handleOnTextCompositionEnd)}
+            onTextCut={createCursorEventHandler(handleOnTextCut)}
+            onTextCopy={createCursorEventHandler(handleOnTextCopy)}
+            onTextPaste={createCursorEventHandler(handleOnTextPaste)}
+            onSuggectionMouseDown={createCursorEventHandler(handleOnSuggectionMouseDown)}
+          />
+          <Selection textSelection={state.textSelection} />
+          <TextLines
+            text={props.text}
+            textDecoration={props.decoration?.text ?? defaultTextDecoration}
+            bracketLinkProps={props.bracketLinkProps ?? {}}
+            hashTagProps={props.hashTagProps ?? {}}
+            taggedLinkPropsMap={props.taggedLinkPropsMap ?? {}}
+            formulaProps={props.formulaProps ?? {}}
+            cursorCoordinate={state.cursorCoordinate}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};

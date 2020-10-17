@@ -5,47 +5,40 @@ import { SelectionConstants } from "./constants";
 import { selectionPropsToState } from "./utils";
 import "../style.css";
 
-export class Selection extends React.Component<Props, State> {
-  private root: HTMLSpanElement | null;
+export const Selection: React.FC<Props> = (props) => {
+  const [state, setState] = React.useState<State>({
+    topDivPosition: undefined,
+    centerDivPosition: undefined,
+    bottomDivPosition: undefined,
+  });
+  const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      topDivPosition: undefined,
-      centerDivPosition: undefined,
-      bottomDivPosition: undefined,
-    };
-    this.root = null;
-  }
+  React.useEffect(() => {
+    if (!rootRef.current) return;
+    const newState = selectionPropsToState(props, rootRef.current);
+    if (newState != state) setState(newState);
+  }, [props]);
 
-  componentDidUpdate(prevProps: Readonly<Props>): void {
-    if (!this.root || prevProps == this.props) return;
-    const state = selectionPropsToState(this.props, this.root);
-    if (this.state != state) this.setState(state);
-  }
-
-  render(): React.ReactElement {
-    return (
-      <span ref={(root) => (this.root = root)}>
-        {this.state.topDivPosition && (
-          <div
-            className={SelectionConstants.div.className}
-            style={SelectionConstants.div.style(this.state.topDivPosition)}
-          />
-        )}
-        {this.state.centerDivPosition && (
-          <div
-            className={SelectionConstants.div.className}
-            style={SelectionConstants.div.style(this.state.centerDivPosition)}
-          />
-        )}
-        {this.state.bottomDivPosition && (
-          <div
-            className={SelectionConstants.div.className}
-            style={SelectionConstants.div.style(this.state.bottomDivPosition)}
-          />
-        )}
-      </span>
-    );
-  }
-}
+  return (
+    <span ref={rootRef}>
+      {state.topDivPosition && (
+        <div
+          className={SelectionConstants.div.className}
+          style={SelectionConstants.div.style(state.topDivPosition)}
+        />
+      )}
+      {state.centerDivPosition && (
+        <div
+          className={SelectionConstants.div.className}
+          style={SelectionConstants.div.style(state.centerDivPosition)}
+        />
+      )}
+      {state.bottomDivPosition && (
+        <div
+          className={SelectionConstants.div.className}
+          style={SelectionConstants.div.style(state.bottomDivPosition)}
+        />
+      )}
+    </span>
+  );
+};
