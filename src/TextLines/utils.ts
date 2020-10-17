@@ -8,7 +8,7 @@ import {
   DecorationNode,
   TaggedLinkNode,
   BracketLinkNode,
-  BlockFormulaNode,
+  DisplayFormulaNode,
   InlineFormulaNode,
   HashTagNode,
   NormalNode,
@@ -96,7 +96,7 @@ function parseText(text: string, option: ParseOption): Node[] {
   const {
     decoration,
     bracketLink,
-    blockFormula,
+    displayFormula,
     inlineFormula,
     hashTag,
     normal,
@@ -109,8 +109,8 @@ function parseText(text: string, option: ParseOption): Node[] {
     return parseTaggedLink(text, option, taggedLink);
   } else if (bracketLink.test(text)) {
     return parseBracketLink(text, option);
-  } else if (blockFormula.test(text)) {
-    return parseBlockFormula(text, option);
+  } else if (displayFormula.test(text)) {
+    return parseDisplayFormula(text, option);
   } else if (inlineFormula.test(text)) {
     return parseInlineFormula(text, option);
   } else if (hashTag.test(text)) {
@@ -182,13 +182,13 @@ function parseBracketLink(text: string, option: ParseOption): Node[] {
   return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
 }
 
-function parseBlockFormula(text: string, option: ParseOption): Node[] {
-  const regex = TextLinesConstants.regexes.blockFormula;
+function parseDisplayFormula(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.displayFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
-  const node: BlockFormulaNode = {
-    type: "blockFormula",
+  const node: DisplayFormulaNode = {
+    type: "displayFormula",
     range: [from, to],
     facingMeta: "$$",
     formula,

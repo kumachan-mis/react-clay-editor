@@ -56,7 +56,7 @@ export type Node =
   | DecorationNode
   | TaggedLinkNode
   | BracketLinkNode
-  | BlockFormulaNode
+  | DisplayFormulaNode
   | InlineFormulaNode
   | HashTagNode
   | NormalNode;
@@ -86,8 +86,8 @@ export interface BracketLinkNode {
   trailingMeta: string;
 }
 
-export interface BlockFormulaNode {
-  type: "blockFormula";
+export interface DisplayFormulaNode {
+  type: "displayFormula";
   range: [number, number];
   facingMeta: string;
   formula: string;

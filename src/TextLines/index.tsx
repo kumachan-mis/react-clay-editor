@@ -176,11 +176,11 @@ const Node: React.FC<NodeProps> = (props) => {
         <span>{bracketLinkCharSpans}</span>
       );
     }
-    case "blockFormula":
+    case "displayFormula":
     case "inlineFormula": {
       const { facingMeta, formula, trailingMeta } = props.node;
       const { disabled } = props.formulaProps;
-      const displayMode = props.node.type == "blockFormula";
+      const displayMode = props.node.type == "displayFormula";
       const [fromCharIndex, toCharIndex] = [from + facingMeta.length, to - trailingMeta.length];
       return (
         <span className={charGroupConstants.className(props.lineIndex, fromCharIndex, toCharIndex)}>
