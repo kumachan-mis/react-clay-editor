@@ -11,13 +11,19 @@ export class TextLines extends React.Component<Props> {
   static readonly defaultProps: Required<
     Pick<
       Props,
-      "textDecoration" | "bracketLinkProps" | "hashTagProps" | "taggedLinkPropsMap" | "formulaProps"
+      | "textDecoration"
+      | "bracketLinkProps"
+      | "hashTagProps"
+      | "taggedLinkPropsMap"
+      | "codeProps"
+      | "formulaProps"
     >
   > = {
     textDecoration: defaultTextDecoration,
     bracketLinkProps: {},
     hashTagProps: {},
     taggedLinkPropsMap: {},
+    codeProps: {},
     formulaProps: {},
   };
 
@@ -89,6 +95,72 @@ export class TextLines extends React.Component<Props> {
     const [from, to] = props.node.range;
 
     switch (props.node.type) {
+      case "inlineCode": {
+        const { facingMeta, code, trailingMeta } = props.node;
+        const { codeProps, disabled } = this.props.codeProps;
+        const inlineCodeCharSpans = [
+          ...[...facingMeta].map((char: string, index: number) => (
+            <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
+              <span>{disabled || cursorOn ? char : ""}</span>
+            </span>
+          )),
+          ...[...code].map((char: string, index: number) => (
+            <span
+              key={from + facingMeta.length + index}
+              className={charConstants.className(lineIndex, from + facingMeta.length + index)}
+            >
+              <span>{char}</span>
+            </span>
+          )),
+          ...[...trailingMeta].map((char: string, index: number) => (
+            <span
+              key={to - trailingMeta.length + index}
+              className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
+            >
+              <span>{disabled || cursorOn ? char : ""}</span>
+            </span>
+          )),
+        ];
+
+        return !disabled ? (
+          <code style={constants.code.style} {...(codeProps?.(code) || {})}>
+            {inlineCodeCharSpans}
+          </code>
+        ) : (
+          <span>{inlineCodeCharSpans}</span>
+        );
+      }
+      case "blockFormula":
+      case "inlineFormula": {
+        const { facingMeta, formula, trailingMeta } = props.node;
+        const displayMode = props.node.type == "blockFormula";
+        const { disabled } = this.props.formulaProps;
+
+        return !disabled && !cursorOn ? (
+          <span
+            className={charGroupConstants.className(
+              lineIndex,
+              from + facingMeta.length,
+              to - trailingMeta.length
+            )}
+          >
+            <KaTeX
+              options={{ throwOnError: false, displayMode }}
+              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
+            >
+              {formula}
+            </KaTeX>
+          </span>
+        ) : (
+          <span>
+            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
+              <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                <span>{char}</span>
+              </span>
+            ))}
+          </span>
+        );
+      }
       case "decoration": {
         const { facingMeta, trailingMeta, children } = props.node;
         const { textDecoration } = this.props;
@@ -186,37 +258,6 @@ export class TextLines extends React.Component<Props> {
           </a>
         ) : (
           <span>{bracketLinkCharSpans}</span>
-        );
-      }
-      case "blockFormula":
-      case "inlineFormula": {
-        const { facingMeta, formula, trailingMeta } = props.node;
-        const displayMode = props.node.type == "blockFormula";
-        const { disabled } = this.props.formulaProps;
-
-        return !disabled && !cursorOn ? (
-          <span
-            className={charGroupConstants.className(
-              lineIndex,
-              from + facingMeta.length,
-              to - trailingMeta.length
-            )}
-          >
-            <KaTeX
-              options={{ throwOnError: false, displayMode }}
-              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
-            >
-              {formula}
-            </KaTeX>
-          </span>
-        ) : (
-          <span>
-            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                <span>{char}</span>
-              </span>
-            ))}
-          </span>
         );
       }
       case "hashTag": {

@@ -12,6 +12,11 @@ export const defaultLinkStyle: React.CSSProperties = {
   cursor: "pointer",
 };
 
+export const defaultCodeStyle: React.CSSProperties = {
+  fontFamily: "SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace",
+  backgroundColor: "rgba(27, 31, 35, 0.05)",
+};
+
 export const TextLinesConstants = {
   className: "React-Realtime-Markup-Editor-textlines",
   line: {
@@ -29,6 +34,9 @@ export const TextLinesConstants = {
     },
     content: {
       className: "React-Realtime-Markup-Editor-textlines-content",
+      code: {
+        style: defaultCodeStyle,
+      },
       decoration: {
         style: (decorationStyle: DecorationStyle): React.CSSProperties => ({
           fontSize: `${decorationStyle.fontSize}px`,
@@ -67,6 +75,9 @@ export const TextLinesConstants = {
   },
   regexes: {
     indent: /^(?<indent>[ \t]*)(?<content>([^ ].*)?)$/,
+    inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
+    blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
+    inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {
       const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -74,8 +85,6 @@ export const TextLinesConstants = {
       return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
     },
     bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-    blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
-    inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
     hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },
