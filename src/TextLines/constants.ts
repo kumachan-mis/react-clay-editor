@@ -67,6 +67,9 @@ export const TextLinesConstants = {
   },
   regexes: {
     indent: /^(?<indent>[ \t]*)(?<content>([^ ].*)?)$/,
+    inlineCode: /^(?<left>.*?)`(?<code>[^$]+)`(?<right>.*)$/,
+    blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
+    inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {
       const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -74,8 +77,6 @@ export const TextLinesConstants = {
       return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
     },
     bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-    blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
-    inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
     hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },

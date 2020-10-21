@@ -89,6 +89,37 @@ export class TextLines extends React.Component<Props> {
     const [from, to] = props.node.range;
 
     switch (props.node.type) {
+      case "blockFormula":
+      case "inlineFormula": {
+        const { facingMeta, formula, trailingMeta } = props.node;
+        const displayMode = props.node.type == "blockFormula";
+        const { disabled } = this.props.formulaProps;
+
+        return !disabled && !cursorOn ? (
+          <span
+            className={charGroupConstants.className(
+              lineIndex,
+              from + facingMeta.length,
+              to - trailingMeta.length
+            )}
+          >
+            <KaTeX
+              options={{ throwOnError: false, displayMode }}
+              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
+            >
+              {formula}
+            </KaTeX>
+          </span>
+        ) : (
+          <span>
+            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
+              <span key={index} className={charConstants.className(lineIndex, from + index)}>
+                <span>{char}</span>
+              </span>
+            ))}
+          </span>
+        );
+      }
       case "decoration": {
         const { facingMeta, trailingMeta, children } = props.node;
         const { textDecoration } = this.props;
@@ -186,37 +217,6 @@ export class TextLines extends React.Component<Props> {
           </a>
         ) : (
           <span>{bracketLinkCharSpans}</span>
-        );
-      }
-      case "blockFormula":
-      case "inlineFormula": {
-        const { facingMeta, formula, trailingMeta } = props.node;
-        const displayMode = props.node.type == "blockFormula";
-        const { disabled } = this.props.formulaProps;
-
-        return !disabled && !cursorOn ? (
-          <span
-            className={charGroupConstants.className(
-              lineIndex,
-              from + facingMeta.length,
-              to - trailingMeta.length
-            )}
-          >
-            <KaTeX
-              options={{ throwOnError: false, displayMode }}
-              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
-            >
-              {formula}
-            </KaTeX>
-          </span>
-        ) : (
-          <span>
-            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                <span>{char}</span>
-              </span>
-            ))}
-          </span>
         );
       }
       case "hashTag": {

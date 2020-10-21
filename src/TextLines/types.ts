@@ -49,11 +49,11 @@ export interface DecorationStyle {
 }
 
 export type Node =
+  | BlockFormulaNode
+  | InlineFormulaNode
   | DecorationNode
   | TaggedLinkNode
   | BracketLinkNode
-  | BlockFormulaNode
-  | InlineFormulaNode
   | HashTagNode
   | NormalNode;
 
@@ -62,6 +62,22 @@ export interface DecorationNode {
   range: [number, number];
   facingMeta: string;
   children: Node[];
+  trailingMeta: string;
+}
+
+export interface BlockFormulaNode {
+  type: "blockFormula";
+  range: [number, number];
+  facingMeta: string;
+  formula: string;
+  trailingMeta: string;
+}
+
+export interface InlineFormulaNode {
+  type: "inlineFormula";
+  range: [number, number];
+  facingMeta: string;
+  formula: string;
   trailingMeta: string;
 }
 
@@ -79,22 +95,6 @@ export interface BracketLinkNode {
   range: [number, number];
   facingMeta: string;
   linkName: string;
-  trailingMeta: string;
-}
-
-export interface BlockFormulaNode {
-  type: "blockFormula";
-  range: [number, number];
-  facingMeta: string;
-  formula: string;
-  trailingMeta: string;
-}
-
-export interface InlineFormulaNode {
-  type: "inlineFormula";
-  range: [number, number];
-  facingMeta: string;
-  formula: string;
   trailingMeta: string;
 }
 
