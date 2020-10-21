@@ -5,11 +5,12 @@ import {
   ContentWithIndent,
   DecorationStyle,
   Node,
+  InlineCodeNode,
+  BlockFormulaNode,
+  InlineFormulaNode,
   DecorationNode,
   TaggedLinkNode,
   BracketLinkNode,
-  BlockFormulaNode,
-  InlineFormulaNode,
   HashTagNode,
   NormalNode,
   ParseOption,
@@ -94,6 +95,7 @@ export function getHashTagName(hashTag: string): string {
 
 function parseText(text: string, option: ParseOption): Node[] {
   const {
+    inlineCode,
     blockFormula,
     inlineFormula,
     decoration,
@@ -103,7 +105,9 @@ function parseText(text: string, option: ParseOption): Node[] {
   } = TextLinesConstants.regexes;
   const taggedLink = option.taggedLinkRegexes.find((regex) => regex.test(text));
 
-  if (blockFormula.test(text)) {
+  if (inlineCode.test(text)) {
+    return parseInlineCode(text, option);
+  } else if (blockFormula.test(text)) {
     return parseBlockFormula(text, option);
   } else if (inlineFormula.test(text)) {
     return parseInlineFormula(text, option);
@@ -122,6 +126,21 @@ function parseText(text: string, option: ParseOption): Node[] {
   }
 }
 
+function parseInlineCode(text: string, option: ParseOption): Node[] {
+  const regex = TextLinesConstants.regexes.inlineCode;
+  const { left, code, right } = text.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+
+  const node: InlineCodeNode = {
+    type: "inlineCode",
+    range: [from, to],
+    facingMeta: "`",
+    code,
+    trailingMeta: "`",
+  };
+
+  return [...parseText(left, option), node, ...parseText(right, { ...option, offset: to })];
+}
 function parseBlockFormula(text: string, option: ParseOption): Node[] {
   const regex = TextLinesConstants.regexes.blockFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;

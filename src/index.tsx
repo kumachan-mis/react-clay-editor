@@ -5,11 +5,13 @@ export {
   BracketLinkProps,
   HashTagProps,
   TaggedLinkProps,
+  CodeProps,
   FormulaProps,
 } from "./Editor/types";
 export { defaultSuggestionListDecoration } from "./Cursor/constants";
 export {
   defaultTextDecoration,
   defaultLinkNameRegex,
+  defaultCodeStyle,
   defaultLinkStyle,
 } from "./TextLines/constants";

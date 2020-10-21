@@ -29,6 +29,11 @@ export interface TaggedLinkProps {
   tagHidden?: boolean;
 }
 
+export interface CodeProps {
+  codeProps?: (code: string) => React.ComponentProps<"code">;
+  disabled?: boolean;
+}
+
 export interface FormulaProps {
   disabled?: boolean;
 }
@@ -40,6 +45,7 @@ export interface Props {
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
+  codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   disabled?: boolean;
   style?: React.CSSProperties;

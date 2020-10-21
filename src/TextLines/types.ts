@@ -1,4 +1,10 @@
-import { BracketLinkProps, HashTagProps, TaggedLinkProps, FormulaProps } from "../Editor/types";
+import {
+  BracketLinkProps,
+  HashTagProps,
+  TaggedLinkProps,
+  CodeProps,
+  FormulaProps,
+} from "../Editor/types";
 import { CursorCoordinate } from "../Cursor/types";
 
 export interface TextDecoration {
@@ -13,6 +19,7 @@ export interface Props {
   bracketLinkProps: BracketLinkProps;
   hashTagProps: HashTagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
+  codeProps: CodeProps;
   formulaProps: FormulaProps;
   cursorCoordinate: CursorCoordinate | undefined;
 }
@@ -49,6 +56,7 @@ export interface DecorationStyle {
 }
 
 export type Node =
+  | InlineCodeNode
   | BlockFormulaNode
   | InlineFormulaNode
   | DecorationNode
@@ -57,11 +65,11 @@ export type Node =
   | HashTagNode
   | NormalNode;
 
-export interface DecorationNode {
-  type: "decoration";
+export interface InlineCodeNode {
+  type: "inlineCode";
   range: [number, number];
   facingMeta: string;
-  children: Node[];
+  code: string;
   trailingMeta: string;
 }
 
@@ -78,6 +86,14 @@ export interface InlineFormulaNode {
   range: [number, number];
   facingMeta: string;
   formula: string;
+  trailingMeta: string;
+}
+
+export interface DecorationNode {
+  type: "decoration";
+  range: [number, number];
+  facingMeta: string;
+  children: Node[];
   trailingMeta: string;
 }
 
