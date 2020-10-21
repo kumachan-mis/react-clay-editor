@@ -71,6 +71,12 @@ Here are some examples:
 | <a>tag: tagged link</a> | `[tag: tagged link]` |
 | <a>#hash-tag</a>        | `#hash-tag`          |
 
+### Code Strings
+
+| style                | syntax               |
+| -------------------- | -------------------- |
+| `inline code string` | `inline code string` |
+
 ### Math Formulas
 
 | style                                     | syntax                          |
@@ -108,6 +114,7 @@ Here are some examples:
 | `bracketLinkProps`   | `BracketLinkProps`                       | optional          | see [BracketLinkProps](#BracketLinkProps) | settings of bracket links<br>details: [BracketLinkProps](#BracketLinkProps)                                         |
 | `hashTagProps`       | `HashTagProps`                           | optional          | see [HashTagProps](#HashTagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashTagProps)                                                 |
 | `taggedLinkPropsMap` | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
+| `codeProps`          | `CodeProps`                              | optional          | see [CodeProps](#CodeProps)               | settings of code strings<br>details: [CodeProps](#CodeProps)                                                        |
 | `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
 | `disabled`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
@@ -290,12 +297,45 @@ you can import `defaultLinkNameRegex` by adding
 import { defaultLinkNameRegex } from "react-realtime-markup-editor";
 ```
 
+### CodeProps
+
+settings of code strings
+
+```ts
+interface CodeProps {
+  codeProps?: (code: string) => React.ComponentProps<"code">;
+  disabled?: boolean;
+}
+```
+
+**Attributes**
+
+- codeProps: given `code`, this function returns props of `<code>` tag  
+  default: `(code: string) => ({ style: defaultCodeStyle })`
+- disabled: if `true`, math formulas behave in the same way as plain texts  
+  default: `undefined` (falsy)
+
+**Default**
+
+```ts
+const defaultCodeStyle: React.CSSProperties = {
+  fontFamily: "SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace",
+  backgroundColor: "rgba(27, 31, 35, 0.05)",
+};
+```
+
+you can import `defaultCodeStyle` by adding
+
+```ts
+import { defaultCodeStyle } from "react-realtime-markup-editor";
+```
+
 ### FormulaProps
 
 settings of math formulas
 
 ```ts
-export interface FormulaProps {
+interface FormulaProps {
   disabled?: boolean;
 }
 ```

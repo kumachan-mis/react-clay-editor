@@ -12,6 +12,6 @@ export { defaultSuggestionListDecoration } from "./Cursor/constants";
 export {
   defaultTextDecoration,
   defaultLinkNameRegex,
-  defaultCodeStyle,
   defaultLinkStyle,
+  defaultCodeStyle,
 } from "./TextLines/constants";
