@@ -83,6 +83,8 @@ export class Editor extends React.Component<Props, State> {
               textDecoration={this.props.decoration?.text}
               bracketLinkProps={this.props.bracketLinkProps}
               hashTagProps={this.props.hashTagProps}
+              codeProps={this.props.codeProps}
+              formulaProps={this.props.formulaProps}
               taggedLinkPropsMap={this.props.taggedLinkPropsMap}
               cursorCoordinate={this.state.cursorCoordinate}
             />

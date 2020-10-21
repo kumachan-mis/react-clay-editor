@@ -3,7 +3,7 @@ import * as React from "react";
 import { Editor } from "../../src";
 
 // eslint-disable-next-line prettier/prettier
-const defaultMainText = String.raw
+const defaultMainText =
 `[*** React Realtime Markup Editor]
 A text document editor which is syntactically formattable in real time
 
@@ -42,18 +42,28 @@ and so on
   [github: @kumachan-mis/react-realtime-markup-editor]
   [npm: react-realtime-markup-editor]
 
+[** Code string]
+ \`import { Editor } from "react-realtime-markup-editor"\`
+
 [** Math formulas]
  inline mode
   $f(x)$
  display mode
-  $$\int_a^b f(x) \mathrm{d}x$$`;
+  $$\\int_a^b f(x) \\mathrm{d}x$$`;
 
 // eslint-disable-next-line prettier/prettier
-const defaultSubText = String.raw
+const defaultSubText =
 `[** Of course, you can use multiple editors]
 [* Links can be disabled]
  [disabled-bracket-link]
  #disabled-hash-tag-link
+
+[* Code string can be disabled]
+ \`import { Editor } from "react-realtime-markup-editor"\`
+
+[* Math formulas can be disabled]
+ $f(x)$
+ $$\\int_a^b f(x) \\mathrm{d}x$$
 
 More features are comming soon...`;
 
@@ -111,6 +121,8 @@ export const App: React.FC = () => {
         onChangeText={setSubText}
         bracketLinkProps={{ disabled: true }}
         hashTagProps={{ disabled: true }}
+        codeProps={{ disabled: true }}
+        formulaProps={{ disabled: true }}
         style={subStyle}
       />
     </>
