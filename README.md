@@ -73,9 +73,9 @@ Here are some examples:
 
 ### Code Strings
 
-| style                | syntax                   |
-| -------------------- | ------------------------ |
-| `inline code string` | `\`inline code string\`` |
+| style                | syntax                     |
+| -------------------- | -------------------------- |
+| `inline code string` | `` `inline code string` `` |
 
 ### Math Formulas
 
