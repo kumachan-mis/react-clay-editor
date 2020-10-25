@@ -74,7 +74,7 @@ export const TextLinesConstants = {
     classNameRegex: /React-Realtime-Markup-Editor-group L(?<lineIndex>\d+)C(?<from>\d+)-(?<to>\d+)/,
   },
   regexes: {
-    indent: /^(?<indent>[ \t]*)(?<content>([^ ].*)?)$/,
+    indent: /^(?<indent>[ \t\u3000]*)(?<content>([^ ].*)?)$/,
     inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
     blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
     inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
