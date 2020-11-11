@@ -136,7 +136,7 @@ function parseItemization(line: string, option: ParsingOption): Node[] {
     lineIndex: option.lineIndex,
     range: [from, to],
     indent,
-    children: parseToNodes(content, { ...option, line: false }),
+    children: parseToNodes(content, { ...option, offset: from + indent.length, line: false }),
   };
 
   return [node];
