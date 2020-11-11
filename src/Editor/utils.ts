@@ -3,7 +3,6 @@ import { EditorConstants } from "./constants";
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
 import { selectionToRange, getSelectedText } from "../Selection/utils";
-import { parseLine } from "../TextLines/utils";
 import { CursorCoordinate, SuggestionType } from "../Cursor/types";
 import { SelectionWithMouse } from "../Selection/types";
 import { TextLinesConstants } from "../TextLines/constants";
@@ -126,18 +125,7 @@ export function handleOnKeyDown(
       }
       const [newText, newState] = insertText(text, state, "\n");
       if (!newState.cursorCoordinate) return [newText, newState];
-
-      const newLines = newText.split("\n");
-      const { indent, content } = parseLine(newLines[newState.cursorCoordinate.lineIndex - 1]);
-      if (indent.length == 0) {
-        return [newText, newState];
-      } else if (content.length > 0) {
-        return insertText(newText, newState, indent);
-      } else {
-        const backCoordinate = moveCursor(newText, newState.cursorCoordinate, -indent.length - 1);
-        const textSelection = { fixed: newState.cursorCoordinate, free: backCoordinate };
-        return insertText(newText, { ...newState, textSelection }, "");
-      }
+      return [newText, newState];
     }
     case "Backspace": {
       if (state.textSelection) return insertText(text, state, "");
