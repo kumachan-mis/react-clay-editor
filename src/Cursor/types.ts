@@ -22,7 +22,7 @@ export interface Props {
   suggestionType: SuggestionType;
   suggestions: string[];
   suggestionIndex: number;
-  suggestionListDecoration: SuggestionListDecoration;
+  suggestionListDecoration?: SuggestionListDecoration;
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
