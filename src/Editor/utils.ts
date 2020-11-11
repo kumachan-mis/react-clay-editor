@@ -125,7 +125,11 @@ export function handleOnKeyDown(
       }
       const [newText, newState] = insertText(text, state, "\n");
       if (!newState.cursorCoordinate) return [newText, newState];
-      return [newText, newState];
+
+      const newLPrevLine = newText.split("\n")[newState.cursorCoordinate.lineIndex - 1];
+      const { indent } = newLPrevLine.match(TextLinesConstants.regexes.itemization)
+        ?.groups as Record<string, string>;
+      return insertText(newText, newState, indent);
     }
     case "Backspace": {
       if (state.textSelection) return insertText(text, state, "");
