@@ -17,7 +17,7 @@ export const Selection: React.FC<Props> = (props) => {
     if (!rootRef.current) return;
     const newState = selectionPropsToState(props, rootRef.current);
     if (newState != state) setState(newState);
-  }, [props]);
+  }, [props.textSelection]);
 
   return (
     <span ref={rootRef}>

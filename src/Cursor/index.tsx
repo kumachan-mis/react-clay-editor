@@ -29,7 +29,14 @@ export const Cursor: React.FC<Props> = (props) => {
     if (!editorRoot) return;
     editorRoot.removeEventListener("scroll", handleOnEditorScroll);
     editorRoot.addEventListener("scroll", handleOnEditorScroll);
-  }, [props]);
+  }, [
+    props.coordinate,
+    props.textAreaValue,
+    props.suggestionType,
+    props.suggestions,
+    props.suggestionIndex,
+    props.suggestionListDecoration,
+  ]);
 
   return (
     <span ref={rootRef}>
