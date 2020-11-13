@@ -15,7 +15,7 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const textAreaSelector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
   const textArea = root?.querySelector(textAreaSelector) as HTMLTextAreaElement | null;
-  textArea?.focus({ preventScroll: true });
+  textArea?.focus();
   if (props.suggestions.length > 0) {
     const index = props.suggestionIndex;
     const className = classNameToSelector(CursorConstants.suggestion.item.className(index));
