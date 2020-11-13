@@ -42,7 +42,7 @@ and so on
   [github: @kumachan-mis/react-realtime-markup-editor]
   [npm: react-realtime-markup-editor]
 
-[** Code string]
+[** Code strings]
  \`import { Editor } from "react-realtime-markup-editor"\`
 
 [** Math formulas]

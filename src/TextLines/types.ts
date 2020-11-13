@@ -15,37 +15,30 @@ export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };
 
 export interface Props {
   text: string;
+  textDecoration?: TextDecoration;
+  bracketLinkProps?: BracketLinkProps;
+  hashTagProps?: HashTagProps;
+  taggedLinkPropsMap?: TaggedLinkPropsMap;
+  codeProps?: CodeProps;
+  formulaProps?: FormulaProps;
+  cursorCoordinate: CursorCoordinate | undefined;
+}
+
+export interface NodeProps {
+  node: Node;
   textDecoration: TextDecoration;
   bracketLinkProps: BracketLinkProps;
   hashTagProps: HashTagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
   codeProps: CodeProps;
   formulaProps: FormulaProps;
-  cursorCoordinate: CursorCoordinate | undefined;
-}
-
-export interface IndentProps {
-  indent: string;
-  content: string;
-  lineIndex: number;
-}
-
-export interface ContentProps {
-  indent: string;
-  content: string;
-  lineIndex: number;
   cursorOn: boolean;
 }
 
-export interface NodeProps {
-  node: Node;
+export interface CharProps {
+  char: string;
   lineIndex: number;
-  cursorOn: boolean;
-}
-
-export interface ContentWithIndent {
-  indent: string;
-  content: string;
+  charIndex: number;
 }
 
 export interface DecorationStyle {
@@ -56,6 +49,7 @@ export interface DecorationStyle {
 }
 
 export type Node =
+  | ItemizationNode
   | InlineCodeNode
   | BlockFormulaNode
   | InlineFormulaNode
@@ -65,8 +59,17 @@ export type Node =
   | HashTagNode
   | NormalNode;
 
+export interface ItemizationNode {
+  type: "itemization";
+  lineIndex: number;
+  range: [number, number];
+  indent: string;
+  children: Node[];
+}
+
 export interface InlineCodeNode {
   type: "inlineCode";
+  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   code: string;
@@ -75,6 +78,7 @@ export interface InlineCodeNode {
 
 export interface BlockFormulaNode {
   type: "blockFormula";
+  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   formula: string;
@@ -83,6 +87,7 @@ export interface BlockFormulaNode {
 
 export interface InlineFormulaNode {
   type: "inlineFormula";
+  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   formula: string;
@@ -91,6 +96,7 @@ export interface InlineFormulaNode {
 
 export interface DecorationNode {
   type: "decoration";
+  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   children: Node[];
@@ -99,6 +105,7 @@ export interface DecorationNode {
 
 export interface TaggedLinkNode {
   type: "taggedLink";
+  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   tag: string;
@@ -108,6 +115,7 @@ export interface TaggedLinkNode {
 
 export interface BracketLinkNode {
   type: "bracketLink";
+  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   linkName: string;
@@ -116,18 +124,22 @@ export interface BracketLinkNode {
 
 export interface HashTagNode {
   type: "hashTag";
+  lineIndex: number;
   range: [number, number];
   hashTag: string;
 }
 
 export interface NormalNode {
   type: "normal";
+  lineIndex: number;
   range: [number, number];
   text: string;
 }
 
-export interface ParseOption {
+export interface ParsingOption {
+  lineIndex: number;
   offset: number;
   nested: boolean;
+  line: boolean;
   taggedLinkRegexes: RegExp[];
 }

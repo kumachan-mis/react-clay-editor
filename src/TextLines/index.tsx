@@ -1,291 +1,321 @@
 import * as React from "react";
-import "katex/dist/katex.min.css";
 
-import { Props, IndentProps, ContentProps, NodeProps, Node } from "./types";
-import { TextLinesConstants, defaultTextDecoration } from "./constants";
-import { parseLine, parseContent, getDecorationStyle, getTagName, getHashTagName } from "./utils";
+import { Props, NodeProps, CharProps, Node } from "./types";
+import {
+  TextLinesConstants,
+  defaultTextDecoration,
+  defaultLinkStyle,
+  defaultCodeStyle,
+} from "./constants";
+import { parseText, getDecorationStyle, getTagName, getHashTagName } from "./utils";
 import { KaTeX } from "../KaTeX";
 import "../style.css";
 
-export class TextLines extends React.Component<Props> {
-  static readonly defaultProps: Required<
-    Pick<
-      Props,
-      | "textDecoration"
-      | "bracketLinkProps"
-      | "hashTagProps"
-      | "taggedLinkPropsMap"
-      | "codeProps"
-      | "formulaProps"
-    >
-  > = {
-    textDecoration: defaultTextDecoration,
-    bracketLinkProps: {},
-    hashTagProps: {},
-    taggedLinkPropsMap: {},
-    codeProps: {},
-    formulaProps: {},
-  };
+export const TextLines: React.FC<Props> = ({
+  text,
+  textDecoration = defaultTextDecoration,
+  bracketLinkProps = { anchorProps: () => ({ style: defaultLinkStyle }) },
+  hashTagProps = { anchorProps: () => ({ style: defaultLinkStyle }) },
+  taggedLinkPropsMap = {},
+  codeProps = { codeProps: () => ({ style: defaultCodeStyle }) },
+  formulaProps = {},
+  cursorCoordinate,
+}) => {
+  const nodes = parseText(text, taggedLinkPropsMap);
+  return (
+    <div className={TextLinesConstants.className}>
+      {nodes.map((node, index) => (
+        <Node
+          key={index}
+          node={node}
+          textDecoration={textDecoration}
+          bracketLinkProps={bracketLinkProps}
+          hashTagProps={hashTagProps}
+          taggedLinkPropsMap={taggedLinkPropsMap}
+          codeProps={codeProps}
+          formulaProps={formulaProps}
+          cursorOn={cursorCoordinate?.lineIndex == node.lineIndex}
+        />
+      ))}
+    </div>
+  );
+};
 
-  render(): React.ReactElement {
-    return (
-      <div className={TextLinesConstants.className}>
-        {this.props.text.split("\n").map((line: string, index: number) => {
-          const { indent, content } = parseLine(line);
-          const defaultFontSize = this.props.textDecoration.fontSizes.level1;
-          const on = index == this.props.cursorCoordinate?.lineIndex;
-          return (
-            <div
-              className={TextLinesConstants.line.className(index)}
-              key={index}
-              style={TextLinesConstants.line.style(defaultFontSize)}
-            >
-              <this.Indent indent={indent} content={content} lineIndex={index} />
-              <this.Content indent={indent} content={content} lineIndex={index} cursorOn={on} />
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+const Node: React.FC<NodeProps> = ({
+  node,
+  textDecoration,
+  bracketLinkProps,
+  hashTagProps,
+  taggedLinkPropsMap,
+  codeProps,
+  formulaProps,
+  cursorOn,
+}) => {
+  switch (node.type) {
+    case "itemization": {
+      const { lineIndex, indent, children } = node;
+      const [, to] = node.range;
 
-  private Indent = (props: IndentProps): React.ReactElement => {
-    if (props.indent.length == 0) return <></>;
-
-    const constants = TextLinesConstants.line.indent;
-    return (
-      <span className={constants.className} style={constants.style(props.indent.length)}>
-        {[...props.indent].map((char: string, charIndex: number) => {
-          const charClassName = TextLinesConstants.char.className(props.lineIndex, charIndex);
-          return (
-            <span key={charIndex} className={`${constants.pad.className} ${charClassName}`}>
-              <span> </span>
-            </span>
-          );
-        })}
-        <span className={constants.dot.className} />
-      </span>
-    );
-  };
-
-  private Content = (props: ContentProps): React.ReactElement => {
-    const constants = TextLinesConstants.line.content;
-    const charConstants = TextLinesConstants.char;
-    const { indent, content, lineIndex, cursorOn } = props;
-    return (
-      <span className={constants.className} style={constants.style(indent.length)}>
-        {parseContent(content, this.props.taggedLinkPropsMap, indent.length).map(
-          (node: Node, index: number) => (
-            <this.Node key={index} node={node} lineIndex={lineIndex} cursorOn={cursorOn} />
-          )
-        )}
-        <span className={charConstants.className(lineIndex, indent.length + content.length)}>
-          <span> </span>
-        </span>
-      </span>
-    );
-  };
-
-  private Node = (props: NodeProps): React.ReactElement => {
-    const constants = TextLinesConstants.line.content;
-    const charConstants = TextLinesConstants.char;
-    const charGroupConstants = TextLinesConstants.charGroup;
-
-    const { lineIndex, cursorOn } = props;
-    const [from, to] = props.node.range;
-
-    switch (props.node.type) {
-      case "inlineCode": {
-        const { facingMeta, code, trailingMeta } = props.node;
-        const { codeProps, disabled } = this.props.codeProps;
-        const inlineCodeCharSpans = [
-          ...[...facingMeta].map((char: string, index: number) => (
-            <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-              <span>{disabled || cursorOn ? char : ""}</span>
-            </span>
-          )),
-          ...[...code].map((char: string, index: number) => (
-            <span
-              key={from + facingMeta.length + index}
-              className={charConstants.className(lineIndex, from + facingMeta.length + index)}
-            >
-              <span>{char}</span>
-            </span>
-          )),
-          ...[...trailingMeta].map((char: string, index: number) => (
-            <span
-              key={to - trailingMeta.length + index}
-              className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
-            >
-              <span>{disabled || cursorOn ? char : ""}</span>
-            </span>
-          )),
-        ];
-
-        return !disabled ? (
-          <code style={constants.code.style} {...(codeProps?.(code) || {})}>
-            {inlineCodeCharSpans}
-          </code>
-        ) : (
-          <span>{inlineCodeCharSpans}</span>
-        );
-      }
-      case "blockFormula":
-      case "inlineFormula": {
-        const { facingMeta, formula, trailingMeta } = props.node;
-        const displayMode = props.node.type == "blockFormula";
-        const { disabled } = this.props.formulaProps;
-
-        return !disabled && !cursorOn ? (
+      return (
+        <div
+          className={TextLinesConstants.line.className(lineIndex)}
+          style={TextLinesConstants.line.style(textDecoration.fontSizes.level1)}
+        >
           <span
-            className={charGroupConstants.className(
-              lineIndex,
-              from + facingMeta.length,
-              to - trailingMeta.length
-            )}
+            className={TextLinesConstants.itemization.indent.className}
+            style={TextLinesConstants.itemization.indent.style(indent.length)}
           >
-            <KaTeX
-              options={{ throwOnError: false, displayMode }}
-              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
-            >
-              {formula}
-            </KaTeX>
+            {[...indent].map((char: string, charIndex: number) => {
+              const charClassName = TextLinesConstants.char.className(lineIndex, charIndex);
+              const className = `${TextLinesConstants.itemization.pad.className} ${charClassName}`;
+              return (
+                <span key={charIndex} className={className}>
+                  <span> </span>
+                </span>
+              );
+            })}
+            <span className={TextLinesConstants.itemization.dot.className} />
           </span>
-        ) : (
-          <span>
-            {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
-              <span key={index} className={charConstants.className(lineIndex, from + index)}>
-                <span>{char}</span>
-              </span>
-            ))}
-          </span>
-        );
-      }
-      case "decoration": {
-        const { facingMeta, trailingMeta, children } = props.node;
-        const { textDecoration } = this.props;
-        const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, textDecoration);
-        return (
-          <span style={constants.decoration.style(decorationStyle)}>
-            {[...facingMeta].map((char: string, index: number) => (
-              <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                <span>{cursorOn ? char : ""}</span>
-              </span>
-            ))}
+          <span
+            className={TextLinesConstants.itemization.content.className}
+            style={TextLinesConstants.itemization.content.style(indent.length)}
+          >
             {children.map((child: Node, index: number) => (
-              <this.Node key={index} node={child} lineIndex={lineIndex} cursorOn={cursorOn} />
+              <Node
+                key={index}
+                node={child}
+                textDecoration={textDecoration}
+                bracketLinkProps={bracketLinkProps}
+                hashTagProps={bracketLinkProps}
+                taggedLinkPropsMap={taggedLinkPropsMap}
+                codeProps={codeProps}
+                formulaProps={formulaProps}
+                cursorOn={cursorOn}
+              />
             ))}
-            {[...trailingMeta].map((char: string, index: number) => (
-              <span
-                key={to - trailingMeta.length + index}
-                className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
-              >
-                <span>{cursorOn ? char : ""}</span>
-              </span>
-            ))}
+            <Char lineIndex={lineIndex} charIndex={to} char={" "} />
           </span>
-        );
-      }
-      case "taggedLink": {
-        const { facingMeta, tag, linkName, trailingMeta } = props.node;
-        const { anchorProps, tagHidden } = this.props.taggedLinkPropsMap[getTagName(tag)];
-        return (
-          <a style={constants.taggedLink.style} {...(anchorProps?.(linkName) || {})}>
-            {[...facingMeta].map((char: string, index: number) => (
-              <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                <span>{cursorOn ? char : ""}</span>
-              </span>
-            ))}
-            {[...tag].map((char: string, index: number) => (
-              <span
-                key={from + facingMeta.length + index}
-                className={charConstants.className(lineIndex, from + facingMeta.length + index)}
-              >
-                <span>{cursorOn || !tagHidden ? char : ""}</span>
-              </span>
-            ))}
-            {[...linkName].map((char: string, index: number) => (
-              <span
-                key={from + facingMeta.length + tag.length + index}
-                className={charConstants.className(
-                  lineIndex,
-                  from + facingMeta.length + tag.length + index
-                )}
-              >
-                <span>{char}</span>
-              </span>
-            ))}
-            {[...trailingMeta].map((char: string, index: number) => (
-              <span
-                key={to - trailingMeta.length + index}
-                className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
-              >
-                <span>{cursorOn ? char : ""}</span>
-              </span>
-            ))}
-          </a>
-        );
-      }
-      case "bracketLink": {
-        const { facingMeta, linkName, trailingMeta } = props.node;
-        const { disabled, anchorProps } = this.props.bracketLinkProps;
-        const bracketLinkCharSpans = [
-          ...[...facingMeta].map((char: string, index: number) => (
-            <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-              <span>{disabled || cursorOn ? char : ""}</span>
-            </span>
-          )),
-          ...[...linkName].map((char: string, index: number) => (
-            <span
-              key={from + facingMeta.length + index}
-              className={charConstants.className(lineIndex, from + facingMeta.length + index)}
-            >
-              <span>{char}</span>
-            </span>
-          )),
-          ...[...trailingMeta].map((char: string, index: number) => (
-            <span
-              key={to - trailingMeta.length + index}
-              className={charConstants.className(lineIndex, to - trailingMeta.length + index)}
-            >
-              <span>{disabled || cursorOn ? char : ""}</span>
-            </span>
-          )),
-        ];
-        return !disabled ? (
-          <a style={constants.bracketLink.style} {...(anchorProps?.(linkName) || {})}>
-            {bracketLinkCharSpans}
-          </a>
-        ) : (
-          <span>{bracketLinkCharSpans}</span>
-        );
-      }
-      case "hashTag": {
-        const hashTagName = getHashTagName(props.node.hashTag);
-        const { disabled, anchorProps } = this.props.hashTagProps;
-        const hashTagCharSpans = [...props.node.hashTag].map((char: string, index: number) => (
-          <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-            <span>{char}</span>
-          </span>
-        ));
-        return !disabled ? (
-          <a style={constants.hashTag.style} {...(anchorProps?.(hashTagName) || {})}>
-            {hashTagCharSpans}
-          </a>
-        ) : (
-          <span>{hashTagCharSpans}</span>
-        );
-      }
-      case "normal":
-        return (
-          <span>
-            {[...props.node.text].map((char: string, index: number) => (
-              <span key={from + index} className={charConstants.className(lineIndex, from + index)}>
-                <span>{char}</span>
-              </span>
-            ))}
-          </span>
-        );
+        </div>
+      );
     }
-  };
-}
+    case "inlineCode": {
+      const { lineIndex, facingMeta, code, trailingMeta } = node;
+      const [from, to] = node.range;
+      const { codeProps: codeElementProps, disabled } = codeProps;
+      const inlineCodeCharSpans = [
+        ...[...facingMeta].map((char: string, index: number) => (
+          <Char
+            key={from + index}
+            lineIndex={lineIndex}
+            charIndex={from + index}
+            char={disabled || cursorOn ? char : ""}
+          />
+        )),
+        ...[...code].map((char: string, index: number) => (
+          <Char
+            key={from + facingMeta.length + index}
+            lineIndex={lineIndex}
+            charIndex={from + facingMeta.length + index}
+            char={char}
+          />
+        )),
+        ...[...trailingMeta].map((char: string, index: number) => (
+          <Char
+            key={to - trailingMeta.length + index}
+            lineIndex={lineIndex}
+            charIndex={to - trailingMeta.length + index}
+            char={disabled || cursorOn ? char : ""}
+          />
+        )),
+      ];
+
+      return !disabled ? (
+        <code style={defaultCodeStyle} {...(codeElementProps?.(code) || {})}>
+          {inlineCodeCharSpans}
+        </code>
+      ) : (
+        <span>{inlineCodeCharSpans}</span>
+      );
+    }
+    case "blockFormula":
+    case "inlineFormula": {
+      const { lineIndex, facingMeta, formula, trailingMeta } = node;
+      const [from, to] = node.range;
+      const { disabled } = formulaProps;
+      const displayMode = node.type == "blockFormula";
+
+      return !disabled && !cursorOn ? (
+        <span
+          className={TextLinesConstants.charGroup.className(
+            lineIndex,
+            from + facingMeta.length,
+            to - trailingMeta.length
+          )}
+        >
+          <KaTeX
+            options={{ throwOnError: false, displayMode }}
+            onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
+          >
+            {formula}
+          </KaTeX>
+        </span>
+      ) : (
+        <span>
+          {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
+            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
+          ))}
+        </span>
+      );
+    }
+    case "decoration": {
+      const { lineIndex, facingMeta, trailingMeta, children } = node;
+      const [from, to] = node.range;
+      const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, textDecoration);
+      return (
+        <span style={TextLinesConstants.decoration.style(decorationStyle)}>
+          {[...facingMeta].map((char: string, index: number) => (
+            <Char
+              key={from + index}
+              lineIndex={lineIndex}
+              charIndex={from + index}
+              char={cursorOn ? char : ""}
+            />
+          ))}
+          {children.map((child: Node, index: number) => (
+            <Node
+              key={index}
+              node={child}
+              textDecoration={textDecoration}
+              bracketLinkProps={bracketLinkProps}
+              hashTagProps={bracketLinkProps}
+              taggedLinkPropsMap={taggedLinkPropsMap}
+              codeProps={codeProps}
+              formulaProps={formulaProps}
+              cursorOn={cursorOn}
+            />
+          ))}
+          {[...trailingMeta].map((char: string, index: number) => (
+            <Char
+              key={to - trailingMeta.length + index}
+              lineIndex={lineIndex}
+              charIndex={to - trailingMeta.length + index}
+              char={cursorOn ? char : ""}
+            />
+          ))}
+        </span>
+      );
+    }
+    case "taggedLink": {
+      const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
+      const [from, to] = node.range;
+      const { anchorProps: anchorElementProps, tagHidden } = taggedLinkPropsMap[getTagName(tag)];
+      return (
+        <a style={defaultLinkStyle} {...(anchorElementProps?.(linkName) || {})}>
+          {[...facingMeta].map((char: string, index: number) => (
+            <Char
+              key={from + index}
+              lineIndex={lineIndex}
+              charIndex={from + index}
+              char={cursorOn ? char : ""}
+            />
+          ))}
+          {[...tag].map((char: string, index: number) => (
+            <Char
+              key={from + facingMeta.length + index}
+              lineIndex={lineIndex}
+              charIndex={from + facingMeta.length + index}
+              char={cursorOn || !tagHidden ? char : ""}
+            />
+          ))}
+          {[...linkName].map((char: string, index: number) => (
+            <Char
+              key={from + facingMeta.length + tag.length + index}
+              lineIndex={lineIndex}
+              charIndex={from + facingMeta.length + tag.length + index}
+              char={char}
+            />
+          ))}
+          {[...trailingMeta].map((char: string, index: number) => (
+            <Char
+              key={to - trailingMeta.length + index}
+              lineIndex={lineIndex}
+              charIndex={to - trailingMeta.length + index}
+              char={cursorOn ? char : ""}
+            />
+          ))}
+        </a>
+      );
+    }
+    case "bracketLink": {
+      const { lineIndex, facingMeta, linkName, trailingMeta } = node;
+      const [from, to] = node.range;
+      const { anchorProps: anchorElementProps, disabled } = bracketLinkProps;
+      const bracketLinkCharSpans = [
+        ...[...facingMeta].map((char: string, index: number) => (
+          <Char
+            key={from + index}
+            lineIndex={lineIndex}
+            charIndex={from + index}
+            char={disabled || cursorOn ? char : ""}
+          />
+        )),
+        ...[...linkName].map((char: string, index: number) => (
+          <Char
+            key={from + facingMeta.length + index}
+            lineIndex={lineIndex}
+            charIndex={from + facingMeta.length + index}
+            char={char}
+          />
+        )),
+        ...[...trailingMeta].map((char: string, index: number) => (
+          <Char
+            key={to - trailingMeta.length + index}
+            lineIndex={lineIndex}
+            charIndex={to - trailingMeta.length + index}
+            char={disabled || cursorOn ? char : ""}
+          />
+        )),
+      ];
+      return !disabled ? (
+        <a style={defaultLinkStyle} {...(anchorElementProps?.(linkName) || {})}>
+          {bracketLinkCharSpans}
+        </a>
+      ) : (
+        <span>{bracketLinkCharSpans}</span>
+      );
+    }
+    case "hashTag": {
+      const { lineIndex, hashTag } = node;
+      const [from] = node.range;
+      const { anchorProps: anchorElementProps, disabled } = hashTagProps;
+      const hashTagName = getHashTagName(hashTag);
+      const hashTagCharSpans = [...hashTag].map((char: string, index: number) => (
+        <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
+      ));
+      return !disabled ? (
+        <a style={defaultLinkStyle} {...(anchorElementProps?.(hashTagName) || {})}>
+          {hashTagCharSpans}
+        </a>
+      ) : (
+        <span>{hashTagCharSpans}</span>
+      );
+    }
+    case "normal": {
+      const { lineIndex, text } = node;
+      const [from] = node.range;
+      return (
+        <span>
+          {[...text].map((char: string, index: number) => (
+            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
+          ))}
+        </span>
+      );
+    }
+  }
+};
+
+const Char: React.FC<CharProps> = (props) => (
+  <span className={TextLinesConstants.char.className(props.lineIndex, props.charIndex)}>
+    <span>{props.char}</span>
+  </span>
+);

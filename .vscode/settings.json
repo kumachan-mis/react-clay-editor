@@ -6,7 +6,6 @@
   "[typescriptreact]": {
     "editor.rulers": [100]
   },
-  "eslint.enable": true,
   "eslint.packageManager": "yarn",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
