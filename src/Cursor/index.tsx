@@ -8,10 +8,7 @@ import "../style.css";
 import { getRoot } from "../Editor/utils";
 
 export const Cursor: React.FC<Props> = (props) => {
-  const [state, setState] = React.useState<State>({
-    position: { top: 0, left: 0 },
-    cursorSize: 0,
-  });
+  const [state, setState] = React.useState<State>({ position: { top: 0, left: 0 }, cursorSize: 0 });
   const rootRef = React.createRef<HTMLSpanElement>();
 
   const handleOnEditorScroll = (): void => {
@@ -21,14 +18,16 @@ export const Cursor: React.FC<Props> = (props) => {
   };
 
   React.useEffect(() => {
+    const editorRoot = rootRef.current && getRoot(rootRef.current);
+    if (!editorRoot) return;
+    editorRoot.addEventListener("scroll", handleOnEditorScroll);
+    return () => editorRoot.removeEventListener("scroll", handleOnEditorScroll);
+  }, [rootRef, handleOnEditorScroll]);
+
+  React.useEffect(() => {
     if (!rootRef.current) return;
     const newState = cursorPropsToState(props, state, rootRef.current);
     if (newState != state) setState(newState);
-
-    const editorRoot = getRoot(rootRef.current);
-    if (!editorRoot) return;
-    editorRoot.removeEventListener("scroll", handleOnEditorScroll);
-    editorRoot.addEventListener("scroll", handleOnEditorScroll);
   }, [
     props.coordinate,
     props.textAreaValue,
