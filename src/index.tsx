@@ -13,5 +13,6 @@ export {
   defaultTextDecoration,
   defaultLinkNameRegex,
   defaultLinkStyle,
+  defaultLinkOverriddenStyleOnHover,
   defaultCodeStyle,
 } from "./TextLines/constants";

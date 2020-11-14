@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Editor } from "../../src";
+import { Editor, defaultLinkStyle, defaultLinkOverriddenStyleOnHover } from "../../src";
 
 // eslint-disable-next-line prettier/prettier
 const defaultMainText =
@@ -91,10 +91,18 @@ export const App: React.FC = () => {
         text={mainText}
         onChangeText={setMainText}
         bracketLinkProps={{
-          anchorProps: (linkName) => ({ href: `https://www.npmjs.com/package/${linkName}` }),
+          anchorProps: (linkName) => ({
+            href: `https://www.npmjs.com/package/${linkName}`,
+            style: defaultLinkStyle,
+            overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
+          }),
         }}
         hashTagProps={{
-          anchorProps: (hashTagName) => ({ href: `https://www.npmjs.com/package/${hashTagName}` }),
+          anchorProps: (hashTagName) => ({
+            href: `https://www.npmjs.com/package/${hashTagName}`,
+            style: defaultLinkStyle,
+            overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
+          }),
           suggestions: ["react-realtime-markup-editor"],
         }}
         taggedLinkPropsMap={{
@@ -102,14 +110,16 @@ export const App: React.FC = () => {
             linkNameRegex: /@[^[\]]+\/[^[\]]+/,
             anchorProps: (linkName) => ({
               href: `https://github.com/${linkName.substring(1)}`,
-              style: { color: "#121B31", textDecoration: "underline" },
+              style: { color: "#595f6E", borderBottom: "solid 1px" },
+              overriddenStyleOnHover: { color: "#08090B", fontWeight: 500 },
             }),
             suggestions: ["@kumachan-mis/react-realtime-markup-editor"],
           },
           npm: {
             anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,
-              style: { color: "#F75E8A", textDecoration: "underline" },
+              style: { color: "#F75E8A", borderBottom: "solid 1px" },
+              overriddenStyleOnHover: { color: "#E14978", fontWeight: 500 },
             }),
             suggestions: ["react-realtime-markup-editor"],
           },

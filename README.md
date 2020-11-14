@@ -212,7 +212,9 @@ settings of bracket links
 
 ```ts
 interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<"a">;
+  anchorProps?: (
+    linkName: string
+  ) => React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -221,8 +223,8 @@ interface BracketLinkProps {
 
 **Attributes**
 
-- anchorProps: given `linkName`, this function returns props of `<a>` tag  
-  default: `(linkName: string) => ({ style: defaultLinkStyle })`
+- anchorProps: given `linkName`, this function returns props of `<a>` tag and overridden style on hover  
+  default: `(linkName: string) => ({ style: defaultLinkStyle, overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover })`
 - suggestions: input suggestions of bracket links  
   default: `[]`
 - initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
@@ -235,15 +237,24 @@ interface BracketLinkProps {
 ```ts
 const defaultLinkStyle: React.CSSProperties = {
   color: "#5E8AF7",
-  textDecoration: "none",
   cursor: "pointer",
+};
+
+const defaultLinkOverriddenStyleOnHover: React.CSSProperties = {
+  color: "#425A9D",
 };
 ```
 
-you can import `defaultLinkStyle` by adding
+you can import `defaultLinkStyle` or `defaultLinkOverriddenStyleOnHover` by adding
 
 ```ts
 import { defaultLinkStyle } from "react-realtime-markup-editor";
+```
+
+or
+
+```ts
+import { defaultLinkOverriddenStyleOnHover } from "react-realtime-markup-editor";
 ```
 
 ### HashTagProps
@@ -252,7 +263,9 @@ settings of hash tags
 
 ```ts
 interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.ComponentProps<"a">;
+  anchorProps?: (
+    hashTagName: string
+  ) => React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -268,7 +281,9 @@ settings of tagged links
 ```ts
 interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.ComponentProps<"a">;
+  anchorProps?: (
+    linkName: string
+  ) => React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;
