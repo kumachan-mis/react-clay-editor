@@ -5,6 +5,7 @@ import {
   TextLinesConstants,
   defaultTextDecoration,
   defaultLinkStyle,
+  defaultLinkOverriddenStyleOnHover,
   defaultCodeStyle,
 } from "./constants";
 import { parseText, getDecorationStyle, getTagName, getHashTagName } from "./utils";
@@ -14,10 +15,22 @@ import "../style.css";
 export const TextLines: React.FC<Props> = ({
   text,
   textDecoration = defaultTextDecoration,
-  bracketLinkProps = { anchorProps: () => ({ style: defaultLinkStyle }) },
-  hashTagProps = { anchorProps: () => ({ style: defaultLinkStyle }) },
+  bracketLinkProps = {
+    anchorProps: () => ({
+      style: defaultLinkStyle,
+      overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
+    }),
+  },
+  hashTagProps = {
+    anchorProps: () => ({
+      style: defaultLinkStyle,
+      overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
+    }),
+  },
   taggedLinkPropsMap = {},
-  codeProps = { codeProps: () => ({ style: defaultCodeStyle }) },
+  codeProps = {
+    codeProps: () => ({ style: defaultCodeStyle }),
+  },
   formulaProps = {},
   cursorCoordinate,
 }) => {
@@ -130,9 +143,7 @@ const Node: React.FC<NodeProps> = ({
       ];
 
       return !disabled ? (
-        <code style={defaultCodeStyle} {...(codeElementProps?.(code) || {})}>
-          {inlineCodeCharSpans}
-        </code>
+        <code {...(codeElementProps?.(code) || {})}>{inlineCodeCharSpans}</code>
       ) : (
         <span>{inlineCodeCharSpans}</span>
       );
@@ -210,7 +221,7 @@ const Node: React.FC<NodeProps> = ({
       const [from, to] = node.range;
       const { anchorProps: anchorElementProps, tagHidden } = taggedLinkPropsMap[getTagName(tag)];
       return (
-        <a style={defaultLinkStyle} {...(anchorElementProps?.(linkName) || {})}>
+        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})}>
           {[...facingMeta].map((char: string, index: number) => (
             <Char
               key={from + index}
@@ -243,7 +254,7 @@ const Node: React.FC<NodeProps> = ({
               char={cursorOn ? char : ""}
             />
           ))}
-        </a>
+        </AnchorWithHoverStyle>
       );
     }
     case "bracketLink": {
@@ -277,9 +288,9 @@ const Node: React.FC<NodeProps> = ({
         )),
       ];
       return !disabled ? (
-        <a style={defaultLinkStyle} {...(anchorElementProps?.(linkName) || {})}>
+        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})}>
           {bracketLinkCharSpans}
-        </a>
+        </AnchorWithHoverStyle>
       ) : (
         <span>{bracketLinkCharSpans}</span>
       );
@@ -293,9 +304,9 @@ const Node: React.FC<NodeProps> = ({
         <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
       ));
       return !disabled ? (
-        <a style={defaultLinkStyle} {...(anchorElementProps?.(hashTagName) || {})}>
+        <AnchorWithHoverStyle {...(anchorElementProps?.(hashTagName) || {})}>
           {hashTagCharSpans}
-        </a>
+        </AnchorWithHoverStyle>
       ) : (
         <span>{hashTagCharSpans}</span>
       );
@@ -312,6 +323,36 @@ const Node: React.FC<NodeProps> = ({
       );
     }
   }
+};
+
+const AnchorWithHoverStyle: React.FC<
+  React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties }
+> = (props) => {
+  const {
+    overriddenStyleOnHover,
+    style,
+    onMouseEnter,
+    onMouseLeave,
+    children,
+    ...restAnchorProps
+  } = props;
+  const [hover, setHover] = React.useState(false);
+  return (
+    <a
+      {...restAnchorProps}
+      onMouseEnter={(event) => {
+        onMouseEnter?.(event);
+        setHover(true);
+      }}
+      onMouseLeave={(event) => {
+        onMouseLeave?.(event);
+        setHover(false);
+      }}
+      style={hover ? { ...style, ...overriddenStyleOnHover } : style}
+    >
+      {children}
+    </a>
+  );
 };
 
 const Char: React.FC<CharProps> = (props) => (
