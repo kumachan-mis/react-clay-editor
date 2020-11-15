@@ -7,6 +7,7 @@ import "../style.css";
 
 import { getRoot } from "../Editor/utils";
 
+// TODO: use function and hooks
 export class Cursor extends React.Component<Props, State> {
   private rootRef: React.RefObject<HTMLSpanElement>;
 
