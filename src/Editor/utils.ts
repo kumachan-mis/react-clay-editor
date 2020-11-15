@@ -413,7 +413,7 @@ function addEditActions(state: State, actions: EditAction[]): State {
   if (validActions.length == 0) return state;
 
   if (state.historyHead == -1) {
-    return { ...state, editActionHistory: validActions, historyHead: actions.length - 1 };
+    return { ...state, editActionHistory: validActions, historyHead: validActions.length - 1 };
   }
 
   const { editActionHistory, historyHead } = state;
