@@ -2,68 +2,73 @@ import * as React from "react";
 
 import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from "./types";
 import { CursorConstants, defaultSuggestionListDecoration } from "./constants";
-import { cursorPropsToState, handleOnEditorScroll as handleOnEditorScroll_ } from "./utils";
+import { cursorPropsToState, handleOnEditorScroll } from "./utils";
 import "../style.css";
 
 import { getRoot } from "../Editor/utils";
 
-export const Cursor: React.FC<Props> = (props) => {
-  const [state, setState] = React.useState<State>({ position: { top: 0, left: 0 }, cursorSize: 0 });
-  const rootRef = React.createRef<HTMLSpanElement>();
+export class Cursor extends React.Component<Props, State> {
+  private rootRef: React.RefObject<HTMLSpanElement>;
 
-  const handleOnEditorScroll = (): void => {
-    if (!rootRef.current) return;
-    const newState = handleOnEditorScroll_(props, state, rootRef.current);
-    if (newState != state) setState(newState);
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = { position: { top: 0, left: 0 }, cursorSize: 0 };
+    this.rootRef = React.createRef<HTMLSpanElement>();
+  }
 
-  React.useEffect(() => {
-    const editorRoot = rootRef.current && getRoot(rootRef.current);
+  componentDidMount(): void {
+    const editorRoot = this.rootRef.current && getRoot(this.rootRef.current);
     if (!editorRoot) return;
-    editorRoot.addEventListener("scroll", handleOnEditorScroll);
-    return () => editorRoot.removeEventListener("scroll", handleOnEditorScroll);
-  }, [rootRef, handleOnEditorScroll]);
+    editorRoot.addEventListener("scroll", this.handleOnEditorScroll);
+  }
 
-  React.useEffect(() => {
-    if (!rootRef.current) return;
-    const newState = cursorPropsToState(props, state, rootRef.current);
-    if (newState != state) setState(newState);
-  }, [
-    props.coordinate,
-    props.textAreaValue,
-    props.suggestionType,
-    props.suggestions,
-    props.suggestionIndex,
-    props.suggestionListDecoration,
-  ]);
+  componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (!this.rootRef.current || this.props == prevProps) return;
+    const newState = cursorPropsToState(this.props, this.state, this.rootRef.current);
+    if (newState != this.state) this.setState(newState);
+  }
 
-  return (
-    <span ref={rootRef}>
-      <CursorBar position={state.position} cursorSize={state.cursorSize} />
-      <HiddenTextArea
-        textAreaValue={props.textAreaValue}
-        position={state.position}
-        cursorSize={state.cursorSize}
-        onKeyDown={props.onKeyDown}
-        onTextChange={props.onTextChange}
-        onTextCut={props.onTextCut}
-        onTextCopy={props.onTextCopy}
-        onTextPaste={props.onTextPaste}
-        onTextCompositionStart={props.onTextCompositionStart}
-        onTextCompositionEnd={props.onTextCompositionEnd}
-      />
-      <SuggestionList
-        suggestionType={props.suggestionType}
-        suggestions={props.suggestions}
-        suggestionIndex={props.suggestionIndex}
-        suggestionListDecoration={props.suggestionListDecoration}
-        position={state.position}
-        cursorSize={state.cursorSize}
-        onSuggectionMouseDown={props.onSuggectionMouseDown}
-      />
-    </span>
-  );
-};
+  componentWillUnmount(): void {
+    const editorRoot = this.rootRef.current && getRoot(this.rootRef.current);
+    if (!editorRoot) return;
+    editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
+  }
+
+  render(): React.ReactNode {
+    return (
+      <span ref={this.rootRef}>
+        <CursorBar position={this.state.position} cursorSize={this.state.cursorSize} />
+        <HiddenTextArea
+          textAreaValue={this.props.textAreaValue}
+          position={this.state.position}
+          cursorSize={this.state.cursorSize}
+          onKeyDown={this.props.onKeyDown}
+          onTextChange={this.props.onTextChange}
+          onTextCut={this.props.onTextCut}
+          onTextCopy={this.props.onTextCopy}
+          onTextPaste={this.props.onTextPaste}
+          onTextCompositionStart={this.props.onTextCompositionStart}
+          onTextCompositionEnd={this.props.onTextCompositionEnd}
+        />
+        <SuggestionList
+          suggestionType={this.props.suggestionType}
+          suggestions={this.props.suggestions}
+          suggestionIndex={this.props.suggestionIndex}
+          suggestionListDecoration={this.props.suggestionListDecoration}
+          position={this.state.position}
+          cursorSize={this.state.cursorSize}
+          onSuggectionMouseDown={this.props.onSuggectionMouseDown}
+        />
+      </span>
+    );
+  }
+
+  private handleOnEditorScroll = (): void => {
+    if (!this.rootRef.current) return;
+    const newState = handleOnEditorScroll(this.props, this.state, this.rootRef.current);
+    if (newState != this.state) this.setState(newState);
+  };
+}
 
 const CursorBar: React.FC<CursorBarProps> = (props) => {
   const { position, cursorSize } = props;
