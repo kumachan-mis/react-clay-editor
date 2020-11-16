@@ -23,6 +23,7 @@ import { Selection } from "../Selection";
 import { TextLines } from "../TextLines";
 import { SelectionWithMouse } from "../Selection/types";
 
+// TODO: use function and hooks
 export class Editor extends React.Component<Props, State> {
   private rootRef: React.RefObject<HTMLDivElement>;
 
