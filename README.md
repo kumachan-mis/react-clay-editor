@@ -237,6 +237,7 @@ interface BracketLinkProps {
 ```ts
 const defaultLinkStyle: React.CSSProperties = {
   color: "#5E8AF7",
+  cursor: "text",
 };
 
 const defaultLinkOverriddenStyleOnHover: React.CSSProperties = {

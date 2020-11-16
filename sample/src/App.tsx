@@ -110,16 +110,24 @@ export const App: React.FC = () => {
             linkNameRegex: /@[^[\]]+\/[^[\]]+/,
             anchorProps: (linkName) => ({
               href: `https://github.com/${linkName.substring(1)}`,
-              style: { color: "#595f6E", borderBottom: "solid 1px" },
-              overriddenStyleOnHover: { color: "#08090B", fontWeight: 500 },
+              style: { ...defaultLinkStyle, color: "#595f6E", borderBottom: "solid 1px" },
+              overriddenStyleOnHover: {
+                ...defaultLinkOverriddenStyleOnHover,
+                color: "#08090B",
+                fontWeight: 500,
+              },
             }),
             suggestions: ["@kumachan-mis/react-realtime-markup-editor"],
           },
           npm: {
             anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,
-              style: { color: "#F75E8A", borderBottom: "solid 1px" },
-              overriddenStyleOnHover: { color: "#E14978", fontWeight: 500 },
+              style: { ...defaultLinkStyle, color: "#F75E8A", borderBottom: "solid 1px" },
+              overriddenStyleOnHover: {
+                ...defaultLinkOverriddenStyleOnHover,
+                color: "#E14978",
+                fontWeight: 500,
+              },
             }),
             suggestions: ["react-realtime-markup-editor"],
           },

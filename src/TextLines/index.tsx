@@ -329,9 +329,9 @@ const AnchorWithHoverStyle: React.FC<
   React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties; cursorOn: boolean }
 > = (props) => {
   const {
-    href,
     onMouseEnter,
     onMouseLeave,
+    onClick,
     style,
     overriddenStyleOnHover,
     cursorOn,
@@ -341,7 +341,6 @@ const AnchorWithHoverStyle: React.FC<
   const [hover, setHover] = React.useState(false);
   return (
     <a
-      href={!cursorOn ? href : undefined}
       onMouseEnter={(event) => {
         onMouseEnter?.(event);
         setHover(!cursorOn);
@@ -349,6 +348,10 @@ const AnchorWithHoverStyle: React.FC<
       onMouseLeave={(event) => {
         onMouseLeave?.(event);
         setHover(false);
+      }}
+      onClick={(event) => {
+        onClick?.(event);
+        if (!hover) event.preventDefault();
       }}
       style={hover ? { ...style, ...overriddenStyleOnHover } : style}
       {...restAnchorProps}
