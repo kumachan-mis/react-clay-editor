@@ -53,7 +53,9 @@ export function handleOnMouseMove(
     return [text, { ...state, selectionWithMouse: SelectionWithMouse.Active }];
   }
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
-  if (coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state];
+  if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) {
+    return [text, state];
+  }
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
@@ -78,7 +80,7 @@ export function handleOnMouseUp(
   }
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
-  const free = { ...cursorCoordinate };
+  const free = cursorCoordinate ? cursorCoordinate : { ...state.cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   return [
     text,
@@ -430,7 +432,7 @@ function positionToCursorCoordinate(
   state: State,
   position: [number, number],
   element: HTMLElement
-): CursorCoordinate {
+): CursorCoordinate | undefined {
   type Groups = Record<string, string>;
 
   const [x, y] = position;
@@ -446,6 +448,11 @@ function positionToCursorCoordinate(
   const lineClassNameRegex = TextLinesConstants.line.classNameRegex;
   const lineElement = elements.find(
     (lineEl) => lineClassNameRegex.test(lineEl.className) && element.contains(lineEl)
+  );
+
+  const marginBottomClassNameRegex = TextLinesConstants.marginBottom.classNameRegex;
+  const marginBottomElement = elements.find(
+    (marginEl) => marginBottomClassNameRegex.test(marginEl.className) && element.contains(marginEl)
   );
 
   const lines = text.split("\n");
@@ -475,10 +482,10 @@ function positionToCursorCoordinate(
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups["lineIndex"], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
-  } else if (state.selectionWithMouse == SelectionWithMouse.Active && state.cursorCoordinate) {
-    return { ...state.cursorCoordinate };
-  } else {
+  } else if (marginBottomElement) {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
+  } else {
+    return state.cursorCoordinate;
   }
 }
 
