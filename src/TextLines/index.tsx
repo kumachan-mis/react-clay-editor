@@ -221,7 +221,7 @@ const Node: React.FC<NodeProps> = ({
       const [from, to] = node.range;
       const { anchorProps: anchorElementProps, tagHidden } = taggedLinkPropsMap[getTagName(tag)];
       return (
-        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})}>
+        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})} cursorOn={cursorOn}>
           {[...facingMeta].map((char: string, index: number) => (
             <Char
               key={from + index}
@@ -288,7 +288,7 @@ const Node: React.FC<NodeProps> = ({
         )),
       ];
       return !disabled ? (
-        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})}>
+        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})} cursorOn={cursorOn}>
           {bracketLinkCharSpans}
         </AnchorWithHoverStyle>
       ) : (
@@ -304,7 +304,7 @@ const Node: React.FC<NodeProps> = ({
         <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
       ));
       return !disabled ? (
-        <AnchorWithHoverStyle {...(anchorElementProps?.(hashTagName) || {})}>
+        <AnchorWithHoverStyle {...(anchorElementProps?.(hashTagName) || {})} cursorOn={cursorOn}>
           {hashTagCharSpans}
         </AnchorWithHoverStyle>
       ) : (
@@ -326,29 +326,35 @@ const Node: React.FC<NodeProps> = ({
 };
 
 const AnchorWithHoverStyle: React.FC<
-  React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties }
+  React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties; cursorOn: boolean }
 > = (props) => {
   const {
-    overriddenStyleOnHover,
-    style,
     onMouseEnter,
     onMouseLeave,
+    onClick,
+    style,
+    overriddenStyleOnHover,
+    cursorOn,
     children,
     ...restAnchorProps
   } = props;
   const [hover, setHover] = React.useState(false);
   return (
     <a
-      {...restAnchorProps}
       onMouseEnter={(event) => {
         onMouseEnter?.(event);
-        setHover(true);
+        setHover(!cursorOn);
       }}
       onMouseLeave={(event) => {
         onMouseLeave?.(event);
         setHover(false);
       }}
+      onClick={(event) => {
+        onClick?.(event);
+        if (!hover) event.preventDefault();
+      }}
       style={hover ? { ...style, ...overriddenStyleOnHover } : style}
+      {...restAnchorProps}
     >
       {children}
     </a>

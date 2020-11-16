@@ -8,11 +8,12 @@ export const defaultLinkNameRegex = /[^[\]]+/;
 
 export const defaultLinkStyle: React.CSSProperties = {
   color: "#5E8AF7",
-  cursor: "pointer",
+  cursor: "text",
 };
 
 export const defaultLinkOverriddenStyleOnHover: React.CSSProperties = {
   color: "#425A9D",
+  cursor: "pointer",
 };
 
 export const defaultCodeStyle: React.CSSProperties = {
