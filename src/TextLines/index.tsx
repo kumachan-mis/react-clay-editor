@@ -50,6 +50,7 @@ export const TextLines: React.FC<Props> = ({
           cursorOn={cursorCoordinate?.lineIndex == node.lineIndex}
         />
       ))}
+      <MarginBottom />
     </div>
   );
 };
@@ -350,8 +351,8 @@ const AnchorWithHoverStyle: React.FC<
         setHover(false);
       }}
       onClick={(event) => {
-        onClick?.(event);
-        if (!hover) event.preventDefault();
+        if (hover) onClick?.(event);
+        else event.preventDefault();
       }}
       style={hover ? { ...style, ...overriddenStyleOnHover } : style}
       {...restAnchorProps}
@@ -366,3 +367,5 @@ const Char: React.FC<CharProps> = (props) => (
     <span>{props.char}</span>
   </span>
 );
+
+const MarginBottom: React.FC = () => <div className={TextLinesConstants.marginBottom.className} />;

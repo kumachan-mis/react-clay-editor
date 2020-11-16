@@ -69,14 +69,14 @@ More features are comming soon...`;
 
 const mainStyle: React.CSSProperties = {
   width: "800px",
-  height: "500px",
+  height: "calc(72vh - 40px)",
   margin: "20px",
   border: "solid 1px",
   padding: "10px",
 };
 const subStyle: React.CSSProperties = {
   width: "800px",
-  height: "150px",
+  height: "calc(24vh - 40px)",
   margin: "20px",
   border: "solid 1px",
   padding: "10px",

@@ -67,6 +67,10 @@ export const TextLinesConstants = {
       `React-Realtime-Markup-Editor-char L${lineIndex}C${charIndex}`,
     classNameRegex: /React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<charIndex>\d+)/,
   },
+  marginBottom: {
+    className: `React-Realtime-Markup-Editor-margin-bottom`,
+    classNameRegex: /React-Realtime-Markup-Editor-margin-bottom/,
+  },
   regexes: {
     itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ ].*)?)$/,
     inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
