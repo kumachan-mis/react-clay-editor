@@ -104,16 +104,6 @@ export function handleOnKeyDown(
   event.preventDefault();
   event.nativeEvent.stopImmediatePropagation();
 
-  const arrowState = (cursorCoordinate: CursorCoordinate): State => {
-    if (!state.cursorCoordinate) return state;
-    if (!event.shiftKey) return { ...state, cursorCoordinate, textSelection: undefined };
-
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-    return { ...state, cursorCoordinate, textSelection };
-  };
-
   switch (event.key) {
     case "Tab": {
       if (state.suggestionType != SuggestionType.None) {
@@ -168,7 +158,13 @@ export function handleOnKeyDown(
         lineIndex: state.cursorCoordinate.lineIndex - 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, prevLine.length),
       };
-      return [text, arrowState(cursorCoordinate)];
+      const textSelection = (() => {
+        if (!event.shiftKey) return undefined;
+        const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
+        const free = { ...cursorCoordinate };
+        return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+      })();
+      return [text, { ...state, cursorCoordinate, textSelection }];
     }
     case "ArrowDown": {
       if (state.suggestions.length > 0) {
@@ -182,15 +178,33 @@ export function handleOnKeyDown(
         lineIndex: state.cursorCoordinate.lineIndex + 1,
         charIndex: Math.min(state.cursorCoordinate.charIndex, nextLine.length),
       };
-      return [text, arrowState(cursorCoordinate)];
+      const textSelection = (() => {
+        if (!event.shiftKey) return undefined;
+        const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
+        const free = { ...cursorCoordinate };
+        return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+      })();
+      return [text, { ...state, cursorCoordinate, textSelection }];
     }
     case "ArrowLeft": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-      return showSuggestion(text, props, arrowState(cursorCoordinate));
+      const textSelection = (() => {
+        if (!event.shiftKey) return undefined;
+        const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
+        const free = { ...cursorCoordinate };
+        return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+      })();
+      return showSuggestion(text, props, { ...state, cursorCoordinate, textSelection });
     }
     case "ArrowRight": {
       const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
-      return showSuggestion(text, props, arrowState(cursorCoordinate));
+      const textSelection = (() => {
+        if (!event.shiftKey) return undefined;
+        const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
+        const free = { ...cursorCoordinate };
+        return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+      })();
+      return showSuggestion(text, props, { ...state, cursorCoordinate, textSelection });
     }
     default:
       return handleOnShortcut(text, state, command);
@@ -240,6 +254,7 @@ export function handleOnTextChange(
 export function handleOnTextCompositionStart(
   text: string,
   state: State,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.CompositionEvent<HTMLTextAreaElement>
 ): [string, State] {
   if (!state.cursorCoordinate || state.isComposing) return [text, state];
