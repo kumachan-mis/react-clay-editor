@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Props, State } from "./types";
-import { EditorConstants } from "./constants";
+import { Props, State } from './types';
+import { EditorConstants } from './constants';
 import {
   handleOnMouseDown,
   handleOnMouseMove,
@@ -15,13 +15,13 @@ import {
   handleOnTextCompositionStart,
   handleOnTextCompositionEnd,
   handleOnSuggectionMouseDown,
-} from "./utils";
-import "../style.css";
+} from './utils';
+import '../style.css';
 
-import { Cursor } from "../Cursor";
-import { Selection } from "../Selection";
-import { TextLines } from "../TextLines";
-import { SelectionWithMouse } from "../Selection/types";
+import { Cursor } from '../Cursor';
+import { Selection } from '../Selection';
+import { TextLines } from '../TextLines';
+import { SelectionWithMouse } from '../Selection/types';
 
 // TODO: use function and hooks
 export class Editor extends React.Component<Props, State> {
@@ -31,7 +31,7 @@ export class Editor extends React.Component<Props, State> {
     super(props);
     this.state = {
       cursorCoordinate: undefined,
-      textAreaValue: "",
+      textAreaValue: '',
       isComposing: false,
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Inactive,
@@ -43,11 +43,11 @@ export class Editor extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    document.addEventListener("mousedown", this.handleOnEditorBlur);
+    document.addEventListener('mousedown', this.handleOnEditorBlur);
   }
 
   componentWillUnmount(): void {
-    document.removeEventListener("mousedown", this.handleOnEditorBlur);
+    document.removeEventListener('mousedown', this.handleOnEditorBlur);
   }
 
   render(): React.ReactNode {
@@ -172,7 +172,7 @@ export class Editor extends React.Component<Props, State> {
       this.setState({
         ...this.state,
         cursorCoordinate: undefined,
-        textAreaValue: "",
+        textAreaValue: '',
         isComposing: false,
         textSelection: undefined,
         selectionWithMouse: SelectionWithMouse.Inactive,

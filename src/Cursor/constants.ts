@@ -1,4 +1,4 @@
-import { Position, SuggestionListDecoration } from "./types";
+import { Position, SuggestionListDecoration } from './types';
 
 export const defaultSuggestionListDecoration: SuggestionListDecoration = {
   width: 250,
@@ -8,20 +8,20 @@ export const defaultSuggestionListDecoration: SuggestionListDecoration = {
 
 export const CursorConstants = {
   rootDiv: {
-    className: "React-Realtime-Markup-Editor-cursor",
+    className: 'React-Realtime-Markup-Editor-cursor',
     style: (position: Position, cursorSize: number): React.CSSProperties => ({
       top: `${position.top}px`,
       left: `${position.left}px`,
       height: `${cursorSize}px`,
     }),
   },
-  svg: { width: "2px" },
-  rect: { x: 0, y: 0, width: "1px", height: "100%" },
+  svg: { width: '2px' },
+  rect: { x: 0, y: 0, width: '1px', height: '100%' },
   textArea: {
-    className: "React-Realtime-Markup-Editor-cursor",
-    wrap: "off",
+    className: 'React-Realtime-Markup-Editor-cursor',
+    wrap: 'off',
     spellCheck: false,
-    autoCapitalize: "none",
+    autoCapitalize: 'none',
     style: (position: Position, cursorSize: number, length: number): React.CSSProperties => ({
       top: `${position.top}px`,
       left: `${position.left}px`,
@@ -33,7 +33,7 @@ export const CursorConstants = {
   },
   suggestion: {
     list: {
-      className: "React-Realtime-Markup-Editor-cursor-suggestion-list",
+      className: 'React-Realtime-Markup-Editor-cursor-suggestion-list',
       style: (
         position: Position,
         cursorSize: number,
@@ -45,7 +45,7 @@ export const CursorConstants = {
         left: `${position.left}px`,
         width: `${width}px`,
         maxHeight: `${maxHeight}px`,
-        display: hidden ? "none" : undefined,
+        display: hidden ? 'none' : undefined,
       }),
     },
     item: {

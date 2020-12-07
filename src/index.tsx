@@ -1,4 +1,4 @@
-export { Editor } from "./Editor";
+export { Editor } from './Editor';
 export {
   Props,
   Decoration,
@@ -7,12 +7,12 @@ export {
   TaggedLinkProps,
   CodeProps,
   FormulaProps,
-} from "./Editor/types";
-export { defaultSuggestionListDecoration } from "./Cursor/constants";
+} from './Editor/types';
+export { defaultSuggestionListDecoration } from './Cursor/constants';
 export {
   defaultTextDecoration,
   defaultLinkNameRegex,
   defaultLinkStyle,
   defaultLinkOverriddenStyleOnHover,
   defaultCodeStyle,
-} from "./TextLines/constants";
+} from './TextLines/constants';

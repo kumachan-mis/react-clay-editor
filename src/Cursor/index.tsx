@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from "./types";
-import { CursorConstants, defaultSuggestionListDecoration } from "./constants";
-import { cursorPropsToState, handleOnEditorScroll } from "./utils";
-import "../style.css";
+import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
+import { CursorConstants, defaultSuggestionListDecoration } from './constants';
+import { cursorPropsToState, handleOnEditorScroll } from './utils';
+import '../style.css';
 
-import { getRoot } from "../Editor/utils";
+import { getRoot } from '../Editor/utils';
 
 // TODO: use function and hooks
 export class Cursor extends React.Component<Props, State> {
@@ -20,7 +20,7 @@ export class Cursor extends React.Component<Props, State> {
   componentDidMount(): void {
     const editorRoot = this.rootRef.current && getRoot(this.rootRef.current);
     if (!editorRoot) return;
-    editorRoot.addEventListener("scroll", this.handleOnEditorScroll);
+    editorRoot.addEventListener('scroll', this.handleOnEditorScroll);
   }
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
@@ -32,7 +32,7 @@ export class Cursor extends React.Component<Props, State> {
   componentWillUnmount(): void {
     const editorRoot = this.rootRef.current && getRoot(this.rootRef.current);
     if (!editorRoot) return;
-    editorRoot.removeEventListener("scroll", this.handleOnEditorScroll);
+    editorRoot.removeEventListener('scroll', this.handleOnEditorScroll);
   }
 
   render(): React.ReactNode {

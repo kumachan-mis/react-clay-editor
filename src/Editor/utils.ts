@@ -1,12 +1,12 @@
-import { Props, State, EditAction, ShortcutCommand } from "./types";
-import { EditorConstants } from "./constants";
+import { Props, State, EditAction, ShortcutCommand } from './types';
+import { EditorConstants } from './constants';
 
-import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from "../Cursor/utils";
-import { selectionToRange, getSelectedText } from "../Selection/utils";
-import { CursorCoordinate, SuggestionType } from "../Cursor/types";
-import { SelectionWithMouse } from "../Selection/types";
-import { TextLinesConstants } from "../TextLines/constants";
-import { classNameToSelector, isMacOS } from "../common";
+import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../Cursor/utils';
+import { selectionToRange, getSelectedText } from '../Selection/utils';
+import { CursorCoordinate, SuggestionType } from '../Cursor/types';
+import { SelectionWithMouse } from '../Selection/types';
+import { TextLinesConstants } from '../TextLines/constants';
+import { classNameToSelector, isMacOS } from '../common';
 
 export function getRoot(element: HTMLElement): HTMLElement | null {
   return element.closest(`div${classNameToSelector(EditorConstants.root.className)}`);
@@ -105,48 +105,48 @@ export function handleOnKeyDown(
   event.nativeEvent.stopImmediatePropagation();
 
   switch (event.key) {
-    case "Tab": {
+    case 'Tab': {
       if (state.suggestionType != SuggestionType.None) {
         return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
       }
-      return insertText(text, state, "\t");
+      return insertText(text, state, '\t');
     }
-    case "Enter": {
+    case 'Enter': {
       if (state.suggestionType != SuggestionType.None) {
         return insertSuggestion(text, state, state.suggestions[state.suggestionIndex]);
       }
-      const [newText, newState] = insertText(text, state, "\n");
+      const [newText, newState] = insertText(text, state, '\n');
       if (!newState.cursorCoordinate) return [newText, newState];
 
-      const newLPrevLine = newText.split("\n")[newState.cursorCoordinate.lineIndex - 1];
+      const newLPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
       const { indent } = newLPrevLine.match(TextLinesConstants.regexes.itemization)
         ?.groups as Record<string, string>;
       return insertText(newText, newState, indent);
     }
-    case "Backspace": {
-      if (state.textSelection) return insertText(text, state, "");
+    case 'Backspace': {
+      if (state.textSelection) return insertText(text, state, '');
 
       const [newText, newState] = (() => {
         const free = moveCursor(text, state.cursorCoordinate, -1);
         const fixed = moveCursor(text, state.cursorCoordinate, 1);
         const textMayDelete = getSelectedText({ fixed, free }, text);
         switch (textMayDelete) {
-          case "[]":
-          case "{}":
-          case "()": {
+          case '[]':
+          case '{}':
+          case '()': {
             const textSelection = { fixed, free };
-            return insertText(text, { ...state, textSelection }, "");
+            return insertText(text, { ...state, textSelection }, '');
           }
           default: {
             const textSelection = { fixed: state.cursorCoordinate, free };
-            return insertText(text, { ...state, textSelection }, "");
+            return insertText(text, { ...state, textSelection }, '');
           }
         }
       })();
 
       return showSuggestion(newText, props, newState);
     }
-    case "ArrowUp": {
+    case 'ArrowUp': {
       if (state.suggestions.length > 0) {
         const suggestionIndex = Math.max(state.suggestionIndex - 1, 0);
         return [text, { ...state, suggestionIndex: suggestionIndex }];
@@ -156,7 +156,7 @@ export function handleOnKeyDown(
       }
       return handleOnMoveUp(text, state, event);
     }
-    case "ArrowDown": {
+    case 'ArrowDown': {
       if (state.suggestions.length > 0) {
         const suggestionIndex = Math.min(state.suggestionIndex + 1, state.suggestions.length - 1);
         return [text, { ...state, suggestionIndex: suggestionIndex }];
@@ -166,21 +166,21 @@ export function handleOnKeyDown(
       }
       return handleOnMoveDown(text, state, event);
     }
-    case "ArrowLeft": {
+    case 'ArrowLeft': {
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
         return handleOnMoveLineTop(text, state, event);
       }
       const [newText, newState] = handleOnMoveLeft(text, state, event);
       return showSuggestion(newText, props, newState);
     }
-    case "ArrowRight": {
+    case 'ArrowRight': {
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
         return handleOnMoveLineBottom(text, state, event);
       }
       const [newText, newState] = handleOnMoveRight(text, state, event);
       return showSuggestion(newText, props, newState);
     }
-    case "Home": {
+    case 'Home': {
       if (
         (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
         !event.altKey
@@ -189,7 +189,7 @@ export function handleOnKeyDown(
       }
       return handleOnMoveLineTop(text, state, event);
     }
-    case "End": {
+    case 'End': {
       if (
         (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
         !event.altKey
@@ -218,23 +218,23 @@ export function handleOnTextChange(
 
   const [newText, newState] = (() => {
     switch (textAreaValue) {
-      case "[": {
+      case '[': {
         const textIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
         return textIndex == text.length || text[textIndex].match(/^\s$/)
-          ? insertText(text, state, "[]", 1)
-          : insertText(text, state, "[");
+          ? insertText(text, state, '[]', 1)
+          : insertText(text, state, '[');
       }
-      case "{": {
+      case '{': {
         const textIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
         return textIndex == text.length || text[textIndex].match(/^\s$/)
-          ? insertText(text, state, "{}", 1)
-          : insertText(text, state, "{");
+          ? insertText(text, state, '{}', 1)
+          : insertText(text, state, '{');
       }
-      case "(": {
+      case '(': {
         const textIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
         return textIndex == text.length || text[textIndex].match(/^\s$/)
-          ? insertText(text, state, "()", 1)
-          : insertText(text, state, "(");
+          ? insertText(text, state, '()', 1)
+          : insertText(text, state, '(');
       }
       default:
         return insertText(text, state, textAreaValue);
@@ -260,7 +260,7 @@ export function handleOnTextCompositionEnd(
 ): [string, State] {
   if (!state.cursorCoordinate || !state.isComposing) return [text, state];
   const [newText, newState] = insertText(text, state, event.data);
-  return [newText, { ...newState, textAreaValue: "", isComposing: false }];
+  return [newText, { ...newState, textAreaValue: '', isComposing: false }];
 }
 
 export function handleOnTextCut(
@@ -271,8 +271,8 @@ export function handleOnTextCut(
   if (!state.cursorCoordinate || !state.textSelection) return [text, state];
   event.preventDefault();
   const selectedText = getSelectedText(state.textSelection, text);
-  event.clipboardData.setData("text/plain", selectedText);
-  return insertText(text, state, "");
+  event.clipboardData.setData('text/plain', selectedText);
+  return insertText(text, state, '');
 }
 
 export function handleOnTextCopy(
@@ -283,7 +283,7 @@ export function handleOnTextCopy(
   if (!state.cursorCoordinate || !state.textSelection) return [text, state];
   event.preventDefault();
   const selectedText = getSelectedText(state.textSelection, text);
-  event.clipboardData.setData("text/plain", selectedText);
+  event.clipboardData.setData('text/plain', selectedText);
   return [text, state];
 }
 
@@ -294,7 +294,7 @@ export function handleOnTextPaste(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
   event.preventDefault();
-  const textToPaste = event.clipboardData.getData("text");
+  const textToPaste = event.clipboardData.getData('text');
   return insertText(text, state, textToPaste);
 }
 
@@ -325,7 +325,7 @@ function insertText(
     const newText = text.substring(0, insertIndex) + insertedText + text.substring(insertIndex);
     const cursorCoordinate = moveCursor(newText, state.cursorCoordinate, cursourMoveAmount);
     const newState = addEditActions(state, [
-      { actionType: "insert", coordinate: state.cursorCoordinate, text: insertedText },
+      { actionType: 'insert', coordinate: state.cursorCoordinate, text: insertedText },
     ]);
     return [newText, { ...newState, cursorCoordinate, textSelection: undefined }];
   }
@@ -337,8 +337,8 @@ function insertText(
   const newText = text.substring(0, startIndex) + insertedText + text.substring(endIndex);
   const cursorCoordinate = moveCursor(newText, start, cursourMoveAmount);
   const newState = addEditActions(state, [
-    { actionType: "delete", coordinate: start, text: deletedText },
-    { actionType: "insert", coordinate: start, text: insertedText },
+    { actionType: 'delete', coordinate: start, text: deletedText },
+    { actionType: 'insert', coordinate: start, text: insertedText },
   ]);
   return [newText, { ...newState, cursorCoordinate, textSelection: undefined }];
 }
@@ -349,9 +349,9 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
   }
 
   const { lineIndex, charIndex } = state.cursorCoordinate;
-  const currentLine = text.split("\n")[lineIndex];
+  const currentLine = text.split('\n')[lineIndex];
   switch (currentLine[charIndex - 1]) {
-    case "[": {
+    case '[': {
       const suggestions = props.bracketLinkProps?.suggestions;
       const suggestionIndex = props.bracketLinkProps?.initialSuggestionIndex || 0;
       const suggestionState =
@@ -360,7 +360,7 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
           : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
     }
-    case "#": {
+    case '#': {
       const suggestions = props.hashTagProps?.suggestions;
       const suggestionIndex = props.hashTagProps?.initialSuggestionIndex || 0;
       const suggestionState =
@@ -369,7 +369,7 @@ function showSuggestion(text: string, props: Props, state: State): [string, Stat
           : EditorConstants.defaultSuggestionState;
       return [text, { ...state, ...suggestionState }];
     }
-    case ":": {
+    case ':': {
       if (!props.taggedLinkPropsMap) {
         return [text, { ...state, ...EditorConstants.defaultSuggestionState }];
       }
@@ -418,7 +418,7 @@ function insertSuggestion(text: string, state: State, suggestion: string): [stri
 }
 
 function addEditActions(state: State, actions: EditAction[]): State {
-  const validActions = actions.filter((action) => action.text != "");
+  const validActions = actions.filter((action) => action.text != '');
   if (validActions.length == 0) return state;
 
   if (state.historyHead == -1) {
@@ -462,11 +462,11 @@ function positionToCursorCoordinate(
     (marginEl) => marginBottomClassNameRegex.test(marginEl.className) && element.contains(marginEl)
   );
 
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   if (charElement) {
     const groups = charElement.className.match(charClassNameRegex)?.groups as Groups;
-    const lineIndex = Number.parseInt(groups["lineIndex"], 10);
-    const charIndex = Number.parseInt(groups["charIndex"], 10);
+    const lineIndex = Number.parseInt(groups['lineIndex'], 10);
+    const charIndex = Number.parseInt(groups['charIndex'], 10);
     if (charIndex == lines[lineIndex].length) return { lineIndex, charIndex };
     const charRect = charElement.getBoundingClientRect();
     if (x <= charRect.left + charRect.width / 2) {
@@ -476,9 +476,9 @@ function positionToCursorCoordinate(
     }
   } else if (charGroupElement) {
     const groups = charGroupElement.className.match(charGroupClassNameRegex)?.groups as Groups;
-    const lineIndex = Number.parseInt(groups["lineIndex"], 10);
-    const fromCharIndex = Number.parseInt(groups["from"], 10);
-    const toCharIndex = Number.parseInt(groups["to"], 10);
+    const lineIndex = Number.parseInt(groups['lineIndex'], 10);
+    const fromCharIndex = Number.parseInt(groups['from'], 10);
+    const toCharIndex = Number.parseInt(groups['to'], 10);
     const charGroupRect = charGroupElement.getBoundingClientRect();
     if (x <= charGroupRect.left + charGroupRect.width / 2) {
       return { lineIndex, charIndex: fromCharIndex };
@@ -487,7 +487,7 @@ function positionToCursorCoordinate(
     }
   } else if (lineElement) {
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
-    const lineIndex = Number.parseInt(groups["lineIndex"], 10);
+    const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
   } else if (marginBottomElement) {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
@@ -499,26 +499,26 @@ function positionToCursorCoordinate(
 function shortcutCommand(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): ShortcutCommand | undefined {
-  if (selectAllTriggered(event)) return "selectAll";
-  if (undoTriggered(event)) return "undo";
-  if (redoTriggered(event)) return "redo";
-  if (moveUpTriggered(event)) return "moveUp";
-  if (moveDownTriggered(event)) return "moveDown";
-  if (moveLeftTriggered(event)) return "moveLeft";
-  if (moveRightTriggered(event)) return "moveRight";
-  if (moveWordTopTriggered(event)) return "moveWordTop";
-  if (moveWordBottomTriggered(event)) return "moveWordBottom";
-  if (moveLineTopTriggered(event)) return "moveLineTop";
-  if (moveLineBottomTriggered(event)) return "moveLineBottom";
-  if (moveTextTopTriggered(event)) return "moveTextTop";
-  if (moveTextBottomTriggered(event)) return "moveTextBottom";
+  if (selectAllTriggered(event)) return 'selectAll';
+  if (undoTriggered(event)) return 'undo';
+  if (redoTriggered(event)) return 'redo';
+  if (moveUpTriggered(event)) return 'moveUp';
+  if (moveDownTriggered(event)) return 'moveDown';
+  if (moveLeftTriggered(event)) return 'moveLeft';
+  if (moveRightTriggered(event)) return 'moveRight';
+  if (moveWordTopTriggered(event)) return 'moveWordTop';
+  if (moveWordBottomTriggered(event)) return 'moveWordBottom';
+  if (moveLineTopTriggered(event)) return 'moveLineTop';
+  if (moveLineBottomTriggered(event)) return 'moveLineBottom';
+  if (moveTextTopTriggered(event)) return 'moveTextTop';
+  if (moveTextBottomTriggered(event)) return 'moveTextBottom';
   return undefined;
 }
 
 function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
     (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-    event.key == "a" &&
+    event.key == 'a' &&
     !event.altKey &&
     !event.shiftKey
   );
@@ -527,7 +527,7 @@ function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): bo
 function undoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
     (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-    event.key == "z" &&
+    event.key == 'z' &&
     !event.altKey &&
     !event.shiftKey
   );
@@ -536,25 +536,25 @@ function undoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean
 function redoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
     (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-    ((event.shiftKey && event.key == "z") || (!event.shiftKey && event.key == "y")) &&
+    ((event.shiftKey && event.key == 'z') || (!event.shiftKey && event.key == 'y')) &&
     !event.altKey
   );
 }
 
 function moveUpTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == "p" || event.key == "P") && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key == 'p' || event.key == 'P') && !event.metaKey && !event.altKey;
 }
 
 function moveDownTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == "n" || event.key == "N") && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key == 'n' || event.key == 'N') && !event.metaKey && !event.altKey;
 }
 
 function moveLeftTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == "b" || event.key == "B") && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key == 'b' || event.key == 'B') && !event.metaKey && !event.altKey;
 }
 
 function moveRightTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == "f" || event.key == "F") && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key == 'f' || event.key == 'F') && !event.metaKey && !event.altKey;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -573,7 +573,7 @@ function moveLineTopTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): 
   return (
     isMacOS() &&
     event.ctrlKey &&
-    (event.key == "a" || event.key == "A") &&
+    (event.key == 'a' || event.key == 'A') &&
     !event.metaKey &&
     !event.altKey
   );
@@ -583,7 +583,7 @@ function moveLineBottomTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>
   return (
     isMacOS() &&
     event.ctrlKey &&
-    (event.key == "e" || event.key == "E") &&
+    (event.key == 'e' || event.key == 'E') &&
     !event.metaKey &&
     !event.altKey
   );
@@ -606,31 +606,31 @@ function handleOnShortcut(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   switch (command) {
-    case "selectAll":
+    case 'selectAll':
       return handleOnSelectAll(text, state, event);
-    case "undo":
+    case 'undo':
       return handleOnUndo(text, state, event);
-    case "redo":
+    case 'redo':
       return handleOnRedo(text, state, event);
-    case "moveUp":
+    case 'moveUp':
       return handleOnMoveUp(text, state, event);
-    case "moveDown":
+    case 'moveDown':
       return handleOnMoveDown(text, state, event);
-    case "moveLeft":
+    case 'moveLeft':
       return handleOnMoveLeft(text, state, event);
-    case "moveRight":
+    case 'moveRight':
       return handleOnMoveRight(text, state, event);
-    case "moveWordTop":
+    case 'moveWordTop':
       return handleOnMoveWordTop(text, state, event);
-    case "moveWordBottom":
+    case 'moveWordBottom':
       return handleOnMoveWordBottom(text, state, event);
-    case "moveLineTop":
+    case 'moveLineTop':
       return handleOnMoveLineTop(text, state, event);
-    case "moveLineBottom":
+    case 'moveLineBottom':
       return handleOnMoveLineBottom(text, state, event);
-    case "moveTextTop":
+    case 'moveTextTop':
       return handleOnMoveTextTop(text, state, event);
-    case "moveTextBottom":
+    case 'moveTextBottom':
       return handleOnMoveTextBottom(text, state, event);
     default:
       return [text, state];
@@ -644,7 +644,7 @@ function handleOnSelectAll(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   const textSelection = {
     fixed: { lineIndex: 0, charIndex: 0 },
     free: { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length },
@@ -659,10 +659,10 @@ function handleOnUndo(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   const { editActionHistory, historyHead } = state;
-  if (historyHead == -1 || state.textAreaValue != "") return [text, state];
+  if (historyHead == -1 || state.textAreaValue != '') return [text, state];
 
   const action = editActionHistory[historyHead];
-  if (action.actionType == "insert") {
+  if (action.actionType == 'insert') {
     const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
     const endIndex = startIndex + action.text.length;
     const newText = text.substring(0, startIndex) + text.substring(endIndex);
@@ -677,7 +677,7 @@ function handleOnUndo(
         ...EditorConstants.defaultSuggestionState,
       },
     ];
-  } else if (action.actionType == "delete") {
+  } else if (action.actionType == 'delete') {
     const insertIndex = cursorCoordinateToTextIndex(text, action.coordinate);
     const newText = text.substring(0, insertIndex) + action.text + text.substring(insertIndex);
     const cursorCoordinate = moveCursor(newText, action.coordinate, action.text.length);
@@ -702,12 +702,12 @@ function handleOnRedo(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   const { editActionHistory, historyHead } = state;
-  if (historyHead == editActionHistory.length - 1 || state.textAreaValue != "") {
+  if (historyHead == editActionHistory.length - 1 || state.textAreaValue != '') {
     return [text, state];
   }
 
   const action = editActionHistory[historyHead + 1];
-  if (action.actionType == "insert") {
+  if (action.actionType == 'insert') {
     const insertIndex = cursorCoordinateToTextIndex(text, action.coordinate);
     const newText = text.substring(0, insertIndex) + action.text + text.substring(insertIndex);
     const cursorCoordinate = moveCursor(newText, action.coordinate, action.text.length);
@@ -721,7 +721,7 @@ function handleOnRedo(
         ...EditorConstants.defaultSuggestionState,
       },
     ];
-  } else if (action.actionType == "delete") {
+  } else if (action.actionType == 'delete') {
     const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
     const endIndex = startIndex + action.text.length;
     const newText = text.substring(0, startIndex) + text.substring(endIndex);
@@ -748,7 +748,7 @@ function handleOnMoveUp(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   const prevLine = lines[state.cursorCoordinate.lineIndex - 1];
   if (prevLine === undefined) return [text, state];
 
@@ -772,7 +772,7 @@ function handleOnMoveDown(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   const nextLine = lines[state.cursorCoordinate.lineIndex + 1];
   if (nextLine === undefined) return [text, state];
 
@@ -867,7 +867,7 @@ function handleOnMoveLineBottom(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   const cursorCoordinate = {
     lineIndex: state.cursorCoordinate.lineIndex,
     charIndex: lines[state.cursorCoordinate.lineIndex].length,
@@ -905,7 +905,7 @@ function handleOnMoveTextBottom(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   const cursorCoordinate = {
     lineIndex: lines.length - 1,
     charIndex: lines[lines.length - 1].length,

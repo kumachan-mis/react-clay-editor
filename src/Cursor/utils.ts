@@ -1,9 +1,9 @@
-import { Props, State, CursorCoordinate } from "./types";
-import { CursorConstants } from "./constants";
+import { Props, State, CursorCoordinate } from './types';
+import { CursorConstants } from './constants';
 
-import { getTextCharElementAt } from "../TextLines/utils";
-import { getRoot, getEditor } from "../Editor/utils";
-import { classNameToSelector } from "../common";
+import { getTextCharElementAt } from '../TextLines/utils';
+import { getRoot, getEditor } from '../Editor/utils';
+import { classNameToSelector } from '../common';
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
   const root = getRoot(element);
@@ -72,7 +72,7 @@ export function moveCursor(
 ): CursorCoordinate {
   if (amount == 0) return coordinate;
 
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   let { lineIndex, charIndex } = { ...coordinate };
   if (amount > 0) {
     while (amount > 0) {
@@ -110,7 +110,7 @@ export function moveCursor(
 }
 
 export function cursorCoordinateToTextIndex(text: string, coordinate: CursorCoordinate): number {
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   let textIndex = 0;
   for (let lineIndex = 0; lineIndex < coordinate.lineIndex; lineIndex++) {
     textIndex += lines[lineIndex].length + 1;

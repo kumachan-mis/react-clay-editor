@@ -1,4 +1,4 @@
-import { CursorCoordinate } from "../Cursor/types";
+import { CursorCoordinate } from '../Cursor/types';
 
 export interface TextSelection {
   fixed: CursorCoordinate;

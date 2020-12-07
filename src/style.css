@@ -118,7 +118,7 @@ li.React-Realtime-Markup-Editor-cursor-suggestion-item:hover {
   background-color: #f6f8fa;
 }
 
-li.React-Realtime-Markup-Editor-cursor-suggestion-item[aria-selected="true"] {
+li.React-Realtime-Markup-Editor-cursor-suggestion-item[aria-selected='true'] {
   background-color: #f6f8fa;
 }
 

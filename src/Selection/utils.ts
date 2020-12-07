@@ -1,8 +1,8 @@
-import { Props, State, TextSelection, TextRange } from "./types";
+import { Props, State, TextSelection, TextRange } from './types';
 
-import { getEditor } from "../Editor/utils";
-import { getTextCharElementAt } from "../TextLines/utils";
-import { cursorCoordinateToTextIndex } from "../Cursor/utils";
+import { getEditor } from '../Editor/utils';
+import { getTextCharElementAt } from '../TextLines/utils';
+import { cursorCoordinateToTextIndex } from '../Cursor/utils';
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
   const editorRect = getEditor(element)?.getBoundingClientRect();
@@ -66,7 +66,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
 }
 
 export function getSelectedText(textSelection: TextSelection | undefined, text: string): string {
-  if (!textSelection) return "";
+  if (!textSelection) return '';
   const { start, end } = selectionToRange(textSelection);
   const startIndex = cursorCoordinateToTextIndex(text, start);
   const endIndex = cursorCoordinateToTextIndex(text, end);

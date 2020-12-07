@@ -4,11 +4,11 @@ import {
   TaggedLinkProps,
   CodeProps,
   FormulaProps,
-} from "../Editor/types";
-import { CursorCoordinate } from "../Cursor/types";
+} from '../Editor/types';
+import { CursorCoordinate } from '../Cursor/types';
 
 export interface TextDecoration {
-  fontSizes: Record<"level1" | "level2" | "level3", number>;
+  fontSizes: Record<'level1' | 'level2' | 'level3', number>;
 }
 
 export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };
@@ -60,7 +60,7 @@ export type Node =
   | NormalNode;
 
 export interface ItemizationNode {
-  type: "itemization";
+  type: 'itemization';
   lineIndex: number;
   range: [number, number];
   indent: string;
@@ -68,7 +68,7 @@ export interface ItemizationNode {
 }
 
 export interface InlineCodeNode {
-  type: "inlineCode";
+  type: 'inlineCode';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
@@ -77,7 +77,7 @@ export interface InlineCodeNode {
 }
 
 export interface BlockFormulaNode {
-  type: "blockFormula";
+  type: 'blockFormula';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
@@ -86,7 +86,7 @@ export interface BlockFormulaNode {
 }
 
 export interface InlineFormulaNode {
-  type: "inlineFormula";
+  type: 'inlineFormula';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
@@ -95,7 +95,7 @@ export interface InlineFormulaNode {
 }
 
 export interface DecorationNode {
-  type: "decoration";
+  type: 'decoration';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
@@ -104,7 +104,7 @@ export interface DecorationNode {
 }
 
 export interface TaggedLinkNode {
-  type: "taggedLink";
+  type: 'taggedLink';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
@@ -114,7 +114,7 @@ export interface TaggedLinkNode {
 }
 
 export interface BracketLinkNode {
-  type: "bracketLink";
+  type: 'bracketLink';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
@@ -123,14 +123,14 @@ export interface BracketLinkNode {
 }
 
 export interface HashTagNode {
-  type: "hashTag";
+  type: 'hashTag';
   lineIndex: number;
   range: [number, number];
   hashTag: string;
 }
 
 export interface NormalNode {
-  type: "normal";
+  type: 'normal';
   lineIndex: number;
   range: [number, number];
   text: string;
