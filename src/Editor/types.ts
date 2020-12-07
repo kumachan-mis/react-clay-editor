@@ -76,4 +76,17 @@ export interface State {
   suggestionIndex: number;
 }
 
-export type ShortcutCommand = "selectAll" | "undo" | "redo";
+export type ShortcutCommand =
+  | "selectAll"
+  | "undo"
+  | "redo"
+  | "moveUp"
+  | "moveDown"
+  | "moveLeft"
+  | "moveRight"
+  | "moveWordTop"
+  | "moveWordBottom"
+  | "moveLineTop"
+  | "moveLineBottom"
+  | "moveTextTop"
+  | "moveTextBottom";
