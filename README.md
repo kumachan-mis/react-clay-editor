@@ -20,10 +20,10 @@ yarn add react-realtime-markup-editor
 ### Simplest Usage
 
 ```tsx
-import { Editor } from "react-realtime-markup-editor";
+import { Editor } from 'react-realtime-markup-editor';
 
 const App: React.FC = () => {
-  const [text, setText] = React.useState("");
+  const [text, setText] = React.useState('');
   return <Editor text={text} onChangeText={setText} />;
 };
 ```
@@ -168,7 +168,7 @@ const defaultTextDecoration: TextDecoration = {
 you can import `defaultTextDecoration` by adding
 
 ```ts
-import { defaultTextDecoration } from "react-realtime-markup-editor";
+import { defaultTextDecoration } from 'react-realtime-markup-editor';
 ```
 
 #### Decoration.suggestionList: SuggestionListDecoration
@@ -203,7 +203,7 @@ const defaultSuggestionListDecoration: SuggestionListDecoration = {
 you can import `defaultSuggestionListDecoration` by adding
 
 ```ts
-import { defaultSuggestionListDecoration } from "react-realtime-markup-editor";
+import { defaultSuggestionListDecoration } from 'react-realtime-markup-editor';
 ```
 
 ### BracketLinkProps
@@ -214,7 +214,7 @@ settings of bracket links
 interface BracketLinkProps {
   anchorProps?: (
     linkName: string
-  ) => React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties };
+  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -236,26 +236,26 @@ interface BracketLinkProps {
 
 ```ts
 const defaultLinkStyle: React.CSSProperties = {
-  color: "#5E8AF7",
-  cursor: "text",
+  color: '#5E8AF7',
+  cursor: 'text',
 };
 
 const defaultLinkOverriddenStyleOnHover: React.CSSProperties = {
-  color: "#425A9D",
-  cursor: "pointer",
+  color: '#425A9D',
+  cursor: 'pointer',
 };
 ```
 
 you can import `defaultLinkStyle` or `defaultLinkOverriddenStyleOnHover` by adding
 
 ```ts
-import { defaultLinkStyle } from "react-realtime-markup-editor";
+import { defaultLinkStyle } from 'react-realtime-markup-editor';
 ```
 
 or
 
 ```ts
-import { defaultLinkOverriddenStyleOnHover } from "react-realtime-markup-editor";
+import { defaultLinkOverriddenStyleOnHover } from 'react-realtime-markup-editor';
 ```
 
 ### HashTagProps
@@ -266,7 +266,7 @@ settings of hash tags
 interface HashTagProps {
   anchorProps?: (
     hashTagName: string
-  ) => React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties };
+  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -284,7 +284,7 @@ interface TaggedLinkProps {
   linkNameRegex?: RegExp;
   anchorProps?: (
     linkName: string
-  ) => React.ComponentProps<"a"> & { overriddenStyleOnHover?: React.CSSProperties };
+  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;
@@ -297,7 +297,7 @@ same as `BracketLinkProps` except `linkNameRegex` and `tagHidden`
 **Attributes**
 
 - linkNameRegex: regular expression of link names. This **MUST** be a subset of `defaultLinkNameRegex = /[^[\]]+/`  
-  If `tagged link` does not match the pattern, `[tag: tagged link]` will be a BRACKET LINK whose name is `"tag: tagged link"`  
+  If `tagged link` does not match the pattern, `[tag: tagged link]` will be a BRACKET LINK whose name is `tag: tagged link`  
   default: `defaultLinkNameRegex`
 - tagHidden: if `true`, `[tag: tagged link]` goes to `<a>tagged link</a>` instead of `<a>tag: tagged link</a>`
 
@@ -310,7 +310,7 @@ const defaultLinkNameRegex = /[^[\]]+/;
 you can import `defaultLinkNameRegex` by adding
 
 ```ts
-import { defaultLinkNameRegex } from "react-realtime-markup-editor";
+import { defaultLinkNameRegex } from 'react-realtime-markup-editor';
 ```
 
 ### CodeProps
@@ -319,7 +319,7 @@ settings of code strings
 
 ```ts
 interface CodeProps {
-  codeProps?: (code: string) => React.ComponentProps<"code">;
+  codeProps?: (code: string) => React.ComponentProps<'code'>;
   disabled?: boolean;
 }
 ```
@@ -335,15 +335,15 @@ interface CodeProps {
 
 ```ts
 const defaultCodeStyle: React.CSSProperties = {
-  fontFamily: "SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace",
-  backgroundColor: "rgba(27, 31, 35, 0.05)",
+  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
+  backgroundColor: 'rgba(27, 31, 35, 0.05)',
 };
 ```
 
 you can import `defaultCodeStyle` by adding
 
 ```ts
-import { defaultCodeStyle } from "react-realtime-markup-editor";
+import { defaultCodeStyle } from 'react-realtime-markup-editor';
 ```
 
 ### FormulaProps
