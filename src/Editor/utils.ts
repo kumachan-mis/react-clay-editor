@@ -111,10 +111,12 @@ export function handleOnClick(
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   switch (event.detail) {
     case 2: {
+      // double click
       const textSelection = getWordSelection(text, cursorCoordinate);
       return [text, { ...state, textSelection }];
     }
     case 3: {
+      // triple click
       const textSelection = getLineSelection(text, cursorCoordinate);
       return [text, { ...state, textSelection }];
     }
