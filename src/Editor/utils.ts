@@ -170,12 +170,24 @@ export function handleOnKeyDown(
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
         return handleOnMoveLineTop(text, state, event);
       }
+      if (
+        (!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) &&
+        !event.metaKey
+      ) {
+        return handleOnMoveWordTop(text, state, event);
+      }
       const [newText, newState] = handleOnMoveLeft(text, state, event);
       return showSuggestion(newText, props, newState);
     }
     case 'ArrowRight': {
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
         return handleOnMoveLineBottom(text, state, event);
+      }
+      if (
+        (!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) &&
+        !event.metaKey
+      ) {
+        return handleOnMoveWordBottom(text, state, event);
       }
       const [newText, newState] = handleOnMoveRight(text, state, event);
       return showSuggestion(newText, props, newState);
@@ -559,13 +571,11 @@ function moveRightTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): bo
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function moveWordTopTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  // TODO: implement here
   return false;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function moveWordBottomTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  // TODO: implement here
   return false;
 }
 
