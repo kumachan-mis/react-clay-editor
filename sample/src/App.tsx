@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Editor, defaultLinkStyle, defaultLinkOverriddenStyleOnHover } from "../../src";
+import { Editor, defaultLinkStyle, defaultLinkOverriddenStyleOnHover } from '../../src';
 
 // eslint-disable-next-line prettier/prettier
 const defaultMainText =
@@ -68,18 +68,18 @@ const defaultSubText =
 More features are comming soon...`;
 
 const mainStyle: React.CSSProperties = {
-  width: "800px",
-  height: "calc(72vh - 40px)",
-  margin: "20px",
-  border: "solid 1px",
-  padding: "10px",
+  width: '800px',
+  height: 'calc(72vh - 40px)',
+  margin: '20px',
+  border: 'solid 1px',
+  padding: '10px',
 };
 const subStyle: React.CSSProperties = {
-  width: "800px",
-  height: "calc(24vh - 40px)",
-  margin: "20px",
-  border: "solid 1px",
-  padding: "10px",
+  width: '800px',
+  height: 'calc(24vh - 40px)',
+  margin: '20px',
+  border: 'solid 1px',
+  padding: '10px',
 };
 
 export const App: React.FC = () => {
@@ -103,33 +103,33 @@ export const App: React.FC = () => {
             style: defaultLinkStyle,
             overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
           }),
-          suggestions: ["react-realtime-markup-editor"],
+          suggestions: ['react-realtime-markup-editor'],
         }}
         taggedLinkPropsMap={{
           github: {
             linkNameRegex: /@[^[\]]+\/[^[\]]+/,
             anchorProps: (linkName) => ({
               href: `https://github.com/${linkName.substring(1)}`,
-              style: { ...defaultLinkStyle, color: "#595f6E", borderBottom: "solid 1px" },
+              style: { ...defaultLinkStyle, color: '#595f6E', borderBottom: 'solid 1px' },
               overriddenStyleOnHover: {
                 ...defaultLinkOverriddenStyleOnHover,
-                color: "#08090B",
+                color: '#08090B',
                 fontWeight: 500,
               },
             }),
-            suggestions: ["@kumachan-mis/react-realtime-markup-editor"],
+            suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
           },
           npm: {
             anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,
-              style: { ...defaultLinkStyle, color: "#F75E8A", borderBottom: "solid 1px" },
+              style: { ...defaultLinkStyle, color: '#F75E8A', borderBottom: 'solid 1px' },
               overriddenStyleOnHover: {
                 ...defaultLinkOverriddenStyleOnHover,
-                color: "#E14978",
+                color: '#E14978',
                 fontWeight: 500,
               },
             }),
-            suggestions: ["react-realtime-markup-editor"],
+            suggestions: ['react-realtime-markup-editor'],
           },
         }}
         style={mainStyle}

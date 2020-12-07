@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Props, State } from "./types";
-import { SelectionConstants } from "./constants";
-import { selectionPropsToState } from "./utils";
-import "../style.css";
+import { Props, State } from './types';
+import { SelectionConstants } from './constants';
+import { selectionPropsToState } from './utils';
+import '../style.css';
 
 export const Selection: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({

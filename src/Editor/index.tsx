@@ -1,12 +1,13 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Props, State } from "./types";
-import { EditorConstants } from "./constants";
+import { Props, State } from './types';
+import { EditorConstants } from './constants';
 import {
   handleOnMouseDown,
   handleOnMouseMove,
   handleOnMouseUp,
   handleOnMouseLeave,
+  handleOnClick,
   handleOnKeyDown,
   handleOnTextChange,
   handleOnTextCut,
@@ -15,13 +16,13 @@ import {
   handleOnTextCompositionStart,
   handleOnTextCompositionEnd,
   handleOnSuggectionMouseDown,
-} from "./utils";
-import "../style.css";
+} from './utils';
+import '../style.css';
 
-import { Cursor } from "../Cursor";
-import { Selection } from "../Selection";
-import { TextLines } from "../TextLines";
-import { SelectionWithMouse } from "../Selection/types";
+import { Cursor } from '../Cursor';
+import { Selection } from '../Selection';
+import { TextLines } from '../TextLines';
+import { SelectionWithMouse } from '../Selection/types';
 
 // TODO: use function and hooks
 export class Editor extends React.Component<Props, State> {
@@ -31,7 +32,7 @@ export class Editor extends React.Component<Props, State> {
     super(props);
     this.state = {
       cursorCoordinate: undefined,
-      textAreaValue: "",
+      textAreaValue: '',
       isComposing: false,
       textSelection: undefined,
       selectionWithMouse: SelectionWithMouse.Inactive,
@@ -43,11 +44,11 @@ export class Editor extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    document.addEventListener("mousedown", this.handleOnEditorBlur);
+    document.addEventListener('mousedown', this.handleOnEditorBlur);
   }
 
   componentWillUnmount(): void {
-    document.removeEventListener("mousedown", this.handleOnEditorBlur);
+    document.removeEventListener('mousedown', this.handleOnEditorBlur);
   }
 
   render(): React.ReactNode {
@@ -56,10 +57,11 @@ export class Editor extends React.Component<Props, State> {
         <div className={EditorConstants.root.className} ref={this.rootRef}>
           <div
             className={EditorConstants.editor.className}
-            onMouseDown={this.createMouseEventHandlerWithProps(handleOnMouseDown)}
+            onMouseDown={this.createMouseEventHandler(handleOnMouseDown)}
             onMouseMove={this.createMouseEventHandler(handleOnMouseMove)}
             onMouseUp={this.createMouseEventHandler(handleOnMouseUp)}
             onMouseLeave={this.createMouseEventHandler(handleOnMouseLeave)}
+            onClick={this.createMouseEventHandler(handleOnClick)}
           >
             <Cursor
               coordinate={this.state.cursorCoordinate}
@@ -98,43 +100,13 @@ export class Editor extends React.Component<Props, State> {
     handler: (
       text: string,
       state: State,
-      pos: [number, number],
+      event: React.MouseEvent,
       root: HTMLElement | null
     ) => [string, State]
   ): ((event: React.MouseEvent) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
-      const position: [number, number] = [event.clientX, event.clientY];
-      const [newText, newState] = handler(
-        this.props.text,
-        this.state,
-        position,
-        this.rootRef.current
-      );
-      if (newState != this.state) this.setState(newState);
-      if (newText != this.props.text) this.props.onChangeText(newText);
-    };
-  };
-
-  private createMouseEventHandlerWithProps = (
-    handler: (
-      text: string,
-      props: Props,
-      state: State,
-      pos: [number, number],
-      root: HTMLElement | null
-    ) => [string, State]
-  ): ((event: React.MouseEvent) => void) => {
-    return (event) => {
-      if (this.props.disabled || event.button != 0) return;
-      const position: [number, number] = [event.clientX, event.clientY];
-      const [newText, newState] = handler(
-        this.props.text,
-        this.props,
-        this.state,
-        position,
-        this.rootRef.current
-      );
+      const [newText, newState] = handler(this.props.text, this.state, event, this.rootRef.current);
       if (newState != this.state) this.setState(newState);
       if (newText != this.props.text) this.props.onChangeText(newText);
     };
@@ -172,7 +144,7 @@ export class Editor extends React.Component<Props, State> {
       this.setState({
         ...this.state,
         cursorCoordinate: undefined,
-        textAreaValue: "",
+        textAreaValue: '',
         isComposing: false,
         textSelection: undefined,
         selectionWithMouse: SelectionWithMouse.Inactive,

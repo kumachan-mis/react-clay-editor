@@ -1,4 +1,4 @@
-import { TextLinesConstants } from "./constants";
+import { TextLinesConstants } from './constants';
 import {
   TextDecoration,
   TaggedLinkPropsMap,
@@ -14,10 +14,10 @@ import {
   HashTagNode,
   NormalNode,
   ParsingOption,
-} from "./types";
+} from './types';
 
-import { classNameToSelector } from "../common";
-import { EditorConstants } from "../Editor/constants";
+import { classNameToSelector } from '../common';
+import { EditorConstants } from '../Editor/constants';
 
 export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
   const rootSelector = classNameToSelector(EditorConstants.editor.className);
@@ -48,7 +48,7 @@ export function getDecorationStyle(
   const style = { bold: false, italic: false, underline: false, fontSize: level1 };
   for (let i = 1; i < facingMeta.length - 1; i++) {
     switch (facingMeta[i]) {
-      case "*":
+      case '*':
         if (!style.bold) {
           style.bold = true;
         } else if (style.fontSize == level1) {
@@ -57,10 +57,10 @@ export function getDecorationStyle(
           style.fontSize = level3;
         }
         break;
-      case "/":
+      case '/':
         style.italic = true;
         break;
-      case "_":
+      case '_':
         style.underline = true;
         break;
     }
@@ -77,7 +77,7 @@ export function getHashTagName(hashTag: string): string {
 }
 
 export function parseText(text: string, taggedLinkPropsMap: TaggedLinkPropsMap): Node[] {
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   const taggedLinkRegexes = Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
     TextLinesConstants.regexes.taggedLink(tagName, linkProps.linkNameRegex)
   );
@@ -132,7 +132,7 @@ function parseItemization(line: string, option: ParsingOption): Node[] {
   const [from, to] = [option.offset, option.offset + line.length];
 
   const node: ItemizationNode = {
-    type: "itemization",
+    type: 'itemization',
     lineIndex: option.lineIndex,
     range: [from, to],
     indent,
@@ -148,12 +148,12 @@ function parseInlineCode(text: string, option: ParsingOption): Node[] {
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
   const node: InlineCodeNode = {
-    type: "inlineCode",
+    type: 'inlineCode',
     lineIndex: option.lineIndex,
     range: [from, to],
-    facingMeta: "`",
+    facingMeta: '`',
     code,
-    trailingMeta: "`",
+    trailingMeta: '`',
   };
 
   return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
@@ -164,12 +164,12 @@ function parseBlockFormula(text: string, option: ParsingOption): Node[] {
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
   const node: BlockFormulaNode = {
-    type: "blockFormula",
+    type: 'blockFormula',
     lineIndex: option.lineIndex,
     range: [from, to],
-    facingMeta: "$$",
+    facingMeta: '$$',
     formula,
-    trailingMeta: "$$",
+    trailingMeta: '$$',
   };
 
   return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
@@ -181,12 +181,12 @@ function parseInlineFormula(text: string, option: ParsingOption): Node[] {
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
   const node: InlineFormulaNode = {
-    type: "inlineFormula",
+    type: 'inlineFormula',
     lineIndex: option.lineIndex,
     range: [from, to],
-    facingMeta: "$",
+    facingMeta: '$',
     formula,
-    trailingMeta: "$",
+    trailingMeta: '$',
   };
 
   return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
@@ -199,7 +199,7 @@ function parseDecoration(text: string, option: ParsingOption): Node[] {
 
   const node: DecorationNode | BracketLinkNode = !option.nested
     ? {
-        type: "decoration",
+        type: 'decoration',
         lineIndex: option.lineIndex,
         range: [from, to],
         facingMeta: `[${decoration} `,
@@ -208,15 +208,15 @@ function parseDecoration(text: string, option: ParsingOption): Node[] {
           offset: from + decoration.length + 2,
           nested: true,
         }),
-        trailingMeta: "]",
+        trailingMeta: ']',
       }
     : {
-        type: "bracketLink",
+        type: 'bracketLink',
         lineIndex: option.lineIndex,
         range: [from, to],
-        facingMeta: "[",
+        facingMeta: '[',
         linkName: `${decoration} ${body}`,
-        trailingMeta: "]",
+        trailingMeta: ']',
       };
 
   return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
@@ -227,13 +227,13 @@ function parseTaggedLink(text: string, option: ParsingOption, regex: RegExp): No
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
   const node: TaggedLinkNode = {
-    type: "taggedLink",
+    type: 'taggedLink',
     lineIndex: option.lineIndex,
     range: [from, to],
-    facingMeta: "[",
+    facingMeta: '[',
     tag,
     linkName,
-    trailingMeta: "]",
+    trailingMeta: ']',
   };
 
   return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
@@ -245,12 +245,12 @@ function parseBracketLink(text: string, option: ParsingOption): Node[] {
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
 
   const node: BracketLinkNode = {
-    type: "bracketLink",
+    type: 'bracketLink',
     lineIndex: option.lineIndex,
     range: [from, to],
-    facingMeta: "[",
+    facingMeta: '[',
     linkName,
-    trailingMeta: "]",
+    trailingMeta: ']',
   };
 
   return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
@@ -261,7 +261,7 @@ function parseHashTag(text: string, option: ParsingOption): Node[] {
   const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
   const node: HashTagNode = {
-    type: "hashTag",
+    type: 'hashTag',
     lineIndex: option.lineIndex,
     range: [from, to],
     hashTag,
@@ -273,7 +273,7 @@ function parseNormal(text: string, option: ParsingOption): Node[] {
   const [from, to] = [option.offset, option.offset + text.length];
 
   const node: NormalNode = {
-    type: "normal",
+    type: 'normal',
     lineIndex: option.lineIndex,
     text,
     range: [from, to],
