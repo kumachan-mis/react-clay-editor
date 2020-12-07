@@ -2,7 +2,12 @@ import { Props, State, EditAction, ShortcutCommand } from './types';
 import { EditorConstants } from './constants';
 
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../Cursor/utils';
-import { selectionToRange, getSelectedText } from '../Selection/utils';
+import {
+  getWordSelection,
+  getLineSelection,
+  getSelectedText,
+  selectionToRange,
+} from '../Selection/utils';
 import { CursorCoordinate, SuggestionType } from '../Cursor/types';
 import { SelectionWithMouse } from '../Selection/types';
 import { TextLinesConstants } from '../TextLines/constants';
@@ -18,13 +23,13 @@ export function getEditor(element: HTMLElement): HTMLElement | null {
 
 export function handleOnMouseDown(
   text: string,
-  props: Props,
   state: State,
-  position: [number, number],
+  event: React.MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
   if (!element) return [text, state];
 
+  const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   const newState = {
     ...state,
@@ -39,7 +44,7 @@ export function handleOnMouseDown(
 export function handleOnMouseMove(
   text: string,
   state: State,
-  position: [number, number],
+  event: React.MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
   if (
@@ -52,6 +57,8 @@ export function handleOnMouseMove(
   if (state.selectionWithMouse == SelectionWithMouse.Started) {
     return [text, { ...state, selectionWithMouse: SelectionWithMouse.Active }];
   }
+
+  const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) {
     return [text, state];
@@ -65,7 +72,7 @@ export function handleOnMouseMove(
 export function handleOnMouseUp(
   text: string,
   state: State,
-  position: [number, number],
+  event: React.MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
   if (
@@ -78,6 +85,8 @@ export function handleOnMouseUp(
   if (state.selectionWithMouse != SelectionWithMouse.Active) {
     return [text, { ...state, selectionWithMouse: SelectionWithMouse.Inactive }];
   }
+
+  const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = cursorCoordinate ? cursorCoordinate : { ...state.cursorCoordinate };
@@ -89,6 +98,30 @@ export function handleOnMouseUp(
 }
 
 export const handleOnMouseLeave = handleOnMouseUp;
+
+export function handleOnClick(
+  text: string,
+  state: State,
+  event: React.MouseEvent,
+  element: HTMLElement | null
+): [string, State] {
+  if (!element) return [text, state];
+
+  const position: [number, number] = [event.clientX, event.clientY];
+  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
+  switch (event.detail) {
+    case 2: {
+      const textSelection = getWordSelection(text, cursorCoordinate);
+      return [text, { ...state, textSelection }];
+    }
+    case 3: {
+      const textSelection = getLineSelection(text, cursorCoordinate);
+      return [text, { ...state, textSelection }];
+    }
+    default:
+      return [text, state];
+  }
+}
 
 export function handleOnKeyDown(
   text: string,

@@ -2,6 +2,8 @@ import { Props, State, TextSelection, TextRange } from './types';
 
 import { getEditor } from '../Editor/utils';
 import { getTextCharElementAt } from '../TextLines/utils';
+import { TextLinesConstants } from '../TextLines/constants';
+import { CursorCoordinate } from '../Cursor/types';
 import { cursorCoordinateToTextIndex } from '../Cursor/utils';
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
@@ -63,6 +65,44 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     };
     return { topDivPosition, centerDivPosition, bottomDivPosition };
   }
+}
+
+export function getWordSelection(
+  text: string,
+  cursorCoordinate: CursorCoordinate | undefined
+): TextSelection | undefined {
+  if (!cursorCoordinate) return undefined;
+
+  const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+  const lines = text.split('\n');
+  const currentLine = lines[cursorCoordinate.lineIndex];
+  let match: RegExpExecArray | null = null;
+  while ((match = wordRegex.exec(currentLine))) {
+    if (match === null) break;
+    const from = wordRegex.lastIndex - match[0].length;
+    const to = wordRegex.lastIndex;
+    if (to < cursorCoordinate.charIndex) continue;
+    if (from > cursorCoordinate.charIndex) break;
+    return {
+      fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: from },
+      free: { lineIndex: cursorCoordinate.lineIndex, charIndex: to },
+    };
+  }
+  return undefined;
+}
+
+export function getLineSelection(
+  text: string,
+  cursorCoordinate: CursorCoordinate | undefined
+): TextSelection | undefined {
+  if (!cursorCoordinate) return undefined;
+
+  const lines = text.split('\n');
+  const currentLine = lines[cursorCoordinate.lineIndex];
+  return {
+    fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 },
+    free: { lineIndex: cursorCoordinate.lineIndex, charIndex: currentLine.length },
+  };
 }
 
 export function getSelectedText(textSelection: TextSelection | undefined, text: string): string {

@@ -86,4 +86,5 @@ export const TextLinesConstants = {
     hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },
+  wordRegex: /[^ !"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~\t\u3000]+/,
 };
