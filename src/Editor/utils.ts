@@ -872,8 +872,31 @@ function handleOnMoveWordTop(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
-  // TODO: implement here
-  return [text, state];
+  if (!state.cursorCoordinate) return [text, state];
+
+  const cursorCoordinate = (() => {
+    const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+    const lines = text.split('\n');
+    const currentLine = lines[state.cursorCoordinate.lineIndex];
+    let charIndex: number | undefined = undefined;
+    let match: RegExpExecArray | null = null;
+    while ((match = wordRegex.exec(currentLine))) {
+      if (match === null) break;
+      const candidateIndex = wordRegex.lastIndex - match[0].length;
+      if (candidateIndex >= state.cursorCoordinate.charIndex) break;
+      charIndex = candidateIndex;
+    }
+    return charIndex !== undefined
+      ? { lineIndex: state.cursorCoordinate.lineIndex, charIndex }
+      : state.cursorCoordinate;
+  })();
+  const textSelection = (() => {
+    if (!event.shiftKey) return undefined;
+    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
+    const free = { ...cursorCoordinate };
+    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+  })();
+  return [text, { ...state, cursorCoordinate, textSelection }];
 }
 
 function handleOnMoveWordBottom(
@@ -882,8 +905,29 @@ function handleOnMoveWordBottom(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
-  // TODO: implement here
-  return [text, state];
+  if (!state.cursorCoordinate) return [text, state];
+
+  const cursorCoordinate = (() => {
+    const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+    const lines = text.split('\n');
+    const currentLine = lines[state.cursorCoordinate.lineIndex];
+    let match: RegExpExecArray | null = null;
+    while ((match = wordRegex.exec(currentLine))) {
+      if (match === null) break;
+      const candidateIndex = wordRegex.lastIndex;
+      if (candidateIndex > state.cursorCoordinate.charIndex) {
+        return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: candidateIndex };
+      }
+    }
+    return state.cursorCoordinate;
+  })();
+  const textSelection = (() => {
+    if (!event.shiftKey) return undefined;
+    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
+    const free = { ...cursorCoordinate };
+    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+  })();
+  return [text, { ...state, cursorCoordinate, textSelection }];
 }
 
 function handleOnMoveLineTop(
