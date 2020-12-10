@@ -888,9 +888,7 @@ function handleOnMoveWordTop(
       if (candidateIndex >= state.cursorCoordinate.charIndex) break;
       charIndex = candidateIndex;
     }
-    return charIndex !== undefined
-      ? { lineIndex: state.cursorCoordinate.lineIndex, charIndex }
-      : state.cursorCoordinate;
+    return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: charIndex || 0 };
   })();
   const textSelection = (() => {
     if (!event.shiftKey) return undefined;
@@ -921,7 +919,7 @@ function handleOnMoveWordBottom(
         return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: candidateIndex };
       }
     }
-    return state.cursorCoordinate;
+    return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: currentLine.length };
   })();
   const textSelection = (() => {
     if (!event.shiftKey) return undefined;

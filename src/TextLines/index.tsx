@@ -67,8 +67,8 @@ const Node: React.FC<NodeProps> = ({
 }) => {
   switch (node.type) {
     case 'itemization': {
-      const { lineIndex, indent, children } = node;
-      const [, to] = node.range;
+      const { lineIndex, indentDepth, children } = node;
+      const [from, to] = node.range;
 
       return (
         <div
@@ -76,12 +76,12 @@ const Node: React.FC<NodeProps> = ({
           style={TextLinesConstants.line.style(textDecoration.fontSizes.level1)}
         >
           <span
-            className={TextLinesConstants.itemization.indent.className}
-            style={TextLinesConstants.itemization.indent.style(indent.length)}
+            className={TextLinesConstants.line.indent.className}
+            style={TextLinesConstants.line.indent.style(indentDepth)}
           >
-            {[...indent].map((char: string, charIndex: number) => {
-              const charClassName = TextLinesConstants.char.className(lineIndex, charIndex);
-              const className = `${TextLinesConstants.itemization.pad.className} ${charClassName}`;
+            {[...Array(indentDepth).keys()].map((charIndex) => {
+              const charClassName = TextLinesConstants.char.className(lineIndex, from + charIndex);
+              const className = `${TextLinesConstants.line.pad.className} ${charClassName}`;
               return (
                 <span key={charIndex} className={className}>
                   <span> </span>
@@ -91,10 +91,10 @@ const Node: React.FC<NodeProps> = ({
             <span className={TextLinesConstants.itemization.dot.className} />
           </span>
           <span
-            className={TextLinesConstants.itemization.content.className}
-            style={TextLinesConstants.itemization.content.style(indent.length)}
+            className={TextLinesConstants.line.content.className}
+            style={TextLinesConstants.itemization.content.style(indentDepth)}
           >
-            {children.map((child: Node, index: number) => (
+            {children.map((child, index) => (
               <Node
                 key={index}
                 node={child}
@@ -112,20 +112,80 @@ const Node: React.FC<NodeProps> = ({
         </div>
       );
     }
+    case 'blockCodeMeta':
+    case 'blockCodeLine': {
+      const { lineIndex, indentDepth } = node;
+      const code = node.type == 'blockCodeMeta' ? node.meta : node.codeLine;
+      const [from, to] = node.range;
+
+      const blockCodeCharSpans = [
+        ...[...code].map((char, index) => (
+          <Char
+            key={index}
+            lineIndex={lineIndex}
+            charIndex={from + indentDepth + index}
+            char={char}
+          />
+        )),
+      ];
+      const codeElementProps = codeProps.codeProps?.(code);
+
+      return (
+        <div
+          className={TextLinesConstants.line.className(lineIndex)}
+          style={TextLinesConstants.line.style(textDecoration.fontSizes.level1)}
+        >
+          <span
+            className={TextLinesConstants.line.indent.className}
+            style={TextLinesConstants.line.indent.style(indentDepth)}
+          >
+            {[...Array(indentDepth).keys()].map((charIndex) => {
+              const charClassName = TextLinesConstants.char.className(lineIndex, from + charIndex);
+              const className = `${TextLinesConstants.line.pad.className} ${charClassName}`;
+              return (
+                <span key={charIndex} className={className}>
+                  <span> </span>
+                </span>
+              );
+            })}
+          </span>
+          {!codeProps.disabled ? (
+            <span
+              className={TextLinesConstants.line.content.className}
+              style={TextLinesConstants.blockCodeLine.content.style(
+                indentDepth,
+                codeElementProps?.style
+              )}
+            >
+              <code {...codeElementProps}>{blockCodeCharSpans}</code>
+              <Char lineIndex={lineIndex} charIndex={to} char={' '} />
+            </span>
+          ) : (
+            <span
+              className={TextLinesConstants.line.content.className}
+              style={TextLinesConstants.blockCodeLine.content.style(indentDepth)}
+            >
+              <span>{blockCodeCharSpans}</span>
+              <Char lineIndex={lineIndex} charIndex={to} char={' '} />
+            </span>
+          )}
+        </div>
+      );
+    }
     case 'inlineCode': {
       const { lineIndex, facingMeta, code, trailingMeta } = node;
       const [from, to] = node.range;
-      const { codeProps: codeElementProps, disabled } = codeProps;
+
       const inlineCodeCharSpans = [
-        ...[...facingMeta].map((char: string, index: number) => (
+        ...[...facingMeta].map((char, index) => (
           <Char
             key={from + index}
             lineIndex={lineIndex}
             charIndex={from + index}
-            char={disabled || cursorOn ? char : ''}
+            char={codeProps.disabled || cursorOn ? char : ''}
           />
         )),
-        ...[...code].map((char: string, index: number) => (
+        ...[...code].map((char, index) => (
           <Char
             key={from + facingMeta.length + index}
             lineIndex={lineIndex}
@@ -133,18 +193,19 @@ const Node: React.FC<NodeProps> = ({
             char={char}
           />
         )),
-        ...[...trailingMeta].map((char: string, index: number) => (
+        ...[...trailingMeta].map((char, index) => (
           <Char
             key={to - trailingMeta.length + index}
             lineIndex={lineIndex}
             charIndex={to - trailingMeta.length + index}
-            char={disabled || cursorOn ? char : ''}
+            char={codeProps.disabled || cursorOn ? char : ''}
           />
         )),
       ];
+      const codeElementProps = codeProps.codeProps?.(code);
 
-      return !disabled ? (
-        <code {...(codeElementProps?.(code) || {})}>{inlineCodeCharSpans}</code>
+      return !codeProps.disabled ? (
+        <code {...codeElementProps}>{inlineCodeCharSpans}</code>
       ) : (
         <span>{inlineCodeCharSpans}</span>
       );
@@ -153,10 +214,9 @@ const Node: React.FC<NodeProps> = ({
     case 'inlineFormula': {
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
       const [from, to] = node.range;
-      const { disabled } = formulaProps;
       const displayMode = node.type == 'blockFormula';
 
-      return !disabled && !cursorOn ? (
+      return !formulaProps.disabled && !cursorOn ? (
         <span
           className={TextLinesConstants.charGroup.className(
             lineIndex,
@@ -173,7 +233,7 @@ const Node: React.FC<NodeProps> = ({
         </span>
       ) : (
         <span>
-          {[...facingMeta, ...formula, ...trailingMeta].map((char: string, index: number) => (
+          {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
           ))}
         </span>
@@ -185,7 +245,7 @@ const Node: React.FC<NodeProps> = ({
       const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, textDecoration);
       return (
         <span style={TextLinesConstants.decoration.style(decorationStyle)}>
-          {[...facingMeta].map((char: string, index: number) => (
+          {[...facingMeta].map((char, index) => (
             <Char
               key={from + index}
               lineIndex={lineIndex}
@@ -193,7 +253,7 @@ const Node: React.FC<NodeProps> = ({
               char={cursorOn ? char : ''}
             />
           ))}
-          {children.map((child: Node, index: number) => (
+          {children.map((child, index) => (
             <Node
               key={index}
               node={child}
@@ -206,7 +266,7 @@ const Node: React.FC<NodeProps> = ({
               cursorOn={cursorOn}
             />
           ))}
-          {[...trailingMeta].map((char: string, index: number) => (
+          {[...trailingMeta].map((char, index) => (
             <Char
               key={to - trailingMeta.length + index}
               lineIndex={lineIndex}
@@ -220,10 +280,12 @@ const Node: React.FC<NodeProps> = ({
     case 'taggedLink': {
       const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
       const [from, to] = node.range;
-      const { anchorProps: anchorElementProps, tagHidden } = taggedLinkPropsMap[getTagName(tag)];
+      const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
+      const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
+
       return (
-        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})} cursorOn={cursorOn}>
-          {[...facingMeta].map((char: string, index: number) => (
+        <AnchorWithHoverStyle {...anchorElementProps} cursorOn={cursorOn}>
+          {[...facingMeta].map((char, index) => (
             <Char
               key={from + index}
               lineIndex={lineIndex}
@@ -231,15 +293,15 @@ const Node: React.FC<NodeProps> = ({
               char={cursorOn ? char : ''}
             />
           ))}
-          {[...tag].map((char: string, index: number) => (
+          {[...tag].map((char, index) => (
             <Char
               key={from + facingMeta.length + index}
               lineIndex={lineIndex}
               charIndex={from + facingMeta.length + index}
-              char={cursorOn || !tagHidden ? char : ''}
+              char={cursorOn || !taggedLinkProps.tagHidden ? char : ''}
             />
           ))}
-          {[...linkName].map((char: string, index: number) => (
+          {[...linkName].map((char, index) => (
             <Char
               key={from + facingMeta.length + tag.length + index}
               lineIndex={lineIndex}
@@ -247,7 +309,7 @@ const Node: React.FC<NodeProps> = ({
               char={char}
             />
           ))}
-          {[...trailingMeta].map((char: string, index: number) => (
+          {[...trailingMeta].map((char, index) => (
             <Char
               key={to - trailingMeta.length + index}
               lineIndex={lineIndex}
@@ -261,17 +323,17 @@ const Node: React.FC<NodeProps> = ({
     case 'bracketLink': {
       const { lineIndex, facingMeta, linkName, trailingMeta } = node;
       const [from, to] = node.range;
-      const { anchorProps: anchorElementProps, disabled } = bracketLinkProps;
+
       const bracketLinkCharSpans = [
-        ...[...facingMeta].map((char: string, index: number) => (
+        ...[...facingMeta].map((char, index) => (
           <Char
             key={from + index}
             lineIndex={lineIndex}
             charIndex={from + index}
-            char={disabled || cursorOn ? char : ''}
+            char={bracketLinkProps.disabled || cursorOn ? char : ''}
           />
         )),
-        ...[...linkName].map((char: string, index: number) => (
+        ...[...linkName].map((char, index) => (
           <Char
             key={from + facingMeta.length + index}
             lineIndex={lineIndex}
@@ -279,17 +341,19 @@ const Node: React.FC<NodeProps> = ({
             char={char}
           />
         )),
-        ...[...trailingMeta].map((char: string, index: number) => (
+        ...[...trailingMeta].map((char, index) => (
           <Char
             key={to - trailingMeta.length + index}
             lineIndex={lineIndex}
             charIndex={to - trailingMeta.length + index}
-            char={disabled || cursorOn ? char : ''}
+            char={bracketLinkProps.disabled || cursorOn ? char : ''}
           />
         )),
       ];
-      return !disabled ? (
-        <AnchorWithHoverStyle {...(anchorElementProps?.(linkName) || {})} cursorOn={cursorOn}>
+      const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
+
+      return !bracketLinkProps.disabled ? (
+        <AnchorWithHoverStyle {...anchorElementProps} cursorOn={cursorOn}>
           {bracketLinkCharSpans}
         </AnchorWithHoverStyle>
       ) : (
@@ -299,13 +363,14 @@ const Node: React.FC<NodeProps> = ({
     case 'hashTag': {
       const { lineIndex, hashTag } = node;
       const [from] = node.range;
-      const { anchorProps: anchorElementProps, disabled } = hashTagProps;
-      const hashTagName = getHashTagName(hashTag);
-      const hashTagCharSpans = [...hashTag].map((char: string, index: number) => (
+
+      const hashTagCharSpans = [...hashTag].map((char, index) => (
         <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
       ));
-      return !disabled ? (
-        <AnchorWithHoverStyle {...(anchorElementProps?.(hashTagName) || {})} cursorOn={cursorOn}>
+      const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
+
+      return !hashTagProps.disabled ? (
+        <AnchorWithHoverStyle {...anchorElementProps} cursorOn={cursorOn}>
           {hashTagCharSpans}
         </AnchorWithHoverStyle>
       ) : (
@@ -315,9 +380,10 @@ const Node: React.FC<NodeProps> = ({
     case 'normal': {
       const { lineIndex, text } = node;
       const [from] = node.range;
+
       return (
         <span>
-          {[...text].map((char: string, index: number) => (
+          {[...text].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index} char={char} />
           ))}
         </span>

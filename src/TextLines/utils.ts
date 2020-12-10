@@ -5,6 +5,8 @@ import {
   DecorationStyle,
   Node,
   ItemizationNode,
+  BlockCodeMetaNode,
+  BlockCodeLineNode,
   InlineCodeNode,
   BlockFormulaNode,
   InlineFormulaNode,
@@ -13,7 +15,8 @@ import {
   BracketLinkNode,
   HashTagNode,
   NormalNode,
-  ParsingOption,
+  SingleLineContext,
+  MultiLineContext,
 } from './types';
 
 import { classNameToSelector } from '../common';
@@ -77,22 +80,33 @@ export function getHashTagName(hashTag: string): string {
 }
 
 export function parseText(text: string, taggedLinkPropsMap: TaggedLinkPropsMap): Node[] {
-  const lines = text.split('\n');
   const taggedLinkRegexes = Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
     TextLinesConstants.regexes.taggedLink(tagName, linkProps.linkNameRegex)
   );
 
-  return ([] as Node[]).concat(
-    ...lines.map((line, index) => {
-      const option = { lineIndex: index, offset: 0, nested: false, line: true, taggedLinkRegexes };
-      return parseToNodes(line, option);
-    })
-  );
+  const lines = text.split('\n');
+  const nodes: Node[] = [];
+  const multi: MultiLineContext = {
+    blockCodeDepth: undefined,
+    taggedLinkRegexes,
+  };
+  for (const [index, line] of lines.entries()) {
+    const single: SingleLineContext = {
+      lineIndex: index,
+      offset: 0,
+      nested: false,
+      line: true,
+    };
+    nodes.push(...parseToNodes(line, single, multi));
+  }
+  return nodes;
 }
 
-function parseToNodes(text: string, option: ParsingOption): Node[] {
+function parseToNodes(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
   const {
     itemization,
+    blockCodeMeta,
+    blockCodeLine,
     inlineCode,
     blockFormula,
     inlineFormula,
@@ -101,134 +115,241 @@ function parseToNodes(text: string, option: ParsingOption): Node[] {
     hashTag,
     normal,
   } = TextLinesConstants.regexes;
-  const taggedLink = option.taggedLinkRegexes.find((regex) => regex.test(text));
+  const taggedLink = multi.taggedLinkRegexes.find((regex) => regex.test(text));
 
-  if (option.line && itemization.test(text)) {
-    return parseItemization(text, option);
+  if (single.line && blockCodeMeta.test(text)) {
+    return parseBlockCodeMeta(text, single, multi);
+  } else if (
+    single.line &&
+    multi.blockCodeDepth !== undefined &&
+    blockCodeLine(multi.blockCodeDepth).test(text)
+  ) {
+    return parseBlockCodeLine(text, single, multi);
+  } else if (single.line && itemization.test(text)) {
+    return parseItemization(text, single, multi);
   } else if (inlineCode.test(text)) {
-    return parseInlineCode(text, option);
+    return parseInlineCode(text, single, multi);
   } else if (blockFormula.test(text)) {
-    return parseBlockFormula(text, option);
+    return parseBlockFormula(text, single, multi);
   } else if (inlineFormula.test(text)) {
-    return parseInlineFormula(text, option);
+    return parseInlineFormula(text, single, multi);
   } else if (decoration.test(text)) {
-    return parseDecoration(text, option);
+    return parseDecoration(text, single, multi);
   } else if (taggedLink) {
-    return parseTaggedLink(text, option, taggedLink);
+    return parseTaggedLink(text, single, multi, taggedLink);
   } else if (bracketLink.test(text)) {
-    return parseBracketLink(text, option);
+    return parseBracketLink(text, single, multi);
   } else if (hashTag.test(text)) {
-    return parseHashTag(text, option);
+    return parseHashTag(text, single, multi);
   } else if (normal.test(text)) {
-    return parseNormal(text, option);
+    return parseNormal(text, single);
   } else {
     return [];
   }
 }
 
-function parseItemization(line: string, option: ParsingOption): Node[] {
-  const regex = TextLinesConstants.regexes.itemization;
-  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset, option.offset + line.length];
+function parseBlockCodeMeta(
+  line: string,
+  single: SingleLineContext,
+  multi: MultiLineContext
+): Node[] {
+  if (!single.line) return [];
 
-  const node: ItemizationNode = {
-    type: 'itemization',
-    lineIndex: option.lineIndex,
+  const regex = TextLinesConstants.regexes.blockCodeMeta;
+  const { indent, meta } = line.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [single.offset, single.offset + line.length];
+
+  const node: BlockCodeMetaNode = {
+    type: 'blockCodeMeta',
+    lineIndex: single.lineIndex,
     range: [from, to],
-    indent,
-    children: parseToNodes(content, { ...option, offset: from + indent.length, line: false }),
+    indentDepth: indent.length,
+    meta,
+  };
+
+  if (indent.length == multi.blockCodeDepth) {
+    multi.blockCodeDepth = undefined;
+  } else {
+    multi.blockCodeDepth = indent.length;
+  }
+
+  return [node];
+}
+
+function parseBlockCodeLine(
+  line: string,
+  single: SingleLineContext,
+  multi: MultiLineContext
+): Node[] {
+  if (!single.line || multi.blockCodeDepth === undefined) return [];
+
+  const regex = TextLinesConstants.regexes.blockCodeLine(multi.blockCodeDepth);
+  const { indent, codeLine } = line.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [single.offset, single.offset + line.length];
+
+  const node: BlockCodeLineNode = {
+    type: 'blockCodeLine',
+    lineIndex: single.lineIndex,
+    range: [from, to],
+    indentDepth: indent.length,
+    codeLine,
   };
 
   return [node];
 }
 
-function parseInlineCode(text: string, option: ParsingOption): Node[] {
+function parseItemization(
+  line: string,
+  single: SingleLineContext,
+  multi: MultiLineContext
+): Node[] {
+  if (!single.line) return [];
+
+  const regex = TextLinesConstants.regexes.itemization;
+  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [single.offset, single.offset + line.length];
+
+  const node: ItemizationNode = {
+    type: 'itemization',
+    lineIndex: single.lineIndex,
+    range: [from, to],
+    indentDepth: indent.length,
+    children: parseToNodes(
+      content,
+      { ...single, offset: from + indent.length, line: false },
+      multi
+    ),
+  };
+
+  multi.blockCodeDepth = undefined;
+
+  return [node];
+}
+
+function parseInlineCode(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
+  if (single.line) return [];
+
   const regex = TextLinesConstants.regexes.inlineCode;
   const { left, code, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
 
   const node: InlineCodeNode = {
     type: 'inlineCode',
-    lineIndex: option.lineIndex,
+    lineIndex: single.lineIndex,
     range: [from, to],
     facingMeta: '`',
     code,
     trailingMeta: '`',
   };
 
-  return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
+  return [
+    ...parseToNodes(left, single, multi),
+    node,
+    ...parseToNodes(right, { ...single, offset: to }, multi),
+  ];
 }
-function parseBlockFormula(text: string, option: ParsingOption): Node[] {
+function parseBlockFormula(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext
+): Node[] {
   const regex = TextLinesConstants.regexes.blockFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
 
   const node: BlockFormulaNode = {
     type: 'blockFormula',
-    lineIndex: option.lineIndex,
+    lineIndex: single.lineIndex,
     range: [from, to],
     facingMeta: '$$',
     formula,
     trailingMeta: '$$',
   };
 
-  return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
+  return [
+    ...parseToNodes(left, single, multi),
+    node,
+    ...parseToNodes(right, { ...single, offset: to }, multi),
+  ];
 }
 
-function parseInlineFormula(text: string, option: ParsingOption): Node[] {
+function parseInlineFormula(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext
+): Node[] {
+  if (single.line) return [];
+
   const regex = TextLinesConstants.regexes.inlineFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
 
   const node: InlineFormulaNode = {
     type: 'inlineFormula',
-    lineIndex: option.lineIndex,
+    lineIndex: single.lineIndex,
     range: [from, to],
     facingMeta: '$',
     formula,
     trailingMeta: '$',
   };
 
-  return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
+  return [
+    ...parseToNodes(left, single, multi),
+    node,
+    ...parseToNodes(right, { ...single, offset: to }, multi),
+  ];
 }
 
-function parseDecoration(text: string, option: ParsingOption): Node[] {
+function parseDecoration(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
+  if (single.line) return [];
+
   const regex = TextLinesConstants.regexes.decoration;
   const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
 
-  const node: DecorationNode | BracketLinkNode = !option.nested
+  const node: DecorationNode | BracketLinkNode = !single.nested
     ? {
         type: 'decoration',
-        lineIndex: option.lineIndex,
+        lineIndex: single.lineIndex,
         range: [from, to],
         facingMeta: `[${decoration} `,
-        children: parseToNodes(body, {
-          ...option,
-          offset: from + decoration.length + 2,
-          nested: true,
-        }),
+        children: parseToNodes(
+          body,
+          { ...single, offset: from + decoration.length + 2, nested: true },
+          multi
+        ),
         trailingMeta: ']',
       }
     : {
         type: 'bracketLink',
-        lineIndex: option.lineIndex,
+        lineIndex: single.lineIndex,
         range: [from, to],
         facingMeta: '[',
         linkName: `${decoration} ${body}`,
         trailingMeta: ']',
       };
 
-  return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
+  return [
+    ...parseToNodes(left, single, multi),
+    node,
+    ...parseToNodes(right, { ...single, offset: to }, multi),
+  ];
 }
 
-function parseTaggedLink(text: string, option: ParsingOption, regex: RegExp): Node[] {
+function parseTaggedLink(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext,
+  regex: RegExp
+): Node[] {
+  if (single.line) return [];
+
   const { left, tag, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
 
   const node: TaggedLinkNode = {
     type: 'taggedLink',
-    lineIndex: option.lineIndex,
+    lineIndex: single.lineIndex,
     range: [from, to],
     facingMeta: '[',
     tag,
@@ -236,45 +357,67 @@ function parseTaggedLink(text: string, option: ParsingOption, regex: RegExp): No
     trailingMeta: ']',
   };
 
-  return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
+  return [
+    ...parseToNodes(left, single, multi),
+    node,
+    ...parseToNodes(right, { ...single, offset: to }, multi),
+  ];
 }
 
-function parseBracketLink(text: string, option: ParsingOption): Node[] {
+function parseBracketLink(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext
+): Node[] {
+  if (single.line) return [];
+
   const regex = TextLinesConstants.regexes.bracketLink;
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
 
   const node: BracketLinkNode = {
     type: 'bracketLink',
-    lineIndex: option.lineIndex,
+    lineIndex: single.lineIndex,
     range: [from, to],
     facingMeta: '[',
     linkName,
     trailingMeta: ']',
   };
 
-  return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
+  return [
+    ...parseToNodes(left, single, multi),
+    node,
+    ...parseToNodes(right, { ...single, offset: to }, multi),
+  ];
 }
 
-function parseHashTag(text: string, option: ParsingOption): Node[] {
+function parseHashTag(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
+  if (single.line) return [];
+
   const regex = TextLinesConstants.regexes.hashTag;
   const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [option.offset + left.length, option.offset + text.length - right.length];
+  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
   const node: HashTagNode = {
     type: 'hashTag',
-    lineIndex: option.lineIndex,
+    lineIndex: single.lineIndex,
     range: [from, to],
     hashTag,
   };
-  return [...parseToNodes(left, option), node, ...parseToNodes(right, { ...option, offset: to })];
+  return [
+    ...parseToNodes(left, single, multi),
+    node,
+    ...parseToNodes(right, { ...single, offset: to }, multi),
+  ];
 }
 
-function parseNormal(text: string, option: ParsingOption): Node[] {
-  const [from, to] = [option.offset, option.offset + text.length];
+function parseNormal(text: string, single: SingleLineContext): Node[] {
+  if (single.line) return [];
+
+  const [from, to] = [single.offset, single.offset + text.length];
 
   const node: NormalNode = {
     type: 'normal',
-    lineIndex: option.lineIndex,
+    lineIndex: single.lineIndex,
     text,
     range: [from, to],
   };
