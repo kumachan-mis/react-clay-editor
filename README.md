@@ -76,6 +76,9 @@ Here are some examples:
 | style                | syntax                     |
 | -------------------- | -------------------------- |
 | `inline code string` | `` `inline code string` `` |
+|                      | ` ``` `                    |
+| `block code string`  | ` block code string`       |
+|                      | ` ``` `                    |
 
 ### Math Formulas
 
