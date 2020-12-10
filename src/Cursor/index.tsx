@@ -122,7 +122,7 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
       className={constants.list.className}
       style={constants.list.style(position, cursorSize, width, maxHeight, suggestions.length == 0)}
     >
-      {suggestions.map((suggestion: string, index: number) => (
+      {suggestions.map((suggestion, index) => (
         <li
           key={index}
           aria-selected={suggestionIndex == index}

@@ -24,19 +24,19 @@ export const defaultCodeStyle: React.CSSProperties = {
 export const TextLinesConstants = {
   className: 'React-Realtime-Markup-Editor-textlines',
   itemization: {
-    indent: {
-      className: 'React-Realtime-Markup-Editor-textlines-indent',
-      style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
-    },
     dot: {
       className: 'React-Realtime-Markup-Editor-textlines-indent-dot',
     },
-    pad: {
-      className: 'React-Realtime-Markup-Editor-textlines-indent-pad',
-    },
     content: {
-      className: 'React-Realtime-Markup-Editor-textlines-content',
       style: (indentDepth: number): React.CSSProperties => ({
+        marginLeft: `${1.5 * indentDepth}em`,
+      }),
+    },
+  },
+  blockCodeLine: {
+    content: {
+      style: (indentDepth: number, codeStyle?: React.CSSProperties): React.CSSProperties => ({
+        ...codeStyle,
         marginLeft: `${1.5 * indentDepth}em`,
       }),
     },
@@ -52,6 +52,16 @@ export const TextLinesConstants = {
   line: {
     className: (lineIndex: number): string => `React-Realtime-Markup-Editor-line L${lineIndex}`,
     classNameRegex: /React-Realtime-Markup-Editor-line L(?<lineIndex>\d+)/,
+    indent: {
+      className: 'React-Realtime-Markup-Editor-textlines-indent',
+      style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
+    },
+    pad: {
+      className: 'React-Realtime-Markup-Editor-textlines-indent-pad',
+    },
+    content: {
+      className: 'React-Realtime-Markup-Editor-textlines-content',
+    },
     style: (defaultFontSize: number): React.CSSProperties => ({
       fontSize: `${defaultFontSize}px`,
       minHeight: `${defaultFontSize}px`,
@@ -73,6 +83,9 @@ export const TextLinesConstants = {
   },
   regexes: {
     itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ ].*)?)$/,
+    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<meta>```)$/,
+    blockCodeLine: (indentDepth: number): RegExp =>
+      RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
     inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
     blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
     inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,

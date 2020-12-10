@@ -50,6 +50,8 @@ export interface DecorationStyle {
 
 export type Node =
   | ItemizationNode
+  | BlockCodeMetaNode
+  | BlockCodeLineNode
   | InlineCodeNode
   | BlockFormulaNode
   | InlineFormulaNode
@@ -63,8 +65,24 @@ export interface ItemizationNode {
   type: 'itemization';
   lineIndex: number;
   range: [number, number];
-  indent: string;
+  indentDepth: number;
   children: Node[];
+}
+
+export interface BlockCodeMetaNode {
+  type: 'blockCodeMeta';
+  lineIndex: number;
+  range: [number, number];
+  indentDepth: number;
+  meta: string;
+}
+
+export interface BlockCodeLineNode {
+  type: 'blockCodeLine';
+  lineIndex: number;
+  range: [number, number];
+  indentDepth: number;
+  codeLine: string;
 }
 
 export interface InlineCodeNode {
@@ -136,7 +154,11 @@ export interface NormalNode {
   text: string;
 }
 
-export interface ParsingOption {
+export interface MultiLineContext {
+  blockCodeDepth: number | undefined;
+}
+
+export interface SingleLineContext {
   lineIndex: number;
   offset: number;
   nested: boolean;
