@@ -54,12 +54,12 @@ and so on
 
 [** Code strings]
  inline mode
-  \`import { Editor } from "react-realtime-markup-editor"\`
+  \`import { Editor } from 'react-realtime-markup-editor'\`
  block mode
   \`\`\`
-  import { Editor } from "react-realtime-markup-editor";
+  import { Editor } from 'react-realtime-markup-editor';
   const App: React.FC = () => {
-    const [text, setText] = React.useState("");
+    const [text, setText] = React.useState('');
     return <Editor text={text} onChangeText={setText} />;
   };
   // note: code block is not a bulleted item
@@ -79,7 +79,7 @@ const defaultSubText =
  #disabled-hash-tag-link
 
 [* Code string can be disabled]
- \`import { Editor } from "react-realtime-markup-editor"\`
+ \`import { Editor } from 'react-realtime-markup-editor'\`
 
 [* Math formulas can be disabled]
  $f(x)$
