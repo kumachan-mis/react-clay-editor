@@ -88,6 +88,7 @@ export function parseText(text: string, taggedLinkPropsMap: TaggedLinkPropsMap):
   const nodes: Node[] = [];
   const multi: MultiLineContext = {
     blockCodeDepth: undefined,
+    taggedLinkRegexes,
   };
   for (const [index, line] of lines.entries()) {
     const single: SingleLineContext = {
@@ -95,7 +96,6 @@ export function parseText(text: string, taggedLinkPropsMap: TaggedLinkPropsMap):
       offset: 0,
       nested: false,
       line: true,
-      taggedLinkRegexes,
     };
     nodes.push(...parseToNodes(line, single, multi));
   }
@@ -115,7 +115,7 @@ function parseToNodes(text: string, single: SingleLineContext, multi: MultiLineC
     hashTag,
     normal,
   } = TextLinesConstants.regexes;
-  const taggedLink = single.taggedLinkRegexes.find((regex) => regex.test(text));
+  const taggedLink = multi.taggedLinkRegexes.find((regex) => regex.test(text));
 
   if (single.line && blockCodeMeta.test(text)) {
     return parseBlockCodeMeta(text, single, multi);

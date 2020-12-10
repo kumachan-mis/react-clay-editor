@@ -156,6 +156,7 @@ export interface NormalNode {
 
 export interface MultiLineContext {
   blockCodeDepth: number | undefined;
+  taggedLinkRegexes: RegExp[];
 }
 
 export interface SingleLineContext {
@@ -163,5 +164,4 @@ export interface SingleLineContext {
   offset: number;
   nested: boolean;
   line: boolean;
-  taggedLinkRegexes: RegExp[];
 }

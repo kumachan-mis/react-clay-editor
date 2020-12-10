@@ -22,6 +22,16 @@ A text document editor which is syntactically formattable in real time
  paste
  undo
  redo
+ move up
+ move uown
+ move left
+ move right
+ move to word top
+ move to word bottom
+ move to line top
+ move to line bottom
+ move to text top
+ move to text bottom
 
 [** Text decorations]
  [* bold]
@@ -43,7 +53,17 @@ and so on
   [npm: react-realtime-markup-editor]
 
 [** Code strings]
- \`import { Editor } from "react-realtime-markup-editor"\`
+ inline mode
+  \`import { Editor } from "react-realtime-markup-editor"\`
+ block mode
+  \`\`\`
+  import { Editor } from "react-realtime-markup-editor";
+  const App: React.FC = () => {
+    const [text, setText] = React.useState("");
+    return <Editor text={text} onChangeText={setText} />;
+  };
+  // note: code block is not a bulleted item
+  \`\`\`
 
 [** Math formulas]
  inline mode
