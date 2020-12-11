@@ -10,7 +10,7 @@ import {
   BracketLinkNode,
   HashTagNode,
   NormalNode,
-} from '../../src/TextLines/types';
+} from '../../../src/TextLines/types';
 
 export interface TestFixtures {
   testCaseGroups: {

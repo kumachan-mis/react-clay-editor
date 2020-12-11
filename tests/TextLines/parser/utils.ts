@@ -1,5 +1,6 @@
 import { NodeWithoutRange } from './types';
-import { Node } from '../../src/TextLines/types';
+
+import { Node } from '../../../src/TextLines/types';
 
 export function isEqualNodesWithoutRange(expected: NodeWithoutRange[], actual: Node[]): boolean {
   return (
