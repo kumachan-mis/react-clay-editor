@@ -154,14 +154,18 @@ export interface NormalNode {
   text: string;
 }
 
-export interface MultiLineContext {
-  blockCodeDepth: number | undefined;
-  taggedLinkRegexes: RegExp[];
-}
-
 export interface SingleLineContext {
   lineIndex: number;
   offset: number;
   nested: boolean;
   line: boolean;
+}
+
+export interface MultiLineContext {
+  blockCodeDepth: number | undefined;
+}
+
+export interface ParsingOptions {
+  taggedLinkRegexes: RegExp[];
+  disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
 }

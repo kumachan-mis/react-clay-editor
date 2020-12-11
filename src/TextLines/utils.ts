@@ -1,7 +1,6 @@
 import { TextLinesConstants } from './constants';
 import {
   TextDecoration,
-  TaggedLinkPropsMap,
   DecorationStyle,
   Node,
   ItemizationNode,
@@ -17,6 +16,7 @@ import {
   NormalNode,
   SingleLineContext,
   MultiLineContext,
+  ParsingOptions,
 } from './types';
 
 import { classNameToSelector } from '../common';
@@ -79,16 +79,11 @@ export function getHashTagName(hashTag: string): string {
   return hashTag.substring(1);
 }
 
-export function parseText(text: string, taggedLinkPropsMap: TaggedLinkPropsMap): Node[] {
-  const taggedLinkRegexes = Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
-    TextLinesConstants.regexes.taggedLink(tagName, linkProps.linkNameRegex)
-  );
-
+export function parseText(text: string, options: ParsingOptions): Node[] {
   const lines = text.split('\n');
   const nodes: Node[] = [];
   const multi: MultiLineContext = {
     blockCodeDepth: undefined,
-    taggedLinkRegexes,
   };
   for (const [index, line] of lines.entries()) {
     const single: SingleLineContext = {
@@ -97,12 +92,17 @@ export function parseText(text: string, taggedLinkPropsMap: TaggedLinkPropsMap):
       nested: false,
       line: true,
     };
-    nodes.push(...parseToNodes(line, single, multi));
+    nodes.push(...parseToNodes(line, single, multi, options));
   }
   return nodes;
 }
 
-function parseToNodes(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
+function parseToNodes(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext,
+  options: ParsingOptions
+): Node[] {
   const {
     itemization,
     blockCodeMeta,
@@ -115,34 +115,35 @@ function parseToNodes(text: string, single: SingleLineContext, multi: MultiLineC
     hashTag,
     normal,
   } = TextLinesConstants.regexes;
-  const taggedLink = multi.taggedLinkRegexes.find((regex) => regex.test(text));
+  const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
-  if (single.line && blockCodeMeta.test(text)) {
-    return parseBlockCodeMeta(text, single, multi);
+  if (!options.disabledMap.code && single.line && blockCodeMeta.test(text)) {
+    return parseBlockCodeMeta(text, single, multi, options);
   } else if (
+    !options.disabledMap.code &&
     single.line &&
     multi.blockCodeDepth !== undefined &&
     blockCodeLine(multi.blockCodeDepth).test(text)
   ) {
-    return parseBlockCodeLine(text, single, multi);
+    return parseBlockCodeLine(text, single, multi, options);
   } else if (single.line && itemization.test(text)) {
-    return parseItemization(text, single, multi);
-  } else if (inlineCode.test(text)) {
-    return parseInlineCode(text, single, multi);
-  } else if (blockFormula.test(text)) {
-    return parseBlockFormula(text, single, multi);
-  } else if (inlineFormula.test(text)) {
-    return parseInlineFormula(text, single, multi);
+    return parseItemization(text, single, multi, options);
+  } else if (!options.disabledMap.code && inlineCode.test(text)) {
+    return parseInlineCode(text, single, multi, options);
+  } else if (!options.disabledMap.formula && blockFormula.test(text)) {
+    return parseBlockFormula(text, single, multi, options);
+  } else if (!options.disabledMap.formula && inlineFormula.test(text)) {
+    return parseInlineFormula(text, single, multi, options);
   } else if (decoration.test(text)) {
-    return parseDecoration(text, single, multi);
+    return parseDecoration(text, single, multi, options);
   } else if (taggedLink) {
-    return parseTaggedLink(text, single, multi, taggedLink);
-  } else if (bracketLink.test(text)) {
-    return parseBracketLink(text, single, multi);
-  } else if (hashTag.test(text)) {
-    return parseHashTag(text, single, multi);
+    return parseTaggedLink(text, single, multi, options, taggedLink);
+  } else if (!options.disabledMap.bracketLink && bracketLink.test(text)) {
+    return parseBracketLink(text, single, multi, options);
+  } else if (!options.disabledMap.hashTag && hashTag.test(text)) {
+    return parseHashTag(text, single, multi, options);
   } else if (normal.test(text)) {
-    return parseNormal(text, single);
+    return parseNormal(text, single, multi, options);
   } else {
     return [];
   }
@@ -151,7 +152,9 @@ function parseToNodes(text: string, single: SingleLineContext, multi: MultiLineC
 function parseBlockCodeMeta(
   line: string,
   single: SingleLineContext,
-  multi: MultiLineContext
+  multi: MultiLineContext,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options: ParsingOptions
 ): Node[] {
   if (!single.line) return [];
 
@@ -179,7 +182,9 @@ function parseBlockCodeMeta(
 function parseBlockCodeLine(
   line: string,
   single: SingleLineContext,
-  multi: MultiLineContext
+  multi: MultiLineContext,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options: ParsingOptions
 ): Node[] {
   if (!single.line || multi.blockCodeDepth === undefined) return [];
 
@@ -201,7 +206,8 @@ function parseBlockCodeLine(
 function parseItemization(
   line: string,
   single: SingleLineContext,
-  multi: MultiLineContext
+  multi: MultiLineContext,
+  options: ParsingOptions
 ): Node[] {
   if (!single.line) return [];
 
@@ -217,7 +223,8 @@ function parseItemization(
     children: parseToNodes(
       content,
       { ...single, offset: from + indent.length, line: false },
-      multi
+      multi,
+      options
     ),
   };
 
@@ -226,7 +233,12 @@ function parseItemization(
   return [node];
 }
 
-function parseInlineCode(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
+function parseInlineCode(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext,
+  options: ParsingOptions
+): Node[] {
   if (single.line) return [];
 
   const regex = TextLinesConstants.regexes.inlineCode;
@@ -243,15 +255,16 @@ function parseInlineCode(text: string, single: SingleLineContext, multi: MultiLi
   };
 
   return [
-    ...parseToNodes(left, single, multi),
+    ...parseToNodes(left, single, multi, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi),
+    ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
 function parseBlockFormula(
   text: string,
   single: SingleLineContext,
-  multi: MultiLineContext
+  multi: MultiLineContext,
+  options: ParsingOptions
 ): Node[] {
   const regex = TextLinesConstants.regexes.blockFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
@@ -267,16 +280,17 @@ function parseBlockFormula(
   };
 
   return [
-    ...parseToNodes(left, single, multi),
+    ...parseToNodes(left, single, multi, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi),
+    ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
 
 function parseInlineFormula(
   text: string,
   single: SingleLineContext,
-  multi: MultiLineContext
+  multi: MultiLineContext,
+  options: ParsingOptions
 ): Node[] {
   if (single.line) return [];
 
@@ -294,13 +308,18 @@ function parseInlineFormula(
   };
 
   return [
-    ...parseToNodes(left, single, multi),
+    ...parseToNodes(left, single, multi, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi),
+    ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
 
-function parseDecoration(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
+function parseDecoration(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext,
+  options: ParsingOptions
+): Node[] {
   if (single.line) return [];
 
   const regex = TextLinesConstants.regexes.decoration;
@@ -316,7 +335,8 @@ function parseDecoration(text: string, single: SingleLineContext, multi: MultiLi
         children: parseToNodes(
           body,
           { ...single, offset: from + decoration.length + 2, nested: true },
-          multi
+          multi,
+          options
         ),
         trailingMeta: ']',
       }
@@ -330,9 +350,9 @@ function parseDecoration(text: string, single: SingleLineContext, multi: MultiLi
       };
 
   return [
-    ...parseToNodes(left, single, multi),
+    ...parseToNodes(left, single, multi, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi),
+    ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
 
@@ -340,6 +360,7 @@ function parseTaggedLink(
   text: string,
   single: SingleLineContext,
   multi: MultiLineContext,
+  options: ParsingOptions,
   regex: RegExp
 ): Node[] {
   if (single.line) return [];
@@ -358,16 +379,17 @@ function parseTaggedLink(
   };
 
   return [
-    ...parseToNodes(left, single, multi),
+    ...parseToNodes(left, single, multi, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi),
+    ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
 
 function parseBracketLink(
   text: string,
   single: SingleLineContext,
-  multi: MultiLineContext
+  multi: MultiLineContext,
+  options: ParsingOptions
 ): Node[] {
   if (single.line) return [];
 
@@ -385,13 +407,18 @@ function parseBracketLink(
   };
 
   return [
-    ...parseToNodes(left, single, multi),
+    ...parseToNodes(left, single, multi, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi),
+    ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
 
-function parseHashTag(text: string, single: SingleLineContext, multi: MultiLineContext): Node[] {
+function parseHashTag(
+  text: string,
+  single: SingleLineContext,
+  multi: MultiLineContext,
+  options: ParsingOptions
+): Node[] {
   if (single.line) return [];
 
   const regex = TextLinesConstants.regexes.hashTag;
@@ -404,13 +431,20 @@ function parseHashTag(text: string, single: SingleLineContext, multi: MultiLineC
     hashTag,
   };
   return [
-    ...parseToNodes(left, single, multi),
+    ...parseToNodes(left, single, multi, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi),
+    ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
 
-function parseNormal(text: string, single: SingleLineContext): Node[] {
+function parseNormal(
+  text: string,
+  single: SingleLineContext,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  multi: MultiLineContext,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options: ParsingOptions
+): Node[] {
   if (single.line) return [];
 
   const [from, to] = [single.offset, single.offset + text.length];
