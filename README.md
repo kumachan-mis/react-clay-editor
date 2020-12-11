@@ -232,7 +232,7 @@ interface BracketLinkProps {
   default: `[]`
 - initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
   default: `0`
-- disabled: if `true`, bracket links behave in the same way as plain texts  
+- disabled: if `true`, syntax of bracket links is ignored  
   default: `undefined` (falsy)
 
 **Default**
@@ -331,7 +331,7 @@ interface CodeProps {
 
 - codeProps: given `code`, this function returns props of `<code>` tag  
   default: `(code: string) => ({ style: defaultCodeStyle })`
-- disabled: if `true`, math formulas behave in the same way as plain texts  
+- disabled: if `true`, syntax of code strings is ignored  
   default: `undefined` (falsy)
 
 **Default**
@@ -361,5 +361,5 @@ interface FormulaProps {
 
 **Attributes**
 
-- disabled: if `true`, math formulas behave in the same way as plain texts  
+- disabled: if `true`, syntax of math formulas is ignored  
   default: `undefined` (falsy)
