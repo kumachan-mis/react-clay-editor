@@ -75,31 +75,50 @@ and so on
 const defaultSubText =
 `[** Of course, you can use multiple editors]
 [* Links can be disabled]
- [disabled-bracket-link]
- #disabled-hash-tag-link
+ bracket-link
+  [disabled-bracket-link]
+ hash-tag-link
+  #disabled-hash-tag-link
+ tagged-link
+  if you don't define any tag, of course, tagged link is ignored
+  [disabled: plain text]
 
 [* Code string can be disabled]
- \`import { Editor } from 'react-realtime-markup-editor'\`
+ inline mode
+  \`import { Editor } from 'react-realtime-markup-editor'\`
+ block mode
+  \`\`\`
+  import { Editor } from 'react-realtime-markup-editor';
+  const App: React.FC = () => {
+    const [text, setText] = React.useState('');
+    return <Editor text={text} onChangeText={setText} />;
+  };
+  // note: code block is not a bulleted item
+  \`\`\`
 
 [* Math formulas can be disabled]
- $f(x)$
- $$\\int_a^b f(x) \\mathrm{d}x$$
+ inline mode
+  $f(x)$
+ display mode
+  $$\\int_a^b f(x) \\mathrm{d}x$$
 
 More features are comming soon...`;
 
 const mainStyle: React.CSSProperties = {
-  width: '800px',
-  height: 'calc(72vh - 40px)',
+  width: 'calc(48vw - 60px)',
+  height: 'calc(96vh - 60px)',
   margin: '20px',
   border: 'solid 1px',
   padding: '10px',
+  display: 'inline-block',
 };
 const subStyle: React.CSSProperties = {
-  width: '800px',
-  height: 'calc(24vh - 40px)',
+  width: 'calc(48vw - 60px)',
+  height: 'calc(96vh - 60px)',
   margin: '20px',
   border: 'solid 1px',
   padding: '10px',
+  display: 'inline-block',
 };
 
 export const App: React.FC = () => {
