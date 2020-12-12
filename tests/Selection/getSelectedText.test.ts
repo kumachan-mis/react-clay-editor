@@ -7,11 +7,11 @@ import { TextSelection } from '../../src/Selection/types';
 interface TestCase extends BaseTestCase {
   testName: string;
   inputLines: string[];
-  inputTextSelection: TextSelection | undefined;
+  inputSelection: TextSelection | undefined;
   expectedText: string;
 }
 
 unittest<TestCase>('Selection', 'getSelectedText', (_, testCase) => {
-  const actualText = getSelectedText(testCase.inputLines.join('\n'), testCase.inputTextSelection);
+  const actualText = getSelectedText(testCase.inputLines.join('\n'), testCase.inputSelection);
   expect(actualText).toBe(testCase.expectedText);
 });

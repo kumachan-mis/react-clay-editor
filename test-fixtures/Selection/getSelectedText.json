@@ -1,7 +1,7 @@
 {
   "testCaseGroups": [
     {
-      "groupName": "should return correct cooordinate after moving in single line",
+      "groupName": "should return correct selection after moving in single line",
       "testCases": [
         {
           "testName": "should return correct cooordinate, given single-byte characters",
@@ -9,15 +9,17 @@
             "Alice was beginning to get very tired of sitting by her sister on the bank",
             "and of having nothing to do"
           ],
-          "inputCursorCoordinate": {
-            "lineIndex": 0,
-            "charIndex": 34
+          "inputSelection": {
+            "fixed": {
+              "lineIndex": 0,
+              "charIndex": 29
+            },
+            "free": {
+              "lineIndex": 0,
+              "charIndex": 53
+            }
           },
-          "inputAmount": 1,
-          "expectedCursorCoordinate": {
-            "lineIndex": 0,
-            "charIndex": 35
-          }
+          "expectedText": "ry tired of sitting by h"
         }
       ]
     }

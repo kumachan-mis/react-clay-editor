@@ -1,0 +1,26 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "should return correct decoration style, given a normal setting",
+      "setting": {
+        "fontSizes": {
+          "level1": 16,
+          "level2": 20,
+          "level3": 26
+        }
+      },
+      "testCases": [
+        {
+          "testName": "should return only bold, given '*'",
+          "inputDecorationMeta": "*",
+          "expectedDecorationStyle": {
+            "fontSize": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false
+          }
+        }
+      ]
+    }
+  ]
+}

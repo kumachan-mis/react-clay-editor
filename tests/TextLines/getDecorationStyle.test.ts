@@ -18,7 +18,7 @@ interface TestCase extends BaseTestCase {
 
 unittest<TestCase, TestCaseGroup>('TextLines', 'getDecorationStyle', (group, testCase) => {
   const actualDecorationStyle = getDecorationStyle(
-    `[${testCase.inputDecorationMeta}`,
+    `[${testCase.inputDecorationMeta} `,
     ']',
     group.setting
   );
