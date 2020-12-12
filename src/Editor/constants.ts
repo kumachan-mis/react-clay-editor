@@ -1,5 +1,3 @@
-import { SuggestionType } from '../Cursor/types';
-
 export const EditorConstants = {
   root: {
     className: 'React-Realtime-Markup-Editor-root',
@@ -8,9 +6,4 @@ export const EditorConstants = {
     className: 'React-Realtime-Markup-Editor-editor',
   },
   historyMaxLength: 50,
-  defaultSuggestionState: {
-    suggestionType: SuggestionType.None,
-    suggestions: [],
-    suggestionIndex: -1,
-  },
 };

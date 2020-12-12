@@ -1,5 +1,5 @@
-import { CursorCoordinate, SuggestionType, SuggestionListDecoration } from '../Cursor/types';
-import { TextSelection, SelectionWithMouse } from '../Selection/types';
+import { CursorCoordinate, SuggestionListDecoration } from '../Cursor/types';
+import { TextSelection } from '../Selection/types';
 import { TextDecoration } from '../TextLines/types';
 
 export interface Decoration {
@@ -68,10 +68,10 @@ export interface State {
   textAreaValue: string;
   isComposing: boolean;
   textSelection: TextSelection | undefined;
-  selectionWithMouse: SelectionWithMouse;
+  selectionWithMouse: 'inactive' | 'fired' | 'active';
   historyHead: number;
   editActionHistory: EditAction[];
-  suggestionType: SuggestionType;
+  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
 }

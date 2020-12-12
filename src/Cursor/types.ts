@@ -3,13 +3,6 @@ export interface CursorCoordinate {
   charIndex: number;
 }
 
-export const enum SuggestionType {
-  BracketLink,
-  HashTag,
-  TaggedLink,
-  None,
-}
-
 export interface SuggestionListDecoration {
   width: number;
   maxHeight: number;
@@ -19,7 +12,7 @@ export interface SuggestionListDecoration {
 export interface Props {
   coordinate: CursorCoordinate | undefined;
   textAreaValue: string;
-  suggestionType: SuggestionType;
+  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   suggestionListDecoration?: SuggestionListDecoration;
@@ -62,7 +55,7 @@ export interface HiddenTextAreaProps {
 }
 
 export interface SuggestionListProps {
-  suggestionType: SuggestionType;
+  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   suggestionListDecoration?: SuggestionListDecoration;
