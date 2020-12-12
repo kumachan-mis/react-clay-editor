@@ -1,0 +1,22 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "",
+      "testCases": [
+        {
+          "testName": "",
+          "inputLines": [],
+          "inputCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          },
+          "inputAmount": 0,
+          "expectedCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ]
+    }
+  ]
+}
