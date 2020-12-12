@@ -22,7 +22,6 @@ import '../style.css';
 import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
 import { TextLines } from '../TextLines';
-import { SelectionWithMouse } from '../Selection/types';
 
 // TODO: use function and hooks
 export class Editor extends React.Component<Props, State> {
@@ -35,10 +34,12 @@ export class Editor extends React.Component<Props, State> {
       textAreaValue: '',
       isComposing: false,
       textSelection: undefined,
-      selectionWithMouse: SelectionWithMouse.Inactive,
+      selectionWithMouse: 'inactive',
       historyHead: -1,
       editActionHistory: [],
-      ...EditorConstants.defaultSuggestionState,
+      suggestionType: 'none',
+      suggestions: [],
+      suggestionIndex: -1,
     };
     this.rootRef = React.createRef<HTMLDivElement>();
   }
@@ -147,8 +148,10 @@ export class Editor extends React.Component<Props, State> {
         textAreaValue: '',
         isComposing: false,
         textSelection: undefined,
-        selectionWithMouse: SelectionWithMouse.Inactive,
-        ...EditorConstants.defaultSuggestionState,
+        selectionWithMouse: 'inactive',
+        suggestionType: 'none',
+        suggestions: [],
+        suggestionIndex: -1,
       });
     }
   };

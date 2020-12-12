@@ -10,12 +10,6 @@ export interface TextRange {
   end: CursorCoordinate;
 }
 
-export const enum SelectionWithMouse {
-  Inactive,
-  Started,
-  Active,
-}
-
 export interface Props {
   textSelection: TextSelection | undefined;
 }
