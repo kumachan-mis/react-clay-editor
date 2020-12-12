@@ -13,7 +13,7 @@ export function unittest<
 ): void {
   type Fixtures = TestFixtures<TestCase, TestCaseGroup>;
 
-  describe(`Unit test of function ${functionName}`, () => {
+  describe(`Unit test of function "${functionName}"`, () => {
     const fixturesDirPath = resolve(__dirname, '..', '..', 'test-fixtures');
     const fixturesFilePath = resolve(fixturesDirPath, componentName, `${functionName}.json`);
     const fixtures = JSON.parse(readFileSync(fixturesFilePath, 'utf-8')) as Fixtures;
