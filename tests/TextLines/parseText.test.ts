@@ -1,14 +1,87 @@
-import { NodeWithoutRange } from './types';
-import { Node } from '../../src/TextLines/types';
+import { resolve } from 'path';
+import { readFileSync } from 'fs';
 
-export function isEqualNodesWithoutRange(expected: NodeWithoutRange[], actual: Node[]): boolean {
+import { parseText } from '../../src/TextLines/utils';
+import {
+  Node,
+  ItemizationNode,
+  BlockCodeMetaNode,
+  BlockCodeLineNode,
+  InlineCodeNode,
+  BlockFormulaNode,
+  InlineFormulaNode,
+  DecorationNode,
+  TaggedLinkNode,
+  BracketLinkNode,
+  HashTagNode,
+  NormalNode,
+  ParsingOptions,
+} from '../../src/TextLines/types';
+
+interface TestFixtures {
+  testCaseGroups: {
+    groupName: string;
+    options: {
+      taggedLinkPatterns: string[];
+      disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean };
+    };
+    testCases: {
+      testName: string;
+      inputLines: string[];
+      expectedNodes: NodeWithoutRange[];
+    }[];
+  }[];
+}
+
+type NodeWithoutRange =
+  | (Omit<ItemizationNode, 'range' | 'children'> & { children: NodeWithoutRange[] })
+  | Omit<BlockCodeMetaNode, 'range'>
+  | Omit<BlockCodeLineNode, 'range'>
+  | Omit<InlineCodeNode, 'range'>
+  | Omit<BlockFormulaNode, 'range'>
+  | Omit<InlineFormulaNode, 'range'>
+  | (Omit<DecorationNode, 'range' | 'children'> & { children: NodeWithoutRange[] })
+  | Omit<TaggedLinkNode, 'range'>
+  | Omit<BracketLinkNode, 'range'>
+  | Omit<HashTagNode, 'range'>
+  | Omit<NormalNode, 'range'>;
+
+describe('Unit test of function parseText', () => {
+  const fixturesFilePath = resolve(
+    __dirname,
+    '..',
+    '..',
+    'test-fixtures',
+    'TextLines',
+    'parseText.json'
+  );
+  const fixtures = JSON.parse(readFileSync(fixturesFilePath, 'utf-8')) as TestFixtures;
+
+  fixtures.testCaseGroups.forEach((group) => {
+    describe(group.groupName, () => {
+      const options: ParsingOptions = {
+        disabledMap: group.options.disabledMap,
+        taggedLinkRegexes: group.options.taggedLinkPatterns.map((pattern) => RegExp(pattern)),
+      };
+
+      group.testCases.forEach((testCase) => {
+        it(testCase.testName, () => {
+          const actualNodes = parseText(testCase.inputLines.join('\n'), options);
+          expect(isEqualNodesWithoutRange(testCase.expectedNodes, actualNodes)).toBe(true);
+        });
+      });
+    });
+  });
+});
+
+function isEqualNodesWithoutRange(expected: NodeWithoutRange[], actual: Node[]): boolean {
   return (
     actual.length == expected.length &&
     [...Array(expected.length).keys()].every((i) => isEqualNodeWithoutRange(expected[i], actual[i]))
   );
 }
 
-export function isEqualNodeWithoutRange(expected: NodeWithoutRange, actual: Node): boolean {
+function isEqualNodeWithoutRange(expected: NodeWithoutRange, actual: Node): boolean {
   switch (expected.type) {
     case 'itemization': {
       if (actual.type != 'itemization') return false;
@@ -58,18 +131,10 @@ export function isEqualNodeWithoutRange(expected: NodeWithoutRange, actual: Node
         actual.code == expected.code
       );
     }
-    case 'blockFormula': {
-      if (actual.type != 'blockFormula') return false;
-      return (
-        actual.lineIndex == expected.lineIndex &&
-        actual.facingMeta == expected.facingMeta &&
-        actual.trailingMeta == expected.trailingMeta &&
-        actual.formula == expected.formula
-      );
-    }
+    case 'blockFormula':
     case 'inlineFormula': {
-      if (actual.type != 'inlineFormula') return false;
       return (
+        actual.type == expected.type &&
         actual.lineIndex == expected.lineIndex &&
         actual.facingMeta == expected.facingMeta &&
         actual.trailingMeta == expected.trailingMeta &&
