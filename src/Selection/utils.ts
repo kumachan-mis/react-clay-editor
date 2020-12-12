@@ -105,7 +105,7 @@ export function getLineSelection(
   };
 }
 
-export function getSelectedText(textSelection: TextSelection | undefined, text: string): string {
+export function getSelectedText(text: string, textSelection: TextSelection | undefined): string {
   if (!textSelection) return '';
   const { start, end } = selectionToRange(textSelection);
   const startIndex = cursorCoordinateToTextIndex(text, start);
