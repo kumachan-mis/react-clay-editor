@@ -164,7 +164,7 @@ export function handleOnKeyDown(
       const [newText, newState] = (() => {
         const free = moveCursor(text, state.cursorCoordinate, -1);
         const fixed = moveCursor(text, state.cursorCoordinate, 1);
-        const textMayDelete = getSelectedText({ fixed, free }, text);
+        const textMayDelete = getSelectedText(text, { fixed, free });
         switch (textMayDelete) {
           case '[]':
           case '{}':
@@ -317,7 +317,7 @@ export function handleOnTextCut(
 ): [string, State] {
   if (!state.cursorCoordinate || !state.textSelection) return [text, state];
   event.preventDefault();
-  const selectedText = getSelectedText(state.textSelection, text);
+  const selectedText = getSelectedText(text, state.textSelection);
   event.clipboardData.setData('text/plain', selectedText);
   return insertText(text, state, '');
 }
@@ -329,7 +329,7 @@ export function handleOnTextCopy(
 ): [string, State] {
   if (!state.cursorCoordinate || !state.textSelection) return [text, state];
   event.preventDefault();
-  const selectedText = getSelectedText(state.textSelection, text);
+  const selectedText = getSelectedText(text, state.textSelection);
   event.clipboardData.setData('text/plain', selectedText);
   return [text, state];
 }

@@ -1,0 +1,25 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "should return correct cooordinate after moving in single line",
+      "testCases": [
+        {
+          "testName": "should return correct cooordinate, given single-byte characters",
+          "inputLines": [
+            "Alice was beginning to get very tired of sitting by her sister on the bank",
+            "and of having nothing to do"
+          ],
+          "inputCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 34
+          },
+          "inputAmount": 1,
+          "expectedCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 35
+          }
+        }
+      ]
+    }
+  ]
+}

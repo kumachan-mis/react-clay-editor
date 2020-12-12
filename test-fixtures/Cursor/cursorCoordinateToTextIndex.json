@@ -1,0 +1,47 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "should reurn correct index, given one line text",
+      "testCases": [
+        {
+          "testName": "should return correct index, given single-byte characters",
+          "inputLines": ["A text document editor which is syntactically formattable in read time"],
+          "inputCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 26
+          },
+          "expectedIndex": 26
+        },
+        {
+          "testName": "should return correct index, given multi-bytes characters",
+          "inputLines": ["記法によりリアルタイムに文字装飾が可能なテキスト文書エディタ"],
+          "inputCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 17
+          },
+          "expectedIndex": 17
+        },
+        {
+          "testName": "should return correct index, given single-byte and multi-bytes characters",
+          "inputLines": [
+            "react-realtime-markup-editor: 記法によりリアルタイムに文字装飾が可能なreact製テキスト文書エディタ"
+          ],
+          "inputCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 50
+          },
+          "expectedIndex": 50
+        },
+        {
+          "testName": "should return correct index, given an empty text",
+          "inputLines": [],
+          "inputCursorCoordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          },
+          "expectedIndex": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import { resolve } from 'path';
-import { readFileSync } from 'fs';
+import { unittest } from '../unittest';
+import { BaseTestCaseGroup, BaseTestCase } from '../unittest/types';
 
 import { parseText } from '../../src/TextLines/utils';
 import {
@@ -18,19 +18,19 @@ import {
   ParsingOptions,
 } from '../../src/TextLines/types';
 
-interface TestFixtures {
-  testCaseGroups: {
-    groupName: string;
-    options: {
-      taggedLinkPatterns: string[];
-      disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean };
-    };
-    testCases: {
-      testName: string;
-      inputLines: string[];
-      expectedNodes: NodeWithoutRange[];
-    }[];
-  }[];
+interface TestCaseGroup extends BaseTestCaseGroup<TestCase> {
+  groupName: string;
+  options: {
+    taggedLinkPatterns: string[];
+    disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean };
+  };
+  testCases: TestCase[];
+}
+
+interface TestCase extends BaseTestCase {
+  testName: string;
+  inputLines: string[];
+  expectedNodes: NodeWithoutRange[];
 }
 
 type NodeWithoutRange =
@@ -46,32 +46,13 @@ type NodeWithoutRange =
   | Omit<HashTagNode, 'range'>
   | Omit<NormalNode, 'range'>;
 
-describe('Unit test of function parseText', () => {
-  const fixturesFilePath = resolve(
-    __dirname,
-    '..',
-    '..',
-    'test-fixtures',
-    'TextLines',
-    'parseText.json'
-  );
-  const fixtures = JSON.parse(readFileSync(fixturesFilePath, 'utf-8')) as TestFixtures;
-
-  fixtures.testCaseGroups.forEach((group) => {
-    describe(group.groupName, () => {
-      const options: ParsingOptions = {
-        disabledMap: group.options.disabledMap,
-        taggedLinkRegexes: group.options.taggedLinkPatterns.map((pattern) => RegExp(pattern)),
-      };
-
-      group.testCases.forEach((testCase) => {
-        it(testCase.testName, () => {
-          const actualNodes = parseText(testCase.inputLines.join('\n'), options);
-          expect(isEqualNodesWithoutRange(testCase.expectedNodes, actualNodes)).toBe(true);
-        });
-      });
-    });
-  });
+unittest<TestCase, TestCaseGroup>('TextLines', 'parseText', (group, testCase) => {
+  const options: ParsingOptions = {
+    disabledMap: group.options.disabledMap,
+    taggedLinkRegexes: group.options.taggedLinkPatterns.map((pattern) => RegExp(pattern)),
+  };
+  const actualNodes = parseText(testCase.inputLines.join('\n'), options);
+  expect(isEqualNodesWithoutRange(testCase.expectedNodes, actualNodes)).toBe(true);
 });
 
 function isEqualNodesWithoutRange(expected: NodeWithoutRange[], actual: Node[]): boolean {

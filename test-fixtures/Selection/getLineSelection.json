@@ -1,0 +1,30 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "should return correct selection, given alphabet characters",
+      "testCases": [
+        {
+          "testName": "should return correct selection, given single line consisting of common characters",
+          "inputLines": [
+            "Alice was beginning to get very tired of sitting by her sister on the bank",
+            "and of having nothing to do"
+          ],
+          "inputCursorCoordinate": {
+            "lineIndex": 1,
+            "charIndex": 12
+          },
+          "expectedSelection": {
+            "fixed": {
+              "lineIndex": 1,
+              "charIndex": 0
+            },
+            "free": {
+              "lineIndex": 1,
+              "charIndex": 27
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
