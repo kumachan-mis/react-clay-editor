@@ -31,7 +31,7 @@ unittest<TestCase>('state transition', 'Editor', 'shortcutCommand', (_, testCase
       'Chrome/69.0.3497.100',
     ].join(' '),
     configurable: true,
-  });
+  }); // for windows
   userEvent.type(editor, testCase.inputTypingForWin);
   for (const [key, value] of Object.entries(testCase.expectedState)) {
     expect(screen.getByText(`${key}:${JSON.stringify(value)}`)).toBeInTheDocument();
@@ -45,7 +45,7 @@ unittest<TestCase>('state transition', 'Editor', 'shortcutCommand', (_, testCase
       'Chrome/69.0.3497.100 Safari/537.36',
     ].join(' '),
     configurable: true,
-  });
+  }); // for mac
   userEvent.type(editor, testCase.inputTypingForMac);
   const expectedLinesAndState = { lines: testCase.expectedLines, ...testCase.expectedState };
   for (const [key, value] of Object.entries(expectedLinesAndState)) {
