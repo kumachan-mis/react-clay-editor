@@ -1,0 +1,99 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "should perform correct state transition in typing normal keys",
+      "testCases": [
+        {
+          "testName": "should perform correct state transition, given single key",
+          "inputState": {
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 0
+            }
+          },
+          "inputTypingString": "a",
+          "expectedState": {
+            "lines": ["a"],
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 1
+            },
+            "textAreaValue": "",
+            "historyHead": 0,
+            "editActionHistory": [
+              {
+                "actionType": "insert",
+                "coordinate": {
+                  "lineIndex": 0,
+                  "charIndex": 0
+                },
+                "text": "a"
+              }
+            ]
+          }
+        },
+        {
+          "testName": "should perform correct state transition, given multiple keys",
+          "inputState": {
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 0
+            }
+          },
+          "inputTypingString": "abCxY",
+          "expectedState": {
+            "lines": ["abCxY"],
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 5
+            },
+            "textAreaValue": "",
+            "historyHead": 4,
+            "editActionHistory": [
+              {
+                "actionType": "insert",
+                "coordinate": {
+                  "lineIndex": 0,
+                  "charIndex": 0
+                },
+                "text": "a"
+              },
+              {
+                "actionType": "insert",
+                "coordinate": {
+                  "lineIndex": 0,
+                  "charIndex": 1
+                },
+                "text": "b"
+              },
+              {
+                "actionType": "insert",
+                "coordinate": {
+                  "lineIndex": 0,
+                  "charIndex": 2
+                },
+                "text": "C"
+              },
+              {
+                "actionType": "insert",
+                "coordinate": {
+                  "lineIndex": 0,
+                  "charIndex": 3
+                },
+                "text": "x"
+              },
+              {
+                "actionType": "insert",
+                "coordinate": {
+                  "lineIndex": 0,
+                  "charIndex": 4
+                },
+                "text": "Y"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

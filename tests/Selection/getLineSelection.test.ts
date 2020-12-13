@@ -12,7 +12,7 @@ interface TestCase extends BaseTestCase {
   expectedSelection: TextSelection | undefined;
 }
 
-unittest<TestCase>('Selection', 'getLineSelection', (_, testCase) => {
+unittest<TestCase>('function', 'Selection', 'getLineSelection', (_, testCase) => {
   const actualCursorCoordinate = getLineSelection(
     testCase.inputLines.join('\n'),
     testCase.inputCursorCoordinate

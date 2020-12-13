@@ -11,7 +11,7 @@ interface TestCase extends BaseTestCase {
   expectedText: string;
 }
 
-unittest<TestCase>('Selection', 'getSelectedText', (_, testCase) => {
+unittest<TestCase>('function', 'Selection', 'getSelectedText', (_, testCase) => {
   const actualText = getSelectedText(testCase.inputLines.join('\n'), testCase.inputSelection);
   expect(actualText).toBe(testCase.expectedText);
 });

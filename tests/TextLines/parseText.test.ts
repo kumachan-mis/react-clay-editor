@@ -46,7 +46,7 @@ type NodeWithoutRange =
   | Omit<HashTagNode, 'range'>
   | Omit<NormalNode, 'range'>;
 
-unittest<TestCase, TestCaseGroup>('TextLines', 'parseText', (group, testCase) => {
+unittest<TestCase, TestCaseGroup>('function', 'TextLines', 'parseText', (group, testCase) => {
   const options: ParsingOptions = {
     disabledMap: group.options.disabledMap,
     taggedLinkRegexes: group.options.taggedLinkPatterns.map((pattern) => RegExp(pattern)),

@@ -16,11 +16,16 @@ interface TestCase extends BaseTestCase {
   expectedDecorationStyle: DecorationStyle;
 }
 
-unittest<TestCase, TestCaseGroup>('TextLines', 'getDecorationStyle', (group, testCase) => {
-  const actualDecorationStyle = getDecorationStyle(
-    `[${testCase.inputDecorationMeta} `,
-    ']',
-    group.setting
-  );
-  expect(actualDecorationStyle).toEqual(testCase.expectedDecorationStyle);
-});
+unittest<TestCase, TestCaseGroup>(
+  'function',
+  'TextLines',
+  'getDecorationStyle',
+  (group, testCase) => {
+    const actualDecorationStyle = getDecorationStyle(
+      `[${testCase.inputDecorationMeta} `,
+      ']',
+      group.setting
+    );
+    expect(actualDecorationStyle).toEqual(testCase.expectedDecorationStyle);
+  }
+);
