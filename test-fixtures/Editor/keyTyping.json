@@ -33,7 +33,7 @@
           }
         },
         {
-          "testName": "should perform correct state transition, for multiple keys typing",
+          "testName": "should perform correct state transition for multiple keys typing",
           "inputState": {
             "cursorCoordinate": {
               "lineIndex": 0,
