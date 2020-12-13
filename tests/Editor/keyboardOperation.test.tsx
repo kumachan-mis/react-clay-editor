@@ -14,7 +14,7 @@ interface TestCase extends BaseTestCase {
   expectedState: KeyboardTestState;
 }
 
-unittest<TestCase>('state transition', 'Editor', 'keyTyping', (_, testCase) => {
+unittest<TestCase>('state transition', 'Editor', 'keyboardOperation', (_, testCase) => {
   const initState = { ...defaultInitState, ...testCase.inputState };
   render(<KeyboardTest initState={initState} />);
   const editor = screen.getByRole('textbox');
