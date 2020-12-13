@@ -1,0 +1,38 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "should perform correct state transition in typing normal keys",
+      "testCases": [
+        {
+          "testName": "should perform correct state transition, given single key",
+          "inputState": {
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 0
+            }
+          },
+          "inputTypingString": "a",
+          "expectedState": {
+            "lines": ["a"],
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 1
+            },
+            "textAreaValue": "",
+            "historyHead": 0,
+            "editActionHistory": [
+              {
+                "actionType": "insert",
+                "coordinate": {
+                  "lineIndex": 0,
+                  "charIndex": 0
+                },
+                "text": "a"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

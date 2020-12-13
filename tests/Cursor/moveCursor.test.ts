@@ -12,7 +12,7 @@ interface TestCase extends BaseTestCase {
   expectedCursorCoordinate: CursorCoordinate;
 }
 
-unittest<TestCase>('Cursor', 'moveCursor', (_, testCase) => {
+unittest<TestCase>('function', 'Cursor', 'moveCursor', (_, testCase) => {
   const actualCursorCoordinate = moveCursor(
     testCase.inputLines.join('\n'),
     testCase.inputCursorCoordinate,
