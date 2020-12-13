@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { KeyboardTest, KeyboardTestState, defaultInitState } from './KeyboardTest';
-import { unittest } from '../unit';
-import { BaseTestCase } from '../unit/types';
+import { unittest } from '../utils/unit';
+import { BaseTestCase } from '../utils/unit/types';
 
 interface TestCase extends BaseTestCase {
   testName: string;
