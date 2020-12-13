@@ -1,0 +1,40 @@
+{
+  "testCaseGroups": [
+    {
+      "groupName": "should perform correct state transition for selectAll command",
+      "testCases": [
+        {
+          "testName": "should perform selectAll correctly, given single line text",
+          "inputLines": ["A text document editor which is syntactically formattable in real time"],
+          "inputState": {
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 17
+            }
+          },
+          "inputTypingForWin": "{ctrl}a{/ctrl}",
+          "inputTypingForMac": "{meta}a{/meta}",
+          "expectedLines": [
+            "A text document editor which is syntactically formattable in real time"
+          ],
+          "expectedState": {
+            "cursorCoordinate": {
+              "lineIndex": 0,
+              "charIndex": 17
+            },
+            "textSelection": {
+              "fixed": {
+                "lineIndex": 0,
+                "charIndex": 0
+              },
+              "free": {
+                "lineIndex": 0,
+                "charIndex": 70
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

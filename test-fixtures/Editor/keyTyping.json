@@ -11,9 +11,9 @@
               "charIndex": 0
             }
           },
-          "inputTypingString": "a",
+          "inputTyping": "a",
+          "expectedLines": ["a"],
           "expectedState": {
-            "lines": ["a"],
             "cursorCoordinate": {
               "lineIndex": 0,
               "charIndex": 1
@@ -40,9 +40,9 @@
               "charIndex": 0
             }
           },
-          "inputTypingString": "aBC",
+          "inputTyping": "aBC",
+          "expectedLines": ["aBC"],
           "expectedState": {
-            "lines": ["aBC"],
             "cursorCoordinate": {
               "lineIndex": 0,
               "charIndex": 3
