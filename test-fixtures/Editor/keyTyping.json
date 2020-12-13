@@ -4,7 +4,7 @@
       "groupName": "should perform correct state transition in typing normal keys",
       "testCases": [
         {
-          "testName": "should perform correct state transition, given single key",
+          "testName": "should perform correct state transition for single key typing",
           "inputState": {
             "cursorCoordinate": {
               "lineIndex": 0,
@@ -33,7 +33,7 @@
           }
         },
         {
-          "testName": "should perform correct state transition, given multiple keys",
+          "testName": "should perform correct state transition, for multiple keys typing",
           "inputState": {
             "cursorCoordinate": {
               "lineIndex": 0,
