@@ -40,15 +40,15 @@
               "charIndex": 0
             }
           },
-          "inputTypingString": "abCxY",
+          "inputTypingString": "aBC",
           "expectedState": {
-            "lines": ["abCxY"],
+            "lines": ["aBC"],
             "cursorCoordinate": {
               "lineIndex": 0,
-              "charIndex": 5
+              "charIndex": 3
             },
             "textAreaValue": "",
-            "historyHead": 4,
+            "historyHead": 2,
             "editActionHistory": [
               {
                 "actionType": "insert",
@@ -64,7 +64,7 @@
                   "lineIndex": 0,
                   "charIndex": 1
                 },
-                "text": "b"
+                "text": "B"
               },
               {
                 "actionType": "insert",
@@ -73,22 +73,6 @@
                   "charIndex": 2
                 },
                 "text": "C"
-              },
-              {
-                "actionType": "insert",
-                "coordinate": {
-                  "lineIndex": 0,
-                  "charIndex": 3
-                },
-                "text": "x"
-              },
-              {
-                "actionType": "insert",
-                "coordinate": {
-                  "lineIndex": 0,
-                  "charIndex": 4
-                },
-                "text": "Y"
               }
             ]
           }
