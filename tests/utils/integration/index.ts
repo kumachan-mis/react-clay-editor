@@ -11,7 +11,7 @@ export function integrationtest<TestCase extends BaseTestCase = BaseTestCase>(
 ): void {
   type Fixtures = TestFixtures<TestCase>;
 
-  describe(`Unit test of ${targetType} in ${componentName}: ${targetName}`, () => {
+  describe(`Integration test of ${targetType} in ${componentName}: ${targetName}`, () => {
     const fixturesDirPath = resolve(__dirname, '..', '..', '..', 'test-fixtures');
     const fixturesFilePath = resolve(fixturesDirPath, componentName, `${targetName}.json`);
     const fixtures = JSON.parse(readFileSync(fixturesFilePath, 'utf-8')) as Fixtures;
