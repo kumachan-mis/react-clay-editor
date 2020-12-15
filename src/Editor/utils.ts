@@ -45,7 +45,7 @@ export function handleOnMouseDown(
 export function handleOnMouseMove(
   text: string,
   state: State,
-  event: React.MouseEvent,
+  event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
   if (!state.cursorCoordinate || state.selectionWithMouse == 'inactive' || !element) {
@@ -69,7 +69,7 @@ export function handleOnMouseMove(
 export function handleOnMouseUp(
   text: string,
   state: State,
-  event: React.MouseEvent,
+  event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
   if (!state.cursorCoordinate || state.selectionWithMouse == 'inactive' || !element) {
@@ -86,8 +86,6 @@ export function handleOnMouseUp(
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   return [text, { ...state, cursorCoordinate, textSelection, selectionWithMouse: 'inactive' }];
 }
-
-export const handleOnMouseLeave = handleOnMouseUp;
 
 export function handleOnClick(
   text: string,

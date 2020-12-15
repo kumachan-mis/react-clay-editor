@@ -6,7 +6,6 @@ import {
   handleOnMouseDown,
   handleOnMouseMove,
   handleOnMouseUp,
-  handleOnMouseLeave,
   handleOnClick,
   handleOnKeyDown,
   handleOnTextChange,
@@ -58,10 +57,7 @@ export class Editor extends React.Component<Props, State> {
         <div className={EditorConstants.root.className} ref={this.rootRef}>
           <div
             className={EditorConstants.editor.className}
-            onMouseDown={this.createMouseEventHandler(handleOnMouseDown)}
-            onMouseMove={this.createMouseEventHandler(handleOnMouseMove)}
-            onMouseUp={this.createMouseEventHandler(handleOnMouseUp)}
-            onMouseLeave={this.createMouseEventHandler(handleOnMouseLeave)}
+            onMouseDown={(event) => this.handleOnMouseDown(event)}
             onClick={this.createMouseEventHandler(handleOnClick)}
           >
             <Cursor
@@ -97,14 +93,9 @@ export class Editor extends React.Component<Props, State> {
     );
   }
 
-  private createMouseEventHandler = (
-    handler: (
-      text: string,
-      state: State,
-      event: React.MouseEvent,
-      root: HTMLElement | null
-    ) => [string, State]
-  ): ((event: React.MouseEvent) => void) => {
+  private createMouseEventHandler = <Event extends MouseEvent | React.MouseEvent>(
+    handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
+  ): ((event: Event) => void) => {
     return (event) => {
       if (this.props.disabled || event.button != 0) return;
       const [newText, newState] = handler(this.props.text, this.state, event, this.rootRef.current);
@@ -133,6 +124,22 @@ export class Editor extends React.Component<Props, State> {
       if (newState != this.state) this.setState(newState);
       if (newText != this.props.text) this.props.onChangeText(newText);
     };
+  };
+
+  private handleOnMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    this.createMouseEventHandler(handleOnMouseDown)(event);
+    document.addEventListener('mousemove', this.handleOnMouseMove);
+    document.addEventListener('mouseup', this.handleOnMouseUp);
+  };
+
+  private handleOnMouseMove = (event: MouseEvent) => {
+    this.createMouseEventHandler(handleOnMouseMove)(event);
+  };
+
+  private handleOnMouseUp = (event: MouseEvent) => {
+    this.createMouseEventHandler(handleOnMouseUp)(event);
+    document.removeEventListener('mousemove', this.handleOnMouseMove);
+    document.removeEventListener('mouseup', this.handleOnMouseUp);
   };
 
   private handleOnEditorBlur = (event: MouseEvent) => {

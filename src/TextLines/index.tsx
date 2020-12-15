@@ -190,7 +190,7 @@ const Node: React.FC<NodeProps> = ({
               key={from + index}
               lineIndex={lineIndex}
               charIndex={from + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
           {[...code].map((char, index) => (
@@ -206,7 +206,7 @@ const Node: React.FC<NodeProps> = ({
               key={to - trailingMeta.length + index}
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
         </code>
@@ -253,7 +253,7 @@ const Node: React.FC<NodeProps> = ({
               key={from + index}
               lineIndex={lineIndex}
               charIndex={from + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
           {children.map((child, index) => (
@@ -274,7 +274,7 @@ const Node: React.FC<NodeProps> = ({
               key={to - trailingMeta.length + index}
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
         </span>
@@ -293,7 +293,7 @@ const Node: React.FC<NodeProps> = ({
               key={from + index}
               lineIndex={lineIndex}
               charIndex={from + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
           {[...tag].map((char, index) => (
@@ -301,7 +301,7 @@ const Node: React.FC<NodeProps> = ({
               key={from + facingMeta.length + index}
               lineIndex={lineIndex}
               charIndex={from + facingMeta.length + index}
-              char={cursorOn || !taggedLinkProps.tagHidden ? char : ''}
+              char={cursorOn || !taggedLinkProps.tagHidden ? char : '\u200b'}
             />
           ))}
           {[...linkName].map((char, index) => (
@@ -317,7 +317,7 @@ const Node: React.FC<NodeProps> = ({
               key={to - trailingMeta.length + index}
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
         </AnchorWithHoverStyle>
@@ -335,7 +335,7 @@ const Node: React.FC<NodeProps> = ({
               key={from + index}
               lineIndex={lineIndex}
               charIndex={from + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
           {[...linkName].map((char, index) => (
@@ -351,7 +351,7 @@ const Node: React.FC<NodeProps> = ({
               key={to - trailingMeta.length + index}
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
-              char={cursorOn ? char : ''}
+              char={cursorOn ? char : '\u200b'}
             />
           ))}
         </AnchorWithHoverStyle>
