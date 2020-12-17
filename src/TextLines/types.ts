@@ -32,7 +32,7 @@ export interface NodeProps {
   taggedLinkPropsMap: TaggedLinkPropsMap;
   codeProps: CodeProps;
   formulaProps: FormulaProps;
-  cursorOn: boolean;
+  curcorLineIndex: number | undefined;
 }
 
 export interface CharProps {
@@ -49,11 +49,78 @@ export interface DecorationStyle {
   underline: boolean;
 }
 
-export type Node =
-  | QuotationNode
-  | ItemizationNode
+export type Node = LineNode | ContentNode;
+
+export type LineNode =
+  | BlockCodeNode
+  | BlockFormulaNode
   | BlockCodeMetaNode
   | BlockCodeLineNode
+  | BlockFormulaMetaNode
+  | BlockFormulaLineNode
+  | QuotationNode
+  | ItemizationNode;
+
+export interface BlockCodeNode {
+  type: 'blockCode';
+  facingMeta: BlockCodeMetaNode;
+  children: BlockCodeLineNode[];
+  trailingMeta?: BlockCodeMetaNode;
+}
+
+export interface BlockFormulaNode {
+  type: 'blockFormula';
+  facingMeta: BlockFormulaMetaNode;
+  children: BlockFormulaLineNode[];
+  trailingMeta?: BlockFormulaMetaNode;
+}
+
+export interface BlockCodeMetaNode {
+  type: 'blockCodeMeta';
+  lineIndex: number;
+  indentDepth: number;
+  codeMeta: string;
+}
+
+export interface BlockCodeLineNode {
+  type: 'blockCodeLine';
+  lineIndex: number;
+  indentDepth: number;
+  codeLine: string;
+}
+
+export interface BlockFormulaMetaNode {
+  type: 'blockFormulaMeta';
+  lineIndex: number;
+  indentDepth: number;
+  formulaMeta: string;
+}
+
+export interface BlockFormulaLineNode {
+  type: 'blockFormulaLine';
+  lineIndex: number;
+  indentDepth: number;
+  formulaLine: string;
+}
+
+export interface QuotationNode {
+  type: 'quotation';
+  lineIndex: number;
+  indentDepth: number;
+  contentLength: number;
+  meta: string;
+  children: ContentNode[];
+}
+
+export interface ItemizationNode {
+  type: 'itemization';
+  lineIndex: number;
+  indentDepth: number;
+  contentLength: number;
+  children: ContentNode[];
+}
+
+export type ContentNode =
   | InlineCodeNode
   | DisplayFormulaNode
   | InlineFormulaNode
@@ -62,39 +129,6 @@ export type Node =
   | BracketLinkNode
   | HashTagNode
   | NormalNode;
-
-export interface QuotationNode {
-  type: 'quotation';
-  lineIndex: number;
-  range: [number, number];
-  indentDepth: number;
-  meta: string;
-  children: Node[];
-}
-
-export interface ItemizationNode {
-  type: 'itemization';
-  lineIndex: number;
-  range: [number, number];
-  indentDepth: number;
-  children: Node[];
-}
-
-export interface BlockCodeMetaNode {
-  type: 'blockCodeMeta';
-  lineIndex: number;
-  range: [number, number];
-  indentDepth: number;
-  meta: string;
-}
-
-export interface BlockCodeLineNode {
-  type: 'blockCodeLine';
-  lineIndex: number;
-  range: [number, number];
-  indentDepth: number;
-  codeLine: string;
-}
 
 export interface InlineCodeNode {
   type: 'inlineCode';
@@ -128,7 +162,8 @@ export interface DecorationNode {
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
-  children: Node[];
+  decoration: string;
+  children: ContentNode[];
   trailingMeta: string;
 }
 
@@ -165,15 +200,10 @@ export interface NormalNode {
   text: string;
 }
 
-export interface SingleLineContext {
+export interface ParsingContext {
   lineIndex: number;
-  offset: number;
+  charIndex: number;
   nested: boolean;
-  line: boolean;
-}
-
-export interface MultiLineContext {
-  blockCodeDepth: number | undefined;
 }
 
 export interface ParsingOptions {

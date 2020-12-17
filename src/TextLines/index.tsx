@@ -65,7 +65,7 @@ export const TextLines: React.FC<Props> = ({
           taggedLinkPropsMap={taggedLinkPropsMap}
           codeProps={codeProps}
           formulaProps={formulaProps}
-          cursorOn={cursorCoordinate?.lineIndex == node.lineIndex}
+          curcorLineIndex={cursorCoordinate?.lineIndex}
         />
       ))}
       <MarginBottom />
@@ -81,12 +81,57 @@ const Node: React.FC<NodeProps> = ({
   taggedLinkPropsMap,
   codeProps,
   formulaProps,
-  cursorOn,
+  curcorLineIndex,
 }) => {
   switch (node.type) {
-    case 'quotation': {
-      const { lineIndex, indentDepth, meta, children } = node;
-      const [from, to] = node.range;
+    case 'blockCode': {
+      const { facingMeta, children, trailingMeta } = node;
+      return (
+        <>
+          <Node
+            node={facingMeta}
+            textDecoration={textDecoration}
+            bracketLinkProps={bracketLinkProps}
+            hashTagProps={hashTagProps}
+            taggedLinkPropsMap={taggedLinkPropsMap}
+            codeProps={codeProps}
+            formulaProps={formulaProps}
+            curcorLineIndex={curcorLineIndex}
+          />
+          {children.map((child, index) => (
+            <Node
+              key={index}
+              node={child}
+              textDecoration={textDecoration}
+              bracketLinkProps={bracketLinkProps}
+              hashTagProps={hashTagProps}
+              taggedLinkPropsMap={taggedLinkPropsMap}
+              codeProps={codeProps}
+              formulaProps={formulaProps}
+              curcorLineIndex={curcorLineIndex}
+            />
+          ))}
+          {trailingMeta && (
+            <Node
+              node={trailingMeta}
+              textDecoration={textDecoration}
+              bracketLinkProps={bracketLinkProps}
+              hashTagProps={hashTagProps}
+              taggedLinkPropsMap={taggedLinkPropsMap}
+              codeProps={codeProps}
+              formulaProps={formulaProps}
+              curcorLineIndex={curcorLineIndex}
+            />
+          )}
+        </>
+      );
+    }
+    case 'blockCodeMeta':
+    case 'blockCodeLine': {
+      const { lineIndex, indentDepth } = node;
+      const code = node.type == 'blockCodeMeta' ? node.codeMeta : node.codeLine;
+      const codeElementProps = codeProps.codeProps?.(code);
+
       return (
         <div
           className={TextLinesConstants.line.className(lineIndex)}
@@ -98,8 +143,62 @@ const Node: React.FC<NodeProps> = ({
           >
             {[...Array(indentDepth).keys()].map((charIndex) => (
               <Char
-                key={from + charIndex}
-                charIndex={from + charIndex}
+                key={charIndex}
+                charIndex={charIndex}
+                lineIndex={lineIndex}
+                char=" "
+                spanPorps={{ className: TextLinesConstants.line.pad.className }}
+              />
+            ))}
+          </span>
+          <span
+            className={TextLinesConstants.line.content.className}
+            style={TextLinesConstants.blockCodeLine.content.style(
+              indentDepth,
+              codeElementProps?.style
+            )}
+          >
+            <code {...codeElementProps}>
+              {[...code].map((char, index) => (
+                <Char
+                  key={indentDepth + index}
+                  lineIndex={lineIndex}
+                  charIndex={indentDepth + index}
+                  char={char}
+                />
+              ))}
+            </code>
+            <Char lineIndex={lineIndex} charIndex={indentDepth + code.length} char={' '} />
+          </span>
+        </div>
+      );
+    }
+    case 'blockFormula': {
+      return <></>;
+    }
+    case 'blockFormulaMeta': {
+      return <></>;
+    }
+    case 'blockFormulaLine': {
+      return <></>;
+    }
+    case 'quotation': {
+      const { lineIndex, indentDepth, contentLength, meta, children } = node;
+      const cursorOn = curcorLineIndex == lineIndex;
+
+      return (
+        <div
+          className={TextLinesConstants.line.className(lineIndex)}
+          style={TextLinesConstants.line.style(textDecoration.fontSizes.level1)}
+        >
+          <span
+            className={TextLinesConstants.line.indent.className}
+            style={TextLinesConstants.line.indent.style(indentDepth)}
+          >
+            {[...Array(indentDepth).keys()].map((charIndex) => (
+              <Char
+                key={charIndex}
+                charIndex={charIndex}
                 lineIndex={lineIndex}
                 char=" "
                 spanPorps={{ className: TextLinesConstants.line.pad.className }}
@@ -112,9 +211,9 @@ const Node: React.FC<NodeProps> = ({
           >
             {[...meta].map((char, index) => (
               <Char
-                key={from + indentDepth + index}
+                key={indentDepth + index}
                 lineIndex={lineIndex}
-                charIndex={from + indentDepth + index}
+                charIndex={indentDepth + index}
                 char={cursorOn ? char : '\u200b'}
               />
             ))}
@@ -128,17 +227,20 @@ const Node: React.FC<NodeProps> = ({
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
-                cursorOn={cursorOn}
+                curcorLineIndex={curcorLineIndex}
               />
             ))}
-            <Char lineIndex={lineIndex} charIndex={to} char={' '} />
+            <Char
+              lineIndex={lineIndex}
+              charIndex={indentDepth + meta.length + contentLength}
+              char={' '}
+            />
           </span>
         </div>
       );
     }
     case 'itemization': {
-      const { lineIndex, indentDepth, children } = node;
-      const [from, to] = node.range;
+      const { lineIndex, indentDepth, contentLength, children } = node;
 
       return (
         <div
@@ -151,8 +253,8 @@ const Node: React.FC<NodeProps> = ({
           >
             {[...Array(indentDepth).keys()].map((charIndex) => (
               <Char
-                key={from + charIndex}
-                charIndex={from + charIndex}
+                key={charIndex}
+                charIndex={charIndex}
                 lineIndex={lineIndex}
                 char=" "
                 spanPorps={{ className: TextLinesConstants.line.pad.className }}
@@ -174,58 +276,10 @@ const Node: React.FC<NodeProps> = ({
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
-                cursorOn={cursorOn}
+                curcorLineIndex={curcorLineIndex}
               />
             ))}
-            <Char lineIndex={lineIndex} charIndex={to} char={' '} />
-          </span>
-        </div>
-      );
-    }
-    case 'blockCodeMeta':
-    case 'blockCodeLine': {
-      const { lineIndex, indentDepth } = node;
-      const code = node.type == 'blockCodeMeta' ? node.meta : node.codeLine;
-      const [from, to] = node.range;
-      const codeElementProps = codeProps.codeProps?.(code);
-
-      return (
-        <div
-          className={TextLinesConstants.line.className(lineIndex)}
-          style={TextLinesConstants.line.style(textDecoration.fontSizes.level1)}
-        >
-          <span
-            className={TextLinesConstants.line.indent.className}
-            style={TextLinesConstants.line.indent.style(indentDepth)}
-          >
-            {[...Array(indentDepth).keys()].map((charIndex) => (
-              <Char
-                key={from + charIndex}
-                charIndex={from + charIndex}
-                lineIndex={lineIndex}
-                char=" "
-                spanPorps={{ className: TextLinesConstants.line.pad.className }}
-              />
-            ))}
-          </span>
-          <span
-            className={TextLinesConstants.line.content.className}
-            style={TextLinesConstants.blockCodeLine.content.style(
-              indentDepth,
-              codeElementProps?.style
-            )}
-          >
-            <code {...codeElementProps}>
-              {[...code].map((char, index) => (
-                <Char
-                  key={from + indentDepth + index}
-                  lineIndex={lineIndex}
-                  charIndex={from + indentDepth + index}
-                  char={char}
-                />
-              ))}
-            </code>
-            <Char lineIndex={lineIndex} charIndex={to} char={' '} />
+            <Char lineIndex={lineIndex} charIndex={indentDepth + contentLength} char={' '} />
           </span>
         </div>
       );
@@ -233,6 +287,7 @@ const Node: React.FC<NodeProps> = ({
     case 'inlineCode': {
       const { lineIndex, facingMeta, code, trailingMeta } = node;
       const [from, to] = node.range;
+      const cursorOn = curcorLineIndex == lineIndex;
       const codeElementProps = codeProps.codeProps?.(code);
 
       return (
@@ -268,6 +323,7 @@ const Node: React.FC<NodeProps> = ({
     case 'inlineFormula': {
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
       const [from, to] = node.range;
+      const cursorOn = curcorLineIndex == lineIndex;
       const displayMode = node.type == 'displayFormula';
 
       return !cursorOn ? (
@@ -294,13 +350,14 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'decoration': {
-      const { lineIndex, facingMeta, trailingMeta, children } = node;
+      const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
       const [from, to] = node.range;
-      const decorationStyle = getDecorationStyle(facingMeta, trailingMeta, textDecoration);
+      const cursorOn = curcorLineIndex == lineIndex;
+      const decorationStyle = getDecorationStyle(decoration, textDecoration);
 
       return (
         <span style={TextLinesConstants.decoration.style(decorationStyle)}>
-          {[...facingMeta].map((char, index) => (
+          {[...facingMeta, ...decoration].map((char, index) => (
             <Char
               key={from + index}
               lineIndex={lineIndex}
@@ -318,7 +375,7 @@ const Node: React.FC<NodeProps> = ({
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
-              cursorOn={cursorOn}
+              curcorLineIndex={curcorLineIndex}
             />
           ))}
           {[...trailingMeta].map((char, index) => (
@@ -335,6 +392,7 @@ const Node: React.FC<NodeProps> = ({
     case 'taggedLink': {
       const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
       const [from, to] = node.range;
+      const cursorOn = curcorLineIndex == lineIndex;
       const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
       const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
 
@@ -378,6 +436,7 @@ const Node: React.FC<NodeProps> = ({
     case 'bracketLink': {
       const { lineIndex, facingMeta, linkName, trailingMeta } = node;
       const [from, to] = node.range;
+      const cursorOn = curcorLineIndex == lineIndex;
       const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
 
       return (
@@ -412,6 +471,7 @@ const Node: React.FC<NodeProps> = ({
     case 'hashTag': {
       const { lineIndex, hashTag } = node;
       const [from] = node.range;
+      const cursorOn = curcorLineIndex == lineIndex;
       const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
 
       return (

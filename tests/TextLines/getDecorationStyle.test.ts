@@ -12,7 +12,7 @@ interface TestCaseGroup extends BaseTestCaseGroup<TestCase> {
 
 interface TestCase extends BaseTestCase {
   testName: string;
-  inputDecorationMeta: string;
+  inputDecoration: string;
   expectedDecorationStyle: DecorationStyle;
 }
 
@@ -21,11 +21,7 @@ unittest<TestCase, TestCaseGroup>(
   'TextLines',
   'getDecorationStyle',
   (group, testCase) => {
-    const actualDecorationStyle = getDecorationStyle(
-      `[${testCase.inputDecorationMeta} `,
-      ']',
-      group.setting
-    );
+    const actualDecorationStyle = getDecorationStyle(`${testCase.inputDecoration} `, group.setting);
     expect(actualDecorationStyle).toEqual(testCase.expectedDecorationStyle);
   }
 );

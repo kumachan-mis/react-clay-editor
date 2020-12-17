@@ -2,11 +2,16 @@ import { TextLinesConstants } from './constants';
 import {
   TextDecoration,
   DecorationStyle,
-  Node,
-  QuotationNode,
-  ItemizationNode,
+  LineNode,
+  BlockCodeNode,
   BlockCodeMetaNode,
   BlockCodeLineNode,
+  BlockFormulaNode,
+  BlockFormulaMetaNode,
+  BlockFormulaLineNode,
+  QuotationNode,
+  ItemizationNode,
+  ContentNode,
   InlineCodeNode,
   DisplayFormulaNode,
   InlineFormulaNode,
@@ -15,8 +20,7 @@ import {
   BracketLinkNode,
   HashTagNode,
   NormalNode,
-  SingleLineContext,
-  MultiLineContext,
+  ParsingContext,
   ParsingOptions,
 } from './types';
 
@@ -43,15 +47,11 @@ export function getTextCharElementAt(
   return rootElement.querySelector(charSelector);
 }
 
-export function getDecorationStyle(
-  facingMeta: string,
-  trailingMeta: string,
-  setting: TextDecoration
-): DecorationStyle {
+export function getDecorationStyle(decoration: string, setting: TextDecoration): DecorationStyle {
   const { level1, level2, level3 } = setting.fontSizes;
   const style = { bold: false, italic: false, underline: false, fontSize: level1 };
-  for (let i = 1; i < facingMeta.length - 1; i++) {
-    switch (facingMeta[i]) {
+  for (let i = 0; i < decoration.length; i++) {
+    switch (decoration[i]) {
       case '*':
         if (!style.bold) {
           style.bold = true;
@@ -80,34 +80,187 @@ export function getHashTagName(hashTag: string): string {
   return hashTag.substring(1);
 }
 
-export function parseText(text: string, options: ParsingOptions): Node[] {
+export function parseText(text: string, options: ParsingOptions): LineNode[] {
+  const { blockCodeMeta, blockFormulaMeta, quotation, itemization } = TextLinesConstants.regexes;
+
   const lines = text.split('\n');
-  const nodes: Node[] = [];
-  const multi: MultiLineContext = {
-    blockCodeDepth: undefined,
-  };
-  for (const [index, line] of lines.entries()) {
-    const single: SingleLineContext = {
-      lineIndex: index,
-      offset: 0,
-      nested: false,
-      line: true,
-    };
-    nodes.push(...parseToNodes(line, single, multi, options));
+  const nodes: LineNode[] = [];
+  const context: ParsingContext = { lineIndex: 0, charIndex: 0, nested: false };
+
+  while (context.lineIndex < lines.length) {
+    const line = lines[context.lineIndex];
+    if (!options.disabledMap.code && blockCodeMeta.test(line)) {
+      nodes.push(parseBlockCode(lines, context));
+    } else if (!options.disabledMap.formula && blockFormulaMeta.test(line)) {
+      nodes.push(parseBlockFormula(lines, context));
+    } else if (quotation.test(line)) {
+      nodes.push(parseQuotation(line, context, options));
+    } else if (itemization.test(line)) {
+      nodes.push(parseItemization(line, context, options));
+    }
+    context.lineIndex++;
   }
+
   return nodes;
 }
 
-function parseToNodes(
-  text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
+  const facingMeta = parseBlockCodeMeta(lines[context.lineIndex], context);
+  const metaRegex = TextLinesConstants.regexes.blockCodeMeta;
+  const lineRegex = TextLinesConstants.regexes.blockCodeLine(facingMeta.indentDepth);
+  context.lineIndex++;
+
+  const node: BlockCodeNode = { type: 'blockCode', facingMeta, children: [] };
+  while (context.lineIndex < lines.length) {
+    if (metaRegex.test(lines[context.lineIndex])) {
+      const mayTrailingMeta = parseBlockCodeMeta(lines[context.lineIndex], context);
+      if (mayTrailingMeta.indentDepth == facingMeta.indentDepth) {
+        node.trailingMeta = mayTrailingMeta;
+        context.lineIndex++;
+      }
+      return node;
+    }
+
+    if (!lineRegex.test(lines[context.lineIndex])) break;
+
+    node.children.push(parseBlockCodeLine(lines[context.lineIndex], context, lineRegex));
+    context.lineIndex++;
+  }
+  return node;
+}
+
+function parseBlockCodeMeta(line: string, context: ParsingContext): BlockCodeMetaNode {
+  const regex = TextLinesConstants.regexes.blockCodeMeta;
+  const { indent, codeMeta } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: BlockCodeMetaNode = {
+    type: 'blockCodeMeta',
+    lineIndex: context.lineIndex,
+    indentDepth: indent.length,
+    codeMeta,
+  };
+
+  return node;
+}
+
+function parseBlockCodeLine(
+  line: string,
+  context: ParsingContext,
+  regex: RegExp
+): BlockCodeLineNode {
+  const { indent, codeLine } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: BlockCodeLineNode = {
+    type: 'blockCodeLine',
+    lineIndex: context.lineIndex,
+    indentDepth: indent.length,
+    codeLine,
+  };
+
+  return node;
+}
+
+function parseBlockFormula(lines: string[], context: ParsingContext): BlockFormulaNode {
+  const facingMeta = parseBlockFormulaMeta(lines[context.lineIndex], context);
+  const metaRegex = TextLinesConstants.regexes.blockFormulaMeta;
+  const lineRegex = TextLinesConstants.regexes.blockFormulaLine(facingMeta.indentDepth);
+  context.lineIndex++;
+
+  const node: BlockFormulaNode = { type: 'blockFormula', facingMeta, children: [] };
+  while (context.lineIndex < lines.length) {
+    if (metaRegex.test(lines[context.lineIndex])) {
+      const mayTrailingMeta = parseBlockFormulaMeta(lines[context.lineIndex], context);
+      if (mayTrailingMeta.indentDepth == facingMeta.indentDepth) {
+        node.trailingMeta = mayTrailingMeta;
+        context.lineIndex++;
+      }
+      return node;
+    }
+
+    if (!lineRegex.test(lines[context.lineIndex])) break;
+
+    node.children.push(parseBlockFormulaLine(lines[context.lineIndex], context, lineRegex));
+    context.lineIndex++;
+  }
+  return node;
+}
+
+function parseBlockFormulaMeta(line: string, context: ParsingContext): BlockFormulaMetaNode {
+  const regex = TextLinesConstants.regexes.blockFormulaMeta;
+  const { indent, formulaMeta } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: BlockFormulaMetaNode = {
+    type: 'blockFormulaMeta',
+    lineIndex: context.lineIndex,
+    indentDepth: indent.length,
+    formulaMeta,
+  };
+
+  return node;
+}
+
+function parseBlockFormulaLine(
+  line: string,
+  context: ParsingContext,
+  regex: RegExp
+): BlockFormulaLineNode {
+  const { indent, formulaLine } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: BlockFormulaLineNode = {
+    type: 'blockFormulaLine',
+    lineIndex: context.lineIndex,
+    indentDepth: indent.length,
+    formulaLine,
+  };
+
+  return node;
+}
+
+function parseQuotation(
+  line: string,
+  context: ParsingContext,
   options: ParsingOptions
-): Node[] {
+): QuotationNode {
+  const regex = TextLinesConstants.regexes.quotation;
+  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: QuotationNode = {
+    type: 'quotation',
+    lineIndex: context.lineIndex,
+    indentDepth: indent.length,
+    contentLength: content.length,
+    meta: '>',
+    children: parseContent(content, { ...context, charIndex: indent.length + 1 }, options),
+  };
+
+  return node;
+}
+
+function parseItemization(
+  line: string,
+  context: ParsingContext,
+  options: ParsingOptions
+): ItemizationNode {
+  const regex = TextLinesConstants.regexes.itemization;
+  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: ItemizationNode = {
+    type: 'itemization',
+    lineIndex: context.lineIndex,
+    indentDepth: indent.length,
+    contentLength: content.length,
+    children: parseContent(content, { ...context, charIndex: indent.length }, options),
+  };
+
+  return node;
+}
+
+function parseContent(
+  text: string,
+  context: ParsingContext,
+  options: ParsingOptions
+): ContentNode[] {
   const {
-    quotation,
-    itemization,
-    blockCodeMeta,
     inlineCode,
     displayFormula,
     inlineFormula,
@@ -116,171 +269,44 @@ function parseToNodes(
     hashTag,
     normal,
   } = TextLinesConstants.regexes;
-  const blockCodeLine =
-    multi.blockCodeDepth !== undefined
-      ? TextLinesConstants.regexes.blockCodeLine(multi.blockCodeDepth)
-      : undefined;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
-  if (!options.disabledMap.code && single.line && blockCodeMeta.test(text)) {
-    return parseBlockCodeMeta(text, single, multi, options);
-  } else if (!options.disabledMap.code && single.line && blockCodeLine?.test(text)) {
-    return parseBlockCodeLine(text, single, multi, options);
-  } else if (single.line && quotation.test(text)) {
-    return parseQuotation(text, single, multi, options);
-  } else if (single.line && itemization.test(text)) {
-    return parseItemization(text, single, multi, options);
-  } else if (!options.disabledMap.code && inlineCode.test(text)) {
-    return parseInlineCode(text, single, multi, options);
+  if (!options.disabledMap.code && inlineCode.test(text)) {
+    return parseInlineCode(text, context, options);
   } else if (!options.disabledMap.formula && displayFormula.test(text)) {
-    return parseDisplayFormula(text, single, multi, options);
+    return parseDisplayFormula(text, context, options);
   } else if (!options.disabledMap.formula && inlineFormula.test(text)) {
-    return parseInlineFormula(text, single, multi, options);
+    return parseInlineFormula(text, context, options);
   } else if (decoration.test(text)) {
-    return parseDecoration(text, single, multi, options);
+    return parseDecoration(text, context, options);
   } else if (taggedLink) {
-    return parseTaggedLink(text, single, multi, options, taggedLink);
+    return parseTaggedLink(text, context, options, taggedLink);
   } else if (!options.disabledMap.bracketLink && bracketLink.test(text)) {
-    return parseBracketLink(text, single, multi, options);
+    return parseBracketLink(text, context, options);
   } else if (!options.disabledMap.hashTag && hashTag.test(text)) {
-    return parseHashTag(text, single, multi, options);
+    return parseHashTag(text, context, options);
   } else if (normal.test(text)) {
-    return parseNormal(text, single, multi, options);
+    return parseNormal(text, context);
   } else {
     return [];
   }
 }
 
-function parseBlockCodeMeta(
-  line: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options: ParsingOptions
-): Node[] {
-  if (!single.line) return [];
-
-  const regex = TextLinesConstants.regexes.blockCodeMeta;
-  const { indent, meta } = line.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset, single.offset + line.length];
-
-  const node: BlockCodeMetaNode = {
-    type: 'blockCodeMeta',
-    lineIndex: single.lineIndex,
-    range: [from, to],
-    indentDepth: indent.length,
-    meta,
-  };
-
-  if (indent.length == multi.blockCodeDepth) {
-    multi.blockCodeDepth = undefined;
-  } else {
-    multi.blockCodeDepth = indent.length;
-  }
-
-  return [node];
-}
-
-function parseBlockCodeLine(
-  line: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options: ParsingOptions
-): Node[] {
-  if (!single.line || multi.blockCodeDepth === undefined) return [];
-
-  const regex = TextLinesConstants.regexes.blockCodeLine(multi.blockCodeDepth);
-  const { indent, codeLine } = line.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset, single.offset + line.length];
-
-  const node: BlockCodeLineNode = {
-    type: 'blockCodeLine',
-    lineIndex: single.lineIndex,
-    range: [from, to],
-    indentDepth: indent.length,
-    codeLine,
-  };
-
-  return [node];
-}
-
-function parseQuotation(
-  line: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
-  options: ParsingOptions
-): Node[] {
-  if (!single.line) return [];
-
-  const regex = TextLinesConstants.regexes.quotation;
-  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset, single.offset + line.length];
-
-  const node: QuotationNode = {
-    type: 'quotation',
-    lineIndex: single.lineIndex,
-    range: [from, to],
-    indentDepth: indent.length,
-    meta: '>',
-    children: parseToNodes(
-      content,
-      { ...single, offset: from + indent.length + 1, line: false },
-      multi,
-      options
-    ),
-  };
-
-  multi.blockCodeDepth = undefined;
-
-  return [node];
-}
-
-function parseItemization(
-  line: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
-  options: ParsingOptions
-): Node[] {
-  if (!single.line) return [];
-
-  const regex = TextLinesConstants.regexes.itemization;
-  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset, single.offset + line.length];
-
-  const node: ItemizationNode = {
-    type: 'itemization',
-    lineIndex: single.lineIndex,
-    range: [from, to],
-    indentDepth: indent.length,
-    children: parseToNodes(
-      content,
-      { ...single, offset: from + indent.length, line: false },
-      multi,
-      options
-    ),
-  };
-
-  multi.blockCodeDepth = undefined;
-
-  return [node];
-}
-
 function parseInlineCode(
   text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+  context: ParsingContext,
   options: ParsingOptions
-): Node[] {
-  if (single.line) return [];
-
+): ContentNode[] {
   const regex = TextLinesConstants.regexes.inlineCode;
   const { left, code, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
+  const [from, to] = [
+    context.charIndex + left.length,
+    context.charIndex + text.length - right.length,
+  ];
 
   const node: InlineCodeNode = {
     type: 'inlineCode',
-    lineIndex: single.lineIndex,
+    lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: '`',
     code,
@@ -288,24 +314,26 @@ function parseInlineCode(
   };
 
   return [
-    ...parseToNodes(left, single, multi, options),
+    ...parseContent(left, context, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi, options),
+    ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
 function parseDisplayFormula(
   text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+  context: ParsingContext,
   options: ParsingOptions
-): Node[] {
+): ContentNode[] {
   const regex = TextLinesConstants.regexes.displayFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
+  const [from, to] = [
+    context.charIndex + left.length,
+    context.charIndex + text.length - right.length,
+  ];
 
   const node: DisplayFormulaNode = {
     type: 'displayFormula',
-    lineIndex: single.lineIndex,
+    lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: '$$',
     formula,
@@ -313,27 +341,27 @@ function parseDisplayFormula(
   };
 
   return [
-    ...parseToNodes(left, single, multi, options),
+    ...parseContent(left, context, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi, options),
+    ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
 
 function parseInlineFormula(
   text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+  context: ParsingContext,
   options: ParsingOptions
-): Node[] {
-  if (single.line) return [];
-
+): ContentNode[] {
   const regex = TextLinesConstants.regexes.inlineFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
+  const [from, to] = [
+    context.charIndex + left.length,
+    context.charIndex + text.length - right.length,
+  ];
 
   const node: InlineFormulaNode = {
     type: 'inlineFormula',
-    lineIndex: single.lineIndex,
+    lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: '$',
     formula,
@@ -341,41 +369,41 @@ function parseInlineFormula(
   };
 
   return [
-    ...parseToNodes(left, single, multi, options),
+    ...parseContent(left, context, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi, options),
+    ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
 
 function parseDecoration(
   text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+  context: ParsingContext,
   options: ParsingOptions
-): Node[] {
-  if (single.line) return [];
-
+): ContentNode[] {
   const regex = TextLinesConstants.regexes.decoration;
   const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
+  const [from, to] = [
+    context.charIndex + left.length,
+    context.charIndex + text.length - right.length,
+  ];
 
-  const node: DecorationNode | BracketLinkNode = !single.nested
+  const node: DecorationNode | BracketLinkNode = !context.nested
     ? {
         type: 'decoration',
-        lineIndex: single.lineIndex,
+        lineIndex: context.lineIndex,
         range: [from, to],
-        facingMeta: `[${decoration} `,
-        children: parseToNodes(
+        facingMeta: '[',
+        decoration: `${decoration} `,
+        children: parseContent(
           body,
-          { ...single, offset: from + decoration.length + 2, nested: true },
-          multi,
+          { ...context, charIndex: from + decoration.length + 2, nested: true },
           options
         ),
         trailingMeta: ']',
       }
     : {
         type: 'bracketLink',
-        lineIndex: single.lineIndex,
+        lineIndex: context.lineIndex,
         range: [from, to],
         facingMeta: '[',
         linkName: `${decoration} ${body}`,
@@ -383,27 +411,27 @@ function parseDecoration(
       };
 
   return [
-    ...parseToNodes(left, single, multi, options),
+    ...parseContent(left, context, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi, options),
+    ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
 
 function parseTaggedLink(
   text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+  context: ParsingContext,
   options: ParsingOptions,
   regex: RegExp
-): Node[] {
-  if (single.line) return [];
-
+): ContentNode[] {
   const { left, tag, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
+  const [from, to] = [
+    context.charIndex + left.length,
+    context.charIndex + text.length - right.length,
+  ];
 
   const node: TaggedLinkNode = {
     type: 'taggedLink',
-    lineIndex: single.lineIndex,
+    lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: '[',
     tag,
@@ -412,27 +440,27 @@ function parseTaggedLink(
   };
 
   return [
-    ...parseToNodes(left, single, multi, options),
+    ...parseContent(left, context, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi, options),
+    ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
 
 function parseBracketLink(
   text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+  context: ParsingContext,
   options: ParsingOptions
-): Node[] {
-  if (single.line) return [];
-
+): ContentNode[] {
   const regex = TextLinesConstants.regexes.bracketLink;
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
+  const [from, to] = [
+    context.charIndex + left.length,
+    context.charIndex + text.length - right.length,
+  ];
 
   const node: BracketLinkNode = {
     type: 'bracketLink',
-    lineIndex: single.lineIndex,
+    lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: '[',
     linkName,
@@ -440,51 +468,43 @@ function parseBracketLink(
   };
 
   return [
-    ...parseToNodes(left, single, multi, options),
+    ...parseContent(left, context, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi, options),
+    ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
 
 function parseHashTag(
   text: string,
-  single: SingleLineContext,
-  multi: MultiLineContext,
+  context: ParsingContext,
   options: ParsingOptions
-): Node[] {
-  if (single.line) return [];
-
+): ContentNode[] {
   const regex = TextLinesConstants.regexes.hashTag;
   const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
+  const [from, to] = [
+    context.charIndex + left.length,
+    context.charIndex + text.length - right.length,
+  ];
+
   const node: HashTagNode = {
     type: 'hashTag',
-    lineIndex: single.lineIndex,
+    lineIndex: context.lineIndex,
     range: [from, to],
     hashTag,
   };
   return [
-    ...parseToNodes(left, single, multi, options),
+    ...parseContent(left, context, options),
     node,
-    ...parseToNodes(right, { ...single, offset: to }, multi, options),
+    ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
 
-function parseNormal(
-  text: string,
-  single: SingleLineContext,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  multi: MultiLineContext,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options: ParsingOptions
-): Node[] {
-  if (single.line) return [];
-
-  const [from, to] = [single.offset, single.offset + text.length];
+function parseNormal(text: string, context: ParsingContext): ContentNode[] {
+  const [from, to] = [context.charIndex, context.charIndex + text.length];
 
   const node: NormalNode = {
     type: 'normal',
-    lineIndex: single.lineIndex,
+    lineIndex: context.lineIndex,
     text,
     range: [from, to],
   };

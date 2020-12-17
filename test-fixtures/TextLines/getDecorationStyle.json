@@ -12,7 +12,7 @@
       "testCases": [
         {
           "testName": "should return only bold, given '*'",
-          "inputDecorationMeta": "*",
+          "inputDecoration": "*",
           "expectedDecorationStyle": {
             "fontSize": 16,
             "bold": true,

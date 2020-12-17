@@ -93,11 +93,14 @@ export const TextLinesConstants = {
     classNameRegex: /React-Realtime-Markup-Editor-margin-bottom/,
   },
   regexes: {
-    quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
-    itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ \t\u3000].*)?)$/,
-    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<meta>```)$/,
+    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>\$\$)$/,
     blockCodeLine: (indentDepth: number): RegExp =>
       RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
+    blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>```)$/,
+    blockFormulaLine: (indentDepth: number): RegExp =>
+      RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),
+    quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
+    itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ \t\u3000].*)?)$/,
     inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
     displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
     inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
