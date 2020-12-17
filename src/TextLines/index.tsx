@@ -264,11 +264,11 @@ const Node: React.FC<NodeProps> = ({
         </code>
       );
     }
-    case 'blockFormula':
+    case 'displayFormula':
     case 'inlineFormula': {
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
       const [from, to] = node.range;
-      const displayMode = node.type == 'blockFormula';
+      const displayMode = node.type == 'displayFormula';
 
       return !cursorOn ? (
         <span

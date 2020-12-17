@@ -8,7 +8,7 @@ import {
   BlockCodeMetaNode,
   BlockCodeLineNode,
   InlineCodeNode,
-  BlockFormulaNode,
+  DisplayFormulaNode,
   InlineFormulaNode,
   DecorationNode,
   TaggedLinkNode,
@@ -38,7 +38,7 @@ type NodeWithoutRange =
   | Omit<BlockCodeMetaNode, 'range'>
   | Omit<BlockCodeLineNode, 'range'>
   | Omit<InlineCodeNode, 'range'>
-  | Omit<BlockFormulaNode, 'range'>
+  | Omit<DisplayFormulaNode, 'range'>
   | Omit<InlineFormulaNode, 'range'>
   | (Omit<DecorationNode, 'range' | 'children'> & { children: NodeWithoutRange[] })
   | Omit<TaggedLinkNode, 'range'>
@@ -112,7 +112,7 @@ function isEqualNodeWithoutRange(expected: NodeWithoutRange, actual: Node): bool
         actual.code == expected.code
       );
     }
-    case 'blockFormula':
+    case 'displayFormula':
     case 'inlineFormula': {
       return (
         actual.type == expected.type &&

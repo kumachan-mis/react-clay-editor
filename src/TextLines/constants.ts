@@ -99,7 +99,7 @@ export const TextLinesConstants = {
     blockCodeLine: (indentDepth: number): RegExp =>
       RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
     inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
-    blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
+    displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
     inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {

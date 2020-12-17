@@ -55,7 +55,7 @@ export type Node =
   | BlockCodeMetaNode
   | BlockCodeLineNode
   | InlineCodeNode
-  | BlockFormulaNode
+  | DisplayFormulaNode
   | InlineFormulaNode
   | DecorationNode
   | TaggedLinkNode
@@ -105,8 +105,8 @@ export interface InlineCodeNode {
   trailingMeta: string;
 }
 
-export interface BlockFormulaNode {
-  type: 'blockFormula';
+export interface DisplayFormulaNode {
+  type: 'displayFormula';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;

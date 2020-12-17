@@ -8,7 +8,7 @@ import {
   BlockCodeMetaNode,
   BlockCodeLineNode,
   InlineCodeNode,
-  BlockFormulaNode,
+  DisplayFormulaNode,
   InlineFormulaNode,
   DecorationNode,
   TaggedLinkNode,
@@ -109,7 +109,7 @@ function parseToNodes(
     itemization,
     blockCodeMeta,
     inlineCode,
-    blockFormula,
+    displayFormula,
     inlineFormula,
     decoration,
     bracketLink,
@@ -132,8 +132,8 @@ function parseToNodes(
     return parseItemization(text, single, multi, options);
   } else if (!options.disabledMap.code && inlineCode.test(text)) {
     return parseInlineCode(text, single, multi, options);
-  } else if (!options.disabledMap.formula && blockFormula.test(text)) {
-    return parseBlockFormula(text, single, multi, options);
+  } else if (!options.disabledMap.formula && displayFormula.test(text)) {
+    return parseDisplayFormula(text, single, multi, options);
   } else if (!options.disabledMap.formula && inlineFormula.test(text)) {
     return parseInlineFormula(text, single, multi, options);
   } else if (decoration.test(text)) {
@@ -293,18 +293,18 @@ function parseInlineCode(
     ...parseToNodes(right, { ...single, offset: to }, multi, options),
   ];
 }
-function parseBlockFormula(
+function parseDisplayFormula(
   text: string,
   single: SingleLineContext,
   multi: MultiLineContext,
   options: ParsingOptions
 ): Node[] {
-  const regex = TextLinesConstants.regexes.blockFormula;
+  const regex = TextLinesConstants.regexes.displayFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [single.offset + left.length, single.offset + text.length - right.length];
 
-  const node: BlockFormulaNode = {
-    type: 'blockFormula',
+  const node: DisplayFormulaNode = {
+    type: 'displayFormula',
     lineIndex: single.lineIndex,
     range: [from, to],
     facingMeta: '$$',
