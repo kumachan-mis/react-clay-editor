@@ -1,5 +1,5 @@
-import { unittest } from '../unittest';
-import { BaseTestCaseGroup, BaseTestCase } from '../unittest/types';
+import { unittest } from '../utils/unit';
+import { BaseTestCaseGroup, BaseTestCase } from '../utils/unit/types';
 
 import { parseText } from '../../src/TextLines/utils';
 import {

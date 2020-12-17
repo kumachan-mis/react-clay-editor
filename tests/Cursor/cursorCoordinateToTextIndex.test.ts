@@ -1,5 +1,5 @@
-import { unittest } from '../unittest';
-import { BaseTestCase } from '../unittest/types';
+import { unittest } from '../utils/unit';
+import { BaseTestCase } from '../utils/unit/types';
 
 import { cursorCoordinateToTextIndex } from '../../src/Cursor/utils';
 import { CursorCoordinate } from '../../src/Cursor/types';

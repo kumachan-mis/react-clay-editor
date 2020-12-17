@@ -15,7 +15,7 @@ export function unittest<
   type Fixtures = TestFixtures<TestCase, TestCaseGroup>;
 
   describe(`Unit test of ${targetType} in ${componentName}: ${targetName}`, () => {
-    const fixturesDirPath = resolve(__dirname, '..', '..', 'test-fixtures');
+    const fixturesDirPath = resolve(__dirname, '..', '..', '..', 'test-fixtures');
     const fixturesFilePath = resolve(fixturesDirPath, componentName, `${targetName}.json`);
     const fixtures = JSON.parse(readFileSync(fixturesFilePath, 'utf-8')) as Fixtures;
 
@@ -27,6 +27,6 @@ export function unittest<
       });
     });
 
-    // End of Unittest
+    // end of unit test
   });
 }

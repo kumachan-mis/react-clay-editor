@@ -1,5 +1,5 @@
-import { unittest } from '../unittest';
-import { BaseTestCase } from '../unittest/types';
+import { unittest } from '../utils/unit';
+import { BaseTestCase } from '../utils/unit/types';
 
 import { getSelectedText } from '../../src/Selection/utils';
 import { TextSelection } from '../../src/Selection/types';

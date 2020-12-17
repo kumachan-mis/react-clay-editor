@@ -3,20 +3,21 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { KeyboardTest, KeyboardTestState, defaultInitState } from './KeyboardTest';
-import { unittest } from '../unittest';
-import { BaseTestCase } from '../unittest/types';
+import { unittest } from '../utils/unit';
+import { BaseTestCase } from '../utils/unit/types';
 
 interface TestCase extends BaseTestCase {
   testName: string;
+  inputLines: string[];
   inputState: Partial<KeyboardTestState>;
   inputTyping: string;
   expectedLines: string[];
   expectedState: KeyboardTestState;
 }
 
-unittest<TestCase>('state transition', 'Editor', 'keyTyping', (_, testCase) => {
+unittest<TestCase>('state transition', 'Editor', 'keyboardOperation', (_, testCase) => {
   const initState = { ...defaultInitState, ...testCase.inputState };
-  render(<KeyboardTest initState={initState} />);
+  render(<KeyboardTest initText={testCase.inputLines.join('\n')} initState={initState} />);
   const editor = screen.getByRole('textbox');
 
   userEvent.type(editor, testCase.inputTyping);
