@@ -39,6 +39,7 @@ export interface CharProps {
   char: string;
   lineIndex: number;
   charIndex: number;
+  spanPorps?: React.ComponentProps<'span'>;
 }
 
 export interface DecorationStyle {
@@ -49,6 +50,7 @@ export interface DecorationStyle {
 }
 
 export type Node =
+  | QuotationNode
   | ItemizationNode
   | BlockCodeMetaNode
   | BlockCodeLineNode
@@ -60,6 +62,15 @@ export type Node =
   | BracketLinkNode
   | HashTagNode
   | NormalNode;
+
+export interface QuotationNode {
+  type: 'quotation';
+  lineIndex: number;
+  range: [number, number];
+  indentDepth: number;
+  meta: string;
+  children: Node[];
+}
 
 export interface ItemizationNode {
   type: 'itemization';

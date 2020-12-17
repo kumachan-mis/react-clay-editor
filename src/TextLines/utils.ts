@@ -3,6 +3,7 @@ import {
   TextDecoration,
   DecorationStyle,
   Node,
+  QuotationNode,
   ItemizationNode,
   BlockCodeMetaNode,
   BlockCodeLineNode,
@@ -104,9 +105,9 @@ function parseToNodes(
   options: ParsingOptions
 ): Node[] {
   const {
+    quotation,
     itemization,
     blockCodeMeta,
-    blockCodeLine,
     inlineCode,
     blockFormula,
     inlineFormula,
@@ -115,17 +116,18 @@ function parseToNodes(
     hashTag,
     normal,
   } = TextLinesConstants.regexes;
+  const blockCodeLine =
+    multi.blockCodeDepth !== undefined
+      ? TextLinesConstants.regexes.blockCodeLine(multi.blockCodeDepth)
+      : undefined;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
   if (!options.disabledMap.code && single.line && blockCodeMeta.test(text)) {
     return parseBlockCodeMeta(text, single, multi, options);
-  } else if (
-    !options.disabledMap.code &&
-    single.line &&
-    multi.blockCodeDepth !== undefined &&
-    blockCodeLine(multi.blockCodeDepth).test(text)
-  ) {
+  } else if (!options.disabledMap.code && single.line && blockCodeLine?.test(text)) {
     return parseBlockCodeLine(text, single, multi, options);
+  } else if (single.line && quotation.test(text)) {
+    return parseQuotation(text, single, multi, options);
   } else if (single.line && itemization.test(text)) {
     return parseItemization(text, single, multi, options);
   } else if (!options.disabledMap.code && inlineCode.test(text)) {
@@ -199,6 +201,37 @@ function parseBlockCodeLine(
     indentDepth: indent.length,
     codeLine,
   };
+
+  return [node];
+}
+
+function parseQuotation(
+  line: string,
+  single: SingleLineContext,
+  multi: MultiLineContext,
+  options: ParsingOptions
+): Node[] {
+  if (!single.line) return [];
+
+  const regex = TextLinesConstants.regexes.quotation;
+  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+  const [from, to] = [single.offset, single.offset + line.length];
+
+  const node: QuotationNode = {
+    type: 'quotation',
+    lineIndex: single.lineIndex,
+    range: [from, to],
+    indentDepth: indent.length,
+    meta: '>',
+    children: parseToNodes(
+      content,
+      { ...single, offset: from + indent.length + 1, line: false },
+      multi,
+      options
+    ),
+  };
+
+  multi.blockCodeDepth = undefined;
 
   return [node];
 }

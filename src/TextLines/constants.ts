@@ -23,6 +23,16 @@ export const defaultCodeStyle: React.CSSProperties = {
 
 export const TextLinesConstants = {
   className: 'React-Realtime-Markup-Editor-textlines',
+  quotation: {
+    content: {
+      style: (indentDepth: number): React.CSSProperties => ({
+        marginLeft: `${1.5 * indentDepth}em`,
+        backgroundColor: 'rgba(125,128,128,0.1)',
+        borderLeft: 'solid 4px #a0a0a0',
+        paddingLeft: '4px',
+      }),
+    },
+  },
   itemization: {
     dot: {
       className: 'React-Realtime-Markup-Editor-textlines-indent-dot',
@@ -82,7 +92,8 @@ export const TextLinesConstants = {
     classNameRegex: /React-Realtime-Markup-Editor-margin-bottom/,
   },
   regexes: {
-    itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ ].*)?)$/,
+    quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
+    itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ \t\u3000].*)?)$/,
     blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<meta>```)$/,
     blockCodeLine: (indentDepth: number): RegExp =>
       RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
@@ -96,7 +107,7 @@ export const TextLinesConstants = {
       return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
     },
     bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-    hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
+    hashTag: /^(?<left>.*?)(?<hashTag>#[^ \t\u3000]+)(?<right>.*)$/,
     normal: /^(?<text>.+)$/,
   },
   wordRegex: /[^ !"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~\t\u3000]+/,
