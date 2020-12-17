@@ -84,6 +84,58 @@ const Node: React.FC<NodeProps> = ({
   cursorOn,
 }) => {
   switch (node.type) {
+    case 'quotation': {
+      const { lineIndex, indentDepth, meta, children } = node;
+      const [from, to] = node.range;
+      return (
+        <div
+          className={TextLinesConstants.line.className(lineIndex)}
+          style={TextLinesConstants.line.style(textDecoration.fontSizes.level1)}
+        >
+          <span
+            className={TextLinesConstants.line.indent.className}
+            style={TextLinesConstants.line.indent.style(indentDepth)}
+          >
+            {[...Array(indentDepth).keys()].map((charIndex) => (
+              <Char
+                key={from + charIndex}
+                charIndex={from + charIndex}
+                lineIndex={lineIndex}
+                char=" "
+                spanPorps={{ className: TextLinesConstants.line.pad.className }}
+              />
+            ))}
+          </span>
+          <span
+            className={TextLinesConstants.line.content.className}
+            style={TextLinesConstants.quotation.content.style(indentDepth)}
+          >
+            {[...meta].map((char, index) => (
+              <Char
+                key={from + indentDepth + index}
+                lineIndex={lineIndex}
+                charIndex={from + indentDepth + index}
+                char={cursorOn ? char : '\u200b'}
+              />
+            ))}
+            {children.map((child, index) => (
+              <Node
+                key={index}
+                node={child}
+                textDecoration={textDecoration}
+                bracketLinkProps={bracketLinkProps}
+                hashTagProps={hashTagProps}
+                taggedLinkPropsMap={taggedLinkPropsMap}
+                codeProps={codeProps}
+                formulaProps={formulaProps}
+                cursorOn={cursorOn}
+              />
+            ))}
+            <Char lineIndex={lineIndex} charIndex={to} char={' '} />
+          </span>
+        </div>
+      );
+    }
     case 'itemization': {
       const { lineIndex, indentDepth, children } = node;
       const [from, to] = node.range;
@@ -97,15 +149,15 @@ const Node: React.FC<NodeProps> = ({
             className={TextLinesConstants.line.indent.className}
             style={TextLinesConstants.line.indent.style(indentDepth)}
           >
-            {[...Array(indentDepth).keys()].map((charIndex) => {
-              const charClassName = TextLinesConstants.char.className(lineIndex, from + charIndex);
-              const className = `${TextLinesConstants.line.pad.className} ${charClassName}`;
-              return (
-                <span key={charIndex} className={className}>
-                  <span> </span>
-                </span>
-              );
-            })}
+            {[...Array(indentDepth).keys()].map((charIndex) => (
+              <Char
+                key={from + charIndex}
+                charIndex={from + charIndex}
+                lineIndex={lineIndex}
+                char=" "
+                spanPorps={{ className: TextLinesConstants.line.pad.className }}
+              />
+            ))}
             <span className={TextLinesConstants.itemization.dot.className} />
           </span>
           <span
@@ -146,15 +198,15 @@ const Node: React.FC<NodeProps> = ({
             className={TextLinesConstants.line.indent.className}
             style={TextLinesConstants.line.indent.style(indentDepth)}
           >
-            {[...Array(indentDepth).keys()].map((charIndex) => {
-              const charClassName = TextLinesConstants.char.className(lineIndex, from + charIndex);
-              const className = `${TextLinesConstants.line.pad.className} ${charClassName}`;
-              return (
-                <span key={charIndex} className={className}>
-                  <span> </span>
-                </span>
-              );
-            })}
+            {[...Array(indentDepth).keys()].map((charIndex) => (
+              <Char
+                key={from + charIndex}
+                charIndex={from + charIndex}
+                lineIndex={lineIndex}
+                char=" "
+                spanPorps={{ className: TextLinesConstants.line.pad.className }}
+              />
+            ))}
           </span>
           <span
             className={TextLinesConstants.line.content.className}
@@ -166,7 +218,7 @@ const Node: React.FC<NodeProps> = ({
             <code {...codeElementProps}>
               {[...code].map((char, index) => (
                 <Char
-                  key={index}
+                  key={from + indentDepth + index}
                   lineIndex={lineIndex}
                   charIndex={from + indentDepth + index}
                   char={char}
@@ -421,10 +473,14 @@ const AnchorWithHoverStyle: React.FC<
   );
 };
 
-const Char: React.FC<CharProps> = (props) => (
-  <span className={TextLinesConstants.char.className(props.lineIndex, props.charIndex)}>
-    <span>{props.char}</span>
-  </span>
-);
+const Char: React.FC<CharProps> = ({ char, lineIndex, charIndex, spanPorps = {} }) => {
+  const charClassName = TextLinesConstants.char.className(lineIndex, charIndex);
+  const { className, ...rest } = spanPorps;
+  return (
+    <span className={className ? `${charClassName} ${className}` : charClassName} {...rest}>
+      <span>{char}</span>
+    </span>
+  );
+};
 
 const MarginBottom: React.FC = () => <div className={TextLinesConstants.marginBottom.className} />;
