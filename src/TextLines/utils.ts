@@ -98,7 +98,6 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     } else if (itemization.test(line)) {
       nodes.push(parseItemization(line, context, options));
     }
-    context.lineIndex++;
   }
 
   return nodes;
@@ -233,6 +232,8 @@ function parseQuotation(
     children: parseContent(content, { ...context, charIndex: indent.length + 1 }, options),
   };
 
+  context.lineIndex++;
+
   return node;
 }
 
@@ -251,6 +252,8 @@ function parseItemization(
     contentLength: content.length,
     children: parseContent(content, { ...context, charIndex: indent.length }, options),
   };
+
+  context.lineIndex++;
 
   return node;
 }

@@ -93,10 +93,10 @@ export const TextLinesConstants = {
     classNameRegex: /React-Realtime-Markup-Editor-margin-bottom/,
   },
   regexes: {
-    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>\$\$)$/,
+    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>```)$/,
     blockCodeLine: (indentDepth: number): RegExp =>
       RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
-    blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>```)$/,
+    blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>\$\$)$/,
     blockFormulaLine: (indentDepth: number): RegExp =>
       RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),
     quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
