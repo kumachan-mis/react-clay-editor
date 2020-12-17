@@ -87,6 +87,12 @@ Here are some examples:
 | ![inline-mode](figures/inline-mode.png)   | `$\int_a^b f(x) \mathrm{d}x$`   |
 | ![display-mode](figures/display-mode.png) | `$$\int_a^b f(x) \mathrm{d}x$$` |
 
+### Quatations
+
+| style      | syntax       |
+| ---------- | ------------ |
+| >quotation | `>quotation` |
+
 **Note**
 
 1. Tagged links are useful when you want to make some link groups  

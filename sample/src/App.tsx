@@ -69,7 +69,11 @@ and so on
  inline mode
   $f(x)$
  display mode
-  $$\\int_a^b f(x) \\mathrm{d}x$$`;
+  $$\\int_a^b f(x) \\mathrm{d}x$$
+
+[** Quatations]
+>[* Genius is one percent inspiration and ninety-nine percent perspiration]
+>by Thomas Edison`;
 
 // eslint-disable-next-line prettier/prettier
 const defaultSubText =
