@@ -39,6 +39,6 @@ scenariotest<TestScenario>('keyboard event', 'Editor', 'keyboardScenario', (test
 
   Object.defineProperty(window.navigator, 'userAgent', {
     value: originalUserAgent,
-    configurable: false,
+    configurable: true,
   });
 });

@@ -10,13 +10,55 @@
           "charIndex": 0
         }
       },
-      "inputTypingLines": [""],
-      "expectedLines": [""],
+      "inputTypingLines": [
+        "[* *{arrowleft}{backspace}{arrowright} Binary Tree{arrowright}\n",
+        " In computer si{backspace}cience, a binary tree is a tree data strak{backspace}{backspace}ucturew{meta}z{/meta}\n",
+        " in wihc{backspace}{backspace}{backspace}hich each node has at most tow{meta}z{/meta}{meta}z{/meta}wo children,\n",
+        " which are refered{backspace}{meta}z{/meta}{arrowleft}{arrowleft}r{arrowright}{arrowright} to as the left child",
+        " and the right chlid{arrowleft}{backspace}{backspace}il{arrowright}."
+      ],
+      "expectedLines": [
+        "[** Binary Tree]",
+        " In computer science, a binary tree is a tree data structure",
+        " in which each node has at most two children,",
+        " which are referred to as the left child and the right child."
+      ],
       "expectedState": {
+        "cursorCoordinate": {
+          "lineIndex": 3,
+          "charIndex": 61
+        },
+        "textAreaValue": ""
+      }
+    },
+    {
+      "scenarioName": "fixing typo again and again (Japanese)",
+      "os": "windows",
+      "inputLines": [""],
+      "inputState": {
         "cursorCoordinate": {
           "lineIndex": 0,
           "charIndex": 0
         }
+      },
+      "inputTypingLines": [
+        "[** 二分木{arrowright}\n",
+        " 二分木は、データ構造の1つふぇある。{arrowleft}{arrowleft}{arrowleft}{backspace}{backspace}で{arrowright}{arrowright}{arrowright}\n",
+        " 根付き木構造の中で、あるノード（節点 ので{shift}{arrowleft}{arrowleft}{/shift}{backspace}node）が持つ子の数が高々2レアル{backspace}{backspace}{backspace}であるものをいう。\n",
+        " 典型的には2つの子はそれぞれ「左右{arrowleft}」「{arrowright}」と呼バレる{shift}{arrowleft}{arrowleft}{/shift}{backspace}{backspace}ばれる。"
+      ],
+      "expectedLines": [
+        "[** 二分木]",
+        " 二分木は、データ構造の1つである。",
+        " 根付き木構造の中で、あるノード（節点 node）が持つ子の数が高々2であるものをいう。",
+        " 典型的には2つの子はそれぞれ「左」「右」と呼ばれる。"
+      ],
+      "expectedState": {
+        "cursorCoordinate": {
+          "lineIndex": 3,
+          "charIndex": 27
+        },
+        "textAreaValue": ""
       }
     }
   ]

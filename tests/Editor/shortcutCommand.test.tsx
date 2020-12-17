@@ -40,6 +40,6 @@ unittest<TestCase>('state transition', 'Editor', 'shortcutCommand', (_, testCase
 
   Object.defineProperty(window.navigator, 'userAgent', {
     value: originalUserAgent,
-    configurable: false,
+    configurable: true,
   });
 });
