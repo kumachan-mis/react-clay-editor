@@ -1,0 +1,23 @@
+{
+  "testScenarios": [
+    {
+      "scenarioName": "fixing typo again and again (English)",
+      "os": "macos",
+      "inputLines": [""],
+      "inputState": {
+        "cursorCoordinate": {
+          "lineIndex": 0,
+          "charIndex": 0
+        }
+      },
+      "inputTypingLines": [""],
+      "expectedLines": [""],
+      "expectedState": {
+        "cursorCoordinate": {
+          "lineIndex": 0,
+          "charIndex": 0
+        }
+      }
+    }
+  ]
+}

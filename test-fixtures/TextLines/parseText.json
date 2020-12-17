@@ -32,7 +32,7 @@
         },
         {
           "testName": "should parse empty text correctly",
-          "inputLines": [],
+          "inputLines": [""],
           "expectedNodes": [
             {
               "type": "itemization",

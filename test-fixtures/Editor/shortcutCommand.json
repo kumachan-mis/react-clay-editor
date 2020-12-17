@@ -12,8 +12,10 @@
               "charIndex": 17
             }
           },
-          "inputTypingForWin": "{ctrl}a{/ctrl}",
-          "inputTypingForMac": "{meta}a{/meta}",
+          "inputTypingByOS": {
+            "windows": "{ctrl}a{/ctrl}",
+            "macos": "{meta}a{/meta}"
+          },
           "expectedLines": [
             "A text document editor which is syntactically formattable in real time"
           ],

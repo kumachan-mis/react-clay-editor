@@ -8,6 +8,7 @@ import { BaseTestCase } from '../utils/unit/types';
 
 interface TestCase extends BaseTestCase {
   testName: string;
+  inputLines: string[];
   inputState: Partial<KeyboardTestState>;
   inputTyping: string;
   expectedLines: string[];
@@ -16,7 +17,7 @@ interface TestCase extends BaseTestCase {
 
 unittest<TestCase>('state transition', 'Editor', 'keyboardOperation', (_, testCase) => {
   const initState = { ...defaultInitState, ...testCase.inputState };
-  render(<KeyboardTest initState={initState} />);
+  render(<KeyboardTest initText={testCase.inputLines.join('\n')} initState={initState} />);
   const editor = screen.getByRole('textbox');
 
   userEvent.type(editor, testCase.inputTyping);

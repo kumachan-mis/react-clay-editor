@@ -7,7 +7,7 @@ export function scenariotest<TestScenario extends BaseTestScenario = BaseTestSce
   targetType: string,
   componentName: string,
   targetName: string,
-  test: (testCase: TestScenario) => void
+  test: (testScenario: TestScenario) => void
 ): void {
   type Fixtures = TestFixtures<TestScenario>;
 
@@ -16,8 +16,8 @@ export function scenariotest<TestScenario extends BaseTestScenario = BaseTestSce
     const fixturesFilePath = resolve(fixturesDirPath, componentName, `${targetName}.json`);
     const fixtures = JSON.parse(readFileSync(fixturesFilePath, 'utf-8')) as Fixtures;
 
-    fixtures.testScenarios.forEach((testCase) => {
-      it(testCase.scenarioName, () => test(testCase));
+    fixtures.testScenarios.forEach((testScenario) => {
+      it(testScenario.scenarioName, () => test(testScenario));
     });
 
     // end of scenario test

@@ -5,6 +5,7 @@
       "testCases": [
         {
           "testName": "should perform correct state transition for single key typing",
+          "inputLines": [""],
           "inputState": {
             "cursorCoordinate": {
               "lineIndex": 0,
@@ -34,6 +35,7 @@
         },
         {
           "testName": "should perform correct state transition for multiple keys typing",
+          "inputLines": [""],
           "inputState": {
             "cursorCoordinate": {
               "lineIndex": 0,
