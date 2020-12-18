@@ -73,12 +73,7 @@ span.React-Realtime-Markup-Editor-textlines-content {
   display: block;
 }
 
-div.React-Realtime-Markup-Editor-linegroup span.katex-display {
-  display: inline-block !important;
-  margin: 0 !important;
-}
-
-span.React-Realtime-Markup-Editor-chargroup span.katex-display {
+span.katex-display {
   display: inline-block !important;
   margin: 0 !important;
   text-align: inherit !important;
