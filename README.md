@@ -116,6 +116,7 @@ Here are some examples:
 - syntax
   ```
   $$
+  A =
   \left(
   \begin{matrix}
     a_{11} & a_{12} & \cdots & a_{1n} \\
