@@ -482,6 +482,7 @@ function positionToCursorCoordinate(
 
   const [x, y] = position;
   const elements = document.elementsFromPoint(x, y);
+
   const charClassNameRegex = TextLinesConstants.char.classNameRegex;
   const charElement = elements.find(
     (charEl) => charClassNameRegex.test(charEl.className) && element.contains(charEl)
@@ -494,7 +495,10 @@ function positionToCursorCoordinate(
   const lineElement = elements.find(
     (lineEl) => lineClassNameRegex.test(lineEl.className) && element.contains(lineEl)
   );
-
+  const lineGroupClassNameRegex = TextLinesConstants.lineGroup.classNameRegex;
+  const lineGroupElement = elements.find(
+    (lineGrpEl) => lineGroupClassNameRegex.test(lineGrpEl.className) && element.contains(lineGrpEl)
+  );
   const marginBottomClassNameRegex = TextLinesConstants.marginBottom.classNameRegex;
   const marginBottomElement = elements.find(
     (marginEl) => marginBottomClassNameRegex.test(marginEl.className) && element.contains(marginEl)
@@ -527,6 +531,16 @@ function positionToCursorCoordinate(
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     return { lineIndex, charIndex: lines[lineIndex].length };
+  } else if (lineGroupElement) {
+    const groups = lineGroupElement.className.match(lineGroupClassNameRegex)?.groups as Groups;
+    const fromLineIndex = Number.parseInt(groups['from'], 10);
+    const toLineIndex = Number.parseInt(groups['to'], 10);
+    const lineGroupRect = lineGroupElement.getBoundingClientRect();
+    if (x <= lineGroupRect.left + lineGroupRect.width / 2) {
+      return { lineIndex: fromLineIndex, charIndex: 0 };
+    } else {
+      return { lineIndex: toLineIndex, charIndex: lines[toLineIndex].length };
+    }
   } else if (marginBottomElement) {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
   } else {

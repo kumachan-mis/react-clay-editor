@@ -1,8 +1,9 @@
 import { unittest } from '../utils/unit';
 import { BaseTestCaseGroup, BaseTestCase } from '../utils/unit/types';
 
-import { getDecorationStyle } from '../../src/TextLines/utils';
-import { TextDecoration, DecorationStyle } from '../../src/TextLines/types';
+import { getDecorationStyle } from '../../src/TextLines/parser';
+import { TextDecoration } from '../../src/TextLines/types';
+import { DecorationStyle } from '../../src/TextLines/parser/types';
 
 interface TestCaseGroup extends BaseTestCaseGroup<TestCase> {
   groupName: string;
@@ -12,7 +13,7 @@ interface TestCaseGroup extends BaseTestCaseGroup<TestCase> {
 
 interface TestCase extends BaseTestCase {
   testName: string;
-  inputDecorationMeta: string;
+  inputDecoration: string;
   expectedDecorationStyle: DecorationStyle;
 }
 
@@ -21,11 +22,7 @@ unittest<TestCase, TestCaseGroup>(
   'TextLines',
   'getDecorationStyle',
   (group, testCase) => {
-    const actualDecorationStyle = getDecorationStyle(
-      `[${testCase.inputDecorationMeta} `,
-      ']',
-      group.setting
-    );
+    const actualDecorationStyle = getDecorationStyle(`${testCase.inputDecoration} `, group.setting);
     expect(actualDecorationStyle).toEqual(testCase.expectedDecorationStyle);
   }
 );

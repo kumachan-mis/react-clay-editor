@@ -23,12 +23,17 @@ div.React-Realtime-Markup-Editor-textlines {
   cursor: text;
 }
 
+div.React-Realtime-Markup-Editor-linegroup {
+  display: block;
+  position: relative;
+}
+
 div.React-Realtime-Markup-Editor-line {
   display: block;
   position: relative;
 }
 
-span.React-Realtime-Markup-Editor-group {
+span.React-Realtime-Markup-Editor-chargroup {
   display: inline-block;
 }
 

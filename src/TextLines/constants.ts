@@ -1,4 +1,5 @@
-import { TextDecoration, DecorationStyle } from './types';
+import { TextDecoration } from './types';
+import { DecorationStyle } from './parser/types';
 
 export const defaultTextDecoration: TextDecoration = {
   fontSizes: { level1: 16, level2: 20, level3: 24 },
@@ -25,31 +26,17 @@ export const TextLinesConstants = {
   className: 'React-Realtime-Markup-Editor-textlines',
   quotation: {
     content: {
-      style: (indentDepth: number): React.CSSProperties => ({
-        marginLeft: `${1.5 * indentDepth}em`,
+      style: {
         backgroundColor: 'rgba(125,128,128,0.1)',
         borderLeft: 'solid 4px #a0a0a0',
         paddingLeft: '4px',
         fontStyle: 'italic',
-      }),
+      } as React.CSSProperties,
     },
   },
   itemization: {
     dot: {
       className: 'React-Realtime-Markup-Editor-textlines-indent-dot',
-    },
-    content: {
-      style: (indentDepth: number): React.CSSProperties => ({
-        marginLeft: `${1.5 * indentDepth}em`,
-      }),
-    },
-  },
-  blockCodeLine: {
-    content: {
-      style: (indentDepth: number, codeStyle?: React.CSSProperties): React.CSSProperties => ({
-        ...codeStyle,
-        marginLeft: `${1.5 * indentDepth}em`,
-      }),
     },
   },
   decoration: {
@@ -59,6 +46,11 @@ export const TextLinesConstants = {
       fontStyle: decorationStyle.italic ? 'italic' : undefined,
       borderBottom: decorationStyle.underline ? 'solid 1px' : undefined,
     }),
+  },
+  lineGroup: {
+    className: (from: number, to: number): string =>
+      `React-Realtime-Markup-Editor-linegroup L${from}-${to}`,
+    classNameRegex: /React-Realtime-Markup-Editor-linegroup L(?<from>\d+)-(?<to>\d+)/,
   },
   line: {
     className: (lineIndex: number): string => `React-Realtime-Markup-Editor-line L${lineIndex}`,
@@ -72,6 +64,9 @@ export const TextLinesConstants = {
     },
     content: {
       className: 'React-Realtime-Markup-Editor-textlines-content',
+      style: (indentDepth: number): React.CSSProperties => ({
+        marginLeft: `${1.5 * indentDepth}em`,
+      }),
     },
     style: (defaultFontSize: number): React.CSSProperties => ({
       fontSize: `${defaultFontSize}px`,
@@ -80,8 +75,8 @@ export const TextLinesConstants = {
   },
   charGroup: {
     className: (lineIndex: number, from: number, to: number): string =>
-      `React-Realtime-Markup-Editor-group L${lineIndex}C${from}-${to}`,
-    classNameRegex: /React-Realtime-Markup-Editor-group L(?<lineIndex>\d+)C(?<from>\d+)-(?<to>\d+)/,
+      `React-Realtime-Markup-Editor-chargroup L${lineIndex}C${from}-${to}`,
+    classNameRegex: /React-Realtime-Markup-Editor-chargroup L(?<lineIndex>\d+)C(?<from>\d+)-(?<to>\d+)/,
   },
   char: {
     className: (lineIndex: number, charIndex: number): string =>
@@ -93,13 +88,16 @@ export const TextLinesConstants = {
     classNameRegex: /React-Realtime-Markup-Editor-margin-bottom/,
   },
   regexes: {
-    quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
-    itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ \t\u3000].*)?)$/,
-    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<meta>```)$/,
+    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>```)$/,
     blockCodeLine: (indentDepth: number): RegExp =>
       RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
+    blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>\$\$)$/,
+    blockFormulaLine: (indentDepth: number): RegExp =>
+      RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),
+    quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
+    itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ \t\u3000].*)?)$/,
     inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
-    blockFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
+    displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
     inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {

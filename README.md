@@ -82,10 +82,20 @@ Here are some examples:
 
 ### Math Formulas
 
-| style                                     | syntax                          |
-| ----------------------------------------- | ------------------------------- |
-| ![inline-mode](figures/inline-mode.png)   | `$\int_a^b f(x) \mathrm{d}x$`   |
-| ![display-mode](figures/display-mode.png) | `$$\int_a^b f(x) \mathrm{d}x$$` |
+| style                                     | syntax                                  |
+| ----------------------------------------- | --------------------------------------- |
+| ![inline-mode](figures/inline-mode.png)   | `$\int_a^b f(x) \mathrm{d}x$`           |
+| ![display-mode](figures/display-mode.png) | `$$\int_a^b f(x) \mathrm{d}x$$`         |
+|                                           | `$$`                                    |
+|                                           | `\left(`                                |
+|                                           | `\begin{matrix}`                        |
+|                                           | ` a_{11} & a_{12} & \cdots & a_{1n} \\` |
+|                                           | ` a_{21} & a_{22} & \cdots & a_{2n} \\` |
+| ![block-mode](figures/block-mode.png)     | ` \vdots & \vdots & \ddots & \vdots \\` |
+|                                           | ` a_{m1} & a_{m2} & \cdots & a_{mn} \\` |
+|                                           | `\end{matrix}`                          |
+|                                           | `\right)`                               |
+|                                           | `$$`                                    |
 
 ### Quatations
 

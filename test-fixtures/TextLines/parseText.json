@@ -20,10 +20,12 @@
               "type": "itemization",
               "lineIndex": 0,
               "indentDepth": 0,
+              "contentLength": 11,
               "children": [
                 {
                   "type": "normal",
                   "lineIndex": 0,
+                  "range": [0, 11],
                   "text": "hello world"
                 }
               ]
@@ -38,6 +40,7 @@
               "type": "itemization",
               "lineIndex": 0,
               "indentDepth": 0,
+              "contentLength": 0,
               "children": []
             }
           ]
