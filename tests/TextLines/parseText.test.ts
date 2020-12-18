@@ -1,8 +1,8 @@
 import { unittest } from '../utils/unit';
 import { BaseTestCaseGroup, BaseTestCase } from '../utils/unit/types';
 
-import { parseText } from '../../src/TextLines/utils';
-import { Node, ParsingOptions } from '../../src/TextLines/types';
+import { parseText } from '../../src/TextLines/parser';
+import { Node, ParsingOptions } from '../../src/TextLines/parser/types';
 
 interface TestCaseGroup extends BaseTestCaseGroup<TestCase> {
   groupName: string;

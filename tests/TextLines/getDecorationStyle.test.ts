@@ -1,8 +1,9 @@
 import { unittest } from '../utils/unit';
 import { BaseTestCaseGroup, BaseTestCase } from '../utils/unit/types';
 
-import { getDecorationStyle } from '../../src/TextLines/utils';
-import { TextDecoration, DecorationStyle } from '../../src/TextLines/types';
+import { getDecorationStyle } from '../../src/TextLines/parser';
+import { TextDecoration } from '../../src/TextLines/types';
+import { DecorationStyle } from '../../src/TextLines/parser/types';
 
 interface TestCaseGroup extends BaseTestCaseGroup<TestCase> {
   groupName: string;
