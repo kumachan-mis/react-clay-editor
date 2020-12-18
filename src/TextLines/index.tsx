@@ -182,7 +182,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
-            contentLength={contentLength}
+            contentLength={meta.length + contentLength}
             spanPorps={{ style: TextLinesConstants.quotation.content.style }}
           >
             {[...meta].map((char, index) => (
@@ -402,7 +402,7 @@ const Node: React.FC<NodeProps> = ({
               lineIndex={lineIndex}
               charIndex={from + facingMeta.length + index}
             >
-              {cursorOn ? char : '\u200b'}
+              {char}
             </Char>
           ))}
           {[...trailingMeta].map((char, index) => (

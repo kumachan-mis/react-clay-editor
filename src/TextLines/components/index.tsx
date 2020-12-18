@@ -84,11 +84,12 @@ export const LineContent: React.FC<LineContentProps> = ({
   children,
 }) => {
   const baseClassName = TextLinesConstants.line.content.className;
-  const { className, ...rest } = spanPorps;
+  const baseStyle = TextLinesConstants.line.content.style(indentDepth);
+  const { className, style, ...rest } = spanPorps;
   return (
     <span
       className={className ? `${baseClassName} ${className}` : baseClassName}
-      style={TextLinesConstants.line.content.style(indentDepth)}
+      style={style ? { ...baseStyle, ...style } : baseStyle}
       {...rest}
     >
       {children}
