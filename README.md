@@ -129,9 +129,10 @@ Here are some examples:
 
 ### Quatations
 
-| style      | syntax       |
-| ---------- | ------------ |
-| >quotation | `>quotation` |
+- style
+  > quotation
+- syntax  
+  `>quotation`
 
 **Note**
 
