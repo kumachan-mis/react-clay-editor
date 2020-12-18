@@ -88,9 +88,9 @@ Here are some examples:
   ```
 - syntax
   ````
-    ```
-    block code string
-    ```
+  ```
+  block code string
+  ```
   ````
 
 ### Math Formulas
