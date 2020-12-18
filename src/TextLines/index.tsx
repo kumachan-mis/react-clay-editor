@@ -16,6 +16,7 @@ import {
   Char,
   AnchorWithHoverStyle,
   MarginBottom,
+  LineGroup,
 } from './components';
 import { parseText, getDecorationStyle, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
@@ -166,11 +167,89 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'blockFormula': {
-      return <></>;
+      const { facingMeta, children, trailingMeta } = node;
+      const [from, to] = node.range;
+      const formula = children.map((child) => child.formulaLine).join('\n');
+      const cursorOn =
+        curcorLineIndex !== undefined && from <= curcorLineIndex && curcorLineIndex <= to;
+
+      return !cursorOn && !/^\s*$/.test(formula) ? (
+        <LineGroup
+          fromLineIndex={from + 1}
+          toLineIndex={trailingMeta ? to - 1 : to}
+          divPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
+        >
+          <LineIndent lineIndex={from} indentDepth={facingMeta.indentDepth} />
+          <LineContent lineIndex={facingMeta.lineIndex} indentDepth={facingMeta.indentDepth}>
+            <KaTeX
+              options={{ throwOnError: false, displayMode: true }}
+              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
+            >
+              {formula}
+            </KaTeX>
+          </LineContent>
+        </LineGroup>
+      ) : (
+        <>
+          <Node
+            node={facingMeta}
+            textDecoration={textDecoration}
+            bracketLinkProps={bracketLinkProps}
+            hashTagProps={hashTagProps}
+            taggedLinkPropsMap={taggedLinkPropsMap}
+            codeProps={codeProps}
+            formulaProps={formulaProps}
+            curcorLineIndex={curcorLineIndex}
+          />
+          {children.map((child, index) => (
+            <Node
+              key={index}
+              node={child}
+              textDecoration={textDecoration}
+              bracketLinkProps={bracketLinkProps}
+              hashTagProps={hashTagProps}
+              taggedLinkPropsMap={taggedLinkPropsMap}
+              codeProps={codeProps}
+              formulaProps={formulaProps}
+              curcorLineIndex={curcorLineIndex}
+            />
+          ))}
+          {trailingMeta && (
+            <Node
+              node={trailingMeta}
+              textDecoration={textDecoration}
+              bracketLinkProps={bracketLinkProps}
+              hashTagProps={hashTagProps}
+              taggedLinkPropsMap={taggedLinkPropsMap}
+              codeProps={codeProps}
+              formulaProps={formulaProps}
+              curcorLineIndex={curcorLineIndex}
+            />
+          )}
+        </>
+      );
     }
     case 'blockFormulaMeta':
     case 'blockFormulaLine': {
-      return <></>;
+      const { lineIndex, indentDepth } = node;
+      const formula = node.type == 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
+
+      return (
+        <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
+          <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
+          <LineContent
+            lineIndex={lineIndex}
+            indentDepth={indentDepth}
+            contentLength={formula.length}
+          >
+            {[...formula].map((char, index) => (
+              <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
+                {char}
+              </Char>
+            ))}
+          </LineContent>
+        </Line>
+      );
     }
     case 'quotation': {
       const { lineIndex, indentDepth, contentLength, meta, children } = node;
@@ -283,13 +362,9 @@ const Node: React.FC<NodeProps> = ({
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
           toCharIndex={to - trailingMeta.length}
+          spanPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
-          <KaTeX
-            options={{ throwOnError: false, displayMode }}
-            onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
-          >
-            {formula}
-          </KaTeX>
+          <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
         </CharGroup>
       ) : (
         <span>

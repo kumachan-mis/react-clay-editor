@@ -19,7 +19,7 @@ export interface LineIndentProps {
 export interface LineContentProps {
   lineIndex: number;
   indentDepth: number;
-  contentLength: number;
+  contentLength?: number;
   spanPorps?: React.ComponentProps<'span'>;
 }
 

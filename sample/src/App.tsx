@@ -70,6 +70,18 @@ and so on
   $f(x)$
  display mode
   $$\\int_a^b f(x) \\mathrm{d}x$$
+ block mode
+  $$
+  A =
+  \\left(
+  \\begin{matrix}
+    a_{11}  & a_{12}  & \\cdots & a_{1n}  \\\\
+    a_{21}  & a_{22}  & \\cdots & a_{2n}  \\\\
+    \\vdots & \\vdots & \\ddots & \\vdots \\\\
+    a_{m1}  & a_{m2}  & \\cdots & a_{mn}  \\\\
+  \\end{matrix}
+  \\right)
+  $$
 
 [** Quatations]
 >[* Genius is one percent inspiration and ninety-nine percent perspiration]

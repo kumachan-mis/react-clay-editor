@@ -23,12 +23,17 @@ div.React-Realtime-Markup-Editor-textlines {
   cursor: text;
 }
 
+div.React-Realtime-Markup-Editor-linegroup {
+  display: block;
+  position: relative;
+}
+
 div.React-Realtime-Markup-Editor-line {
   display: block;
   position: relative;
 }
 
-span.React-Realtime-Markup-Editor-group {
+span.React-Realtime-Markup-Editor-chargroup {
   display: inline-block;
 }
 
@@ -68,7 +73,12 @@ span.React-Realtime-Markup-Editor-textlines-content {
   display: block;
 }
 
-span.katex-display {
+div.React-Realtime-Markup-Editor-linegroup span.katex-display {
+  display: inline-block !important;
+  margin: 0 !important;
+}
+
+span.React-Realtime-Markup-Editor-chargroup span.katex-display {
   display: inline-block !important;
   margin: 0 !important;
   text-align: inherit !important;

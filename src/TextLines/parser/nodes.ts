@@ -12,6 +12,7 @@ export type LineNode =
 
 export interface BlockCodeNode {
   type: 'blockCode';
+  range: [number, number];
   facingMeta: BlockCodeMetaNode;
   children: BlockCodeLineNode[];
   trailingMeta?: BlockCodeMetaNode;
@@ -19,6 +20,7 @@ export interface BlockCodeNode {
 
 export interface BlockFormulaNode {
   type: 'blockFormula';
+  range: [number, number];
   facingMeta: BlockFormulaMetaNode;
   children: BlockFormulaLineNode[];
   trailingMeta?: BlockFormulaMetaNode;

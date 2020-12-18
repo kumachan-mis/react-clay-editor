@@ -93,9 +93,11 @@ export const LineContent: React.FC<LineContentProps> = ({
       {...rest}
     >
       {children}
-      <Char lineIndex={lineIndex} charIndex={indentDepth + contentLength}>
-        {' '}
-      </Char>
+      {contentLength !== undefined && (
+        <Char lineIndex={lineIndex} charIndex={indentDepth + contentLength}>
+          {' '}
+        </Char>
+      )}
     </span>
   );
 };
