@@ -73,29 +73,59 @@ Here are some examples:
 
 ### Code Strings
 
-| style                | syntax                     |
-| -------------------- | -------------------------- |
-| `inline code string` | `` `inline code string` `` |
-|                      | ` ``` `                    |
-| `block code string`  | ` block code string`       |
-|                      | ` ``` `                    |
+#### inline code string
+
+- style  
+  `inline code string`
+- syntax  
+  `` `inline code string` ``
+
+#### block code string
+
+- style
+  ```
+  block code string
+  ```
+- syntax
+  ````
+    ```
+    block code string
+    ```
+  ````
 
 ### Math Formulas
 
-| style                                     | syntax                                  |
-| ----------------------------------------- | --------------------------------------- |
-| ![inline-mode](figures/inline-mode.png)   | `$\int_a^b f(x) \mathrm{d}x$`           |
-| ![display-mode](figures/display-mode.png) | `$$\int_a^b f(x) \mathrm{d}x$$`         |
-|                                           | `$$`                                    |
-|                                           | `\left(`                                |
-|                                           | `\begin{matrix}`                        |
-|                                           | ` a_{11} & a_{12} & \cdots & a_{1n} \\` |
-|                                           | ` a_{21} & a_{22} & \cdots & a_{2n} \\` |
-| ![block-mode](figures/block-mode.png)     | ` \vdots & \vdots & \ddots & \vdots \\` |
-|                                           | ` a_{m1} & a_{m2} & \cdots & a_{mn} \\` |
-|                                           | `\end{matrix}`                          |
-|                                           | `\right)`                               |
-|                                           | `$$`                                    |
+### inline math formula
+
+- style  
+  ![inline-mode](figures/inline-mode.png)
+- syntax  
+  `$\int_a^b f(x) \mathrm{d}x$`
+
+### display math formula
+
+- style  
+  ![display-mode](figures/display-mode.png)
+- syntax  
+  `$$\int_a^b f(x) \mathrm{d}x$$`
+
+### block math formula
+
+- style  
+  ![block-mode](figures/block-mode.png)
+- syntax
+  ```
+  $$
+  \left(
+  \begin{matrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn} \\
+  \end{matrix}
+  \right)
+  $$
+  ```
 
 ### Quatations
 
