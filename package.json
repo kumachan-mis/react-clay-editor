@@ -1,7 +1,7 @@
 {
   "name": "react-realtime-markup-editor",
   "homepage": "https://kumachan-mis.github.io/react-realtime-markup-editor",
-  "version": "0.12.3",
+  "version": "0.13.0",
   "description": "A text document editor which is syntactically formattable in real time",
   "keywords": [
     "react",
