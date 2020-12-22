@@ -15,7 +15,7 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const textAreaSelector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
   const textArea = root?.querySelector(textAreaSelector) as HTMLTextAreaElement | null;
-  textArea?.focus();
+  textArea?.focus({ preventScroll: true });
 
   if (props.suggestions.length > 0) {
     const index = props.suggestionIndex;
@@ -39,13 +39,13 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const position = { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left };
   const cursorSize = charRect.height;
-  const margin = 2 * cursorSize;
+  const margin = 1.5 * cursorSize;
   if (charRect.top - rootRect.top - margin < 0) {
     root.scrollTop += charRect.top - rootRect.top - margin;
-    return state;
+    return handleOnEditorScroll(props, state, element);
   } else if (charRect.top + cursorSize - rootRect.top > rootRect.height - margin) {
     root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height + margin;
-    return state;
+    return handleOnEditorScroll(props, state, element);
   }
   return { ...state, position, cursorSize };
 }

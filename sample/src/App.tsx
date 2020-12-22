@@ -23,7 +23,7 @@ A text document editor which is syntactically formattable in real time
  undo
  redo
  move up
- move uown
+ move down
  move left
  move right
  move to word top
