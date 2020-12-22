@@ -22,144 +22,166 @@ import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
 import { TextLines } from '../TextLines';
 
-// TODO: use function and hooks
-export class Editor extends React.Component<Props, State> {
-  private rootRef: React.RefObject<HTMLDivElement>;
+export const Editor: React.FC<Props> = (props) => {
+  const [state, setState] = React.useState<State>({
+    cursorCoordinate: undefined,
+    textAreaValue: '',
+    isComposing: false,
+    textSelection: undefined,
+    selectionWithMouse: 'inactive',
+    historyHead: -1,
+    editActionHistory: [],
+    suggestionType: 'none',
+    suggestions: [],
+    suggestionIndex: -1,
+  });
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      cursorCoordinate: undefined,
-      textAreaValue: '',
-      isComposing: false,
-      textSelection: undefined,
-      selectionWithMouse: 'inactive',
-      historyHead: -1,
-      editActionHistory: [],
-      suggestionType: 'none',
-      suggestions: [],
-      suggestionIndex: -1,
+  const createMouseEventHandler = React.useCallback(
+    <Event extends MouseEvent | React.MouseEvent>(
+      handler: (
+        text: string,
+        state: State,
+        event: Event,
+        root: HTMLElement | null
+      ) => [string, State]
+    ): ((event: Event) => void) => {
+      return (event) => {
+        if (props.disabled || event.button != 0) return;
+        const [newText, newState] = handler(props.text, state, event, rootRef.current);
+        if (newState != state) setState(newState);
+        if (newText != props.text) props.onChangeText(newText);
+      };
+    },
+    [state, props, setState, rootRef]
+  );
+
+  const createCursorEventHandler = React.useCallback(
+    <Event,>(
+      handler: (text: string, state: State, event: Event) => [string, State]
+    ): ((event: Event) => void) => {
+      return (event) => {
+        if (props.disabled) return;
+        const [newText, newState] = handler(props.text, state, event);
+        if (newState != state) setState(newState);
+        if (newText != props.text) props.onChangeText(newText);
+      };
+    },
+    [state, props, setState]
+  );
+
+  const createCursorEventHandlerWithProps = React.useCallback(
+    <Event,>(
+      handler: (text: string, props: Props, state: State, event: Event) => [string, State]
+    ): ((event: Event) => void) => {
+      return (event) => {
+        if (props.disabled) return;
+        const [newText, newState] = handler(props.text, props, state, event);
+        if (newState != state) setState(newState);
+        if (newText != props.text) props.onChangeText(newText);
+      };
+    },
+    [state, props, setState]
+  );
+
+  const _handleOnMouseDown = React.useCallback(
+    (event: React.MouseEvent) => createMouseEventHandler(handleOnMouseDown)(event),
+    [createMouseEventHandler]
+  );
+
+  const _handleOnMouseMove = React.useCallback(
+    (event: MouseEvent) => createMouseEventHandler(handleOnMouseMove)(event),
+    [createMouseEventHandler]
+  );
+
+  const _handleOnMouseUp = React.useCallback(
+    (event: MouseEvent) => createMouseEventHandler(handleOnMouseUp)(event),
+
+    [createMouseEventHandler]
+  );
+
+  const handleOnEditorBlur = React.useCallback(
+    (event: MouseEvent) => {
+      if (
+        !props.disabled &&
+        state.cursorCoordinate &&
+        rootRef.current &&
+        !rootRef.current.contains(event.target as Node)
+      ) {
+        setState({
+          ...state,
+          cursorCoordinate: undefined,
+          textAreaValue: '',
+          isComposing: false,
+          textSelection: undefined,
+          selectionWithMouse: 'inactive',
+          suggestionType: 'none',
+          suggestions: [],
+          suggestionIndex: -1,
+        });
+      }
+    },
+    [props.disabled, state, setState, rootRef]
+  );
+
+  React.useEffect(() => {
+    document.addEventListener('mousemove', _handleOnMouseMove);
+    return () => {
+      document.removeEventListener('mousemove', _handleOnMouseMove);
     };
-    this.rootRef = React.createRef<HTMLDivElement>();
-  }
+  }, [_handleOnMouseMove]);
 
-  componentDidMount(): void {
-    document.addEventListener('mousedown', this.handleOnEditorBlur);
-  }
+  React.useEffect(() => {
+    document.addEventListener('mouseup', _handleOnMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', _handleOnMouseUp);
+    };
+  }, [_handleOnMouseUp]);
 
-  componentWillUnmount(): void {
-    document.removeEventListener('mousedown', this.handleOnEditorBlur);
-  }
+  React.useEffect(() => {
+    document.addEventListener('mousedown', handleOnEditorBlur);
+    return () => {
+      document.removeEventListener('mousedown', handleOnEditorBlur);
+    };
+  }, [handleOnEditorBlur]);
 
-  render(): React.ReactNode {
-    return (
-      <div style={this.props.style}>
-        <div className={EditorConstants.root.className} ref={this.rootRef}>
-          <div
-            className={EditorConstants.editor.className}
-            onMouseDown={(event) => this.handleOnMouseDown(event)}
-            onClick={this.createMouseEventHandler(handleOnClick)}
-          >
-            <Cursor
-              coordinate={this.state.cursorCoordinate}
-              textAreaValue={this.state.textAreaValue}
-              suggestionType={this.state.suggestionType}
-              suggestions={this.state.suggestions}
-              suggestionIndex={this.state.suggestionIndex}
-              suggestionListDecoration={this.props.decoration?.suggestionList}
-              onKeyDown={this.createCursorEventHandlerWithProps(handleOnKeyDown)}
-              onTextChange={this.createCursorEventHandlerWithProps(handleOnTextChange)}
-              onTextCompositionStart={this.createCursorEventHandler(handleOnTextCompositionStart)}
-              onTextCompositionEnd={this.createCursorEventHandler(handleOnTextCompositionEnd)}
-              onTextCut={this.createCursorEventHandler(handleOnTextCut)}
-              onTextCopy={this.createCursorEventHandler(handleOnTextCopy)}
-              onTextPaste={this.createCursorEventHandler(handleOnTextPaste)}
-              onSuggectionMouseDown={this.createCursorEventHandler(handleOnSuggectionMouseDown)}
-            />
-            <Selection textSelection={this.state.textSelection} />
-            <TextLines
-              text={this.props.text}
-              textDecoration={this.props.decoration?.text}
-              bracketLinkProps={this.props.bracketLinkProps}
-              hashTagProps={this.props.hashTagProps}
-              codeProps={this.props.codeProps}
-              formulaProps={this.props.formulaProps}
-              taggedLinkPropsMap={this.props.taggedLinkPropsMap}
-              cursorCoordinate={this.state.cursorCoordinate}
-            />
-          </div>
+  return (
+    <div style={props.style}>
+      <div className={EditorConstants.root.className} ref={rootRef}>
+        <div
+          className={EditorConstants.editor.className}
+          onMouseDown={_handleOnMouseDown}
+          onClick={createMouseEventHandler(handleOnClick)}
+        >
+          <Cursor
+            coordinate={state.cursorCoordinate}
+            textAreaValue={state.textAreaValue}
+            suggestionType={state.suggestionType}
+            suggestions={state.suggestions}
+            suggestionIndex={state.suggestionIndex}
+            suggestionListDecoration={props.decoration?.suggestionList}
+            onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
+            onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
+            onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
+            onTextCompositionEnd={createCursorEventHandler(handleOnTextCompositionEnd)}
+            onTextCut={createCursorEventHandler(handleOnTextCut)}
+            onTextCopy={createCursorEventHandler(handleOnTextCopy)}
+            onTextPaste={createCursorEventHandler(handleOnTextPaste)}
+            onSuggectionMouseDown={createCursorEventHandler(handleOnSuggectionMouseDown)}
+          />
+          <Selection textSelection={state.textSelection} />
+          <TextLines
+            text={props.text}
+            textDecoration={props.decoration?.text}
+            bracketLinkProps={props.bracketLinkProps}
+            hashTagProps={props.hashTagProps}
+            codeProps={props.codeProps}
+            formulaProps={props.formulaProps}
+            taggedLinkPropsMap={props.taggedLinkPropsMap}
+            cursorCoordinate={state.cursorCoordinate}
+          />
         </div>
       </div>
-    );
-  }
-
-  private createMouseEventHandler = <Event extends MouseEvent | React.MouseEvent>(
-    handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
-  ): ((event: Event) => void) => {
-    return (event) => {
-      if (this.props.disabled || event.button != 0) return;
-      const [newText, newState] = handler(this.props.text, this.state, event, this.rootRef.current);
-      if (newState != this.state) this.setState(newState);
-      if (newText != this.props.text) this.props.onChangeText(newText);
-    };
-  };
-
-  private createCursorEventHandler = <Event,>(
-    handler: (text: string, state: State, event: Event) => [string, State]
-  ): ((event: Event) => void) => {
-    return (event) => {
-      if (this.props.disabled) return;
-      const [newText, newState] = handler(this.props.text, this.state, event);
-      if (newState != this.state) this.setState(newState);
-      if (newText != this.props.text) this.props.onChangeText(newText);
-    };
-  };
-
-  private createCursorEventHandlerWithProps = <Event,>(
-    handler: (text: string, props: Props, state: State, event: Event) => [string, State]
-  ): ((event: Event) => void) => {
-    return (event) => {
-      if (this.props.disabled) return;
-      const [newText, newState] = handler(this.props.text, this.props, this.state, event);
-      if (newState != this.state) this.setState(newState);
-      if (newText != this.props.text) this.props.onChangeText(newText);
-    };
-  };
-
-  private handleOnMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    this.createMouseEventHandler(handleOnMouseDown)(event);
-    document.addEventListener('mousemove', this.handleOnMouseMove);
-    document.addEventListener('mouseup', this.handleOnMouseUp);
-  };
-
-  private handleOnMouseMove = (event: MouseEvent) => {
-    this.createMouseEventHandler(handleOnMouseMove)(event);
-  };
-
-  private handleOnMouseUp = (event: MouseEvent) => {
-    this.createMouseEventHandler(handleOnMouseUp)(event);
-    document.removeEventListener('mousemove', this.handleOnMouseMove);
-    document.removeEventListener('mouseup', this.handleOnMouseUp);
-  };
-
-  private handleOnEditorBlur = (event: MouseEvent) => {
-    if (
-      !this.props.disabled &&
-      this.state.cursorCoordinate &&
-      this.rootRef.current &&
-      !this.rootRef.current.contains(event.target as Node)
-    ) {
-      this.setState({
-        ...this.state,
-        cursorCoordinate: undefined,
-        textAreaValue: '',
-        isComposing: false,
-        textSelection: undefined,
-        selectionWithMouse: 'inactive',
-        suggestionType: 'none',
-        suggestions: [],
-        suggestionIndex: -1,
-      });
-    }
-  };
-}
+    </div>
+  );
+};
