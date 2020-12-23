@@ -15,5 +15,9 @@
   },
   "[json]": {
     "editor.formatOnSave": true
-  }
+  },
+
+  "githubPullRequests.defaultMergeMethod": "squash",
+  "githubPullRequests.pullRequestTitle": "custom",
+  "githubPullRequests.pullRequestDescription": "custom"
 }
