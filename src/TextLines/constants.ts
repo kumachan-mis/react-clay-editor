@@ -51,6 +51,19 @@ export const TextLinesConstants = {
     className: (from: number, to: number): string =>
       `React-Realtime-Markup-Editor-linegroup L${from}-${to}`,
     classNameRegex: /React-Realtime-Markup-Editor-linegroup L(?<from>\d+)-(?<to>\d+)/,
+    indent: {
+      className: 'React-Realtime-Markup-Editor-textlines-indent',
+      style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
+    },
+    pad: {
+      className: 'React-Realtime-Markup-Editor-textlines-indent-pad',
+    },
+    content: {
+      className: 'React-Realtime-Markup-Editor-textlines-content',
+      style: (indentDepth: number): React.CSSProperties => ({
+        marginLeft: `${1.5 * indentDepth}em`,
+      }),
+    },
   },
   line: {
     className: (lineIndex: number): string => `React-Realtime-Markup-Editor-line L${lineIndex}`,

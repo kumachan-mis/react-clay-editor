@@ -9,6 +9,9 @@ import {
   defaultCodeStyle,
 } from './constants';
 import {
+  LineGroup,
+  LineGroupIndent,
+  LineGroupContent,
   Line,
   LineIndent,
   LineContent,
@@ -16,7 +19,6 @@ import {
   Char,
   AnchorWithHoverStyle,
   MarginBottom,
-  LineGroup,
 } from './components';
 import { parseText, getDecorationStyle, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
@@ -179,15 +181,10 @@ const Node: React.FC<NodeProps> = ({
           toLineIndex={trailingMeta ? to - 1 : to}
           divPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
-          <LineIndent lineIndex={from} indentDepth={facingMeta.indentDepth} />
-          <LineContent lineIndex={facingMeta.lineIndex} indentDepth={facingMeta.indentDepth}>
-            <KaTeX
-              options={{ throwOnError: false, displayMode: true }}
-              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
-            >
-              {formula}
-            </KaTeX>
-          </LineContent>
+          <LineGroupIndent indentDepth={facingMeta.indentDepth} />
+          <LineGroupContent indentDepth={facingMeta.indentDepth}>
+            <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
+          </LineGroupContent>
         </LineGroup>
       ) : (
         <>
