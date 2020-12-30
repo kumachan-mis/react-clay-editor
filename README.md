@@ -403,11 +403,29 @@ settings of math formulas
 
 ```ts
 interface FormulaProps {
+  spanProps?: (formula: string) => React.ComponentProps<'span'>;
   disabled?: boolean;
 }
 ```
 
 **Attributes**
 
+- spanProps: given `formula`, this function returns props of `<formula>` tag  
+  default: `(formula: string) => ({ style: defaultFormulaStyle })`
 - disabled: if `true`, syntax of math formulas is ignored  
   default: `undefined` (falsy)
+
+**Default**
+
+```ts
+const defaultFormulaStyle: React.CSSProperties = {
+  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
+  backgroundColor: 'rgba(27, 31, 35, 0.05)',
+};
+```
+
+you can import `defaultFormulaStyle` by adding
+
+```ts
+import { defaultFormulaStyle } from 'react-realtime-markup-editor';
+```

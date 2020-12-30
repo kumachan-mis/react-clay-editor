@@ -41,6 +41,7 @@ export interface CodeProps {
 }
 
 export interface FormulaProps {
+  spanProps?: (formula: string) => React.ComponentProps<'span'>;
   disabled?: boolean;
 }
 

@@ -7,8 +7,12 @@ import {
   defaultLinkStyle,
   defaultLinkOverriddenStyleOnHover,
   defaultCodeStyle,
+  defaultFormulaStyle,
 } from './constants';
 import {
+  LineGroup,
+  LineGroupIndent,
+  LineGroupContent,
   Line,
   LineIndent,
   LineContent,
@@ -16,7 +20,6 @@ import {
   Char,
   AnchorWithHoverStyle,
   MarginBottom,
-  LineGroup,
 } from './components';
 import { parseText, getDecorationStyle, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
@@ -46,7 +49,7 @@ export const TextLines: React.FC<Props> = ({
     codeProps: () => ({ style: defaultCodeStyle }),
   } as CodeProps,
   formulaProps = {
-    // empty object
+    spanProps: () => ({ style: defaultFormulaStyle }),
   } as FormulaProps,
   cursorCoordinate,
 }) => {
@@ -172,6 +175,7 @@ const Node: React.FC<NodeProps> = ({
       const formula = children.map((child) => child.formulaLine).join('\n');
       const cursorOn =
         curcorLineIndex !== undefined && from <= curcorLineIndex && curcorLineIndex <= to;
+      const spanElementProps = formulaProps.spanProps?.(formula);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
         <LineGroup
@@ -179,15 +183,13 @@ const Node: React.FC<NodeProps> = ({
           toLineIndex={trailingMeta ? to - 1 : to}
           divPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
-          <LineIndent lineIndex={from} indentDepth={facingMeta.indentDepth} />
-          <LineContent lineIndex={facingMeta.lineIndex} indentDepth={facingMeta.indentDepth}>
-            <KaTeX
-              options={{ throwOnError: false, displayMode: true }}
-              onMouseDown={(event) => event.nativeEvent.stopImmediatePropagation()}
-            >
-              {formula}
-            </KaTeX>
-          </LineContent>
+          <LineGroupIndent indentDepth={facingMeta.indentDepth} />
+          <LineGroupContent
+            indentDepth={facingMeta.indentDepth}
+            spanPorps={{ style: spanElementProps?.style }}
+          >
+            <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
+          </LineGroupContent>
         </LineGroup>
       ) : (
         <>
@@ -233,6 +235,7 @@ const Node: React.FC<NodeProps> = ({
     case 'blockFormulaLine': {
       const { lineIndex, indentDepth } = node;
       const formula = node.type == 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
+      const spanElementProps = formulaProps.spanProps?.(formula);
 
       return (
         <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
@@ -241,6 +244,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={formula.length}
+            spanPorps={{ style: spanElementProps?.style }}
           >
             {[...formula].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -355,6 +359,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
+      const spanElementProps = formulaProps.spanProps?.(formula);
       const displayMode = node.type == 'displayFormula';
 
       return !cursorOn ? (
@@ -362,12 +367,15 @@ const Node: React.FC<NodeProps> = ({
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
           toCharIndex={to - trailingMeta.length}
-          spanPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
+          spanPorps={{
+            onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation(),
+            style: spanElementProps?.style,
+          }}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
         </CharGroup>
       ) : (
-        <span>
+        <span style={spanElementProps?.style}>
           {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {char}

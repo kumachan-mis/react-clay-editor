@@ -4,6 +4,16 @@ export interface LineGroupProps {
   divPorps?: React.ComponentProps<'div'>;
 }
 
+export interface LineGroupIndentProps {
+  indentDepth: number;
+  spanPorps?: React.ComponentProps<'span'>;
+}
+
+export interface LineGroupContentProps {
+  indentDepth: number;
+  spanPorps?: React.ComponentProps<'span'>;
+}
+
 export interface LineProps {
   lineIndex: number;
   defaultFontSize: number;

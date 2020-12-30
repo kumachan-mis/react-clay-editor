@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import {
   LineGroupProps,
+  LineGroupIndentProps,
+  LineGroupContentProps,
   LineProps,
   LineIndentProps,
   LineContentProps,
@@ -23,6 +25,49 @@ export const LineGroup: React.FC<LineGroupProps> = ({
     <div className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
       {children}
     </div>
+  );
+};
+
+export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({
+  indentDepth,
+  spanPorps = {},
+  children,
+}) => {
+  const baseClassName = TextLinesConstants.lineGroup.indent.className;
+  const baseStyle = TextLinesConstants.lineGroup.indent.style(indentDepth);
+  const { className, style, ...rest } = spanPorps;
+  return (
+    <span
+      className={className ? `${baseClassName} ${className}` : baseClassName}
+      style={style ? { ...baseStyle, ...style } : baseStyle}
+      {...rest}
+    >
+      {[...Array(indentDepth).keys()].map((charIndex) => (
+        <span key={charIndex} className={TextLinesConstants.lineGroup.pad.className}>
+          <span> </span>
+        </span>
+      ))}
+      {children}
+    </span>
+  );
+};
+
+export const LineGroupContent: React.FC<LineGroupContentProps> = ({
+  indentDepth,
+  spanPorps = {},
+  children,
+}) => {
+  const baseClassName = TextLinesConstants.lineGroup.content.className;
+  const baseStyle = TextLinesConstants.lineGroup.content.style(indentDepth);
+  const { className, style, ...rest } = spanPorps;
+  return (
+    <span
+      className={className ? `${baseClassName} ${className}` : baseClassName}
+      style={style ? { ...baseStyle, ...style } : baseStyle}
+      {...rest}
+    >
+      {children}
+    </span>
   );
 };
 

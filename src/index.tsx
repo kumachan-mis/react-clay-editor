@@ -15,4 +15,5 @@ export {
   defaultLinkStyle,
   defaultLinkOverriddenStyleOnHover,
   defaultCodeStyle,
+  defaultFormulaStyle,
 } from './TextLines/constants';
