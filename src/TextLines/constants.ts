@@ -22,6 +22,11 @@ export const defaultCodeStyle: React.CSSProperties = {
   backgroundColor: 'rgba(27, 31, 35, 0.05)',
 };
 
+export const defaultFormulaStyle: React.CSSProperties = {
+  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
+  backgroundColor: 'rgba(27, 31, 35, 0.05)',
+};
+
 export const TextLinesConstants = {
   className: 'React-Realtime-Markup-Editor-textlines',
   quotation: {
