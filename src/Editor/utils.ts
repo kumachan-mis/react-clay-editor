@@ -10,7 +10,7 @@ import {
 } from '../Selection/utils';
 import { CursorCoordinate } from '../Cursor/types';
 import { TextLinesConstants } from '../TextLines/constants';
-import { classNameToSelector, isMacOS } from '../common';
+import { classNameToSelector, isMacOS } from '../utils';
 
 export function getRoot(element: HTMLElement): HTMLElement | null {
   return element.closest(`div${classNameToSelector(EditorConstants.root.className)}`);

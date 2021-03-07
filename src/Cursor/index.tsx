@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
 import { CursorConstants, defaultSuggestionListDecoration } from './constants';
 import { cursorPropsToState, handleOnEditorScroll } from './utils';
-import '../style.css';
 
 import { getRoot } from '../Editor/utils';
 
@@ -65,8 +64,8 @@ const CursorBar: React.FC<CursorBarProps> = (props) => {
   const { position, cursorSize } = props;
   return (
     <div
-      className={CursorConstants.rootDiv.className}
-      style={CursorConstants.rootDiv.style(position, cursorSize)}
+      className={CursorConstants.cursorBar.className}
+      style={CursorConstants.cursorBar.style(position, cursorSize)}
     >
       <svg width={CursorConstants.svg.width} height={cursorSize}>
         <rect

@@ -25,7 +25,6 @@ import { parseText, getDecorationStyle, getHashTagName, getTagName } from './par
 import { ParsingOptions } from './parser/types';
 import { BracketLinkProps, HashTagProps, CodeProps, FormulaProps } from '../Editor/types';
 import { KaTeX } from '../KaTeX';
-import '../style.css';
 
 export const TextLines: React.FC<Props> = ({
   text,

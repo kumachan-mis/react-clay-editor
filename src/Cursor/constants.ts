@@ -1,4 +1,5 @@
 import { Position, SuggestionListDecoration } from './types';
+import styles from './style.css';
 
 export const defaultSuggestionListDecoration: SuggestionListDecoration = {
   width: 250,
@@ -7,8 +8,8 @@ export const defaultSuggestionListDecoration: SuggestionListDecoration = {
 };
 
 export const CursorConstants = {
-  rootDiv: {
-    className: 'React-Realtime-Markup-Editor-cursor',
+  cursorBar: {
+    className: styles.cursorBar,
     style: (position: Position, cursorSize: number): React.CSSProperties => ({
       top: `${position.top}px`,
       left: `${position.left}px`,
@@ -18,7 +19,7 @@ export const CursorConstants = {
   svg: { width: '2px' },
   rect: { x: 0, y: 0, width: '1px', height: '100%' },
   textArea: {
-    className: 'React-Realtime-Markup-Editor-cursor',
+    className: styles.cursorTextarea,
     wrap: 'off',
     spellCheck: false,
     autoCapitalize: 'none',
@@ -33,7 +34,7 @@ export const CursorConstants = {
   },
   suggestion: {
     list: {
-      className: 'React-Realtime-Markup-Editor-cursor-suggestion-list',
+      className: styles.suggestionList,
       style: (
         position: Position,
         cursorSize: number,
@@ -49,11 +50,8 @@ export const CursorConstants = {
       }),
     },
     item: {
-      className: (index: number): string =>
-        `React-Realtime-Markup-Editor-cursor-suggestion-item Item${index}`,
-      style: (fontSize: number): React.CSSProperties => ({
-        fontSize: `${fontSize}px`,
-      }),
+      className: (index: number): string => `${styles.suggestionItem} Item${index}`,
+      style: (fontSize: number): React.CSSProperties => ({ fontSize: `${fontSize}px` }),
     },
   },
 };

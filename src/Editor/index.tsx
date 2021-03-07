@@ -16,7 +16,6 @@ import {
   handleOnTextCompositionEnd,
   handleOnSuggectionMouseDown,
 } from './utils';
-import '../style.css';
 
 import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';

@@ -1,6 +1,6 @@
 import { TextLinesConstants } from './constants';
 
-import { classNameToSelector } from '../common';
+import { classNameToSelector } from '../utils';
 import { EditorConstants } from '../Editor/constants';
 
 export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
