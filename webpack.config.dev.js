@@ -1,45 +1,12 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.config.common');
 
-module.exports = {
-  entry: path.resolve('sample', 'src', 'index.tsx'),
+module.exports = merge(common, {
   mode: 'development',
-  target: 'web',
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  },
-  output: {
-    path: path.resolve('sample', 'dist'),
-    publicPath: '/',
-    filename: 'main.js',
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ts|tsx|js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-      {
-        test: /\.(css)$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(ttf|woff|woff2)$/,
-        use: ['file-loader'],
-      },
-    ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'sample/src/index.html',
-      filename: 'index.html',
-    }),
-  ],
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.resolve('sample', 'dist'),
+    contentBase: common.output.path,
     historyApiFallback: true,
     open: true,
   },
-};
+});
