@@ -2,9 +2,7 @@ import * as React from 'react';
 
 import { Editor, defaultLinkStyle, defaultLinkOverriddenStyleOnHover } from '../../src';
 
-// eslint-disable-next-line prettier/prettier
-const defaultMainText =
-`[*** React Realtime Markup Editor]
+const defaultMainText = `[*** React Realtime Markup Editor]
 A text document editor which is syntactically formattable in real time
 
 [** Itemizations]
@@ -87,9 +85,7 @@ and so on
 >[* Genius is one percent inspiration and ninety-nine percent perspiration]
 >by Thomas Edison`;
 
-// eslint-disable-next-line prettier/prettier
-const defaultSubText =
-`[** Of course, you can use multiple editors]
+const defaultSubText = `[** Of course, you can use multiple editors]
 [* Links can be disabled]
  bracket-link
   [disabled-bracket-link]

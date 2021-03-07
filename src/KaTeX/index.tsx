@@ -9,13 +9,13 @@ export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({
   children,
   ...props
 }) => {
-  const innerHtml = (() => {
+  const formula = (children ?? '') as string;
+  const innerHtml = React.useMemo(() => {
     try {
-      const formula = (children ?? '') as string;
-      return React.useMemo(() => renderToString(formula, options), [options, children]);
+      return renderToString(formula, options);
     } catch (error) {
       return error.message;
     }
-  })();
+  }, [formula, options]);
   return <span {...props} dangerouslySetInnerHTML={{ __html: innerHtml }} />;
 };
