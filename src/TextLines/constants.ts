@@ -54,8 +54,8 @@ export const TextLinesConstants = {
     }),
   },
   lineGroup: {
-    className: (from: number, to: number): string => `${styles.lineGrpup} L${from}-${to}`,
-    classNameRegex: RegExp(`${styles.lineGrpup} L(?<from>\\d+)-(?<to>\\d+)`),
+    className: (from: number, to: number): string => `${styles.lineGroup} L${from}-${to}`,
+    classNameRegex: RegExp(`${styles.lineGroup} L(?<from>\\d+)-(?<to>\\d+)`),
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),

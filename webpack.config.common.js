@@ -21,6 +21,7 @@ module.exports = {
       },
       {
         test: /\.(css)$/,
+        exclude: /katex\..+\.(css)$/,
         use: [
           {
             loader: 'style-loader',
@@ -35,6 +36,10 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /katex\..+\.(css)$/,
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(ttf|woff|woff2)$/,
