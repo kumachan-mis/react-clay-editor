@@ -17,7 +17,9 @@ export const Selection: React.FC<Props> = (props) => {
     if (!rootRef.current) return;
     const newState = selectionPropsToState(props, rootRef.current);
     if (newState != state) setState(newState);
-  }, [props.textSelection]);
+    // state should not be in dependencies because of infinite recursion
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props, rootRef]);
 
   return (
     <span ref={rootRef}>

@@ -3,10 +3,11 @@
     "jsx": "react",
     "moduleResolution": "node",
     "target": "ESNext",
+    "module": "ESNext",
     "outDir": "./dist",
     "strict": true,
+    "alwaysStrict": true,
     "declaration": true,
-    "esModuleInterop": true
   },
   "include": ["./src"]
 }

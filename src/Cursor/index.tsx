@@ -21,7 +21,6 @@ export const Cursor: React.FC<Props> = (props) => {
     const editorRoot = rootRef.current && getRoot(rootRef.current);
     if (editorRoot) editorRoot.addEventListener('scroll', _handleOnEditorScroll);
     return () => {
-      const editorRoot = rootRef.current && getRoot(rootRef.current);
       if (editorRoot) editorRoot.removeEventListener('scroll', _handleOnEditorScroll);
     };
   });
@@ -30,6 +29,8 @@ export const Cursor: React.FC<Props> = (props) => {
     if (!rootRef.current) return;
     const newState = cursorPropsToState(props, state, rootRef.current);
     if (newState != state) setState(newState);
+    // state should not be in dependencies because of infinite recursion
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, rootRef]);
 
   return (
