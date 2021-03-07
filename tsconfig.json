@@ -9,5 +9,5 @@
     "alwaysStrict": true,
     "declaration": true,
   },
-  "include": ["./src"]
+  "include": ["src/**/*", "sample/**/*", "tests/**/*"]
 }

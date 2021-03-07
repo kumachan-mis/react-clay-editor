@@ -1,4 +1,5 @@
 {
+  "root": true,
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -8,14 +9,11 @@
   ],
   "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "rules": {
-    "react/prop-types": 0,
-    "quotes": ["error", "single"]
+    "quotes": ["error", "single"],
+    "react/prop-types": 0
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "sourceType": "module"
-  },
-  "env": {
-    "browser": true
+    "project": "./tsconfig.json"
   }
 }
