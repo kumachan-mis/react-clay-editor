@@ -20,8 +20,8 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.(css)$/,
-        exclude: /katex\..+\.(css)$/,
+        test: /\.css$/,
+        exclude: /node_modules|katex/,
         use: [
           {
             loader: 'style-loader',
@@ -38,7 +38,8 @@ module.exports = {
         ],
       },
       {
-        test: /katex\..+\.(css)$/,
+        test: /\.css$/,
+        include: /node_modules|katex/,
         use: ['style-loader', 'css-loader'],
       },
       {
