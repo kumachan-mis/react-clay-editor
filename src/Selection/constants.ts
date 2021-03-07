@@ -1,8 +1,9 @@
 import { Position } from './types';
+import styles from './style.css';
 
 export const SelectionConstants = {
   div: {
-    className: 'React-Realtime-Markup-Editor-selection',
+    className: styles.selection,
     style: (position: Position): React.CSSProperties => ({
       top: `${position.top}px`,
       left: `${position.left}px`,

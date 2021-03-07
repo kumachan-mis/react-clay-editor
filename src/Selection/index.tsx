@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Props, State } from './types';
 import { SelectionConstants } from './constants';
 import { selectionPropsToState } from './utils';
-import '../style.css';
 
 export const Selection: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({
@@ -11,7 +10,7 @@ export const Selection: React.FC<Props> = (props) => {
     centerDivPosition: undefined,
     bottomDivPosition: undefined,
   });
-  const rootRef = React.createRef<HTMLSpanElement>();
+  const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
   React.useEffect(() => {
     if (!rootRef.current) return;

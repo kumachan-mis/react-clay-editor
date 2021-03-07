@@ -1,5 +1,6 @@
 import { TextDecoration } from './types';
 import { DecorationStyle } from './parser/types';
+import styles from './style.css';
 
 export const defaultTextDecoration: TextDecoration = {
   fontSizes: { level1: 16, level2: 20, level3: 24 },
@@ -28,7 +29,7 @@ export const defaultFormulaStyle: React.CSSProperties = {
 };
 
 export const TextLinesConstants = {
-  className: 'React-Realtime-Markup-Editor-textlines',
+  className: styles.textlines,
   quotation: {
     content: {
       style: {
@@ -41,7 +42,7 @@ export const TextLinesConstants = {
   },
   itemization: {
     dot: {
-      className: 'React-Realtime-Markup-Editor-textlines-indent-dot',
+      className: styles.indentDot,
     },
   },
   decoration: {
@@ -53,35 +54,34 @@ export const TextLinesConstants = {
     }),
   },
   lineGroup: {
-    className: (from: number, to: number): string =>
-      `React-Realtime-Markup-Editor-linegroup L${from}-${to}`,
-    classNameRegex: /React-Realtime-Markup-Editor-linegroup L(?<from>\d+)-(?<to>\d+)/,
+    className: (from: number, to: number): string => `${styles.lineGroup} L${from}-${to}`,
+    classNameRegex: RegExp(`${styles.lineGroup} L(?<from>\\d+)-(?<to>\\d+)`),
     indent: {
-      className: 'React-Realtime-Markup-Editor-textlines-indent',
+      className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
     },
     pad: {
-      className: 'React-Realtime-Markup-Editor-textlines-indent-pad',
+      className: styles.indentPad,
     },
     content: {
-      className: 'React-Realtime-Markup-Editor-textlines-content',
+      className: styles.content,
       style: (indentDepth: number): React.CSSProperties => ({
         marginLeft: `${1.5 * indentDepth}em`,
       }),
     },
   },
   line: {
-    className: (lineIndex: number): string => `React-Realtime-Markup-Editor-line L${lineIndex}`,
-    classNameRegex: /React-Realtime-Markup-Editor-line L(?<lineIndex>\d+)/,
+    className: (lineIndex: number): string => `${styles.line} L${lineIndex}`,
+    classNameRegex: RegExp(`${styles.line} L(?<lineIndex>\\d+)`),
     indent: {
-      className: 'React-Realtime-Markup-Editor-textlines-indent',
+      className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
     },
     pad: {
-      className: 'React-Realtime-Markup-Editor-textlines-indent-pad',
+      className: styles.indentPad,
     },
     content: {
-      className: 'React-Realtime-Markup-Editor-textlines-content',
+      className: styles.content,
       style: (indentDepth: number): React.CSSProperties => ({
         marginLeft: `${1.5 * indentDepth}em`,
       }),
@@ -93,17 +93,17 @@ export const TextLinesConstants = {
   },
   charGroup: {
     className: (lineIndex: number, from: number, to: number): string =>
-      `React-Realtime-Markup-Editor-chargroup L${lineIndex}C${from}-${to}`,
-    classNameRegex: /React-Realtime-Markup-Editor-chargroup L(?<lineIndex>\d+)C(?<from>\d+)-(?<to>\d+)/,
+      `${styles.charGroup} L${lineIndex}C${from}-${to}`,
+    classNameRegex: RegExp(`${styles.charGroup} L(?<lineIndex>\\d+)C(?<from>\\d+)-(?<to>\\d+)`),
   },
   char: {
     className: (lineIndex: number, charIndex: number): string =>
-      `React-Realtime-Markup-Editor-char L${lineIndex}C${charIndex}`,
-    classNameRegex: /React-Realtime-Markup-Editor-char L(?<lineIndex>\d+)C(?<charIndex>\d+)/,
+      `${styles.char} L${lineIndex}C${charIndex}`,
+    classNameRegex: RegExp(`${styles.char} L(?<lineIndex>\\d+)C(?<charIndex>\\d+)`),
   },
   marginBottom: {
-    className: 'React-Realtime-Markup-Editor-margin-bottom',
-    classNameRegex: /React-Realtime-Markup-Editor-margin-bottom/,
+    className: styles.marginBottom,
+    classNameRegex: RegExp(styles.marginBottom),
   },
   regexes: {
     blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>```)$/,

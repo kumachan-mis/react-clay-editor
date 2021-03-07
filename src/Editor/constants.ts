@@ -1,9 +1,7 @@
+import styles from './style.css';
+
 export const EditorConstants = {
-  root: {
-    className: 'React-Realtime-Markup-Editor-root',
-  },
-  editor: {
-    className: 'React-Realtime-Markup-Editor-editor',
-  },
+  root: { className: styles.root },
+  editor: { className: styles.editor },
   historyMaxLength: 50,
 };

@@ -20,7 +20,26 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.(css)$/,
+        test: /\.css$/,
+        exclude: /node_modules|katex/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                compileType: 'module',
+                localIdentName: '[path][name]__[local]__[hash:base64:5]',
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules|katex/,
         use: ['style-loader', 'css-loader'],
       },
       {
