@@ -10,6 +10,7 @@ module.exports = {
   output: {
     path: path.resolve('sample', 'dist'),
     filename: '[name].bundle.js',
+    publicPath: '/',
     clean: true,
   },
   module: {
