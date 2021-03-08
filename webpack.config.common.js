@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules|katex/,
+        exclude: /katex/,
         use: [
           {
             loader: 'style-loader',
@@ -39,7 +39,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: /node_modules|katex/,
+        include: /katex/,
         use: ['style-loader', 'css-loader'],
       },
       {
