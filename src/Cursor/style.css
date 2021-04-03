@@ -3,6 +3,7 @@
 }
 
 .cursorTextarea {
+  font: inherit;
   position: absolute;
   overflow: hidden;
   border: none;
