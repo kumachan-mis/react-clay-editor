@@ -2,17 +2,17 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { KeyboardTest, KeyboardTestState, defaultInitState } from './KeyboardTest';
+import { KeyboardTest, EditorState, defaultInitState } from './components/KeyboardTest';
 import { unittest } from '../utils/unit';
 import { BaseTestCase } from '../utils/unit/types';
 
 interface TestCase extends BaseTestCase {
   testName: string;
   inputLines: string[];
-  inputState: Partial<KeyboardTestState>;
+  inputState: Partial<EditorState>;
   inputTyping: string;
   expectedLines: string[];
-  expectedState: KeyboardTestState;
+  expectedState: EditorState;
 }
 
 unittest<TestCase>('state transition', 'Editor', 'keyboardOperation', (_, testCase) => {

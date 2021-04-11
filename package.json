@@ -80,6 +80,6 @@
     "prettier": "prettier --write \"**/*.{css,html,json,scss,ts,tsx,}\"",
     "start": "rm -Rf sample/dist && webpack serve --config webpack.config.dev.js",
     "test": "jest",
-    "typecheck": "yarn build --noEmit"
+    "typecheck": "yarn tsc --noEmit"
   }
 }
