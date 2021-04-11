@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { KeyboardTest, KeyboardTestState, defaultInitState } from './KeyboardTest';
+import { KeyboardTest, EditorState, defaultInitState } from './components/KeyboardTest';
 import { scenariotest } from '../utils/scenario';
 import { BaseTestScenario } from '../utils/scenario/types';
 import { OperatingSystem, OperatingSystemEnvironment } from '../utils/osenv';
@@ -11,10 +11,10 @@ interface TestScenario extends BaseTestScenario {
   testName: string;
   os: OperatingSystem;
   inputLines: string[];
-  inputState: Partial<KeyboardTestState>;
+  inputState: Partial<EditorState>;
   inputTypingLines: string[];
   expectedLines: string[];
-  expectedState: KeyboardTestState;
+  expectedState: EditorState;
 }
 
 scenariotest<TestScenario>('keyboard event', 'Editor', 'keyboardScenario', (testScenario) => {

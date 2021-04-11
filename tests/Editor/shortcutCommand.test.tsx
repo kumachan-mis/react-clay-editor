@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { KeyboardTest, KeyboardTestState, defaultInitState } from './KeyboardTest';
+import { KeyboardTest, EditorState, defaultInitState } from './components/KeyboardTest';
 import { unittest } from '../utils/unit';
 import { BaseTestCase } from '../utils/unit/types';
 import { OperatingSystem, OperatingSystemEnvironment } from '../utils/osenv';
@@ -10,11 +10,11 @@ import { OperatingSystem, OperatingSystemEnvironment } from '../utils/osenv';
 interface TestCase extends BaseTestCase {
   testName: string;
   inputLines: string[];
-  inputState: Partial<KeyboardTestState>;
+  inputState: Partial<EditorState>;
   inputTypingByOS: { [os in OperatingSystem]: string };
   inputTypingForMacos: string;
   expectedLines: string[];
-  expectedState: KeyboardTestState;
+  expectedState: EditorState;
 }
 
 unittest<TestCase>('state transition', 'Editor', 'shortcutCommand', (_, testCase) => {

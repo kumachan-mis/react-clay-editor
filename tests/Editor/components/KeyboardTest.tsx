@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Props, State } from '../../src/Editor/types';
+import { Props as EditorProps, State as EditorState } from '../../../src/Editor/types';
 import {
   handleOnKeyDown,
   handleOnTextChange,
@@ -9,9 +9,16 @@ import {
   handleOnTextPaste,
   handleOnTextCompositionStart,
   handleOnTextCompositionEnd,
-} from '../../src/Editor/utils';
+} from '../../../src/Editor/utils';
 
-export const defaultInitState: State = {
+export type Props = Omit<EditorProps, 'text' | 'onChangeText'> & {
+  initText?: string;
+  initState?: EditorState;
+};
+export { EditorProps, EditorState };
+type BodyProps = EditorProps & { initState: EditorState };
+
+export const defaultInitState: EditorState = {
   cursorCoordinate: undefined,
   textAreaValue: '',
   isComposing: false,
@@ -24,14 +31,7 @@ export const defaultInitState: State = {
   suggestionIndex: -1,
 };
 
-export type KeyboardTestProps = Omit<Props, 'text' | 'onChangeText'> & {
-  initText?: string;
-  initState?: State;
-};
-
-export { State as KeyboardTestState };
-
-export const KeyboardTest: React.FC<KeyboardTestProps> = ({
+export const KeyboardTest: React.FC<Props> = ({
   initText = '',
   initState = defaultInitState,
   ...props
@@ -40,11 +40,11 @@ export const KeyboardTest: React.FC<KeyboardTestProps> = ({
   return <KeyboardTestBody text={text} onChangeText={setText} initState={initState} {...props} />;
 };
 
-const KeyboardTestBody: React.FC<Props & { initState: State }> = ({ initState, ...props }) => {
-  const [state, setState] = React.useState<State>(initState);
+const KeyboardTestBody: React.FC<BodyProps> = ({ initState, ...props }) => {
+  const [state, setState] = React.useState<EditorState>(initState);
 
   const createCursorEventHandler = <Event,>(
-    handler: (text: string, state: State, event: Event) => [string, State]
+    handler: (text: string, state: EditorState, event: Event) => [string, EditorState]
   ): ((event: Event) => void) => {
     return (event) => {
       if (props.disabled) return;
@@ -55,7 +55,12 @@ const KeyboardTestBody: React.FC<Props & { initState: State }> = ({ initState, .
   };
 
   const createCursorEventHandlerWithProps = <Event,>(
-    handler: (text: string, props: Props, state: State, event: Event) => [string, State]
+    handler: (
+      text: string,
+      props: EditorProps,
+      state: EditorState,
+      event: Event
+    ) => [string, EditorState]
   ): ((event: Event) => void) => {
     return (event) => {
       if (props.disabled) return;
