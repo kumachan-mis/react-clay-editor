@@ -1,4 +1,4 @@
-import { parseContent } from './contentParser';
+import { parseContent } from './parseContent';
 import {
   BlockCodeNode,
   BlockCodeMetaNode,
@@ -8,8 +8,9 @@ import {
   BlockFormulaLineNode,
   QuotationNode,
   ItemizationNode,
-} from './nodes';
-import { ParsingContext, ParsingOptions } from './types';
+  ParsingContext,
+  ParsingOptions,
+} from './types';
 import { TextLinesConstants } from '../constants';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {

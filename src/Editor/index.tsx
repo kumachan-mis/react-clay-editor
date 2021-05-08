@@ -15,7 +15,7 @@ import {
   handleOnTextCompositionStart,
   handleOnTextCompositionEnd,
   handleOnSuggectionMouseDown,
-} from './utils';
+} from './callbacks';
 
 import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
