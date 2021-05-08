@@ -1,5 +1,5 @@
 import { ShortcutCommand } from '../types';
-import { isMacOS } from '../../utils';
+import { isMacOS } from '../../common/utils';
 
 export function shortcutCommand(
   event: React.KeyboardEvent<HTMLTextAreaElement>

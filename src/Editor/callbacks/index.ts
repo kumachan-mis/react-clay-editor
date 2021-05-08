@@ -26,7 +26,7 @@ import { Props, State } from '../types';
 import { coordinatesAreEqual } from '../../Cursor/utils';
 import { getWordSelection, getLineSelection, getSelectedText } from '../../Selection/utils';
 import { TextLinesConstants } from '../../TextLines/constants';
-import { isMacOS } from '../../utils';
+import { isMacOS } from '../../common/utils';
 
 export function handleOnMouseDown(
   text: string,

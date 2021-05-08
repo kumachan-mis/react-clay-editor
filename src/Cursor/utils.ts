@@ -3,7 +3,7 @@ import { CursorConstants } from './constants';
 
 import { getTextCharElementAt } from '../TextLines/utils';
 import { getRoot, getEditor } from '../Editor/utils';
-import { classNameToSelector } from '../utils';
+import { classNameToSelector } from '../common/utils';
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
   const root = getRoot(element);
