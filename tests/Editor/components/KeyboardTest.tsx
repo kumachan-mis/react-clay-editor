@@ -9,7 +9,7 @@ import {
   handleOnTextPaste,
   handleOnTextCompositionStart,
   handleOnTextCompositionEnd,
-} from '../../../src/Editor/utils';
+} from '../../../src/Editor/callbacks';
 
 export type Props = Omit<EditorProps, 'text' | 'onChangeText'> & {
   initText?: string;

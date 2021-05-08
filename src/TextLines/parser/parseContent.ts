@@ -8,8 +8,9 @@ import {
   BracketLinkNode,
   HashTagNode,
   NormalNode,
-} from './nodes';
-import { ParsingContext, ParsingOptions } from './types';
+  ParsingContext,
+  ParsingOptions,
+} from './types';
 import { TextLinesConstants } from '../constants';
 
 export function parseContent(
