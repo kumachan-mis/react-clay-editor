@@ -78,6 +78,8 @@ export interface State {
 }
 
 export type ShortcutCommand =
+  | 'forwardDelete'
+  | 'backwardDelete'
   | 'selectAll'
   | 'undo'
   | 'redo'
