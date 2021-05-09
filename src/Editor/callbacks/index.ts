@@ -238,7 +238,7 @@ export function handleOnTextChange(
   if (!state.cursorCoordinate) return [text, state];
 
   const textAreaValue = event.target.value;
-  if (state.isComposing) return [text, resetSuggestion(state)];
+  if (state.isComposing) return [text, resetSuggestion({ ...state, textAreaValue })];
 
   const [newText, newState] = (() => {
     switch (textAreaValue) {
