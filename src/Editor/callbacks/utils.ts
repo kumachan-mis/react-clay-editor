@@ -70,7 +70,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
     case '#': {
       const suggestions = props.hashTagProps?.suggestions;
       const suggestionIndex = props.hashTagProps?.initialSuggestionIndex || 0;
-      if (!suggestions || suggestions.length == 0 || props.bracketLinkProps?.disabled) {
+      if (!suggestions || suggestions.length == 0 || props.hashTagProps?.disabled) {
         return [text, resetSuggestion(state)];
       }
       return [text, { ...state, suggestionType: 'hashTag', suggestions, suggestionIndex }];
@@ -88,9 +88,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
 
       const suggestions = taggedLinkProps?.suggestions;
       const suggestionIndex = taggedLinkProps?.initialSuggestionIndex || 0;
-      if (!suggestions || suggestions.length == 0 || props.bracketLinkProps?.disabled) {
-        return [text, resetSuggestion(state)];
-      }
+      if (!suggestions || suggestions.length == 0) return [text, resetSuggestion(state)];
       return [text, { ...state, suggestionType: 'taggedLink', suggestions, suggestionIndex }];
     }
     default:
