@@ -13,20 +13,9 @@ import {
 } from './types';
 import { TextLinesConstants } from '../constants';
 
-export function parseContent(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ContentNode[] {
-  const {
-    inlineCode,
-    displayFormula,
-    inlineFormula,
-    decoration,
-    bracketLink,
-    hashTag,
-    normal,
-  } = TextLinesConstants.regexes;
+export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
+  const { inlineCode, displayFormula, inlineFormula, decoration, bracketLink, hashTag, normal } =
+    TextLinesConstants.regexes;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
   if (!options.disabledMap.code && inlineCode.test(text)) {
@@ -50,17 +39,10 @@ export function parseContent(
   }
 }
 
-function parseInlineCode(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ContentNode[] {
+function parseInlineCode(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.inlineCode;
   const { left, code, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [
-    context.charIndex + left.length,
-    context.charIndex + text.length - right.length,
-  ];
+  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: InlineCodeNode = {
     type: 'inlineCode',
@@ -77,17 +59,10 @@ function parseInlineCode(
     ...parseContent(right, { ...context, charIndex: to }, options),
   ];
 }
-function parseDisplayFormula(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ContentNode[] {
+function parseDisplayFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.displayFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [
-    context.charIndex + left.length,
-    context.charIndex + text.length - right.length,
-  ];
+  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DisplayFormulaNode = {
     type: 'displayFormula',
@@ -105,17 +80,10 @@ function parseDisplayFormula(
   ];
 }
 
-function parseInlineFormula(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ContentNode[] {
+function parseInlineFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.inlineFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [
-    context.charIndex + left.length,
-    context.charIndex + text.length - right.length,
-  ];
+  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: InlineFormulaNode = {
     type: 'inlineFormula',
@@ -133,17 +101,10 @@ function parseInlineFormula(
   ];
 }
 
-function parseDecoration(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ContentNode[] {
+function parseDecoration(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.decoration;
   const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [
-    context.charIndex + left.length,
-    context.charIndex + text.length - right.length,
-  ];
+  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode | BracketLinkNode = !context.nested
     ? {
@@ -152,11 +113,7 @@ function parseDecoration(
         range: [from, to],
         facingMeta: '[',
         decoration: `${decoration} `,
-        children: parseContent(
-          body,
-          { ...context, charIndex: from + decoration.length + 2, nested: true },
-          options
-        ),
+        children: parseContent(body, { ...context, charIndex: from + decoration.length + 2, nested: true }, options),
         trailingMeta: ']',
       }
     : {
@@ -175,17 +132,9 @@ function parseDecoration(
   ];
 }
 
-function parseTaggedLink(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions,
-  regex: RegExp
-): ContentNode[] {
+function parseTaggedLink(text: string, context: ParsingContext, options: ParsingOptions, regex: RegExp): ContentNode[] {
   const { left, tag, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [
-    context.charIndex + left.length,
-    context.charIndex + text.length - right.length,
-  ];
+  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: TaggedLinkNode = {
     type: 'taggedLink',
@@ -204,17 +153,10 @@ function parseTaggedLink(
   ];
 }
 
-function parseBracketLink(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ContentNode[] {
+function parseBracketLink(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.bracketLink;
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [
-    context.charIndex + left.length,
-    context.charIndex + text.length - right.length,
-  ];
+  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: BracketLinkNode = {
     type: 'bracketLink',
@@ -232,17 +174,10 @@ function parseBracketLink(
   ];
 }
 
-function parseHashTag(
-  text: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ContentNode[] {
+function parseHashTag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.hashTag;
   const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [
-    context.charIndex + left.length,
-    context.charIndex + text.length - right.length,
-  ];
+  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: HashTagNode = {
     type: 'hashTag',

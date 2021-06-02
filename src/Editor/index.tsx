@@ -38,12 +38,7 @@ export const Editor: React.FC<Props> = (props) => {
 
   const createMouseEventHandler = React.useCallback(
     <Event extends MouseEvent | React.MouseEvent>(
-      handler: (
-        text: string,
-        state: State,
-        event: Event,
-        root: HTMLElement | null
-      ) => [string, State]
+      handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
     ): ((event: Event) => void) => {
       return (event) => {
         if (props.disabled || event.button != 0) return;
@@ -56,9 +51,7 @@ export const Editor: React.FC<Props> = (props) => {
   );
 
   const createCursorEventHandler = React.useCallback(
-    <Event,>(
-      handler: (text: string, state: State, event: Event) => [string, State]
-    ): ((event: Event) => void) => {
+    <Event,>(handler: (text: string, state: State, event: Event) => [string, State]): ((event: Event) => void) => {
       return (event) => {
         if (props.disabled) return;
         const [newText, newState] = handler(props.text, state, event);

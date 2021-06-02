@@ -155,11 +155,7 @@ const Node: React.FC<NodeProps> = ({
           >
             <code {...codeElementProps}>
               {[...code].map((char, index) => (
-                <Char
-                  key={indentDepth + index}
-                  lineIndex={lineIndex}
-                  charIndex={indentDepth + index}
-                >
+                <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
                   {char}
                 </Char>
               ))}
@@ -172,8 +168,7 @@ const Node: React.FC<NodeProps> = ({
       const { facingMeta, children, trailingMeta } = node;
       const [from, to] = node.range;
       const formula = children.map((child) => child.formulaLine).join('\n');
-      const cursorOn =
-        curcorLineIndex !== undefined && from <= curcorLineIndex && curcorLineIndex <= to;
+      const cursorOn = curcorLineIndex !== undefined && from <= curcorLineIndex && curcorLineIndex <= to;
       const spanElementProps = formulaProps.spanProps?.(formula);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
@@ -183,10 +178,7 @@ const Node: React.FC<NodeProps> = ({
           divPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-          <LineGroupContent
-            indentDepth={facingMeta.indentDepth}
-            spanPorps={{ style: spanElementProps?.style }}
-          >
+          <LineGroupContent indentDepth={facingMeta.indentDepth} spanPorps={{ style: spanElementProps?.style }}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
           </LineGroupContent>
         </LineGroup>
@@ -297,11 +289,7 @@ const Node: React.FC<NodeProps> = ({
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth}>
             <span className={TextLinesConstants.itemization.dot.className} />
           </LineIndent>
-          <LineContent
-            lineIndex={lineIndex}
-            indentDepth={indentDepth}
-            contentLength={contentLength}
-          >
+          <LineContent lineIndex={lineIndex} indentDepth={indentDepth} contentLength={contentLength}>
             {children.map((child, index) => (
               <Node
                 key={index}

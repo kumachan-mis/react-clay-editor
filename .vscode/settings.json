@@ -1,15 +1,15 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
   "[typescript]": {
-    "editor.rulers": [100],
+    "editor.rulers": [120],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
-    "editor.rulers": [100],
+    "editor.rulers": [120],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
-    "editor.rulers": [100],
+    "editor.rulers": [120],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "javascript.suggestionActions.enabled": false,

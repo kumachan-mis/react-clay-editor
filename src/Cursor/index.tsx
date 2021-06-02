@@ -63,10 +63,7 @@ export const Cursor: React.FC<Props> = (props) => {
 const CursorBar: React.FC<CursorBarProps> = (props) => {
   const { position, cursorSize } = props;
   return (
-    <div
-      className={CursorConstants.cursorBar.className}
-      style={CursorConstants.cursorBar.style(position, cursorSize)}
-    >
+    <div className={CursorConstants.cursorBar.className} style={CursorConstants.cursorBar.style(position, cursorSize)}>
       <svg width={CursorConstants.svg.width} height={cursorSize}>
         <rect
           x={CursorConstants.rect.x}
@@ -104,8 +101,7 @@ const HiddenTextArea: React.FC<HiddenTextAreaProps> = (props) => {
 const SuggestionList: React.FC<SuggestionListProps> = (props) => {
   const constants = CursorConstants.suggestion;
   const { suggestions, suggestionIndex, position, cursorSize } = props;
-  const { width, maxHeight, fontSize } =
-    props.suggestionListDecoration || defaultSuggestionListDecoration;
+  const { width, maxHeight, fontSize } = props.suggestionListDecoration || defaultSuggestionListDecoration;
   return (
     <ul
       className={constants.list.className}

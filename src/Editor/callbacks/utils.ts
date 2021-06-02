@@ -124,17 +124,13 @@ export function positionToCursorCoordinate(
   const elements = document.elementsFromPoint(x, y);
 
   const charClassNameRegex = TextLinesConstants.char.classNameRegex;
-  const charElement = elements.find(
-    (charEl) => charClassNameRegex.test(charEl.className) && element.contains(charEl)
-  );
+  const charElement = elements.find((charEl) => charClassNameRegex.test(charEl.className) && element.contains(charEl));
   const charGroupClassNameRegex = TextLinesConstants.charGroup.classNameRegex;
   const charGroupElement = elements.find(
     (charGrpEl) => charGroupClassNameRegex.test(charGrpEl.className) && element.contains(charGrpEl)
   );
   const lineClassNameRegex = TextLinesConstants.line.classNameRegex;
-  const lineElement = elements.find(
-    (lineEl) => lineClassNameRegex.test(lineEl.className) && element.contains(lineEl)
-  );
+  const lineElement = elements.find((lineEl) => lineClassNameRegex.test(lineEl.className) && element.contains(lineEl));
   const lineGroupClassNameRegex = TextLinesConstants.lineGroup.classNameRegex;
   const lineGroupElement = elements.find(
     (lineGrpEl) => lineGroupClassNameRegex.test(lineGrpEl.className) && element.contains(lineGrpEl)

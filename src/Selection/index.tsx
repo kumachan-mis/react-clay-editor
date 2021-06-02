@@ -23,10 +23,7 @@ export const Selection: React.FC<Props> = (props) => {
   return (
     <span ref={rootRef}>
       {state.topDivPosition && (
-        <div
-          className={SelectionConstants.div.className}
-          style={SelectionConstants.div.style(state.topDivPosition)}
-        />
+        <div className={SelectionConstants.div.className} style={SelectionConstants.div.style(state.topDivPosition)} />
       )}
       {state.centerDivPosition && (
         <div
