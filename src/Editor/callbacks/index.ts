@@ -14,13 +14,7 @@ import {
   handleOnMoveTextTop,
   handleOnMoveTextBottom,
 } from './shortcutHandlers';
-import {
-  insertText,
-  showSuggestion,
-  insertSuggestion,
-  resetSuggestion,
-  positionToCursorCoordinate,
-} from './utils';
+import { insertText, showSuggestion, insertSuggestion, resetSuggestion, positionToCursorCoordinate } from './utils';
 
 import { Props, State } from '../types';
 import { coordinatesAreEqual } from '../../Cursor/utils';
@@ -144,8 +138,7 @@ export function handleOnKeyDown(
       if (!newState.cursorCoordinate) return [newText, newState];
 
       const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
-      const { indent } = newPrevLine.match(TextLinesConstants.regexes.itemization)
-        ?.groups as Record<string, string>;
+      const { indent } = newPrevLine.match(TextLinesConstants.regexes.itemization)?.groups as Record<string, string>;
       return insertText(newText, newState, indent);
     }
     case 'Backspace': {
@@ -180,10 +173,7 @@ export function handleOnKeyDown(
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
         return handleOnMoveLineTop(text, state, event);
       }
-      if (
-        (!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) &&
-        !event.metaKey
-      ) {
+      if ((!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) && !event.metaKey) {
         return handleOnMoveWordTop(text, state, event);
       }
       const [newText, newState] = handleOnMoveLeft(text, state, event);
@@ -193,29 +183,20 @@ export function handleOnKeyDown(
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
         return handleOnMoveLineBottom(text, state, event);
       }
-      if (
-        (!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) &&
-        !event.metaKey
-      ) {
+      if ((!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) && !event.metaKey) {
         return handleOnMoveWordBottom(text, state, event);
       }
       const [newText, newState] = handleOnMoveRight(text, state, event);
       return showSuggestion(newText, props, newState);
     }
     case 'Home': {
-      if (
-        (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-        !event.altKey
-      ) {
+      if ((!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) && !event.altKey) {
         return handleOnMoveTextTop(text, state, event);
       }
       return handleOnMoveLineTop(text, state, event);
     }
     case 'End': {
-      if (
-        (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-        !event.altKey
-      ) {
+      if ((!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) && !event.altKey) {
         return handleOnMoveTextBottom(text, state, event);
       }
       return handleOnMoveLineBottom(text, state, event);

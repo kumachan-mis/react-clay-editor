@@ -1,9 +1,7 @@
 import { ShortcutCommand } from '../types';
 import { isMacOS } from '../../common/utils';
 
-export function shortcutCommand(
-  event: React.KeyboardEvent<HTMLTextAreaElement>
-): ShortcutCommand | undefined {
+export function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>): ShortcutCommand | undefined {
   if (forwardDeleteTriggered(event)) return 'forwardDelete';
   if (backwardDeleteTriggered(event)) return 'backwardDelete';
   if (selectAllTriggered(event)) return 'selectAll';
@@ -23,14 +21,7 @@ export function shortcutCommand(
 }
 
 function forwardDeleteTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return (
-    isMacOS() &&
-    event.key == 'd' &&
-    event.ctrlKey &&
-    !event.metaKey &&
-    !event.altKey &&
-    !event.shiftKey
-  );
+  return isMacOS() && event.key == 'd' && event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,23 +82,11 @@ function moveWordBottomTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>
 }
 
 function moveLineTopTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return (
-    isMacOS() &&
-    event.ctrlKey &&
-    (event.key == 'a' || event.key == 'A') &&
-    !event.metaKey &&
-    !event.altKey
-  );
+  return isMacOS() && event.ctrlKey && (event.key == 'a' || event.key == 'A') && !event.metaKey && !event.altKey;
 }
 
 function moveLineBottomTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return (
-    isMacOS() &&
-    event.ctrlKey &&
-    (event.key == 'e' || event.key == 'E') &&
-    !event.metaKey &&
-    !event.altKey
-  );
+  return isMacOS() && event.ctrlKey && (event.key == 'e' || event.key == 'E') && !event.metaKey && !event.altKey;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

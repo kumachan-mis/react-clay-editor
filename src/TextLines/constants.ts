@@ -97,8 +97,7 @@ export const TextLinesConstants = {
     classNameRegex: RegExp(`${styles.charGroup} L(?<lineIndex>\\d+)C(?<from>\\d+)-(?<to>\\d+)`),
   },
   char: {
-    className: (lineIndex: number, charIndex: number): string =>
-      `${styles.char} L${lineIndex}C${charIndex}`,
+    className: (lineIndex: number, charIndex: number): string => `${styles.char} L${lineIndex}C${charIndex}`,
     classNameRegex: RegExp(`${styles.char} L(?<lineIndex>\\d+)C(?<charIndex>\\d+)`),
   },
   marginBottom: {
@@ -107,8 +106,7 @@ export const TextLinesConstants = {
   },
   regexes: {
     blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>```)$/,
-    blockCodeLine: (indentDepth: number): RegExp =>
-      RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
+    blockCodeLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
     blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>\$\$)$/,
     blockFormulaLine: (indentDepth: number): RegExp =>
       RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),

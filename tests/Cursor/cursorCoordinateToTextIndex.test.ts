@@ -12,9 +12,6 @@ interface TestCase extends BaseTestCase {
 }
 
 unittest<TestCase>('function', 'Cursor', 'cursorCoordinateToTextIndex', (_, testCase) => {
-  const actualIndex = cursorCoordinateToTextIndex(
-    testCase.inputLines.join('\n'),
-    testCase.inputCursorCoordinate
-  );
+  const actualIndex = cursorCoordinateToTextIndex(testCase.inputLines.join('\n'), testCase.inputCursorCoordinate);
   expect(actualIndex).toEqual(testCase.expectedIndex);
 });

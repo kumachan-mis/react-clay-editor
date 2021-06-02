@@ -61,11 +61,7 @@ function parseBlockCodeMeta(line: string, context: ParsingContext): BlockCodeMet
   return node;
 }
 
-function parseBlockCodeLine(
-  line: string,
-  context: ParsingContext,
-  regex: RegExp
-): BlockCodeLineNode {
+function parseBlockCodeLine(line: string, context: ParsingContext, regex: RegExp): BlockCodeLineNode {
   const { indent, codeLine } = line.match(regex)?.groups as Record<string, string>;
 
   const node: BlockCodeLineNode = {
@@ -126,11 +122,7 @@ function parseBlockFormulaMeta(line: string, context: ParsingContext): BlockForm
   return node;
 }
 
-function parseBlockFormulaLine(
-  line: string,
-  context: ParsingContext,
-  regex: RegExp
-): BlockFormulaLineNode {
+function parseBlockFormulaLine(line: string, context: ParsingContext, regex: RegExp): BlockFormulaLineNode {
   const { indent, formulaLine } = line.match(regex)?.groups as Record<string, string>;
 
   const node: BlockFormulaLineNode = {
@@ -143,11 +135,7 @@ function parseBlockFormulaLine(
   return node;
 }
 
-export function parseQuotation(
-  line: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): QuotationNode {
+export function parseQuotation(line: string, context: ParsingContext, options: ParsingOptions): QuotationNode {
   const regex = TextLinesConstants.regexes.quotation;
   const { indent, content } = line.match(regex)?.groups as Record<string, string>;
 
@@ -165,11 +153,7 @@ export function parseQuotation(
   return node;
 }
 
-export function parseItemization(
-  line: string,
-  context: ParsingContext,
-  options: ParsingOptions
-): ItemizationNode {
+export function parseItemization(line: string, context: ParsingContext, options: ParsingOptions): ItemizationNode {
   const regex = TextLinesConstants.regexes.itemization;
   const { indent, content } = line.match(regex)?.groups as Record<string, string>;
 

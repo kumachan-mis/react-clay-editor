@@ -66,11 +66,7 @@ export function handleOnEditorScroll(props: Props, state: State, element: HTMLEl
   return { ...state, position, cursorSize };
 }
 
-export function moveCursor(
-  text: string,
-  coordinate: CursorCoordinate,
-  amount: number
-): CursorCoordinate {
+export function moveCursor(text: string, coordinate: CursorCoordinate, amount: number): CursorCoordinate {
   if (amount == 0) return coordinate;
 
   const lines = text.split('\n');

@@ -16,9 +16,7 @@
             "windows": "{ctrl}a{/ctrl}",
             "macos": "{meta}a{/meta}"
           },
-          "expectedLines": [
-            "A text document editor which is syntactically formattable in real time"
-          ],
+          "expectedLines": ["A text document editor which is syntactically formattable in real time"],
           "expectedState": {
             "cursorCoordinate": {
               "lineIndex": 0,

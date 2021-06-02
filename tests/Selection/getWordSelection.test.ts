@@ -13,9 +13,6 @@ interface TestCase extends BaseTestCase {
 }
 
 unittest<TestCase>('function', 'Selection', 'getWordSelection', (_, testCase) => {
-  const actualCursorCoordinate = getWordSelection(
-    testCase.inputLines.join('\n'),
-    testCase.inputCursorCoordinate
-  );
+  const actualCursorCoordinate = getWordSelection(testCase.inputLines.join('\n'), testCase.inputCursorCoordinate);
   expect(actualCursorCoordinate).toEqual(testCase.expectedSelection);
 });

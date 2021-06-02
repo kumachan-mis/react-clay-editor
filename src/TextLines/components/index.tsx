@@ -13,12 +13,7 @@ import {
 } from './types';
 import { TextLinesConstants } from '../constants';
 
-export const LineGroup: React.FC<LineGroupProps> = ({
-  fromLineIndex,
-  toLineIndex,
-  divPorps = {},
-  children,
-}) => {
+export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex, divPorps = {}, children }) => {
   const baseClassName = TextLinesConstants.lineGroup.className(fromLineIndex, toLineIndex);
   const { className, ...rest } = divPorps;
   return (
@@ -28,11 +23,7 @@ export const LineGroup: React.FC<LineGroupProps> = ({
   );
 };
 
-export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({
-  indentDepth,
-  spanPorps = {},
-  children,
-}) => {
+export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, spanPorps = {}, children }) => {
   const baseClassName = TextLinesConstants.lineGroup.indent.className;
   const baseStyle = TextLinesConstants.lineGroup.indent.style(indentDepth);
   const { className, style, ...rest } = spanPorps;
@@ -52,11 +43,7 @@ export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({
   );
 };
 
-export const LineGroupContent: React.FC<LineGroupContentProps> = ({
-  indentDepth,
-  spanPorps = {},
-  children,
-}) => {
+export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth, spanPorps = {}, children }) => {
   const baseClassName = TextLinesConstants.lineGroup.content.className;
   const baseStyle = TextLinesConstants.lineGroup.content.style(indentDepth);
   const { className, style, ...rest } = spanPorps;
@@ -71,12 +58,7 @@ export const LineGroupContent: React.FC<LineGroupContentProps> = ({
   );
 };
 
-export const Line: React.FC<LineProps> = ({
-  lineIndex,
-  defaultFontSize,
-  divPorps = {},
-  children,
-}) => {
+export const Line: React.FC<LineProps> = ({ lineIndex, defaultFontSize, divPorps = {}, children }) => {
   const baseClassName = TextLinesConstants.line.className(lineIndex);
   const baseStyle = TextLinesConstants.line.style(defaultFontSize);
   const { className, style, ...rest } = divPorps;
@@ -91,12 +73,7 @@ export const Line: React.FC<LineProps> = ({
   );
 };
 
-export const LineIndent: React.FC<LineIndentProps> = ({
-  lineIndex,
-  indentDepth,
-  spanPorps = {},
-  children,
-}) => {
+export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, spanPorps = {}, children }) => {
   const baseClassName = TextLinesConstants.line.indent.className;
   const baseStyle = TextLinesConstants.line.indent.style(indentDepth);
   const { className, style, ...rest } = spanPorps;
@@ -154,11 +131,7 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   spanPorps = {},
   children,
 }) => {
-  const baseClassName = TextLinesConstants.charGroup.className(
-    lineIndex,
-    fromCharIndex,
-    toCharIndex
-  );
+  const baseClassName = TextLinesConstants.charGroup.className(lineIndex, fromCharIndex, toCharIndex);
   const { className, ...rest } = spanPorps;
   return (
     <span className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
@@ -210,6 +183,4 @@ export const AnchorWithHoverStyle: React.FC<AnchorWithHoverStyleProps> = ({
   );
 };
 
-export const MarginBottom: React.FC = () => (
-  <div className={TextLinesConstants.marginBottom.className} />
-);
+export const MarginBottom: React.FC = () => <div className={TextLinesConstants.marginBottom.className} />;
