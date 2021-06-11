@@ -14,8 +14,8 @@ import {
 import { TextLinesConstants } from '../constants';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { inlineCode, displayFormula, inlineFormula, decoration, bracketLink, hashTag, normal } =
-    TextLinesConstants.regexes;
+  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashTag, normal } = TextLinesConstants.regexes.common;
+  const { decoration } = TextLinesConstants.regexes.bracketSyntax;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
   if (!options.disabledMap.code && inlineCode.test(text)) {
@@ -40,7 +40,7 @@ export function parseContent(text: string, context: ParsingContext, options: Par
 }
 
 function parseInlineCode(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.inlineCode;
+  const regex = TextLinesConstants.regexes.common.inlineCode;
   const { left, code, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
@@ -60,7 +60,7 @@ function parseInlineCode(text: string, context: ParsingContext, options: Parsing
   ];
 }
 function parseDisplayFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.displayFormula;
+  const regex = TextLinesConstants.regexes.common.displayFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
@@ -81,7 +81,7 @@ function parseDisplayFormula(text: string, context: ParsingContext, options: Par
 }
 
 function parseInlineFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.inlineFormula;
+  const regex = TextLinesConstants.regexes.common.inlineFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
@@ -102,7 +102,7 @@ function parseInlineFormula(text: string, context: ParsingContext, options: Pars
 }
 
 function parseDecoration(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.decoration;
+  const regex = TextLinesConstants.regexes.bracketSyntax.decoration;
   const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
@@ -154,7 +154,7 @@ function parseTaggedLink(text: string, context: ParsingContext, options: Parsing
 }
 
 function parseBracketLink(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.bracketLink;
+  const regex = TextLinesConstants.regexes.common.bracketLink;
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
@@ -175,7 +175,7 @@ function parseBracketLink(text: string, context: ParsingContext, options: Parsin
 }
 
 function parseHashTag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.hashTag;
+  const regex = TextLinesConstants.regexes.common.hashTag;
   const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 

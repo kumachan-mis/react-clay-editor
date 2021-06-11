@@ -1,9 +1,10 @@
-import { parseBlockCode, parseBlockFormula, parseQuotation, parseItemization } from './parseLine';
+import { parseBlockCode, parseBlockFormula, parseQuotation, parseItemization, parseNormalLine } from './parseLine';
 import { LineNode, ParsingContext, ParsingOptions } from './types';
 import { TextLinesConstants } from '../constants';
 
 export function parseText(text: string, options: ParsingOptions): LineNode[] {
-  const { blockCodeMeta, blockFormulaMeta, quotation, itemization } = TextLinesConstants.regexes;
+  const { blockCodeMeta, blockFormulaMeta, quotation } = TextLinesConstants.regexes.common;
+  const { itemization } = TextLinesConstants.regexes.bracketSyntax;
 
   const lines = text.split('\n');
   const nodes: LineNode[] = [];
@@ -19,6 +20,8 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
       nodes.push(parseQuotation(line, context, options));
     } else if (itemization.test(line)) {
       nodes.push(parseItemization(line, context, options));
+    } else {
+      nodes.push(parseNormalLine(line, context, options));
     }
   }
 

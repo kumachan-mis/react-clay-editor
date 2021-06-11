@@ -105,25 +105,36 @@ export const TextLinesConstants = {
     classNameRegex: RegExp(styles.marginBottom),
   },
   regexes: {
-    blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>```)$/,
-    blockCodeLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
-    blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>\$\$)$/,
-    blockFormulaLine: (indentDepth: number): RegExp =>
-      RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),
-    quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
-    itemization: /^(?<indent>[ \t\u3000]*)(?<content>([^ \t\u3000].*)?)$/,
-    inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
-    displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
-    inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
-    decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
-    taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {
-      const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const linkName = linkNameRegex.source;
-      return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
+    bracketSyntax: {
+      itemization: /^(?<indent>[ \t\u3000]+)(?<content>([^ \t\u3000].*)?)$/,
+      decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     },
-    bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-    hashTag: /^(?<left>.*?)(?<hashTag>#[^ \t\u3000]+)(?<right>.*)$/,
-    normal: /^(?<text>.+)$/,
+    markdownSyntax: {
+      itemization: /^(?<indent>[ \t\u3000]*)(?<bullet>[*-][ \t\u3000])(?<content>([^ \t\u3000].*)?)$/,
+      heading: /^#+[ \t\u3000](?<body>.+)$/,
+      bold: /^(?<left>.*?)\*(?<body>[^* \t\u3000](.*[^* \t\u3000])?)\*(?<right>.*)$/,
+      italic: /^(?<left>.*?)_(?<body>[^_ \t\u3000](.*[^_ \t\u3000])?)_(?<right>.*)$/,
+    },
+    common: {
+      blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>```)$/,
+      blockCodeLine: (indentDepth: number): RegExp =>
+        RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
+      blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>\$\$)$/,
+      blockFormulaLine: (indentDepth: number): RegExp =>
+        RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),
+      quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
+      inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
+      displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
+      inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
+      taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {
+        const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const linkName = linkNameRegex.source;
+        return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
+      },
+      bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
+      hashTag: /^(?<left>.*?)(?<hashTag>#[^ !"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~\t\u3000]+)(?<right>.*)$/,
+      normal: /^(?<text>.+)$/,
+    },
   },
   wordRegex: /[^ !"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~\t\u3000]+/,
 };

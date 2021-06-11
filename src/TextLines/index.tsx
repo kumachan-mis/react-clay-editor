@@ -54,7 +54,7 @@ export const TextLines: React.FC<Props> = ({
 }) => {
   const options: ParsingOptions = {
     taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
-      TextLinesConstants.regexes.taggedLink(tagName, linkProps.linkNameRegex)
+      TextLinesConstants.regexes.common.taggedLink(tagName, linkProps.linkNameRegex)
     ),
     disabledMap: {
       bracketLink: bracketLinkProps.disabled,
@@ -290,6 +290,29 @@ const Node: React.FC<NodeProps> = ({
             <span className={TextLinesConstants.itemization.dot.className} />
           </LineIndent>
           <LineContent lineIndex={lineIndex} indentDepth={indentDepth} contentLength={contentLength}>
+            {children.map((child, index) => (
+              <Node
+                key={index}
+                node={child}
+                textDecoration={textDecoration}
+                bracketLinkProps={bracketLinkProps}
+                hashTagProps={hashTagProps}
+                taggedLinkPropsMap={taggedLinkPropsMap}
+                codeProps={codeProps}
+                formulaProps={formulaProps}
+                curcorLineIndex={curcorLineIndex}
+              />
+            ))}
+          </LineContent>
+        </Line>
+      );
+    }
+    case 'normalLine': {
+      const { lineIndex, contentLength, children } = node;
+
+      return (
+        <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
+          <LineContent lineIndex={lineIndex} indentDepth={0} contentLength={contentLength}>
             {children.map((child, index) => (
               <Node
                 key={index}

@@ -26,7 +26,8 @@ export type LineNode =
   | BlockFormulaMetaNode
   | BlockFormulaLineNode
   | QuotationNode
-  | ItemizationNode;
+  | ItemizationNode
+  | NormalLineNode;
 
 export interface BlockCodeNode {
   type: 'blockCode';
@@ -85,6 +86,13 @@ export interface ItemizationNode {
   type: 'itemization';
   lineIndex: number;
   indentDepth: number;
+  contentLength: number;
+  children: ContentNode[];
+}
+
+export interface NormalLineNode {
+  type: 'normalLine';
+  lineIndex: number;
   contentLength: number;
   children: ContentNode[];
 }
