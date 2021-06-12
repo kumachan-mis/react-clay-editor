@@ -21,13 +21,14 @@ import {
   AnchorWithHoverStyle,
   MarginBottom,
 } from './components';
-import { parseText, getDecorationStyle, getHashTagName, getTagName } from './parser';
+import { parseText, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
 import { BracketLinkProps, HashTagProps, CodeProps, FormulaProps } from '../Editor/types';
 import { KaTeX } from '../KaTeX';
 
 export const TextLines: React.FC<Props> = ({
   text,
+  syntax = 'bracket',
   textDecoration = defaultTextDecoration,
   bracketLinkProps = {
     anchorProps: () => ({
@@ -53,6 +54,7 @@ export const TextLines: React.FC<Props> = ({
   cursorCoordinate,
 }) => {
   const options: ParsingOptions = {
+    decoration: textDecoration,
     taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
       TextLinesConstants.regexes.common.taggedLink(tagName, linkProps.linkNameRegex)
     ),
@@ -62,6 +64,7 @@ export const TextLines: React.FC<Props> = ({
       code: codeProps.disabled,
       formula: formulaProps.disabled,
     },
+    syntax,
   };
   const nodes = parseText(text, options);
 
@@ -151,7 +154,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={code.length}
-            spanPorps={{ style: codeElementProps?.style }}
+            spanProps={{ style: codeElementProps?.style }}
           >
             <code {...codeElementProps}>
               {[...code].map((char, index) => (
@@ -175,10 +178,10 @@ const Node: React.FC<NodeProps> = ({
         <LineGroup
           fromLineIndex={from + 1}
           toLineIndex={trailingMeta ? to - 1 : to}
-          divPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
+          divProps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-          <LineGroupContent indentDepth={facingMeta.indentDepth} spanPorps={{ style: spanElementProps?.style }}>
+          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ style: spanElementProps?.style }}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
           </LineGroupContent>
         </LineGroup>
@@ -235,7 +238,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={formula.length}
-            spanPorps={{ style: spanElementProps?.style }}
+            spanProps={{ style: spanElementProps?.style }}
           >
             {[...formula].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -257,7 +260,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={meta.length + contentLength}
-            spanPorps={{ style: TextLinesConstants.quotation.content.style }}
+            spanProps={{ style: TextLinesConstants.quotation.content.style }}
           >
             {[...meta].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -282,28 +285,61 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'itemization': {
-      const { lineIndex, indentDepth, contentLength, children } = node;
+      const { lineIndex, bullet, indentDepth, contentLength, children } = node;
+      const cursorOn = curcorLineIndex == lineIndex;
 
       return (
         <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
-          <LineIndent lineIndex={lineIndex} indentDepth={indentDepth}>
-            <span className={TextLinesConstants.itemization.dot.className} />
-          </LineIndent>
-          <LineContent lineIndex={lineIndex} indentDepth={indentDepth} contentLength={contentLength}>
-            {children.map((child, index) => (
-              <Node
-                key={index}
-                node={child}
-                textDecoration={textDecoration}
-                bracketLinkProps={bracketLinkProps}
-                hashTagProps={hashTagProps}
-                taggedLinkPropsMap={taggedLinkPropsMap}
-                codeProps={codeProps}
-                formulaProps={formulaProps}
-                curcorLineIndex={curcorLineIndex}
-              />
-            ))}
-          </LineContent>
+          {!cursorOn || bullet.length == 1 ? (
+            <>
+              <LineIndent lineIndex={lineIndex} indentDepth={indentDepth + 1}>
+                <span className={TextLinesConstants.itemization.bullet.className} />
+              </LineIndent>
+              <LineContent lineIndex={lineIndex} indentDepth={indentDepth + 1} contentLength={contentLength}>
+                {children.map((child, index) => (
+                  <Node
+                    key={index}
+                    node={child}
+                    textDecoration={textDecoration}
+                    bracketLinkProps={bracketLinkProps}
+                    hashTagProps={hashTagProps}
+                    taggedLinkPropsMap={taggedLinkPropsMap}
+                    codeProps={codeProps}
+                    formulaProps={formulaProps}
+                    curcorLineIndex={curcorLineIndex}
+                  />
+                ))}
+              </LineContent>
+            </>
+          ) : (
+            <>
+              <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
+              <LineContent
+                lineIndex={lineIndex}
+                indentDepth={indentDepth}
+                contentLength={bullet.length + contentLength}
+              >
+                {[...bullet].map((char, index) => (
+                  <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
+                    {char}
+                  </Char>
+                ))}
+                {children.map((child, index) => (
+                  <Node
+                    key={index}
+                    node={child}
+                    textDecoration={textDecoration}
+                    bracketLinkProps={bracketLinkProps}
+                    hashTagProps={hashTagProps}
+                    taggedLinkPropsMap={taggedLinkPropsMap}
+                    codeProps={codeProps}
+                    formulaProps={formulaProps}
+                    curcorLineIndex={curcorLineIndex}
+                  />
+                ))}
+              </LineContent>
+            </>
+          )}
         </Line>
       );
     }
@@ -377,7 +413,7 @@ const Node: React.FC<NodeProps> = ({
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
           toCharIndex={to - trailingMeta.length}
-          spanPorps={{
+          spanProps={{
             onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation(),
             style: spanElementProps?.style,
           }}
@@ -398,11 +434,10 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
-      const decorationStyle = getDecorationStyle(decoration, textDecoration);
 
       return (
-        <span style={TextLinesConstants.decoration.style(decorationStyle)}>
-          {[...facingMeta, ...decoration].map((char, index) => (
+        <span style={TextLinesConstants.decoration.style(decoration)}>
+          {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
             </Char>

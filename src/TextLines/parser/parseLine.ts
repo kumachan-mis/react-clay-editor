@@ -8,10 +8,13 @@ import {
   BlockFormulaLineNode,
   QuotationNode,
   ItemizationNode,
+  DecorationNode,
   NormalLineNode,
   ParsingContext,
   ParsingOptions,
+  DecorationStyle,
 } from './types';
+import { TextDecoration } from '../types';
 import { TextLinesConstants } from '../constants';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
@@ -136,6 +139,64 @@ function parseBlockFormulaLine(line: string, context: ParsingContext, regex: Reg
   return node;
 }
 
+export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
+  const regex = TextLinesConstants.regexes.markdownSyntax.heading;
+  const { heading, body } = line.match(regex)?.groups as Record<string, string>;
+  const headingStyle = getHeadingStyle(heading, options.decoration);
+
+  const childNode: DecorationNode = {
+    type: 'decoration',
+    lineIndex: context.lineIndex,
+    range: [0, line.length],
+    facingMeta: `${heading} `,
+    children: parseContent(
+      body,
+      { ...context, charIndex: heading.length + 1, nested: true, decoration: headingStyle },
+      options
+    ),
+    trailingMeta: '',
+    decoration: headingStyle,
+  };
+
+  const node: NormalLineNode = {
+    type: 'normalLine',
+    lineIndex: context.lineIndex,
+    contentLength: line.length,
+    children: [childNode],
+  };
+
+  context.lineIndex++;
+
+  return node;
+}
+
+function getHeadingStyle(decoration: string, setting: TextDecoration): DecorationStyle {
+  const { level2, level3 } = setting.fontSizes;
+  return { bold: true, italic: false, underline: false, fontSize: decoration == '#' ? level3 : level2 };
+}
+
+export function parseBracketItemization(
+  line: string,
+  context: ParsingContext,
+  options: ParsingOptions
+): ItemizationNode {
+  const regex = TextLinesConstants.regexes.bracketSyntax.itemization;
+  const { indent, bullet, content } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: ItemizationNode = {
+    type: 'itemization',
+    lineIndex: context.lineIndex,
+    bullet,
+    indentDepth: indent.length,
+    contentLength: content.length,
+    children: parseContent(content, { ...context, charIndex: indent.length + bullet.length }, options),
+  };
+
+  context.lineIndex++;
+
+  return node;
+}
+
 export function parseQuotation(line: string, context: ParsingContext, options: ParsingOptions): QuotationNode {
   const regex = TextLinesConstants.regexes.common.quotation;
   const { indent, content } = line.match(regex)?.groups as Record<string, string>;
@@ -154,16 +215,21 @@ export function parseQuotation(line: string, context: ParsingContext, options: P
   return node;
 }
 
-export function parseItemization(line: string, context: ParsingContext, options: ParsingOptions): ItemizationNode {
-  const regex = TextLinesConstants.regexes.bracketSyntax.itemization;
-  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+export function parseMarkdownItemization(
+  line: string,
+  context: ParsingContext,
+  options: ParsingOptions
+): ItemizationNode {
+  const regex = TextLinesConstants.regexes.markdownSyntax.itemization;
+  const { indent, bullet, content } = line.match(regex)?.groups as Record<string, string>;
 
   const node: ItemizationNode = {
     type: 'itemization',
     lineIndex: context.lineIndex,
+    bullet,
     indentDepth: indent.length,
     contentLength: content.length,
-    children: parseContent(content, { ...context, charIndex: indent.length }, options),
+    children: parseContent(content, { ...context, charIndex: indent.length + bullet.length }, options),
   };
 
   context.lineIndex++;
