@@ -36,14 +36,25 @@ const App: React.FC = () => {
 
 ### Itemizations
 
+#### bracket-based syntax
+
 | style         | syntax  |
 | ------------- | ------- |
 | <li>item</li> | `␣item` |
+
+#### markdown-like syntax
+
+| style         | syntax  |
+| ------------- | ------- |
+| <li>item</li> | `-item` |
+| <li>item</li> | `*item` |
 
 **Note**  
 Multiple spaces will provide nested itemizations.
 
 ### Text Decorations
+
+#### bracket-based syntax
 
 | style            | syntax          |
 | ---------------- | --------------- |
@@ -62,6 +73,18 @@ Here are some examples:
 | <b><i>bold italic</i></b>      | `[*/ bold italic]` or `[/* bold italic]`           |
 | <b><u>bold underline</u></b>   | `[*_ bold underline]` or `[_* bold underline]`     |
 | <i><u>italic underline</u></i> | `[/_ italic underline]` or `[_/ italic underline]` |
+
+#### markdown-like syntax
+
+| style            | syntax      |
+| ---------------- | ----------- |
+| <b>bold</b>      | `*bold*`    |
+| <h3>larger</h3>  | `## larger` |
+| <h2>largest</h2> | `# largest` |
+| <i>italic</i>    | `_italic_`  |
+
+**Note**  
+Combinations of `*` and `_` are NOT available yet...
 
 ### Links
 
@@ -263,9 +286,7 @@ settings of bracket links
 
 ```ts
 interface BracketLinkProps {
-  anchorProps?: (
-    linkName: string
-  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -315,9 +336,7 @@ settings of hash tags
 
 ```ts
 interface HashTagProps {
-  anchorProps?: (
-    hashTagName: string
-  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -333,9 +352,7 @@ settings of tagged links
 ```ts
 interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (
-    linkName: string
-  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;
