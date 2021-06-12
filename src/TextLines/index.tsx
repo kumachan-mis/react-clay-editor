@@ -285,61 +285,28 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'itemization': {
-      const { lineIndex, bullet, indentDepth, contentLength, children } = node;
-      const cursorOn = curcorLineIndex == lineIndex;
+      const { lineIndex, indentDepth, contentLength, children } = node;
 
       return (
         <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
-          {!cursorOn || bullet.length == 1 ? (
-            <>
-              <LineIndent lineIndex={lineIndex} indentDepth={indentDepth + 1}>
-                <span className={TextLinesConstants.itemization.bullet.className} />
-              </LineIndent>
-              <LineContent lineIndex={lineIndex} indentDepth={indentDepth + 1} contentLength={contentLength}>
-                {children.map((child, index) => (
-                  <Node
-                    key={index}
-                    node={child}
-                    textDecoration={textDecoration}
-                    bracketLinkProps={bracketLinkProps}
-                    hashTagProps={hashTagProps}
-                    taggedLinkPropsMap={taggedLinkPropsMap}
-                    codeProps={codeProps}
-                    formulaProps={formulaProps}
-                    curcorLineIndex={curcorLineIndex}
-                  />
-                ))}
-              </LineContent>
-            </>
-          ) : (
-            <>
-              <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-              <LineContent
-                lineIndex={lineIndex}
-                indentDepth={indentDepth}
-                contentLength={bullet.length + contentLength}
-              >
-                {[...bullet].map((char, index) => (
-                  <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
-                    {char}
-                  </Char>
-                ))}
-                {children.map((child, index) => (
-                  <Node
-                    key={index}
-                    node={child}
-                    textDecoration={textDecoration}
-                    bracketLinkProps={bracketLinkProps}
-                    hashTagProps={hashTagProps}
-                    taggedLinkPropsMap={taggedLinkPropsMap}
-                    codeProps={codeProps}
-                    formulaProps={formulaProps}
-                    curcorLineIndex={curcorLineIndex}
-                  />
-                ))}
-              </LineContent>
-            </>
-          )}
+          <LineIndent lineIndex={lineIndex} indentDepth={indentDepth + 1}>
+            <span className={TextLinesConstants.itemization.bullet.className} />
+          </LineIndent>
+          <LineContent lineIndex={lineIndex} indentDepth={indentDepth + 1} contentLength={contentLength}>
+            {children.map((child, index) => (
+              <Node
+                key={index}
+                node={child}
+                textDecoration={textDecoration}
+                bracketLinkProps={bracketLinkProps}
+                hashTagProps={hashTagProps}
+                taggedLinkPropsMap={taggedLinkPropsMap}
+                codeProps={codeProps}
+                formulaProps={formulaProps}
+                curcorLineIndex={curcorLineIndex}
+              />
+            ))}
+          </LineContent>
         </Line>
       );
     }

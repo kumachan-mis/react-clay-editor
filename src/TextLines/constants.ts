@@ -110,7 +110,7 @@ export const TextLinesConstants = {
       decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     },
     markdownSyntax: {
-      itemization: /^(?<indent>[ \t\u3000]*)(?<bullet>[*-] )(?<content>([^ ].*)?)$/,
+      itemization: /^(?<indent>[ \t\u3000]*)(?<bullet>[*-])(?<content>([^ ].*)?)$/,
       heading: /^(?<heading>#+) (?<body>.+)$/,
       bold: /^(?<left>.*?)\*(?<body>[^* \t\u3000](.*[^* \t\u3000])?)\*(?<right>.*)$/,
       italic: /^(?<left>.*?)_(?<body>[^_ \t\u3000](.*[^_ \t\u3000])?)_(?<right>.*)$/,
@@ -122,7 +122,7 @@ export const TextLinesConstants = {
       blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>\$\$)$/,
       blockFormulaLine: (indentDepth: number): RegExp =>
         RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),
-      quotation: /^(?<indent>[ \t\u3000]*)> (?<content>.*)$/,
+      quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
       inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
       displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
       inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,

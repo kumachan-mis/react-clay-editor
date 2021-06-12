@@ -139,14 +139,14 @@ export function handleOnKeyDown(
 
       if (props.syntax == 'bracket') {
         const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
-        const regex = TextLinesConstants.regexes.bracketSyntax.itemization;
-        const { indent, bullet } = newPrevLine.match(regex)?.groups as Record<string, string>;
-        return insertText(newText, newState, indent + bullet);
+        const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
+        if (!groups) return [newText, newState];
+        return insertText(newText, newState, groups.indent + groups.bullet);
       } else if (props.syntax == 'markdown') {
         const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
-        const regex = TextLinesConstants.regexes.markdownSyntax.itemization;
-        const { indent, bullet } = newPrevLine.match(regex)?.groups as Record<string, string>;
-        return insertText(newText, newState, indent + bullet);
+        const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
+        if (!groups) return [newText, newState];
+        return insertText(newText, newState, groups.indent + groups.bullet);
       }
 
       return [newText, newState];

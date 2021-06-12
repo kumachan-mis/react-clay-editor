@@ -6,7 +6,7 @@ import { Editor, defaultLinkStyle, defaultLinkOverriddenStyleOnHover } from '../
 const defaultBracketText =
 `[*** React Realtime Markup Editor]
 A text document editor which is syntactically formattable in real time
-bracket syntax
+[/ bracket-based syntax]
 
 [** Itemizations]
  You can use itemizations
@@ -85,60 +85,60 @@ and so on
   $$
 
 [** Quatations]
-> Genius is one percent inspiration and ninety-nine percent perspiration
-> by Thomas Edison`;
+>Genius is one percent inspiration and ninety-nine percent perspiration
+>by Thomas Edison`;
 
 // prettier-ignore
 const defaultMarkdownText =
 `# React Realtime Markup Editor
 A text document editor which is syntactically formattable in real time
-markdown syntax
+_markdown-like syntax_
 
 ## Itemizations
-- You can use itemizations
-- by just typing a \`-\` or \`*\`
-- like this
- - You can also use nested itemizations
- - by just typing spaces
- - like this
+-You can use itemizations
+-by just typing a \`-\` or \`*\`
+-like this
+ -You can also use nested itemizations
+ -by just typing spaces
+ -like this
 
 ## Shortcut commands
-- select all
-- cut
-- copy
-- paste
-- undo
-- redo
-- move up
-- move down
-- move left
-- move right
-- move to word top
-- move to word bottom
-- move to line top
-- move to line bottom
-- move to text top
-- move to text bottom
+-select all
+-cut
+-copy
+-paste
+-undo
+-redo
+-move up
+-move down
+-move left
+-move right
+-move to word top
+-move to word bottom
+-move to line top
+-move to line bottom
+-move to text top
+-move to text bottom
 
 ## Text decorations
-- *bold*
-- _italic_
+-*bold*
+-_italic_
 
 combination of text decorations is not supported yet
 
 ## Links
-- bracket-link
- - [react-realtime-markup-editor]
-- hash-tag-link
- - #react-realtime-markup-editor
-- tagged-link
- - [github: @kumachan-mis/react-realtime-markup-editor]
- - [npm: react-realtime-markup-editor]
+-bracket-link
+ -[react-realtime-markup-editor]
+-hash-tag-link
+ -#react-realtime-markup-editor
+-tagged-link
+ -[github: @kumachan-mis/react-realtime-markup-editor]
+ -[npm: react-realtime-markup-editor]
 
 ## Code strings
-- inline mode
- - \`import { Editor } from 'react-realtime-markup-editor'\`
-- block mode
+-inline mode
+ -\`import { Editor } from 'react-realtime-markup-editor'\`
+-block mode
   \`\`\`
   import { Editor } from 'react-realtime-markup-editor';
   const App: React.FC = () => {
@@ -149,11 +149,11 @@ combination of text decorations is not supported yet
   \`\`\`
 
 ## Math formulas
-- inline mode
- - $f(x)$
-- display mode
- - $$\\int_a^b f(x) \\mathrm{d}x$$
-- block mode
+-inline mode
+ -$f(x)$
+-display mode
+ -$$\\int_a^b f(x) \\mathrm{d}x$$
+-block mode
   $$
   A =
   \\left(
@@ -167,8 +167,8 @@ combination of text decorations is not supported yet
   $$
 
 ## Quatations
-> Genius is one percent inspiration and ninety-nine percent perspiration
-> by Thomas Edison`;
+>Genius is one percent inspiration and ninety-nine percent perspiration
+>by Thomas Edison`;
 
 const style: React.CSSProperties = {
   width: 'calc(48vw - 60px)',
