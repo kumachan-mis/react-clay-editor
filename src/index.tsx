@@ -8,7 +8,8 @@ export {
   CodeProps,
   FormulaProps,
 } from './Editor/types';
-export { defaultSuggestionListDecoration } from './Cursor/constants';
+export { defaultSuggestionListDecoration
+ } from './Cursor/constants';
 export {
   defaultTextDecoration,
   defaultLinkNameRegex,
