@@ -19,4 +19,5 @@ export {
   BracketLinkNode,
   HashTagNode,
   NormalNode,
+  ParsingOptions,
 } from './TextLines/parser/types';
