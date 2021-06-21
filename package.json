@@ -75,6 +75,7 @@
     "deploy": "gh-pages -d sample/dist",
     "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
     "lint-fix": "yarn lint --fix",
+    "postinstall": "husky install",
     "predeploy": "yarn build-sample",
     "prepublishOnly": "yarn build",
     "prettier": "prettier --write \"**/*.{css,html,json,scss,ts,tsx,}\"",
