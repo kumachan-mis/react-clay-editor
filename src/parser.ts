@@ -1,0 +1,22 @@
+export { parseText } from './TextLines/parser';
+export {
+  Node,
+  LineNode,
+  BlockCodeNode,
+  BlockFormulaNode,
+  BlockCodeMetaNode,
+  BlockCodeLineNode,
+  BlockFormulaMetaNode,
+  BlockFormulaLineNode,
+  QuotationNode,
+  ItemizationNode,
+  ContentNode,
+  InlineCodeNode,
+  DisplayFormulaNode,
+  InlineFormulaNode,
+  DecorationNode,
+  TaggedLinkNode,
+  BracketLinkNode,
+  HashTagNode,
+  NormalNode,
+} from './TextLines/parser/types';
