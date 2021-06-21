@@ -42,7 +42,7 @@
         }
       },
       "inputTypingLines": [
-        "[[** 二分木{arrowright}\n",
+        "[[** 二分木{arrowright}{enter}",
         " 二分木は、データ構造の1つふぇある。{arrowleft}{arrowleft}{arrowleft}{backspace}{backspace}で{arrowright}{arrowright}{arrowright}{enter}",
         "根付き木構造の中で、あるノード（節点 ので{shift}{arrowleft}{arrowleft}{/shift}{backspace}node）が持つ子の数が高々2レアル{backspace}{backspace}{backspace}であるものをいう。{enter}",
         "典型的には2つの子はそれぞれ「左右{arrowleft}」「{arrowright}」と呼バレる{shift}{arrowleft}{arrowleft}{/shift}{backspace}{backspace}ばれる{enter}{backspace}{backspace}。"

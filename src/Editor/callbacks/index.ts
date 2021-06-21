@@ -137,7 +137,7 @@ export function handleOnKeyDown(
       const [newText, newState] = insertText(text, state, '\n');
       if (!newState.cursorCoordinate) return [newText, newState];
 
-      if (props.syntax == 'bracket') {
+      if (!props.syntax || props.syntax == 'bracket') {
         const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
         const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
         if (!groups) return [newText, newState];
