@@ -13,9 +13,9 @@ import {
 } from './types';
 import { TextLinesConstants } from '../constants';
 
-export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex, divPorps = {}, children }) => {
+export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex, divProps = {}, children }) => {
   const baseClassName = TextLinesConstants.lineGroup.className(fromLineIndex, toLineIndex);
-  const { className, ...rest } = divPorps;
+  const { className, ...rest } = divProps;
   return (
     <div className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
       {children}
@@ -23,10 +23,10 @@ export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex
   );
 };
 
-export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, spanPorps = {}, children }) => {
+export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, spanProps = {}, children }) => {
   const baseClassName = TextLinesConstants.lineGroup.indent.className;
   const baseStyle = TextLinesConstants.lineGroup.indent.style(indentDepth);
-  const { className, style, ...rest } = spanPorps;
+  const { className, style, ...rest } = spanProps;
   return (
     <span
       className={className ? `${baseClassName} ${className}` : baseClassName}
@@ -43,10 +43,10 @@ export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, s
   );
 };
 
-export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth, spanPorps = {}, children }) => {
+export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth, spanProps = {}, children }) => {
   const baseClassName = TextLinesConstants.lineGroup.content.className;
   const baseStyle = TextLinesConstants.lineGroup.content.style(indentDepth);
-  const { className, style, ...rest } = spanPorps;
+  const { className, style, ...rest } = spanProps;
   return (
     <span
       className={className ? `${baseClassName} ${className}` : baseClassName}
@@ -58,10 +58,10 @@ export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth,
   );
 };
 
-export const Line: React.FC<LineProps> = ({ lineIndex, defaultFontSize, divPorps = {}, children }) => {
+export const Line: React.FC<LineProps> = ({ lineIndex, defaultFontSize, divProps = {}, children }) => {
   const baseClassName = TextLinesConstants.line.className(lineIndex);
   const baseStyle = TextLinesConstants.line.style(defaultFontSize);
-  const { className, style, ...rest } = divPorps;
+  const { className, style, ...rest } = divProps;
   return (
     <div
       className={className ? `${baseClassName} ${className}` : baseClassName}
@@ -73,10 +73,10 @@ export const Line: React.FC<LineProps> = ({ lineIndex, defaultFontSize, divPorps
   );
 };
 
-export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, spanPorps = {}, children }) => {
+export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, spanProps = {}, children }) => {
   const baseClassName = TextLinesConstants.line.indent.className;
   const baseStyle = TextLinesConstants.line.indent.style(indentDepth);
-  const { className, style, ...rest } = spanPorps;
+  const { className, style, ...rest } = spanProps;
   return (
     <span
       className={className ? `${baseClassName} ${className}` : baseClassName}
@@ -88,7 +88,7 @@ export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, 
           key={charIndex}
           charIndex={charIndex}
           lineIndex={lineIndex}
-          spanPorps={{ className: TextLinesConstants.line.pad.className }}
+          spanProps={{ className: TextLinesConstants.line.pad.className }}
         >
           {' '}
         </Char>
@@ -102,12 +102,12 @@ export const LineContent: React.FC<LineContentProps> = ({
   lineIndex,
   indentDepth,
   contentLength,
-  spanPorps = {},
+  spanProps = {},
   children,
 }) => {
   const baseClassName = TextLinesConstants.line.content.className;
   const baseStyle = TextLinesConstants.line.content.style(indentDepth);
-  const { className, style, ...rest } = spanPorps;
+  const { className, style, ...rest } = spanProps;
   return (
     <span
       className={className ? `${baseClassName} ${className}` : baseClassName}
@@ -128,11 +128,11 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   lineIndex,
   fromCharIndex,
   toCharIndex,
-  spanPorps = {},
+  spanProps = {},
   children,
 }) => {
   const baseClassName = TextLinesConstants.charGroup.className(lineIndex, fromCharIndex, toCharIndex);
-  const { className, ...rest } = spanPorps;
+  const { className, ...rest } = spanProps;
   return (
     <span className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
       {children}
@@ -140,9 +140,9 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   );
 };
 
-export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanPorps = {}, children }) => {
+export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}, children }) => {
   const baseClassName = TextLinesConstants.char.className(lineIndex, charIndex);
-  const { className, ...rest } = spanPorps;
+  const { className, ...rest } = spanProps;
   return (
     <span className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
       <span>{children}</span>
