@@ -164,6 +164,7 @@ export const Editor: React.FC<Props> = (props) => {
           <Selection textSelection={state.textSelection} />
           <TextLines
             text={props.text}
+            syntax={props.syntax}
             cursorCoordinate={state.cursorCoordinate}
             textDecoration={props.decoration?.text}
             bracketLinkProps={props.bracketLinkProps}

@@ -8,17 +8,21 @@ import {
   BlockFormulaLineNode,
   QuotationNode,
   ItemizationNode,
+  DecorationNode,
+  NormalLineNode,
   ParsingContext,
   ParsingOptions,
+  DecorationStyle,
 } from './types';
+import { TextDecoration } from '../types';
 import { TextLinesConstants } from '../constants';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
   const originalLineIndex = context.lineIndex;
   const facingMeta = parseBlockCodeMeta(lines[context.lineIndex], context);
   context.lineIndex++;
-  const metaRegex = TextLinesConstants.regexes.blockCodeMeta;
-  const lineRegex = TextLinesConstants.regexes.blockCodeLine(facingMeta.indentDepth);
+  const metaRegex = TextLinesConstants.regexes.common.blockCodeMeta;
+  const lineRegex = TextLinesConstants.regexes.common.blockCodeLine(facingMeta.indentDepth);
 
   const node: BlockCodeNode = {
     type: 'blockCode',
@@ -48,7 +52,7 @@ export function parseBlockCode(lines: string[], context: ParsingContext): BlockC
 }
 
 function parseBlockCodeMeta(line: string, context: ParsingContext): BlockCodeMetaNode {
-  const regex = TextLinesConstants.regexes.blockCodeMeta;
+  const regex = TextLinesConstants.regexes.common.blockCodeMeta;
   const { indent, codeMeta } = line.match(regex)?.groups as Record<string, string>;
 
   const node: BlockCodeMetaNode = {
@@ -78,8 +82,8 @@ export function parseBlockFormula(lines: string[], context: ParsingContext): Blo
   const originalLineIndex = context.lineIndex;
   const facingMeta = parseBlockFormulaMeta(lines[context.lineIndex], context);
   context.lineIndex++;
-  const metaRegex = TextLinesConstants.regexes.blockFormulaMeta;
-  const lineRegex = TextLinesConstants.regexes.blockFormulaLine(facingMeta.indentDepth);
+  const metaRegex = TextLinesConstants.regexes.common.blockFormulaMeta;
+  const lineRegex = TextLinesConstants.regexes.common.blockFormulaLine(facingMeta.indentDepth);
 
   const node: BlockFormulaNode = {
     type: 'blockFormula',
@@ -109,7 +113,7 @@ export function parseBlockFormula(lines: string[], context: ParsingContext): Blo
 }
 
 function parseBlockFormulaMeta(line: string, context: ParsingContext): BlockFormulaMetaNode {
-  const regex = TextLinesConstants.regexes.blockFormulaMeta;
+  const regex = TextLinesConstants.regexes.common.blockFormulaMeta;
   const { indent, formulaMeta } = line.match(regex)?.groups as Record<string, string>;
 
   const node: BlockFormulaMetaNode = {
@@ -135,8 +139,66 @@ function parseBlockFormulaLine(line: string, context: ParsingContext, regex: Reg
   return node;
 }
 
+export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
+  const regex = TextLinesConstants.regexes.markdownSyntax.heading;
+  const { heading, body } = line.match(regex)?.groups as Record<string, string>;
+  const headingStyle = getHeadingStyle(heading, options.decoration);
+
+  const childNode: DecorationNode = {
+    type: 'decoration',
+    lineIndex: context.lineIndex,
+    range: [0, line.length],
+    facingMeta: `${heading} `,
+    children: parseContent(
+      body,
+      { ...context, charIndex: heading.length + 1, nested: true, decoration: headingStyle },
+      options
+    ),
+    trailingMeta: '',
+    decoration: headingStyle,
+  };
+
+  const node: NormalLineNode = {
+    type: 'normalLine',
+    lineIndex: context.lineIndex,
+    contentLength: line.length,
+    children: [childNode],
+  };
+
+  context.lineIndex++;
+
+  return node;
+}
+
+function getHeadingStyle(decoration: string, setting: TextDecoration): DecorationStyle {
+  const { level2, level3 } = setting.fontSizes;
+  return { bold: true, italic: false, underline: false, fontSize: decoration == '#' ? level3 : level2 };
+}
+
+export function parseBracketItemization(
+  line: string,
+  context: ParsingContext,
+  options: ParsingOptions
+): ItemizationNode {
+  const regex = TextLinesConstants.regexes.bracketSyntax.itemization;
+  const { indent, bullet, content } = line.match(regex)?.groups as Record<string, string>;
+
+  const node: ItemizationNode = {
+    type: 'itemization',
+    lineIndex: context.lineIndex,
+    bullet,
+    indentDepth: indent.length,
+    contentLength: content.length,
+    children: parseContent(content, { ...context, charIndex: indent.length + bullet.length }, options),
+  };
+
+  context.lineIndex++;
+
+  return node;
+}
+
 export function parseQuotation(line: string, context: ParsingContext, options: ParsingOptions): QuotationNode {
-  const regex = TextLinesConstants.regexes.quotation;
+  const regex = TextLinesConstants.regexes.common.quotation;
   const { indent, content } = line.match(regex)?.groups as Record<string, string>;
 
   const node: QuotationNode = {
@@ -153,16 +215,34 @@ export function parseQuotation(line: string, context: ParsingContext, options: P
   return node;
 }
 
-export function parseItemization(line: string, context: ParsingContext, options: ParsingOptions): ItemizationNode {
-  const regex = TextLinesConstants.regexes.itemization;
-  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+export function parseMarkdownItemization(
+  line: string,
+  context: ParsingContext,
+  options: ParsingOptions
+): ItemizationNode {
+  const regex = TextLinesConstants.regexes.markdownSyntax.itemization;
+  const { indent, bullet, content } = line.match(regex)?.groups as Record<string, string>;
 
   const node: ItemizationNode = {
     type: 'itemization',
     lineIndex: context.lineIndex,
+    bullet,
     indentDepth: indent.length,
     contentLength: content.length,
-    children: parseContent(content, { ...context, charIndex: indent.length }, options),
+    children: parseContent(content, { ...context, charIndex: indent.length + bullet.length }, options),
+  };
+
+  context.lineIndex++;
+
+  return node;
+}
+
+export function parseNormalLine(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
+  const node: NormalLineNode = {
+    type: 'normalLine',
+    lineIndex: context.lineIndex,
+    contentLength: line.length,
+    children: parseContent(line, { ...context, charIndex: 0 }, options),
   };
 
   context.lineIndex++;

@@ -1,6 +1,7 @@
 import { unittest } from '../utils/unit';
 import { BaseTestCaseGroup, BaseTestCase } from '../utils/unit/types';
 
+import { defaultTextDecoration } from '../../src/TextLines/constants';
 import { parseText } from '../../src/TextLines/parser';
 import { Node, ParsingOptions } from '../../src/TextLines/parser/types';
 
@@ -21,8 +22,10 @@ interface TestCase extends BaseTestCase {
 
 unittest<TestCase, TestCaseGroup>('function', 'TextLines', 'parseText', (group, testCase) => {
   const options: ParsingOptions = {
+    decoration: defaultTextDecoration,
     disabledMap: group.options.disabledMap,
     taggedLinkRegexes: group.options.taggedLinkPatterns.map((pattern) => RegExp(pattern)),
+    syntax: 'bracket',
   };
   const actualNodes = parseText(testCase.inputLines.join('\n'), options);
   expect(actualNodes).toEqual(testCase.expectedNodes);

@@ -4,6 +4,7 @@ import { CursorCoordinate } from '../Cursor/types';
 
 export interface Props {
   text: string;
+  syntax?: 'bracket' | 'markdown';
   cursorCoordinate?: CursorCoordinate;
   textDecoration?: TextDecoration;
   bracketLinkProps?: BracketLinkProps;

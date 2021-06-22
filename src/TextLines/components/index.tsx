@@ -88,7 +88,7 @@ export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, 
           key={charIndex}
           charIndex={charIndex}
           lineIndex={lineIndex}
-          spanProps={{ className: TextLinesConstants.line.pad.className }}
+          spanProps={{ className: TextLinesConstants.line.indentPad.className }}
         >
           {' '}
         </Char>

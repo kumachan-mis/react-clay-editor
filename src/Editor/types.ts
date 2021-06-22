@@ -42,6 +42,7 @@ export interface FormulaProps {
 export interface Props {
   text: string;
   onChangeText: (text: string) => void;
+  syntax?: 'bracket' | 'markdown';
   decoration?: Decoration;
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;

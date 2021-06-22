@@ -1,12 +1,17 @@
+import { TextDecoration } from '../types';
+
 export interface ParsingContext {
   lineIndex: number;
   charIndex: number;
   nested: boolean;
+  decoration: DecorationStyle;
 }
 
 export interface ParsingOptions {
+  decoration: TextDecoration;
   taggedLinkRegexes: RegExp[];
   disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
+  syntax: 'bracket' | 'markdown';
 }
 
 export interface DecorationStyle {
@@ -26,7 +31,8 @@ export type LineNode =
   | BlockFormulaMetaNode
   | BlockFormulaLineNode
   | QuotationNode
-  | ItemizationNode;
+  | ItemizationNode
+  | NormalLineNode;
 
 export interface BlockCodeNode {
   type: 'blockCode';
@@ -84,7 +90,15 @@ export interface QuotationNode {
 export interface ItemizationNode {
   type: 'itemization';
   lineIndex: number;
+  bullet: string;
   indentDepth: number;
+  contentLength: number;
+  children: ContentNode[];
+}
+
+export interface NormalLineNode {
+  type: 'normalLine';
+  lineIndex: number;
   contentLength: number;
   children: ContentNode[];
 }
@@ -131,9 +145,9 @@ export interface DecorationNode {
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
-  decoration: string;
   children: ContentNode[];
   trailingMeta: string;
+  decoration: DecorationStyle;
 }
 
 export interface TaggedLinkNode {

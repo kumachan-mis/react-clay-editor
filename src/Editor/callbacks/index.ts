@@ -137,9 +137,19 @@ export function handleOnKeyDown(
       const [newText, newState] = insertText(text, state, '\n');
       if (!newState.cursorCoordinate) return [newText, newState];
 
-      const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
-      const { indent } = newPrevLine.match(TextLinesConstants.regexes.itemization)?.groups as Record<string, string>;
-      return insertText(newText, newState, indent);
+      if (!props.syntax || props.syntax == 'bracket') {
+        const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
+        const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
+        if (!groups) return [newText, newState];
+        return insertText(newText, newState, groups.indent + groups.bullet);
+      } else if (props.syntax == 'markdown') {
+        const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
+        const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
+        if (!groups) return [newText, newState];
+        return insertText(newText, newState, groups.indent + groups.bullet);
+      }
+
+      return [newText, newState];
     }
     case 'Backspace': {
       const [newText, newState] = handleOnBackwardDelete(text, state, event);

@@ -17,9 +17,8 @@
           "inputLines": ["hello world"],
           "expectedNodes": [
             {
-              "type": "itemization",
+              "type": "normalLine",
               "lineIndex": 0,
-              "indentDepth": 0,
               "contentLength": 11,
               "children": [
                 {
@@ -37,9 +36,8 @@
           "inputLines": [""],
           "expectedNodes": [
             {
-              "type": "itemization",
+              "type": "normalLine",
               "lineIndex": 0,
-              "indentDepth": 0,
               "contentLength": 0,
               "children": []
             }
