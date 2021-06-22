@@ -43,7 +43,7 @@ const KeyboardTestBody: React.FC<BodyProps> = ({ initState, ...props }) => {
     handler: (text: string, state: EditorState, event: Event) => [string, EditorState]
   ): ((event: Event) => void) => {
     return (event) => {
-      if (props.disabled) return;
+      if (props.readonly) return;
       const [newText, newState] = handler(props.text, state, event);
       if (newState != state) setState(newState);
       if (newText != props.text) props.onChangeText(newText);
@@ -54,7 +54,7 @@ const KeyboardTestBody: React.FC<BodyProps> = ({ initState, ...props }) => {
     handler: (text: string, props: EditorProps, state: EditorState, event: Event) => [string, EditorState]
   ): ((event: Event) => void) => {
     return (event) => {
-      if (props.disabled) return;
+      if (props.readonly) return;
       const [newText, newState] = handler(props.text, props, state, event);
       if (newState != state) setState(newState);
       if (newText != props.text) props.onChangeText(newText);

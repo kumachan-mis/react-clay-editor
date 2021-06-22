@@ -29,6 +29,7 @@ import { KaTeX } from '../KaTeX';
 export const TextLines: React.FC<Props> = ({
   text,
   syntax = 'bracket',
+  cursorCoordinate,
   textDecoration = defaultTextDecoration,
   bracketLinkProps = {
     anchorProps: () => ({
@@ -51,7 +52,7 @@ export const TextLines: React.FC<Props> = ({
   formulaProps = {
     spanProps: () => ({ style: defaultFormulaStyle }),
   } as FormulaProps,
-  cursorCoordinate,
+  readonly,
 }) => {
   const options: ParsingOptions = {
     decoration: textDecoration,
@@ -83,7 +84,7 @@ export const TextLines: React.FC<Props> = ({
           curcorLineIndex={cursorCoordinate?.lineIndex}
         />
       ))}
-      <MarginBottom />
+      {!readonly && <MarginBottom />}
     </div>
   );
 };

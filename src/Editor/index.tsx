@@ -41,7 +41,7 @@ export const Editor: React.FC<Props> = (props) => {
       handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
     ): ((event: Event) => void) => {
       return (event) => {
-        if (props.disabled || event.button != 0) return;
+        if (props.readonly || event.button != 0) return;
         const [newText, newState] = handler(props.text, state, event, rootRef.current);
         if (newState != state) setState(newState);
         if (newText != props.text) props.onChangeText(newText);
@@ -53,7 +53,7 @@ export const Editor: React.FC<Props> = (props) => {
   const createCursorEventHandler = React.useCallback(
     <Event,>(handler: (text: string, state: State, event: Event) => [string, State]): ((event: Event) => void) => {
       return (event) => {
-        if (props.disabled) return;
+        if (props.readonly) return;
         const [newText, newState] = handler(props.text, state, event);
         if (newState != state) setState(newState);
         if (newText != props.text) props.onChangeText(newText);
@@ -67,7 +67,7 @@ export const Editor: React.FC<Props> = (props) => {
       handler: (text: string, props: Props, state: State, event: Event) => [string, State]
     ): ((event: Event) => void) => {
       return (event) => {
-        if (props.disabled) return;
+        if (props.readonly) return;
         const [newText, newState] = handler(props.text, props, state, event);
         if (newState != state) setState(newState);
         if (newText != props.text) props.onChangeText(newText);
@@ -95,7 +95,7 @@ export const Editor: React.FC<Props> = (props) => {
   const handleOnEditorBlur = React.useCallback(
     (event: MouseEvent) => {
       if (
-        !props.disabled &&
+        !props.readonly &&
         state.cursorCoordinate &&
         rootRef.current &&
         !rootRef.current.contains(event.target as Node)
@@ -113,7 +113,7 @@ export const Editor: React.FC<Props> = (props) => {
         });
       }
     },
-    [props.disabled, state, setState, rootRef]
+    [props.readonly, state, setState, rootRef]
   );
 
   React.useEffect(() => {
@@ -165,13 +165,14 @@ export const Editor: React.FC<Props> = (props) => {
           <TextLines
             text={props.text}
             syntax={props.syntax}
+            cursorCoordinate={state.cursorCoordinate}
             textDecoration={props.decoration?.text}
             bracketLinkProps={props.bracketLinkProps}
             hashTagProps={props.hashTagProps}
             codeProps={props.codeProps}
             formulaProps={props.formulaProps}
             taggedLinkPropsMap={props.taggedLinkPropsMap}
-            cursorCoordinate={state.cursorCoordinate}
+            readonly={props.readonly}
           />
         </div>
       </div>
