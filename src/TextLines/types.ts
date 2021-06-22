@@ -12,6 +12,7 @@ export interface Props {
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   marginBottom?: boolean;
+  style?: React.CSSProperties;
 }
 
 export interface NodeProps {

@@ -1,6 +1,6 @@
 export { Editor } from './Editor';
 export {
-  Props,
+  Props as EditorProps,
   Decoration,
   BracketLinkProps,
   HashTagProps,
@@ -8,7 +8,8 @@ export {
   CodeProps,
   FormulaProps,
 } from './Editor/types';
-export { defaultSuggestionListDecoration } from './Cursor/constants';
+export { TextLines as Viewer } from './TextLines';
+export { Props as ViewerProps } from './TextLines/types';
 export {
   defaultTextDecoration,
   defaultLinkNameRegex,
@@ -17,3 +18,4 @@ export {
   defaultCodeStyle,
   defaultFormulaStyle,
 } from './TextLines/constants';
+export { defaultSuggestionListDecoration } from './Cursor/constants';
