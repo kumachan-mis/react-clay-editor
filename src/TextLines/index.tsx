@@ -51,7 +51,7 @@ export const TextLines: React.FC<Props> = ({
   formulaProps = {
     spanProps: () => ({ style: defaultFormulaStyle }),
   } as FormulaProps,
-  readonly,
+  marginBottom,
 }) => {
   const options: ParsingOptions = {
     taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
@@ -81,7 +81,7 @@ export const TextLines: React.FC<Props> = ({
           curcorLineIndex={cursorCoordinate?.lineIndex}
         />
       ))}
-      {!readonly && <MarginBottom />}
+      {marginBottom && <MarginBottom />}
     </div>
   );
 };
