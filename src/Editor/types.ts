@@ -48,7 +48,7 @@ export interface Props {
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
-  disabled?: boolean;
+  readonly?: boolean;
   style?: React.CSSProperties;
 }
 

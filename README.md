@@ -167,7 +167,7 @@ Here are some examples:
 | `taggedLinkPropsMap` | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
 | `codeProps`          | `CodeProps`                              | optional          | see [CodeProps](#CodeProps)               | settings of code strings<br>details: [CodeProps](#CodeProps)                                                        |
 | `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
-| `disabled`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
+| `readonly`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
 ### Decoration
@@ -263,9 +263,7 @@ settings of bracket links
 
 ```ts
 interface BracketLinkProps {
-  anchorProps?: (
-    linkName: string
-  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -315,9 +313,7 @@ settings of hash tags
 
 ```ts
 interface HashTagProps {
-  anchorProps?: (
-    hashTagName: string
-  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -333,9 +329,7 @@ settings of tagged links
 ```ts
 interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (
-    linkName: string
-  ) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;
