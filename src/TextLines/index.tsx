@@ -152,7 +152,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={code.length}
-            spanPorps={{ style: codeElementProps?.style }}
+            spanProps={{ style: codeElementProps?.style }}
           >
             <code {...codeElementProps}>
               {[...code].map((char, index) => (
@@ -176,10 +176,10 @@ const Node: React.FC<NodeProps> = ({
         <LineGroup
           fromLineIndex={from + 1}
           toLineIndex={trailingMeta ? to - 1 : to}
-          divPorps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
+          divProps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-          <LineGroupContent indentDepth={facingMeta.indentDepth} spanPorps={{ style: spanElementProps?.style }}>
+          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ style: spanElementProps?.style }}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
           </LineGroupContent>
         </LineGroup>
@@ -236,7 +236,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={formula.length}
-            spanPorps={{ style: spanElementProps?.style }}
+            spanProps={{ style: spanElementProps?.style }}
           >
             {[...formula].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -258,7 +258,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={meta.length + contentLength}
-            spanPorps={{ style: TextLinesConstants.quotation.content.style }}
+            spanProps={{ style: TextLinesConstants.quotation.content.style }}
           >
             {[...meta].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -355,7 +355,7 @@ const Node: React.FC<NodeProps> = ({
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
           toCharIndex={to - trailingMeta.length}
-          spanPorps={{
+          spanProps={{
             onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation(),
             style: spanElementProps?.style,
           }}
