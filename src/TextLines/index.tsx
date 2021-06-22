@@ -52,6 +52,7 @@ export const TextLines: React.FC<Props> = ({
     spanProps: () => ({ style: defaultFormulaStyle }),
   } as FormulaProps,
   marginBottom,
+  style,
 }) => {
   const options: ParsingOptions = {
     taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
@@ -67,7 +68,7 @@ export const TextLines: React.FC<Props> = ({
   const nodes = parseText(text, options);
 
   return (
-    <div className={TextLinesConstants.className}>
+    <div className={TextLinesConstants.className} style={style}>
       {nodes.map((node, index) => (
         <Node
           key={index}
