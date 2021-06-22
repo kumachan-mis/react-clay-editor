@@ -52,7 +52,7 @@ export const TextLines: React.FC<Props> = ({
   formulaProps = {
     spanProps: () => ({ style: defaultFormulaStyle }),
   } as FormulaProps,
-  readonly,
+  marginBottom,
 }) => {
   const options: ParsingOptions = {
     decoration: textDecoration,
@@ -84,7 +84,7 @@ export const TextLines: React.FC<Props> = ({
           curcorLineIndex={cursorCoordinate?.lineIndex}
         />
       ))}
-      {!readonly && <MarginBottom />}
+      {marginBottom && <MarginBottom />}
     </div>
   );
 };

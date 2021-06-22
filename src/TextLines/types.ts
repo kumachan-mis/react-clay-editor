@@ -5,14 +5,14 @@ import { CursorCoordinate } from '../Cursor/types';
 export interface Props {
   text: string;
   syntax?: 'bracket' | 'markdown';
-  cursorCoordinate: CursorCoordinate | undefined;
+  cursorCoordinate?: CursorCoordinate;
   textDecoration?: TextDecoration;
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: TaggedLinkPropsMap;
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
-  readonly?: boolean;
+  marginBottom?: boolean;
 }
 
 export interface NodeProps {

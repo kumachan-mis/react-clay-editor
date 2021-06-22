@@ -172,7 +172,7 @@ export const Editor: React.FC<Props> = (props) => {
             codeProps={props.codeProps}
             formulaProps={props.formulaProps}
             taggedLinkPropsMap={props.taggedLinkPropsMap}
-            readonly={props.readonly}
+            marginBottom={!props.readonly}
           />
         </div>
       </div>
