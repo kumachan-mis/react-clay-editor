@@ -19,7 +19,6 @@ import {
   CharGroup,
   Char,
   AnchorWithHoverStyle,
-  MarginBottom,
 } from './components';
 import { parseText, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
@@ -52,7 +51,6 @@ export const TextLines: React.FC<Props> = ({
   formulaProps = {
     spanProps: () => ({ style: defaultFormulaStyle }),
   } as FormulaProps,
-  marginBottom,
   style,
 }) => {
   const options: ParsingOptions = {
@@ -85,7 +83,6 @@ export const TextLines: React.FC<Props> = ({
           curcorLineIndex={cursorCoordinate?.lineIndex}
         />
       ))}
-      {marginBottom && <MarginBottom />}
     </div>
   );
 };
