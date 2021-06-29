@@ -1,7 +1,6 @@
 .textlines {
   white-space: pre-wrap;
   word-wrap: break-word;
-  cursor: text;
 }
 
 .lineGroup {
@@ -47,9 +46,4 @@
 
 .char {
   display: inline-block;
-}
-
-.marginBottom {
-  width: 100%;
-  height: 50%;
 }

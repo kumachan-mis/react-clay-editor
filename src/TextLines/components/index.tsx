@@ -182,5 +182,3 @@ export const AnchorWithHoverStyle: React.FC<AnchorWithHoverStyleProps> = ({
     </a>
   );
 };
-
-export const MarginBottom: React.FC = () => <div className={TextLinesConstants.marginBottom.className} />;

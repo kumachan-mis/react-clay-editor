@@ -12,7 +12,6 @@ export interface Props {
   taggedLinkPropsMap?: TaggedLinkPropsMap;
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
-  marginBottom?: boolean;
   style?: React.CSSProperties;
 }
 

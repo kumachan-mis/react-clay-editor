@@ -135,9 +135,9 @@ export function positionToCursorCoordinate(
   const lineGroupElement = elements.find(
     (lineGrpEl) => lineGroupClassNameRegex.test(lineGrpEl.className) && element.contains(lineGrpEl)
   );
-  const marginBottomClassNameRegex = TextLinesConstants.marginBottom.classNameRegex;
+  const marginBottomClassName = EditorConstants.editor.className;
   const marginBottomElement = elements.find(
-    (marginEl) => marginBottomClassNameRegex.test(marginEl.className) && element.contains(marginEl)
+    (marginEl) => marginEl.className == marginBottomClassName && element.contains(marginEl)
   );
 
   const lines = text.split('\n');
