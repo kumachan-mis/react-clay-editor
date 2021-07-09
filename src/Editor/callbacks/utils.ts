@@ -102,7 +102,7 @@ export function insertSuggestion(text: string, state: State, suggestion: string)
       case 'bracketLink':
         return insertText(text, state, suggestion);
       case 'hashTag':
-        return insertText(text, state, `${suggestion} `);
+        return insertText(text, state, `${suggestion.replaceAll(' ', '_')} `);
       case 'taggedLink':
         return insertText(text, state, ` ${suggestion}`);
       case 'none':
