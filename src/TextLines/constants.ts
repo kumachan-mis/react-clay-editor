@@ -100,10 +100,6 @@ export const TextLinesConstants = {
     className: (lineIndex: number, charIndex: number): string => `${styles.char} L${lineIndex}C${charIndex}`,
     classNameRegex: RegExp(`${styles.char} L(?<lineIndex>\\d+)C(?<charIndex>\\d+)`),
   },
-  marginBottom: {
-    className: styles.marginBottom,
-    classNameRegex: RegExp(styles.marginBottom),
-  },
   regexes: {
     bracketSyntax: {
       itemization: /^(?<indent>[ \t\u3000]*)(?<bullet>[ \t\u3000])(?<content>([^ \t\u3000].*)?)$/,
