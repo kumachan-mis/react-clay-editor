@@ -3,5 +3,5 @@ export function getTagName(tag: string): string {
 }
 
 export function getHashTagName(hashTag: string): string {
-  return hashTag.substring(1);
+  return hashTag.substring(1).replaceAll('_', ' ');
 }

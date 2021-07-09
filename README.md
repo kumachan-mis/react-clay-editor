@@ -71,6 +71,9 @@ Here are some examples:
 | <a>tag: tagged link</a> | `[tag: tagged link]` |
 | <a>#hash-tag</a>        | `#hash-tag`          |
 
+**Note**
+A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
+
 ### Code Strings
 
 #### inline code string
