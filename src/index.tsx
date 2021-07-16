@@ -1,5 +1,5 @@
 export { Editor } from './Editor';
-export {
+export type {
   Props as EditorProps,
   Decoration,
   BracketLinkProps,
@@ -9,7 +9,7 @@ export {
   FormulaProps,
 } from './Editor/types';
 export { TextLines as Viewer } from './TextLines';
-export { Props as ViewerProps } from './TextLines/types';
+export type { Props as ViewerProps } from './TextLines/types';
 export {
   defaultTextDecoration,
   defaultLinkNameRegex,
