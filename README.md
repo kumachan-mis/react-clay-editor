@@ -8,12 +8,14 @@ Inspired by [Scrapbox](https://scrapbox.io/product)
 ### Installation
 
 ```sh
+npm install katex
 npm install react-realtime-markup-editor
 ```
 
 or
 
 ```sh
+yarn add katex
 yarn add react-realtime-markup-editor
 ```
 
