@@ -1,11 +1,15 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: path.resolve('sample', 'src', 'index.tsx'),
   target: 'web',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    katex: 'katex',
   },
   output: {
     path: path.resolve('sample', 'dist'),
@@ -42,16 +46,6 @@ module.exports = {
         include: /katex/,
         use: ['style-loader', 'css-loader'],
       },
-      {
-        test: /\.(ttf|woff|woff2)$/,
-        use: ['file-loader'],
-      },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve('sample', 'src', 'index.html'),
-      filename: 'index.html',
-    }),
-  ],
 };

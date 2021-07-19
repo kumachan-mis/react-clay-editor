@@ -23,6 +23,7 @@ yarn add react-realtime-markup-editor
 
 ```tsx
 import { Editor } from 'react-realtime-markup-editor';
+import 'katex/dist/katex.min.css';
 
 const App: React.FC = () => {
   const [text, setText] = React.useState('');
