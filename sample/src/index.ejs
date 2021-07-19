@@ -9,8 +9,8 @@
   <body>
     <div id="app"></div>
     <script crossorigin src="https://unpkg.com/react@<%= reactVersion %>/umd/react.<%= mode == 'production' ? 'production.min' : 'development' %>.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@<%= reactVersion %>/umd/react-dom.<%= mode == 'production' ? 'production' : 'development' %>.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.css" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.js" crossorigin="anonymous"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@<%= reactVersion %>/umd/react-dom.<%= mode == 'production' ? 'production.min' : 'development' %>.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex<%= mode == 'production' ? '.min' : '' %>.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex<%= mode == 'production' ? '.min' : '' %>.js" crossorigin="anonymous"></script>
   </body>
 </html>
