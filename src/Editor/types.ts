@@ -1,10 +1,11 @@
-import { CursorCoordinate, SuggestionListDecoration } from '../Cursor/types';
+import { CursorCoordinate } from '../Cursor/types';
 import { TextSelection } from '../Selection/types';
-import { TextDecoration } from '../TextLines/types';
+import { DecorationSettings } from '../TextLines/types';
 
-export interface Decoration {
-  text?: TextDecoration;
-  suggestionList?: SuggestionListDecoration;
+export interface DecorationProps {
+  settings?: DecorationSettings;
+  suggestions?: string[];
+  initialSuggestionIndex?: number;
 }
 
 export interface BracketLinkProps {
@@ -43,7 +44,7 @@ export interface Props {
   text: string;
   onChangeText: (text: string) => void;
   syntax?: 'bracket' | 'markdown';
-  decoration?: Decoration;
+  decorationProps?: DecorationProps;
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
@@ -67,7 +68,7 @@ export interface State {
   selectionWithMouse: 'inactive' | 'fired' | 'active';
   historyHead: number;
   editActionHistory: EditAction[];
-  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'decoration' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
 }

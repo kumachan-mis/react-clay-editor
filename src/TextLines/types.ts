@@ -6,7 +6,7 @@ export interface Props {
   text: string;
   syntax?: 'bracket' | 'markdown';
   cursorCoordinate?: CursorCoordinate;
-  textDecoration?: TextDecoration;
+  decorationSettings?: DecorationSettings;
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: TaggedLinkPropsMap;
@@ -17,7 +17,7 @@ export interface Props {
 
 export interface NodeProps {
   node: Node;
-  textDecoration: TextDecoration;
+  decorationSettings: DecorationSettings;
   bracketLinkProps: BracketLinkProps;
   hashTagProps: HashTagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
@@ -26,8 +26,8 @@ export interface NodeProps {
   curcorLineIndex: number | undefined;
 }
 
-export interface TextDecoration {
-  fontSizes: Record<'level1' | 'level2' | 'level3', number>;
+export interface DecorationSettings {
+  fontSizes: Record<'normal' | 'larger' | 'largest', number>;
 }
 
 export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };

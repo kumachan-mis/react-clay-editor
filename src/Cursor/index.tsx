@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
-import { CursorConstants, defaultSuggestionListDecoration } from './constants';
+import { CursorConstants } from './constants';
 import { cursorPropsToState, handleOnEditorScroll } from './utils';
 
 import { getRoot } from '../Editor/utils';
@@ -51,7 +51,6 @@ export const Cursor: React.FC<Props> = (props) => {
         suggestionType={props.suggestionType}
         suggestions={props.suggestions}
         suggestionIndex={props.suggestionIndex}
-        suggestionListDecoration={props.suggestionListDecoration}
         position={state.position}
         cursorSize={state.cursorSize}
         onSuggectionMouseDown={props.onSuggectionMouseDown}
@@ -101,11 +100,10 @@ const HiddenTextArea: React.FC<HiddenTextAreaProps> = (props) => {
 const SuggestionList: React.FC<SuggestionListProps> = (props) => {
   const constants = CursorConstants.suggestion;
   const { suggestions, suggestionIndex, position, cursorSize } = props;
-  const { width, maxHeight, fontSize } = props.suggestionListDecoration || defaultSuggestionListDecoration;
   return (
     <ul
       className={constants.list.className}
-      style={constants.list.style(position, cursorSize, width, maxHeight, suggestions.length == 0)}
+      style={constants.list.style(position, cursorSize, suggestions.length == 0)}
     >
       {suggestions.map((suggestion, index) => (
         <li
@@ -113,7 +111,6 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
           aria-selected={suggestionIndex == index}
           className={constants.item.className(index)}
           onMouseDown={(event) => props.onSuggectionMouseDown(event)}
-          style={constants.item.style(fontSize)}
         >
           {suggestion}
         </li>

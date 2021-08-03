@@ -1,9 +1,9 @@
-import { TextDecoration } from './types';
+import { DecorationSettings } from './types';
 import { DecorationStyle } from './parser/types';
 import styles from './style.css';
 
-export const defaultTextDecoration: TextDecoration = {
-  fontSizes: { level1: 16, level2: 20, level3: 24 },
+export const defaultDecorationSettings: DecorationSettings = {
+  fontSizes: { normal: 16, larger: 20, largest: 24 },
 };
 
 export const defaultLinkNameRegex = /[^[\]]+/;

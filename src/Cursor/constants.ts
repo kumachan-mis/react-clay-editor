@@ -1,11 +1,5 @@
-import { Position, SuggestionListDecoration } from './types';
+import { Position } from './types';
 import styles from './style.css';
-
-export const defaultSuggestionListDecoration: SuggestionListDecoration = {
-  width: 250,
-  maxHeight: 100,
-  fontSize: 14,
-};
 
 export const CursorConstants = {
   cursorBar: {
@@ -35,23 +29,14 @@ export const CursorConstants = {
   suggestion: {
     list: {
       className: styles.suggestionList,
-      style: (
-        position: Position,
-        cursorSize: number,
-        width: number,
-        maxHeight: number,
-        hidden: boolean
-      ): React.CSSProperties => ({
+      style: (position: Position, cursorSize: number, hidden: boolean): React.CSSProperties => ({
         top: `${position.top + cursorSize + 2}px`,
         left: `${position.left}px`,
-        width: `${width}px`,
-        maxHeight: `${maxHeight}px`,
         display: hidden ? 'none' : undefined,
       }),
     },
     item: {
       className: (index: number): string => `${styles.suggestionItem} Item${index}`,
-      style: (fontSize: number): React.CSSProperties => ({ fontSize: `${fontSize}px` }),
     },
   },
 };

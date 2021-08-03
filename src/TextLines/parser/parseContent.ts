@@ -12,7 +12,7 @@ import {
   ParsingOptions,
   DecorationStyle,
 } from './types';
-import { TextDecoration } from '../types';
+import { DecorationSettings } from '../types';
 import { TextLinesConstants } from '../constants';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
@@ -134,7 +134,7 @@ function parseInlineFormula(text: string, context: ParsingContext, options: Pars
 function parseDecoration(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.bracketSyntax.decoration;
   const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
-  const decorationStyle = getDecorationStyle(decoration, options.decoration);
+  const decorationStyle = getDecorationStyle(decoration, options.decorationSettings);
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
@@ -158,18 +158,19 @@ function parseDecoration(text: string, context: ParsingContext, options: Parsing
   ];
 }
 
-function getDecorationStyle(decoration: string, setting: TextDecoration): DecorationStyle {
-  const { level1, level2, level3 } = setting.fontSizes;
-  const style = { bold: false, italic: false, underline: false, fontSize: level1 };
+function getDecorationStyle(decoration: string, setting: DecorationSettings): DecorationStyle {
+  const { normal, larger, largest } = setting.fontSizes;
+  const style = { bold: false, italic: false, underline: false, fontSize: normal };
+
   for (let i = 0; i < decoration.length; i++) {
     switch (decoration[i]) {
       case '*':
         if (!style.bold) {
           style.bold = true;
-        } else if (style.fontSize == level1) {
-          style.fontSize = level2;
-        } else if (style.fontSize == level2) {
-          style.fontSize = level3;
+        } else if (style.fontSize == normal) {
+          style.fontSize = larger;
+        } else if (style.fontSize == larger) {
+          style.fontSize = largest;
         }
         break;
       case '/':
@@ -180,6 +181,7 @@ function getDecorationStyle(decoration: string, setting: TextDecoration): Decora
         break;
     }
   }
+
   return style;
 }
 

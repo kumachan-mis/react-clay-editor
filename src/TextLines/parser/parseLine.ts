@@ -14,7 +14,7 @@ import {
   ParsingOptions,
   DecorationStyle,
 } from './types';
-import { TextDecoration } from '../types';
+import { DecorationSettings } from '../types';
 import { TextLinesConstants } from '../constants';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
@@ -142,7 +142,7 @@ function parseBlockFormulaLine(line: string, context: ParsingContext, regex: Reg
 export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
   const regex = TextLinesConstants.regexes.markdownSyntax.heading;
   const { heading, body } = line.match(regex)?.groups as Record<string, string>;
-  const headingStyle = getHeadingStyle(heading, options.decoration);
+  const headingStyle = getHeadingStyle(heading, options.decorationSettings);
 
   const childNode: DecorationNode = {
     type: 'decoration',
@@ -170,9 +170,23 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
   return node;
 }
 
-function getHeadingStyle(decoration: string, setting: TextDecoration): DecorationStyle {
-  const { level2, level3 } = setting.fontSizes;
-  return { bold: true, italic: false, underline: false, fontSize: decoration == '#' ? level3 : level2 };
+function getHeadingStyle(decoration: string, setting: DecorationSettings): DecorationStyle {
+  const { normal, larger, largest } = setting.fontSizes;
+  let fontSize = normal;
+
+  switch (decoration) {
+    case '#':
+      fontSize = largest;
+      break;
+    case '##':
+      fontSize = larger;
+      break;
+    case '###':
+      fontSize = normal;
+      break;
+  }
+
+  return { bold: true, italic: false, underline: false, fontSize };
 }
 
 export function parseBracketItemization(

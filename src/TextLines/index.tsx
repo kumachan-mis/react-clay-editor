@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Props, NodeProps, TaggedLinkPropsMap } from './types';
 import {
   TextLinesConstants,
-  defaultTextDecoration,
+  defaultDecorationSettings,
   defaultLinkStyle,
   defaultLinkOverriddenStyleOnHover,
   defaultCodeStyle,
@@ -29,7 +29,7 @@ export const TextLines: React.FC<Props> = ({
   text,
   syntax = 'bracket',
   cursorCoordinate,
-  textDecoration = defaultTextDecoration,
+  decorationSettings = defaultDecorationSettings,
   bracketLinkProps = {
     anchorProps: () => ({
       style: defaultLinkStyle,
@@ -54,7 +54,7 @@ export const TextLines: React.FC<Props> = ({
   style,
 }) => {
   const options: ParsingOptions = {
-    decoration: textDecoration,
+    decorationSettings: decorationSettings,
     taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
       TextLinesConstants.regexes.common.taggedLink(tagName, linkProps.linkNameRegex)
     ),
@@ -74,7 +74,7 @@ export const TextLines: React.FC<Props> = ({
         <Node
           key={index}
           node={node}
-          textDecoration={textDecoration}
+          decorationSettings={decorationSettings}
           bracketLinkProps={bracketLinkProps}
           hashTagProps={hashTagProps}
           taggedLinkPropsMap={taggedLinkPropsMap}
@@ -89,7 +89,7 @@ export const TextLines: React.FC<Props> = ({
 
 const Node: React.FC<NodeProps> = ({
   node,
-  textDecoration,
+  decorationSettings,
   bracketLinkProps,
   hashTagProps,
   taggedLinkPropsMap,
@@ -104,7 +104,7 @@ const Node: React.FC<NodeProps> = ({
         <>
           <Node
             node={facingMeta}
-            textDecoration={textDecoration}
+            decorationSettings={decorationSettings}
             bracketLinkProps={bracketLinkProps}
             hashTagProps={hashTagProps}
             taggedLinkPropsMap={taggedLinkPropsMap}
@@ -116,7 +116,7 @@ const Node: React.FC<NodeProps> = ({
             <Node
               key={index}
               node={child}
-              textDecoration={textDecoration}
+              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -128,7 +128,7 @@ const Node: React.FC<NodeProps> = ({
           {trailingMeta && (
             <Node
               node={trailingMeta}
-              textDecoration={textDecoration}
+              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -147,7 +147,7 @@ const Node: React.FC<NodeProps> = ({
       const codeElementProps = codeProps.codeProps?.(code);
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
+        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
@@ -188,7 +188,7 @@ const Node: React.FC<NodeProps> = ({
         <>
           <Node
             node={facingMeta}
-            textDecoration={textDecoration}
+            decorationSettings={decorationSettings}
             bracketLinkProps={bracketLinkProps}
             hashTagProps={hashTagProps}
             taggedLinkPropsMap={taggedLinkPropsMap}
@@ -200,7 +200,7 @@ const Node: React.FC<NodeProps> = ({
             <Node
               key={index}
               node={child}
-              textDecoration={textDecoration}
+              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -212,7 +212,7 @@ const Node: React.FC<NodeProps> = ({
           {trailingMeta && (
             <Node
               node={trailingMeta}
-              textDecoration={textDecoration}
+              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -231,7 +231,7 @@ const Node: React.FC<NodeProps> = ({
       const spanElementProps = formulaProps.spanProps?.(formula);
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
+        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
@@ -253,7 +253,7 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = curcorLineIndex == lineIndex;
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
+        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
@@ -270,7 +270,7 @@ const Node: React.FC<NodeProps> = ({
               <Node
                 key={index}
                 node={child}
-                textDecoration={textDecoration}
+                decorationSettings={decorationSettings}
                 bracketLinkProps={bracketLinkProps}
                 hashTagProps={hashTagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
@@ -287,7 +287,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth, contentLength, children } = node;
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
+        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth + 1}>
             <span className={TextLinesConstants.itemization.bullet.className} />
           </LineIndent>
@@ -296,7 +296,7 @@ const Node: React.FC<NodeProps> = ({
               <Node
                 key={index}
                 node={child}
-                textDecoration={textDecoration}
+                decorationSettings={decorationSettings}
                 bracketLinkProps={bracketLinkProps}
                 hashTagProps={hashTagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
@@ -313,13 +313,13 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, contentLength, children } = node;
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={textDecoration.fontSizes.level1}>
+        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
           <LineContent lineIndex={lineIndex} indentDepth={0} contentLength={contentLength}>
             {children.map((child, index) => (
               <Node
                 key={index}
                 node={child}
-                textDecoration={textDecoration}
+                decorationSettings={decorationSettings}
                 bracketLinkProps={bracketLinkProps}
                 hashTagProps={hashTagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
@@ -412,7 +412,7 @@ const Node: React.FC<NodeProps> = ({
             <Node
               key={index}
               node={child}
-              textDecoration={textDecoration}
+              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}

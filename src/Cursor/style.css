@@ -15,6 +15,9 @@
 
 .suggestionList {
   position: absolute;
+  width: 250px;
+  max-height: 100px;
+  font-size: 14px;
   margin: 0px;
   padding: 0px;
   border-radius: 6px;
