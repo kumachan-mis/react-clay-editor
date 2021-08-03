@@ -68,7 +68,7 @@ export interface State {
   selectionWithMouse: 'inactive' | 'fired' | 'active';
   historyHead: number;
   editActionHistory: EditAction[];
-  suggestionType: 'decoration' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
 }

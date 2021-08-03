@@ -145,7 +145,7 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
   const headingStyle = getHeadingStyle(heading, options.decorationSettings);
 
   const childNode: DecorationNode = {
-    type: 'decoration',
+    type: 'text',
     lineIndex: context.lineIndex,
     range: [0, line.length],
     facingMeta: `${heading} `,

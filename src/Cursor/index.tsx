@@ -105,6 +105,7 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
       className={constants.list.className}
       style={constants.list.style(position, cursorSize, suggestions.length == 0)}
     >
+      <li className={constants.header.className}>{constants.header.name(props.suggestionType)}</li>
       {suggestions.map((suggestion, index) => (
         <li
           key={index}

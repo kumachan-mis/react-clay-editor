@@ -115,12 +115,12 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
           ) {
             return [text, resetSuggestion(state)];
           }
-          return [text, { ...state, suggestionType: 'decoration', suggestions, suggestionIndex }];
+          return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
         case 'markdown':
           if (currentLine[charIndex] !== undefined || !['#', '##', '###'].includes(header)) {
             return [text, resetSuggestion(state)];
           }
-          return [text, { ...state, suggestionType: 'decoration', suggestions, suggestionIndex }];
+          return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
         default:
           return [text, resetSuggestion(state)];
       }
@@ -139,7 +139,7 @@ export function insertSuggestion(text: string, state: State, suggestion: string)
         return insertText(text, state, `${suggestion.replaceAll(' ', '_')} `);
       case 'taggedLink':
         return insertText(text, state, ` ${suggestion}`);
-      case 'decoration':
+      case 'text':
         return insertText(text, state, suggestion);
       case 'none':
         return [text, state];

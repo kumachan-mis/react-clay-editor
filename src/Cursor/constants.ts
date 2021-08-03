@@ -35,6 +35,23 @@ export const CursorConstants = {
         display: hidden ? 'none' : undefined,
       }),
     },
+    header: {
+      className: styles.suggestionHeader,
+      name: (suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none'): string => {
+        switch (suggestionType) {
+          case 'text':
+            return 'Text Suggestion';
+          case 'bracketLink':
+            return 'Bracket Link Suggestion';
+          case 'hashTag':
+            return 'HashTag Suggestion';
+          case 'taggedLink':
+            return 'Tagged Link Suggestion';
+          default:
+            return '';
+        }
+      },
+    },
     item: {
       className: (index: number): string => `${styles.suggestionItem} Item${index}`,
     },

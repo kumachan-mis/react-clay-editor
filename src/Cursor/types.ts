@@ -6,7 +6,7 @@ export interface CursorCoordinate {
 export interface Props {
   coordinate: CursorCoordinate | undefined;
   textAreaValue: string;
-  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
@@ -48,7 +48,7 @@ export interface HiddenTextAreaProps {
 }
 
 export interface SuggestionListProps {
-  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   position: Position;

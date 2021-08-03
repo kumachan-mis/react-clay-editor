@@ -396,7 +396,7 @@ const Node: React.FC<NodeProps> = ({
         </span>
       );
     }
-    case 'decoration': {
+    case 'text': {
       const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
