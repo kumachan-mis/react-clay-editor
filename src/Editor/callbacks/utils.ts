@@ -109,10 +109,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
       const header = currentLine.substring(0, charIndex - 1);
       switch (props.syntax) {
         case 'bracket':
-          if (
-            (currentLine[charIndex] !== undefined && currentLine[charIndex] !== ']') ||
-            !['[*', '[**', '[***'].includes(header)
-          ) {
+          if (![']', undefined].includes(currentLine[charIndex]) || !['[*', '[**', '[***'].includes(header)) {
             return [text, resetSuggestion(state)];
           }
           return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
