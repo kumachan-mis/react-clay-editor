@@ -101,21 +101,23 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
   const constants = CursorConstants.suggestion;
   const { suggestions, suggestionIndex, position, cursorSize } = props;
   return (
-    <ul
+    <div
       className={constants.list.className}
       style={constants.list.style(position, cursorSize, suggestions.length == 0)}
     >
-      <li className={constants.header.className}>{constants.header.name(props.suggestionType)}</li>
-      {suggestions.map((suggestion, index) => (
-        <li
-          key={index}
-          aria-selected={suggestionIndex == index}
-          className={constants.item.className(index)}
-          onMouseDown={(event) => props.onSuggectionMouseDown(event)}
-        >
-          {suggestion}
-        </li>
-      ))}
-    </ul>
+      <div className={constants.header.className}>{constants.header.name(props.suggestionType)}</div>
+      <ul className={constants.container.className}>
+        {suggestions.map((suggestion, index) => (
+          <li
+            key={index}
+            aria-selected={suggestionIndex == index}
+            className={constants.item.className(index)}
+            onMouseDown={(event) => props.onSuggectionMouseDown(event)}
+          >
+            {suggestion}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };

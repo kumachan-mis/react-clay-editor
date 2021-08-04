@@ -52,6 +52,9 @@ export const CursorConstants = {
         }
       },
     },
+    container: {
+      className: styles.suggestionContainer,
+    },
     item: {
       className: (index: number): string => `${styles.suggestionItem} Item${index}`,
     },
