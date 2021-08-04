@@ -15,33 +15,53 @@
 
 .suggestionList {
   position: absolute;
-  margin: 0px;
-  padding: 0px;
+  min-width: 250px;
+  font-size: 14px;
   border-radius: 6px;
   box-shadow: 0px 1px 2px #cccccc;
   background-color: #ffffff;
-  overflow-y: scroll;
   z-index: 1;
+}
+
+.suggestionHeader {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3px;
+  border-radius: 6px 6px 0px 0px;
+  border-bottom: 2px solid #d3d3d3;
+  white-space: nowrap;
+  text-align: center;
+  font-weight: bold;
+  background-color: #e7e9eb;
+}
+
+.suggestionContainer {
+  position: relative;
+  width: 100%;
+  max-height: 100px;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 0px 0px 6px 6px;
+  overflow-y: scroll;
 }
 
 .suggestionItem {
   list-style-type: none;
   cursor: pointer;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 6px;
+  padding-right: 6px;
   padding-top: 2px;
   padding-bottom: 2px;
   border-bottom: 1px solid #eaecef;
   overflow: hidden;
   white-space: nowrap;
-  overflow-y: scroll;
   text-overflow: ellipsis;
 }
 
-.suggestionItem:hover {
-  background-color: #f6f8fa;
+.suggestionItem[aria-selected='true'] {
+  background-color: #d9e9f7;
 }
 
-.suggestionItem[aria-selected='true'] {
-  background-color: #f6f8fa;
+.suggestionItem:hover {
+  background-color: #eff7ff;
 }

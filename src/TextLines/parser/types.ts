@@ -1,4 +1,4 @@
-import { TextDecoration } from '../types';
+import { DecorationSettings } from '../types';
 
 export interface ParsingContext {
   lineIndex: number;
@@ -8,7 +8,7 @@ export interface ParsingContext {
 }
 
 export interface ParsingOptions {
-  decoration: TextDecoration;
+  decorationSettings: DecorationSettings;
   taggedLinkRegexes: RegExp[];
   disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
   syntax: 'bracket' | 'markdown';
@@ -141,7 +141,7 @@ export interface InlineFormulaNode {
 }
 
 export interface DecorationNode {
-  type: 'decoration';
+  type: 'text';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;

@@ -151,7 +151,6 @@ export const Editor: React.FC<Props> = (props) => {
             suggestionType={state.suggestionType}
             suggestions={state.suggestions}
             suggestionIndex={state.suggestionIndex}
-            suggestionListDecoration={props.decoration?.suggestionList}
             onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
             onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
             onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
@@ -166,7 +165,7 @@ export const Editor: React.FC<Props> = (props) => {
             text={props.text}
             syntax={props.syntax}
             cursorCoordinate={state.cursorCoordinate}
-            textDecoration={props.decoration?.text}
+            decorationSettings={props.decorationProps?.settings}
             bracketLinkProps={props.bracketLinkProps}
             hashTagProps={props.hashTagProps}
             codeProps={props.codeProps}
