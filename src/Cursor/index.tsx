@@ -19,10 +19,11 @@ export const Cursor: React.FC<Props> = (props) => {
   React.useEffect(() => {
     const editorRoot = rootRef.current && getRoot(rootRef.current);
     if (editorRoot) editorRoot.addEventListener('scroll', _handleOnEditorScroll);
+
     return () => {
       if (editorRoot) editorRoot.removeEventListener('scroll', _handleOnEditorScroll);
     };
-  });
+  }, [_handleOnEditorScroll]);
 
   React.useEffect(() => {
     if (!rootRef.current) return;
