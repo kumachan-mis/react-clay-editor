@@ -201,15 +201,21 @@ export function positionToCursorCoordinate(
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const currentLine = lines[lineIndex];
     let [charIndex, minDistance] = [lines[lineIndex].length, Number.MAX_VALUE];
-    for (let index = 0; index <= currentLine.length; index++) {
+    for (let index = 0; index < currentLine.length; index++) {
       const charElement = getTextCharElementAt(lineIndex, index, element);
       const charRect = charElement?.firstElementChild?.getBoundingClientRect();
       if (!charRect) continue;
-      const [dx, dy] = [charRect.left - x, (charRect.top + charRect.bottom) / 2 - y];
-      const distance = dx * dx + lineElement.clientWidth * dy * dy;
-      if (distance < minDistance) {
-        minDistance = distance;
+      const [ldx, ldy] = [charRect.left - x, (charRect.top + charRect.bottom) / 2 - y];
+      const leftDistance = ldx * ldx + lineElement.clientWidth * ldy * ldy;
+      if (leftDistance <= minDistance) {
+        minDistance = leftDistance;
         charIndex = index;
+      }
+      const [rdx, rdy] = [charRect.right - x, (charRect.top + charRect.bottom) / 2 - y];
+      const rightDistance = rdx * rdx + lineElement.clientWidth * rdy * rdy;
+      if (rightDistance <= minDistance) {
+        minDistance = rightDistance;
+        charIndex = index + 1;
       }
     }
     return { lineIndex, charIndex };
