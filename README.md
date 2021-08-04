@@ -255,6 +255,7 @@ interface BracketLinkProps {
 
 ```ts
 const defaultLinkStyle: React.CSSProperties = {
+  textDecorationLine: 'none',
   color: '#5E8AF7',
   cursor: 'text',
 };
