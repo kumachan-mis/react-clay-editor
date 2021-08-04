@@ -87,9 +87,8 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
         return [text, resetSuggestion(state)];
       }
       const tagName = Object.keys(props.taggedLinkPropsMap).find((tagName) => {
-        const pattern = `[${tagName}`;
-        const [start, end] = [Math.max(charIndex - pattern.length, 0), charIndex - 1];
-        const target = currentLine.substring(start, end);
+        const pattern = `[${tagName}:`;
+        const target = currentLine.substring(Math.max(charIndex - pattern.length, 0), charIndex);
         return target == pattern;
       });
       const taggedLinkProps = tagName ? props.taggedLinkPropsMap[tagName] : undefined;
@@ -109,12 +108,12 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
       const header = currentLine.substring(0, charIndex - 1);
       switch (props.syntax) {
         case 'bracket':
-          if (![']', undefined].includes(currentLine[charIndex]) || !['[*', '[**', '[***'].includes(header)) {
+          if (!/^.*\[\*{1,3}$/.test(header) || ![']', undefined].includes(currentLine[charIndex])) {
             return [text, resetSuggestion(state)];
           }
           return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
         case 'markdown':
-          if (currentLine[charIndex] !== undefined || !['#', '##', '###'].includes(header)) {
+          if (!['#', '##', '###'].includes(header) || currentLine[charIndex] !== undefined) {
             return [text, resetSuggestion(state)];
           }
           return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
