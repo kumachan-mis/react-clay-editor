@@ -2,6 +2,7 @@ import { Props, State, EditAction } from '../types';
 import { EditorConstants } from '../constants';
 import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
 import { selectionToRange } from '../../Selection/utils';
+import { getTextCharElementAt } from '../../TextLines/utils';
 import { CursorCoordinate } from '../../Cursor/types';
 import { TextLinesConstants } from '../../TextLines/constants';
 
@@ -60,7 +61,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
   const currentLine = text.split('\n')[lineIndex];
   switch (currentLine[charIndex - 1]) {
     case '[': {
-      if (currentLine[charIndex] !== undefined && !'] \t\u3000'.includes(currentLine[charIndex])) {
+      if (currentLine[charIndex] !== undefined && !/[\]\s]/.test(currentLine[charIndex])) {
         return [text, resetSuggestion(state)];
       }
       const suggestions = props.bracketLinkProps?.suggestions;
@@ -71,7 +72,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
       return [text, { ...state, suggestionType: 'bracketLink', suggestions, suggestionIndex }];
     }
     case '#': {
-      if (currentLine[charIndex] !== undefined && !' \t\u3000'.includes(currentLine[charIndex])) {
+      if (currentLine[charIndex] !== undefined && !/[\]\s]/.test(currentLine[charIndex])) {
         return [text, resetSuggestion(state)];
       }
       const suggestions = props.hashTagProps?.suggestions;
@@ -83,7 +84,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
     }
     case ':': {
       if (!props.taggedLinkPropsMap) return [text, resetSuggestion(state)];
-      if (currentLine[charIndex] !== undefined && !'] \t\u3000'.includes(currentLine[charIndex])) {
+      if (currentLine[charIndex] !== undefined && !/[\]\s]/.test(currentLine[charIndex])) {
         return [text, resetSuggestion(state)];
       }
       const tagName = Object.keys(props.taggedLinkPropsMap).find((tagName) => {
@@ -113,7 +114,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
           }
           return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
         case 'markdown':
-          if (!['#', '##', '###'].includes(header) || currentLine[charIndex] !== undefined) {
+          if (!/^#{1,3}$/.test(header) || currentLine[charIndex] !== undefined) {
             return [text, resetSuggestion(state)];
           }
           return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
@@ -198,7 +199,20 @@ export function positionToCursorCoordinate(
   } else if (lineElement) {
     const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
-    return { lineIndex, charIndex: lines[lineIndex].length };
+    const currentLine = lines[lineIndex];
+    let [charIndex, minDistance] = [lines[lineIndex].length, Number.MAX_VALUE];
+    for (let index = 0; index <= currentLine.length; index++) {
+      const charElement = getTextCharElementAt(lineIndex, index, element);
+      const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+      if (!charRect) continue;
+      const [dx, dy] = [charRect.left - x, (charRect.top + charRect.bottom) / 2 - y];
+      const distance = dx * dx + lineElement.clientWidth * dy * dy;
+      if (distance < minDistance) {
+        minDistance = distance;
+        charIndex = index;
+      }
+    }
+    return { lineIndex, charIndex };
   } else if (lineGroupElement) {
     const groups = lineGroupElement.className.match(lineGroupClassNameRegex)?.groups as Groups;
     const fromLineIndex = Number.parseInt(groups['from'], 10);

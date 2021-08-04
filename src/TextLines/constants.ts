@@ -9,6 +9,7 @@ export const defaultDecorationSettings: DecorationSettings = {
 export const defaultLinkNameRegex = /[^[\]]+/;
 
 export const defaultLinkStyle: React.CSSProperties = {
+  textDecorationLine: 'none',
   color: '#5E8AF7',
   cursor: 'text',
 };
@@ -102,23 +103,21 @@ export const TextLinesConstants = {
   },
   regexes: {
     bracketSyntax: {
-      itemization: /^(?<indent>[ \t\u3000]*)(?<bullet>[ \t\u3000])(?<content>([^ \t\u3000].*)?)$/,
+      itemization: /^(?<indent>\s*)(?<bullet>\s)(?<content>(\S.*)?)$/,
       decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     },
     markdownSyntax: {
-      itemization: /^(?<indent>[ \t\u3000]*)(?<bullet>[*-])(?<content>([^ ].*)?)$/,
+      itemization: /^(?<indent>\s*)(?<bullet>[*-])(?<content>(.*)?)$/,
       heading: /^(?<heading>#+) (?<body>.+)$/,
-      bold: /^(?<left>.*?)\*(?<body>[^* \t\u3000](.*[^* \t\u3000])?)\*(?<right>.*)$/,
-      italic: /^(?<left>.*?)_(?<body>[^_ \t\u3000](.*[^_ \t\u3000])?)_(?<right>.*)$/,
+      bold: /^(?<left>.*?)\*(?<body>[^*\s](.*[^*\s])?)\*(?<right>.*)$/,
+      italic: /^(?<left>.*?)_(?<body>[^_\s](.*[^_\s])?)_(?<right>.*)$/,
     },
     common: {
-      blockCodeMeta: /^(?<indent>[ \t\u3000]*)(?<codeMeta>```)$/,
-      blockCodeLine: (indentDepth: number): RegExp =>
-        RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<codeLine>.*)$`),
-      blockFormulaMeta: /^(?<indent>[ \t\u3000]*)(?<formulaMeta>\$\$)$/,
-      blockFormulaLine: (indentDepth: number): RegExp =>
-        RegExp(`^(?<indent>[ \\t\\u3000]{${indentDepth}})(?<formulaLine>.*)$`),
-      quotation: /^(?<indent>[ \t\u3000]*)>(?<content>.*)$/,
+      blockCodeMeta: /^(?<indent>\s*)(?<codeMeta>```)$/,
+      blockCodeLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>\\s{${indentDepth}})(?<codeLine>.*)$`),
+      blockFormulaMeta: /^(?<indent>\s*)(?<formulaMeta>\$\$)$/,
+      blockFormulaLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>\\s{${indentDepth}})(?<formulaLine>.*)$`),
+      quotation: /^(?<indent>\s*)>(?<content>.*)$/,
       inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
       displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
       inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,
@@ -128,9 +127,9 @@ export const TextLinesConstants = {
         return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
       },
       bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-      hashTag: /^(?<left>.*?)(?<hashTag>#[^ \t\u3000]+)(?<right>.*)$/,
+      hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
       normal: /^(?<text>.+)$/,
     },
   },
-  wordRegex: /[^ !"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~\t\u3000]+/,
+  wordRegex: /[^\s!"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~]+/,
 };
