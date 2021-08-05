@@ -71,6 +71,7 @@ export interface State {
   suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
+  suggestionStart: number;
 }
 
 export type ShortcutCommand =

@@ -196,9 +196,7 @@ export const App: React.FC = () => {
           text={text}
           onChangeText={setText}
           syntax={syntax}
-          textProps={{
-            suggestions: ['React Realtime Markup Editor', 'Text Document Editor', 'Formatting Syntax', 'Real Time'],
-          }}
+          textProps={{ suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'] }}
           bracketLinkProps={{
             anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,

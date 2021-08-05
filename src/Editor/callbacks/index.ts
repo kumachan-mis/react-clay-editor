@@ -14,7 +14,14 @@ import {
   handleOnMoveTextTop,
   handleOnMoveTextBottom,
 } from './shortcutHandlers';
-import { insertText, showSuggestion, insertSuggestion, resetSuggestion, positionToCursorCoordinate } from './utils';
+import {
+  insertText,
+  showSuggestion,
+  showIMEBasedSuggestion,
+  insertSuggestion,
+  resetSuggestion,
+  positionToCursorCoordinate,
+} from './utils';
 
 import { Props, State } from '../types';
 import { coordinatesAreEqual } from '../../Cursor/utils';
@@ -132,7 +139,7 @@ export function handleOnKeyDown(
     }
     case 'Enter': {
       if (state.suggestionType != 'none') {
-        return insertSuggestion(text, state, state.suggestions[state.suggestionIndex]);
+        return insertSuggestion(text, state, state.suggestions[state.suggestionIndex], state.suggestionStart);
       }
       const [newText, newState] = insertText(text, state, '\n');
       if (!newState.cursorCoordinate) return [newText, newState];
@@ -258,12 +265,13 @@ export function handleOnTextCompositionStart(
 
 export function handleOnTextCompositionEnd(
   text: string,
+  props: Props,
   state: State,
   event: React.CompositionEvent<HTMLTextAreaElement>
 ): [string, State] {
   if (!state.cursorCoordinate || !state.isComposing) return [text, state];
   const [newText, newState] = insertText(text, state, event.data);
-  return [newText, { ...newState, textAreaValue: '', isComposing: false }];
+  return showIMEBasedSuggestion(newText, props, { ...newState, textAreaValue: '', isComposing: false }, event.data);
 }
 
 export function handleOnTextCut(
@@ -312,5 +320,5 @@ export function handleOnSuggectionMouseDown(
 
   const suggestion = event.currentTarget.textContent;
   if (!suggestion) return [text, state];
-  return insertSuggestion(text, state, suggestion);
+  return insertSuggestion(text, state, suggestion, state.suggestionStart);
 }
