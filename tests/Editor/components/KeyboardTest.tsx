@@ -29,6 +29,7 @@ export const defaultInitState: EditorState = {
   suggestionType: 'none',
   suggestions: [],
   suggestionIndex: -1,
+  suggestionStart: 0,
 };
 
 export const KeyboardTest: React.FC<Props> = ({ initText = '', initState = defaultInitState, ...props }) => {
@@ -76,7 +77,7 @@ const KeyboardTestBody: React.FC<BodyProps> = ({ initState, ...props }) => {
         onCopy={createCursorEventHandler(handleOnTextCopy)}
         onPaste={createCursorEventHandler(handleOnTextPaste)}
         onCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
-        onCompositionEnd={createCursorEventHandler(handleOnTextCompositionEnd)}
+        onCompositionEnd={createCursorEventHandlerWithProps(handleOnTextCompositionEnd)}
       />
     </>
   );
