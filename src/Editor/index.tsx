@@ -33,6 +33,7 @@ export const Editor: React.FC<Props> = (props) => {
     suggestionType: 'none',
     suggestions: [],
     suggestionIndex: -1,
+    suggestionStart: 0,
   });
   const rootRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -154,7 +155,7 @@ export const Editor: React.FC<Props> = (props) => {
             onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
             onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
             onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
-            onTextCompositionEnd={createCursorEventHandler(handleOnTextCompositionEnd)}
+            onTextCompositionEnd={createCursorEventHandlerWithProps(handleOnTextCompositionEnd)}
             onTextCut={createCursorEventHandler(handleOnTextCut)}
             onTextCopy={createCursorEventHandler(handleOnTextCopy)}
             onTextPaste={createCursorEventHandler(handleOnTextPaste)}
@@ -165,7 +166,7 @@ export const Editor: React.FC<Props> = (props) => {
             text={props.text}
             syntax={props.syntax}
             cursorCoordinate={state.cursorCoordinate}
-            decorationSettings={props.decorationProps?.settings}
+            decorationSettings={props.textProps?.decorationSettings}
             bracketLinkProps={props.bracketLinkProps}
             hashTagProps={props.hashTagProps}
             codeProps={props.codeProps}

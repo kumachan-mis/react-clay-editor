@@ -2,8 +2,8 @@ import { CursorCoordinate } from '../Cursor/types';
 import { TextSelection } from '../Selection/types';
 import { DecorationSettings } from '../TextLines/types';
 
-export interface DecorationProps {
-  settings?: DecorationSettings;
+export interface TextProps {
+  decorationSettings?: DecorationSettings;
   suggestions?: string[];
   initialSuggestionIndex?: number;
 }
@@ -44,7 +44,7 @@ export interface Props {
   text: string;
   onChangeText: (text: string) => void;
   syntax?: 'bracket' | 'markdown';
-  decorationProps?: DecorationProps;
+  textProps?: TextProps;
   bracketLinkProps?: BracketLinkProps;
   hashTagProps?: HashTagProps;
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
@@ -71,6 +71,7 @@ export interface State {
   suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
+  suggestionStart: number;
 }
 
 export type ShortcutCommand =
