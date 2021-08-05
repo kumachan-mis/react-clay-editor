@@ -196,7 +196,7 @@ export const App: React.FC = () => {
           text={text}
           onChangeText={setText}
           syntax={syntax}
-          decorationProps={{
+          textProps={{
             suggestions: ['React Realtime Markup Editor', 'Text Document Editor', 'Formatting Syntax', 'Real Time'],
           }}
           bracketLinkProps={{

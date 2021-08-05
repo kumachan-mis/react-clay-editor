@@ -1,7 +1,7 @@
 export { Editor } from './Editor';
 export type {
   Props as EditorProps,
-  DecorationProps,
+  TextProps,
   BracketLinkProps,
   HashTagProps,
   TaggedLinkProps,

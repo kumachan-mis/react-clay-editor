@@ -167,7 +167,7 @@ A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
 | -------------------- | ---------------------------------------- | ----------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `text`               | `string`                                 | requried          | -                                         | syntactic text in `Editor`<br>you will use this like<br>`text={this.state.text}`                                    |
 | `onChangeText`       | `(text: string) => void`                 | requried          | -                                         | callback function on `text` changed<br>you will use this like<br>`onChangeText={(text) => this.setState({ text })}` |
-| `decorationProps`    | `DecorationProps`                        | optional          | see [DecorationProps](#DecorationProps)   | settings of decorations<br>details: [DecorationProps](#DecorationProps)                                             |
+| `textProps`          | `TextProps`                              | optional          | see [TextProps](#TextProps)               | general settings of text<br>details: [TextProps](#TextProps)                                                        |
 | `bracketLinkProps`   | `BracketLinkProps`                       | optional          | see [BracketLinkProps](#BracketLinkProps) | settings of bracket links<br>details: [BracketLinkProps](#BracketLinkProps)                                         |
 | `hashTagProps`       | `HashTagProps`                           | optional          | see [HashTagProps](#HashTagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashTagProps)                                                 |
 | `taggedLinkPropsMap` | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
@@ -176,19 +176,21 @@ A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
 | `readonly`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
-### DecorationProps
+### TextProps
 
-settings of decorations
+general settings of text
 
 ```ts
-interface DecorationProps {
+interface TextProps {
   settings?: DecorationSettings;
+  suggestions?: string[];
+  initialSuggestionIndex?: number;
 }
 ```
 
-#### Decoration.settings: DecorationSettings
+#### TextProps.settings: DecorationSettings
 
-settings of decorations (optional)
+settings of text decoration (optional)
 
 ```ts
 interface DecorationSettings {

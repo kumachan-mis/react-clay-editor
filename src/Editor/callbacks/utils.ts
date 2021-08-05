@@ -100,26 +100,25 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
       return [text, { ...state, suggestionType: 'taggedLink', suggestions, suggestionIndex }];
     }
     case ' ': {
-      const suggestions = props.decorationProps?.suggestions;
-      const suggestionIndex = props.decorationProps?.initialSuggestionIndex || 0;
+      const suggestions = props.textProps?.suggestions;
+      const suggestionIndex = props.textProps?.initialSuggestionIndex || 0;
       if (!suggestions || suggestions.length == 0 || props.hashTagProps?.disabled) {
         return [text, resetSuggestion(state)];
       }
 
       const header = currentLine.substring(0, charIndex - 1);
       switch (props.syntax) {
-        case 'bracket':
-          if (!/^.*\[\*{1,3}$/.test(header) || ![']', undefined].includes(currentLine[charIndex])) {
-            return [text, resetSuggestion(state)];
-          }
-          return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
         case 'markdown':
           if (!/^#{1,3}$/.test(header) || currentLine[charIndex] !== undefined) {
             return [text, resetSuggestion(state)];
           }
           return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
+        case 'bracket':
         default:
-          return [text, resetSuggestion(state)];
+          if (!/^.*\[\*{1,3}$/.test(header) || ![']', undefined].includes(currentLine[charIndex])) {
+            return [text, resetSuggestion(state)];
+          }
+          return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex }];
       }
     }
     default:
