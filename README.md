@@ -188,6 +188,13 @@ interface TextProps {
 }
 ```
 
+- settings: settings of the text decoration  
+  see below for the details
+- suggestions: input suggestions of normal texts  
+  default: `[]`
+- initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
+  default: `0`
+
 #### TextProps.settings: DecorationSettings
 
 settings of text decoration (optional)
