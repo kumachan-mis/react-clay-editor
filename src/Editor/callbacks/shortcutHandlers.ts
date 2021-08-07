@@ -58,7 +58,8 @@ export function handleOnForwardDelete(
 
   const current = state.cursorCoordinate;
   const forward = moveCursor(text, current, 1);
-  return insertText(text, { ...state, textSelection: { fixed: current, free: forward } }, '');
+  const [newText, newState] = insertText(text, { ...state, textSelection: { fixed: current, free: forward } }, '');
+  return [newText, resetSuggestion(newState)];
 }
 
 export function handleOnBackwardDelete(
@@ -77,10 +78,14 @@ export function handleOnBackwardDelete(
   switch (neighborText) {
     case '[]':
     case '{}':
-    case '()':
-      return insertText(text, { ...state, textSelection: { fixed: backward, free: forward } }, '');
-    default:
-      return insertText(text, { ...state, textSelection: { fixed: backward, free: current } }, '');
+    case '()': {
+      const [newText, newState] = insertText(text, { ...state, textSelection: { fixed: backward, free: forward } }, '');
+      return [newText, resetSuggestion(newState)];
+    }
+    default: {
+      const [newText, newState] = insertText(text, { ...state, textSelection: { fixed: backward, free: current } }, '');
+      return [newText, resetSuggestion(newState)];
+    }
   }
 }
 
@@ -192,7 +197,7 @@ export function handleOnMoveUp(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveDown(
@@ -216,7 +221,7 @@ export function handleOnMoveDown(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveLeft(
@@ -233,7 +238,7 @@ export function handleOnMoveLeft(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveRight(
@@ -250,7 +255,7 @@ export function handleOnMoveRight(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveWordTop(
@@ -281,7 +286,7 @@ export function handleOnMoveWordTop(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveWordBottom(
@@ -312,7 +317,7 @@ export function handleOnMoveWordBottom(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveLineTop(
@@ -329,7 +334,7 @@ export function handleOnMoveLineTop(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveLineBottom(
@@ -350,7 +355,7 @@ export function handleOnMoveLineBottom(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveTextTop(
@@ -367,7 +372,7 @@ export function handleOnMoveTextTop(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }
 
 export function handleOnMoveTextBottom(
@@ -388,5 +393,5 @@ export function handleOnMoveTextBottom(
     const free = { ...cursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
 }

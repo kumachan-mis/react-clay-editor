@@ -159,12 +159,10 @@ export function handleOnKeyDown(
       return [newText, newState];
     }
     case 'Backspace': {
-      const [newText, newState] = handleOnBackwardDelete(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnBackwardDelete(text, state, event);
     }
     case 'Delete': {
-      const [newText, newState] = handleOnForwardDelete(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnForwardDelete(text, state, event);
     }
     case 'ArrowUp': {
       if (state.suggestions.length > 0) {
@@ -193,8 +191,7 @@ export function handleOnKeyDown(
       if ((!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) && !event.metaKey) {
         return handleOnMoveWordTop(text, state, event);
       }
-      const [newText, newState] = handleOnMoveLeft(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnMoveLeft(text, state, event);
     }
     case 'ArrowRight': {
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
@@ -203,8 +200,7 @@ export function handleOnKeyDown(
       if ((!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) && !event.metaKey) {
         return handleOnMoveWordBottom(text, state, event);
       }
-      const [newText, newState] = handleOnMoveRight(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnMoveRight(text, state, event);
     }
     case 'Home': {
       if ((!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) && !event.altKey) {
