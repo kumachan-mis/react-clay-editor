@@ -2,6 +2,7 @@ import { Props, State, EditAction } from '../types';
 import { EditorConstants } from '../constants';
 import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
 import { selectionToRange } from '../../Selection/utils';
+import { getTextCharElementAt } from '../../TextLines/utils';
 import { CursorCoordinate } from '../../Cursor/types';
 import { TextLinesConstants } from '../../TextLines/constants';
 
@@ -47,7 +48,7 @@ function addEditActions(state: State, actions: EditAction[]): State {
   const { editActionHistory, historyHead } = state;
   const concatedHistory = [...editActionHistory.slice(0, historyHead + 1), ...validActions];
   const newHistory = concatedHistory.slice(
-    Math.max(0, concatedHistory.length - EditorConstants.historyMaxLength),
+    Math.max(0, concatedHistory.length - EditorConstants.history.maxLength),
     concatedHistory.length
   );
   return { ...state, editActionHistory: newHistory, historyHead: newHistory.length - 1 };
@@ -56,55 +57,125 @@ function addEditActions(state: State, actions: EditAction[]): State {
 export function showSuggestion(text: string, props: Props, state: State): [string, State] {
   if (!state.cursorCoordinate) return [text, resetSuggestion(state)];
 
+  const constants = EditorConstants.suggestion;
   const { lineIndex, charIndex } = state.cursorCoordinate;
   const currentLine = text.split('\n')[lineIndex];
-  switch (currentLine[charIndex - 1]) {
-    case '[': {
-      const suggestions = props.bracketLinkProps?.suggestions;
-      const suggestionIndex = props.bracketLinkProps?.initialSuggestionIndex || 0;
-      if (!suggestions || suggestions.length == 0 || props.bracketLinkProps?.disabled) {
-        return [text, resetSuggestion(state)];
-      }
-      return [text, { ...state, suggestionType: 'bracketLink', suggestions, suggestionIndex }];
-    }
-    case '#': {
-      const suggestions = props.hashTagProps?.suggestions;
-      const suggestionIndex = props.hashTagProps?.initialSuggestionIndex || 0;
-      if (!suggestions || suggestions.length == 0 || props.hashTagProps?.disabled) {
-        return [text, resetSuggestion(state)];
-      }
-      return [text, { ...state, suggestionType: 'hashTag', suggestions, suggestionIndex }];
-    }
-    case ':': {
-      if (!props.taggedLinkPropsMap) return [text, resetSuggestion(state)];
+  const [facingText, trailingText] = [currentLine.substring(0, charIndex), currentLine.substring(charIndex)];
 
-      const tagName = Object.keys(props.taggedLinkPropsMap).find((tagName) => {
-        const pattern = `[${tagName}:`;
-        const [start, end] = [Math.max(charIndex - pattern.length, 0), charIndex];
-        const target = currentLine.substring(start, end);
-        return target == pattern;
-      });
-      const taggedLinkProps = tagName ? props.taggedLinkPropsMap[tagName] : undefined;
-
-      const suggestions = taggedLinkProps?.suggestions;
-      const suggestionIndex = taggedLinkProps?.initialSuggestionIndex || 0;
-      if (!suggestions || suggestions.length == 0) return [text, resetSuggestion(state)];
-      return [text, { ...state, suggestionType: 'taggedLink', suggestions, suggestionIndex }];
-    }
-    default:
-      return [text, resetSuggestion(state)];
+  interface RegexObject {
+    facingRegex: RegExp;
+    trailingRegex: RegExp;
   }
+
+  interface SuggestionConfig {
+    suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+    suggestions?: string[];
+    initialSuggestionIndex?: number;
+    getSuggestionStart?: (text: string | undefined) => number;
+    disabled?: boolean;
+  }
+
+  function typedSuggestion(state: State, regexes: RegexObject, config: SuggestionConfig): State | undefined {
+    if (!regexes.facingRegex.test(facingText) || !regexes.trailingRegex.test(trailingText)) return undefined;
+
+    const allSuggestions = config.suggestions;
+    if (!allSuggestions || allSuggestions.length == 0 || config.disabled) return resetSuggestion(state);
+
+    const groups = facingText.match(regexes.facingRegex)?.groups as Record<string, string>;
+    const suggestions = allSuggestions.filter((suggestion) => suggestion.startsWith(groups.text || ''));
+    if (suggestions.length == 0) return resetSuggestion(state);
+
+    let suggestionIndex = config.initialSuggestionIndex;
+    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
+    const suggestionStart = config.getSuggestionStart?.(groups.text) || groups.text?.length || 0;
+    return { ...state, suggestionType: config.suggestionType, suggestions, suggestionIndex, suggestionStart };
+  }
+
+  switch (props.syntax) {
+    case 'markdown': {
+      const regexes: RegexObject = constants.heading;
+      const config: SuggestionConfig = { suggestionType: 'text', ...props.textProps };
+      const newState = typedSuggestion(state, regexes, config);
+      if (newState) return [text, newState];
+      break;
+    }
+    case 'bracket':
+    default: {
+      const regexes: RegexObject = constants.decoration;
+      const config: SuggestionConfig = { suggestionType: 'text', ...props.textProps };
+      const newState = typedSuggestion(state, regexes, config);
+      if (newState) return [text, newState];
+      break;
+    }
+  }
+
+  for (const tagName of Object.keys(props.taggedLinkPropsMap || {})) {
+    const regexes: RegexObject = {
+      facingRegex: constants.taggedLink.facingRegex(tagName),
+      trailingRegex: constants.taggedLink.trailingRegex,
+    };
+    const config: SuggestionConfig = {
+      suggestionType: 'taggedLink',
+      getSuggestionStart: (text) => (text === undefined ? 0 : text.length + 1),
+      ...props.taggedLinkPropsMap?.[tagName],
+    };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
+  }
+
+  {
+    const regexes: RegexObject = constants.bracketLink;
+    const config: SuggestionConfig = { suggestionType: 'bracketLink', ...props.bracketLinkProps };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
+  }
+
+  {
+    const regexes: RegexObject = constants.hashtag;
+    const config: SuggestionConfig = { suggestionType: 'hashTag', ...props.hashTagProps };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
+  }
+
+  {
+    const regexes: RegexObject = constants.text;
+    const config: SuggestionConfig = { suggestionType: 'text', ...props.textProps };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
+  }
+
+  return [text, resetSuggestion(state)];
 }
 
-export function insertSuggestion(text: string, state: State, suggestion: string): [string, State] {
+export function showIMEBasedSuggestion(
+  text: string,
+  props: Props,
+  state: State,
+  specifiedText: string
+): [string, State] {
+  const allSuggestions = props.textProps?.suggestions;
+  if (!allSuggestions || allSuggestions.length == 0) return [text, resetSuggestion(state)];
+
+  const suggestions = allSuggestions.filter((suggestion) => suggestion.startsWith(specifiedText));
+  if (suggestions.length == 0) return [text, resetSuggestion(state)];
+
+  let suggestionIndex = props.textProps?.initialSuggestionIndex;
+  if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
+  const suggestionStart = specifiedText.length;
+  return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex, suggestionStart }];
+}
+
+export function insertSuggestion(text: string, state: State, suggestion: string, start: number): [string, State] {
   const [newText, newState] = ((): [string, State] => {
     switch (state.suggestionType) {
       case 'bracketLink':
-        return insertText(text, state, suggestion);
+        return insertText(text, state, suggestion.substring(start));
       case 'hashTag':
-        return insertText(text, state, `${suggestion.replaceAll(' ', '_')} `);
+        return insertText(text, state, `${suggestion.replaceAll(' ', '_')} `.substring(start));
       case 'taggedLink':
-        return insertText(text, state, ` ${suggestion}`);
+        return insertText(text, state, ` ${suggestion}`.substring(start));
+      case 'text':
+        return insertText(text, state, suggestion.substring(start));
       case 'none':
         return [text, state];
     }
@@ -118,8 +189,6 @@ export function positionToCursorCoordinate(
   position: [number, number],
   element: HTMLElement
 ): CursorCoordinate | undefined {
-  type Groups = Record<string, string>;
-
   const [x, y] = position;
   const elements = document.elementsFromPoint(x, y);
 
@@ -142,7 +211,7 @@ export function positionToCursorCoordinate(
 
   const lines = text.split('\n');
   if (charElement) {
-    const groups = charElement.className.match(charClassNameRegex)?.groups as Groups;
+    const groups = charElement.className.match(charClassNameRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const charIndex = Number.parseInt(groups['charIndex'], 10);
     if (charIndex == lines[lineIndex].length) return { lineIndex, charIndex };
@@ -153,7 +222,7 @@ export function positionToCursorCoordinate(
       return { lineIndex, charIndex: charIndex + 1 };
     }
   } else if (charGroupElement) {
-    const groups = charGroupElement.className.match(charGroupClassNameRegex)?.groups as Groups;
+    const groups = charGroupElement.className.match(charGroupClassNameRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const fromCharIndex = Number.parseInt(groups['from'], 10);
     const toCharIndex = Number.parseInt(groups['to'], 10);
@@ -164,11 +233,30 @@ export function positionToCursorCoordinate(
       return { lineIndex, charIndex: toCharIndex };
     }
   } else if (lineElement) {
-    const groups = lineElement.className.match(lineClassNameRegex)?.groups as Groups;
+    const groups = lineElement.className.match(lineClassNameRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
-    return { lineIndex, charIndex: lines[lineIndex].length };
+    const currentLine = lines[lineIndex];
+    let [charIndex, minDistance] = [lines[lineIndex].length, Number.MAX_VALUE];
+    for (let index = 0; index < currentLine.length; index++) {
+      const charElement = getTextCharElementAt(lineIndex, index, element);
+      const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+      if (!charRect) continue;
+      const [ldx, ldy] = [charRect.left - x, (charRect.top + charRect.bottom) / 2 - y];
+      const leftDistance = ldx * ldx + lineElement.clientWidth * ldy * ldy;
+      if (leftDistance <= minDistance) {
+        minDistance = leftDistance;
+        charIndex = index;
+      }
+      const [rdx, rdy] = [charRect.right - x, (charRect.top + charRect.bottom) / 2 - y];
+      const rightDistance = rdx * rdx + lineElement.clientWidth * rdy * rdy;
+      if (rightDistance <= minDistance) {
+        minDistance = rightDistance;
+        charIndex = index + 1;
+      }
+    }
+    return { lineIndex, charIndex };
   } else if (lineGroupElement) {
-    const groups = lineGroupElement.className.match(lineGroupClassNameRegex)?.groups as Groups;
+    const groups = lineGroupElement.className.match(lineGroupClassNameRegex)?.groups as Record<string, string>;
     const fromLineIndex = Number.parseInt(groups['from'], 10);
     const toLineIndex = Number.parseInt(groups['to'], 10);
     const lineGroupRect = lineGroupElement.getBoundingClientRect();
@@ -185,7 +273,7 @@ export function positionToCursorCoordinate(
 }
 
 export function resetSuggestion(state: State): State {
-  return { ...state, suggestionType: 'none', suggestions: [], suggestionIndex: -1 };
+  return { ...state, suggestionType: 'none', suggestions: [], suggestionIndex: -1, suggestionStart: 0 };
 }
 
 export function resetTextSelection(state: State): State {
@@ -200,5 +288,6 @@ export function resetTextSelectionAndSuggestion(state: State): State {
     suggestionType: 'none',
     suggestions: [],
     suggestionIndex: -1,
+    suggestionStart: 0,
   };
 }

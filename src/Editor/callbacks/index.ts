@@ -14,7 +14,14 @@ import {
   handleOnMoveTextTop,
   handleOnMoveTextBottom,
 } from './shortcutHandlers';
-import { insertText, showSuggestion, insertSuggestion, resetSuggestion, positionToCursorCoordinate } from './utils';
+import {
+  insertText,
+  showSuggestion,
+  showIMEBasedSuggestion,
+  insertSuggestion,
+  resetSuggestion,
+  positionToCursorCoordinate,
+} from './utils';
 
 import { Props, State } from '../types';
 import { coordinatesAreEqual } from '../../Cursor/utils';
@@ -132,7 +139,7 @@ export function handleOnKeyDown(
     }
     case 'Enter': {
       if (state.suggestionType != 'none') {
-        return insertSuggestion(text, state, state.suggestions[state.suggestionIndex]);
+        return insertSuggestion(text, state, state.suggestions[state.suggestionIndex], state.suggestionStart);
       }
       const [newText, newState] = insertText(text, state, '\n');
       if (!newState.cursorCoordinate) return [newText, newState];
@@ -152,12 +159,10 @@ export function handleOnKeyDown(
       return [newText, newState];
     }
     case 'Backspace': {
-      const [newText, newState] = handleOnBackwardDelete(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnBackwardDelete(text, state, event);
     }
     case 'Delete': {
-      const [newText, newState] = handleOnForwardDelete(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnForwardDelete(text, state, event);
     }
     case 'ArrowUp': {
       if (state.suggestions.length > 0) {
@@ -186,8 +191,7 @@ export function handleOnKeyDown(
       if ((!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) && !event.metaKey) {
         return handleOnMoveWordTop(text, state, event);
       }
-      const [newText, newState] = handleOnMoveLeft(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnMoveLeft(text, state, event);
     }
     case 'ArrowRight': {
       if (isMacOS() && event.metaKey && !event.ctrlKey && !event.altKey) {
@@ -196,8 +200,7 @@ export function handleOnKeyDown(
       if ((!isMacOS() ? event.ctrlKey && !event.altKey : event.altKey && !event.ctrlKey) && !event.metaKey) {
         return handleOnMoveWordBottom(text, state, event);
       }
-      const [newText, newState] = handleOnMoveRight(text, state, event);
-      return showSuggestion(newText, props, newState);
+      return handleOnMoveRight(text, state, event);
     }
     case 'Home': {
       if ((!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) && !event.altKey) {
@@ -258,12 +261,13 @@ export function handleOnTextCompositionStart(
 
 export function handleOnTextCompositionEnd(
   text: string,
+  props: Props,
   state: State,
   event: React.CompositionEvent<HTMLTextAreaElement>
 ): [string, State] {
   if (!state.cursorCoordinate || !state.isComposing) return [text, state];
   const [newText, newState] = insertText(text, state, event.data);
-  return [newText, { ...newState, textAreaValue: '', isComposing: false }];
+  return showIMEBasedSuggestion(newText, props, { ...newState, textAreaValue: '', isComposing: false }, event.data);
 }
 
 export function handleOnTextCut(
@@ -312,5 +316,5 @@ export function handleOnSuggectionMouseDown(
 
   const suggestion = event.currentTarget.textContent;
   if (!suggestion) return [text, state];
-  return insertSuggestion(text, state, suggestion);
+  return insertSuggestion(text, state, suggestion, state.suggestionStart);
 }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { renderToString } from 'katex';
-import 'katex/dist/katex.min.css';
 import './katex.style.css';
 
 import { Props } from './types';

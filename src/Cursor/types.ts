@@ -3,19 +3,12 @@ export interface CursorCoordinate {
   charIndex: number;
 }
 
-export interface SuggestionListDecoration {
-  width: number;
-  maxHeight: number;
-  fontSize: number;
-}
-
 export interface Props {
   coordinate: CursorCoordinate | undefined;
   textAreaValue: string;
-  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
-  suggestionListDecoration?: SuggestionListDecoration;
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
@@ -55,10 +48,9 @@ export interface HiddenTextAreaProps {
 }
 
 export interface SuggestionListProps {
-  suggestionType: 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
-  suggestionListDecoration?: SuggestionListDecoration;
   position: Position;
   cursorSize: number;
   onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;

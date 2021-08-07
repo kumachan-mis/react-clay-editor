@@ -8,12 +8,14 @@ Inspired by [Scrapbox](https://scrapbox.io/product)
 ### Installation
 
 ```sh
+npm install katex
 npm install react-realtime-markup-editor
 ```
 
 or
 
 ```sh
+yarn add katex
 yarn add react-realtime-markup-editor
 ```
 
@@ -21,6 +23,7 @@ yarn add react-realtime-markup-editor
 
 ```tsx
 import { Editor } from 'react-realtime-markup-editor';
+import 'katex/dist/katex.min.css';
 
 const App: React.FC = () => {
   const [text, setText] = React.useState('');
@@ -187,7 +190,7 @@ A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
 | -------------------- | ---------------------------------------- | ----------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `text`               | `string`                                 | requried          | -                                         | syntactic text in `Editor`<br>you will use this like<br>`text={this.state.text}`                                    |
 | `onChangeText`       | `(text: string) => void`                 | requried          | -                                         | callback function on `text` changed<br>you will use this like<br>`onChangeText={(text) => this.setState({ text })}` |
-| `decoration`         | `Decoration`                             | optional          | see [Decoration](#Decoration)             | settings of decorations<br>details: [Decoration](#Decoration)                                                       |
+| `textProps`          | `TextProps`                              | optional          | see [TextProps](#TextProps)               | general settings of text<br>details: [TextProps](#TextProps)                                                        |
 | `bracketLinkProps`   | `BracketLinkProps`                       | optional          | see [BracketLinkProps](#BracketLinkProps) | settings of bracket links<br>details: [BracketLinkProps](#BracketLinkProps)                                         |
 | `hashTagProps`       | `HashTagProps`                           | optional          | see [HashTagProps](#HashTagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashTagProps)                                                 |
 | `taggedLinkPropsMap` | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
@@ -196,27 +199,35 @@ A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
 | `readonly`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
-### Decoration
+### TextProps
 
-settings of decorations
+general settings of text
 
 ```ts
-interface Decoration {
-  text?: TextDecoration;
-  suggestionList?: SuggestionListDecoration;
+interface TextProps {
+  settings?: DecorationSettings;
+  suggestions?: string[];
+  initialSuggestionIndex?: number;
 }
 ```
 
-#### Decoration.text: TextDecoration
+- settings: settings of the text decoration  
+  see below for the details
+- suggestions: input suggestions of normal texts  
+  default: `[]`
+- initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
+  default: `0`
 
-settings of text decorations (optional)
+#### TextProps.settings: DecorationSettings
+
+settings of text decoration (optional)
 
 ```ts
-interface TextDecoration {
+interface DecorationSettings {
   fontSizes: {
-    level1: number;
-    level2: number;
-    level3: number;
+    normal: number;
+    larger: number;
+    largest: number;
   };
 }
 ```
@@ -224,63 +235,28 @@ interface TextDecoration {
 **Attributes**
 
 - fontSizes
-  - level1: font size \[px\] of normal-sized text
-  - level2: font size \[px\] of larger-sized text  
+  - normal: font size \[px\] of normal-sized text
+  - larger: font size \[px\] of larger-sized text  
     c.f. `[** larger]`
-  - level3: font size \[px\] of largest-sized text  
+  - largest: font size \[px\] of largest-sized text  
     c.f. `[*** largest]`
 
 **Default**
 
 ```ts
-const defaultTextDecoration: TextDecoration = {
+const defaultDecorationSettings: DecorationSettings = {
   fontSizes: {
-    level1: 16,
-    level2: 20,
-    level3: 24,
+    normal: 16,
+    larger: 20,
+    largest: 24,
   },
 };
 ```
 
-you can import `defaultTextDecoration` by adding
+you can import `defaultDecorationSettings` by adding
 
 ```ts
-import { defaultTextDecoration } from 'react-realtime-markup-editor';
-```
-
-#### Decoration.suggestionList: SuggestionListDecoration
-
-settings of link suggestion list (optional)
-
-```ts
-interface SuggestionListDecoration {
-  width: number;
-  maxHeight: number;
-  fontSize: number;
-}
-```
-
-**Attributes**
-
-- width: width \[px\] of suggestion list
-- maxHeight: maximum height \[px\] of suggestion list  
-  If many suggestions are provided, the list will be scrollable
-- fontSize: font size \[px\] of suggestions
-
-**Default**
-
-```ts
-const defaultSuggestionListDecoration: SuggestionListDecoration = {
-  width: 250,
-  maxHeight: 100,
-  fontSize: 14,
-};
-```
-
-you can import `defaultSuggestionListDecoration` by adding
-
-```ts
-import { defaultSuggestionListDecoration } from 'react-realtime-markup-editor';
+import { defaultDecorationSettings } from 'react-realtime-markup-editor';
 ```
 
 ### BracketLinkProps
@@ -311,6 +287,7 @@ interface BracketLinkProps {
 
 ```ts
 const defaultLinkStyle: React.CSSProperties = {
+  textDecorationLine: 'none',
   color: '#5E8AF7',
   cursor: 'text',
 };
