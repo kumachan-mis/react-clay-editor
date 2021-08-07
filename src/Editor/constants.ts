@@ -9,26 +9,26 @@ export const EditorConstants = {
   },
   suggestion: {
     bracketLink: {
-      facingRegex: /^.*\[(?<linkName>[^[\]]*)$/,
+      facingRegex: /^.*\[(?<text>[^[\]]*)$/,
       trailingRegex: /^([\]\s].*)?$/,
     },
     hashtag: {
-      facingRegex: /^.*#(?<hashTagName>\S*)$/,
+      facingRegex: /^.*#(?<text>\S*)$/,
       trailingRegex: /^(\s.*)?$/,
     },
     taggedLink: {
       facingRegex: (tagName: string): RegExp => {
         const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        return RegExp(`^.*\\[(?<tag>${tag}:)( (?<linkName>[^[\\]]*))?$`);
+        return RegExp(`^.*\\[(?<tag>${tag}:)( (?<text>[^[\\]]*))?$`);
       },
       trailingRegex: /^([\]\s].*)?$/,
     },
     decoration: {
-      facingRegex: /^.*\[\*{1,3} (?<body>[^[\]]*)$/,
+      facingRegex: /^.*\[\*{1,3} (?<text>[^[\]]*)$/,
       trailingRegex: /^([\]\s].*)?$/,
     },
     heading: {
-      facingRegex: /^#{1,3} (?<body>[^[\]]*)$/,
+      facingRegex: /^#{1,3} (?<text>[^[\]]*)$/,
       trailingRegex: /^([\]\s].*)?$/,
     },
     text: {
