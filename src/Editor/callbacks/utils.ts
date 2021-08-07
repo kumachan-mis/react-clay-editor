@@ -62,102 +62,86 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
   const currentLine = text.split('\n')[lineIndex];
   const [facingText, trailingText] = [currentLine.substring(0, charIndex), currentLine.substring(charIndex)];
 
-  if (
-    (props.syntax === undefined || props.syntax == 'bracket') &&
-    constants.decoration.facingRegex.test(facingText) &&
-    constants.decoration.trailingRegex.test(trailingText)
-  ) {
-    const allSuggestions = props.textProps?.suggestions;
-    if (!allSuggestions || allSuggestions.length == 0) return [text, resetSuggestion(state)];
-
-    const groups = facingText.match(constants.decoration.facingRegex)?.groups as Record<string, string>;
-    const suggestions = allSuggestions.filter((sugg) => sugg.startsWith(groups.body) && sugg != groups.body);
-    if (suggestions.length == 0) return [text, resetSuggestion(state)];
-
-    let suggestionIndex = props.textProps?.initialSuggestionIndex;
-    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
-    const suggestionStart = groups.body.length;
-    return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex, suggestionStart }];
-  } else if (
-    props.syntax == 'markdown' &&
-    constants.heading.facingRegex.test(facingText) &&
-    constants.heading.trailingRegex.test(trailingText)
-  ) {
-    const allSuggestions = props.textProps?.suggestions;
-    if (!allSuggestions || allSuggestions.length == 0) return [text, resetSuggestion(state)];
-
-    const groups = facingText.match(constants.heading.facingRegex)?.groups as Record<string, string>;
-    const suggestions = allSuggestions.filter((sugg) => sugg.startsWith(groups.body) && sugg != groups.body);
-    if (suggestions.length == 0) return [text, resetSuggestion(state)];
-
-    let suggestionIndex = props.textProps?.initialSuggestionIndex;
-    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
-    const suggestionStart = groups.body.length;
-    return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex, suggestionStart }];
+  interface RegexObject {
+    facingRegex: RegExp;
+    trailingRegex: RegExp;
   }
 
-  const tagNames = Object.keys(props.taggedLinkPropsMap || {});
-  for (const tagName of tagNames) {
-    const facingRegex = constants.taggedLink.facingRegex(tagName);
-    if (!facingRegex.test(facingText) || !constants.taggedLink.trailingRegex.test(trailingText)) continue;
-
-    const allSuggestions = props.taggedLinkPropsMap?.[tagName]?.suggestions;
-    if (!allSuggestions || allSuggestions.length == 0) return [text, resetSuggestion(state)];
-
-    const groups = facingText.match(facingRegex)?.groups as Record<string, string>;
-    const linkName = groups.linkName || '';
-    const suggestions = allSuggestions.filter((sugg) => sugg.startsWith(linkName) && sugg != linkName);
-    if (suggestions.length == 0) return [text, resetSuggestion(state)];
-
-    let suggestionIndex = props.taggedLinkPropsMap?.[tagName]?.initialSuggestionIndex;
-    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
-    const suggestionStart = groups.linkName === undefined ? 0 : groups.linkName.length + 1;
-    return [text, { ...state, suggestionType: 'taggedLink', suggestions, suggestionIndex, suggestionStart }];
+  interface SuggestionConfig {
+    suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+    suggestions?: string[];
+    initialSuggestionIndex?: number;
+    getSuggestionStart?: (text: string | undefined) => number;
+    disabled?: boolean;
   }
 
-  if (constants.bracketLink.facingRegex.test(facingText) && constants.bracketLink.trailingRegex.test(trailingText)) {
-    const allSuggestions = props.bracketLinkProps?.suggestions;
-    if (!allSuggestions || allSuggestions.length == 0 || props.bracketLinkProps?.disabled) {
-      return [text, resetSuggestion(state)];
+  function typedSuggestion(state: State, regexes: RegexObject, config: SuggestionConfig): State | undefined {
+    if (!regexes.facingRegex.test(facingText) || !regexes.trailingRegex.test(trailingText)) return undefined;
+
+    const allSuggestions = config.suggestions;
+    if (!allSuggestions || allSuggestions.length == 0 || config.disabled) return resetSuggestion(state);
+
+    const groups = facingText.match(regexes.facingRegex)?.groups as Record<string, string>;
+    const suggestions = allSuggestions.filter((suggestion) => suggestion.startsWith(groups.text || ''));
+    if (suggestions.length == 0) return resetSuggestion(state);
+
+    let suggestionIndex = config.initialSuggestionIndex;
+    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
+    const suggestionStart = config.getSuggestionStart?.(groups.text) || groups.text?.length || 0;
+    return { ...state, suggestionType: config.suggestionType, suggestions, suggestionIndex, suggestionStart };
+  }
+
+  switch (props.syntax) {
+    case 'markdown': {
+      const regexes: RegexObject = constants.heading;
+      const config: SuggestionConfig = { suggestionType: 'text', ...props.textProps };
+      const newState = typedSuggestion(state, regexes, config);
+      if (newState) return [text, newState];
+      break;
     }
-    const groups = facingText.match(constants.bracketLink.facingRegex)?.groups as Record<string, string>;
-    const suggestions = allSuggestions.filter((sugg) => sugg.startsWith(groups.linkName) && sugg != groups.linkName);
-    if (suggestions.length == 0) return [text, resetSuggestion(state)];
-
-    let suggestionIndex = props.bracketLinkProps?.initialSuggestionIndex;
-    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
-    const suggestionStart = groups.linkName.length;
-    return [text, { ...state, suggestionType: 'bracketLink', suggestions, suggestionIndex, suggestionStart }];
-  }
-
-  if (constants.hashtag.facingRegex.test(facingText) && constants.hashtag.trailingRegex.test(trailingText)) {
-    const allSuggestions = props.hashTagProps?.suggestions;
-    if (!allSuggestions || allSuggestions.length == 0 || props.hashTagProps?.disabled) {
-      return [text, resetSuggestion(state)];
+    case 'bracket':
+    default: {
+      const regexes: RegexObject = constants.decoration;
+      const config: SuggestionConfig = { suggestionType: 'text', ...props.textProps };
+      const newState = typedSuggestion(state, regexes, config);
+      if (newState) return [text, newState];
+      break;
     }
-    const groups = facingText.match(constants.hashtag.facingRegex)?.groups as Record<string, string>;
-    const hashTagName = groups.hashTagName;
-    const suggestions = allSuggestions.filter((sugg) => sugg.startsWith(hashTagName) && sugg != hashTagName);
-    if (suggestions.length == 0) return [text, resetSuggestion(state)];
-
-    let suggestionIndex = props.hashTagProps?.initialSuggestionIndex;
-    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
-    const suggestionStart = groups.hashTagName.length;
-    return [text, { ...state, suggestionType: 'hashTag', suggestions, suggestionIndex, suggestionStart }];
   }
 
-  if (constants.text.facingRegex.test(facingText) && constants.text.trailingRegex.test(trailingText)) {
-    const allSuggestions = props.textProps?.suggestions;
-    if (!allSuggestions || allSuggestions.length == 0) return [text, resetSuggestion(state)];
+  for (const tagName of Object.keys(props.taggedLinkPropsMap || {})) {
+    const regexes: RegexObject = {
+      facingRegex: constants.taggedLink.facingRegex(tagName),
+      trailingRegex: constants.taggedLink.trailingRegex,
+    };
+    const config: SuggestionConfig = {
+      suggestionType: 'taggedLink',
+      getSuggestionStart: (text) => (text === undefined ? 0 : text.length + 1),
+      ...props.taggedLinkPropsMap?.[tagName],
+    };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
+  }
 
-    const groups = facingText.match(constants.text.facingRegex)?.groups as Record<string, string>;
-    const suggestions = allSuggestions.filter((sugg) => sugg.startsWith(groups.text) && sugg != groups.text);
-    if (suggestions.length == 0) return [text, resetSuggestion(state)];
+  {
+    const regexes: RegexObject = constants.bracketLink;
+    const config: SuggestionConfig = { suggestionType: 'bracketLink', ...props.bracketLinkProps };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
+  }
 
-    let suggestionIndex = props.textProps?.initialSuggestionIndex;
-    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
-    const suggestionStart = groups.text.length;
-    return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex, suggestionStart }];
+  {
+    const regexes: RegexObject = constants.hashtag;
+    const config: SuggestionConfig = { suggestionType: 'hashTag', ...props.hashTagProps };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
+  }
+
+  {
+    const regexes: RegexObject = constants.text;
+    const config: SuggestionConfig = { suggestionType: 'text', ...props.textProps };
+    const newState = typedSuggestion(state, regexes, config);
+    if (newState) return [text, newState];
   }
 
   return [text, resetSuggestion(state)];
@@ -172,7 +156,7 @@ export function showIMEBasedSuggestion(
   const allSuggestions = props.textProps?.suggestions;
   if (!allSuggestions || allSuggestions.length == 0) return [text, resetSuggestion(state)];
 
-  const suggestions = allSuggestions.filter((sugg) => sugg.startsWith(specifiedText) && sugg != specifiedText);
+  const suggestions = allSuggestions.filter((suggestion) => suggestion.startsWith(specifiedText));
   if (suggestions.length == 0) return [text, resetSuggestion(state)];
 
   let suggestionIndex = props.textProps?.initialSuggestionIndex;
