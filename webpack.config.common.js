@@ -32,19 +32,22 @@ module.exports = {
           },
           {
             loader: 'css-loader',
-            options: {
-              modules: {
-                compileType: 'module',
-                localIdentName: '[path][name]__[local]__[hash:base64:5]',
-              },
-            },
+            options: { modules: true },
           },
         ],
       },
       {
         test: /\.css$/,
         include: /katex/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: { modules: false },
+          },
+        ],
       },
     ],
   },
