@@ -1,4 +1,4 @@
-import { unittest, BaseTestCase } from '../utils/unit';
+import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
 
 import { cursorCoordinateToTextIndex } from '../../src/Cursor/utils';
 import { CursorCoordinate } from '../../src/Cursor/types';
@@ -10,7 +10,7 @@ interface TestCase extends BaseTestCase {
   expectedIndex: number;
 }
 
-unittest<TestCase>('cursorCoordinateToTextIndex', 'Cursor', 'cursorCoordinateToTextIndex', (testCase) => {
+fixtureTest<TestCase>('cursorCoordinateToTextIndex', 'Cursor', 'cursorCoordinateToTextIndex', (testCase) => {
   const actualIndex = cursorCoordinateToTextIndex(testCase.inputLines.join('\n'), testCase.inputCursorCoordinate);
   expect(actualIndex).toEqual(testCase.expectedIndex);
 });

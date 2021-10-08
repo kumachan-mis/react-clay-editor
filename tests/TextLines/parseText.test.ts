@@ -1,4 +1,4 @@
-import { unittest, BaseTestCase } from '../utils/unit';
+import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
 
 import { defaultDecorationSettings } from '../../src/TextLines/constants';
 import { parseText } from '../../src/TextLines/parser';
@@ -10,7 +10,7 @@ interface TestCase extends BaseTestCase {
   expectedNodes: Node[];
 }
 
-unittest<TestCase>('parseText', 'TextLines', 'parseText', (testCase) => {
+fixtureTest<TestCase>('parseText', 'TextLines', 'parseText', (testCase) => {
   const options: ParsingOptions = {
     decorationSettings: defaultDecorationSettings,
     disabledMap: { bracketLink: false, hashTag: false, code: false, formula: false },

@@ -1,4 +1,4 @@
-import { unittest, BaseTestCase } from '../utils/unit';
+import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
 
 import { getLineSelection } from '../../src/Selection/utils';
 import { TextSelection } from '../../src/Selection/types';
@@ -11,7 +11,7 @@ interface TestCase extends BaseTestCase {
   expectedSelection: TextSelection | undefined;
 }
 
-unittest<TestCase>('getLineSelection', 'Selection', 'getLineSelection', (testCase) => {
+fixtureTest<TestCase>('getLineSelection', 'Selection', 'getLineSelection', (testCase) => {
   const actualCursorCoordinate = getLineSelection(testCase.inputLines.join('\n'), testCase.inputCursorCoordinate);
   expect(actualCursorCoordinate).toEqual(testCase.expectedSelection);
 });
