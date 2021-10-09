@@ -57,7 +57,7 @@ export const CursorConstants = {
     },
     item: {
       className: styles.suggestionItem,
-      selectId: (index: number): string => `react-realtime-markup-editor__suggestion-item-${index}`,
+      selectId: (index: number): string => `suggestion-item-${index}`,
     },
   },
 };
