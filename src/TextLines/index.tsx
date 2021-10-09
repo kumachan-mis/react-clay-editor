@@ -125,7 +125,7 @@ const Node: React.FC<NodeProps> = ({
             contentLength={code.length}
             spanProps={{ className }}
           >
-            <code {...codeElementProps}>
+            <code {...codeElementProps} className={className}>
               {[...code].map((char, index) => (
                 <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
                   {char}

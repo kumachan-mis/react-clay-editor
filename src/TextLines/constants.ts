@@ -1,5 +1,6 @@
 import { Decoration } from './parser/types';
 import styles from './style.css';
+import { mergeClassNames } from './utils';
 
 export const defaultLinkNameRegex = /[^[\]]+/;
 
@@ -19,7 +20,8 @@ export const TextLinesConstants = {
   },
   decoration: {
     className: (decoration: Decoration): string => {
-      let ret = `editor-text-decoration-${decoration.fontlevel}`;
+      let ret = '';
+      if (decoration.fontlevel != 'normal') ret = `editor-text-decoration-${decoration.fontlevel}`;
       if (decoration.bold) ret += ' editor-text-decoration-bold';
       if (decoration.italic) ret += ' editor-text-decoration-italic';
       if (decoration.underline) ret += ' editor-text-decoration-underline';
@@ -43,7 +45,7 @@ export const TextLinesConstants = {
     },
   },
   line: {
-    className: styles.line,
+    className: mergeClassNames(styles.line, 'editor-text-decoration-normal'),
     selectId: (lineIndex: number): string => `line-L${lineIndex}`,
     selectIdRegex: RegExp('line-L(?<lineIndex>\\d+)'),
     indent: {
