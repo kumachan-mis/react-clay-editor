@@ -58,10 +58,10 @@
 }
 
 :global(.editor-text-decoration-underline) {
-  border-radius: 1px solid;
+  border-bottom: 1px solid;
 }
 
-:global(.editor-root) :global(.katex-display) {
+:global(.react-realtime-markup-editor) :global(.katex-display) {
   display: inline-block;
   margin: 0;
   text-align: inherit;

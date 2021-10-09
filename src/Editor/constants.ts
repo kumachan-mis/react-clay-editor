@@ -3,8 +3,8 @@ import './style.css';
 export const EditorConstants = {
   root: {
     className: 'react-realtime-markup-editor',
-    selectId: 'react-realtime-markup-editor',
-    selectIdRegex: /react-realtime-markup-editor/,
+    selectId: 'editor-root',
+    selectIdRegex: /editor-root/,
   },
   body: {
     className: 'editor-body',
