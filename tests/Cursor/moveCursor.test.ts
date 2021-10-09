@@ -1,18 +1,17 @@
-import { unittest } from '../utils/unit';
-import { BaseTestCase } from '../utils/unit/types';
+import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
 
 import { moveCursor } from '../../src/Cursor/utils';
 import { CursorCoordinate } from '../../src/Cursor/types';
 
 interface TestCase extends BaseTestCase {
-  testName: string;
+  name: string;
   inputLines: string[];
   inputCursorCoordinate: CursorCoordinate;
   inputAmount: number;
   expectedCursorCoordinate: CursorCoordinate;
 }
 
-unittest<TestCase>('function', 'Cursor', 'moveCursor', (_, testCase) => {
+fixtureTest<TestCase>('moveCursor', 'Cursor', 'moveCursor', (testCase) => {
   const actualCursorCoordinate = moveCursor(
     testCase.inputLines.join('\n'),
     testCase.inputCursorCoordinate,

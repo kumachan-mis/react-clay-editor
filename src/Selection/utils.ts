@@ -9,11 +9,7 @@ import { cursorCoordinateToTextIndex } from '../Cursor/utils';
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
   const editorRect = getEditor(element)?.getBoundingClientRect();
   if (!props.textSelection || !editorRect) {
-    return {
-      topDivPosition: undefined,
-      centerDivPosition: undefined,
-      bottomDivPosition: undefined,
-    };
+    return { topDivPosition: undefined, centerDivPosition: undefined, bottomDivPosition: undefined };
   }
 
   const { start, end } = selectionToRange(props.textSelection);
@@ -22,11 +18,7 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
   const startRect = startElement?.getBoundingClientRect();
   const endRect = endElement?.getBoundingClientRect();
   if (!startRect || !endRect) {
-    return {
-      topDivPosition: undefined,
-      centerDivPosition: undefined,
-      bottomDivPosition: undefined,
-    };
+    return { topDivPosition: undefined, centerDivPosition: undefined, bottomDivPosition: undefined };
   }
 
   const startRectCenter = startRect.bottom - (startRect.bottom - startRect.top) / 2;
