@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { Editor, defaultLinkStyle, defaultLinkOverriddenStyleOnHover } from '../../src';
+import { Editor } from '../../src';
+import styles from './style.css';
 
 // prettier-ignore
 const defaultBracketText =
@@ -170,15 +171,6 @@ combination of text decorations is not supported yet
 >Genius is one percent inspiration and ninety-nine percent perspiration
 >by Thomas Edison`;
 
-const style: React.CSSProperties = {
-  width: 'calc(48vw - 60px)',
-  height: 'calc(96vh - 60px)',
-  margin: '20px',
-  border: 'solid 1px',
-  padding: '10px',
-  display: 'inline-block',
-};
-
 export const App: React.FC = () => {
   const [bracketText, setBracketText] = React.useState(defaultBracketText);
   const [markdownText, setMarkdownText] = React.useState(defaultMarkdownText);
@@ -200,16 +192,12 @@ export const App: React.FC = () => {
           bracketLinkProps={{
             anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,
-              style: defaultLinkStyle,
-              overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
             }),
             suggestions: ['react-realtime-markup-editor'],
           }}
           hashTagProps={{
             anchorProps: (hashTagName) => ({
               href: `https://www.npmjs.com/package/${hashTagName}`,
-              style: defaultLinkStyle,
-              overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
             }),
             suggestions: ['react-realtime-markup-editor'],
           }}
@@ -217,30 +205,19 @@ export const App: React.FC = () => {
             github: {
               linkNameRegex: /@[^[\]]+\/[^[\]]+/,
               anchorProps: (linkName) => ({
+                className: styles.github,
                 href: `https://github.com/${linkName.substring(1)}`,
-                style: { ...defaultLinkStyle, color: '#595f6E', borderBottom: 'solid 1px' },
-                overriddenStyleOnHover: {
-                  ...defaultLinkOverriddenStyleOnHover,
-                  color: '#08090B',
-                  fontWeight: 500,
-                },
               }),
               suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
             },
             npm: {
               anchorProps: (linkName) => ({
+                className: styles.npm,
                 href: `https://www.npmjs.com/package/${linkName}`,
-                style: { ...defaultLinkStyle, color: '#F75E8A', borderBottom: 'solid 1px' },
-                overriddenStyleOnHover: {
-                  ...defaultLinkOverriddenStyleOnHover,
-                  color: '#E14978',
-                  fontWeight: 500,
-                },
               }),
               suggestions: ['react-realtime-markup-editor'],
             },
           }}
-          style={style}
         />
       ))}
     </>

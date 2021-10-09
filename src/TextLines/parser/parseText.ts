@@ -18,7 +18,7 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     lineIndex: 0,
     charIndex: 0,
     nested: false,
-    decoration: { fontSize: options.decorationSettings.fontSizes.normal, bold: false, italic: false, underline: false },
+    decoration: { fontlevel: 'normal', bold: false, italic: false, underline: false },
   };
 
   if (options.syntax == 'bracket') {

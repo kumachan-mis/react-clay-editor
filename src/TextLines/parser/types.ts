@@ -1,21 +1,18 @@
-import { DecorationSettings } from '../types';
-
 export interface ParsingContext {
   lineIndex: number;
   charIndex: number;
   nested: boolean;
-  decoration: DecorationStyle;
+  decoration: Decoration;
 }
 
 export interface ParsingOptions {
-  decorationSettings: DecorationSettings;
   taggedLinkRegexes: RegExp[];
   disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
   syntax: 'bracket' | 'markdown';
 }
 
-export interface DecorationStyle {
-  fontSize: number;
+export interface Decoration {
+  fontlevel: 'normal' | 'larger' | 'largest';
   bold: boolean;
   italic: boolean;
   underline: boolean;
@@ -147,7 +144,7 @@ export interface DecorationNode {
   facingMeta: string;
   children: ContentNode[];
   trailingMeta: string;
-  decoration: DecorationStyle;
+  decoration: Decoration;
 }
 
 export interface TaggedLinkNode {

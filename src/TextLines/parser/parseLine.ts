@@ -12,9 +12,8 @@ import {
   NormalLineNode,
   ParsingContext,
   ParsingOptions,
-  DecorationStyle,
+  Decoration,
 } from './types';
-import { DecorationSettings } from '../types';
 import { TextLinesConstants } from '../constants';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
@@ -142,20 +141,16 @@ function parseBlockFormulaLine(line: string, context: ParsingContext, regex: Reg
 export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
   const regex = TextLinesConstants.regexes.markdownSyntax.heading;
   const { heading, body } = line.match(regex)?.groups as Record<string, string>;
-  const headingStyle = getHeadingStyle(heading, options.decorationSettings);
+  const decoration = getHeadingStyle(heading);
 
   const childNode: DecorationNode = {
     type: 'text',
     lineIndex: context.lineIndex,
     range: [0, line.length],
     facingMeta: `${heading} `,
-    children: parseContent(
-      body,
-      { ...context, charIndex: heading.length + 1, nested: true, decoration: headingStyle },
-      options
-    ),
+    children: parseContent(body, { ...context, charIndex: heading.length + 1, nested: true, decoration }, options),
     trailingMeta: '',
-    decoration: headingStyle,
+    decoration: decoration,
   };
 
   const node: NormalLineNode = {
@@ -170,23 +165,22 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
   return node;
 }
 
-function getHeadingStyle(decoration: string, setting: DecorationSettings): DecorationStyle {
-  const { normal, larger, largest } = setting.fontSizes;
-  let fontSize = normal;
+function getHeadingStyle(decoration: string): Decoration {
+  let fontlevel: 'normal' | 'largest' | 'larger' = 'normal';
 
   switch (decoration) {
     case '#':
-      fontSize = largest;
+      fontlevel = 'largest';
       break;
     case '##':
-      fontSize = larger;
+      fontlevel = 'larger';
       break;
     case '###':
-      fontSize = normal;
+      fontlevel = 'normal';
       break;
   }
 
-  return { bold: true, italic: false, underline: false, fontSize };
+  return { bold: true, italic: false, underline: false, fontlevel };
 }
 
 export function parseBracketItemization(

@@ -1,57 +1,37 @@
-import { DecorationSettings } from './types';
-import { DecorationStyle } from './parser/types';
+import { Decoration } from './parser/types';
 import styles from './style.css';
-
-export const defaultDecorationSettings: DecorationSettings = {
-  fontSizes: { normal: 16, larger: 20, largest: 24 },
-};
+import { mergeClassNames } from '../common/utils';
 
 export const defaultLinkNameRegex = /[^[\]]+/;
-
-export const defaultLinkStyle: React.CSSProperties = {
-  textDecorationLine: 'none',
-  color: '#5E8AF7',
-  cursor: 'text',
-};
-
-export const defaultLinkOverriddenStyleOnHover: React.CSSProperties = {
-  color: '#425A9D',
-  cursor: 'pointer',
-};
-
-export const defaultCodeStyle: React.CSSProperties = {
-  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
-  backgroundColor: 'rgba(27, 31, 35, 0.05)',
-};
-
-export const defaultFormulaStyle: React.CSSProperties = {
-  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
-  backgroundColor: 'rgba(27, 31, 35, 0.05)',
-};
 
 export const TextLinesConstants = {
   className: styles.textlines,
   quotation: {
-    content: {
-      style: {
-        backgroundColor: 'rgba(125,128,128,0.1)',
-        borderLeft: 'solid 4px #a0a0a0',
-        paddingLeft: '4px',
-        fontStyle: 'italic',
-      } as React.CSSProperties,
-    },
+    className: 'editor-quotation',
+  },
+  code: {
+    className: 'editor-code',
+  },
+  formula: {
+    className: 'editor-formula',
+  },
+  link: {
+    className: 'editor-link',
   },
   decoration: {
-    style: (decorationStyle: DecorationStyle): React.CSSProperties => ({
-      fontSize: `${decorationStyle.fontSize}px`,
-      fontWeight: decorationStyle.bold ? 'bold' : undefined,
-      fontStyle: decorationStyle.italic ? 'italic' : undefined,
-      borderBottom: decorationStyle.underline ? 'solid 1px' : undefined,
-    }),
+    className: (decoration: Decoration): string => {
+      let ret = '';
+      if (decoration.fontlevel != 'normal') ret = `editor-text-decoration-${decoration.fontlevel}`;
+      if (decoration.bold) ret += ' editor-text-decoration-bold';
+      if (decoration.italic) ret += ' editor-text-decoration-italic';
+      if (decoration.underline) ret += ' editor-text-decoration-underline';
+      return ret;
+    },
   },
   lineGroup: {
-    className: (from: number, to: number): string => `${styles.lineGroup} L${from}-${to}`,
-    classNameRegex: RegExp(`${styles.lineGroup} L(?<from>\\d+)-(?<to>\\d+)`),
+    className: styles.lineGroup,
+    selectId: (from: number, to: number): string => `line-group-L${from}-${to}`,
+    selectIdRegex: RegExp('line-group-L(?<from>\\d+)-(?<to>\\d+)'),
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
@@ -61,14 +41,13 @@ export const TextLinesConstants = {
     },
     content: {
       className: styles.content,
-      style: (indentDepth: number): React.CSSProperties => ({
-        marginLeft: `${1.5 * indentDepth}em`,
-      }),
+      style: (indentDepth: number): React.CSSProperties => ({ marginLeft: `${1.5 * indentDepth}em` }),
     },
   },
   line: {
-    className: (lineIndex: number): string => `${styles.line} L${lineIndex}`,
-    classNameRegex: RegExp(`${styles.line} L(?<lineIndex>\\d+)`),
+    className: mergeClassNames(styles.line, 'editor-text-decoration-normal'),
+    selectId: (lineIndex: number): string => `line-L${lineIndex}`,
+    selectIdRegex: RegExp('line-L(?<lineIndex>\\d+)'),
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
@@ -78,14 +57,8 @@ export const TextLinesConstants = {
     },
     content: {
       className: styles.content,
-      style: (indentDepth: number): React.CSSProperties => ({
-        marginLeft: `${1.5 * indentDepth}em`,
-      }),
+      style: (indentDepth: number): React.CSSProperties => ({ marginLeft: `${1.5 * indentDepth}em` }),
     },
-    style: (defaultFontSize: number): React.CSSProperties => ({
-      fontSize: `${defaultFontSize}px`,
-      minHeight: `${defaultFontSize}px`,
-    }),
   },
   itemization: {
     bullet: {
@@ -93,13 +66,14 @@ export const TextLinesConstants = {
     },
   },
   charGroup: {
-    className: (lineIndex: number, from: number, to: number): string =>
-      `${styles.charGroup} L${lineIndex}C${from}-${to}`,
-    classNameRegex: RegExp(`${styles.charGroup} L(?<lineIndex>\\d+)C(?<from>\\d+)-(?<to>\\d+)`),
+    className: styles.charGroup,
+    selectId: (lineIndex: number, from: number, to: number): string => `char-group-L${lineIndex}C${from}-${to}`,
+    selectIdRegex: RegExp('char-group-L(?<lineIndex>\\d+)C(?<from>\\d+)-(?<to>\\d+)'),
   },
   char: {
-    className: (lineIndex: number, charIndex: number): string => `${styles.char} L${lineIndex}C${charIndex}`,
-    classNameRegex: RegExp(`${styles.char} L(?<lineIndex>\\d+)C(?<charIndex>\\d+)`),
+    className: styles.char,
+    selectId: (lineIndex: number, charIndex: number): string => `char-L${lineIndex}C${charIndex}`,
+    selectIdRegex: RegExp('char-L(?<lineIndex>\\d+)C(?<charIndex>\\d+)'),
   },
   regexes: {
     bracketSyntax: {

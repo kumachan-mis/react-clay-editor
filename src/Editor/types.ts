@@ -1,22 +1,20 @@
 import { CursorCoordinate } from '../Cursor/types';
 import { TextSelection } from '../Selection/types';
-import { DecorationSettings } from '../TextLines/types';
 
 export interface TextProps {
-  decorationSettings?: DecorationSettings;
   suggestions?: string[];
   initialSuggestionIndex?: number;
 }
 
 export interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
 }
 
 export interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -24,7 +22,7 @@ export interface HashTagProps {
 
 export interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;

@@ -3,9 +3,13 @@ import styles from './style.css';
 export const EditorConstants = {
   root: {
     className: styles.root,
+    selectId: 'editor-root',
+    selectIdRegex: /editor-root/,
   },
-  editor: {
-    className: styles.editor,
+  body: {
+    className: styles.body,
+    selectId: 'editor-body',
+    selectIdRegex: /editor-body/,
   },
   suggestion: {
     bracketLink: {

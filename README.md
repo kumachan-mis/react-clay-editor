@@ -182,59 +182,15 @@ general settings of text
 
 ```ts
 interface TextProps {
-  settings?: DecorationSettings;
   suggestions?: string[];
   initialSuggestionIndex?: number;
 }
 ```
 
-- settings: settings of the text decoration  
-  see below for the details
 - suggestions: input suggestions of normal texts  
   default: `[]`
 - initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
   default: `0`
-
-#### TextProps.settings: DecorationSettings
-
-settings of text decoration (optional)
-
-```ts
-interface DecorationSettings {
-  fontSizes: {
-    normal: number;
-    larger: number;
-    largest: number;
-  };
-}
-```
-
-**Attributes**
-
-- fontSizes
-  - normal: font size \[px\] of normal-sized text
-  - larger: font size \[px\] of larger-sized text  
-    c.f. `[** larger]`
-  - largest: font size \[px\] of largest-sized text  
-    c.f. `[*** largest]`
-
-**Default**
-
-```ts
-const defaultDecorationSettings: DecorationSettings = {
-  fontSizes: {
-    normal: 16,
-    larger: 20,
-    largest: 24,
-  },
-};
-```
-
-you can import `defaultDecorationSettings` by adding
-
-```ts
-import { defaultDecorationSettings } from 'react-realtime-markup-editor';
-```
 
 ### BracketLinkProps
 
@@ -242,7 +198,7 @@ settings of bracket links
 
 ```ts
 interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -252,7 +208,7 @@ interface BracketLinkProps {
 **Attributes**
 
 - anchorProps: given `linkName`, this function returns props of `<a>` tag and overridden style on hover  
-  default: `(linkName: string) => ({ style: defaultLinkStyle, overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover })`
+  default: `undefined`
 - suggestions: input suggestions of bracket links  
   default: `[]`
 - initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
@@ -260,40 +216,13 @@ interface BracketLinkProps {
 - disabled: if `true`, syntax of bracket links is ignored  
   default: `undefined` (falsy)
 
-**Default**
-
-```ts
-const defaultLinkStyle: React.CSSProperties = {
-  textDecorationLine: 'none',
-  color: '#5E8AF7',
-  cursor: 'text',
-};
-
-const defaultLinkOverriddenStyleOnHover: React.CSSProperties = {
-  color: '#425A9D',
-  cursor: 'pointer',
-};
-```
-
-you can import `defaultLinkStyle` or `defaultLinkOverriddenStyleOnHover` by adding
-
-```ts
-import { defaultLinkStyle } from 'react-realtime-markup-editor';
-```
-
-or
-
-```ts
-import { defaultLinkOverriddenStyleOnHover } from 'react-realtime-markup-editor';
-```
-
 ### HashTagProps
 
 settings of hash tags
 
 ```ts
 interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -309,7 +238,7 @@ settings of tagged links
 ```ts
 interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;
@@ -329,7 +258,7 @@ same as `BracketLinkProps` except `linkNameRegex` and `tagHidden`
 **Default**
 
 ```ts
-const defaultLinkNameRegex = /[^[\]]+/;
+export const defaultLinkNameRegex = /[^[\]]+/;
 ```
 
 you can import `defaultLinkNameRegex` by adding
@@ -352,24 +281,9 @@ interface CodeProps {
 **Attributes**
 
 - codeProps: given `code`, this function returns props of `<code>` tag  
-  default: `(code: string) => ({ style: defaultCodeStyle })`
+  default: `undefined`
 - disabled: if `true`, syntax of code strings is ignored  
   default: `undefined` (falsy)
-
-**Default**
-
-```ts
-const defaultCodeStyle: React.CSSProperties = {
-  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
-  backgroundColor: 'rgba(27, 31, 35, 0.05)',
-};
-```
-
-you can import `defaultCodeStyle` by adding
-
-```ts
-import { defaultCodeStyle } from 'react-realtime-markup-editor';
-```
 
 ### FormulaProps
 
@@ -385,21 +299,6 @@ interface FormulaProps {
 **Attributes**
 
 - spanProps: given `formula`, this function returns props of `<formula>` tag  
-  default: `(formula: string) => ({ style: defaultFormulaStyle })`
+  default: `undefined`
 - disabled: if `true`, syntax of math formulas is ignored  
   default: `undefined` (falsy)
-
-**Default**
-
-```ts
-const defaultFormulaStyle: React.CSSProperties = {
-  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
-  backgroundColor: 'rgba(27, 31, 35, 0.05)',
-};
-```
-
-you can import `defaultFormulaStyle` by adding
-
-```ts
-import { defaultFormulaStyle } from 'react-realtime-markup-editor';
-```

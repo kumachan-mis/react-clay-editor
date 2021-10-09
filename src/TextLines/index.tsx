@@ -1,14 +1,8 @@
 import * as React from 'react';
 
-import { Props, NodeProps, TaggedLinkPropsMap } from './types';
-import {
-  TextLinesConstants,
-  defaultDecorationSettings,
-  defaultLinkStyle,
-  defaultLinkOverriddenStyleOnHover,
-  defaultCodeStyle,
-  defaultFormulaStyle,
-} from './constants';
+import { Props, NodeProps } from './types';
+import { TextLinesConstants } from './constants';
+import { mergeClassNames } from '../common/utils';
 import {
   LineGroup,
   LineGroupIndent,
@@ -18,43 +12,23 @@ import {
   LineContent,
   CharGroup,
   Char,
-  AnchorWithHoverStyle,
 } from './components';
 import { parseText, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
-import { BracketLinkProps, HashTagProps, CodeProps, FormulaProps } from '../Editor/types';
 import { KaTeX } from '../KaTeX';
 
 export const TextLines: React.FC<Props> = ({
   text,
   syntax = 'bracket',
   cursorCoordinate,
-  decorationSettings = defaultDecorationSettings,
-  bracketLinkProps = {
-    anchorProps: () => ({
-      style: defaultLinkStyle,
-      overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
-    }),
-  } as BracketLinkProps,
-  hashTagProps = {
-    anchorProps: () => ({
-      style: defaultLinkStyle,
-      overriddenStyleOnHover: defaultLinkOverriddenStyleOnHover,
-    }),
-  } as HashTagProps,
-  taggedLinkPropsMap = {
-    // empty object
-  } as TaggedLinkPropsMap,
-  codeProps = {
-    codeProps: () => ({ style: defaultCodeStyle }),
-  } as CodeProps,
-  formulaProps = {
-    spanProps: () => ({ style: defaultFormulaStyle }),
-  } as FormulaProps,
+  bracketLinkProps = {},
+  hashTagProps = {},
+  taggedLinkPropsMap = {},
+  codeProps = {},
+  formulaProps = {},
   style,
 }) => {
   const options: ParsingOptions = {
-    decorationSettings: decorationSettings,
     taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
       TextLinesConstants.regexes.common.taggedLink(tagName, linkProps.linkNameRegex)
     ),
@@ -74,7 +48,6 @@ export const TextLines: React.FC<Props> = ({
         <Node
           key={index}
           node={node}
-          decorationSettings={decorationSettings}
           bracketLinkProps={bracketLinkProps}
           hashTagProps={hashTagProps}
           taggedLinkPropsMap={taggedLinkPropsMap}
@@ -89,7 +62,6 @@ export const TextLines: React.FC<Props> = ({
 
 const Node: React.FC<NodeProps> = ({
   node,
-  decorationSettings,
   bracketLinkProps,
   hashTagProps,
   taggedLinkPropsMap,
@@ -104,7 +76,6 @@ const Node: React.FC<NodeProps> = ({
         <>
           <Node
             node={facingMeta}
-            decorationSettings={decorationSettings}
             bracketLinkProps={bracketLinkProps}
             hashTagProps={hashTagProps}
             taggedLinkPropsMap={taggedLinkPropsMap}
@@ -116,7 +87,6 @@ const Node: React.FC<NodeProps> = ({
             <Node
               key={index}
               node={child}
-              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -128,7 +98,6 @@ const Node: React.FC<NodeProps> = ({
           {trailingMeta && (
             <Node
               node={trailingMeta}
-              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -145,17 +114,18 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth } = node;
       const code = node.type == 'blockCodeMeta' ? node.codeMeta : node.codeLine;
       const codeElementProps = codeProps.codeProps?.(code);
+      const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
+        <Line lineIndex={lineIndex}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={code.length}
-            spanProps={{ style: codeElementProps?.style }}
+            spanProps={{ className }}
           >
-            <code {...codeElementProps}>
+            <code {...codeElementProps} className={className}>
               {[...code].map((char, index) => (
                 <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
                   {char}
@@ -172,6 +142,7 @@ const Node: React.FC<NodeProps> = ({
       const formula = children.map((child) => child.formulaLine).join('\n');
       const cursorOn = curcorLineIndex !== undefined && from <= curcorLineIndex && curcorLineIndex <= to;
       const spanElementProps = formulaProps.spanProps?.(formula);
+      const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
         <LineGroup
@@ -180,7 +151,7 @@ const Node: React.FC<NodeProps> = ({
           divProps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ style: spanElementProps?.style }}>
+          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ className }}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
           </LineGroupContent>
         </LineGroup>
@@ -188,7 +159,6 @@ const Node: React.FC<NodeProps> = ({
         <>
           <Node
             node={facingMeta}
-            decorationSettings={decorationSettings}
             bracketLinkProps={bracketLinkProps}
             hashTagProps={hashTagProps}
             taggedLinkPropsMap={taggedLinkPropsMap}
@@ -200,7 +170,6 @@ const Node: React.FC<NodeProps> = ({
             <Node
               key={index}
               node={child}
-              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -212,7 +181,6 @@ const Node: React.FC<NodeProps> = ({
           {trailingMeta && (
             <Node
               node={trailingMeta}
-              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -229,15 +197,16 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth } = node;
       const formula = node.type == 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
       const spanElementProps = formulaProps.spanProps?.(formula);
+      const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
+        <Line lineIndex={lineIndex}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={formula.length}
-            spanProps={{ style: spanElementProps?.style }}
+            spanProps={{ className }}
           >
             {[...formula].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -253,13 +222,13 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = curcorLineIndex == lineIndex;
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
+        <Line lineIndex={lineIndex}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={meta.length + contentLength}
-            spanProps={{ style: TextLinesConstants.quotation.content.style }}
+            spanProps={{ className: TextLinesConstants.quotation.className }}
           >
             {[...meta].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -270,7 +239,6 @@ const Node: React.FC<NodeProps> = ({
               <Node
                 key={index}
                 node={child}
-                decorationSettings={decorationSettings}
                 bracketLinkProps={bracketLinkProps}
                 hashTagProps={hashTagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
@@ -287,7 +255,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth, contentLength, children } = node;
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
+        <Line lineIndex={lineIndex}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth + 1}>
             <span className={TextLinesConstants.itemization.bullet.className} />
           </LineIndent>
@@ -296,7 +264,6 @@ const Node: React.FC<NodeProps> = ({
               <Node
                 key={index}
                 node={child}
-                decorationSettings={decorationSettings}
                 bracketLinkProps={bracketLinkProps}
                 hashTagProps={hashTagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
@@ -313,13 +280,12 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, contentLength, children } = node;
 
       return (
-        <Line lineIndex={lineIndex} defaultFontSize={decorationSettings.fontSizes.normal}>
+        <Line lineIndex={lineIndex}>
           <LineContent lineIndex={lineIndex} indentDepth={0} contentLength={contentLength}>
             {children.map((child, index) => (
               <Node
                 key={index}
                 node={child}
-                decorationSettings={decorationSettings}
                 bracketLinkProps={bracketLinkProps}
                 hashTagProps={hashTagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
@@ -337,9 +303,10 @@ const Node: React.FC<NodeProps> = ({
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
       const codeElementProps = codeProps.codeProps?.(code);
+      const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
-        <code {...codeElementProps}>
+        <code {...codeElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -369,20 +336,18 @@ const Node: React.FC<NodeProps> = ({
     case 'displayFormula':
     case 'inlineFormula': {
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
+      const displayMode = node.type == 'displayFormula';
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
       const spanElementProps = formulaProps.spanProps?.(formula);
-      const displayMode = node.type == 'displayFormula';
+      const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn ? (
         <CharGroup
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
           toCharIndex={to - trailingMeta.length}
-          spanProps={{
-            onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation(),
-            style: spanElementProps?.style,
-          }}
+          spanProps={{ className, onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
         </CharGroup>
@@ -402,7 +367,7 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = curcorLineIndex == lineIndex;
 
       return (
-        <span style={TextLinesConstants.decoration.style(decoration)}>
+        <span className={TextLinesConstants.decoration.className(decoration)}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -412,7 +377,6 @@ const Node: React.FC<NodeProps> = ({
             <Node
               key={index}
               node={child}
-              decorationSettings={decorationSettings}
               bracketLinkProps={bracketLinkProps}
               hashTagProps={hashTagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
@@ -439,9 +403,10 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = curcorLineIndex == lineIndex;
       const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
       const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
+      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <AnchorWithHoverStyle {...anchorElementProps} cursorOn={cursorOn}>
+        <a {...anchorElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -474,7 +439,7 @@ const Node: React.FC<NodeProps> = ({
               {cursorOn ? char : '\u200b'}
             </Char>
           ))}
-        </AnchorWithHoverStyle>
+        </a>
       );
     }
     case 'bracketLink': {
@@ -482,9 +447,10 @@ const Node: React.FC<NodeProps> = ({
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
       const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
+      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <AnchorWithHoverStyle {...anchorElementProps} cursorOn={cursorOn}>
+        <a {...anchorElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -508,23 +474,23 @@ const Node: React.FC<NodeProps> = ({
               {cursorOn ? char : '\u200b'}
             </Char>
           ))}
-        </AnchorWithHoverStyle>
+        </a>
       );
     }
     case 'hashTag': {
       const { lineIndex, hashTag } = node;
       const [from] = node.range;
-      const cursorOn = curcorLineIndex == lineIndex;
       const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
+      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <AnchorWithHoverStyle {...anchorElementProps} cursorOn={cursorOn}>
+        <a {...anchorElementProps} className={className}>
           {[...hashTag].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {char}
             </Char>
           ))}
-        </AnchorWithHoverStyle>
+        </a>
       );
     }
     case 'normal': {
