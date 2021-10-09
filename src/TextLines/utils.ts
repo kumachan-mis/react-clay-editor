@@ -7,7 +7,3 @@ export function getTextCharElementAt(lineIndex: number, charIndex: number, eleme
   if (rootElement == null) rootElement = element;
   return rootElement.querySelector(`span[data-selectid="${TextLinesConstants.char.selectId(lineIndex, charIndex)}"]`);
 }
-
-export function mergeClassNames(...classNames: (string | undefined)[]): string {
-  return classNames.filter((className) => !!className).join(' ');
-}

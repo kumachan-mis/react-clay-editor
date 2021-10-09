@@ -1,6 +1,6 @@
 import { Decoration } from './parser/types';
 import styles from './style.css';
-import { mergeClassNames } from './utils';
+import { mergeClassNames } from '../common/utils';
 
 export const defaultLinkNameRegex = /[^[\]]+/;
 

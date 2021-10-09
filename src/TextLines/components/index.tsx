@@ -11,7 +11,7 @@ import {
   CharProps,
 } from './types';
 import { TextLinesConstants } from '../constants';
-import { mergeClassNames } from '../utils';
+import { mergeClassNames } from '../../common/utils';
 
 export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex, divProps = {}, children }) => {
   const constants = TextLinesConstants.lineGroup;

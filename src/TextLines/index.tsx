@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Props, NodeProps } from './types';
 import { TextLinesConstants } from './constants';
-import { mergeClassNames } from './utils';
+import { mergeClassNames } from '../common/utils';
 import {
   LineGroup,
   LineGroupIndent,
