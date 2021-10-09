@@ -1,9 +1,9 @@
 :global(.react-realtime-markup-editor) {
-  width: calc(48vw - 60px);
-  height: calc(96vh - 60px);
-  margin: 20px;
+  width: calc(48vw - 30px);
+  height: calc(96vh - 30px);
+  margin: 10px;
   border: solid 1px;
-  padding: 10px;
+  padding: 5px;
   display: inline-block;
 }
 
