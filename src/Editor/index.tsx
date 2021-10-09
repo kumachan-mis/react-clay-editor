@@ -144,6 +144,7 @@ export const Editor: React.FC<Props> = (props) => {
         <div
           className={EditorConstants.body.className}
           data-selectid={EditorConstants.body.selectId}
+          data-testid={EditorConstants.body.selectId}
           onMouseDown={_handleOnMouseDown}
           onClick={createMouseEventHandler(handleOnClick)}
         >
