@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Props, NodeProps } from './types';
 import { TextLinesConstants } from './constants';
+import { mergeClassNames } from './utils';
 import {
   LineGroup,
   LineGroupIndent,
@@ -113,6 +114,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth } = node;
       const code = node.type == 'blockCodeMeta' ? node.codeMeta : node.codeLine;
       const codeElementProps = codeProps.codeProps?.(code);
+      const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
         <Line lineIndex={lineIndex}>
@@ -121,7 +123,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={code.length}
-            spanProps={{ style: codeElementProps?.style }}
+            spanProps={{ className }}
           >
             <code {...codeElementProps}>
               {[...code].map((char, index) => (
@@ -140,6 +142,7 @@ const Node: React.FC<NodeProps> = ({
       const formula = children.map((child) => child.formulaLine).join('\n');
       const cursorOn = curcorLineIndex !== undefined && from <= curcorLineIndex && curcorLineIndex <= to;
       const spanElementProps = formulaProps.spanProps?.(formula);
+      const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
         <LineGroup
@@ -148,7 +151,7 @@ const Node: React.FC<NodeProps> = ({
           divProps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ style: spanElementProps?.style }}>
+          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ className }}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
           </LineGroupContent>
         </LineGroup>
@@ -194,6 +197,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth } = node;
       const formula = node.type == 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
       const spanElementProps = formulaProps.spanProps?.(formula);
+      const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return (
         <Line lineIndex={lineIndex}>
@@ -202,7 +206,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={formula.length}
-            spanProps={{ style: spanElementProps?.style }}
+            spanProps={{ className }}
           >
             {[...formula].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -299,9 +303,10 @@ const Node: React.FC<NodeProps> = ({
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
       const codeElementProps = codeProps.codeProps?.(code);
+      const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
-        <code {...codeElementProps}>
+        <code {...codeElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -331,20 +336,18 @@ const Node: React.FC<NodeProps> = ({
     case 'displayFormula':
     case 'inlineFormula': {
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
+      const displayMode = node.type == 'displayFormula';
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
       const spanElementProps = formulaProps.spanProps?.(formula);
-      const displayMode = node.type == 'displayFormula';
+      const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn ? (
         <CharGroup
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
           toCharIndex={to - trailingMeta.length}
-          spanProps={{
-            onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation(),
-            style: spanElementProps?.style,
-          }}
+          spanProps={{ className, onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
         </CharGroup>
@@ -400,9 +403,10 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = curcorLineIndex == lineIndex;
       const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
       const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
+      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <a {...anchorElementProps}>
+        <a {...anchorElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -443,9 +447,10 @@ const Node: React.FC<NodeProps> = ({
       const [from, to] = node.range;
       const cursorOn = curcorLineIndex == lineIndex;
       const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
+      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <a {...anchorElementProps}>
+        <a {...anchorElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -476,9 +481,10 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, hashTag } = node;
       const [from] = node.range;
       const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
+      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <a {...anchorElementProps}>
+        <a {...anchorElementProps} className={className}>
           {[...hashTag].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {char}

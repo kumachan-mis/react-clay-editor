@@ -11,13 +11,14 @@ import {
   CharProps,
 } from './types';
 import { TextLinesConstants } from '../constants';
+import { mergeClassNames } from '../utils';
 
 export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex, divProps = {}, children }) => {
   const constants = TextLinesConstants.lineGroup;
   const { className, ...rest } = divProps;
   return (
     <div
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(fromLineIndex, toLineIndex)}
       {...rest}
     >
@@ -31,7 +32,7 @@ export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, s
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
@@ -50,7 +51,7 @@ export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth,
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
@@ -64,7 +65,7 @@ export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }
   const { className, ...rest } = divProps;
   return (
     <div
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(lineIndex)}
       {...rest}
     >
@@ -78,7 +79,7 @@ export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, 
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
@@ -108,7 +109,7 @@ export const LineContent: React.FC<LineContentProps> = ({
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
@@ -133,7 +134,7 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   const { className, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(lineIndex, fromCharIndex, toCharIndex)}
       {...rest}
     >
@@ -147,7 +148,7 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
   const { className, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${constants.className} ${className}` : constants.className}
+      className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(lineIndex, charIndex)}
       {...rest}
     >

@@ -1,5 +1,3 @@
-import './style.global.css';
-
 export { Editor } from './Editor';
 export type {
   Props as EditorProps,

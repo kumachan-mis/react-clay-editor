@@ -8,18 +8,21 @@ export const TextLinesConstants = {
   quotation: {
     className: 'editor-quotation',
   },
-  codeBlock: {
-    className: 'editor-codeblock',
+  code: {
+    className: 'editor-code',
+  },
+  formula: {
+    className: 'editor-formula',
   },
   link: {
     className: 'editor-link',
   },
   decoration: {
     className: (decoration: Decoration): string => {
-      let ret = `editor-fontlevel-${decoration.fontlevel}`;
-      if (decoration.bold) ret += ` ${styles.bold}`;
-      if (decoration.italic) ret += ` ${styles.italic}`;
-      if (decoration.underline) ret += ` ${styles.underline}`;
+      let ret = `editor-text-decoration-${decoration.fontlevel}`;
+      if (decoration.bold) ret += ' editor-text-decoration-bold';
+      if (decoration.italic) ret += ' editor-text-decoration-italic';
+      if (decoration.underline) ret += ' editor-text-decoration-underline';
       return ret;
     },
   },
