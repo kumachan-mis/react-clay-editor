@@ -167,7 +167,6 @@ export const Editor: React.FC<Props> = (props) => {
             text={props.text}
             syntax={props.syntax}
             cursorCoordinate={state.cursorCoordinate}
-            decorationSettings={props.textProps?.decorationSettings}
             bracketLinkProps={props.bracketLinkProps}
             hashTagProps={props.hashTagProps}
             codeProps={props.codeProps}

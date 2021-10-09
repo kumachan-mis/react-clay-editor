@@ -1,0 +1,40 @@
+:global(.editor-quotation) {
+  background-color: 'rgba(125,128,128,0.1)';
+  border-left: 'solid 4px #a0a0a0';
+  padding-left: '4px';
+  font-style: 'italic';
+}
+
+:global(.editor-codeblock, .editor-formula) {
+  font-family: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace';
+  background-color: 'rgba(27, 31, 35, 0.05)';
+}
+
+:global(.editor-link) {
+  text-decoration-line: 'none';
+  color: '#5E8AF7';
+  cursor: 'text';
+}
+
+:global(.editor-link:hover) {
+  color: '#425A9D';
+  cursor: 'pointer';
+}
+
+:global(.editor-fontlevel-normal) {
+  font-size: '16px';
+}
+
+:global(.editor-fontlevel-larger) {
+  font-size: '20px';
+}
+
+:global(.editor-fontlevel-largest) {
+  font-size: '24px';
+}
+
+:global(.katex-display) {
+  display: inline-block !important;
+  margin: 0 !important;
+  text-align: inherit !important;
+}

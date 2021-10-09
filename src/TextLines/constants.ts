@@ -1,53 +1,27 @@
-import { DecorationSettings } from './types';
-import { DecorationStyle } from './parser/types';
+import { Decoration } from './parser/types';
 import styles from './style.css';
 
-export const defaultDecorationSettings: DecorationSettings = {
-  fontSizes: { normal: 16, larger: 20, largest: 24 },
-};
-
 export const defaultLinkNameRegex = /[^[\]]+/;
-
-export const defaultLinkStyle: React.CSSProperties = {
-  textDecorationLine: 'none',
-  color: '#5E8AF7',
-  cursor: 'text',
-};
-
-export const defaultLinkOverriddenStyleOnHover: React.CSSProperties = {
-  color: '#425A9D',
-  cursor: 'pointer',
-};
-
-export const defaultCodeStyle: React.CSSProperties = {
-  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
-  backgroundColor: 'rgba(27, 31, 35, 0.05)',
-};
-
-export const defaultFormulaStyle: React.CSSProperties = {
-  fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace',
-  backgroundColor: 'rgba(27, 31, 35, 0.05)',
-};
 
 export const TextLinesConstants = {
   className: styles.textlines,
   quotation: {
-    content: {
-      style: {
-        backgroundColor: 'rgba(125,128,128,0.1)',
-        borderLeft: 'solid 4px #a0a0a0',
-        paddingLeft: '4px',
-        fontStyle: 'italic',
-      } as React.CSSProperties,
-    },
+    className: 'editor-quotation',
+  },
+  codeBlock: {
+    className: 'editor-codeblock',
+  },
+  link: {
+    className: 'editor-link',
   },
   decoration: {
-    style: (decorationStyle: DecorationStyle): React.CSSProperties => ({
-      fontSize: `${decorationStyle.fontSize}px`,
-      fontWeight: decorationStyle.bold ? 'bold' : undefined,
-      fontStyle: decorationStyle.italic ? 'italic' : undefined,
-      borderBottom: decorationStyle.underline ? 'solid 1px' : undefined,
-    }),
+    className: (decoration: Decoration): string => {
+      let ret = `editor-fontlevel-${decoration.fontlevel}`;
+      if (decoration.bold) ret += ` ${styles.bold}`;
+      if (decoration.italic) ret += ` ${styles.italic}`;
+      if (decoration.underline) ret += ` ${styles.underline}`;
+      return ret;
+    },
   },
   lineGroup: {
     className: styles.lineGroup,
@@ -62,9 +36,7 @@ export const TextLinesConstants = {
     },
     content: {
       className: styles.content,
-      style: (indentDepth: number): React.CSSProperties => ({
-        marginLeft: `${1.5 * indentDepth}em`,
-      }),
+      style: (indentDepth: number): React.CSSProperties => ({ marginLeft: `${1.5 * indentDepth}em` }),
     },
   },
   line: {
@@ -80,14 +52,8 @@ export const TextLinesConstants = {
     },
     content: {
       className: styles.content,
-      style: (indentDepth: number): React.CSSProperties => ({
-        marginLeft: `${1.5 * indentDepth}em`,
-      }),
+      style: (indentDepth: number): React.CSSProperties => ({ marginLeft: `${1.5 * indentDepth}em` }),
     },
-    style: (defaultFontSize: number): React.CSSProperties => ({
-      fontSize: `${defaultFontSize}px`,
-      minHeight: `${defaultFontSize}px`,
-    }),
   },
   itemization: {
     bullet: {

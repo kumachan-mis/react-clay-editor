@@ -9,7 +9,6 @@ import {
   LineContentProps,
   CharGroupProps,
   CharProps,
-  AnchorWithHoverStyleProps,
 } from './types';
 import { TextLinesConstants } from '../constants';
 
@@ -60,14 +59,13 @@ export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth,
   );
 };
 
-export const Line: React.FC<LineProps> = ({ lineIndex, defaultFontSize, divProps = {}, children }) => {
+export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }) => {
   const constants = TextLinesConstants.line;
-  const { className, style, ...rest } = divProps;
+  const { className, ...rest } = divProps;
   return (
     <div
       className={className ? `${constants.className} ${className}` : constants.className}
       data-selectid={constants.selectId(lineIndex)}
-      style={{ ...constants.style(defaultFontSize), ...style }}
       {...rest}
     >
       {children}
@@ -155,38 +153,5 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
     >
       <span>{children}</span>
     </span>
-  );
-};
-
-export const AnchorWithHoverStyle: React.FC<AnchorWithHoverStyleProps> = ({
-  onMouseEnter,
-  onMouseLeave,
-  onClick,
-  style,
-  overriddenStyleOnHover,
-  cursorOn,
-  children,
-  ...rest
-}) => {
-  const [hover, setHover] = React.useState(false);
-  return (
-    <a
-      onMouseEnter={(event) => {
-        onMouseEnter?.(event);
-        setHover(!cursorOn);
-      }}
-      onMouseLeave={(event) => {
-        onMouseLeave?.(event);
-        setHover(false);
-      }}
-      onClick={(event) => {
-        if (hover) onClick?.(event);
-        else event.preventDefault();
-      }}
-      style={hover ? { ...style, ...overriddenStyleOnHover } : style}
-      {...rest}
-    >
-      {children}
-    </a>
   );
 };

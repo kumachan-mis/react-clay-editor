@@ -242,7 +242,7 @@ settings of bracket links
 
 ```ts
 interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'> & { overriddenStyleOnHover?: React.CSSProperties };
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;

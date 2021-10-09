@@ -10,9 +10,8 @@ import {
   NormalNode,
   ParsingContext,
   ParsingOptions,
-  DecorationStyle,
+  Decoration,
 } from './types';
-import { DecorationSettings } from '../types';
 import { TextLinesConstants } from '../constants';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
@@ -133,22 +132,22 @@ function parseInlineFormula(text: string, context: ParsingContext, options: Pars
 
 function parseDecoration(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.bracketSyntax.decoration;
-  const { left, decoration, body, right } = text.match(regex)?.groups as Record<string, string>;
-  const decorationStyle = getDecorationStyle(decoration, options.decorationSettings);
+  const { left, decoration: decostring, body, right } = text.match(regex)?.groups as Record<string, string>;
+  const decoration = stringToDecoration(decostring);
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
     type: 'text',
     lineIndex: context.lineIndex,
     range: [from, to],
-    facingMeta: `[${decoration} `,
+    facingMeta: `[${decostring} `,
     children: parseContent(
       body,
-      { ...context, charIndex: from + decoration.length + 2, nested: true, decoration: decorationStyle },
+      { ...context, charIndex: from + decostring.length + 2, nested: true, decoration: decoration },
       options
     ),
     trailingMeta: ']',
-    decoration: decorationStyle,
+    decoration: decoration,
   };
 
   return [
@@ -158,31 +157,30 @@ function parseDecoration(text: string, context: ParsingContext, options: Parsing
   ];
 }
 
-function getDecorationStyle(decoration: string, setting: DecorationSettings): DecorationStyle {
-  const { normal, larger, largest } = setting.fontSizes;
-  const style = { bold: false, italic: false, underline: false, fontSize: normal };
+function stringToDecoration(decostring: string): Decoration {
+  const decoration: Decoration = { bold: false, italic: false, underline: false, fontlevel: 'normal' };
 
-  for (let i = 0; i < decoration.length; i++) {
-    switch (decoration[i]) {
+  for (let i = 0; i < decostring.length; i++) {
+    switch (decostring[i]) {
       case '*':
-        if (!style.bold) {
-          style.bold = true;
-        } else if (style.fontSize == normal) {
-          style.fontSize = larger;
-        } else if (style.fontSize == larger) {
-          style.fontSize = largest;
+        if (!decoration.bold) {
+          decoration.bold = true;
+        } else if (decoration.fontlevel == 'normal') {
+          decoration.fontlevel = 'larger';
+        } else if (decoration.fontlevel == 'larger') {
+          decoration.fontlevel = 'largest';
         }
         break;
       case '/':
-        style.italic = true;
+        decoration.italic = true;
         break;
       case '_':
-        style.underline = true;
+        decoration.underline = true;
         break;
     }
   }
 
-  return style;
+  return decoration;
 }
 
 function parseBold(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
