@@ -1,14 +1,14 @@
 import { Props, State, TextSelection, TextRange } from './types';
 
-import { getEditor } from '../Editor/utils';
+import { getBody } from '../Editor/utils';
 import { getTextCharElementAt } from '../TextLines/utils';
 import { TextLinesConstants } from '../TextLines/constants';
 import { CursorCoordinate } from '../Cursor/types';
 import { cursorCoordinateToTextIndex } from '../Cursor/utils';
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
-  const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (!props.textSelection || !editorRect) {
+  const bodyRect = getBody(element)?.getBoundingClientRect();
+  if (!props.textSelection || !bodyRect) {
     return { topDivPosition: undefined, centerDivPosition: undefined, bottomDivPosition: undefined };
   }
 
@@ -29,8 +29,8 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
   ) {
     const topDivPosition = undefined;
     const centerDivPosition = {
-      top: Math.min(startRect.top, endRect.top) - editorRect.top,
-      left: startRect.left - editorRect.left,
+      top: Math.min(startRect.top, endRect.top) - bodyRect.top,
+      left: startRect.left - bodyRect.left,
       width: endRect.left - startRect.left,
       height: Math.max(startRect.bottom, endRect.bottom) - Math.min(startRect.top, endRect.top),
     };
@@ -38,21 +38,21 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     return { topDivPosition, centerDivPosition, bottomDivPosition };
   } else {
     const topDivPosition = {
-      top: startRect.top - editorRect.top,
-      left: startRect.left - editorRect.left,
-      width: editorRect.right - startRect.left,
+      top: startRect.top - bodyRect.top,
+      left: startRect.left - bodyRect.left,
+      width: bodyRect.right - startRect.left,
       height: startRect.height,
     };
     const centerDivPosition = {
-      top: startRect.bottom - editorRect.top,
+      top: startRect.bottom - bodyRect.top,
       left: 0,
-      width: editorRect.width,
+      width: bodyRect.width,
       height: endRect.top - startRect.bottom,
     };
     const bottomDivPosition = {
-      top: endRect.top - editorRect.top,
+      top: endRect.top - bodyRect.top,
       left: 0,
-      width: endRect.left - editorRect.left,
+      width: endRect.left - bodyRect.left,
       height: endRect.height,
     };
     return { topDivPosition, centerDivPosition, bottomDivPosition };

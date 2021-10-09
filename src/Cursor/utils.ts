@@ -2,25 +2,21 @@ import { Props, State, CursorCoordinate } from './types';
 import { CursorConstants } from './constants';
 
 import { getTextCharElementAt } from '../TextLines/utils';
-import { getRoot, getEditor } from '../Editor/utils';
-import { classNameToSelector } from '../common/utils';
+import { getRoot, getBody } from '../Editor/utils';
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
   const root = getRoot(element);
   const rootRect = root?.getBoundingClientRect();
-  const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (!props.coordinate || !editorRect || !root || !rootRect) {
+  const bodyRect = getBody(element)?.getBoundingClientRect();
+  if (!props.coordinate || !bodyRect || !root || !rootRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const textAreaSelector = `textarea${classNameToSelector(CursorConstants.textArea.className)}`;
-  const textArea = root?.querySelector(textAreaSelector) as HTMLTextAreaElement | null;
-  textArea?.focus({ preventScroll: true });
+  root?.querySelector('textarea')?.focus({ preventScroll: true });
 
   if (props.suggestions.length > 0) {
     const index = props.suggestionIndex;
-    const className = classNameToSelector(CursorConstants.suggestion.item.className(index));
-    const listItemSelector = `li${className}`;
+    const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(index)}"]`;
     const listItem = root?.querySelector(listItemSelector) as HTMLLIElement | null;
     const list = listItem?.parentElement;
     if (list && listItem) {
@@ -37,7 +33,7 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   const charRect = charElement?.firstElementChild?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const position = { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left };
+  const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
   const cursorSize = charRect.height;
   const margin = 1.5 * cursorSize;
   if (charRect.top - rootRect.top - margin < 0) {
@@ -51,8 +47,8 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 }
 
 export function handleOnEditorScroll(props: Props, state: State, element: HTMLElement): State {
-  const editorRect = getEditor(element)?.getBoundingClientRect();
-  if (!props.coordinate || !editorRect) {
+  const bodyRect = getBody(element)?.getBoundingClientRect();
+  if (!props.coordinate || !bodyRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
@@ -61,7 +57,7 @@ export function handleOnEditorScroll(props: Props, state: State, element: HTMLEl
   const charRect = charElement?.firstElementChild?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const position = { top: charRect.top - editorRect.top, left: charRect.left - editorRect.left };
+  const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
   const cursorSize = charRect.height;
   return { ...state, position, cursorSize };
 }

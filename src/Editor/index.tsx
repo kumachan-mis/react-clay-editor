@@ -140,9 +140,10 @@ export const Editor: React.FC<Props> = (props) => {
 
   return (
     <div style={props.style}>
-      <div className={EditorConstants.root.className} ref={rootRef}>
+      <div className={EditorConstants.root.className} data-selectid={EditorConstants.root.selectId} ref={rootRef}>
         <div
-          className={EditorConstants.editor.className}
+          className={EditorConstants.body.className}
+          data-selectid={EditorConstants.body.selectId}
           onMouseDown={_handleOnMouseDown}
           onClick={createMouseEventHandler(handleOnClick)}
         >

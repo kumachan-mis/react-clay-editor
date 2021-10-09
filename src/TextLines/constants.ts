@@ -50,8 +50,9 @@ export const TextLinesConstants = {
     }),
   },
   lineGroup: {
-    className: (from: number, to: number): string => `${styles.lineGroup} L${from}-${to}`,
-    classNameRegex: RegExp(`${styles.lineGroup} L(?<from>\\d+)-(?<to>\\d+)`),
+    className: styles.lineGroup,
+    selectId: (from: number, to: number): string => `react-realtime-markup-editor__line-group-L${from}-${to}`,
+    selectIdRegex: RegExp('react-realtime-markup-editor__line-group-L(?<from>\\d+)-(?<to>\\d+)'),
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
@@ -67,8 +68,9 @@ export const TextLinesConstants = {
     },
   },
   line: {
-    className: (lineIndex: number): string => `${styles.line} L${lineIndex}`,
-    classNameRegex: RegExp(`${styles.line} L(?<lineIndex>\\d+)`),
+    className: styles.line,
+    selectId: (lineIndex: number): string => `react-realtime-markup-editor__line-L${lineIndex}`,
+    selectIdRegex: RegExp('react-realtime-markup-editor__line-L(?<lineIndex>\\d+)'),
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
@@ -93,13 +95,16 @@ export const TextLinesConstants = {
     },
   },
   charGroup: {
-    className: (lineIndex: number, from: number, to: number): string =>
-      `${styles.charGroup} L${lineIndex}C${from}-${to}`,
-    classNameRegex: RegExp(`${styles.charGroup} L(?<lineIndex>\\d+)C(?<from>\\d+)-(?<to>\\d+)`),
+    className: styles.charGroup,
+    selectId: (lineIndex: number, from: number, to: number): string =>
+      `react-realtime-markup-editor__char-group-L${lineIndex}C${from}-${to}`,
+    selectIdRegex: RegExp('react-realtime-markup-editor__char-group-L(?<lineIndex>\\d+)C(?<from>\\d+)-(?<to>\\d+)'),
   },
   char: {
-    className: (lineIndex: number, charIndex: number): string => `${styles.char} L${lineIndex}C${charIndex}`,
-    classNameRegex: RegExp(`${styles.char} L(?<lineIndex>\\d+)C(?<charIndex>\\d+)`),
+    className: styles.char,
+    selectId: (lineIndex: number, charIndex: number): string =>
+      `react-realtime-markup-editor__char-L${lineIndex}C${charIndex}`,
+    selectIdRegex: RegExp('react-realtime-markup-editor__char-L(?<lineIndex>\\d+)C(?<charIndex>\\d+)'),
   },
   regexes: {
     bracketSyntax: {

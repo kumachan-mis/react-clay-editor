@@ -14,23 +14,26 @@ import {
 import { TextLinesConstants } from '../constants';
 
 export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex, divProps = {}, children }) => {
-  const baseClassName = TextLinesConstants.lineGroup.className(fromLineIndex, toLineIndex);
+  const constants = TextLinesConstants.lineGroup;
   const { className, ...rest } = divProps;
   return (
-    <div className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
+    <div
+      className={className ? `${constants.className} ${className}` : constants.className}
+      data-selectid={constants.selectId(fromLineIndex, toLineIndex)}
+      {...rest}
+    >
       {children}
     </div>
   );
 };
 
 export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, spanProps = {}, children }) => {
-  const baseClassName = TextLinesConstants.lineGroup.indent.className;
-  const baseStyle = TextLinesConstants.lineGroup.indent.style(indentDepth);
+  const constants = TextLinesConstants.lineGroup.indent;
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${baseClassName} ${className}` : baseClassName}
-      style={style ? { ...baseStyle, ...style } : baseStyle}
+      className={className ? `${constants.className} ${className}` : constants.className}
+      style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
       {[...Array(indentDepth).keys()].map((charIndex) => (
@@ -44,13 +47,12 @@ export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, s
 };
 
 export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth, spanProps = {}, children }) => {
-  const baseClassName = TextLinesConstants.lineGroup.content.className;
-  const baseStyle = TextLinesConstants.lineGroup.content.style(indentDepth);
+  const constants = TextLinesConstants.lineGroup.content;
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${baseClassName} ${className}` : baseClassName}
-      style={style ? { ...baseStyle, ...style } : baseStyle}
+      className={className ? `${constants.className} ${className}` : constants.className}
+      style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
       {children}
@@ -59,13 +61,13 @@ export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth,
 };
 
 export const Line: React.FC<LineProps> = ({ lineIndex, defaultFontSize, divProps = {}, children }) => {
-  const baseClassName = TextLinesConstants.line.className(lineIndex);
-  const baseStyle = TextLinesConstants.line.style(defaultFontSize);
+  const constants = TextLinesConstants.line;
   const { className, style, ...rest } = divProps;
   return (
     <div
-      className={className ? `${baseClassName} ${className}` : baseClassName}
-      style={style ? { ...baseStyle, ...style } : baseStyle}
+      className={className ? `${constants.className} ${className}` : constants.className}
+      data-selectid={constants.selectId(lineIndex)}
+      style={{ ...constants.style(defaultFontSize), ...style }}
       {...rest}
     >
       {children}
@@ -74,13 +76,12 @@ export const Line: React.FC<LineProps> = ({ lineIndex, defaultFontSize, divProps
 };
 
 export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, spanProps = {}, children }) => {
-  const baseClassName = TextLinesConstants.line.indent.className;
-  const baseStyle = TextLinesConstants.line.indent.style(indentDepth);
+  const constants = TextLinesConstants.line.indent;
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${baseClassName} ${className}` : baseClassName}
-      style={style ? { ...baseStyle, ...style } : baseStyle}
+      className={className ? `${constants.className} ${className}` : constants.className}
+      style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
       {[...Array(indentDepth).keys()].map((charIndex) => (
@@ -105,13 +106,12 @@ export const LineContent: React.FC<LineContentProps> = ({
   spanProps = {},
   children,
 }) => {
-  const baseClassName = TextLinesConstants.line.content.className;
-  const baseStyle = TextLinesConstants.line.content.style(indentDepth);
+  const constants = TextLinesConstants.line.content;
   const { className, style, ...rest } = spanProps;
   return (
     <span
-      className={className ? `${baseClassName} ${className}` : baseClassName}
-      style={style ? { ...baseStyle, ...style } : baseStyle}
+      className={className ? `${constants.className} ${className}` : constants.className}
+      style={{ ...constants.style(indentDepth), ...style }}
       {...rest}
     >
       {children}
@@ -131,20 +131,28 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   spanProps = {},
   children,
 }) => {
-  const baseClassName = TextLinesConstants.charGroup.className(lineIndex, fromCharIndex, toCharIndex);
+  const constants = TextLinesConstants.charGroup;
   const { className, ...rest } = spanProps;
   return (
-    <span className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
+    <span
+      className={className ? `${constants.className} ${className}` : constants.className}
+      data-selectid={constants.selectId(lineIndex, fromCharIndex, toCharIndex)}
+      {...rest}
+    >
       {children}
     </span>
   );
 };
 
 export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}, children }) => {
-  const baseClassName = TextLinesConstants.char.className(lineIndex, charIndex);
+  const constants = TextLinesConstants.char;
   const { className, ...rest } = spanProps;
   return (
-    <span className={className ? `${baseClassName} ${className}` : baseClassName} {...rest}>
+    <span
+      className={className ? `${constants.className} ${className}` : constants.className}
+      data-selectid={constants.selectId(lineIndex, charIndex)}
+      {...rest}
+    >
       <span>{children}</span>
     </span>
   );

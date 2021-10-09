@@ -3,9 +3,13 @@ import styles from './style.css';
 export const EditorConstants = {
   root: {
     className: styles.root,
+    selectId: 'react-realtime-markup-editor__root',
+    selectIdRegex: /react-realtime-markup-editor__root/,
   },
-  editor: {
-    className: styles.editor,
+  body: {
+    className: styles.body,
+    selectId: 'react-realtime-markup-editor__body',
+    selectIdRegex: /react-realtime-markup-editor__body/,
   },
   suggestion: {
     bracketLink: {

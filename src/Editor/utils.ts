@@ -1,11 +1,9 @@
 import { EditorConstants } from './constants';
 
-import { classNameToSelector } from '../common/utils';
-
 export function getRoot(element: HTMLElement): HTMLElement | null {
-  return element.closest(`div${classNameToSelector(EditorConstants.root.className)}`);
+  return element.closest(`div[data-selectid="${EditorConstants.root.selectId}"]`);
 }
 
-export function getEditor(element: HTMLElement): HTMLElement | null {
-  return element.closest(`div${classNameToSelector(EditorConstants.editor.className)}`);
+export function getBody(element: HTMLElement): HTMLElement | null {
+  return element.closest(`div[data-selectid="${EditorConstants.body.selectId}"]`);
 }
