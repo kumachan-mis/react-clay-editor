@@ -72,7 +72,7 @@
     "build": "rm -Rf dist && yarn gen-css && tsc --build tsconfig.json && cpx \"src/**/*.css\" dist",
     "build-sample": "rm -Rf sample/dist && yarn gen-css && webpack --config webpack.config.prod.js",
     "deploy": "gh-pages -d sample/dist",
-    "gen-css": "rm -Rf \"{src,sample}/**/*.css\" && sass src:src sample:sample --no-source-map",
+    "gen-css": "rm -Rf {src,sample}/**/*.css && sass src:src sample:sample --no-source-map",
     "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
     "lint-fix": "yarn lint --fix",
     "predeploy": "yarn build-sample",
