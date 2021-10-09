@@ -1,13 +1,13 @@
-import styles from './style.css';
+import './style.css';
 
 export const EditorConstants = {
   root: {
-    className: styles.root,
-    selectId: 'editor-root',
-    selectIdRegex: /editor-root/,
+    className: 'react-realtime-markup-editor',
+    selectId: 'react-realtime-markup-editor',
+    selectIdRegex: /react-realtime-markup-editor/,
   },
   body: {
-    className: styles.body,
+    className: 'editor-body',
     selectId: 'editor-body',
     selectIdRegex: /editor-body/,
   },

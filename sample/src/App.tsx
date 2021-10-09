@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Editor } from '../../src';
+import styles from './style.css';
 
 // prettier-ignore
 const defaultBracketText =
@@ -170,15 +171,6 @@ combination of text decorations is not supported yet
 >Genius is one percent inspiration and ninety-nine percent perspiration
 >by Thomas Edison`;
 
-const style: React.CSSProperties = {
-  width: 'calc(48vw - 60px)',
-  height: 'calc(96vh - 60px)',
-  margin: '20px',
-  border: 'solid 1px',
-  padding: '10px',
-  display: 'inline-block',
-};
-
 export const App: React.FC = () => {
   const [bracketText, setBracketText] = React.useState(defaultBracketText);
   const [markdownText, setMarkdownText] = React.useState(defaultMarkdownText);
@@ -213,18 +205,19 @@ export const App: React.FC = () => {
             github: {
               linkNameRegex: /@[^[\]]+\/[^[\]]+/,
               anchorProps: (linkName) => ({
+                className: styles.github,
                 href: `https://github.com/${linkName.substring(1)}`,
               }),
               suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
             },
             npm: {
               anchorProps: (linkName) => ({
+                className: styles.npm,
                 href: `https://www.npmjs.com/package/${linkName}`,
               }),
               suggestions: ['react-realtime-markup-editor'],
             },
           }}
-          style={style}
         />
       ))}
     </>

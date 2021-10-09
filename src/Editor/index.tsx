@@ -139,41 +139,44 @@ export const Editor: React.FC<Props> = (props) => {
   }, [handleOnEditorBlur]);
 
   return (
-    <div style={props.style}>
-      <div className={EditorConstants.root.className} data-selectid={EditorConstants.root.selectId} ref={rootRef}>
-        <div
-          className={EditorConstants.body.className}
-          data-selectid={EditorConstants.body.selectId}
-          onMouseDown={_handleOnMouseDown}
-          onClick={createMouseEventHandler(handleOnClick)}
-        >
-          <Cursor
-            coordinate={state.cursorCoordinate}
-            textAreaValue={state.textAreaValue}
-            suggestionType={state.suggestionType}
-            suggestions={state.suggestions}
-            suggestionIndex={state.suggestionIndex}
-            onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
-            onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
-            onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
-            onTextCompositionEnd={createCursorEventHandlerWithProps(handleOnTextCompositionEnd)}
-            onTextCut={createCursorEventHandler(handleOnTextCut)}
-            onTextCopy={createCursorEventHandler(handleOnTextCopy)}
-            onTextPaste={createCursorEventHandler(handleOnTextPaste)}
-            onSuggectionMouseDown={createCursorEventHandler(handleOnSuggectionMouseDown)}
-          />
-          <Selection textSelection={state.textSelection} />
-          <TextLines
-            text={props.text}
-            syntax={props.syntax}
-            cursorCoordinate={state.cursorCoordinate}
-            bracketLinkProps={props.bracketLinkProps}
-            hashTagProps={props.hashTagProps}
-            codeProps={props.codeProps}
-            formulaProps={props.formulaProps}
-            taggedLinkPropsMap={props.taggedLinkPropsMap}
-          />
-        </div>
+    <div
+      className={EditorConstants.root.className}
+      data-selectid={EditorConstants.root.selectId}
+      style={props.style}
+      ref={rootRef}
+    >
+      <div
+        className={EditorConstants.body.className}
+        data-selectid={EditorConstants.body.selectId}
+        onMouseDown={_handleOnMouseDown}
+        onClick={createMouseEventHandler(handleOnClick)}
+      >
+        <Cursor
+          coordinate={state.cursorCoordinate}
+          textAreaValue={state.textAreaValue}
+          suggestionType={state.suggestionType}
+          suggestions={state.suggestions}
+          suggestionIndex={state.suggestionIndex}
+          onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
+          onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
+          onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
+          onTextCompositionEnd={createCursorEventHandlerWithProps(handleOnTextCompositionEnd)}
+          onTextCut={createCursorEventHandler(handleOnTextCut)}
+          onTextCopy={createCursorEventHandler(handleOnTextCopy)}
+          onTextPaste={createCursorEventHandler(handleOnTextPaste)}
+          onSuggectionMouseDown={createCursorEventHandler(handleOnSuggectionMouseDown)}
+        />
+        <Selection textSelection={state.textSelection} />
+        <TextLines
+          text={props.text}
+          syntax={props.syntax}
+          cursorCoordinate={state.cursorCoordinate}
+          bracketLinkProps={props.bracketLinkProps}
+          hashTagProps={props.hashTagProps}
+          codeProps={props.codeProps}
+          formulaProps={props.formulaProps}
+          taggedLinkPropsMap={props.taggedLinkPropsMap}
+        />
       </div>
     </div>
   );

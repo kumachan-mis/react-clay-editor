@@ -1,4 +1,4 @@
-.root {
+:global(.react-realtime-markup-editor) {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
@@ -6,7 +6,7 @@
   user-select: none;
 }
 
-.body {
+:global(.editor-body) {
   width: 100%;
   height: auto;
   min-height: 100%;
@@ -61,7 +61,7 @@
   border-radius: 1px solid;
 }
 
-.root :global(.katex-display) {
+:global(.editor-root) :global(.katex-display) {
   display: inline-block;
   margin: 0;
   text-align: inherit;
