@@ -1,4 +1,9 @@
+import './style.global.css';
+
 export { Editor } from './Editor';
+export { TextLines as Viewer } from './TextLines';
+export { defaultLinkNameRegex } from './TextLines/constants';
+
 export type {
   Props as EditorProps,
   TextProps,
@@ -8,13 +13,4 @@ export type {
   CodeProps,
   FormulaProps,
 } from './Editor/types';
-export { TextLines as Viewer } from './TextLines';
 export type { Props as ViewerProps } from './TextLines/types';
-export {
-  defaultDecorationSettings,
-  defaultLinkNameRegex,
-  defaultLinkStyle,
-  defaultLinkOverriddenStyleOnHover,
-  defaultCodeStyle,
-  defaultFormulaStyle,
-} from './TextLines/constants';

@@ -1,32 +1,20 @@
-import { unittest } from '../utils/unit';
-import { BaseTestCaseGroup, BaseTestCase } from '../utils/unit/types';
+import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
 
-import { defaultDecorationSettings } from '../../src/TextLines/constants';
 import { parseText } from '../../src/TextLines/parser';
 import { Node, ParsingOptions } from '../../src/TextLines/parser/types';
 
-interface TestCaseGroup extends BaseTestCaseGroup<TestCase> {
-  groupName: string;
-  options: {
-    taggedLinkPatterns: string[];
-    disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean };
-  };
-  testCases: TestCase[];
-}
-
 interface TestCase extends BaseTestCase {
-  testName: string;
+  name: string;
   inputLines: string[];
   expectedNodes: Node[];
 }
 
-unittest<TestCase, TestCaseGroup>('function', 'TextLines', 'parseText', (group, testCase) => {
+fixtureTest<TestCase>('parseText', 'TextLines', 'parseText', (testCase) => {
   const options: ParsingOptions = {
-    decorationSettings: defaultDecorationSettings,
-    disabledMap: group.options.disabledMap,
-    taggedLinkRegexes: group.options.taggedLinkPatterns.map((pattern) => RegExp(pattern)),
+    disabledMap: { bracketLink: false, hashTag: false, code: false, formula: false },
+    taggedLinkRegexes: [],
     syntax: 'bracket',
   };
   const actualNodes = parseText(testCase.inputLines.join('\n'), options);
-  expect(actualNodes).toEqual(testCase.expectedNodes);
+  expect(actualNodes).toMatchObject(testCase.expectedNodes);
 });

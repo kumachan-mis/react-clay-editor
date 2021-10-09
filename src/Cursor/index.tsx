@@ -112,7 +112,8 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
           <li
             key={index}
             aria-selected={suggestionIndex == index}
-            className={constants.item.className(index)}
+            className={constants.item.className}
+            data-selectid={constants.item.selectId(index)}
             onMouseDown={(event) => props.onSuggectionMouseDown(event)}
           >
             {suggestion}

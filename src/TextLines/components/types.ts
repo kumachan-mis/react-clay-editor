@@ -16,7 +16,6 @@ export interface LineGroupContentProps {
 
 export interface LineProps {
   lineIndex: number;
-  defaultFontSize: number;
   divProps?: React.ComponentProps<'div'>;
 }
 
@@ -45,8 +44,3 @@ export interface CharProps {
   charIndex: number;
   spanProps?: React.ComponentProps<'span'>;
 }
-
-export type AnchorWithHoverStyleProps = React.ComponentProps<'a'> & {
-  overriddenStyleOnHover?: React.CSSProperties;
-  cursorOn: boolean;
-};

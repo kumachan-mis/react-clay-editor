@@ -56,7 +56,8 @@ export const CursorConstants = {
       className: styles.suggestionContainer,
     },
     item: {
-      className: (index: number): string => `${styles.suggestionItem} Item${index}`,
+      className: styles.suggestionItem,
+      selectId: (index: number): string => `suggestion-item-${index}`,
     },
   },
 };

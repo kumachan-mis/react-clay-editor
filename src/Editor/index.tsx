@@ -139,10 +139,11 @@ export const Editor: React.FC<Props> = (props) => {
   }, [handleOnEditorBlur]);
 
   return (
-    <div style={props.style}>
-      <div className={EditorConstants.root.className} ref={rootRef}>
+    <div className="react-realtime-markup-editor" style={props.style}>
+      <div className={EditorConstants.root.className} data-selectid={EditorConstants.root.selectId} ref={rootRef}>
         <div
-          className={EditorConstants.editor.className}
+          className={EditorConstants.body.className}
+          data-selectid={EditorConstants.body.selectId}
           onMouseDown={_handleOnMouseDown}
           onClick={createMouseEventHandler(handleOnClick)}
         >
@@ -166,7 +167,6 @@ export const Editor: React.FC<Props> = (props) => {
             text={props.text}
             syntax={props.syntax}
             cursorCoordinate={state.cursorCoordinate}
-            decorationSettings={props.textProps?.decorationSettings}
             bracketLinkProps={props.bracketLinkProps}
             hashTagProps={props.hashTagProps}
             codeProps={props.codeProps}

@@ -1,47 +1,27 @@
 {
-  "testCaseGroups": [
+  "testCases": [
     {
-      "groupName": "should parse correctly when all syntaxes are enabled",
-      "options": {
-        "disabledMap": {
-          "bracketLink": false,
-          "hashTag": false,
-          "code": false,
-          "formula": false
-        },
-        "taggedLinkPatterns": []
-      },
-      "testCases": [
+      "name": "normal text",
+      "inputLines": ["hello world"],
+      "expectedNodes": [
         {
-          "testName": "should parse normal text correctly",
-          "inputLines": ["hello world"],
-          "expectedNodes": [
+          "type": "normalLine",
+          "children": [
             {
-              "type": "normalLine",
-              "lineIndex": 0,
-              "contentLength": 11,
-              "children": [
-                {
-                  "type": "normal",
-                  "lineIndex": 0,
-                  "range": [0, 11],
-                  "text": "hello world"
-                }
-              ]
+              "type": "normal",
+              "text": "hello world"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "empty text",
+      "inputLines": [""],
+      "expectedNodes": [
         {
-          "testName": "should parse empty text correctly",
-          "inputLines": [""],
-          "expectedNodes": [
-            {
-              "type": "normalLine",
-              "lineIndex": 0,
-              "contentLength": 0,
-              "children": []
-            }
-          ]
+          "type": "normalLine",
+          "children": []
         }
       ]
     }
