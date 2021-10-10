@@ -1,5 +1,3 @@
-import './style.global.css';
-
 export { Editor } from './Editor';
 export { TextLines as Viewer } from './TextLines';
 export { defaultLinkNameRegex } from './TextLines/constants';
