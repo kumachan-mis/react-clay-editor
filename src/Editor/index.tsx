@@ -140,7 +140,12 @@ export const Editor: React.FC<Props> = (props) => {
 
   return (
     <div className="react-realtime-markup-editor" style={props.style}>
-      <div className={EditorConstants.root.className} data-selectid={EditorConstants.root.selectId} ref={rootRef}>
+      <div
+        className={EditorConstants.root.className}
+        data-selectid={EditorConstants.root.selectId}
+        data-testid={EditorConstants.root.selectId}
+        ref={rootRef}
+      >
         <div
           className={EditorConstants.body.className}
           data-selectid={EditorConstants.body.selectId}
