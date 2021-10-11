@@ -1,4 +1,4 @@
-:global(.react-realtime-markup-editor) {
+.sample {
   width: calc(48vw - 30px);
   height: calc(96vh - 30px);
   margin: 10px;
@@ -7,22 +7,22 @@
   display: inline-block;
 }
 
-:global(.react-realtime-markup-editor-link).github {
+.github {
   color: #595f6e;
   border-bottom: solid 1px;
+
+  &:hover {
+    color: #08090b;
+    font-weight: 500;
+  }
 }
 
-:global(.react-realtime-markup-editor-link).github:hover {
-  color: #08090b;
-  font-weight: 500;
-}
-
-:global(.react-realtime-markup-editor-link).npm {
+.npm {
   color: #f75e8a;
   border-bottom: solid 1px;
-}
 
-:global(.react-realtime-markup-editor-link).npm:hover {
-  color: #e14978;
-  font-weight: 500;
+  &:hover {
+    color: #e14978;
+    font-weight: 500;
+  }
 }

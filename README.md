@@ -197,6 +197,7 @@ A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
 | `codeProps`          | `CodeProps`                              | optional          | see [CodeProps](#CodeProps)               | settings of code strings<br>details: [CodeProps](#CodeProps)                                                        |
 | `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
 | `readonly`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
+| `className`          | `string`                                 | optional          | `undefined`                               | className of `Editor`                                                                                               |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
 ### TextProps

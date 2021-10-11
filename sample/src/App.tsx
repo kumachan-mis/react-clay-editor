@@ -218,6 +218,7 @@ export const App: React.FC = () => {
               suggestions: ['react-realtime-markup-editor'],
             },
           }}
+          className={styles.sample}
         />
       ))}
     </>

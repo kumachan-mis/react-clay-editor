@@ -2,7 +2,7 @@ import styles from './style.css';
 
 export const EditorConstants = {
   editor: {
-    className: 'react-realtime-markup-editor',
+    className: styles.editor,
   },
   root: {
     className: styles.root,
