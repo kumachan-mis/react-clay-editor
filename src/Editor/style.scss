@@ -21,9 +21,13 @@
     cursor: text;
   }
 
-  :global(.editor-link:hover) {
+  :global(.editor-link):hover {
     color: #425a9d;
     cursor: pointer;
+  }
+
+  :global(.editor-link)[data-embeded-link-active='false'] {
+    cursor: text;
   }
 
   :global(.editor-text-decoration-normal) {

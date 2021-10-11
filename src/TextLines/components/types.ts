@@ -44,3 +44,8 @@ export interface CharProps {
   charIndex: number;
   spanProps?: React.ComponentProps<'span'>;
 }
+
+export interface EmbededLinkProps {
+  cursorOn: boolean;
+  anchorProps?: React.ComponentProps<'a'>;
+}
