@@ -16,6 +16,45 @@
       ]
     },
     {
+      "name": "hashtag link",
+      "inputLines": ["standard #hashtagtest, #hashtag_test(snake_case) and #hashtag-test with kebab-case."],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "normal",
+              "text": "standard "
+            },
+            {
+              "type": "hashTag",
+              "hashTag": "#hashtagtest"
+            },
+            {
+              "type": "normal",
+              "text": ", "
+            },
+            {
+              "type": "hashTag",
+              "hashTag": "#hashtag_test"
+            },
+            {
+              "type": "normal",
+              "text": "(snake_case) and "
+            },
+            {
+              "type": "hashTag",
+              "hashTag": "#hashtag-test"
+            },
+            {
+              "type": "normal",
+              "text": " with kebab-case."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "empty text",
       "inputLines": [""],
       "expectedNodes": [

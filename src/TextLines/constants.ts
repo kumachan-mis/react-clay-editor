@@ -101,7 +101,7 @@ export const TextLinesConstants = {
         return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
       },
       bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
-      hashTag: /^(?<left>.*?)(?<hashTag>#\S+)(?<right>.*)$/,
+      hashTag: /^(?<left>.*?)(?<hashTag>#[^\s!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]+)(?<right>.*)$/,
       normal: /^(?<text>.+)$/,
     },
   },
