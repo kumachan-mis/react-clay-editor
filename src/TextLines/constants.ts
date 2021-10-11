@@ -7,24 +7,24 @@ export const defaultLinkNameRegex = /[^[\]]+/;
 export const TextLinesConstants = {
   className: styles.textlines,
   quotation: {
-    className: 'editor-quotation',
+    className: 'react-realtime-markup-editor-quotation',
   },
   code: {
-    className: 'editor-code',
+    className: 'react-realtime-markup-editor-code',
   },
   formula: {
-    className: 'editor-formula',
+    className: 'react-realtime-markup-editor-formula',
   },
   link: {
-    className: 'editor-link',
+    className: 'react-realtime-markup-editor-link',
   },
   decoration: {
     className: (decoration: Decoration): string => {
       let ret = '';
-      if (decoration.fontlevel != 'normal') ret = `editor-text-decoration-${decoration.fontlevel}`;
-      if (decoration.bold) ret += ' editor-text-decoration-bold';
-      if (decoration.italic) ret += ' editor-text-decoration-italic';
-      if (decoration.underline) ret += ' editor-text-decoration-underline';
+      if (decoration.fontlevel != 'normal') ret = `react-realtime-markup-editor-decoration-${decoration.fontlevel}`;
+      if (decoration.bold) ret += ' react-realtime-markup-editor-decoration-bold';
+      if (decoration.italic) ret += ' react-realtime-markup-editor-decoration-italic';
+      if (decoration.underline) ret += ' react-realtime-markup-editor-decoration-underline';
       return ret;
     },
   },
@@ -45,7 +45,7 @@ export const TextLinesConstants = {
     },
   },
   line: {
-    className: mergeClassNames(styles.line, 'editor-text-decoration-normal'),
+    className: mergeClassNames(styles.line, 'editor-decoration-normal'),
     selectId: (lineIndex: number): string => `line-L${lineIndex}`,
     selectIdRegex: RegExp('line-L(?<lineIndex>\\d+)'),
     indent: {

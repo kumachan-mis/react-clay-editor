@@ -135,7 +135,7 @@ export const Editor: React.FC<Props> = (props) => {
   }, [handleOnEditorBlur]);
 
   return (
-    <div className="react-realtime-markup-editor" style={props.style}>
+    <div className={EditorConstants.editor.className} style={props.style}>
       <div
         className={EditorConstants.root.className}
         data-selectid={EditorConstants.root.selectId}

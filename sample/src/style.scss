@@ -5,24 +5,24 @@
   border: solid 1px;
   padding: 5px;
   display: inline-block;
+}
 
-  :global(.editor-link).github {
-    color: #595f6e;
-    border-bottom: solid 1px;
-  }
+:global(.react-realtime-markup-editor-link).github {
+  color: #595f6e;
+  border-bottom: solid 1px;
+}
 
-  :global(.editor-link).github:hover {
-    color: #08090b;
-    font-weight: 500;
-  }
+:global(.react-realtime-markup-editor-link).github:hover {
+  color: #08090b;
+  font-weight: 500;
+}
 
-  :global(.editor-link).npm {
-    color: #f75e8a;
-    border-bottom: solid 1px;
-  }
+:global(.react-realtime-markup-editor-link).npm {
+  color: #f75e8a;
+  border-bottom: solid 1px;
+}
 
-  :global(.editor-link).npm:hover {
-    color: #e14978;
-    font-weight: 500;
-  }
+:global(.react-realtime-markup-editor-link).npm:hover {
+  color: #e14978;
+  font-weight: 500;
 }
