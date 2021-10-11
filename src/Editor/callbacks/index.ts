@@ -125,10 +125,10 @@ export function handleOnKeyDown(
   state: State,
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
-  event.preventDefault();
-
   const command = shortcutCommand(event);
   if (!state.cursorCoordinate || state.isComposing || (event.key.length == 1 && !command)) return [text, state];
+
+  event.preventDefault();
 
   switch (event.key) {
     case 'Tab': {
