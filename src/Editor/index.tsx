@@ -93,28 +93,24 @@ export const Editor: React.FC<Props> = (props) => {
     [createMouseEventHandler]
   );
 
-  const handleOnEditorBlur = React.useCallback(
-    (event: MouseEvent) => {
-      if (
-        !props.readonly &&
-        state.cursorCoordinate &&
-        rootRef.current &&
-        !rootRef.current.contains(event.target as Node)
-      ) {
-        setState({
-          ...state,
-          cursorCoordinate: undefined,
-          textAreaValue: '',
-          isComposing: false,
-          textSelection: undefined,
-          selectionWithMouse: 'inactive',
-          suggestionType: 'none',
-          suggestions: [],
-          suggestionIndex: -1,
-        });
-      }
-    },
-    [props.readonly, state, setState, rootRef]
+  const handleOnEditorBlur = React.useCallback(() => {
+    if (props.readonly) return;
+    setState({
+      ...state,
+      cursorCoordinate: undefined,
+      textAreaValue: '',
+      isComposing: false,
+      textSelection: undefined,
+      selectionWithMouse: 'inactive',
+      suggestionType: 'none',
+      suggestions: [],
+      suggestionIndex: -1,
+    });
+  }, [props.readonly, state, setState]);
+
+  const handleOnPreventEditorBlur = React.useCallback(
+    (event: React.MouseEvent) => event.nativeEvent.stopImmediatePropagation(),
+    []
   );
 
   React.useEffect(() => {
@@ -144,6 +140,7 @@ export const Editor: React.FC<Props> = (props) => {
         className={EditorConstants.root.className}
         data-selectid={EditorConstants.root.selectId}
         data-testid={EditorConstants.root.selectId}
+        onMouseDown={handleOnPreventEditorBlur}
         ref={rootRef}
       >
         <div
