@@ -145,13 +145,9 @@ const Node: React.FC<NodeProps> = ({
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
-        <LineGroup
-          fromLineIndex={from + 1}
-          toLineIndex={trailingMeta ? to - 1 : to}
-          divProps={{ onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
-        >
+        <LineGroup fromLineIndex={from + 1} toLineIndex={trailingMeta ? to - 1 : to}>
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ className }}>
+          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ ...spanElementProps, className }}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
           </LineGroupContent>
         </LineGroup>
@@ -206,7 +202,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             contentLength={formula.length}
-            spanProps={{ className }}
+            spanProps={{ ...spanElementProps, className }}
           >
             {[...formula].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -347,12 +343,12 @@ const Node: React.FC<NodeProps> = ({
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
           toCharIndex={to - trailingMeta.length}
-          spanProps={{ className, onMouseDown: (event) => event.nativeEvent.stopImmediatePropagation() }}
+          spanProps={{ ...spanElementProps, className }}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
         </CharGroup>
       ) : (
-        <span style={spanElementProps?.style}>
+        <span {...spanElementProps} className={className}>
           {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {char}
