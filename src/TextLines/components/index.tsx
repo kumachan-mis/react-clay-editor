@@ -163,7 +163,7 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
 };
 
 export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps = {}, children }) => {
-  const constants = TextLinesConstants.link;
+  const constants = TextLinesConstants.embededLink;
   const { className, onClick, onMouseEnter, onMouseLeave, ...rest } = anchorProps;
   const [active, setActive] = React.useState(false);
 
@@ -183,7 +183,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps 
         else event.preventDefault();
       }}
       {...rest}
-      data-embeded-link-active={active}
+      data-active={active}
     >
       {children}
     </a>

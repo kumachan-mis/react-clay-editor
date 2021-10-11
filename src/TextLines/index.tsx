@@ -27,6 +27,7 @@ export const TextLines: React.FC<Props> = ({
   taggedLinkPropsMap = {},
   codeProps = {},
   formulaProps = {},
+  className,
   style,
 }) => {
   const nodes = React.useMemo(() => {
@@ -54,7 +55,7 @@ export const TextLines: React.FC<Props> = ({
   ]);
 
   return (
-    <div className={TextLinesConstants.className} style={style}>
+    <div className={mergeClassNames(TextLinesConstants.className, className)} style={style}>
       {nodes.map((node, index) => (
         <Node
           key={index}

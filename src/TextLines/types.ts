@@ -11,6 +11,7 @@ export interface Props {
   taggedLinkPropsMap?: TaggedLinkPropsMap;
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
+  className?: string;
   style?: React.CSSProperties;
 }
 

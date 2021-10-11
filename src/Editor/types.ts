@@ -49,6 +49,7 @@ export interface Props {
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   readonly?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 

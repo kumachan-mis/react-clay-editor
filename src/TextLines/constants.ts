@@ -7,25 +7,25 @@ export const defaultLinkNameRegex = /[^[\]]+/;
 export const TextLinesConstants = {
   className: styles.textlines,
   quotation: {
-    className: 'editor-quotation',
+    className: styles.quotation,
   },
   code: {
-    className: 'editor-code',
+    className: styles.code,
   },
   formula: {
-    className: 'editor-formula',
+    className: styles.formula,
   },
-  link: {
-    className: 'editor-link',
+  embededLink: {
+    className: styles.embededLink,
   },
   decoration: {
     className: (decoration: Decoration): string => {
-      let ret = '';
-      if (decoration.fontlevel != 'normal') ret = `editor-text-decoration-${decoration.fontlevel}`;
-      if (decoration.bold) ret += ' editor-text-decoration-bold';
-      if (decoration.italic) ret += ' editor-text-decoration-italic';
-      if (decoration.underline) ret += ' editor-text-decoration-underline';
-      return ret;
+      const classNames: string[] = [];
+      if (decoration.fontlevel != 'normal') classNames.push(styles[decoration.fontlevel]);
+      if (decoration.bold) classNames.push(styles.bold);
+      if (decoration.italic) classNames.push(styles.italic);
+      if (decoration.underline) classNames.push(styles.underline);
+      return mergeClassNames(...classNames);
     },
   },
   lineGroup: {
@@ -45,7 +45,7 @@ export const TextLinesConstants = {
     },
   },
   line: {
-    className: mergeClassNames(styles.line, 'editor-text-decoration-normal'),
+    className: mergeClassNames(styles.line, styles.normal),
     selectId: (lineIndex: number): string => `line-L${lineIndex}`,
     selectIdRegex: RegExp('line-L(?<lineIndex>\\d+)'),
     indent: {

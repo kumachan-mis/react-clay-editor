@@ -20,6 +20,7 @@ import {
 import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
 import { TextLines } from '../TextLines';
+import { mergeClassNames } from '../common/utils';
 
 export const Editor: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({
@@ -135,7 +136,7 @@ export const Editor: React.FC<Props> = (props) => {
   }, [handleOnEditorBlur]);
 
   return (
-    <div className="react-realtime-markup-editor" style={props.style}>
+    <div className={mergeClassNames(EditorConstants.editor.className, props.className)} style={props.style}>
       <div
         className={EditorConstants.root.className}
         data-selectid={EditorConstants.root.selectId}
