@@ -9,6 +9,7 @@ import {
   LineContentProps,
   CharGroupProps,
   CharProps,
+  EmbededLinkProps,
 } from './types';
 import { TextLinesConstants } from '../constants';
 import { mergeClassNames } from '../../common/utils';
@@ -158,5 +159,33 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
     >
       <span>{children}</span>
     </span>
+  );
+};
+
+export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps = {}, children }) => {
+  const constants = TextLinesConstants.link;
+  const { className, onClick, onMouseEnter, onMouseLeave, ...rest } = anchorProps;
+  const [active, setActive] = React.useState(false);
+
+  return (
+    <a
+      className={mergeClassNames(constants.className, className)}
+      onMouseEnter={(event) => {
+        onMouseEnter?.(event);
+        setActive(!cursorOn);
+      }}
+      onMouseLeave={(event) => {
+        onMouseLeave?.(event);
+        setActive(false);
+      }}
+      onClick={(event) => {
+        if (active) onClick?.(event);
+        else event.preventDefault();
+      }}
+      {...rest}
+      data-embeded-link-active={active}
+    >
+      {children}
+    </a>
   );
 };

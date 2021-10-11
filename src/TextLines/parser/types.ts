@@ -6,9 +6,9 @@ export interface ParsingContext {
 }
 
 export interface ParsingOptions {
-  taggedLinkRegexes: RegExp[];
-  disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
   syntax: 'bracket' | 'markdown';
+  disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
+  taggedLinkRegexes: RegExp[];
 }
 
 export interface Decoration {

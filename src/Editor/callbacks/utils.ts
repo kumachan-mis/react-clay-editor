@@ -238,11 +238,20 @@ export function positionToCursorCoordinate(
       const charRect = charElement?.firstElementChild?.getBoundingClientRect();
       if (!charRect) continue;
 
-      const [dx, dy] = [charRect.left - x, (charRect.top + charRect.bottom) / 2 - y];
-      const distance = dx * dx + lineElement.clientWidth * dy * dy;
-      if (distance <= minDistance) {
-        minDistance = distance;
+      const [ldx, ldy] = [charRect.left - x, (charRect.top + charRect.bottom) / 2 - y];
+      const leftDistance = ldx * ldx + lineElement.clientWidth * ldy * ldy;
+      if (leftDistance <= minDistance) {
+        minDistance = leftDistance;
         charIndex = index;
+      }
+
+      if (index == currentLine.length) break;
+
+      const [rdx, rdy] = [charRect.right - x, (charRect.top + charRect.bottom) / 2 - y];
+      const rightDistance = rdx * rdx + lineElement.clientWidth * rdy * rdy;
+      if (rightDistance <= minDistance) {
+        minDistance = rightDistance;
+        charIndex = index + 1;
       }
     }
 

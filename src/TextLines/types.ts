@@ -21,7 +21,7 @@ export interface NodeProps {
   taggedLinkPropsMap: TaggedLinkPropsMap;
   codeProps: CodeProps;
   formulaProps: FormulaProps;
-  curcorLineIndex: number | undefined;
+  cursorLineIndex: number | undefined;
 }
 
 export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };

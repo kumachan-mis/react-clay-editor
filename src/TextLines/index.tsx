@@ -12,6 +12,7 @@ import {
   LineContent,
   CharGroup,
   Char,
+  EmbededLink,
 } from './components';
 import { parseText, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
@@ -28,19 +29,29 @@ export const TextLines: React.FC<Props> = ({
   formulaProps = {},
   style,
 }) => {
-  const options: ParsingOptions = {
-    taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
-      TextLinesConstants.regexes.common.taggedLink(tagName, linkProps.linkNameRegex)
-    ),
-    disabledMap: {
-      bracketLink: bracketLinkProps.disabled,
-      hashTag: hashTagProps.disabled,
-      code: codeProps.disabled,
-      formula: formulaProps.disabled,
-    },
+  const nodes = React.useMemo(() => {
+    const options: ParsingOptions = {
+      syntax,
+      disabledMap: {
+        bracketLink: bracketLinkProps.disabled,
+        hashTag: hashTagProps.disabled,
+        code: codeProps.disabled,
+        formula: formulaProps.disabled,
+      },
+      taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
+        TextLinesConstants.regexes.common.taggedLink(tagName, linkProps.linkNameRegex)
+      ),
+    };
+    return parseText(text, options);
+  }, [
     syntax,
-  };
-  const nodes = parseText(text, options);
+    bracketLinkProps.disabled,
+    codeProps.disabled,
+    formulaProps.disabled,
+    hashTagProps.disabled,
+    taggedLinkPropsMap,
+    text,
+  ]);
 
   return (
     <div className={TextLinesConstants.className} style={style}>
@@ -53,7 +64,7 @@ export const TextLines: React.FC<Props> = ({
           taggedLinkPropsMap={taggedLinkPropsMap}
           codeProps={codeProps}
           formulaProps={formulaProps}
-          curcorLineIndex={cursorCoordinate?.lineIndex}
+          cursorLineIndex={cursorCoordinate?.lineIndex}
         />
       ))}
     </div>
@@ -67,7 +78,7 @@ const Node: React.FC<NodeProps> = ({
   taggedLinkPropsMap,
   codeProps,
   formulaProps,
-  curcorLineIndex,
+  cursorLineIndex,
 }) => {
   switch (node.type) {
     case 'blockCode': {
@@ -81,7 +92,7 @@ const Node: React.FC<NodeProps> = ({
             taggedLinkPropsMap={taggedLinkPropsMap}
             codeProps={codeProps}
             formulaProps={formulaProps}
-            curcorLineIndex={curcorLineIndex}
+            cursorLineIndex={cursorLineIndex}
           />
           {children.map((child, index) => (
             <Node
@@ -92,7 +103,7 @@ const Node: React.FC<NodeProps> = ({
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
-              curcorLineIndex={curcorLineIndex}
+              cursorLineIndex={cursorLineIndex}
             />
           ))}
           {trailingMeta && (
@@ -103,7 +114,7 @@ const Node: React.FC<NodeProps> = ({
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
-              curcorLineIndex={curcorLineIndex}
+              cursorLineIndex={cursorLineIndex}
             />
           )}
         </>
@@ -140,7 +151,7 @@ const Node: React.FC<NodeProps> = ({
       const { facingMeta, children, trailingMeta } = node;
       const [from, to] = node.range;
       const formula = children.map((child) => child.formulaLine).join('\n');
-      const cursorOn = curcorLineIndex !== undefined && from <= curcorLineIndex && curcorLineIndex <= to;
+      const cursorOn = cursorLineIndex !== undefined && from <= cursorLineIndex && cursorLineIndex <= to;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
@@ -160,7 +171,7 @@ const Node: React.FC<NodeProps> = ({
             taggedLinkPropsMap={taggedLinkPropsMap}
             codeProps={codeProps}
             formulaProps={formulaProps}
-            curcorLineIndex={curcorLineIndex}
+            cursorLineIndex={cursorLineIndex}
           />
           {children.map((child, index) => (
             <Node
@@ -171,7 +182,7 @@ const Node: React.FC<NodeProps> = ({
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
-              curcorLineIndex={curcorLineIndex}
+              cursorLineIndex={cursorLineIndex}
             />
           ))}
           {trailingMeta && (
@@ -182,7 +193,7 @@ const Node: React.FC<NodeProps> = ({
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
-              curcorLineIndex={curcorLineIndex}
+              cursorLineIndex={cursorLineIndex}
             />
           )}
         </>
@@ -215,7 +226,7 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'quotation': {
       const { lineIndex, indentDepth, contentLength, meta, children } = node;
-      const cursorOn = curcorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex == lineIndex;
 
       return (
         <Line lineIndex={lineIndex}>
@@ -240,7 +251,7 @@ const Node: React.FC<NodeProps> = ({
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
-                curcorLineIndex={curcorLineIndex}
+                cursorLineIndex={cursorLineIndex}
               />
             ))}
           </LineContent>
@@ -265,7 +276,7 @@ const Node: React.FC<NodeProps> = ({
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
-                curcorLineIndex={curcorLineIndex}
+                cursorLineIndex={cursorLineIndex}
               />
             ))}
           </LineContent>
@@ -287,7 +298,7 @@ const Node: React.FC<NodeProps> = ({
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
-                curcorLineIndex={curcorLineIndex}
+                cursorLineIndex={cursorLineIndex}
               />
             ))}
           </LineContent>
@@ -297,7 +308,7 @@ const Node: React.FC<NodeProps> = ({
     case 'inlineCode': {
       const { lineIndex, facingMeta, code, trailingMeta } = node;
       const [from, to] = node.range;
-      const cursorOn = curcorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex == lineIndex;
       const codeElementProps = codeProps.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
@@ -334,7 +345,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
       const displayMode = node.type == 'displayFormula';
       const [from, to] = node.range;
-      const cursorOn = curcorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex == lineIndex;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
@@ -360,7 +371,7 @@ const Node: React.FC<NodeProps> = ({
     case 'text': {
       const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
       const [from, to] = node.range;
-      const cursorOn = curcorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex == lineIndex;
 
       return (
         <span className={TextLinesConstants.decoration.className(decoration)}>
@@ -378,7 +389,7 @@ const Node: React.FC<NodeProps> = ({
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
-              curcorLineIndex={curcorLineIndex}
+              cursorLineIndex={cursorLineIndex}
             />
           ))}
           {[...trailingMeta].map((char, index) => (
@@ -396,13 +407,12 @@ const Node: React.FC<NodeProps> = ({
     case 'taggedLink': {
       const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
       const [from, to] = node.range;
-      const cursorOn = curcorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex == lineIndex;
       const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
       const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
-      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <a {...anchorElementProps} className={className}>
+        <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -435,18 +445,17 @@ const Node: React.FC<NodeProps> = ({
               {cursorOn ? char : '\u200b'}
             </Char>
           ))}
-        </a>
+        </EmbededLink>
       );
     }
     case 'bracketLink': {
       const { lineIndex, facingMeta, linkName, trailingMeta } = node;
       const [from, to] = node.range;
-      const cursorOn = curcorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex == lineIndex;
       const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
-      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <a {...anchorElementProps} className={className}>
+        <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {cursorOn ? char : '\u200b'}
@@ -470,23 +479,23 @@ const Node: React.FC<NodeProps> = ({
               {cursorOn ? char : '\u200b'}
             </Char>
           ))}
-        </a>
+        </EmbededLink>
       );
     }
     case 'hashTag': {
       const { lineIndex, hashTag } = node;
       const [from] = node.range;
+      const cursorOn = cursorLineIndex == lineIndex;
       const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
-      const className = mergeClassNames(TextLinesConstants.link.className, anchorElementProps?.className);
 
       return (
-        <a {...anchorElementProps} className={className}>
+        <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...hashTag].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
               {char}
             </Char>
           ))}
-        </a>
+        </EmbededLink>
       );
     }
     case 'normal': {
