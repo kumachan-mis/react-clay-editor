@@ -1,0 +1,14 @@
+{
+  "testCases": [
+    {
+      "name": "basic input",
+      "inputTyping": "abc",
+      "expectedLines": ["abc"]
+    },
+    {
+      "name": "newline input",
+      "inputTyping": "Hello{enter}World",
+      "expectedLines": ["Hello", "World"]
+    }
+  ]
+}

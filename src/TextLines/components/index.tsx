@@ -20,6 +20,7 @@ export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex
     <div
       className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(fromLineIndex, toLineIndex)}
+      data-testid={constants.selectId(fromLineIndex, toLineIndex)}
       {...rest}
     >
       {children}
@@ -67,6 +68,7 @@ export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }
     <div
       className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(lineIndex)}
+      data-testid={constants.selectId(lineIndex)}
       {...rest}
     >
       {children}
@@ -136,6 +138,7 @@ export const CharGroup: React.FC<CharGroupProps> = ({
     <span
       className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(lineIndex, fromCharIndex, toCharIndex)}
+      data-testid={constants.selectId(lineIndex, fromCharIndex, toCharIndex)}
       {...rest}
     >
       {children}
@@ -150,6 +153,7 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
     <span
       className={mergeClassNames(constants.className, className)}
       data-selectid={constants.selectId(lineIndex, charIndex)}
+      data-testid={constants.selectId(lineIndex, charIndex)}
       {...rest}
     >
       <span>{children}</span>

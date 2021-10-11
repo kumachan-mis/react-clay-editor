@@ -71,6 +71,7 @@
   "scripts": {
     "build": "rm -Rf dist && yarn gen-css && tsc --build tsconfig.json && cpx \"src/**/*.css\" dist",
     "build-sample": "rm -Rf sample/dist && yarn gen-css && webpack --config webpack.config.prod.js",
+    "clean": "rm -Rf dist sample/dist {src,sample}/**/*.css",
     "deploy": "gh-pages -d sample/dist",
     "gen-css": "rm -Rf {src,sample}/**/*.css && sass src:src sample:sample --no-source-map",
     "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
