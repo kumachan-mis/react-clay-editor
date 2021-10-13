@@ -1,5 +1,5 @@
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "[typescript]": {
     "editor.rulers": [120],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -18,6 +18,12 @@
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": true,
-
-  "githubPullRequests.defaultMergeMethod": "squash"
+  "githubPullRequests.defaultMergeMethod": "squash",
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
