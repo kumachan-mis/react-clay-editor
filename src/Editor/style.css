@@ -1,12 +1,11 @@
 .editor {
   width: 400px;
   height: 400px;
-
-  :global(.katex-display) {
-    display: inline-block;
-    margin: 0;
-    text-align: inherit;
-  }
+}
+.editor :global(.katex-display) {
+  display: inline-block;
+  margin: 0;
+  text-align: inherit;
 }
 
 .root {

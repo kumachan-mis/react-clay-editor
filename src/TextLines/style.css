@@ -89,13 +89,11 @@
   text-decoration-line: none;
   color: #5e8af7;
   cursor: text;
-
-  &:hover {
-    color: #425a9d;
-    cursor: pointer;
-  }
-
-  &[data-active='false'] {
-    cursor: text;
-  }
+}
+.embededLink:hover {
+  color: #425a9d;
+  cursor: pointer;
+}
+.embededLink[data-active='false'] {
+  cursor: text;
 }
