@@ -126,7 +126,6 @@ dist
 !.yarn/versions
 # Comment here to activate zero-installs
 .pnp.*
-
 # and uncomment here to activate zero-installs
 # !.yarn/cache
 
