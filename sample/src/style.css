@@ -10,19 +10,17 @@
 .github {
   color: #595f6e;
   border-bottom: solid 1px;
-
-  &:hover {
-    color: #08090b;
-    font-weight: 500;
-  }
+}
+.github:hover {
+  color: #08090b;
+  font-weight: 500;
 }
 
 .npm {
   color: #f75e8a;
   border-bottom: solid 1px;
-
-  &:hover {
-    color: #e14978;
-    font-weight: 500;
-  }
+}
+.npm:hover {
+  color: #e14978;
+  font-weight: 500;
 }

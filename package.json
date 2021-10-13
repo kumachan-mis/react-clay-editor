@@ -54,7 +54,6 @@
     "prettier": "2.4.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "sass": "^1.42.1",
     "style-loader": "3.3.0",
     "ts-jest": "27.0.5",
     "typescript": "4.4.3",
@@ -69,17 +68,16 @@
     "react-dom": ">=16.0.0"
   },
   "scripts": {
-    "build": "rm -Rf dist && yarn gen-css && tsc --build tsconfig.json && cpx \"src/**/*.css\" dist",
-    "build-sample": "rm -Rf sample/dist && yarn gen-css && webpack --config webpack.config.prod.js",
-    "clean": "rm -Rf dist sample/dist {src,sample}/**/*.css",
+    "build": "rm -Rf dist && tsc --build tsconfig.json && cpx \"src/**/*.css\" dist",
+    "build-sample": "rm -Rf sample/dist && webpack --config webpack.config.prod.js",
+    "clean": "rm -Rf dist sample/dist ",
     "deploy": "gh-pages -d sample/dist",
-    "gen-css": "rm -Rf {src,sample}/**/*.css && sass src:src sample:sample --no-source-map",
     "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
     "lint-fix": "yarn lint --fix",
     "predeploy": "yarn build-sample",
     "prepublishOnly": "yarn build",
     "format": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
-    "start": "rm -Rf sample/dist && yarn gen-css && webpack serve --config webpack.config.dev.js",
+    "start": "rm -Rf sample/dist && webpack serve --config webpack.config.dev.js",
     "test": "jest",
     "typecheck": "yarn tsc --noEmit"
   }
