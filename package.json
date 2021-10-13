@@ -24,7 +24,6 @@
   },
   "author": "Yuya Suwa (@kumachan-mis)",
   "license": "MIT",
-  "private": false,
   "devDependencies": {
     "@babel/core": "7.15.8",
     "@babel/preset-env": "7.15.8",
@@ -81,5 +80,6 @@
     "start": "rm -Rf sample/dist && webpack serve --config webpack.config.dev.js",
     "test": "jest",
     "typecheck": "yarn tsc --noEmit"
-  }
+  },
+  "packageManager": "yarn@3.0.2"
 }
