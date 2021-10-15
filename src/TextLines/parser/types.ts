@@ -138,7 +138,7 @@ export interface InlineFormulaNode {
 }
 
 export interface DecorationNode {
-  type: 'text';
+  type: 'decoration';
   lineIndex: number;
   range: [number, number];
   facingMeta: string;

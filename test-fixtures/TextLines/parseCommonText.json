@@ -1,0 +1,270 @@
+{
+  "testCases": [
+    {
+      "name": "quotation",
+      "inputLines": [
+        "> Genius is one percent inspiration and ninety-nine percent perspiration",
+        " > Anyone who has never made a mistake has never tried anything new"
+      ],
+      "expectedNodes": [
+        {
+          "type": "quotation",
+          "indentDepth": 0,
+          "children": [
+            {
+              "type": "normal",
+              "text": "Genius is one percent inspiration and ninety-nine percent perspiration"
+            }
+          ]
+        },
+        {
+          "type": "quotation",
+          "indentDepth": 1,
+          "children": [
+            {
+              "type": "normal",
+              "text": "Anyone who has never made a mistake has never tried anything new"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "code",
+      "inputLines": [
+        "`import { Editor } from 'react-realtime-markup-editor`",
+        "```",
+        "const SampleEditor: React.FC = () => {",
+        "  return <Editor />;",
+        "};",
+        "```",
+        "  ```",
+        "  function square(x: number): number {",
+        "    return x*x;",
+        "  }",
+        "// This is actually a normal text"
+      ],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "inlineCode",
+              "code": "import { Editor } from 'react-realtime-markup-editor"
+            }
+          ]
+        },
+        {
+          "type": "blockCode",
+          "facingMeta": {
+            "type": "blockCodeMeta",
+            "indentDepth": 0
+          },
+          "children": [
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 0,
+              "codeLine": "const SampleEditor: React.FC = () => {"
+            },
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 0,
+              "codeLine": "  return <Editor />;"
+            },
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 0,
+              "codeLine": "};"
+            }
+          ],
+          "trailingMeta": {
+            "type": "blockCodeMeta",
+            "indentDepth": 0
+          }
+        },
+        {
+          "type": "blockCode",
+          "facingMeta": {
+            "type": "blockCodeMeta",
+            "indentDepth": 2
+          },
+          "children": [
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 2,
+              "codeLine": "function square(x: number): number {"
+            },
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 2,
+              "codeLine": "  return x*x;"
+            },
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 2,
+              "codeLine": "}"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "normal",
+              "text": "// This is actually a normal text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "formula",
+      "inputLines": [
+        "$f(x)$",
+        "$$\\int_a^b f(x) dx$$",
+        "$$",
+        "\\int_a^b f(x) dx",
+        "$$",
+        "  $$",
+        "  \\sum_{n=1}^N a_n",
+        "g(x)"
+      ],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "inlineFormula",
+              "formula": "f(x)"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "displayFormula",
+              "formula": "\\int_a^b f(x) dx"
+            }
+          ]
+        },
+        {
+          "type": "blockFormula",
+          "facingMeta": {
+            "type": "blockFormulaMeta",
+            "indentDepth": 0
+          },
+          "children": [
+            {
+              "type": "blockFormulaLine",
+              "indentDepth": 0,
+              "formulaLine": "\\int_a^b f(x) dx"
+            }
+          ],
+          "trailingMeta": {
+            "type": "blockFormulaMeta",
+            "indentDepth": 0
+          }
+        },
+        {
+          "type": "blockFormula",
+          "facingMeta": {
+            "type": "blockFormulaMeta",
+            "indentDepth": 2
+          },
+          "children": [
+            {
+              "type": "blockFormulaLine",
+              "indentDepth": 2,
+              "formulaLine": "\\sum_{n=1}^N a_n"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "normal",
+              "text": "g(x)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "bracket link",
+      "inputLines": ["[brackettest]"],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "bracketLink",
+              "linkName": "brackettest"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hashtag link",
+      "inputLines": ["#hashtagtest, #hashtag_test, #hashtag-test."],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "hashTag",
+              "hashTag": "#hashtagtest"
+            },
+            {
+              "type": "normal",
+              "text": ", "
+            },
+            {
+              "type": "hashTag",
+              "hashTag": "#hashtag_test"
+            },
+            {
+              "type": "normal",
+              "text": ", "
+            },
+            {
+              "type": "hashTag",
+              "hashTag": "#hashtag-test"
+            },
+            {
+              "type": "normal",
+              "text": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "normal text",
+      "inputLines": ["hello world"],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "normal",
+              "text": "hello world"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "empty text",
+      "inputLines": [""],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
