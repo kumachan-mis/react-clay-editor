@@ -93,7 +93,7 @@ export const TextLinesConstants = {
       blockCodeLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>\\s{${indentDepth}})(?<codeLine>.*)$`),
       blockFormulaMeta: /^(?<indent>\s*)(?<formulaMeta>\$\$)$/,
       blockFormulaLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>\\s{${indentDepth}})(?<formulaLine>.*)$`),
-      quotation: /^(?<indent>\s*)> (?<content>.*)$/,
+      quotation: /^(?<indent>\s*)(?<meta>> )(?<content>.*)$/,
       inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
       displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
       inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,

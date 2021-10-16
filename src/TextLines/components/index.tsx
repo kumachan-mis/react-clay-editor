@@ -171,6 +171,11 @@ export const ItemBullet: React.FC<ItemBulletProps> = ({ lineIndex, indentDepth, 
       {...rest}
     >
       <CharGroup lineIndex={lineIndex} fromCharIndex={indentDepth} toCharIndex={indentDepth + bulletLength - 1}>
+        {[...Array(bulletLength).keys()].map((charIndex) => (
+          <Char key={charIndex} charIndex={indentDepth + charIndex} lineIndex={lineIndex}>
+            {'\u200b'}
+          </Char>
+        ))}
         <span className={constants.bullet.className} />
       </CharGroup>
     </span>
