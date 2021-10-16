@@ -14,7 +14,7 @@
       "name": "itemization enter (non-empty text line)",
       "inputTyping": [
         "-{space}xx{arrowleft}{enter}{arrowright}{enter}",
-        "{arrowleft}{arrowright}{space}{arrowright}{arrowright}yy{arrowleft}{enter}{arrowright}"
+        "{arrowleft}{arrowleft}{space}{arrowright}{arrowright}yy{arrowleft}{enter}{arrowright}"
       ],
       "expectedLines": ["- x", "- x", " - y", " - y"]
     },
