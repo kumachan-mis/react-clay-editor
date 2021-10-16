@@ -6,12 +6,12 @@
       "expectedLines": ["abc"]
     },
     {
-      "name": "newline",
+      "name": "enter",
       "inputTyping": ["Hello{enter}", "World"],
       "expectedLines": ["Hello", "World"]
     },
     {
-      "name": "quotation",
+      "name": "quotation enter",
       "inputTyping": ["> first quotation{enter}", "second quotation"],
       "expectedLines": ["> first quotation{enter}", "> second quotation"]
     }
