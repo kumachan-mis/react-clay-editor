@@ -9,7 +9,6 @@ import {
   LineContentProps,
   CharGroupProps,
   CharProps,
-  ItemBulletProps,
   EmbededLinkProps,
 } from './types';
 import { TextLinesConstants } from '../constants';
@@ -157,27 +156,6 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
       {...rest}
     >
       <span>{children}</span>
-    </span>
-  );
-};
-
-export const ItemBullet: React.FC<ItemBulletProps> = ({ lineIndex, indentDepth, bulletLength, spanProps = {} }) => {
-  const constants = TextLinesConstants.itemization;
-  const { className, style, ...rest } = spanProps;
-  return (
-    <span
-      className={mergeClassNames(constants.className, className)}
-      style={{ ...constants.style(indentDepth), ...style }}
-      {...rest}
-    >
-      <CharGroup lineIndex={lineIndex} fromCharIndex={indentDepth} toCharIndex={indentDepth + bulletLength - 1}>
-        {[...Array(bulletLength).keys()].map((charIndex) => (
-          <Char key={charIndex} charIndex={indentDepth + charIndex} lineIndex={lineIndex}>
-            {'\u200b'}
-          </Char>
-        ))}
-        <span className={constants.bullet.className} />
-      </CharGroup>
     </span>
   );
 };

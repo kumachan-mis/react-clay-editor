@@ -12,7 +12,6 @@ import {
   LineContent,
   CharGroup,
   Char,
-  ItemBullet,
   EmbededLink,
 } from './components';
 import { parseText, getHashTagName, getTagName } from './parser';
@@ -266,12 +265,25 @@ const Node: React.FC<NodeProps> = ({
     case 'itemization': {
       const { lineIndex, indentDepth, bullet, contentLength, children } = node;
       const lineLength = indentDepth + bullet.length + contentLength;
+      const cursorOn = cursorLineIndex == lineIndex;
+      const constants = TextLinesConstants.itemization;
 
       return (
         <Line lineIndex={lineIndex}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-          <ItemBullet lineIndex={lineIndex} indentDepth={indentDepth} bulletLength={bullet.length} />
+          <Char
+            charIndex={indentDepth}
+            lineIndex={lineIndex}
+            spanProps={{ className: constants.className, style: constants.style(indentDepth) }}
+          >
+            <span className={constants.bullet.className} />
+          </Char>
           <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
+            {[...Array(bullet.length - 1).keys()].map((charIndex) => (
+              <Char key={indentDepth + charIndex + 1} lineIndex={lineIndex} charIndex={indentDepth + charIndex + 1}>
+                {cursorOn ? ' ' : '\u200b'}
+              </Char>
+            ))}
             {children.map((child, index) => (
               <Node
                 key={index}

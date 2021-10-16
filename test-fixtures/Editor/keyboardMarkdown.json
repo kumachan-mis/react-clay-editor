@@ -25,7 +25,7 @@
     },
     {
       "name": "itemization backspace",
-      "inputTyping": ["-{space}i{backspace}{backspace}empty"],
+      "inputTyping": ["-{space}i{backspace}{backspace}{backspace}empty"],
       "expectedLines": ["empty"]
     }
   ]
