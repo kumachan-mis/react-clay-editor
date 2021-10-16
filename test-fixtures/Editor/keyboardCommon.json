@@ -13,7 +13,7 @@
     {
       "name": "quotation enter",
       "inputTyping": [">{space}first{space}quotation{enter}", "second{space}quotation"],
-      "expectedLines": ["> first quotation{enter}", "> second quotation"]
+      "expectedLines": ["> first quotation", "> second quotation"]
     },
     {
       "name": "quotation backspace",

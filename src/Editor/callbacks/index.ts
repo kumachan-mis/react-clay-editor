@@ -141,17 +141,18 @@ export function handleOnKeyDown(
       const [newText, newState] = insertText(text, state, '\n');
       if (!newState.cursorCoordinate) return [newText, newState];
 
+      const lines = newText.split('\n');
+      const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
+
       if (!props.syntax || props.syntax == 'bracket') {
-        const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
         const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
-        if (!groups) return [newText, newState];
-        return insertText(newText, newState, groups.indent + groups.bullet);
+        if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       } else if (props.syntax == 'markdown') {
-        const newPrevLine = newText.split('\n')[newState.cursorCoordinate.lineIndex - 1];
         const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
-        if (!groups) return [newText, newState];
-        return insertText(newText, newState, groups.indent + groups.bullet);
+        if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }
+      const groups = newPrevLine.match(TextLinesConstants.regexes.common.quotation)?.groups;
+      if (groups) return insertText(newText, newState, groups.indent + groups.meta);
 
       return [newText, newState];
     }
