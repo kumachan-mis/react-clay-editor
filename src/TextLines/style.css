@@ -1,6 +1,53 @@
+/**********************
+ *  General Stylings  *
+ **********************/
+
 .textlines {
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.char {
+  display: inline;
+}
+
+.charGroup {
+  display: inline-block;
+}
+
+.indent {
+  left: 0px;
+  top: 0px;
+  position: absolute;
+}
+
+.indentPad {
+  display: inline-block;
+  width: 1.5em;
+  overflow: hidden;
+}
+
+.content {
+  display: block;
+}
+
+.line {
+  display: block;
+  position: relative;
+}
+
+.lineGroup {
+  display: block;
+  position: relative;
+}
+
+/***************************
+ *  Syntax Based Stylings  *
+ ***************************/
+
+.itemBulletContent {
+  width: 1.5em;
+  position: absolute;
 }
 
 .itemBullet {
@@ -49,40 +96,6 @@
 
 .underline {
   border-bottom: 1px solid;
-}
-
-.lineGroup {
-  display: block;
-  position: relative;
-}
-
-.line {
-  display: block;
-  position: relative;
-}
-
-.indent {
-  left: 0px;
-  top: 0px;
-  position: absolute;
-}
-
-.indentPad {
-  display: inline-block;
-  width: 1.5em;
-  overflow: hidden;
-}
-
-.content {
-  display: block;
-}
-
-.charGroup {
-  display: inline-block;
-}
-
-.char {
-  display: inline;
 }
 
 .embededLink {

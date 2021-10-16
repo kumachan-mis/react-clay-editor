@@ -1,0 +1,324 @@
+{
+  "testCases": [
+    {
+      "name": "decoration text",
+      "inputLines": [
+        "[*** Largest Text][** Larger Text][* bold text][/ italic text][_ underlined text]",
+        "[*/ bold italic text][/* italic bold text][*// bold italic text]",
+        "[*_ bold underlined text][_* underlined bold text][*__ bold underlined text]",
+        "[/_ italic underlined text][_/ underlined italic text]",
+        "[*/_ bold italic underlined text]"
+      ],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "Largest Text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "largest",
+                "bold": true,
+                "italic": false,
+                "underline": false
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "Larger Text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "larger",
+                "bold": true,
+                "italic": false,
+                "underline": false
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "bold text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": false,
+                "underline": false
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "italic text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": false,
+                "italic": true,
+                "underline": false
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "underlined text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": false,
+                "italic": false,
+                "underline": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "bold italic text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": true,
+                "underline": false
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "italic bold text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": true,
+                "underline": false
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "bold italic text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": true,
+                "underline": false
+              }
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "bold underlined text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": false,
+                "underline": true
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "underlined bold text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": false,
+                "underline": true
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "bold underlined text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": false,
+                "underline": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "italic underlined text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": false,
+                "italic": true,
+                "underline": true
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "underlined italic text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": false,
+                "italic": true,
+                "underline": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "bold italic underlined text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": true,
+                "underline": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "itemization",
+      "inputLines": [
+        " itemized text",
+        "　 nested itemized text",
+        "\titemized text",
+        "\t\t\tnested itemized text",
+        "　箇条書きテキスト",
+        "　　　　ネストした箇条書きテキスト"
+      ],
+      "expectedNodes": [
+        {
+          "type": "itemization",
+          "indentDepth": 0,
+          "children": [
+            {
+              "type": "normal",
+              "text": "itemized text"
+            }
+          ]
+        },
+        {
+          "type": "itemization",
+          "indentDepth": 1,
+          "children": [
+            {
+              "type": "normal",
+              "text": "nested itemized text"
+            }
+          ]
+        },
+        {
+          "type": "itemization",
+          "indentDepth": 0,
+          "children": [
+            {
+              "type": "normal",
+              "text": "itemized text"
+            }
+          ]
+        },
+        {
+          "type": "itemization",
+          "indentDepth": 2,
+          "children": [
+            {
+              "type": "normal",
+              "text": "nested itemized text"
+            }
+          ]
+        },
+        {
+          "type": "itemization",
+          "indentDepth": 0,
+          "children": [
+            {
+              "type": "normal",
+              "text": "箇条書きテキスト"
+            }
+          ]
+        },
+        {
+          "type": "itemization",
+          "indentDepth": 3,
+          "children": [
+            {
+              "type": "normal",
+              "text": "ネストした箇条書きテキスト"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -9,12 +9,17 @@ interface TestCase extends BaseTestCase {
   expectedNodes: Node[];
 }
 
-fixtureTest<TestCase>('parseText', 'TextLines', 'parseText', (testCase) => {
-  const options: ParsingOptions = {
-    disabledMap: { bracketLink: false, hashTag: false, code: false, formula: false },
-    taggedLinkRegexes: [],
-    syntax: 'bracket',
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => void {
+  return (testCase) => {
+    const options: ParsingOptions = {
+      disabledMap: { bracketLink: false, hashTag: false, code: false, formula: false },
+      taggedLinkRegexes: [],
+      syntax,
+    };
+    const actualNodes = parseText(testCase.inputLines.join('\n'), options);
+    expect(actualNodes).toMatchObject(testCase.expectedNodes);
   };
-  const actualNodes = parseText(testCase.inputLines.join('\n'), options);
-  expect(actualNodes).toMatchObject(testCase.expectedNodes);
-});
+}
+
+fixtureTest<TestCase>('parseText', 'TextLines', ['parseCommonText', 'parseBracketText'], createTest('bracket'));
+fixtureTest<TestCase>('parseText', 'TextLines', ['parseCommonText', 'parseMarkdownText'], createTest('markdown'));

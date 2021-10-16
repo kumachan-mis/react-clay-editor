@@ -1,0 +1,32 @@
+{
+  "testCases": [
+    {
+      "name": "itemization enter (empty text line)",
+      "inputTyping": [
+        "-{space}item{space}1{enter}",
+        "item{space}2{enter}",
+        "{arrowleft}{arrowleft}{space}{arrowright}{arrowright}item{space}3{enter}",
+        "item{space}4"
+      ],
+      "expectedLines": ["- item 1", "- item 2", " - item 3", " - item 4"]
+    },
+    {
+      "name": "itemization enter (non-empty text line)",
+      "inputTyping": [
+        "-{space}xx{arrowleft}{enter}{arrowright}{enter}",
+        "{arrowleft}{arrowleft}{space}{arrowright}{arrowright}yy{arrowleft}{enter}{arrowright}"
+      ],
+      "expectedLines": ["- x", "- x", " - y", " - y"]
+    },
+    {
+      "name": "non-itemization enter",
+      "inputTyping": ["{space}item{space}1{enter}", "item{space}2"],
+      "expectedLines": [" item 1", "item 2"]
+    },
+    {
+      "name": "itemization backspace",
+      "inputTyping": ["-{space}i{backspace}{backspace}{backspace}empty"],
+      "expectedLines": ["empty"]
+    }
+  ]
+}

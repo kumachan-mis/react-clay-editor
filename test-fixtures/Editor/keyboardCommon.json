@@ -1,0 +1,24 @@
+{
+  "testCases": [
+    {
+      "name": "basic input",
+      "inputTyping": ["abc"],
+      "expectedLines": ["abc"]
+    },
+    {
+      "name": "enter",
+      "inputTyping": ["Hello{enter}", "World"],
+      "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "quotation enter",
+      "inputTyping": [">{space}first{space}quotation{enter}", "second{space}quotation"],
+      "expectedLines": ["> first quotation", "> second quotation"]
+    },
+    {
+      "name": "quotation backspace",
+      "inputTyping": [">{space}q{backspace}{backspace}empty"],
+      "expectedLines": ["empty"]
+    }
+  ]
+}

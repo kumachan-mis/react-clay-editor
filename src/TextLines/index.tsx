@@ -125,6 +125,7 @@ const Node: React.FC<NodeProps> = ({
     case 'blockCodeLine': {
       const { lineIndex, indentDepth } = node;
       const code = node.type == 'blockCodeMeta' ? node.codeMeta : node.codeLine;
+      const lineLength = indentDepth + code.length;
       const codeElementProps = codeProps.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
@@ -134,7 +135,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
-            contentLength={code.length}
+            lineLength={lineLength}
             spanProps={{ className }}
           >
             <code {...codeElementProps} className={className}>
@@ -204,6 +205,7 @@ const Node: React.FC<NodeProps> = ({
     case 'blockFormulaLine': {
       const { lineIndex, indentDepth } = node;
       const formula = node.type == 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
+      const lineLength = indentDepth + formula.length;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
@@ -213,7 +215,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
-            contentLength={formula.length}
+            lineLength={lineLength}
             spanProps={{ ...spanElementProps, className }}
           >
             {[...formula].map((char, index) => (
@@ -226,7 +228,8 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'quotation': {
-      const { lineIndex, indentDepth, contentLength, meta, children } = node;
+      const { lineIndex, indentDepth, meta, contentLength, children } = node;
+      const lineLength = indentDepth + meta.length + contentLength;
       const cursorOn = cursorLineIndex == lineIndex;
 
       return (
@@ -235,7 +238,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
-            contentLength={meta.length + contentLength}
+            lineLength={lineLength}
             spanProps={{ className: TextLinesConstants.quotation.className }}
           >
             {[...meta].map((char, index) => (
@@ -260,14 +263,27 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'itemization': {
-      const { lineIndex, indentDepth, contentLength, children } = node;
+      const { lineIndex, indentDepth, bullet, contentLength, children } = node;
+      const lineLength = indentDepth + bullet.length + contentLength;
+      const cursorOn = cursorLineIndex == lineIndex;
+      const constants = TextLinesConstants.itemization;
 
       return (
         <Line lineIndex={lineIndex}>
-          <LineIndent lineIndex={lineIndex} indentDepth={indentDepth + 1}>
-            <span className={TextLinesConstants.itemization.bullet.className} />
-          </LineIndent>
-          <LineContent lineIndex={lineIndex} indentDepth={indentDepth + 1} contentLength={contentLength}>
+          <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
+          <Char
+            charIndex={indentDepth}
+            lineIndex={lineIndex}
+            spanProps={{ className: constants.className, style: constants.style(indentDepth) }}
+          >
+            <span className={constants.bullet.className} />
+          </Char>
+          <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
+            {[...Array(bullet.length - 1).keys()].map((charIndex) => (
+              <Char key={indentDepth + charIndex + 1} lineIndex={lineIndex} charIndex={indentDepth + charIndex + 1}>
+                {cursorOn ? ' ' : '\u200b'}
+              </Char>
+            ))}
             {children.map((child, index) => (
               <Node
                 key={index}
@@ -289,7 +305,7 @@ const Node: React.FC<NodeProps> = ({
 
       return (
         <Line lineIndex={lineIndex}>
-          <LineContent lineIndex={lineIndex} indentDepth={0} contentLength={contentLength}>
+          <LineContent lineIndex={lineIndex} lineLength={contentLength}>
             {children.map((child, index) => (
               <Node
                 key={index}
@@ -369,7 +385,7 @@ const Node: React.FC<NodeProps> = ({
         </span>
       );
     }
-    case 'text': {
+    case 'decoration': {
       const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
       const [from, to] = node.range;
       const cursorOn = cursorLineIndex == lineIndex;

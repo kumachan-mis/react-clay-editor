@@ -137,7 +137,7 @@ function parseDecoration(text: string, context: ParsingContext, options: Parsing
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
-    type: 'text',
+    type: 'decoration',
     lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: `[${decostring} `,
@@ -189,7 +189,7 @@ function parseBold(text: string, context: ParsingContext, options: ParsingOption
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
-    type: 'text',
+    type: 'decoration',
     lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: '*',
@@ -211,7 +211,7 @@ function parseItalic(text: string, context: ParsingContext, options: ParsingOpti
   const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
-    type: 'text',
+    type: 'decoration',
     lineIndex: context.lineIndex,
     range: [from, to],
     facingMeta: '_',

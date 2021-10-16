@@ -144,7 +144,7 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
   const decoration = getHeadingStyle(heading);
 
   const childNode: DecorationNode = {
-    type: 'text',
+    type: 'decoration',
     lineIndex: context.lineIndex,
     range: [0, line.length],
     facingMeta: `${heading} `,
@@ -207,15 +207,15 @@ export function parseBracketItemization(
 
 export function parseQuotation(line: string, context: ParsingContext, options: ParsingOptions): QuotationNode {
   const regex = TextLinesConstants.regexes.common.quotation;
-  const { indent, content } = line.match(regex)?.groups as Record<string, string>;
+  const { indent, meta, content } = line.match(regex)?.groups as Record<string, string>;
 
   const node: QuotationNode = {
     type: 'quotation',
     lineIndex: context.lineIndex,
     indentDepth: indent.length,
     contentLength: content.length,
-    meta: '>',
-    children: parseContent(content, { ...context, charIndex: indent.length + 1 }, options),
+    meta,
+    children: parseContent(content, { ...context, charIndex: indent.length + meta.length }, options),
   };
 
   context.lineIndex++;

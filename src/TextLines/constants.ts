@@ -6,6 +6,13 @@ export const defaultLinkNameRegex = /[^[\]]+/;
 
 export const TextLinesConstants = {
   className: styles.textlines,
+  itemization: {
+    className: styles.itemBulletContent,
+    bullet: {
+      className: styles.itemBullet,
+    },
+    style: (indentDepth: number): React.CSSProperties => ({ marginLeft: `${1.5 * indentDepth}em` }),
+  },
   quotation: {
     className: styles.quotation,
   },
@@ -60,11 +67,6 @@ export const TextLinesConstants = {
       style: (indentDepth: number): React.CSSProperties => ({ marginLeft: `${1.5 * indentDepth}em` }),
     },
   },
-  itemization: {
-    bullet: {
-      className: styles.itemBullet,
-    },
-  },
   charGroup: {
     className: styles.charGroup,
     selectId: (lineIndex: number, from: number, to: number): string => `char-group-L${lineIndex}C${from}-${to}`,
@@ -81,7 +83,7 @@ export const TextLinesConstants = {
       decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
     },
     markdownSyntax: {
-      itemization: /^(?<indent>\s*)(?<bullet>[*-])(?<content>(.*)?)$/,
+      itemization: /^(?<indent>\s*)(?<bullet>[*-] )(?<content>(.*)?)$/,
       heading: /^(?<heading>#+) (?<body>.+)$/,
       bold: /^(?<left>.*?)\*(?<body>[^*\s](.*[^*\s])?)\*(?<right>.*)$/,
       italic: /^(?<left>.*?)_(?<body>[^_\s](.*[^_\s])?)_(?<right>.*)$/,
@@ -91,7 +93,7 @@ export const TextLinesConstants = {
       blockCodeLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>\\s{${indentDepth}})(?<codeLine>.*)$`),
       blockFormulaMeta: /^(?<indent>\s*)(?<formulaMeta>\$\$)$/,
       blockFormulaLine: (indentDepth: number): RegExp => RegExp(`^(?<indent>\\s{${indentDepth}})(?<formulaLine>.*)$`),
-      quotation: /^(?<indent>\s*)>(?<content>.*)$/,
+      quotation: /^(?<indent>\s*)(?<meta>> )(?<content>.*)$/,
       inlineCode: /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/,
       displayFormula: /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/,
       inlineFormula: /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/,

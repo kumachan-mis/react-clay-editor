@@ -77,7 +77,7 @@ export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }
   );
 };
 
-export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, spanProps = {}, children }) => {
+export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, spanProps = {} }) => {
   const constants = TextLinesConstants.line.indent;
   const { className, style, ...rest } = spanProps;
   return (
@@ -96,15 +96,15 @@ export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, 
           {' '}
         </Char>
       ))}
-      {children}
     </span>
   );
 };
 
 export const LineContent: React.FC<LineContentProps> = ({
   lineIndex,
-  indentDepth,
-  contentLength,
+  lineLength,
+  indentDepth = 0,
+  itemized = false,
   spanProps = {},
   children,
 }) => {
@@ -113,15 +113,13 @@ export const LineContent: React.FC<LineContentProps> = ({
   return (
     <span
       className={mergeClassNames(constants.className, className)}
-      style={{ ...constants.style(indentDepth), ...style }}
+      style={{ ...constants.style(indentDepth + (itemized ? 1 : 0)), ...style }}
       {...rest}
     >
       {children}
-      {contentLength !== undefined && (
-        <Char lineIndex={lineIndex} charIndex={indentDepth + contentLength}>
-          {' '}
-        </Char>
-      )}
+      <Char lineIndex={lineIndex} charIndex={lineLength}>
+        {' '}
+      </Char>
     </span>
   );
 };
