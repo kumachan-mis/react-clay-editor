@@ -12,7 +12,7 @@
     },
     {
       "name": "quotation enter",
-      "inputTyping": ["> first quotation{enter}", "second quotation"],
+      "inputTyping": [">{space}first{space}quotation{enter}", "second{space}quotation"],
       "expectedLines": ["> first quotation{enter}", "> second quotation"]
     },
     {
