@@ -3,6 +3,11 @@
   word-wrap: break-word;
 }
 
+.itemBulletContent {
+  width: 1.5em;
+  position: absolute;
+}
+
 .itemBullet {
   top: 0.5em;
   right: 0.75em;

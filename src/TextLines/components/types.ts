@@ -27,8 +27,9 @@ export interface LineIndentProps {
 
 export interface LineContentProps {
   lineIndex: number;
-  indentDepth: number;
-  contentLength?: number;
+  lineLength: number;
+  indentDepth?: number;
+  itemized?: boolean;
   spanProps?: React.ComponentProps<'span'>;
 }
 
@@ -42,6 +43,13 @@ export interface CharGroupProps {
 export interface CharProps {
   lineIndex: number;
   charIndex: number;
+  spanProps?: React.ComponentProps<'span'>;
+}
+
+export interface ItemBulletProps {
+  lineIndex: number;
+  indentDepth: number;
+  bulletLength: number;
   spanProps?: React.ComponentProps<'span'>;
 }
 

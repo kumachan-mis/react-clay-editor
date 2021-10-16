@@ -12,6 +12,7 @@ import {
   LineContent,
   CharGroup,
   Char,
+  ItemBullet,
   EmbededLink,
 } from './components';
 import { parseText, getHashTagName, getTagName } from './parser';
@@ -125,6 +126,7 @@ const Node: React.FC<NodeProps> = ({
     case 'blockCodeLine': {
       const { lineIndex, indentDepth } = node;
       const code = node.type == 'blockCodeMeta' ? node.codeMeta : node.codeLine;
+      const lineLength = indentDepth + code.length;
       const codeElementProps = codeProps.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
@@ -134,7 +136,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
-            contentLength={code.length}
+            lineLength={lineLength}
             spanProps={{ className }}
           >
             <code {...codeElementProps} className={className}>
@@ -204,6 +206,7 @@ const Node: React.FC<NodeProps> = ({
     case 'blockFormulaLine': {
       const { lineIndex, indentDepth } = node;
       const formula = node.type == 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
+      const lineLength = indentDepth + formula.length;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
@@ -213,7 +216,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
-            contentLength={formula.length}
+            lineLength={lineLength}
             spanProps={{ ...spanElementProps, className }}
           >
             {[...formula].map((char, index) => (
@@ -226,7 +229,8 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'quotation': {
-      const { lineIndex, indentDepth, contentLength, meta, children } = node;
+      const { lineIndex, indentDepth, meta, contentLength, children } = node;
+      const lineLength = indentDepth + meta.length + contentLength;
       const cursorOn = cursorLineIndex == lineIndex;
 
       return (
@@ -235,7 +239,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent
             lineIndex={lineIndex}
             indentDepth={indentDepth}
-            contentLength={meta.length + contentLength}
+            lineLength={lineLength}
             spanProps={{ className: TextLinesConstants.quotation.className }}
           >
             {[...meta].map((char, index) => (
@@ -260,14 +264,14 @@ const Node: React.FC<NodeProps> = ({
       );
     }
     case 'itemization': {
-      const { lineIndex, indentDepth, contentLength, children } = node;
+      const { lineIndex, indentDepth, bullet, contentLength, children } = node;
+      const lineLength = indentDepth + bullet.length + contentLength;
 
       return (
         <Line lineIndex={lineIndex}>
-          <LineIndent lineIndex={lineIndex} indentDepth={indentDepth + 1}>
-            <span className={TextLinesConstants.itemization.bullet.className} />
-          </LineIndent>
-          <LineContent lineIndex={lineIndex} indentDepth={indentDepth + 1} contentLength={contentLength}>
+          <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
+          <ItemBullet lineIndex={lineIndex} indentDepth={indentDepth} bulletLength={bullet.length} />
+          <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
             {children.map((child, index) => (
               <Node
                 key={index}
@@ -289,7 +293,7 @@ const Node: React.FC<NodeProps> = ({
 
       return (
         <Line lineIndex={lineIndex}>
-          <LineContent lineIndex={lineIndex} indentDepth={0} contentLength={contentLength}>
+          <LineContent lineIndex={lineIndex} lineLength={contentLength}>
             {children.map((child, index) => (
               <Node
                 key={index}
