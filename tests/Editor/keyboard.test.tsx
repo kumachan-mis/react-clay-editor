@@ -13,7 +13,7 @@ interface TestCase extends BaseTestCase {
   expectedLines: string[];
 }
 
-const MockEditor: React.FC<Pick<EditorProps, 'syntax'>> = ({ syntax }) => {
+const MockEditor: React.FC<Omit<EditorProps, 'text' | 'onChangeText'>> = ({ syntax }) => {
   const [text, setText] = React.useState('');
   return <Editor text={text} onChangeText={setText} syntax={syntax} />;
 };
@@ -30,58 +30,28 @@ const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-function setupFixtureTest(): void {
-  const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
-  const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => void {
+  return (testCase) => {
+    const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
+    const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
-  beforeAll(() => {
     SpiedTextLines.mockImplementation(MockTextLines);
     spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
-  });
 
-  afterEach(() => {
-    SpiedTextLines.mockClear();
-    spiedPositionToCursorCoordinate.mockClear();
-  });
+    render(<MockEditor syntax={syntax} />);
+    userEvent.click(screen.getByTestId('editor-body'));
+    userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
 
-  afterAll(() => {
+    for (let i = 0; i < testCase.expectedLines.length; i++) {
+      const line = testCase.expectedLines[i];
+      expect(screen.getByTestId(`mock-line-${i}`)).toHaveTextContent(line, { normalizeWhitespace: false });
+    }
+    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).toBeNull();
+
     SpiedTextLines.mockRestore();
     spiedPositionToCursorCoordinate.mockRestore();
-  });
+  };
 }
 
-fixtureTest<TestCase>(
-  'keyboardEvents',
-  'Editor',
-  ['keyboardCommon', 'keyboardBracket'],
-  (testCase) => {
-    render(<MockEditor syntax="bracket" />);
-    userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
-
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`)).toHaveTextContent(line, { normalizeWhitespace: false });
-    }
-    expect(screen.queryAllByTestId(`mock-line-${testCase.expectedLines.length}`)).toBeNull();
-  },
-  setupFixtureTest
-);
-
-fixtureTest<TestCase>(
-  'keyboardEvents',
-  'Editor',
-  ['keyboardCommon', 'keyboardMarkdown'],
-  (testCase) => {
-    render(<MockEditor syntax="markdown" />);
-    userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
-
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`)).toHaveTextContent(line, { normalizeWhitespace: false });
-    }
-    expect(screen.queryAllByTestId(`mock-line-${testCase.expectedLines.length}`)).toBeNull();
-  },
-  setupFixtureTest
-);
+fixtureTest<TestCase>('keyboardEvents', 'Editor', ['keyboardCommon', 'keyboardBracket'], createTest('bracket'));
+fixtureTest<TestCase>('keyboardEvents', 'Editor', ['keyboardCommon', 'keyboardMarkdown'], createTest('markdown'));
