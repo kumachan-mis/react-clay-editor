@@ -14,9 +14,12 @@ export function fixtureTest<TestCase extends BaseTestCase, Common = undefined>(
   target: string,
   component: string,
   fixtureName: string | string[],
-  testfn: (testCase: TestCase, common: Common) => void
+  testfn: (testCase: TestCase, common: Common) => void,
+  setupfn?: () => void
 ): void {
   describe(`Unit test of ${target} in ${component}: ${fixtureName}`, () => {
+    setupfn?.();
+
     const fixturesDirPath = resolve(__dirname, '..', '..', 'test-fixtures');
     const fixtureNames = typeof fixtureName === 'string' ? [fixtureName] : fixtureName;
 

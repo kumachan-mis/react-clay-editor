@@ -2,12 +2,12 @@
   "testCases": [
     {
       "name": "basic input",
-      "inputTyping": "abc",
+      "inputTyping": ["abc"],
       "expectedLines": ["abc"]
     },
     {
       "name": "newline input",
-      "inputTyping": "Hello{enter}World",
+      "inputTyping": ["Hello{enter}", "World"],
       "expectedLines": ["Hello", "World"]
     }
   ]

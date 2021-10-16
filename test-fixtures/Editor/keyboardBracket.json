@@ -1,0 +1,9 @@
+{
+  "testCases": [
+    {
+      "name": "itemization enter",
+      "inputTyping": ["{space}itemized{space}text{enter}", "next{space}text"],
+      "expectedLines": [" itemized text", " next text"]
+    }
+  ]
+}
