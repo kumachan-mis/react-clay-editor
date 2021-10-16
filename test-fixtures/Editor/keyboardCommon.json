@@ -14,6 +14,11 @@
       "name": "quotation enter",
       "inputTyping": ["> first quotation{enter}", "second quotation"],
       "expectedLines": ["> first quotation{enter}", "> second quotation"]
+    },
+    {
+      "name": "quotation backspace",
+      "inputTyping": [">{space}q{backspace}{backspace}empty"],
+      "expectedLines": ["empty"]
     }
   ]
 }
