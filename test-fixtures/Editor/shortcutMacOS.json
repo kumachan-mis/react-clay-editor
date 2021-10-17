@@ -1,3 +1,79 @@
 {
-  "testCases": []
+  "testCases": [
+    {
+      "name": "forward delete",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "backward delete",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "select all",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "undo",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "redo",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move up",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move down",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move left",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move right",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move word top",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move word bottom",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move line top",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move line bottom",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move text top",
+      "inputTyping": [],
+      "expectedLines": []
+    },
+    {
+      "name": "move text bottom",
+      "inputTyping": [],
+      "expectedLines": []
+    }
+  ]
 }
