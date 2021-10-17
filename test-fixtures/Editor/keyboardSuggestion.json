@@ -1,0 +1,101 @@
+{
+  "common": {
+    "options": {
+      "textProps": {
+        "suggestions": ["apple", "banana", "acerola"]
+      },
+      "bracketLinkProps": {
+        "suggestions": ["blueberries", "cantaloupe", "breadfruit"]
+      },
+      "hashTagProps": {
+        "suggestions": ["cherries", "durian", "coconut meat"]
+      },
+      "taggedLinkPropsMap": {
+        "tag": {
+          "suggestions": ["feijoa", "elderberries", "figs"]
+        },
+        "@": {
+          "suggestions": ["feIjOa", "eldErberrIes", "fiGs"]
+        }
+      }
+    }
+  },
+  "testCases": [
+    {
+      "name": "text suggestion",
+      "inputTyping": [
+        "a{enter}{space}",
+        "a{arrowdown}{enter}{space}",
+        "ac{enter}{space}",
+        "b{arrowup}{arrowdown}{enter}{space}",
+        "c{enter}{space}"
+      ],
+      "expectedLines": ["apple acerola acerola banana c", " "]
+    },
+    {
+      "name": "bracket link suggestion",
+      "inputTyping": [
+        "[[{enter}{arrowright}{space}",
+        "[[{arrowdown}{enter}{arrowright}{space}",
+        "[[b{enter}{arrowright}{space}",
+        "[[br{enter}{arrowright}{space}",
+        "[[b{arrowdown}{enter}{arrowright}{space}",
+        "[[c{arrowup}{arrowdown}{enter}{arrowright}{space}",
+        "[[d{enter}{arrowright}"
+      ],
+      "expectedLines": ["[blueberries] [cantaloupe] [blueberries] [breadfruit] [breadfruit] [cantaloupe] [d", "]"]
+    },
+    {
+      "name": "hashtag suggestion",
+      "inputTyping": [
+        "#{enter}",
+        "#{arrowdown}{enter}",
+        "#c{enter}",
+        "#co{enter}",
+        "#c{arrowdown}{enter}",
+        "#d{arrowup}{arrowdown}{enter}",
+        "#e{enter}nter"
+      ],
+      "expectedLines": ["#cherries #durian #cherries #coconut_meat #coconut_meat #durian #e", "nter"]
+    },
+    {
+      "name": "tagged link suggestion",
+      "inputTyping": [
+        "[[tag:{enter}{arrowright}{space}",
+        "[[tag: {enter}{arrowright}{space}",
+        "[[tag:{arrowdown}{enter}{arrowright}{space}",
+        "[[tag: f{enter}{arrowright}{space}",
+        "[[tag: fi{enter}{arrowright}{space}",
+        "[[tag: f{arrowdown}{enter}{arrowright}{space}",
+        "[[tag: e{arrowup}{arrowdown}{enter}{arrowright}{space}",
+        "[[tag: g{enter}{arrowright}",
+        "{enter}",
+        "[[@:{enter}{arrowright}{space}",
+        "[[@: {enter}{arrowright}{space}",
+        "[[@:{arrowdown}{enter}{arrowright}{space}",
+        "[[@: f{enter}{arrowright}{space}",
+        "[[@: fi{enter}{arrowright}{space}",
+        "[[@: f{arrowdown}{enter}{arrowright}{space}",
+        "[[@: e{arrowup}{arrowdown}{enter}{arrowright}{space}",
+        "[[@: g{enter}{arrowright}"
+      ],
+      "expectedLines": [
+        "[tag: feijoa] [tag: feijoa] [tag: elderberries] [tag: feijoa] [tag: figs] [tag: figs] [tag: elderberries] [tag: g",
+        "]",
+        "[@: feIjOa] [@: feIjOa] [@: eldErberrIes] [@: feIjOa] [@: fiGs] [@: fiGs] [@: eldErberrIes] [@: g",
+        "]"
+      ]
+    },
+    {
+      "name": "escape suggestion",
+      "inputTyping": [
+        "a{esc}{enter}",
+        "[[{esc}{enter}{arrowright}",
+        "#{esc}{enter}",
+        "[[tag:{esc}{enter}{arrowright}",
+        "[[@:{esc}{enter}{arrowright}"
+      ],
+      "expectedLines": ["a", "[", "]#", "[tag:", "][@:", "]"]
+    }
+  ]
+}

@@ -6,9 +6,58 @@
       "expectedLines": ["abc"]
     },
     {
+      "name": "tab",
+      "inputTyping": ["Hello\tWorld"],
+      "expectedLines": ["Hello\tWorld"]
+    },
+    {
       "name": "enter",
       "inputTyping": ["Hello{enter}", "World"],
       "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "backspace",
+      "inputTyping": ["Hell{enter}{backspace}o{enter}", "Wp{backspace}orld"],
+      "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "delete",
+      "inputTyping": ["Hellp{arrowleft}{del}o{enter}", "Q{arrowleft}{arrowleft}{del}{del}{enter}World"],
+      "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "arrowleft",
+      "inputTyping": [
+        "ab{enter}cd",
+        "{arrowleft}1{arrowleft}{arrowleft}{arrowleft}2{arrowleft}{arrowleft}{arrowleft}{arrowleft}3"
+      ],
+      "expectedLines": ["3ab2", "c1d"]
+    },
+    {
+      "name": "arrowright",
+      "inputTyping": [
+        "ab{enter}cd{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowleft}",
+        "{arrowright}1{arrowright}{arrowright}2{arrowright}{arrowright}{arrowright}3"
+      ],
+      "expectedLines": ["a1b", "2cd3"]
+    },
+    {
+      "name": "arrowup",
+      "inputTyping": ["abcde{enter}fg{enter}hijkl", "{arrowup}1{arrowup}2{arrowup}{arrowup}3"],
+      "expectedLines": ["3abc2de", "fg1", "hijkl"]
+    },
+    {
+      "name": "arrowdown",
+      "inputTyping": [
+        "abcde{enter}fg{enter}hijkl{arrowup}{arrowleft}{arrowleft}{arrowleft}",
+        "{arrowdown}1{arrowdown}2{arrowdown}{arrowdown}3"
+      ],
+      "expectedLines": ["abcde", "fg1", "hij2kl3"]
+    },
+    {
+      "name": "parens/braces/brackets auto-fill",
+      "inputTyping": ["(parens{arrowright}{{braces{arrowright}[[brackets{arrowright}"],
+      "expectedLines": ["(parens){braces}[brackets]"]
     },
     {
       "name": "quotation enter",
