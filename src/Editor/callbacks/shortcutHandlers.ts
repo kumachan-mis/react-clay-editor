@@ -183,21 +183,25 @@ export function handleOnMoveUp(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const lines = text.split('\n');
-  const prevLine = lines[state.cursorCoordinate.lineIndex - 1];
-  if (prevLine === undefined) return [text, state];
+  const { cursorCoordinate, textSelection } = state;
 
-  const cursorCoordinate = {
-    lineIndex: state.cursorCoordinate.lineIndex - 1,
-    charIndex: Math.min(state.cursorCoordinate.charIndex, prevLine.length),
-  };
-  const textSelection = (() => {
+  const newCursorCoordinate = (() => {
+    if (cursorCoordinate.lineIndex == 0) return { lineIndex: 0, charIndex: 0 };
+    const lines = text.split('\n');
+    const prevLineIndex = cursorCoordinate.lineIndex - 1;
+    if (cursorCoordinate.charIndex > lines[prevLineIndex].length) {
+      return { lineIndex: prevLineIndex, charIndex: lines[prevLineIndex].length };
+    }
+    return { lineIndex: prevLineIndex, charIndex: cursorCoordinate.charIndex };
+  })();
+
+  const newTextSelection = (() => {
     if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
+    const fixed = textSelection ? textSelection.fixed : cursorCoordinate;
+    const free = { ...newCursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveDown(
@@ -207,21 +211,27 @@ export function handleOnMoveDown(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const lines = text.split('\n');
-  const nextLine = lines[state.cursorCoordinate.lineIndex + 1];
-  if (nextLine === undefined) return [text, state];
+  const { cursorCoordinate, textSelection } = state;
 
-  const cursorCoordinate = {
-    lineIndex: state.cursorCoordinate.lineIndex + 1,
-    charIndex: Math.min(state.cursorCoordinate.charIndex, nextLine.length),
-  };
-  const textSelection = (() => {
+  const newCursorCoordinate = (() => {
+    const lines = text.split('\n');
+    if (cursorCoordinate.lineIndex == lines.length - 1) {
+      return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
+    }
+    const nextLineIndex = cursorCoordinate.lineIndex + 1;
+    if (cursorCoordinate.charIndex > lines[nextLineIndex].length) {
+      return { lineIndex: nextLineIndex, charIndex: lines[nextLineIndex].length };
+    }
+    return { lineIndex: nextLineIndex, charIndex: cursorCoordinate.charIndex };
+  })();
+
+  const newTextSelection = (() => {
     if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
+    const fixed = textSelection ? textSelection.fixed : cursorCoordinate;
+    const free = { ...newCursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
   })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveLeft(
