@@ -11,11 +11,16 @@ interface TestCase extends BaseTestCase {
   name: string;
   inputTyping: string[];
   expectedLines: string[];
+  options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
 }
 
-const MockEditor: React.FC<Omit<EditorProps, 'text' | 'onChangeText'>> = ({ syntax }) => {
+interface Common {
+  options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
+}
+
+const MockEditor: React.FC<Omit<EditorProps, 'text' | 'onChangeText'>> = (props) => {
   const [text, setText] = React.useState('');
-  return <Editor text={text} onChangeText={setText} syntax={syntax} />;
+  return <Editor text={text} onChangeText={setText} {...props} />;
 };
 
 const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
@@ -30,15 +35,15 @@ const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => void {
-  return (testCase) => {
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common?: Common) => void {
+  return (testCase, common) => {
     const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
     const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
     SpiedTextLines.mockImplementation(MockTextLines);
     spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
 
-    render(<MockEditor syntax={syntax} />);
+    render(<MockEditor syntax={syntax} {...common?.options} {...testCase.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
     userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
 
@@ -53,5 +58,15 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => voi
   };
 }
 
-fixtureTest<TestCase>('keyboardEvents', 'Editor', ['keyboardCommon', 'keyboardBracket'], createTest('bracket'));
-fixtureTest<TestCase>('keyboardEvents', 'Editor', ['keyboardCommon', 'keyboardMarkdown'], createTest('markdown'));
+fixtureTest<TestCase, Common | undefined>(
+  'keyboardEvents',
+  'Editor',
+  ['keyboardCommon', 'keyboardSuggestion', 'keyboardBracket'],
+  createTest('bracket')
+);
+fixtureTest<TestCase, Common | undefined>(
+  'keyboardEvents',
+  'Editor',
+  ['keyboardCommon', 'keyboardSuggestion', 'keyboardMarkdown'],
+  createTest('markdown')
+);
