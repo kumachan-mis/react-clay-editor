@@ -1,16 +1,6 @@
 {
   "testCases": [
     {
-      "name": "forward delete",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "backward delete",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
       "name": "select all",
       "inputTyping": [],
       "expectedLines": []
