@@ -35,7 +35,38 @@ const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common?: Common) => void {
+function getFixtureNames(os: 'windows' | 'macos', syntax: 'bracket' | 'markdown'): string[] {
+  const fixtureNames = ['keyboardCommon', 'suggestionCommon'];
+
+  switch (os) {
+    case 'windows':
+      fixtureNames.push('shortcutWindows');
+      break;
+    case 'macos':
+      fixtureNames.push('shortcutMacOS');
+      break;
+    default:
+      break;
+  }
+
+  switch (syntax) {
+    case 'bracket':
+      fixtureNames.push('keyboardBracket');
+      break;
+    case 'markdown':
+      fixtureNames.push('keyboardMarkdown');
+      break;
+    default:
+      break;
+  }
+
+  return fixtureNames;
+}
+
+function createTest(
+  os: 'windows' | 'macos',
+  syntax: 'bracket' | 'markdown'
+): (testCase: TestCase, common?: Common) => void {
   return (testCase, common) => {
     const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
     const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
@@ -58,15 +89,13 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
   };
 }
 
-fixtureTest<TestCase, Common | undefined>(
-  'keyboardEvents',
-  'Editor',
-  ['keyboardCommon', 'keyboardSuggestion', 'keyboardBracket'],
-  createTest('bracket')
-);
-fixtureTest<TestCase, Common | undefined>(
-  'keyboardEvents',
-  'Editor',
-  ['keyboardCommon', 'keyboardSuggestion', 'keyboardMarkdown'],
-  createTest('markdown')
-);
+for (const os of ['windows', 'macos'] as const) {
+  for (const syntax of ['bracket', 'markdown'] as const) {
+    fixtureTest<TestCase, Common | undefined>(
+      'keyboardEvents',
+      'Editor',
+      getFixtureNames(os, syntax),
+      createTest(os, syntax)
+    );
+  }
+}
