@@ -27,8 +27,15 @@
     },
     {
       "name": "arrowkeys",
-      "inputTyping": ["Hello{enter}", "World"],
-      "expectedLines": ["Hello", "World"]
+      "inputTyping": [
+        "ab{enter}",
+        "cd",
+        "{arrowleft}0{arrowleft}{arrowleft}1{arrowleft}{arrowleft}{arrowleft}{arrowleft}2",
+        "{arrowright}3{arrowright}{arrowright}{arrowright}4{arrowright}{arrowright}{arrowright}{arrowright}5",
+        "{arrowup}6{arrowup}7",
+        "{arrowdown}8{arrowdown}9"
+      ],
+      "expectedLines": ["72a3b16", "84c0d59"]
     },
     {
       "name": "parens/braces/brackets auto-fill",
