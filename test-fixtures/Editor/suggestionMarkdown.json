@@ -1,0 +1,29 @@
+{
+  "common": {
+    "options": {
+      "textProps": {
+        "suggestions": ["react", "wysiwyg editor", "react-realtime-markup-editor"],
+        "initialSuggestionIndex": 1
+      }
+    }
+  },
+  "testCases": [
+    {
+      "name": "heading suggestion",
+      "inputTyping": [
+        "#{space}{enter}{enter}",
+        "##{space}{arrowdown}{enter}{enter}",
+        "###{space}r{enter}{enter}",
+        "###{space}r{arrowdown}{enter}{enter}",
+        "###{space}w{arrowdown}{enter}"
+      ],
+      "expectedLines": [
+        "# wysiwyg editor",
+        "## react-realtime-markup-editor",
+        "### react",
+        "### react-realtime-markup-editor",
+        "### wysiwyg editor"
+      ]
+    }
+  ]
+}

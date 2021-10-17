@@ -51,10 +51,10 @@ function getFixtureNames(os: 'windows' | 'macos', syntax: 'bracket' | 'markdown'
 
   switch (syntax) {
     case 'bracket':
-      fixtureNames.push('keyboardBracket');
+      fixtureNames.push('keyboardBracket', 'suggestionBracket');
       break;
     case 'markdown':
-      fixtureNames.push('keyboardMarkdown');
+      fixtureNames.push('keyboardMarkdown', 'suggestionMarkdown');
       break;
     default:
       break;
