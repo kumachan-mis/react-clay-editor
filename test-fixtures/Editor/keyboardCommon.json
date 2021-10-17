@@ -6,9 +6,34 @@
       "expectedLines": ["abc"]
     },
     {
+      "name": "tab",
+      "inputTyping": ["Hello\tWorld"],
+      "expectedLines": ["Hello\tWorld"]
+    },
+    {
       "name": "enter",
       "inputTyping": ["Hello{enter}", "World"],
       "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "backspace",
+      "inputTyping": ["Hell{enter}{backspace}o{enter}", "Wp{backspace}orld"],
+      "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "delete",
+      "inputTyping": ["Hellp{arrowleft}{del}o{enter}", "Q{arrowleft}{arrowleft}{del}{del}{enter}World"],
+      "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "arrowkeys",
+      "inputTyping": ["Hello{enter}", "World"],
+      "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "parens/braces/brackets auto-fill",
+      "inputTyping": ["(parens{arrowright}{{braces{arrowright}[[brackets{arrowright}"],
+      "expectedLines": ["(parens){braces}[brackets]"]
     },
     {
       "name": "quotation enter",
