@@ -17,6 +17,7 @@ interface TestCase extends BaseTestCase {
 
 interface Common {
   options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
+  typingAlias?: Record<string, string[] | undefined>;
 }
 
 const MockEditor: React.FC<Omit<EditorProps, 'text' | 'onChangeText'>> = (props) => {
@@ -80,7 +81,7 @@ function createTest(
 
     render(<MockEditor syntax={syntax} {...common?.options} {...testCase.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
+    userEvent.type(screen.getByRole('textbox'), resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
 
     for (let i = 0; i < testCase.expectedLines.length; i++) {
       const line = testCase.expectedLines[i];
@@ -93,6 +94,19 @@ function createTest(
 
     Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
   };
+}
+
+function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, string[] | undefined>): string[] {
+  if (!typingAlias) return inputTyping;
+
+  const resolvedTyping: string[] = [];
+  for (const typingLine of inputTyping) {
+    const resolvedTypingLines = typingAlias[typingLine];
+    if (!resolvedTypingLines) resolvedTyping.push(typingLine);
+    else resolvedTyping.push(...resolvedTypingLines);
+  }
+
+  return resolvedTyping;
 }
 
 for (const os of ['windows', 'macos'] as const) {
