@@ -1,25 +1,50 @@
 {
+  "common": {
+    "inputLines": [
+      "Alice was beginning to get very tired of sitting by her sister on the bank",
+      "and, of having nothing to do."
+    ]
+  },
   "testCases": [
     {
       "name": "basic input",
-      "inputLines": [
-        "Alice was beginning to get very tired of sitting by her sister on the bank",
-        "and of having nothing to do"
-      ],
       "inputCursorCoordinate": {
         "lineIndex": 1,
         "charIndex": 12
       },
-      "expectedSelection": {
-        "fixed": {
-          "lineIndex": 1,
-          "charIndex": 7
-        },
-        "free": {
-          "lineIndex": 1,
-          "charIndex": 13
-        }
-      }
+      "expectedText": "having"
+    },
+    {
+      "name": "border left",
+      "inputCursorCoordinate": {
+        "lineIndex": 1,
+        "charIndex": 0
+      },
+      "expectedText": "and"
+    },
+    {
+      "name": "border right",
+      "inputCursorCoordinate": {
+        "lineIndex": 0,
+        "charIndex": 74
+      },
+      "expectedText": "bank"
+    },
+    {
+      "name": "both of sides are not word",
+      "inputCursorCoordinate": {
+        "lineIndex": 1,
+        "charIndex": 4
+      },
+      "expectedText": ""
+    },
+    {
+      "name": "after period",
+      "inputCursorCoordinate": {
+        "lineIndex": 1,
+        "charIndex": 29
+      },
+      "expectedText": ""
     }
   ]
 }

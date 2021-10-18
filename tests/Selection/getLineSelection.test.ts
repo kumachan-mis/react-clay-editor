@@ -1,17 +1,21 @@
 import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
 
-import { getLineSelection } from '../../src/Selection/utils';
-import { TextSelection } from '../../src/Selection/types';
+import { getLineSelection, getSelectedText } from '../../src/Selection/utils';
 import { CursorCoordinate } from '../../src/Cursor/types';
 
 interface TestCase extends BaseTestCase {
   name: string;
-  inputLines: string[];
   inputCursorCoordinate: CursorCoordinate | undefined;
-  expectedSelection: TextSelection | undefined;
+  expectedText: string;
 }
 
-fixtureTest<TestCase>('getLineSelection', 'Selection', 'getLineSelection', (testCase) => {
-  const actualCursorCoordinate = getLineSelection(testCase.inputLines.join('\n'), testCase.inputCursorCoordinate);
-  expect(actualCursorCoordinate).toEqual(testCase.expectedSelection);
+interface Common {
+  inputLines: string[];
+}
+
+fixtureTest<TestCase, Common>('getLineSelection', 'Selection', 'getLineSelection', (testCase, common) => {
+  const text = common.inputLines.join('\n');
+  const actualSelection = getLineSelection(text, testCase.inputCursorCoordinate);
+  const actualText = getSelectedText(text, actualSelection);
+  expect(actualText).toEqual(testCase.expectedText);
 });

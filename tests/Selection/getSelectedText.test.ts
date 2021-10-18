@@ -5,12 +5,15 @@ import { TextSelection } from '../../src/Selection/types';
 
 interface TestCase extends BaseTestCase {
   name: string;
-  inputLines: string[];
   inputSelection: TextSelection | undefined;
   expectedText: string;
 }
 
-fixtureTest<TestCase>('getSelectedText', 'Selection', 'getSelectedText', (testCase) => {
-  const actualText = getSelectedText(testCase.inputLines.join('\n'), testCase.inputSelection);
+interface Common {
+  inputLines: string[];
+}
+
+fixtureTest<TestCase, Common>('getSelectedText', 'Selection', 'getSelectedText', (testCase, common) => {
+  const actualText = getSelectedText(common.inputLines.join('\n'), testCase.inputSelection);
   expect(actualText).toBe(testCase.expectedText);
 });
