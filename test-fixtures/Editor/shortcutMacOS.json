@@ -1,0 +1,120 @@
+{
+  "common": {
+    "typingAlias": {
+      "{THREE_WORDS_SENT_TOP}": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{arrowleft}{arrowleft}"
+      ],
+      "{THREE_WORDS_SENT_BOTTOM}": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{home}"
+      ]
+    }
+  },
+  "testCases": [
+    {
+      "name": "PRETEST: typing alias {THREE_WORDS_SENT_TOP}",
+      "inputTyping": ["{THREE_WORDS_SENT_TOP}", "0"],
+      "expectedLines": ["three words,sentence.", "three words,sentenc0e.", "three words,sentence."]
+    },
+    {
+      "name": "PRETEST: typing alias {THREE_WORDS_SENT_BOTTOM}",
+      "inputTyping": ["{THREE_WORDS_SENT_BOTTOM}", "0"],
+      "expectedLines": ["three words,sentence.", "0three words,sentence.", "three words,sentence."]
+    },
+    {
+      "name": "select all (command+a)",
+      "inputTyping": ["Hello{enter}World{meta}a{/meta}{backspace}."],
+      "expectedLines": ["."]
+    },
+    {
+      "name": "undo (command+z)",
+      "inputTyping": ["{meta}z{/meta}", "abc{arrowright}{arrowright}{arrowright}", "{meta}zz{/meta}d"],
+      "expectedLines": ["ad"]
+    },
+    {
+      "name": "redo (command+shift+z)",
+      "inputTyping": [
+        "{meta}{shift}z{/shift}{/meta}",
+        "abc{meta}zzz{/meta}{arrowright}{arrowright}",
+        "{meta}{shift}zz{/shift}{/meta}d"
+      ],
+      "expectedLines": ["abd"]
+    },
+    {
+      "name": "redo (command+y)",
+      "inputTyping": ["{meta}y{/meta}", "abc{meta}zzz{/meta}{arrowright}{arrowright}", "{meta}yy{/meta}d"],
+      "expectedLines": ["abd"]
+    },
+    {
+      "name": "move word top (alt+arrowleft)",
+      "inputTyping": [
+        "{THREE_WORDS_SENT_TOP}",
+        "{alt}{arrowleft}{/alt}0{arrowleft}",
+        "{alt}{arrowleft}{/alt}1{arrowleft}",
+        "{alt}{arrowleft}{/alt}2{arrowleft}"
+      ],
+      "expectedLines": ["three words,sentence.", "2three 1words,0sentence.", "three words,sentence."]
+    },
+    {
+      "name": "move word bottom (alt+arrowright)",
+      "inputTyping": [
+        "{THREE_WORDS_SENT_BOTTOM}",
+        "{alt}{arrowright}{/alt}0",
+        "{alt}{arrowright}{/alt}1",
+        "{alt}{arrowright}{/alt}2"
+      ],
+      "expectedLines": ["three words,sentence.", "three0 words1,sentence2.", "three words,sentence."]
+    },
+    {
+      "name": "move line top (command+arrowleft)",
+      "inputTyping": ["{THREE_WORDS_SENT_TOP}", "{meta}{arrowleft}{/meta}0", "{meta}{arrowleft}{/meta}1"],
+      "expectedLines": ["three words,sentence.", "10three words,sentence.", "three words,sentence."]
+    },
+    {
+      "name": "move line top (home)",
+      "inputTyping": ["{THREE_WORDS_SENT_TOP}", "{home}0{home}1"],
+      "expectedLines": ["three words,sentence.", "10three words,sentence.", "three words,sentence."]
+    },
+    {
+      "name": "move line top (ctrl+a)",
+      "inputTyping": ["{THREE_WORDS_SENT_TOP}", "{ctrl}a{/ctrl}0", "{ctrl}a{/ctrl}1"],
+      "expectedLines": ["three words,sentence.", "10three words,sentence.", "three words,sentence."]
+    },
+    {
+      "name": "move line bottom (command+arrowright)",
+      "inputTyping": ["{THREE_WORDS_SENT_BOTTOM}", "{meta}{arrowright}{/meta}0", "{meta}{arrowright}{/meta}1"],
+      "expectedLines": ["three words,sentence.", "three words,sentence.01", "three words,sentence."]
+    },
+    {
+      "name": "move line bottom (end)",
+      "inputTyping": ["{THREE_WORDS_SENT_BOTTOM}", "{end}0{end}1"],
+      "expectedLines": ["three words,sentence.", "three words,sentence.01", "three words,sentence."]
+    },
+    {
+      "name": "move line bottom (ctrl+e)",
+      "inputTyping": ["{THREE_WORDS_SENT_BOTTOM}", "{ctrl}e{/ctrl}0", "{ctrl}e{/ctrl}1"],
+      "expectedLines": ["three words,sentence.", "three words,sentence.01", "three words,sentence."]
+    },
+    {
+      "name": "move text top (command+arrowup)",
+      "inputTyping": ["{THREE_WORDS_SENT_TOP}", "{meta}{arrowup}{/meta}0"],
+      "expectedLines": ["0three words,sentence.", "three words,sentence.", "three words,sentence."]
+    },
+    {
+      "name": "move text top (command+home)",
+      "inputTyping": ["{THREE_WORDS_SENT_TOP}", "{meta}{home}{/meta}0"],
+      "expectedLines": ["0three words,sentence.", "three words,sentence.", "three words,sentence."]
+    },
+    {
+      "name": "move text bottom (command+arrowdown)",
+      "inputTyping": ["{THREE_WORDS_SENT_BOTTOM}", "{meta}{arrowdown}{/meta}0"],
+      "expectedLines": ["three words,sentence.", "three words,sentence.", "three words,sentence.0"]
+    },
+    {
+      "name": "move text bottom (command+end)",
+      "inputTyping": ["{THREE_WORDS_SENT_BOTTOM}", "{meta}{end}{/meta}0"],
+      "expectedLines": ["three words,sentence.", "three words,sentence.", "three words,sentence.0"]
+    }
+  ]
+}

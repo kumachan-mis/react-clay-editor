@@ -1,0 +1,24 @@
+{
+  "testCases": [
+    {
+      "name": "move up (ctrl+p)",
+      "inputTyping": ["abcde{enter}fg{enter}hijkl", "{ctrl}p{/ctrl}1{ctrl}p{/ctrl}2{ctrl}pp{/ctrl}3"],
+      "expectedLines": ["3abc2de", "fg1", "hijkl"]
+    },
+    {
+      "name": "move down (ctrl+n)",
+      "inputTyping": ["abcde{enter}fg{enter}hijkl{ctrl}pbbb{/ctrl}", "{ctrl}n{/ctrl}1{ctrl}n{/ctrl}2{ctrl}nn{/ctrl}3"],
+      "expectedLines": ["abcde", "fg1", "hij2kl3"]
+    },
+    {
+      "name": "move left (ctrl+b)",
+      "inputTyping": ["ab{enter}cd", "{ctrl}b{/ctrl}1{ctrl}bbb{/ctrl}2{ctrl}bbbb{/ctrl}3"],
+      "expectedLines": ["3ab2", "c1d"]
+    },
+    {
+      "name": "move right (ctrl+f)",
+      "inputTyping": ["ab{enter}cd{ctrl}bbbbb{/ctrl}", "{ctrl}f{/ctrl}1{ctrl}ff{/ctrl}2{ctrl}fff{/ctrl}3"],
+      "expectedLines": ["a1b", "2cd3"]
+    }
+  ]
+}

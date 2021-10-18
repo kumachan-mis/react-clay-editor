@@ -1,7 +1,4 @@
-export type OperatingSystem = 'windows' | 'macos';
-
-export const OperatingSystemEnvironment = {
-  operatingSystems: ['windows', 'macos'] as OperatingSystem[],
+export const operatingSystem = {
   userAgent: {
     windows: [
       'Mozilla/5.0',
@@ -15,5 +12,5 @@ export const OperatingSystemEnvironment = {
       'AppleWebKit/537.36 (KHTML, like Gecko)',
       'Chrome/69.0.3497.100 Safari/537.36',
     ].join(' '),
-  } as { [os in OperatingSystem]: string },
+  },
 };

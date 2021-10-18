@@ -66,8 +66,8 @@
     },
     {
       "name": "quotation backspace",
-      "inputTyping": [">{space}q{backspace}{backspace}empty"],
-      "expectedLines": ["empty"]
+      "inputTyping": [">{space}q{backspace}{backspace}."],
+      "expectedLines": ["."]
     }
   ]
 }

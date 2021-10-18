@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
+import { operatingSystem } from '../utils/operatingSystem';
 import { Editor, EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
@@ -16,6 +17,7 @@ interface TestCase extends BaseTestCase {
 
 interface Common {
   options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
+  typingAlias?: Record<string, string[] | undefined>;
 }
 
 const MockEditor: React.FC<Omit<EditorProps, 'text' | 'onChangeText'>> = (props) => {
@@ -35,8 +37,42 @@ const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common?: Common) => void {
+function getFixtureNames(os: 'windows' | 'macos', syntax: 'bracket' | 'markdown'): string[] {
+  const fixtureNames = ['keyboardCommon', 'shortcutCommon', 'suggestionCommon'];
+
+  switch (os) {
+    case 'windows':
+      fixtureNames.push('shortcutWindows');
+      break;
+    case 'macos':
+      fixtureNames.push('shortcutMacOS');
+      break;
+    default:
+      break;
+  }
+
+  switch (syntax) {
+    case 'bracket':
+      fixtureNames.push('keyboardBracket', 'suggestionBracket');
+      break;
+    case 'markdown':
+      fixtureNames.push('keyboardMarkdown', 'suggestionMarkdown');
+      break;
+    default:
+      break;
+  }
+
+  return fixtureNames;
+}
+
+function createTest(
+  os: 'windows' | 'macos',
+  syntax: 'bracket' | 'markdown'
+): (testCase: TestCase, common?: Common) => void {
   return (testCase, common) => {
+    const originalUserAgent = window.navigator.userAgent;
+    Object.defineProperty(window.navigator, 'userAgent', { value: operatingSystem.userAgent[os], configurable: true });
+
     const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
     const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
@@ -45,7 +81,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
 
     render(<MockEditor syntax={syntax} {...common?.options} {...testCase.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
+    userEvent.type(screen.getByRole('textbox'), resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
 
     for (let i = 0; i < testCase.expectedLines.length; i++) {
       const line = testCase.expectedLines[i];
@@ -55,18 +91,33 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
 
     SpiedTextLines.mockRestore();
     spiedPositionToCursorCoordinate.mockRestore();
+
+    Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
   };
 }
 
-fixtureTest<TestCase, Common | undefined>(
-  'keyboardEvents',
-  'Editor',
-  ['keyboardCommon', 'keyboardSuggestion', 'keyboardBracket'],
-  createTest('bracket')
-);
-fixtureTest<TestCase, Common | undefined>(
-  'keyboardEvents',
-  'Editor',
-  ['keyboardCommon', 'keyboardSuggestion', 'keyboardMarkdown'],
-  createTest('markdown')
-);
+function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, string[] | undefined>): string[] {
+  if (!typingAlias) return inputTyping;
+
+  const resolvedTyping: string[] = [];
+  for (const typingLine of inputTyping) {
+    const resolvedTypingLines = typingAlias[typingLine];
+    if (!resolvedTypingLines) resolvedTyping.push(typingLine);
+    else resolvedTyping.push(...resolvedTypingLines);
+  }
+
+  return resolvedTyping;
+}
+
+for (const [os, syntax] of [
+  ['macos', 'bracket'],
+  ['windows', 'bracket'],
+  ['windows', 'markdown'],
+] as const) {
+  fixtureTest<TestCase, Common | undefined>(
+    'keyboardEvents',
+    'Editor',
+    getFixtureNames(os, syntax),
+    createTest(os, syntax)
+  );
+}
