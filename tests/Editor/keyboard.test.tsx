@@ -109,13 +109,15 @@ function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, 
   return resolvedTyping;
 }
 
-for (const os of ['windows', 'macos'] as const) {
-  for (const syntax of ['bracket', 'markdown'] as const) {
-    fixtureTest<TestCase, Common | undefined>(
-      'keyboardEvents',
-      'Editor',
-      getFixtureNames(os, syntax),
-      createTest(os, syntax)
-    );
-  }
+for (const [os, syntax] of [
+  ['macos', 'bracket'],
+  ['windows', 'bracket'],
+  ['windows', 'markdown'],
+] as const) {
+  fixtureTest<TestCase, Common | undefined>(
+    'keyboardEvents',
+    'Editor',
+    getFixtureNames(os, syntax),
+    createTest(os, syntax)
+  );
 }
