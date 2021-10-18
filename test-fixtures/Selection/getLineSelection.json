@@ -1,25 +1,18 @@
 {
+  "common": {
+    "inputLines": [
+      "Alice was beginning to get very tired of sitting by her sister on the bank",
+      "and, of having nothing to do."
+    ]
+  },
   "testCases": [
     {
       "name": "basic input",
-      "inputLines": [
-        "Alice was beginning to get very tired of sitting by her sister on the bank",
-        "and of having nothing to do"
-      ],
       "inputCursorCoordinate": {
         "lineIndex": 1,
         "charIndex": 12
       },
-      "expectedSelection": {
-        "fixed": {
-          "lineIndex": 1,
-          "charIndex": 0
-        },
-        "free": {
-          "lineIndex": 1,
-          "charIndex": 27
-        }
-      }
+      "expectedText": "and, of having nothing to do."
     }
   ]
 }
