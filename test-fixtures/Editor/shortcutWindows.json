@@ -1,69 +1,28 @@
 {
   "testCases": [
     {
-      "name": "select all",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "select all (ctrl+a)",
+      "inputTyping": ["Hello{enter}World{ctrl}a{/ctrl}{backspace}."],
+      "expectedLines": ["."]
     },
     {
-      "name": "undo",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "undo (ctrl+z)",
+      "inputTyping": ["abc{arrowright}{arrowright}{arrowright}{ctrl}z{/ctrl}d"],
+      "expectedLines": ["abd"]
     },
     {
-      "name": "redo",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "redo (ctrl+shift+z)",
+      "inputTyping": [
+        "{ctrl}{shift}z{/shift}{/ctrl}",
+        "abc{ctrl}zzz{/ctrl}{arrowright}{arrowright}",
+        "{ctrl}{shift}zz{/shift}{/ctrl}d"
+      ],
+      "expectedLines": ["abd"]
     },
     {
-      "name": "move up",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move down",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move left",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move right",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move word top",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move word bottom",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move line top",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move line bottom",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move text top",
-      "inputTyping": [],
-      "expectedLines": []
-    },
-    {
-      "name": "move text bottom",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "redo (ctrl+y)",
+      "inputTyping": ["{ctrl}y{/ctrl}", "abc{ctrl}zzz{/ctrl}{arrowright}{arrowright}", "{ctrl}yy{/ctrl}d"],
+      "expectedLines": ["abd"]
     }
   ]
 }

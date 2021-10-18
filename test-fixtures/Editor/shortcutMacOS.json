@@ -1,69 +1,126 @@
 {
   "testCases": [
     {
-      "name": "select all",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "select all (command+a)",
+      "inputTyping": ["Hello{enter}World{meta}a{/meta}{backspace}."],
+      "expectedLines": ["."]
     },
     {
-      "name": "undo",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "undo (command+z)",
+      "inputTyping": ["{meta}z{/meta}", "abc{arrowright}{arrowright}{arrowright}", "{meta}zz{/meta}d"],
+      "expectedLines": ["ad"]
     },
     {
-      "name": "redo",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "redo (command+shift+z)",
+      "inputTyping": [
+        "{meta}{shift}z{/shift}{/meta}",
+        "abc{meta}zzz{/meta}{arrowright}{arrowright}",
+        "{meta}{shift}zz{/shift}{/meta}d"
+      ],
+      "expectedLines": ["abd"]
     },
     {
-      "name": "move up",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "redo (command+y)",
+      "inputTyping": ["{meta}y{/meta}", "abc{meta}zzz{/meta}{arrowright}{arrowright}", "{meta}yy{/meta}d"],
+      "expectedLines": ["abd"]
     },
     {
-      "name": "move down",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move word top (alt+arrowleft)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{arrowleft}{arrowleft}0",
+        "{alt}{arrowleft}{/alt}1{arrowleft}",
+        "{alt}{arrowleft}{/alt}2{arrowleft}",
+        "{alt}{arrowleft}{/alt}3{arrowleft}"
+      ],
+      "expectedLines": ["three words,sentence.", "3three 2words,1sentenc0e.", "three words,sentence."]
     },
     {
-      "name": "move left",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move word bottom (alt+arrowright)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{home}0",
+        "{alt}{arrowright}{/alt}1",
+        "{alt}{arrowright}{/alt}2",
+        "{alt}{arrowright}{/alt}3"
+      ],
+      "expectedLines": ["three words,sentence.", "0three1 words2,sentence3.", "three words,sentence."]
     },
     {
-      "name": "move right",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move line top (command+arrowleft)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{arrowleft}{arrowleft}0",
+        "{meta}{arrowleft}{/meta}1",
+        "{meta}{arrowleft}{/meta}2"
+      ],
+      "expectedLines": ["three words,sentence.", "21three words,sentenc0e.", "three words,sentence."]
     },
     {
-      "name": "move word top",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move line top (ctrl+a)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{arrowleft}{arrowleft}0",
+        "{ctrl}a{/ctrl}1",
+        "{ctrl}a{/ctrl}2"
+      ],
+      "expectedLines": ["three words,sentence.", "21three words,sentenc0e.", "three words,sentence."]
     },
     {
-      "name": "move word bottom",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move line bottom (command+arrowright)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{home}0",
+        "{meta}{arrowright}{/meta}1",
+        "{meta}{arrowright}{/meta}2"
+      ],
+      "expectedLines": ["three words,sentence.", "0three words,sentence.12", "three words,sentence."]
     },
     {
-      "name": "move line top",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move line bottom (ctrl+e)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{home}0",
+        "{ctrl}e{/ctrl}1",
+        "{ctrl}e{/ctrl}2"
+      ],
+      "expectedLines": ["three words,sentence.", "0three words,sentence.12", "three words,sentence."]
     },
     {
-      "name": "move line bottom",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move text top (command+arrowup)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{arrowleft}{arrowleft}0",
+        "{meta}{arrowup}{/meta}1"
+      ],
+      "expectedLines": ["1three words,sentence.", "three words,sentenc0e.", "three words,sentence."]
     },
     {
-      "name": "move text top",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move text top (command+home)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{arrowleft}{arrowleft}0",
+        "{meta}{home}{/meta}1"
+      ],
+      "expectedLines": ["1three words,sentence.", "three words,sentenc0e.", "three words,sentence."]
     },
     {
-      "name": "move text bottom",
-      "inputTyping": [],
-      "expectedLines": []
+      "name": "move text bottom (command+arrowdown)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{home}0",
+        "{meta}{arrowdown}{/meta}1"
+      ],
+      "expectedLines": ["three words,sentence.", "0three words,sentence.", "three words,sentence.1"]
+    },
+    {
+      "name": "move text bottom (command+end)",
+      "inputTyping": [
+        "three words,sentence.{enter}three words,sentence.{enter}three words,sentence.",
+        "{arrowup}{arrowleft}{arrowleft}0",
+        "{meta}{end}{/meta}1"
+      ],
+      "expectedLines": ["three words,sentence.", "0three words,sentence.", "three words,sentence.1"]
     }
   ]
 }

@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
+import { operatingSystem } from '../utils/operatingSystem';
 import { Editor, EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
@@ -36,7 +37,7 @@ const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
 };
 
 function getFixtureNames(os: 'windows' | 'macos', syntax: 'bracket' | 'markdown'): string[] {
-  const fixtureNames = ['keyboardCommon', 'suggestionCommon'];
+  const fixtureNames = ['keyboardCommon', 'shortcutCommon', 'suggestionCommon'];
 
   switch (os) {
     case 'windows':
@@ -68,6 +69,9 @@ function createTest(
   syntax: 'bracket' | 'markdown'
 ): (testCase: TestCase, common?: Common) => void {
   return (testCase, common) => {
+    const originalUserAgent = window.navigator.userAgent;
+    Object.defineProperty(window.navigator, 'userAgent', { value: operatingSystem.userAgent[os], configurable: true });
+
     const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
     const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
@@ -86,6 +90,8 @@ function createTest(
 
     SpiedTextLines.mockRestore();
     spiedPositionToCursorCoordinate.mockRestore();
+
+    Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
   };
 }
 

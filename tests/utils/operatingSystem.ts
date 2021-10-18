@@ -1,4 +1,4 @@
-export const OperatingSystem = {
+export const operatingSystem = {
   userAgent: {
     windows: [
       'Mozilla/5.0',
