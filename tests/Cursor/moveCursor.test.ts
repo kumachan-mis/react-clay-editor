@@ -5,15 +5,18 @@ import { CursorCoordinate } from '../../src/Cursor/types';
 
 interface TestCase extends BaseTestCase {
   name: string;
-  inputLines: string[];
   inputCursorCoordinate: CursorCoordinate;
   inputAmount: number;
   expectedCursorCoordinate: CursorCoordinate;
 }
 
-fixtureTest<TestCase>('moveCursor', 'Cursor', 'moveCursor', (testCase) => {
+interface Common {
+  inputLines: string[];
+}
+
+fixtureTest<TestCase, Common>('moveCursor', 'Cursor', 'moveCursor', (testCase, common) => {
   const actualCursorCoordinate = moveCursor(
-    testCase.inputLines.join('\n'),
+    common.inputLines.join('\n'),
     testCase.inputCursorCoordinate,
     testCase.inputAmount
   );
