@@ -28,17 +28,27 @@
       "expectedLines": ["."]
     },
     {
-      "name": "undo (ctrl+z)",
+      "name": "undo insert (ctrl+z)",
       "inputTyping": ["abc{arrowright}{arrowright}{arrowright}{ctrl}z{/ctrl}d"],
       "expectedLines": ["abd"]
     },
     {
-      "name": "redo (ctrl+shift+z)",
+      "name": "undo delete (ctrl+z)",
+      "inputTyping": ["abc{backspace}{arrowright}{arrowright}", "{ctrl}z{/ctrl}d"],
+      "expectedLines": ["abcd"]
+    },
+    {
+      "name": "redo insert (ctrl+shift+z)",
       "inputTyping": [
         "{ctrl}{shift}z{/shift}{/ctrl}",
         "abc{ctrl}zzz{/ctrl}{arrowright}{arrowright}",
         "{ctrl}{shift}zz{/shift}{/ctrl}d"
       ],
+      "expectedLines": ["abd"]
+    },
+    {
+      "name": "redo delete (ctrl+shift+z)",
+      "inputTyping": ["abc{backspace}{ctrl}z{/ctrl}{arrowright}{arrowright}", "{ctrl}{shift}z{/shift}{/ctrl}d"],
       "expectedLines": ["abd"]
     },
     {
