@@ -85,7 +85,7 @@ function createTest(
 
     for (let i = 0; i < testCase.expectedLines.length; i++) {
       const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`)).toHaveTextContent(line, { normalizeWhitespace: false });
+      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
     }
     expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).toBeNull();
 
