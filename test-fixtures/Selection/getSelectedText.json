@@ -7,7 +7,35 @@
   },
   "testCases": [
     {
-      "name": "basic input",
+      "name": "fixed.lineIndex < free.lineIndex",
+      "inputSelection": {
+        "fixed": {
+          "lineIndex": 0,
+          "charIndex": 66
+        },
+        "free": {
+          "lineIndex": 1,
+          "charIndex": 2
+        }
+      },
+      "expectedText": "the bank\nan"
+    },
+    {
+      "name": "fixed.lineIndex > free.lineIndex",
+      "inputSelection": {
+        "fixed": {
+          "lineIndex": 1,
+          "charIndex": 6
+        },
+        "free": {
+          "lineIndex": 0,
+          "charIndex": 68
+        }
+      },
+      "expectedText": "e bank\nand, o"
+    },
+    {
+      "name": "fixed.charIndex <= free.charIndex",
       "inputSelection": {
         "fixed": {
           "lineIndex": 0,
@@ -19,6 +47,20 @@
         }
       },
       "expectedText": "ry tired of sitting by h"
+    },
+    {
+      "name": "fixed.charIndex > free.charIndex",
+      "inputSelection": {
+        "fixed": {
+          "lineIndex": 0,
+          "charIndex": 43
+        },
+        "free": {
+          "lineIndex": 0,
+          "charIndex": 18
+        }
+      },
+      "expectedText": "g to get very tired of si"
     }
   ]
 }
