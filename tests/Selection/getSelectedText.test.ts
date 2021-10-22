@@ -1,4 +1,4 @@
-import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 import { getSelectedText } from '../../src/Selection/utils';
 import { TextSelection } from '../../src/Selection/types';
@@ -13,7 +13,9 @@ interface Common {
   inputLines: string[];
 }
 
-fixtureTest<TestCase, Common>('getSelectedText', 'Selection', 'getSelectedText', (testCase, common) => {
-  const actualText = getSelectedText(common.inputLines.join('\n'), testCase.inputSelection);
-  expect(actualText).toBe(testCase.expectedText);
+describe('function getSelectedText in Selection', () => {
+  runFixtureTests<TestCase, Common>('Selection', 'getSelectedText', (testCase, common) => {
+    const actualText = getSelectedText(common.inputLines.join('\n'), testCase.inputSelection);
+    expect(actualText).toBe(testCase.expectedText);
+  });
 });

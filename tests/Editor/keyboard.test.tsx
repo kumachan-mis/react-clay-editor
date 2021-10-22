@@ -2,8 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
-import { operatingSystem } from '../utils/operatingSystem';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 import { Editor, EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
@@ -18,6 +17,21 @@ interface Common {
   options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
   typingAlias?: Record<string, string[] | undefined>;
 }
+
+const osUserAgents = {
+  windows: [
+    'Mozilla/5.0',
+    '(Windows NT 10.0; Win64; x64)',
+    'AppleWebKit/537.36 (KHTML, like Gecko)',
+    'Chrome/69.0.3497.100',
+  ].join(' '),
+  macos: [
+    'Mozilla/5.0',
+    '(Macintosh; Intel Mac OS X 10_13_6)',
+    'AppleWebKit/537.36 (KHTML, like Gecko)',
+    'Chrome/69.0.3497.100 Safari/537.36',
+  ].join(' '),
+};
 
 const MockEditor: React.FC<Omit<EditorProps, 'text' | 'onChangeText'>> = (props) => {
   const [text, setText] = React.useState('');
@@ -36,23 +50,8 @@ const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-function createTest(
-  syntax: 'bracket' | 'markdown',
-  os?: 'windows' | 'macos'
-): (testCase: TestCase, common: Common | undefined) => void {
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
-    const originalUserAgent = window.navigator.userAgent;
-    if (os) {
-      const userAgent = operatingSystem.userAgent[os];
-      Object.defineProperty(window.navigator, 'userAgent', { value: userAgent, configurable: true });
-    }
-
-    const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
-    const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
-
-    SpiedTextLines.mockImplementation(MockTextLines);
-    spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
-
     render(<MockEditor syntax={syntax} {...common?.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
     userEvent.type(screen.getByRole('textbox'), resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
@@ -62,11 +61,6 @@ function createTest(
       expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
     }
     expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
-
-    SpiedTextLines.mockRestore();
-    spiedPositionToCursorCoordinate.mockRestore();
-
-    if (os) Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
   };
 }
 
@@ -83,22 +77,83 @@ function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, 
   return resolvedTyping;
 }
 
-const bracketTest = createTest('bracket');
-for (const fixtureName of ['keyboardCommon', 'keyboardBracket', 'suggestionCommon', 'suggestionBracket']) {
-  fixtureTest<TestCase, Common | undefined>('keyboardEvents (bracket)', 'Editor', fixtureName, bracketTest);
-}
+const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
+const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
-const markdownTest = createTest('markdown');
-for (const fixtureName of ['keyboardCommon', 'keyboardMarkdown', 'suggestionCommon', 'suggestionMarkdown']) {
-  fixtureTest<TestCase, Common | undefined>('keyboardEvents (markdown)', 'Editor', fixtureName, markdownTest);
-}
+beforeAll(() => {
+  SpiedTextLines.mockImplementation(MockTextLines);
+  spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
+});
 
-const windowsTest = createTest('bracket', 'windows');
-for (const fixtureName of ['shortcutCommon', 'shortcutWindows']) {
-  fixtureTest<TestCase, Common | undefined>('keyboardShortcuts (windows)', 'Editor', fixtureName, windowsTest);
-}
+afterAll(() => {
+  SpiedTextLines.mockRestore();
+  spiedPositionToCursorCoordinate.mockRestore();
+});
 
-const macosTest = createTest('bracket', 'macos');
-for (const fixtureName of ['shortcutCommon', 'shortcutMacOS']) {
-  fixtureTest<TestCase, Common | undefined>('keyboardShortcuts (macos)', 'Editor', fixtureName, macosTest);
-}
+describe('keyboardEvents (bracket) in Editor', () => {
+  afterEach(() => {
+    SpiedTextLines.mockClear();
+    spiedPositionToCursorCoordinate.mockClear();
+  });
+
+  const testfun = createTest('bracket');
+  for (const fixtureName of ['keyboardCommon', 'keyboardBracket', 'suggestionCommon', 'suggestionBracket']) {
+    runFixtureTests<TestCase, Common | undefined>('Editor', fixtureName, testfun);
+  }
+});
+
+describe('keyboardEvents (markdown) in Editor', () => {
+  afterEach(() => {
+    SpiedTextLines.mockClear();
+    spiedPositionToCursorCoordinate.mockClear();
+  });
+
+  const testfun = createTest('markdown');
+  for (const fixtureName of ['keyboardCommon', 'keyboardMarkdown', 'suggestionCommon', 'suggestionMarkdown']) {
+    runFixtureTests<TestCase, Common | undefined>('Editor', fixtureName, testfun);
+  }
+});
+
+describe('keyboardShortcuts (windows) in Editor', () => {
+  const originalUserAgent = window.navigator.userAgent;
+
+  beforeAll(() => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: osUserAgents.windows, configurable: true });
+  });
+
+  afterAll(() => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
+  });
+
+  afterEach(() => {
+    SpiedTextLines.mockClear();
+    spiedPositionToCursorCoordinate.mockClear();
+  });
+
+  const testfn = createTest('bracket');
+  for (const fixtureName of ['shortcutCommon', 'shortcutWindows']) {
+    runFixtureTests<TestCase, Common | undefined>('Editor', fixtureName, testfn);
+  }
+});
+
+describe('keyboardShortcuts (macos) in Editor', () => {
+  const originalUserAgent = window.navigator.userAgent;
+
+  beforeAll(() => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: osUserAgents.macos, configurable: true });
+  });
+
+  afterAll(() => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
+  });
+
+  afterEach(() => {
+    SpiedTextLines.mockClear();
+    spiedPositionToCursorCoordinate.mockClear();
+  });
+
+  const testfn = createTest('bracket');
+  for (const fixtureName of ['shortcutCommon', 'shortcutMacOS']) {
+    runFixtureTests<TestCase, Common | undefined>('Editor', fixtureName, testfn);
+  }
+});

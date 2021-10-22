@@ -1,4 +1,4 @@
-import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 import { parseText } from '../../src/TextLines/parser';
 import { Node } from '../../src/TextLines/parser/types';
@@ -43,11 +43,15 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
 }
 
 const bracketTest = createTest('bracket');
-for (const fixtureName of ['parseCommonText', 'parseBracketText']) {
-  fixtureTest<TestCase, Common | undefined>('parseText (bracket syntax)', 'TextLines', fixtureName, bracketTest);
-}
+describe('function parseText in TextLines (bracket syntax)', () => {
+  for (const fixtureName of ['parseCommonText', 'parseBracketText']) {
+    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, bracketTest);
+  }
+});
 
 const markdownTest = createTest('markdown');
-for (const fixtureName of ['parseCommonText', 'parseMarkdownText']) {
-  fixtureTest<TestCase, Common | undefined>('parseText (markdown syntax)', 'TextLines', fixtureName, markdownTest);
-}
+describe('function parseText in TextLines (markdown syntax)', () => {
+  for (const fixtureName of ['parseCommonText', 'parseMarkdownText']) {
+    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, markdownTest);
+  }
+});
