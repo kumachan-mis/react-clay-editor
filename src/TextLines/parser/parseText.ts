@@ -22,7 +22,7 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
   };
 
   if (options.syntax == 'bracket') {
-    /* bracket syntax */
+    // bracket syntax
     const { itemization } = TextLinesConstants.regexes.bracketSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
@@ -39,7 +39,7 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
       }
     }
   } else {
-    /* markdown syntax */
+    // markdown syntax
     const { heading, itemization } = TextLinesConstants.regexes.markdownSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
