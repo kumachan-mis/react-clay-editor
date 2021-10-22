@@ -12,7 +12,6 @@ interface TestCase extends BaseTestCase {
   name: string;
   inputTyping: string[];
   expectedLines: string[];
-  options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
 }
 
 interface Common {
@@ -37,41 +36,16 @@ const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-function getFixtureNames(os: 'windows' | 'macos', syntax: 'bracket' | 'markdown'): string[] {
-  const fixtureNames = ['keyboardCommon', 'shortcutCommon', 'suggestionCommon'];
-
-  switch (os) {
-    case 'windows':
-      fixtureNames.push('shortcutWindows');
-      break;
-    case 'macos':
-      fixtureNames.push('shortcutMacOS');
-      break;
-    default:
-      break;
-  }
-
-  switch (syntax) {
-    case 'bracket':
-      fixtureNames.push('keyboardBracket', 'suggestionBracket');
-      break;
-    case 'markdown':
-      fixtureNames.push('keyboardMarkdown', 'suggestionMarkdown');
-      break;
-    default:
-      break;
-  }
-
-  return fixtureNames;
-}
-
 function createTest(
-  os: 'windows' | 'macos',
-  syntax: 'bracket' | 'markdown'
-): (testCase: TestCase, common?: Common) => void {
+  syntax: 'bracket' | 'markdown',
+  os?: 'windows' | 'macos'
+): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
     const originalUserAgent = window.navigator.userAgent;
-    Object.defineProperty(window.navigator, 'userAgent', { value: operatingSystem.userAgent[os], configurable: true });
+    if (os) {
+      const userAgent = operatingSystem.userAgent[os];
+      Object.defineProperty(window.navigator, 'userAgent', { value: userAgent, configurable: true });
+    }
 
     const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
     const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
@@ -79,20 +53,20 @@ function createTest(
     SpiedTextLines.mockImplementation(MockTextLines);
     spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
 
-    render(<MockEditor syntax={syntax} {...common?.options} {...testCase.options} />);
+    render(<MockEditor syntax={syntax} {...common?.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
     userEvent.type(screen.getByRole('textbox'), resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
 
     for (let i = 0; i < testCase.expectedLines.length; i++) {
       const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`)).toHaveTextContent(line, { normalizeWhitespace: false });
+      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
     }
     expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).toBeNull();
 
     SpiedTextLines.mockRestore();
     spiedPositionToCursorCoordinate.mockRestore();
 
-    Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
+    if (os) Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
   };
 }
 
@@ -109,15 +83,22 @@ function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, 
   return resolvedTyping;
 }
 
-for (const [os, syntax] of [
-  ['macos', 'bracket'],
-  ['windows', 'bracket'],
-  ['windows', 'markdown'],
-] as const) {
-  fixtureTest<TestCase, Common | undefined>(
-    'keyboardEvents',
-    'Editor',
-    getFixtureNames(os, syntax),
-    createTest(os, syntax)
-  );
+const bracketTest = createTest('bracket');
+for (const fixtureName of ['keyboardCommon', 'keyboardBracket', 'suggestionCommon', 'suggestionBracket']) {
+  fixtureTest<TestCase, Common | undefined>('keyboardEvents (bracket)', 'Editor', fixtureName, bracketTest);
+}
+
+const markdownTest = createTest('markdown');
+for (const fixtureName of ['keyboardCommon', 'keyboardMarkdown', 'suggestionCommon', 'suggestionMarkdown']) {
+  fixtureTest<TestCase, Common | undefined>('keyboardEvents (markdown)', 'Editor', fixtureName, markdownTest);
+}
+
+const windowsTest = createTest('bracket', 'windows');
+for (const fixtureName of ['shortcutCommon', 'shortcutWindows']) {
+  fixtureTest<TestCase, Common | undefined>('keyboardShortcuts (windows)', 'Editor', fixtureName, windowsTest);
+}
+
+const macosTest = createTest('bracket', 'macos');
+for (const fixtureName of ['shortcutCommon', 'shortcutMacOS']) {
+  fixtureTest<TestCase, Common | undefined>('keyboardShortcuts (macos)', 'Editor', fixtureName, macosTest);
 }

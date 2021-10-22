@@ -1,42 +1,53 @@
 import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
 
 import { parseText } from '../../src/TextLines/parser';
-import { Node, ParsingOptions } from '../../src/TextLines/parser/types';
+import { Node } from '../../src/TextLines/parser/types';
+import { TextLinesConstants } from '../../src/TextLines/constants';
 
 interface TestCase extends BaseTestCase {
   name: string;
   inputLines: string[];
   expectedNodes: Node[];
-  options?: Omit<ParsingOptions, 'syntax'>;
 }
 
 interface Common {
-  options?: Omit<ParsingOptions, 'syntax'>;
+  disabledMap?: {
+    bracketLink?: boolean;
+    hashTag?: boolean;
+    code?: boolean;
+    formula?: boolean;
+  };
+  taggedLinks?: {
+    tagName: string;
+    linkNamePattern?: string;
+  }[];
 }
 
-function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common?: Common) => void {
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
-    const options: ParsingOptions = {
-      disabledMap: { bracketLink: false, hashTag: false, code: false, formula: false },
-      taggedLinkRegexes: [],
-      syntax,
-      ...common?.options,
-      ...testCase.options,
+    const disabledMap = {
+      bracketLink: false,
+      hashTag: false,
+      code: false,
+      formula: false,
+      ...common?.disabledMap,
     };
-    const actualNodes = parseText(testCase.inputLines.join('\n'), options);
+    const taggedLinkRegexes = (common?.taggedLinks || []).map((link) =>
+      link.linkNamePattern
+        ? TextLinesConstants.regexes.common.taggedLink(link.tagName, new RegExp(link.linkNamePattern))
+        : TextLinesConstants.regexes.common.taggedLink(link.tagName)
+    );
+    const actualNodes = parseText(testCase.inputLines.join('\n'), { syntax, disabledMap, taggedLinkRegexes });
     expect(actualNodes).toMatchObject(testCase.expectedNodes);
   };
 }
 
-fixtureTest<TestCase, Common | undefined>(
-  'parseText',
-  'TextLines',
-  ['parseCommonText', 'parseBracketText'],
-  createTest('bracket')
-);
-fixtureTest<TestCase, Common | undefined>(
-  'parseText',
-  'TextLines',
-  ['parseCommonText', 'parseMarkdownText'],
-  createTest('markdown')
-);
+const bracketTest = createTest('bracket');
+for (const fixtureName of ['parseCommonText', 'parseBracketText']) {
+  fixtureTest<TestCase, Common | undefined>('parseText (bracket syntax)', 'TextLines', fixtureName, bracketTest);
+}
+
+const markdownTest = createTest('markdown');
+for (const fixtureName of ['parseCommonText', 'parseMarkdownText']) {
+  fixtureTest<TestCase, Common | undefined>('parseText (markdown syntax)', 'TextLines', fixtureName, markdownTest);
+}

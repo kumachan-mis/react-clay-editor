@@ -19,6 +19,7 @@ export function parseContent(text: string, context: ParsingContext, options: Par
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
   if (options.syntax == 'bracket') {
+    // bracket syntax
     const { decoration } = TextLinesConstants.regexes.bracketSyntax;
     if (!options.disabledMap.code && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
@@ -38,7 +39,8 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseNormal(text, context);
     }
     return [];
-  } else if (options.syntax == 'markdown') {
+  } else {
+    // markdown syntax
     const { bold, italic } = TextLinesConstants.regexes.markdownSyntax;
     if (!options.disabledMap.code && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
@@ -57,11 +59,6 @@ export function parseContent(text: string, context: ParsingContext, options: Par
     } else if (!options.disabledMap.hashTag && hashTag.test(text)) {
       return parseHashTag(text, context, options);
     } else if (normal.test(text)) {
-      return parseNormal(text, context);
-    }
-    return [];
-  } else {
-    if (normal.test(text)) {
       return parseNormal(text, context);
     }
     return [];

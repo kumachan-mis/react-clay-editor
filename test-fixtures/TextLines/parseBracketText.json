@@ -3,7 +3,7 @@
     {
       "name": "decoration text",
       "inputLines": [
-        "[*** Largest Text][** Larger Text][* bold text][/ italic text][_ underlined text]",
+        "[**** Largest Text][*** Also Largest Text][** Larger Text][* bold text][/ italic text][_ underlined text]",
         "[*/ bold italic text][/* italic bold text][*// bold italic text]",
         "[*_ bold underlined text][_* underlined bold text][*__ bold underlined text]",
         "[/_ italic underlined text][_/ underlined italic text]",
@@ -19,6 +19,21 @@
                 {
                   "type": "normal",
                   "text": "Largest Text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "largest",
+                "bold": true,
+                "italic": false,
+                "underline": false
+              }
+            },
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "Also Largest Text"
                 }
               ],
               "decoration": {

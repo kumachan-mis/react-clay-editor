@@ -23,22 +23,37 @@
       "expectedLines": ["three words,sentence.", "0three words,sentence.", "three words,sentence."]
     },
     {
+      "name": "forward delete (ctrl+d)",
+      "inputTyping": ["Hellp{arrowleft}{ctrl}d{/ctrl}o{enter}", "Q{arrowleft}{arrowleft}{ctrl}dd{/ctrl}{enter}World"],
+      "expectedLines": ["Hello", "World"]
+    },
+    {
       "name": "select all (command+a)",
       "inputTyping": ["Hello{enter}World{meta}a{/meta}{backspace}."],
       "expectedLines": ["."]
     },
     {
-      "name": "undo (command+z)",
+      "name": "undo intert (command+z)",
       "inputTyping": ["{meta}z{/meta}", "abc{arrowright}{arrowright}{arrowright}", "{meta}zz{/meta}d"],
       "expectedLines": ["ad"]
     },
     {
-      "name": "redo (command+shift+z)",
+      "name": "undo delete (command+z)",
+      "inputTyping": ["abc{backspace}{arrowright}{arrowright}", "{meta}z{/meta}d"],
+      "expectedLines": ["abcd"]
+    },
+    {
+      "name": "redo intert (command+shift+z)",
       "inputTyping": [
         "{meta}{shift}z{/shift}{/meta}",
         "abc{meta}zzz{/meta}{arrowright}{arrowright}",
         "{meta}{shift}zz{/shift}{/meta}d"
       ],
+      "expectedLines": ["abd"]
+    },
+    {
+      "name": "redo delete (command+shift+z)",
+      "inputTyping": ["abc{backspace}{meta}z{/meta}{arrowright}{arrowright}", "{meta}{shift}z{/shift}{/meta}d"],
       "expectedLines": ["abd"]
     },
     {
