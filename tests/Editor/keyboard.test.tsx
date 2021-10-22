@@ -61,7 +61,7 @@ function createTest(
       const line = testCase.expectedLines[i];
       expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
     }
-    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).toBeNull();
+    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
 
     SpiedTextLines.mockRestore();
     spiedPositionToCursorCoordinate.mockRestore();

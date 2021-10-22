@@ -11,4 +11,13 @@ export const SelectionConstants = {
       height: `${position.height}px`,
     }),
   },
+  top: {
+    selectId: 'selection-top',
+  },
+  center: {
+    selectId: 'selection-center',
+  },
+  bottom: {
+    selectId: 'selection-bottom',
+  },
 };
