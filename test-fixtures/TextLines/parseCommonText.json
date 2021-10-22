@@ -239,15 +239,31 @@
       ]
     },
     {
+      "name": "tagged link",
+      "inputLines": ["[@: tagged link test]"],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "taggedLink",
+              "tag": "@: ",
+              "linkName": "tagged link test"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "bracket link",
-      "inputLines": ["[brackettest]"],
+      "inputLines": ["[bracket test]"],
       "expectedNodes": [
         {
           "type": "normalLine",
           "children": [
             {
               "type": "bracketLink",
-              "linkName": "brackettest"
+              "linkName": "bracket test"
             }
           ]
         }
