@@ -1,4 +1,7 @@
 {
+  "common": {
+    "taggedLinks": [{ "tagName": "@" }]
+  },
   "testCases": [
     {
       "name": "quotation",
@@ -38,9 +41,13 @@
         "  return <Editor />;",
         "};",
         "```",
+        "```",
+        "function square(x: number): number {",
+        "  return x*x;",
+        "}",
         "  ```",
-        "  function square(x: number): number {",
-        "    return x*x;",
+        "  function cube(x: number): number {",
+        "    return x*x*x;",
         "  }",
         "// This is actually a normal text"
       ],
@@ -86,18 +93,42 @@
           "type": "blockCode",
           "facingMeta": {
             "type": "blockCodeMeta",
+            "indentDepth": 0
+          },
+          "children": [
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 0,
+              "codeLine": "function square(x: number): number {"
+            },
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 0,
+              "codeLine": "  return x*x;"
+            },
+            {
+              "type": "blockCodeLine",
+              "indentDepth": 0,
+              "codeLine": "}"
+            }
+          ]
+        },
+        {
+          "type": "blockCode",
+          "facingMeta": {
+            "type": "blockCodeMeta",
             "indentDepth": 2
           },
           "children": [
             {
               "type": "blockCodeLine",
               "indentDepth": 2,
-              "codeLine": "function square(x: number): number {"
+              "codeLine": "function cube(x: number): number {"
             },
             {
               "type": "blockCodeLine",
               "indentDepth": 2,
-              "codeLine": "  return x*x;"
+              "codeLine": "  return x*x*x;"
             },
             {
               "type": "blockCodeLine",
@@ -125,9 +156,11 @@
         "$$",
         "\\int_a^b f(x) dx",
         "$$",
+        "$$",
+        "\\sum_{n=1}^N a_n",
         "  $$",
-        "  \\sum_{n=1}^N a_n",
-        "g(x)"
+        "  \\sum_{m=1}^M b_m",
+        "c_n"
       ],
       "expectedNodes": [
         {
@@ -170,13 +203,27 @@
           "type": "blockFormula",
           "facingMeta": {
             "type": "blockFormulaMeta",
+            "indentDepth": 0
+          },
+          "children": [
+            {
+              "type": "blockFormulaLine",
+              "indentDepth": 0,
+              "formulaLine": "\\sum_{n=1}^N a_n"
+            }
+          ]
+        },
+        {
+          "type": "blockFormula",
+          "facingMeta": {
+            "type": "blockFormulaMeta",
             "indentDepth": 2
           },
           "children": [
             {
               "type": "blockFormulaLine",
               "indentDepth": 2,
-              "formulaLine": "\\sum_{n=1}^N a_n"
+              "formulaLine": "\\sum_{m=1}^M b_m"
             }
           ]
         },
@@ -185,7 +232,7 @@
           "children": [
             {
               "type": "normal",
-              "text": "g(x)"
+              "text": "c_n"
             }
           ]
         }

@@ -33,10 +33,9 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
       ...common?.disabledMap,
     };
     const taggedLinkRegexes = (common?.taggedLinks || []).map((link) =>
-      TextLinesConstants.regexes.common.taggedLink(
-        link.tagName,
-        link.linkNamePattern ? new RegExp(link.linkNamePattern) : undefined
-      )
+      link.linkNamePattern
+        ? TextLinesConstants.regexes.common.taggedLink(link.tagName, new RegExp(link.linkNamePattern))
+        : TextLinesConstants.regexes.common.taggedLink(link.tagName)
     );
     const actualNodes = parseText(testCase.inputLines.join('\n'), { syntax, disabledMap, taggedLinkRegexes });
     expect(actualNodes).toMatchObject(testCase.expectedNodes);
