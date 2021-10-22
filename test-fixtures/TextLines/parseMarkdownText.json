@@ -2,7 +2,13 @@
   "testCases": [
     {
       "name": "decoration text",
-      "inputLines": ["# Largest Text", "## Larger Text", "### Bold Text", "*bold text*_italic text_"],
+      "inputLines": [
+        "# Largest Text",
+        "## Larger Text",
+        "### Bold Text",
+        "#### Also Bold Text",
+        "*bold text*_italic text_"
+      ],
       "expectedNodes": [
         {
           "type": "normalLine",
@@ -53,6 +59,26 @@
                 {
                   "type": "normal",
                   "text": "Bold Text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": false,
+                "underline": false
+              }
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "children": [
+            {
+              "type": "decoration",
+              "children": [
+                {
+                  "type": "normal",
+                  "text": "Also Bold Text"
                 }
               ],
               "decoration": {

@@ -175,9 +175,6 @@ function getHeadingStyle(decoration: string): Decoration {
     case '##':
       fontlevel = 'larger';
       break;
-    case '###':
-      fontlevel = 'normal';
-      break;
   }
 
   return { bold: true, italic: false, underline: false, fontlevel };
