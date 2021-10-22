@@ -20,11 +20,6 @@ interface TestCase extends BaseTestCase {
     init?: MouseEventInit;
   }[];
   expectedText: string;
-  expectedSelection: {
-    top: boolean;
-    center: boolean;
-    bottom: boolean;
-  };
 }
 
 interface Common {
@@ -37,7 +32,6 @@ const MockEditor: React.FC<Omit<EditorProps, 'onChangeText'>> = (props) => {
 };
 
 describe('mouseEvents in Editor', () => {
-  const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
   const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
   beforeAll(() => {
@@ -53,6 +47,7 @@ describe('mouseEvents in Editor', () => {
   });
 
   runFixtureTests<TestCase, Common>('Editor', 'mouse', (testCase, common) => {
+    const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
     const text = common.textLines.join('\n');
 
     const { rerender } = render(<MockEditor text={text} />);
@@ -66,13 +61,10 @@ describe('mouseEvents in Editor', () => {
       });
     }
 
-    for (const position of ['top', 'center', 'bottom'] as const) {
-      const selectionExpect = expect(screen.queryByTestId(`selection-${position}`));
-      if (testCase.expectedSelection[position]) {
-        selectionExpect.toBeInTheDocument();
-      } else {
-        selectionExpect.not.toBeInTheDocument();
-      }
+    if (testCase.expectedText) {
+      expect(screen.queryAllByTestId('selection')).not.toEqual([]);
+    } else {
+      expect(screen.queryAllByTestId('selection')).toEqual([]);
     }
 
     const MockSelection: React.FC<{ textSelection: TextSelection | undefined }> = ({ textSelection }) => (

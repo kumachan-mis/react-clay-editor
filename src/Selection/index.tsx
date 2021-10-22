@@ -25,24 +25,21 @@ export const Selection: React.FC<Props> = (props) => {
       {state.topDivPosition && (
         <div
           className={SelectionConstants.div.className}
-          data-selectid={SelectionConstants.top.selectId}
-          data-testid={SelectionConstants.top.selectId}
+          data-testid={SelectionConstants.div.selectId}
           style={SelectionConstants.div.style(state.topDivPosition)}
         />
       )}
       {state.centerDivPosition && (
         <div
           className={SelectionConstants.div.className}
-          data-selectid={SelectionConstants.center.selectId}
-          data-testid={SelectionConstants.center.selectId}
+          data-testid={SelectionConstants.div.selectId}
           style={SelectionConstants.div.style(state.centerDivPosition)}
         />
       )}
       {state.bottomDivPosition && (
         <div
           className={SelectionConstants.div.className}
-          data-selectid={SelectionConstants.bottom.selectId}
-          data-testid={SelectionConstants.bottom.selectId}
+          data-testid={SelectionConstants.div.selectId}
           style={SelectionConstants.div.style(state.bottomDivPosition)}
         />
       )}
