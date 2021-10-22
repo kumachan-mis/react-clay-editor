@@ -145,9 +145,11 @@ export function handleOnKeyDown(
       const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
 
       if (!props.syntax || props.syntax == 'bracket') {
+        // bracket syntax
         const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
-      } else if (props.syntax == 'markdown') {
+      } else {
+        // markdown syntax
         const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }

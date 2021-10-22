@@ -56,8 +56,16 @@
     },
     {
       "name": "parens/braces/brackets auto-fill",
-      "inputTyping": ["(parens{arrowright}{{braces{arrowright}[[brackets{arrowright}"],
-      "expectedLines": ["(parens){braces}[brackets]"]
+      "inputTyping": ["({arrowright}{{{arrowright}[[{arrowright}"],
+      "expectedLines": ["(){}[]"]
+    },
+    {
+      "name": "parens/braces/brackets auto-fill",
+      "inputTyping": [
+        "({arrowright}{{{arrowright}[[{arrowright}",
+        "{arrowleft}{backspace}{arrowleft}{backspace}{arrowleft}{backspace}."
+      ],
+      "expectedLines": ["."]
     },
     {
       "name": "quotation enter",

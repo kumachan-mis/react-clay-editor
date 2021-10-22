@@ -89,6 +89,7 @@
     {
       "name": "escape suggestion",
       "inputTyping": [
+        "{esc}",
         "a{esc}{enter}",
         "[[{esc}{enter}{arrowright}",
         "#{esc}{enter}",
