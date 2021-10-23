@@ -14,8 +14,6 @@ export function handleOnShortcut(
   switch (command) {
     case 'forwardDelete':
       return handleOnForwardDelete(text, state, event);
-    case 'backwardDelete':
-      return handleOnBackwardDelete(text, state, event);
     case 'selectAll':
       return handleOnSelectAll(text, state, event);
     case 'undo':
@@ -30,20 +28,19 @@ export function handleOnShortcut(
       return handleOnMoveLeft(text, state, event);
     case 'moveRight':
       return handleOnMoveRight(text, state, event);
-    case 'moveWordTop':
-      return handleOnMoveWordTop(text, state, event);
-    case 'moveWordBottom':
-      return handleOnMoveWordBottom(text, state, event);
     case 'moveLineTop':
       return handleOnMoveLineTop(text, state, event);
     case 'moveLineBottom':
       return handleOnMoveLineBottom(text, state, event);
-    case 'moveTextTop':
-      return handleOnMoveTextTop(text, state, event);
-    case 'moveTextBottom':
-      return handleOnMoveTextBottom(text, state, event);
     default:
       return [text, state];
+
+    // any shortcut commands with a-z are not defined for the following functions
+    // - backwardDelete
+    // - moveWordTop
+    // - moveWordBottom
+    // - moveTextTop
+    // - moveTextBottom
   }
 }
 
