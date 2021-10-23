@@ -36,7 +36,7 @@ afterAll(() => {
   spiedPositionToCursorCoordinate.mockRestore();
 });
 
-describe('mouseEvents in Editor', () => {
+describe('mouseSelection in Editor', () => {
   afterEach(() => {
     spiedPositionToCursorCoordinate.mockClear();
   });
