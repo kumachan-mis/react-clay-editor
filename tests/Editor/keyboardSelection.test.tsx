@@ -24,7 +24,7 @@ interface Common {
 }
 
 describe('keyboardSelection in Editor', () => {
-  runFixtureTests<TestCase, Common>('Editor', 'mouseSelection', (testCase, common) => {
+  runFixtureTests<TestCase, Common>('Editor', 'keyboardSelection', (testCase, common) => {
     const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
     const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
 
