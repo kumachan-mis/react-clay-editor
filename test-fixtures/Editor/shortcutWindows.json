@@ -62,9 +62,10 @@
         "{THREE_WORDS_SENT_TOP}",
         "{ctrl}{arrowleft}{/ctrl}0{arrowleft}",
         "{ctrl}{arrowleft}{/ctrl}1{arrowleft}",
-        "{ctrl}{arrowleft}{/ctrl}2{arrowleft}"
+        "{ctrl}{arrowleft}{/ctrl}2{arrowleft}",
+        "{ctrl}{arrowleft}{/ctrl}3{arrowleft}"
       ],
-      "expectedLines": ["three words,sentence.", "2three 1words,0sentence.", "three words,sentence."]
+      "expectedLines": ["three words,sentence.", "32three 1words,0sentence.", "three words,sentence."]
     },
     {
       "name": "move word bottom (ctrl+arrowright)",
@@ -72,9 +73,10 @@
         "{THREE_WORDS_SENT_BOTTOM}",
         "{ctrl}{arrowright}{/ctrl}0",
         "{ctrl}{arrowright}{/ctrl}1",
-        "{ctrl}{arrowright}{/ctrl}2"
+        "{ctrl}{arrowright}{/ctrl}2",
+        "{ctrl}{arrowright}{/ctrl}3"
       ],
-      "expectedLines": ["three words,sentence.", "three0 words1,sentence2.", "three words,sentence."]
+      "expectedLines": ["three words,sentence.", "three0 words1,sentence2.3", "three words,sentence."]
     },
     {
       "name": "move line top (home)",
