@@ -25,7 +25,7 @@ import {
 
 import { Props, State } from '../types';
 import { coordinatesAreEqual } from '../../Cursor/utils';
-import { getWordSelection, getLineSelection, getSelectedText } from '../../Selection/utils';
+import { getWordSelection, getLineSelection, getSelectionText } from '../../Selection/utils';
 import { TextLinesConstants } from '../../TextLines/constants';
 import { isMacOS } from '../../common/utils';
 
@@ -145,9 +145,11 @@ export function handleOnKeyDown(
       const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
 
       if (!props.syntax || props.syntax == 'bracket') {
+        // bracket syntax
         const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
-      } else if (props.syntax == 'markdown') {
+      } else {
+        // markdown syntax
         const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }
@@ -275,7 +277,7 @@ export function handleOnTextCut(
 ): [string, State] {
   if (!state.cursorCoordinate || !state.textSelection) return [text, state];
   event.preventDefault();
-  const selectedText = getSelectedText(text, state.textSelection);
+  const selectedText = getSelectionText(text, state.textSelection);
   event.clipboardData.setData('text/plain', selectedText);
   return insertText(text, state, '');
 }
@@ -287,7 +289,7 @@ export function handleOnTextCopy(
 ): [string, State] {
   if (!state.cursorCoordinate || !state.textSelection) return [text, state];
   event.preventDefault();
-  const selectedText = getSelectedText(text, state.textSelection);
+  const selectedText = getSelectionText(text, state.textSelection);
   event.clipboardData.setData('text/plain', selectedText);
   return [text, state];
 }

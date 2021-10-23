@@ -1,0 +1,217 @@
+{
+  "common": {
+    "textLines": [
+      "Alice was beginning to get very tired of sitting by her sister on the bank,",
+      "and of having nothing to do: once or twice she had peeped into the book her",
+      "sister was reading, but it had no pictures or conversations in it"
+    ]
+  },
+  "testCases": [
+    {
+      "name": "one line selection",
+      "inputEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        }
+      ],
+      "expectedSelectionLines": ["lice was begin"]
+    },
+    {
+      "name": "two lines selection",
+      "inputEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 67
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 75
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 75
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 10
+          }
+        }
+      ],
+      "expectedSelectionLines": ["he bank,", "and of hav"]
+    },
+    {
+      "name": "three lines selection",
+      "inputEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 72
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 75
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 7
+          }
+        }
+      ],
+      "expectedSelectionLines": [
+        "nk,",
+        "and of having nothing to do: once or twice she had peeped into the book her",
+        "sister "
+      ]
+    },
+    {
+      "name": "double click selection",
+      "inputEvents": [
+        {
+          "type": "click",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 15
+          },
+          "init": {
+            "detail": 2
+          }
+        }
+      ],
+      "expectedSelectionLines": ["reading"]
+    },
+    {
+      "name": "triple click selection",
+      "inputEvents": [
+        {
+          "type": "click",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 15
+          },
+          "init": {
+            "detail": 3
+          }
+        }
+      ],
+      "expectedSelectionLines": ["sister was reading, but it had no pictures or conversations in it"]
+    },
+    {
+      "name": "down then up without move",
+      "inputEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "expectedSelectionLines": [""]
+    },
+    {
+      "name": "move without down and up",
+      "inputEvents": [
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 8
+          }
+        }
+      ],
+      "expectedSelectionLines": [""]
+    }
+  ]
+}

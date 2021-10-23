@@ -1,4 +1,4 @@
-import { fixtureTest, BaseTestCase } from '../utils/fixtureTest';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 import { moveCursor } from '../../src/Cursor/utils';
 import { CursorCoordinate } from '../../src/Cursor/types';
@@ -14,11 +14,13 @@ interface Common {
   inputLines: string[];
 }
 
-fixtureTest<TestCase, Common>('moveCursor', 'Cursor', 'moveCursor', (testCase, common) => {
-  const actualCursorCoordinate = moveCursor(
-    common.inputLines.join('\n'),
-    testCase.inputCursorCoordinate,
-    testCase.inputAmount
-  );
-  expect(actualCursorCoordinate).toEqual(testCase.expectedCursorCoordinate);
+describe('function moveCursor in Cursor', () => {
+  runFixtureTests<TestCase, Common>('Cursor', 'moveCursor', (testCase, common) => {
+    const actualCursorCoordinate = moveCursor(
+      common.inputLines.join('\n'),
+      testCase.inputCursorCoordinate,
+      testCase.inputAmount
+    );
+    expect(actualCursorCoordinate).toEqual(testCase.expectedCursorCoordinate);
+  });
 });

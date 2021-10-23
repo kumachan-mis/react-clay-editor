@@ -12,7 +12,7 @@
         "lineIndex": 1,
         "charIndex": 12
       },
-      "expectedText": "having"
+      "expectedSelectionLines": ["having"]
     },
     {
       "name": "border left",
@@ -20,7 +20,7 @@
         "lineIndex": 1,
         "charIndex": 0
       },
-      "expectedText": "and"
+      "expectedSelectionLines": ["and"]
     },
     {
       "name": "border right",
@@ -28,7 +28,7 @@
         "lineIndex": 0,
         "charIndex": 74
       },
-      "expectedText": "bank"
+      "expectedSelectionLines": ["bank"]
     },
     {
       "name": "both of sides are not word",
@@ -36,7 +36,7 @@
         "lineIndex": 1,
         "charIndex": 4
       },
-      "expectedText": ""
+      "expectedSelectionLines": [""]
     },
     {
       "name": "after period",
@@ -44,7 +44,7 @@
         "lineIndex": 1,
         "charIndex": 29
       },
-      "expectedText": ""
+      "expectedSelectionLines": [""]
     }
   ]
 }

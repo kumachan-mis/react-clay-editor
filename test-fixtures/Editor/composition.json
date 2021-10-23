@@ -1,0 +1,217 @@
+{
+  "testCases": [
+    {
+      "name": "basic input",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "て"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てき"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "テキ"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "expectedLines": ["テキ", ""]
+    },
+    {
+      "name": "suggestion",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "て"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てき"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "テキ"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "options": {
+        "textProps": {
+          "suggestions": ["テキストエディタ"]
+        }
+      },
+      "expectedLines": ["テキストエディタ"]
+    },
+    {
+      "name": "suggestion with index",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "て"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てき"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "テキ"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "options": {
+        "textProps": {
+          "suggestions": ["テキストエディタ", "マークアップエディタ", "テキストドキュメント"],
+          "initialSuggestionIndex": 2
+        }
+      },
+      "expectedLines": ["テキストエディタ"]
+    },
+    {
+      "name": "suggestion canceled by restart",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "て"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てき"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "テキ"
+          }
+        },
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "す"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "すと"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "スト"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "options": {
+        "textProps": {
+          "suggestions": ["テキストエディタ"]
+        }
+      },
+      "expectedLines": ["テキスト", ""]
+    },
+    {
+      "name": "empty suggestion",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "き"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "きほ"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "きほう"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "記法"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "options": {
+        "textProps": {
+          "suggestions": ["テキストエディタ"]
+        }
+      },
+      "expectedLines": ["記法", ""]
+    }
+  ]
+}

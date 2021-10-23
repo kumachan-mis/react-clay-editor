@@ -101,12 +101,18 @@ const HiddenTextArea: React.FC<HiddenTextAreaProps> = (props) => {
 const SuggestionList: React.FC<SuggestionListProps> = (props) => {
   const constants = CursorConstants.suggestion;
   const { suggestions, suggestionIndex, position, cursorSize } = props;
+
+  if (suggestions.length == 0) return <></>;
+
   return (
-    <div
-      className={constants.list.className}
-      style={constants.list.style(position, cursorSize, suggestions.length == 0)}
-    >
-      <div className={constants.header.className}>{constants.header.name(props.suggestionType)}</div>
+    <div className={constants.list.className} style={constants.list.style(position, cursorSize)}>
+      <div
+        className={constants.header.className}
+        data-selectid={constants.header.selectId}
+        data-testid={constants.header.selectId}
+      >
+        {constants.header.name(props.suggestionType)}
+      </div>
       <ul className={constants.container.className}>
         {suggestions.map((suggestion, index) => (
           <li

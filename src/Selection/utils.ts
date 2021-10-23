@@ -97,7 +97,7 @@ export function getLineSelection(
   };
 }
 
-export function getSelectedText(text: string, textSelection: TextSelection | undefined): string {
+export function getSelectionText(text: string, textSelection: TextSelection | undefined): string {
   if (!textSelection) return '';
   const { start, end } = selectionToRange(textSelection);
   const startIndex = cursorCoordinateToTextIndex(text, start);

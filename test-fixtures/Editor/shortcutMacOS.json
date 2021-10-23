@@ -29,7 +29,7 @@
     },
     {
       "name": "select all (command+a)",
-      "inputTyping": ["Hello{enter}World{meta}a{/meta}{backspace}."],
+      "inputTyping": ["Hello{enter}World{meta}a{/meta}."],
       "expectedLines": ["."]
     },
     {
@@ -67,9 +67,10 @@
         "{THREE_WORDS_SENT_TOP}",
         "{alt}{arrowleft}{/alt}0{arrowleft}",
         "{alt}{arrowleft}{/alt}1{arrowleft}",
-        "{alt}{arrowleft}{/alt}2{arrowleft}"
+        "{alt}{arrowleft}{/alt}2{arrowleft}",
+        "{alt}{arrowleft}{/alt}3{arrowleft}"
       ],
-      "expectedLines": ["three words,sentence.", "2three 1words,0sentence.", "three words,sentence."]
+      "expectedLines": ["three words,sentence.", "32three 1words,0sentence.", "three words,sentence."]
     },
     {
       "name": "move word bottom (alt+arrowright)",
@@ -77,9 +78,10 @@
         "{THREE_WORDS_SENT_BOTTOM}",
         "{alt}{arrowright}{/alt}0",
         "{alt}{arrowright}{/alt}1",
-        "{alt}{arrowright}{/alt}2"
+        "{alt}{arrowright}{/alt}2",
+        "{alt}{arrowright}{/alt}3"
       ],
-      "expectedLines": ["three words,sentence.", "three0 words1,sentence2.", "three words,sentence."]
+      "expectedLines": ["three words,sentence.", "three0 words1,sentence2.3", "three words,sentence."]
     },
     {
       "name": "move line top (command+arrowleft)",

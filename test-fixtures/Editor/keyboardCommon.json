@@ -21,9 +21,19 @@
       "expectedLines": ["Hello", "World"]
     },
     {
+      "name": "backspace with selection",
+      "inputTyping": ["Hello{enter}World", "{shift}{home}{/shift}{backspace}"],
+      "expectedLines": ["Hello", ""]
+    },
+    {
       "name": "delete",
       "inputTyping": ["Hellp{arrowleft}{del}o{enter}", "Q{arrowleft}{arrowleft}{del}{del}{enter}World"],
       "expectedLines": ["Hello", "World"]
+    },
+    {
+      "name": "delete with selection",
+      "inputTyping": ["Hello{enter}World", "{shift}{home}{/shift}{del}"],
+      "expectedLines": ["Hello", ""]
     },
     {
       "name": "arrowleft",
@@ -56,8 +66,16 @@
     },
     {
       "name": "parens/braces/brackets auto-fill",
-      "inputTyping": ["(parens{arrowright}{{braces{arrowright}[[brackets{arrowright}"],
-      "expectedLines": ["(parens){braces}[brackets]"]
+      "inputTyping": ["({arrowright}{{{arrowright}[[{arrowright}"],
+      "expectedLines": ["(){}[]"]
+    },
+    {
+      "name": "parens/braces/brackets auto-fill",
+      "inputTyping": [
+        "({arrowright}{{{arrowright}[[{arrowright}",
+        "{arrowleft}{backspace}{arrowleft}{backspace}{arrowleft}{backspace}."
+      ],
+      "expectedLines": ["."]
     },
     {
       "name": "quotation enter",
