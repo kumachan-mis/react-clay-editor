@@ -1,0 +1,122 @@
+{
+  "common": {
+    "textLines": ["Hello World", "Hi, Clipboard"]
+  },
+  "testCases": [
+    {
+      "name": "copy (selected)",
+      "inputMouseEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputClipboardEvent": {
+        "type": "copy",
+        "expectedData": "llo Worl"
+      },
+      "expectedLines": ["Hello World", "Hi, Clipboard"]
+    },
+    {
+      "name": "copy (unselected)",
+      "inputMouseEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputClipboardEvent": {
+        "type": "copy"
+      },
+      "expectedLines": ["Hello World", "Hi, Clipboard"]
+    },
+    {
+      "name": "cut (selected)",
+      "inputMouseEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputClipboardEvent": {
+        "type": "cut",
+        "expectedData": "ld\nHi, C"
+      },
+      "expectedLines": ["Hello Worlipboard"]
+    },
+    {
+      "name": "cut (unselected)",
+      "inputMouseEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputClipboardEvent": {
+        "type": "cut"
+      },
+      "expectedLines": ["Hello World", "Hi, Clipboard"]
+    }
+  ]
+}

@@ -26,24 +26,24 @@ interface Common {
   textLines: string[];
 }
 
-const MockEditor: React.FC<Omit<EditorProps, 'onChangeText'>> = (props) => {
-  const [, setDummyText] = React.useState('');
-  return <Editor onChangeText={setDummyText} {...props} />;
+const MockEditor: React.FC<Omit<EditorProps, 'onChangeText'>> = ({ text: initText, ...props }) => {
+  const [text, setText] = React.useState(initText);
+  return <Editor text={text} onChangeText={setText} {...props} />;
 };
 
+const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
+
+beforeAll(() => {
+  spiedPositionToCursorCoordinate.mockImplementation((p, s, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
+});
+
+afterAll(() => {
+  spiedPositionToCursorCoordinate.mockRestore();
+});
+
 describe('mouseEvents in Editor', () => {
-  const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
-
-  beforeAll(() => {
-    spiedPositionToCursorCoordinate.mockImplementation((p, s, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
-  });
-
   afterEach(() => {
     spiedPositionToCursorCoordinate.mockClear();
-  });
-
-  afterAll(() => {
-    spiedPositionToCursorCoordinate.mockRestore();
   });
 
   runFixtureTests<TestCase, Common>('Editor', 'mouse', (testCase, common) => {
