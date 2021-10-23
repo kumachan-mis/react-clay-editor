@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import { MockEditor } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
+import { osUserAgents } from '../constants';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import { TextSelection } from '../../src/Selection/types';
 import { getSelectionText } from '../../src/Selection/utils';
@@ -24,6 +25,16 @@ interface Common {
 }
 
 describe('keyboardSelection in Editor', () => {
+  const originalUserAgent = window.navigator.userAgent;
+
+  beforeAll(() => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: osUserAgents.windows, configurable: true });
+  });
+
+  afterAll(() => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
+  });
+
   runFixtureTests<TestCase, Common>('Editor', 'keyboardSelection', (testCase, common) => {
     const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
     const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');

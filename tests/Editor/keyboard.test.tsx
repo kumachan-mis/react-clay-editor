@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import { MockEditor, MockTextLines } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
+import { osUserAgents } from '../constants';
 import { EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
@@ -18,21 +19,6 @@ interface Common {
   options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
   typingAlias?: Record<string, string[] | undefined>;
 }
-
-const osUserAgents = {
-  windows: [
-    'Mozilla/5.0',
-    '(Windows NT 10.0; Win64; x64)',
-    'AppleWebKit/537.36 (KHTML, like Gecko)',
-    'Chrome/69.0.3497.100',
-  ].join(' '),
-  macos: [
-    'Mozilla/5.0',
-    '(Macintosh; Intel Mac OS X 10_13_6)',
-    'AppleWebKit/537.36 (KHTML, like Gecko)',
-    'Chrome/69.0.3497.100 Safari/537.36',
-  ].join(' '),
-};
 
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
