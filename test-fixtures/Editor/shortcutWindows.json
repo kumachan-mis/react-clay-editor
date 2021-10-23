@@ -24,7 +24,7 @@
     },
     {
       "name": "select all (ctrl+a)",
-      "inputTyping": ["Hello{enter}World{ctrl}a{/ctrl}{backspace}."],
+      "inputTyping": ["Hello{enter}World{ctrl}a{/ctrl}."],
       "expectedLines": ["."]
     },
     {

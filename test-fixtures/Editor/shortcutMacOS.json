@@ -29,7 +29,7 @@
     },
     {
       "name": "select all (command+a)",
-      "inputTyping": ["Hello{enter}World{meta}a{/meta}{backspace}."],
+      "inputTyping": ["Hello{enter}World{meta}a{/meta}."],
       "expectedLines": ["."]
     },
     {
