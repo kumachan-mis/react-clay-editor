@@ -55,16 +55,16 @@
       "name": "select on move text top",
       "inputTyping": ["{shift}{ctrl}{home}{/ctrl}{/shift}"],
       "expectedSelectionLines": [
-        "hing to do: once or twice she had peeped into the book her",
-        "sister was reading, but it had no pictures or conversations in it"
+        "Alice was beginning to get very tired of sitting by her sister on the bank,",
+        "and of having not"
       ]
     },
     {
       "name": "select on move text bottom",
       "inputTyping": ["{shift}{ctrl}{end}{/ctrl}{/shift}"],
       "expectedSelectionLines": [
-        "Alice was beginning to get very tired of sitting by her sister on the bank,",
-        "and of having not"
+        "hing to do: once or twice she had peeped into the book her",
+        "sister was reading, but it had no pictures or conversations in it"
       ]
     }
   ]
