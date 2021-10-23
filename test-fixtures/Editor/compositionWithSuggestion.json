@@ -2,13 +2,13 @@
   "common": {
     "options": {
       "textProps": {
-        "suggestions": ["テキストエディタ", "マークアップエディタ", "テキストドキュメント"]
+        "suggestions": ["テキストエディタ"]
       }
     }
   },
   "testCases": [
     {
-      "name": "no suggestion",
+      "name": "with suggestion",
       "inputEvents": [
         {
           "type": "compositionStart"
@@ -26,21 +26,9 @@
           }
         },
         {
-          "type": "change",
-          "target": {
-            "value": "てきす"
-          }
-        },
-        {
-          "type": "change",
-          "target": {
-            "value": "てきすと"
-          }
-        },
-        {
           "type": "compositionEnd",
           "init": {
-            "data": "テキスト"
+            "data": "テキ"
           }
         },
         {
@@ -53,7 +41,7 @@
       "expectedLines": ["テキストエディタ"]
     },
     {
-      "name": "basic",
+      "name": "empty suggestion without index",
       "inputEvents": [
         {
           "type": "change",
@@ -92,7 +80,7 @@
       "expectedLines": ["記法", ""]
     },
     {
-      "name": "suggestion canceled when composition restart",
+      "name": "suggestion canceled by restart",
       "inputEvents": [
         {
           "type": "compositionStart"

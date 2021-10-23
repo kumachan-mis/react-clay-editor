@@ -1,0 +1,37 @@
+{
+  "testCases": [
+    {
+      "name": "without suggestion",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "て"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てき"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "テキ"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "expectedLines": ["テキ", ""]
+    }
+  ]
+}

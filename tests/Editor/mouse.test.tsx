@@ -41,7 +41,7 @@ describe('mouseEvents in Editor', () => {
     spiedPositionToCursorCoordinate.mockClear();
   });
 
-  runFixtureTests<TestCase, Common>('Editor', 'mouse', (testCase, common) => {
+  runFixtureTests<TestCase, Common>('Editor', 'mouseSelection', (testCase, common) => {
     const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
     const text = common.textLines.join('\n');
 

@@ -41,20 +41,26 @@ describe('compositionEvents in Editor', () => {
     spiedPositionToCursorCoordinate.mockClear();
   });
 
-  runFixtureTests<TestCase, Common | undefined>('Editor', 'composition', (testCase, common) => {
-    render(<MockEditor {...common?.options} />);
+  for (const fixtureName of [
+    'compositionWithoutSuggestion',
+    'compositionWithSuggestion',
+    'compositionWithSuggestionIndex',
+  ]) {
+    runFixtureTests<TestCase, Common | undefined>('Editor', fixtureName, (testCase, common) => {
+      render(<MockEditor {...common?.options} />);
 
-    userEvent.click(screen.getByTestId('editor-body'));
+      userEvent.click(screen.getByTestId('editor-body'));
 
-    const textarea = screen.getByRole('textbox');
-    for (const event of testCase.inputEvents) {
-      fireEvent[event.type](textarea, event.init);
-    }
+      const textarea = screen.getByRole('textbox');
+      for (const event of testCase.inputEvents) {
+        fireEvent[event.type](textarea, event.init);
+      }
 
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
-    }
-    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
-  });
+      for (let i = 0; i < testCase.expectedLines.length; i++) {
+        const line = testCase.expectedLines[i];
+        expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
+      }
+      expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
+    });
+  }
 });
