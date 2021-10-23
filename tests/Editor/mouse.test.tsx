@@ -51,6 +51,23 @@ describe('mouseEvents in Editor', () => {
     const text = common.textLines.join('\n');
 
     const { rerender } = render(<MockEditor text={text} />);
+    const spiedGetBoundingClientRects: jest.SpyInstance<DOMRect, []>[] = [];
+    for (const event of testCase.inputEvents) {
+      const charEl = screen.getByTestId(`char-L${event.coordinate.lineIndex}C${event.coordinate.charIndex}`);
+      const spiedGetBoundingClientRect = jest.spyOn(charEl, 'getBoundingClientRect');
+      spiedGetBoundingClientRect.mockImplementation(() => ({
+        width: 10,
+        height: 10,
+        top: 15 * event.coordinate.lineIndex,
+        left: 15 * event.coordinate.charIndex,
+        bottom: 15 * event.coordinate.lineIndex + 10,
+        right: 15 * event.coordinate.charIndex + 10,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      }));
+      spiedGetBoundingClientRects.push(spiedGetBoundingClientRect);
+    }
 
     const body = screen.getByTestId('editor-body');
     for (const event of testCase.inputEvents) {
@@ -75,5 +92,8 @@ describe('mouseEvents in Editor', () => {
     rerender(<MockEditor text={text} />);
     expect(screen.getByTestId('mock-selected-text').textContent).toBe(testCase.expectedText);
     SpiedTextLines.mockRestore();
+    for (const spiedGetBoundingClientRect of spiedGetBoundingClientRects) {
+      spiedGetBoundingClientRect.mockRestore();
+    }
   });
 });

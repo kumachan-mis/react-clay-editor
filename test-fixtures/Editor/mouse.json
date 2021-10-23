@@ -8,7 +8,7 @@
   },
   "testCases": [
     {
-      "name": "drag and drop selection",
+      "name": "one line selection",
       "inputEvents": [
         {
           "type": "mouseDown",
@@ -33,6 +33,88 @@
         }
       ],
       "expectedText": "lice was begin"
+    },
+    {
+      "name": "two lines selection",
+      "inputEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 67
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 75
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 75
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 10
+          }
+        }
+      ],
+      "expectedText": "he bank,\nand of hav"
+    },
+    {
+      "name": "three lines selection",
+      "inputEvents": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 72
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 75
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 7
+          }
+        }
+      ],
+      "expectedText": "nk,\nand of having nothing to do: once or twice she had peeped into the book her\nsister "
     },
     {
       "name": "double click selection",
