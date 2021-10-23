@@ -73,7 +73,8 @@ describe('mouseEvents in Editor', () => {
       });
     }
 
-    if (testCase.expectedSelectionLines) {
+    const expectedSelectionText = testCase.expectedSelectionLines.join('\n');
+    if (expectedSelectionText) {
       expect(screen.queryAllByTestId('selection')).not.toEqual([]);
     } else {
       expect(screen.queryAllByTestId('selection')).toEqual([]);
@@ -85,7 +86,7 @@ describe('mouseEvents in Editor', () => {
 
     SpiedTextLines.mockImplementation(MockSelection);
     rerender(<MockEditor initText={text} />);
-    expect(screen.getByTestId('mock-selected-text').textContent).toBe(testCase.expectedSelectionLines.join('\n'));
+    expect(screen.getByTestId('mock-selected-text').textContent).toBe(expectedSelectionText);
     SpiedTextLines.mockRestore();
     for (const spiedGetBoundingClientRect of spiedGetBoundingClientRects) {
       spiedGetBoundingClientRect.mockRestore();
