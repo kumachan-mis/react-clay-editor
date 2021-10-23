@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Editor, EditorProps } from '../../src';
+import { Editor, EditorProps } from '../src';
 
 export type MockEditorProps = Omit<EditorProps, 'text' | 'onChangeText'> & { initText?: string };
 

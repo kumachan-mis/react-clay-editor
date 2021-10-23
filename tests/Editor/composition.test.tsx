@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
-import { MockEditor, MockTextLines } from './mockComponents';
+import { MockEditor, MockTextLines } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
 
-import { MockEditor, MockTextLines } from './mockComponents';
+import { MockEditor, MockTextLines } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
