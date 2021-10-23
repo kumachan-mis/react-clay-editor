@@ -2,8 +2,8 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
 
+import { MockEditor, MockTextLines } from './mockComponents';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { Editor, EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
 
@@ -43,23 +43,6 @@ interface Common {
   textLines: string[];
 }
 
-const MockEditor: React.FC<Omit<EditorProps, 'onChangeText'>> = ({ text: initText, ...props }) => {
-  const [text, setText] = React.useState(initText);
-  return <Editor text={text} onChangeText={setText} {...props} />;
-};
-
-const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
-  return (
-    <div>
-      {text.split('\n').map((line, i) => (
-        <div key={i} data-testid={`mock-line-${i}`}>
-          {line}
-        </div>
-      ))}
-    </div>
-  );
-};
-
 const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
 const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
@@ -81,7 +64,7 @@ describe('clipboardEvents (read) in Editor', () => {
 
   runFixtureTests<ReadTestCase, Common>('Editor', 'clipboardRead', (testCase, common) => {
     const text = common.textLines.join('\n');
-    render(<MockEditor text={text} />);
+    render(<MockEditor initText={text} />);
 
     const body = screen.getByTestId('editor-body');
     for (const event of testCase.inputMouseEvents) {
@@ -112,7 +95,7 @@ describe('clipboardEvents (write) in Editor', () => {
 
   runFixtureTests<WriteTestCase, Common>('Editor', 'clipboardWrite', (testCase, common) => {
     const text = common.textLines.join('\n');
-    render(<MockEditor text={text} />);
+    render(<MockEditor initText={text} />);
 
     const body = screen.getByTestId('editor-body');
     for (const event of testCase.inputMouseEvents) {

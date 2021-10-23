@@ -2,8 +2,9 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { MockEditor, MockTextLines } from './mockComponents';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { Editor, EditorProps } from '../../src';
+import { EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
 
@@ -31,23 +32,6 @@ const osUserAgents = {
     'AppleWebKit/537.36 (KHTML, like Gecko)',
     'Chrome/69.0.3497.100 Safari/537.36',
   ].join(' '),
-};
-
-const MockEditor: React.FC<Omit<EditorProps, 'text' | 'onChangeText'>> = (props) => {
-  const [text, setText] = React.useState('');
-  return <Editor text={text} onChangeText={setText} {...props} />;
-};
-
-const MockTextLines: React.FC<{ text: string }> = ({ text }) => {
-  return (
-    <div>
-      {text.split('\n').map((line, i) => (
-        <div key={i} data-testid={`mock-line-${i}`}>
-          {line}
-        </div>
-      ))}
-    </div>
-  );
 };
 
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
