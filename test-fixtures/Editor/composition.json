@@ -1,0 +1,149 @@
+{
+  "common": {
+    "options": {
+      "textProps": {
+        "suggestions": ["テキストエディタ", "マークアップエディタ", "テキストドキュメント"]
+      }
+    }
+  },
+  "testCases": [
+    {
+      "name": "no suggestion",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "て"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てき"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てきす"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てきすと"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "テキスト"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "expectedLines": ["テキストエディタ"]
+    },
+    {
+      "name": "basic",
+      "inputEvents": [
+        {
+          "type": "change",
+          "target": {
+            "value": "き"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "きほ"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "きほう"
+          }
+        },
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "記法"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "expectedLines": ["記法", ""]
+    },
+    {
+      "name": "suggestion canceled when composition restart",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "て"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "てき"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "テキ"
+          }
+        },
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "す"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "すと"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "スト"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "expectedLines": ["テキスト", ""]
+    }
+  ]
+}

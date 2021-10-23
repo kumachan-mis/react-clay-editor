@@ -2,8 +2,8 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
 
+import { MockEditor } from './mockComponents';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { Editor, EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import { TextSelection } from '../../src/Selection/types';
 import { getSelectedText } from '../../src/Selection/utils';
@@ -26,11 +26,6 @@ interface Common {
   textLines: string[];
 }
 
-const MockEditor: React.FC<Omit<EditorProps, 'onChangeText'>> = ({ text: initText, ...props }) => {
-  const [text, setText] = React.useState(initText);
-  return <Editor text={text} onChangeText={setText} {...props} />;
-};
-
 const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
 beforeAll(() => {
@@ -50,7 +45,7 @@ describe('mouseEvents in Editor', () => {
     const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
     const text = common.textLines.join('\n');
 
-    const { rerender } = render(<MockEditor text={text} />);
+    const { rerender } = render(<MockEditor initText={text} />);
     const spiedGetBoundingClientRects: jest.SpyInstance<DOMRect, []>[] = [];
     for (const event of testCase.inputEvents) {
       const charEl = screen.getByTestId(`char-L${event.coordinate.lineIndex}C${event.coordinate.charIndex}`);
@@ -89,7 +84,7 @@ describe('mouseEvents in Editor', () => {
     );
 
     SpiedTextLines.mockImplementation(MockSelection);
-    rerender(<MockEditor text={text} />);
+    rerender(<MockEditor initText={text} />);
     expect(screen.getByTestId('mock-selected-text').textContent).toBe(testCase.expectedText);
     SpiedTextLines.mockRestore();
     for (const spiedGetBoundingClientRect of spiedGetBoundingClientRects) {
