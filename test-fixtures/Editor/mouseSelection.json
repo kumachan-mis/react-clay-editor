@@ -32,7 +32,7 @@
           }
         }
       ],
-      "expectedText": "lice was begin"
+      "expectedSelectionLines": ["lice was begin"]
     },
     {
       "name": "two lines selection",
@@ -73,7 +73,7 @@
           }
         }
       ],
-      "expectedText": "he bank,\nand of hav"
+      "expectedSelectionLines": ["he bank,", "and of hav"]
     },
     {
       "name": "three lines selection",
@@ -114,7 +114,11 @@
           }
         }
       ],
-      "expectedText": "nk,\nand of having nothing to do: once or twice she had peeped into the book her\nsister "
+      "expectedSelectionLines": [
+        "nk,",
+        "and of having nothing to do: once or twice she had peeped into the book her",
+        "sister "
+      ]
     },
     {
       "name": "double click selection",
@@ -130,7 +134,7 @@
           }
         }
       ],
-      "expectedText": "reading"
+      "expectedSelectionLines": ["reading"]
     },
     {
       "name": "triple click selection",
@@ -146,7 +150,7 @@
           }
         }
       ],
-      "expectedText": "sister was reading, but it had no pictures or conversations in it"
+      "expectedSelectionLines": ["sister was reading, but it had no pictures or conversations in it"]
     },
     {
       "name": "down then up without move",
@@ -166,7 +170,7 @@
           }
         }
       ],
-      "expectedText": ""
+      "expectedSelectionLines": [""]
     },
     {
       "name": "move without down and up",
@@ -207,7 +211,7 @@
           }
         }
       ],
-      "expectedText": ""
+      "expectedSelectionLines": [""]
     }
   ]
 }

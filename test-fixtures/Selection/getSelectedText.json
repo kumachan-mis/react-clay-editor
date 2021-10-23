@@ -18,7 +18,7 @@
           "charIndex": 2
         }
       },
-      "expectedText": "the bank\nan"
+      "expectedSelectionLines": ["the bank", "an"]
     },
     {
       "name": "fixed.lineIndex > free.lineIndex",
@@ -32,7 +32,7 @@
           "charIndex": 68
         }
       },
-      "expectedText": "e bank\nand, o"
+      "expectedSelectionLines": ["e bank", "and, o"]
     },
     {
       "name": "fixed.charIndex <= free.charIndex",
@@ -46,7 +46,7 @@
           "charIndex": 53
         }
       },
-      "expectedText": "ry tired of sitting by h"
+      "expectedSelectionLines": ["ry tired of sitting by h"]
     },
     {
       "name": "fixed.charIndex > free.charIndex",
@@ -60,7 +60,7 @@
           "charIndex": 18
         }
       },
-      "expectedText": "g to get very tired of si"
+      "expectedSelectionLines": ["g to get very tired of si"]
     }
   ]
 }

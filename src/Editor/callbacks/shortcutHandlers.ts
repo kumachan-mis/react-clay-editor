@@ -2,7 +2,7 @@ import { insertText, resetSuggestion, resetTextSelectionAndSuggestion } from './
 
 import { State, ShortcutCommand } from '../types';
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../../Cursor/utils';
-import { getSelectedText } from '../../Selection/utils';
+import { getSelectionText } from '../../Selection/utils';
 import { TextLinesConstants } from '../../TextLines/constants';
 
 export function handleOnShortcut(
@@ -71,7 +71,7 @@ export function handleOnBackwardDelete(
   const current = state.cursorCoordinate;
   const backward = moveCursor(text, current, -1);
   const forward = moveCursor(text, current, 1);
-  const neighborText = getSelectedText(text, { fixed: backward, free: forward });
+  const neighborText = getSelectionText(text, { fixed: backward, free: forward });
   switch (neighborText) {
     case '[]':
     case '{}':

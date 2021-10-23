@@ -12,7 +12,7 @@
         "lineIndex": 1,
         "charIndex": 12
       },
-      "expectedText": "and, of having nothing to do."
+      "expectedSelectionLines": ["and, of having nothing to do."]
     }
   ]
 }

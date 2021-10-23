@@ -6,7 +6,7 @@ import { MockEditor } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import { TextSelection } from '../../src/Selection/types';
-import { getSelectedText } from '../../src/Selection/utils';
+import { getSelectionText } from '../../src/Selection/utils';
 import * as SelectionModule from '../../src/Selection';
 
 interface TestCase extends BaseTestCase {
@@ -19,7 +19,7 @@ interface TestCase extends BaseTestCase {
     };
     init?: MouseEventInit;
   }[];
-  expectedText: string;
+  expectedSelectionLines: string[];
 }
 
 interface Common {
@@ -73,19 +73,19 @@ describe('mouseEvents in Editor', () => {
       });
     }
 
-    if (testCase.expectedText) {
+    if (testCase.expectedSelectionLines) {
       expect(screen.queryAllByTestId('selection')).not.toEqual([]);
     } else {
       expect(screen.queryAllByTestId('selection')).toEqual([]);
     }
 
     const MockSelection: React.FC<{ textSelection: TextSelection | undefined }> = ({ textSelection }) => (
-      <div data-testid="mock-selected-text">{getSelectedText(text, textSelection)}</div>
+      <div data-testid="mock-selected-text">{getSelectionText(text, textSelection)}</div>
     );
 
     SpiedTextLines.mockImplementation(MockSelection);
     rerender(<MockEditor initText={text} />);
-    expect(screen.getByTestId('mock-selected-text').textContent).toBe(testCase.expectedText);
+    expect(screen.getByTestId('mock-selected-text').textContent).toBe(testCase.expectedSelectionLines.join('\n'));
     SpiedTextLines.mockRestore();
     for (const spiedGetBoundingClientRect of spiedGetBoundingClientRects) {
       spiedGetBoundingClientRect.mockRestore();

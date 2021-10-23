@@ -1,0 +1,71 @@
+{
+  "common": {
+    "textLines": [
+      "Alice was beginning to get very tired of sitting by her sister on the bank,",
+      "and of having nothing to do: once or twice she had peeped into the book her",
+      "sister was reading, but it had no pictures or conversations in it"
+    ],
+    "initCoordinate": {
+      "lineIndex": 1,
+      "charIndex": 17
+    }
+  },
+  "testCases": [
+    {
+      "name": "select on move left",
+      "inputTyping": ["{shift}{arrowleft}{arrowleft}{/shift}"],
+      "expectedSelectionLines": ["ot"]
+    },
+    {
+      "name": "select on move right",
+      "inputTyping": ["{shift}{arrowright}{arrowright}{/shift}"],
+      "expectedSelectionLines": ["hi"]
+    },
+    {
+      "name": "select on move up",
+      "inputTyping": ["{shift}{arrowup}{/shift}"],
+      "expectedSelectionLines": ["ng to get very tired of sitting by her sister on the bank,", "and of having not"]
+    },
+    {
+      "name": "select on move down",
+      "inputTyping": ["{shift}{arrowdown}{/shift}"],
+      "expectedSelectionLines": ["hing to do: once or twice she had peeped into the book her", "sister was readin"]
+    },
+    {
+      "name": "select on move word top",
+      "inputTyping": ["{shift}{ctrl}{arrowleft}{/ctrl}{/shift}"],
+      "expectedSelectionLines": ["not"]
+    },
+    {
+      "name": "select on move word bottom",
+      "inputTyping": ["{shift}{ctrl}{arrowright}{/ctrl}{/shift}"],
+      "expectedSelectionLines": ["hing"]
+    },
+    {
+      "name": "select on move line top",
+      "inputTyping": ["{shift}{home}{/shift}"],
+      "expectedSelectionLines": ["and of having not"]
+    },
+    {
+      "name": "select on move line bottom",
+      "inputTyping": ["{shift}{end}{/shift}"],
+      "expectedSelectionLines": ["hing to do: once or twice she had peeped into the book her"]
+    },
+    {
+      "name": "select on move text top",
+      "inputTyping": ["{shift}{ctrl}{home}{/ctrl}{/shift}"],
+      "expectedSelectionLines": [
+        "hing to do: once or twice she had peeped into the book her",
+        "sister was reading, but it had no pictures or conversations in it"
+      ]
+    },
+    {
+      "name": "select on move text bottom",
+      "inputTyping": ["{shift}{ctrl}{end}{/ctrl}{/shift}"],
+      "expectedSelectionLines": [
+        "Alice was beginning to get very tired of sitting by her sister on the bank,",
+        "and of having not"
+      ]
+    }
+  ]
+}
