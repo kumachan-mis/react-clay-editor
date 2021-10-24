@@ -7,6 +7,7 @@ import { Viewer, ViewerProps } from '../../src';
 interface TestCase extends BaseTestCase {
   name: string;
   inputLines: string[];
+  options?: Omit<ViewerProps, 'text' | 'syntax' | 'cursorCoordinate'>;
   expectedTestIdCounts?: {
     [testId: string]: number | undefined;
   };
@@ -14,14 +15,10 @@ interface TestCase extends BaseTestCase {
   expectedEditLines?: string[];
 }
 
-interface Common {
-  options?: Omit<ViewerProps, 'text' | 'syntax' | 'cursorCoordinate'>;
-}
-
-function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
-  return (testCase, common) => {
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => void {
+  return (testCase) => {
     const text = testCase.inputLines.join('\n');
-    const { rerender } = render(<Viewer text={text} syntax={syntax} {...common?.options} />);
+    const { rerender } = render(<Viewer text={text} syntax={syntax} {...testCase?.options} />);
 
     if (testCase.expectedTestIdCounts) {
       for (const [testId, count] of Object.entries(testCase.expectedTestIdCounts)) {
@@ -52,7 +49,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
     let lineIndex = 0;
     for (const editLine of expectedEditLines) {
       const cursorCoordinate = { lineIndex, charIndex: 0 };
-      rerender(<Viewer text={text} syntax={syntax} cursorCoordinate={cursorCoordinate} {...common?.options} />);
+      rerender(<Viewer text={text} syntax={syntax} cursorCoordinate={cursorCoordinate} {...testCase?.options} />);
 
       expect(screen.getByTestId(`line-L${lineIndex}`)).toBeInTheDocument();
 
@@ -73,13 +70,13 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
 describe('UI of Viwer (bracket syntax)', () => {
   const testfun = createTest('bracket');
   for (const fixtureName of ['uiTextLinesCommon', 'uiTextLinesBracket']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfun);
+    runFixtureTests<TestCase>('TextLines', fixtureName, testfun);
   }
 });
 
 describe('UI of Viwer (markdown syntax)', () => {
   const testfun = createTest('markdown');
   for (const fixtureName of ['uiTextLinesCommon', 'uiTextLinesMarkdown']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfun);
+    runFixtureTests<TestCase>('TextLines', fixtureName, testfun);
   }
 });

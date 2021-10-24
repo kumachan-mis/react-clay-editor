@@ -1,12 +1,5 @@
 {
   "note": "dots (.) in expected lines mean hidden characters when cursor not on",
-  "common": {
-    "options": {
-      "taggedLinkPropsMap": {
-        "@": {}
-      }
-    }
-  },
   "testCases": [
     {
       "name": "quotation",
@@ -21,7 +14,11 @@
         "const SampleEditor = () => {",
         "  return <Editor />;",
         "};",
-        "```"
+        "```",
+        "```",
+        "const AnotherEditor = () => {",
+        "  return <Editor />;",
+        "};"
       ],
       "expectedViewLines": [
         ".import { Editor } from 'react-realtime-markup-editor.",
@@ -29,23 +26,47 @@
         "const SampleEditor = () => {",
         "  return <Editor />;",
         "};",
-        "```"
+        "```",
+        "```",
+        "const AnotherEditor = () => {",
+        "  return <Editor />;",
+        "};"
       ]
     },
     {
       "name": "formula",
+      "inputLines": ["$f(x)$", "$$\\int_a^b f(x) dx$$", "$$", "\\int_a^b f(x) dx", "$$", "$$", "\\int_a^b g(x) dx"],
       "expectedTestIdCounts": {
-        "katex": 3
-      },
-      "inputLines": ["$f(x)$", "$$\\int_a^b f(x) dx$$", "$$", "\\int_a^b f(x) dx", "$$"]
+        "katex": 4
+      }
     },
     {
-      "name": "tagged link",
+      "name": "tagged link (no-tag-hidden)",
       "inputLines": ["[@: tagged link test]"],
+      "options": {
+        "taggedLinkPropsMap": {
+          "@": {}
+        }
+      },
       "expectedTestIdCounts": {
         "embeded-link": 1
       },
       "expectedViewLines": [".@: tagged link test."]
+    },
+    {
+      "name": "tagged link (tag-hidden)",
+      "inputLines": ["[@: tagged link test]"],
+      "options": {
+        "taggedLinkPropsMap": {
+          "@": {
+            "tagHidden": true
+          }
+        }
+      },
+      "expectedTestIdCounts": {
+        "embeded-link": 1
+      },
+      "expectedViewLines": ["....tagged link test."]
     },
     {
       "name": "bracket link",

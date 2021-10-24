@@ -5,14 +5,13 @@ import { Props } from './types';
 import { KaTeXConstants } from './constants';
 
 export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options, children, ...props }) => {
-  const formula = (children ?? '') as string;
   const innerHtml = React.useMemo(() => {
     try {
-      return renderToString(formula, options);
+      return renderToString(children as string, options);
     } catch (error: unknown) {
       return error instanceof ParseError ? error.message : '';
     }
-  }, [formula, options]);
+  }, [children, options]);
   return (
     <span
       {...props}
