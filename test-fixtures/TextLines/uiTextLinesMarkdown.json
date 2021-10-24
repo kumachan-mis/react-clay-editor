@@ -20,19 +20,14 @@
     },
     {
       "name": "itemization",
-      "inputLines": ["- itemized text", "　- nested itemized text", "* itemized text", "\t\t* nested itemized text"],
+      "inputLines": ["- itemized text", " - nested itemized text", "* itemized text", "\t\t* nested itemized text"],
       "expectedViewLines": [
         "..itemized text",
-        "　..nested itemized text",
+        " ..nested itemized text",
         "..itemized text",
         "  ..nested itemized text"
       ],
-      "expectedEditLines": [
-        ". itemized text",
-        "　. nested itemized text",
-        ". itemized text",
-        "  . nested itemized text"
-      ]
+      "expectedEditLines": [". itemized text", " . nested itemized text", ". itemized text", "  . nested itemized text"]
     }
   ]
 }

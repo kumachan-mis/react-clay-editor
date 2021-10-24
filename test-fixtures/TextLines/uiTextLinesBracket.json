@@ -16,7 +16,7 @@
       "name": "itemization",
       "inputLines": [
         " itemized text",
-        "　 nested itemized text",
+        "  nested itemized text",
         "\titemized text",
         "\t\t\tnested itemized text",
         "　箇条書きテキスト",
@@ -24,7 +24,7 @@
       ],
       "expectedViewLines": [
         ".itemized text",
-        "　.nested itemized text",
+        " .nested itemized text",
         ".itemized text",
         "  .nested itemized text",
         ".箇条書きテキスト",
@@ -32,7 +32,7 @@
       ],
       "expectedEditLines": [
         ".itemized text",
-        "　.nested itemized text",
+        " .nested itemized text",
         ".itemized text",
         "  .nested itemized text",
         ".箇条書きテキスト",
