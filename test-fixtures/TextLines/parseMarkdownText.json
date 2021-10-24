@@ -129,7 +129,7 @@
     },
     {
       "name": "itemization",
-      "inputLines": ["- itemized text", "　- nested itemized text", "* itemized text", "\t\t* nested itemized text"],
+      "inputLines": ["- itemized text", " - nested itemized text", "* itemized text", "\t\t* nested itemized text"],
       "expectedNodes": [
         {
           "type": "itemization",

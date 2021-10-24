@@ -182,6 +182,8 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps 
       }}
       {...rest}
       data-active={active}
+      data-selectid={constants.selectId}
+      data-testid={constants.selectId}
     >
       {children}
     </a>

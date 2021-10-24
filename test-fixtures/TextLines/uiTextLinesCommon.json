@@ -1,0 +1,101 @@
+{
+  "note": "dots (.) in expected lines mean hidden characters when cursor not on",
+  "testCases": [
+    {
+      "name": "quotation",
+      "inputLines": ["> Genius is one percent inspiration and ninety-nine percent perspiration"],
+      "expectedViewLines": ["..Genius is one percent inspiration and ninety-nine percent perspiration"]
+    },
+    {
+      "name": "code",
+      "inputLines": [
+        "`import { Editor } from 'react-realtime-markup-editor`",
+        "```",
+        "const SampleEditor = () => {",
+        "  return <Editor />;",
+        "};",
+        "```",
+        "```",
+        "const AnotherEditor = () => {",
+        "  return <Editor />;",
+        "};"
+      ],
+      "expectedViewLines": [
+        ".import { Editor } from 'react-realtime-markup-editor.",
+        "```",
+        "const SampleEditor = () => {",
+        "  return <Editor />;",
+        "};",
+        "```",
+        "```",
+        "const AnotherEditor = () => {",
+        "  return <Editor />;",
+        "};"
+      ]
+    },
+    {
+      "name": "formula",
+      "inputLines": [
+        "$f(x)$ $\\unknown$",
+        "$$\\int_a^b f(x) dx$$",
+        "$$",
+        "\\int_a^b f(x) dx",
+        "$$",
+        "$$",
+        "\\int_a^b g(x) dx"
+      ],
+      "expectedTestIdCounts": {
+        "katex": 5
+      }
+    },
+    {
+      "name": "tagged link (no-tag-hidden)",
+      "inputLines": ["[@: tagged link test]"],
+      "options": {
+        "taggedLinkPropsMap": {
+          "@": {}
+        }
+      },
+      "expectedTestIdCounts": {
+        "embeded-link": 1
+      },
+      "expectedViewLines": [".@: tagged link test."]
+    },
+    {
+      "name": "tagged link (tag-hidden)",
+      "inputLines": ["[@: tagged link test]"],
+      "options": {
+        "taggedLinkPropsMap": {
+          "@": {
+            "tagHidden": true
+          }
+        }
+      },
+      "expectedTestIdCounts": {
+        "embeded-link": 1
+      },
+      "expectedViewLines": ["....tagged link test."]
+    },
+    {
+      "name": "bracket link",
+      "inputLines": ["[bracket test]"],
+      "expectedTestIdCounts": {
+        "embeded-link": 1
+      },
+      "expectedViewLines": [".bracket test."]
+    },
+    {
+      "name": "hashtag link",
+      "inputLines": ["#hashtagtest, #hashtag_test, #hashtag-test"],
+      "expectedTestIdCounts": {
+        "embeded-link": 3
+      },
+      "expectedViewLines": ["#hashtagtest, #hashtag_test, #hashtag-test"]
+    },
+    {
+      "name": "normal text",
+      "inputLines": ["hello world"],
+      "expectedViewLines": ["hello world"]
+    }
+  ]
+}

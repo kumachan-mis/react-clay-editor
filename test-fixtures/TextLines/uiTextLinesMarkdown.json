@@ -1,0 +1,33 @@
+{
+  "note": "dots (.) in expected lines mean hidden characters when cursor not on",
+  "testCases": [
+    {
+      "name": "decoration text",
+      "inputLines": [
+        "# Largest Text",
+        "## Larger Text",
+        "### Bold Text",
+        "#### Also Bold Text",
+        "*bold text*_italic text_"
+      ],
+      "expectedViewLines": [
+        "..Largest Text",
+        "...Larger Text",
+        "....Bold Text",
+        ".....Also Bold Text",
+        ".bold text..italic text."
+      ]
+    },
+    {
+      "name": "itemization",
+      "inputLines": ["- itemized text", " - nested itemized text", "* itemized text", "\t\t* nested itemized text"],
+      "expectedViewLines": [
+        "..itemized text",
+        " ..nested itemized text",
+        "..itemized text",
+        "  ..nested itemized text"
+      ],
+      "expectedEditLines": [". itemized text", " . nested itemized text", ". itemized text", "  . nested itemized text"]
+    }
+  ]
+}

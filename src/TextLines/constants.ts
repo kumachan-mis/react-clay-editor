@@ -22,9 +22,6 @@ export const TextLinesConstants = {
   formula: {
     className: styles.formula,
   },
-  embededLink: {
-    className: styles.embededLink,
-  },
   decoration: {
     className: (decoration: Decoration): string => {
       const classNames: string[] = [];
@@ -76,6 +73,10 @@ export const TextLinesConstants = {
     className: styles.char,
     selectId: (lineIndex: number, charIndex: number): string => `char-L${lineIndex}C${charIndex}`,
     selectIdRegex: RegExp('char-L(?<lineIndex>\\d+)C(?<charIndex>\\d+)'),
+  },
+  embededLink: {
+    className: styles.embededLink,
+    selectId: 'embeded-link',
   },
   regexes: {
     bracketSyntax: {

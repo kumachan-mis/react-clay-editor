@@ -266,7 +266,7 @@
       "name": "itemization",
       "inputLines": [
         " itemized text",
-        "　 nested itemized text",
+        "  nested itemized text",
         "\titemized text",
         "\t\t\tnested itemized text",
         "　箇条書きテキスト",

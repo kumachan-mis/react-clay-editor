@@ -20,31 +20,35 @@
   "testCases": [
     {
       "name": "text suggestion",
-      "inputTyping": ["a"],
+      "inputTypingBefore": ["a"],
       "inputClickIndex": 1,
+      "inputTypingAfter": ["."],
       "expectedHeader": "Text Suggestion",
-      "expectedLines": ["acerola"]
+      "expectedLines": ["acerola."]
     },
     {
       "name": "bracket link suggestion",
-      "inputTyping": ["[[c"],
+      "inputTypingBefore": ["[[c"],
       "inputClickIndex": 0,
+      "inputTypingAfter": ["{arrowright}."],
       "expectedHeader": "Bracket Link Suggestion",
-      "expectedLines": ["[cantaloupe]"]
+      "expectedLines": ["[cantaloupe]."]
     },
     {
       "name": "hash tag suggestion",
-      "inputTyping": ["#"],
+      "inputTypingBefore": ["#"],
       "inputClickIndex": 2,
+      "inputTypingAfter": ["."],
       "expectedHeader": "HashTag Suggestion",
-      "expectedLines": ["#coconut_meat "]
+      "expectedLines": ["#coconut_meat ."]
     },
     {
       "name": "tagged link suggestion",
-      "inputTyping": ["[[tag:"],
+      "inputTypingBefore": ["[[tag:"],
       "inputClickIndex": 0,
+      "inputTypingAfter": ["{arrowright}."],
       "expectedHeader": "Tagged Link Suggestion",
-      "expectedLines": ["[tag: feijoa]"]
+      "expectedLines": ["[tag: feijoa]."]
     }
   ]
 }
