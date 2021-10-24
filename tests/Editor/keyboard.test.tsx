@@ -24,7 +24,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
   return (testCase, common) => {
     render(<MockEditor syntax={syntax} {...common?.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.type(screen.getByRole('textbox'), resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
+    userEvent.keyboard(resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
 
     for (let i = 0; i < testCase.expectedLines.length; i++) {
       const line = testCase.expectedLines[i];

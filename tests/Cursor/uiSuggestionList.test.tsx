@@ -10,8 +10,9 @@ import * as textLinesModule from '../../src/TextLines';
 
 interface TestCase extends BaseTestCase {
   name: string;
-  inputTyping: string[];
+  inputTypingBefore: string[];
   inputClickIndex: number;
+  inputTypingAfter: string[];
   expectedHeader: string;
   expectedLines: string[];
 }
@@ -42,7 +43,7 @@ describe('UI of Suggestion List', () => {
   runFixtureTests<TestCase, Common | undefined>('Cursor', 'uiSuggestionList', (testCase, common) => {
     render(<MockEditor {...common?.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
+    userEvent.keyboard(testCase.inputTypingBefore.join(''));
 
     expect(screen.getByTestId('suggestion-header').textContent).toBe(testCase.expectedHeader);
 
@@ -50,6 +51,8 @@ describe('UI of Suggestion List', () => {
 
     expect(screen.queryByTestId('suggestion-header')).not.toBeInTheDocument();
     expect(screen.queryByTestId('suggestion-item-0')).not.toBeInTheDocument();
+
+    userEvent.keyboard(testCase.inputTypingAfter.join(''));
 
     for (let i = 0; i < testCase.expectedLines.length; i++) {
       const line = testCase.expectedLines[i];

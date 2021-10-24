@@ -44,7 +44,7 @@ describe('keyboardSelection in Editor', () => {
 
     spiedPositionToCursorCoordinate.mockImplementation(() => common.initCoordinate);
     userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.type(screen.getByRole('textbox'), testCase.inputTyping.join(''));
+    userEvent.keyboard(testCase.inputTyping.join(''));
 
     const expectedSelectionText = testCase.expectedSelectionLines.join('\n');
     if (expectedSelectionText) {
