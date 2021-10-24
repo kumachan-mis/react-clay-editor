@@ -35,9 +35,17 @@
     },
     {
       "name": "formula",
-      "inputLines": ["$f(x)$", "$$\\int_a^b f(x) dx$$", "$$", "\\int_a^b f(x) dx", "$$", "$$", "\\int_a^b g(x) dx"],
+      "inputLines": [
+        "$f(x)$ $\\unknown$",
+        "$$\\int_a^b f(x) dx$$",
+        "$$",
+        "\\int_a^b f(x) dx",
+        "$$",
+        "$$",
+        "\\int_a^b g(x) dx"
+      ],
       "expectedTestIdCounts": {
-        "katex": 4
+        "katex": 5
       }
     },
     {
