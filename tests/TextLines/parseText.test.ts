@@ -42,16 +42,16 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
   };
 }
 
-const bracketTest = createTest('bracket');
 describe('function parseText in TextLines (bracket syntax)', () => {
+  const testfn = createTest('bracket');
   for (const fixtureName of ['parseCommonText', 'parseBracketText']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, bracketTest);
+    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
   }
 });
 
-const markdownTest = createTest('markdown');
 describe('function parseText in TextLines (markdown syntax)', () => {
+  const testfn = createTest('markdown');
   for (const fixtureName of ['parseCommonText', 'parseMarkdownText']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, markdownTest);
+    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
   }
 });

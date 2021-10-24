@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ParseError, renderToString } from 'katex';
 
 import { Props } from './types';
+import { KaTeXConstants } from './constants';
 
 export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options, children, ...props }) => {
   const formula = (children ?? '') as string;
@@ -12,5 +13,12 @@ export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options,
       return error instanceof ParseError ? error.message : '';
     }
   }, [formula, options]);
-  return <span {...props} dangerouslySetInnerHTML={{ __html: innerHtml }} />;
+  return (
+    <span
+      {...props}
+      dangerouslySetInnerHTML={{ __html: innerHtml }}
+      data-selectid={KaTeXConstants.selectId}
+      data-testid={KaTeXConstants.selectId}
+    />
+  );
 };

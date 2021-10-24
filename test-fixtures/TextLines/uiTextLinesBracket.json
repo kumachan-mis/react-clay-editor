@@ -1,0 +1,43 @@
+{
+  "note": "dots (.) in expected lines mean hidden characters when cursor not on",
+  "testCases": [
+    {
+      "name": "decoration text",
+      "inputLines": [
+        "[**** Largest Text][*** Also Largest Text][** Larger Text]",
+        "[* bold text][/ italic text][_ underlined text]"
+      ],
+      "expectedViewLines": [
+        "......Largest Text......Also Largest Text.....Larger Text.",
+        "...bold text....italic text....underlined text."
+      ]
+    },
+    {
+      "name": "itemization",
+      "inputLines": [
+        " itemized text",
+        "　 nested itemized text",
+        "\titemized text",
+        "\t\t\tnested itemized text",
+        "　箇条書きテキスト",
+        "　　　　ネストした箇条書きテキスト"
+      ],
+      "expectedViewLines": [
+        ".itemized text",
+        "　.nested itemized text",
+        ".itemized text",
+        "  .nested itemized text",
+        ".箇条書きテキスト",
+        "   .ネストした箇条書きテキスト"
+      ],
+      "expectedEditLines": [
+        ".itemized text",
+        "　.nested itemized text",
+        ".itemized text",
+        "  .nested itemized text",
+        ".箇条書きテキスト",
+        "   .ネストした箇条書きテキスト"
+      ]
+    }
+  ]
+}
