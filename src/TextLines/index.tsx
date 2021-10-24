@@ -243,7 +243,7 @@ const Node: React.FC<NodeProps> = ({
           >
             {[...meta].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
-                {cursorOn ? char : '\u200b'}
+                {cursorOn ? char : ''}
               </Char>
             ))}
             {children.map((child, index) => (
@@ -281,7 +281,7 @@ const Node: React.FC<NodeProps> = ({
           <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
             {[...Array(bullet.length - 1).keys()].map((charIndex) => (
               <Char key={indentDepth + charIndex + 1} lineIndex={lineIndex} charIndex={indentDepth + charIndex + 1}>
-                {cursorOn ? ' ' : '\u200b'}
+                {cursorOn ? ' ' : ''}
               </Char>
             ))}
             {children.map((child, index) => (
@@ -333,7 +333,7 @@ const Node: React.FC<NodeProps> = ({
         <code {...codeElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
           {[...code].map((char, index) => (
@@ -351,7 +351,7 @@ const Node: React.FC<NodeProps> = ({
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
             >
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
         </code>
@@ -394,7 +394,7 @@ const Node: React.FC<NodeProps> = ({
         <span className={TextLinesConstants.decoration.className(decoration)}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
           {children.map((child, index) => (
@@ -415,7 +415,7 @@ const Node: React.FC<NodeProps> = ({
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
             >
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
         </span>
@@ -432,7 +432,7 @@ const Node: React.FC<NodeProps> = ({
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
           {[...tag].map((char, index) => (
@@ -441,7 +441,7 @@ const Node: React.FC<NodeProps> = ({
               lineIndex={lineIndex}
               charIndex={from + facingMeta.length + index}
             >
-              {cursorOn || !taggedLinkProps.tagHidden ? char : '\u200b'}
+              {cursorOn || !taggedLinkProps.tagHidden ? char : ''}
             </Char>
           ))}
           {[...linkName].map((char, index) => (
@@ -459,7 +459,7 @@ const Node: React.FC<NodeProps> = ({
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
             >
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
         </EmbededLink>
@@ -475,7 +475,7 @@ const Node: React.FC<NodeProps> = ({
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...facingMeta].map((char, index) => (
             <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
           {[...linkName].map((char, index) => (
@@ -493,7 +493,7 @@ const Node: React.FC<NodeProps> = ({
               lineIndex={lineIndex}
               charIndex={to - trailingMeta.length + index}
             >
-              {cursorOn ? char : '\u200b'}
+              {cursorOn ? char : ''}
             </Char>
           ))}
         </EmbededLink>
