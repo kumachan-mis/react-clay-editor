@@ -41,10 +41,10 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
         }
 
         expect(screen.getByTestId(`char-L${lineIndex}C${charIndex}`)).toBeInTheDocument();
-        expect(screen.getByTestId(`char-L${lineIndex}C${charIndex + 1}`)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(`char-L${lineIndex}C${charIndex + 1}`)).not.toBeInTheDocument();
         lineIndex++;
       }
-      expect(screen.getByTestId(`line-L${lineIndex}`)).not.toBeInTheDocument();
+      expect(screen.queryByTestId(`line-L${lineIndex}`)).not.toBeInTheDocument();
     }
 
     const expectedEditLines = testCase.expectedEditLines || testCase.inputLines;
@@ -63,10 +63,10 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
       }
 
       expect(screen.getByTestId(`char-L${lineIndex}C${charIndex}`)).toBeInTheDocument();
-      expect(screen.getByTestId(`char-L${lineIndex}C${charIndex + 1}`)).not.toBeInTheDocument();
+      expect(screen.queryByTestId(`char-L${lineIndex}C${charIndex + 1}`)).not.toBeInTheDocument();
       lineIndex++;
     }
-    expect(screen.getByTestId(`line-L${lineIndex}`)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(`line-L${lineIndex}`)).not.toBeInTheDocument();
   };
 }
 
