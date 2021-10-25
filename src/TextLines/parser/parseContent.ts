@@ -68,12 +68,12 @@ export function parseContent(text: string, context: ParsingContext, options: Par
 function parseInlineCode(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.common.inlineCode;
   const { left, code, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: InlineCodeNode = {
     type: 'inlineCode',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: '`',
     code,
     trailingMeta: '`',
@@ -82,18 +82,18 @@ function parseInlineCode(text: string, context: ParsingContext, options: Parsing
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 function parseDisplayFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.common.displayFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DisplayFormulaNode = {
     type: 'displayFormula',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: '$$',
     formula,
     trailingMeta: '$$',
@@ -102,19 +102,19 @@ function parseDisplayFormula(text: string, context: ParsingContext, options: Par
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
 function parseInlineFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.common.inlineFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: InlineFormulaNode = {
     type: 'inlineFormula',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: '$',
     formula,
     trailingMeta: '$',
@@ -123,7 +123,7 @@ function parseInlineFormula(text: string, context: ParsingContext, options: Pars
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
@@ -131,16 +131,16 @@ function parseDecoration(text: string, context: ParsingContext, options: Parsing
   const regex = TextLinesConstants.regexes.bracketSyntax.decoration;
   const { left, decoration: decostring, body, right } = text.match(regex)?.groups as Record<string, string>;
   const decoration = stringToDecoration(decostring);
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
     type: 'decoration',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: `[${decostring} `,
     children: parseContent(
       body,
-      { ...context, charIndex: from + decostring.length + 2, nested: true, decoration: decoration },
+      { ...context, charIndex: first + decostring.length + 2, nested: true, decoration: decoration },
       options
     ),
     trailingMeta: ']',
@@ -150,7 +150,7 @@ function parseDecoration(text: string, context: ParsingContext, options: Parsing
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
@@ -183,14 +183,14 @@ function stringToDecoration(decostring: string): Decoration {
 function parseBold(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.markdownSyntax.bold;
   const { left, body, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
     type: 'decoration',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: '*',
-    children: parseContent(body, { ...context, charIndex: from + 1, nested: true }, options),
+    children: parseContent(body, { ...context, charIndex: first + 1, nested: true }, options),
     trailingMeta: '*',
     decoration: { ...context.decoration, bold: true },
   };
@@ -198,21 +198,21 @@ function parseBold(text: string, context: ParsingContext, options: ParsingOption
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
 function parseItalic(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.markdownSyntax.italic;
   const { left, body, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: DecorationNode = {
     type: 'decoration',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: '_',
-    children: parseContent(body, { ...context, charIndex: from + 1, nested: true }, options),
+    children: parseContent(body, { ...context, charIndex: first + 1, nested: true }, options),
     trailingMeta: '_',
     decoration: { ...context.decoration, italic: true },
   };
@@ -220,18 +220,18 @@ function parseItalic(text: string, context: ParsingContext, options: ParsingOpti
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
 function parseTaggedLink(text: string, context: ParsingContext, options: ParsingOptions, regex: RegExp): ContentNode[] {
   const { left, tag, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: TaggedLinkNode = {
     type: 'taggedLink',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: '[',
     tag,
     linkName,
@@ -241,19 +241,19 @@ function parseTaggedLink(text: string, context: ParsingContext, options: Parsing
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
 function parseBracketLink(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.common.bracketLink;
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: BracketLinkNode = {
     type: 'bracketLink',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     facingMeta: '[',
     linkName,
     trailingMeta: ']',
@@ -262,36 +262,36 @@ function parseBracketLink(text: string, context: ParsingContext, options: Parsin
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
 function parseHashTag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = TextLinesConstants.regexes.common.hashTag;
   const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
-  const [from, to] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length];
 
   const node: HashTagNode = {
     type: 'hashTag',
     lineIndex: context.lineIndex,
-    range: [from, to],
+    range: [first, last],
     hashTag,
   };
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: to }, options),
+    ...parseContent(right, { ...context, charIndex: last }, options),
   ];
 }
 
 function parseNormal(text: string, context: ParsingContext): ContentNode[] {
-  const [from, to] = [context.charIndex, context.charIndex + text.length];
+  const [first, last] = [context.charIndex, context.charIndex + text.length];
 
   const node: NormalNode = {
     type: 'normal',
     lineIndex: context.lineIndex,
     text,
-    range: [from, to],
+    range: [first, last],
   };
 
   return [node];
