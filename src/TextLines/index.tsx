@@ -347,9 +347,9 @@ const Node: React.FC<NodeProps> = ({
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={last - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={last - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
@@ -411,9 +411,9 @@ const Node: React.FC<NodeProps> = ({
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={last - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={last - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
@@ -455,9 +455,9 @@ const Node: React.FC<NodeProps> = ({
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={last - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={last - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
@@ -489,9 +489,9 @@ const Node: React.FC<NodeProps> = ({
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={last - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={last - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
