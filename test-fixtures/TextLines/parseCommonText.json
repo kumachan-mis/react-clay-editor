@@ -199,7 +199,7 @@
             {
               "type": "displayFormula",
               "lineIndex": 1,
-              "range": [0, 20],
+              "range": [0, 19],
               "formula": "\\int_a^b f(x) dx"
             }
           ]
