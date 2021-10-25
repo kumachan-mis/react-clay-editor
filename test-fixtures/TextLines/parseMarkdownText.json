@@ -97,12 +97,16 @@
         },
         {
           "type": "normalLine",
+          "lineIndex": 4,
           "children": [
             {
               "type": "decoration",
+              "lineIndex": 4,
+              "range": [0, 10],
               "children": [
                 {
                   "type": "normal",
+                  "range": [1, 9],
                   "text": "bold text"
                 }
               ],
@@ -115,9 +119,13 @@
             },
             {
               "type": "decoration",
+              "lineIndex": 4,
+              "range": [11, 23],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 4,
+                  "range": [12, 22],
                   "text": "italic text"
                 }
               ],
