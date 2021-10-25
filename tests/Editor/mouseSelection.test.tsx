@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
 
-import { MockEditor, spyOnCharGetBoundingClientRect } from '../mocks';
+import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import { TextSelection } from '../../src/Selection/types';
@@ -43,14 +43,14 @@ describe('mouseSelection in Editor', () => {
 
   runFixtureTests<TestCase, Common>('Editor', 'mouseSelection', (testCase, common) => {
     const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
-    const text = common.textLines.join('\n');
 
+    const text = common.textLines.join('\n');
     const { rerender } = render(<MockEditor initText={text} />);
-    const spiedGetBoundingClientRects: jest.SpyInstance<DOMRect, []>[] = [];
-    for (const event of testCase.inputEvents) {
-      const { lineIndex, charIndex } = event.coordinate;
-      spiedGetBoundingClientRects.push(spyOnCharGetBoundingClientRect(screen, lineIndex, charIndex));
-    }
+
+    const spyOnGetBoundingClientRect = new SpyOnGetBoundingClientRect(screen);
+    const spiedGetBoundingClientRects = testCase.inputEvents.map((event) =>
+      spyOnGetBoundingClientRect.char(event.coordinate.lineIndex, event.coordinate.charIndex)
+    );
 
     const body = screen.getByTestId('editor-body');
     for (const event of testCase.inputEvents) {

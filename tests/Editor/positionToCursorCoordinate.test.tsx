@@ -3,11 +3,8 @@ import { render, screen } from '@testing-library/react';
 
 import {
   MockEditor,
-  spyOnCharGetBoundingClientRect,
-  spyOnCharGroupGetBoundingClientRect,
-  spyOnLineGetBoundingClientRect,
-  spyOnLineGroupGetBoundingClientRect,
-  spyOnEditorBodyGetBoundingClientRect,
+  SpyOnGetBoundingClientRect,
+  SpyOnGetBoundingClientRectConfig,
   mockElementsFromPoint,
 } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
@@ -24,11 +21,7 @@ interface TestCase extends BaseTestCase {
 }
 
 interface Common {
-  config: {
-    size: number;
-    chars: number;
-    lines: number;
-  };
+  config: SpyOnGetBoundingClientRectConfig;
   textLines: string[];
 }
 
@@ -51,14 +44,14 @@ describe('function positionToCursorCoordinate in Editor', () => {
       configurable: true,
     });
 
-    const config = common.config;
+    const spyOnGetBoundingClientRect = new SpyOnGetBoundingClientRect(screen, common.config);
 
     const spiedCharGetBoundingClientRects = charElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(TextLinesConstants.char.selectIdRegex)?.groups as Record<string, string>;
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
       const charIndex = Number.parseInt(groups['charIndex'], 10);
-      return spyOnCharGetBoundingClientRect(screen, lineIndex, charIndex, config.size);
+      return spyOnGetBoundingClientRect.char(lineIndex, charIndex);
     });
     const spiedCharGroupGetBoundingClientRects = charGroupElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
@@ -66,27 +59,22 @@ describe('function positionToCursorCoordinate in Editor', () => {
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
       const firstCharIndex = Number.parseInt(groups['first'], 10);
       const lastCharIndex = Number.parseInt(groups['last'], 10);
-      return spyOnCharGroupGetBoundingClientRect(screen, lineIndex, firstCharIndex, lastCharIndex, config.size);
+      return spyOnGetBoundingClientRect.charGroup(lineIndex, firstCharIndex, lastCharIndex);
     });
     const spiedLineGetBoundingClientRects = lineElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(TextLinesConstants.line.selectIdRegex)?.groups as Record<string, string>;
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
-      return spyOnLineGetBoundingClientRect(screen, lineIndex, config.chars, config.size);
+      return spyOnGetBoundingClientRect.line(lineIndex);
     });
     const spiedLineGroupGetBoundingClientRects = lineGroupElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(TextLinesConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
       const firstLineIndex = Number.parseInt(groups['first'], 10);
       const lastLineIndex = Number.parseInt(groups['last'], 10);
-      return spyOnLineGroupGetBoundingClientRect(screen, firstLineIndex, lastLineIndex, config.chars, config.size);
+      return spyOnGetBoundingClientRect.lineGroup(firstLineIndex, lastLineIndex);
     });
-    const spiedEditorBodyGetBoundingClientRect = spyOnEditorBodyGetBoundingClientRect(
-      screen,
-      config.chars,
-      config.lines,
-      config.size
-    );
+    const spiedEditorBodyGetBoundingClientRect = spyOnGetBoundingClientRect.editorBody();
 
     const root = screen.getByTestId('editor-root');
     expect(positionToCursorCoordinate(text, testCase.inputPosition, root)).toEqual(testCase.expectedCoordinate);

@@ -40,7 +40,7 @@ export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, s
     >
       {[...Array(indentDepth).keys()].map((charIndex) => (
         <span key={charIndex} className={TextLinesConstants.lineGroup.pad.className}>
-          <span> </span>
+          {' '}
         </span>
       ))}
       {children}
@@ -155,7 +155,7 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
       data-testid={constants.selectId(lineIndex, charIndex)}
       {...rest}
     >
-      <span>{children}</span>
+      {children}
     </span>
   );
 };

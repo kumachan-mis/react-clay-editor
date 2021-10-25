@@ -24,141 +24,83 @@ export const MockTextLines: React.FC<MockTextLinesProps> = ({ text }) => {
   );
 };
 
-export function spyOnCharGetBoundingClientRect(
-  screen: Screen,
-  lineIndex: number,
-  charIndex: number,
-  size = 10
-): jest.SpyInstance<DOMRect, []> {
-  const element = screen.getByTestId(`char-L${lineIndex}C${charIndex}`);
-  const spiedGetBoundingClientRect = jest.spyOn(element, 'getBoundingClientRect');
-
-  const [width, height] = [size, size];
-  const [x, y] = [size * charIndex, size * lineIndex];
-
-  spiedGetBoundingClientRect.mockImplementation(() => ({
-    width,
-    height,
-    top: y,
-    left: x,
-    bottom: y + height,
-    right: x + width,
-    x,
-    y,
-    toJSON: () => ({}),
-  }));
-
-  return spiedGetBoundingClientRect;
+export interface SpyOnGetBoundingClientRectConfig {
+  chars: number;
+  lines: number;
+  size: number;
+  margin: number;
 }
 
-export function spyOnCharGroupGetBoundingClientRect(
-  screen: Screen,
-  lineIndex: number,
-  firstCharIndex: number,
-  lastCharIndex: number,
-  size = 10
-): jest.SpyInstance<DOMRect, []> {
-  const element = screen.getByTestId(`char-group-L${lineIndex}C${firstCharIndex}-${lastCharIndex}`);
-  const spiedGetBoundingClientRect = jest.spyOn(element, 'getBoundingClientRect');
+export class SpyOnGetBoundingClientRect {
+  private screen: Screen;
+  private config: SpyOnGetBoundingClientRectConfig;
 
-  const [width, height] = [size * (lastCharIndex - firstCharIndex + 1), size];
-  const [x, y] = [size * firstCharIndex, size * lineIndex];
+  constructor(screen: Screen, config?: SpyOnGetBoundingClientRectConfig) {
+    if (!config) config = { chars: 15, lines: 10, size: 10, margin: 1 };
 
-  spiedGetBoundingClientRect.mockImplementation(() => ({
-    width,
-    height,
-    top: y,
-    left: x,
-    bottom: y + height,
-    right: x + width,
-    x,
-    y,
-    toJSON: () => ({}),
-  }));
+    this.screen = screen;
+    this.config = config;
+  }
 
-  return spiedGetBoundingClientRect;
-}
+  char(lineIndex: number, charIndex: number): jest.SpyInstance<DOMRect, []> {
+    const element = this.screen.getByTestId(`char-L${lineIndex}C${charIndex}`);
+    const [width, height] = [this.config.size, this.config.size];
+    const [x, y] = [
+      this.config.size * charIndex,
+      this.config.margin + (this.config.size + 2 * this.config.margin) * lineIndex,
+    ];
+    return this.getSpyInstance(element, width, height, x, y);
+  }
 
-export function spyOnLineGetBoundingClientRect(
-  screen: Screen,
-  lineIndex: number,
-  chars: number,
-  size = 10
-): jest.SpyInstance<DOMRect, []> {
-  const element = screen.getByTestId(`line-L${lineIndex}`);
-  const spiedGetBoundingClientRect = jest.spyOn(element, 'getBoundingClientRect');
+  charGroup(lineIndex: number, firstCharIndex: number, lastCharIndex: number): jest.SpyInstance<DOMRect, []> {
+    const element = this.screen.getByTestId(`char-group-L${lineIndex}C${firstCharIndex}-${lastCharIndex}`);
+    const [width, height] = [this.config.size * (lastCharIndex - firstCharIndex + 1), this.config.size];
+    const [x, y] = [
+      this.config.size * firstCharIndex,
+      this.config.margin + (this.config.size + 2 * this.config.margin) * lineIndex,
+    ];
+    return this.getSpyInstance(element, width, height, x, y);
+  }
 
-  const [width, height] = [size * chars, size];
-  const [x, y] = [0, size * lineIndex];
+  line(lineIndex: number): jest.SpyInstance<DOMRect, []> {
+    const element = this.screen.getByTestId(`line-L${lineIndex}`);
+    const [width, height] = [this.config.size * this.config.chars, this.config.size + 2 * this.config.margin];
+    const [x, y] = [0, (this.config.size + 2 * this.config.margin) * lineIndex];
+    return this.getSpyInstance(element, width, height, x, y);
+  }
 
-  spiedGetBoundingClientRect.mockImplementation(() => ({
-    width,
-    height,
-    top: y,
-    left: x,
-    bottom: y + height,
-    right: x + width,
-    x,
-    y,
-    toJSON: () => ({}),
-  }));
+  lineGroup(firstLineIndex: number, lastLineIndex: number): jest.SpyInstance<DOMRect, []> {
+    const element = this.screen.getByTestId(`line-group-L${firstLineIndex}-${lastLineIndex}`);
+    const [width, height] = [
+      this.config.size * this.config.chars,
+      (this.config.size + 2 * this.config.margin) * (lastLineIndex - firstLineIndex + 1),
+    ];
+    const [x, y] = [0, (this.config.size + 2 * this.config.margin) * firstLineIndex];
+    return this.getSpyInstance(element, width, height, x, y);
+  }
 
-  return spiedGetBoundingClientRect;
-}
+  editorBody(): jest.SpyInstance<DOMRect, []> {
+    const element = this.screen.getByTestId('editor-body');
+    const [width, height] = [
+      this.config.size * this.config.chars,
+      (this.config.size + 2 * this.config.margin) * this.config.lines,
+    ];
+    const [x, y] = [0, 0];
+    return this.getSpyInstance(element, width, height, x, y);
+  }
 
-export function spyOnLineGroupGetBoundingClientRect(
-  screen: Screen,
-  firstLineIndex: number,
-  lastLineIndex: number,
-  chars: number,
-  size = 10
-): jest.SpyInstance<DOMRect, []> {
-  const element = screen.getByTestId(`line-group-L${firstLineIndex}-${lastLineIndex}`);
-  const spiedGetBoundingClientRect = jest.spyOn(element, 'getBoundingClientRect');
-
-  const [width, height] = [size * chars, size * (lastLineIndex - firstLineIndex + 1)];
-  const [x, y] = [0, size * firstLineIndex];
-
-  spiedGetBoundingClientRect.mockImplementation(() => ({
-    width,
-    height,
-    top: y,
-    left: x,
-    bottom: y + height,
-    right: x + width,
-    x,
-    y,
-    toJSON: () => ({}),
-  }));
-
-  return spiedGetBoundingClientRect;
-}
-
-export function spyOnEditorBodyGetBoundingClientRect(
-  screen: Screen,
-  chars: number,
-  lines: number,
-  size = 10
-): jest.SpyInstance<DOMRect, []> {
-  const element = screen.getByTestId('editor-body');
-  const spiedGetBoundingClientRect = jest.spyOn(element, 'getBoundingClientRect');
-
-  const [width, height] = [size * chars, size * lines];
-  const [x, y] = [0, 0];
-
-  spiedGetBoundingClientRect.mockImplementation(() => ({
-    width,
-    height,
-    top: y,
-    left: x,
-    bottom: y + height,
-    right: x + width,
-    x,
-    y,
-    toJSON: () => ({}),
-  }));
-
-  return spiedGetBoundingClientRect;
+  private getSpyInstance(
+    element: HTMLElement,
+    width: number,
+    height: number,
+    x: number,
+    y: number
+  ): jest.SpyInstance<DOMRect, []> {
+    const domRect = { width, height, top: y, left: x, bottom: y + height, right: x + width, x, y, toJSON: () => ({}) };
+    const spyInstance = jest.spyOn(element, 'getBoundingClientRect');
+    spyInstance.mockImplementation(() => domRect);
+    return spyInstance;
+  }
 }
 
 export function mockElementsFromPoint(x: number, y: number, elements: HTMLElement[]): HTMLElement[] {
