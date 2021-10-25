@@ -12,10 +12,13 @@
       "expectedNodes": [
         {
           "type": "quotation",
+          "lineIndex": 0,
           "indentDepth": 0,
           "children": [
             {
               "type": "normal",
+              "lineIndex": 0,
+              "range": [2, 71],
               "text": "Genius is one percent inspiration and ninety-nine percent perspiration"
             }
           ]
@@ -54,60 +57,74 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "inlineCode",
+              "lineIndex": 0,
+              "range": [0, 53],
               "code": "import { Editor } from 'react-realtime-markup-editor"
             }
           ]
         },
         {
           "type": "blockCode",
+          "range": [1, 5],
           "facingMeta": {
             "type": "blockCodeMeta",
+            "lineIndex": 1,
             "indentDepth": 0
           },
           "children": [
             {
               "type": "blockCodeLine",
+              "lineIndex": 2,
               "indentDepth": 0,
               "codeLine": "const SampleEditor: React.FC = () => {"
             },
             {
               "type": "blockCodeLine",
+              "lineIndex": 3,
               "indentDepth": 0,
               "codeLine": "  return <Editor />;"
             },
             {
               "type": "blockCodeLine",
+              "lineIndex": 4,
               "indentDepth": 0,
               "codeLine": "};"
             }
           ],
           "trailingMeta": {
             "type": "blockCodeMeta",
+            "lineIndex": 5,
             "indentDepth": 0
           }
         },
         {
           "type": "blockCode",
+          "range": [6, 9],
           "facingMeta": {
             "type": "blockCodeMeta",
+            "lineIndex": 6,
             "indentDepth": 0
           },
           "children": [
             {
               "type": "blockCodeLine",
+              "lineIndex": 7,
               "indentDepth": 0,
               "codeLine": "function square(x: number): number {"
             },
             {
               "type": "blockCodeLine",
+              "lineIndex": 8,
               "indentDepth": 0,
               "codeLine": "  return x*x;"
             },
             {
               "type": "blockCodeLine",
+              "lineIndex": 9,
               "indentDepth": 0,
               "codeLine": "}"
             }
@@ -165,49 +182,62 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "inlineFormula",
+              "lineIndex": 0,
+              "range": [0, 5],
               "formula": "f(x)"
             }
           ]
         },
         {
           "type": "normalLine",
+          "lineIndex": 1,
           "children": [
             {
               "type": "displayFormula",
+              "lineIndex": 1,
+              "range": [0, 19],
               "formula": "\\int_a^b f(x) dx"
             }
           ]
         },
         {
           "type": "blockFormula",
+          "range": [2, 4],
           "facingMeta": {
             "type": "blockFormulaMeta",
+            "lineIndex": 2,
             "indentDepth": 0
           },
           "children": [
             {
               "type": "blockFormulaLine",
+              "lineIndex": 3,
               "indentDepth": 0,
               "formulaLine": "\\int_a^b f(x) dx"
             }
           ],
           "trailingMeta": {
             "type": "blockFormulaMeta",
+            "lineIndex": 4,
             "indentDepth": 0
           }
         },
         {
           "type": "blockFormula",
+          "range": [5, 6],
           "facingMeta": {
             "type": "blockFormulaMeta",
+            "lineIndex": 5,
             "indentDepth": 0
           },
           "children": [
             {
               "type": "blockFormulaLine",
+              "lineIndex": 6,
               "indentDepth": 0,
               "formulaLine": "\\sum_{n=1}^N a_n"
             }
@@ -244,9 +274,12 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "taggedLink",
+              "lineIndex": 0,
+              "range": [0, 20],
               "tag": "@: ",
               "linkName": "tagged link test"
             }
@@ -260,9 +293,12 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "bracketLink",
+              "lineIndex": 0,
+              "range": [0, 13],
               "linkName": "bracket test"
             }
           ]
@@ -275,9 +311,12 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "hashTag",
+              "lineIndex": 0,
+              "range": [0, 11],
               "hashTag": "#hashtagtest"
             },
             {
@@ -286,6 +325,8 @@
             },
             {
               "type": "hashTag",
+              "lineIndex": 0,
+              "range": [14, 26],
               "hashTag": "#hashtag_test"
             },
             {
@@ -294,6 +335,8 @@
             },
             {
               "type": "hashTag",
+              "lineIndex": 0,
+              "range": [29, 41],
               "hashTag": "#hashtag-test"
             },
             {
@@ -310,9 +353,12 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "normal",
+              "lineIndex": 0,
+              "range": [0, 10],
               "text": "hello world"
             }
           ]

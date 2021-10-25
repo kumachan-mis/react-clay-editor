@@ -146,7 +146,7 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
   const childNode: DecorationNode = {
     type: 'decoration',
     lineIndex: context.lineIndex,
-    range: [0, line.length],
+    range: [0, line.length - 1],
     facingMeta: `${heading} `,
     children: parseContent(body, { ...context, charIndex: heading.length + 1, nested: true, decoration }, options),
     trailingMeta: '',

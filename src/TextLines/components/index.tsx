@@ -14,14 +14,14 @@ import {
 import { TextLinesConstants } from '../constants';
 import { mergeClassNames } from '../../common/utils';
 
-export const LineGroup: React.FC<LineGroupProps> = ({ fromLineIndex, toLineIndex, divProps = {}, children }) => {
+export const LineGroup: React.FC<LineGroupProps> = ({ firstLineIndex, lastLineIndex, divProps = {}, children }) => {
   const constants = TextLinesConstants.lineGroup;
   const { className, ...rest } = divProps;
   return (
     <div
       className={mergeClassNames(constants.className, className)}
-      data-selectid={constants.selectId(fromLineIndex, toLineIndex)}
-      data-testid={constants.selectId(fromLineIndex, toLineIndex)}
+      data-selectid={constants.selectId(firstLineIndex, lastLineIndex)}
+      data-testid={constants.selectId(firstLineIndex, lastLineIndex)}
       {...rest}
     >
       {children}
@@ -126,8 +126,8 @@ export const LineContent: React.FC<LineContentProps> = ({
 
 export const CharGroup: React.FC<CharGroupProps> = ({
   lineIndex,
-  fromCharIndex,
-  toCharIndex,
+  firstCharIndex,
+  lastCharIndex,
   spanProps = {},
   children,
 }) => {
@@ -136,8 +136,8 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   return (
     <span
       className={mergeClassNames(constants.className, className)}
-      data-selectid={constants.selectId(lineIndex, fromCharIndex, toCharIndex)}
-      data-testid={constants.selectId(lineIndex, fromCharIndex, toCharIndex)}
+      data-selectid={constants.selectId(lineIndex, firstCharIndex, lastCharIndex)}
+      data-testid={constants.selectId(lineIndex, firstCharIndex, lastCharIndex)}
       {...rest}
     >
       {children}

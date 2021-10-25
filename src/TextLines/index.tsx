@@ -151,14 +151,14 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'blockFormula': {
       const { facingMeta, children, trailingMeta } = node;
-      const [from, to] = node.range;
+      const [first, last] = node.range;
       const formula = children.map((child) => child.formulaLine).join('\n');
-      const cursorOn = cursorLineIndex !== undefined && from <= cursorLineIndex && cursorLineIndex <= to;
+      const cursorOn = cursorLineIndex !== undefined && first <= cursorLineIndex && cursorLineIndex <= last;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
-        <LineGroup fromLineIndex={from + 1} toLineIndex={trailingMeta ? to - 1 : to}>
+        <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
           <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ ...spanElementProps, className }}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
@@ -324,7 +324,7 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'inlineCode': {
       const { lineIndex, facingMeta, code, trailingMeta } = node;
-      const [from, to] = node.range;
+      const [first, last] = node.range;
       const cursorOn = cursorLineIndex == lineIndex;
       const codeElementProps = codeProps.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
@@ -332,24 +332,24 @@ const Node: React.FC<NodeProps> = ({
       return (
         <code {...codeElementProps} className={className}>
           {[...facingMeta].map((char, index) => (
-            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
+            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
             </Char>
           ))}
           {[...code].map((char, index) => (
             <Char
-              key={from + facingMeta.length + index}
+              key={first + facingMeta.length + index}
               lineIndex={lineIndex}
-              charIndex={from + facingMeta.length + index}
+              charIndex={first + facingMeta.length + index}
             >
               {char}
             </Char>
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={to - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={to - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
@@ -361,7 +361,7 @@ const Node: React.FC<NodeProps> = ({
     case 'inlineFormula': {
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
       const displayMode = node.type == 'displayFormula';
-      const [from, to] = node.range;
+      const [first, last] = node.range;
       const cursorOn = cursorLineIndex == lineIndex;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
@@ -369,8 +369,8 @@ const Node: React.FC<NodeProps> = ({
       return !cursorOn ? (
         <CharGroup
           lineIndex={lineIndex}
-          fromCharIndex={from + facingMeta.length}
-          toCharIndex={to - trailingMeta.length}
+          firstCharIndex={first + facingMeta.length}
+          lastCharIndex={last - trailingMeta.length}
           spanProps={{ ...spanElementProps, className }}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
@@ -378,7 +378,7 @@ const Node: React.FC<NodeProps> = ({
       ) : (
         <span {...spanElementProps} className={className}>
           {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
-            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
+            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
             </Char>
           ))}
@@ -387,13 +387,13 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'decoration': {
       const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
-      const [from, to] = node.range;
+      const [first, last] = node.range;
       const cursorOn = cursorLineIndex == lineIndex;
 
       return (
         <span className={TextLinesConstants.decoration.className(decoration)}>
           {[...facingMeta].map((char, index) => (
-            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
+            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
             </Char>
           ))}
@@ -411,9 +411,9 @@ const Node: React.FC<NodeProps> = ({
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={to - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={to - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
@@ -423,7 +423,7 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'taggedLink': {
       const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
-      const [from, to] = node.range;
+      const [first, last] = node.range;
       const cursorOn = cursorLineIndex == lineIndex;
       const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
       const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
@@ -431,33 +431,33 @@ const Node: React.FC<NodeProps> = ({
       return (
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...facingMeta].map((char, index) => (
-            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
+            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
             </Char>
           ))}
           {[...tag].map((char, index) => (
             <Char
-              key={from + facingMeta.length + index}
+              key={first + facingMeta.length + index}
               lineIndex={lineIndex}
-              charIndex={from + facingMeta.length + index}
+              charIndex={first + facingMeta.length + index}
             >
               {cursorOn || !taggedLinkProps.tagHidden ? char : ''}
             </Char>
           ))}
           {[...linkName].map((char, index) => (
             <Char
-              key={from + facingMeta.length + tag.length + index}
+              key={first + facingMeta.length + tag.length + index}
               lineIndex={lineIndex}
-              charIndex={from + facingMeta.length + tag.length + index}
+              charIndex={first + facingMeta.length + tag.length + index}
             >
               {char}
             </Char>
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={to - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={to - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
@@ -467,31 +467,31 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'bracketLink': {
       const { lineIndex, facingMeta, linkName, trailingMeta } = node;
-      const [from, to] = node.range;
+      const [first, last] = node.range;
       const cursorOn = cursorLineIndex == lineIndex;
       const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
 
       return (
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...facingMeta].map((char, index) => (
-            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
+            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
             </Char>
           ))}
           {[...linkName].map((char, index) => (
             <Char
-              key={from + facingMeta.length + index}
+              key={first + facingMeta.length + index}
               lineIndex={lineIndex}
-              charIndex={from + facingMeta.length + index}
+              charIndex={first + facingMeta.length + index}
             >
               {char}
             </Char>
           ))}
           {[...trailingMeta].map((char, index) => (
             <Char
-              key={to - trailingMeta.length + index}
+              key={last - (trailingMeta.length - 1) + index}
               lineIndex={lineIndex}
-              charIndex={to - trailingMeta.length + index}
+              charIndex={last - (trailingMeta.length - 1) + index}
             >
               {cursorOn ? char : ''}
             </Char>
@@ -501,14 +501,14 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'hashTag': {
       const { lineIndex, hashTag } = node;
-      const [from] = node.range;
+      const [first] = node.range;
       const cursorOn = cursorLineIndex == lineIndex;
       const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
 
       return (
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
           {[...hashTag].map((char, index) => (
-            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
+            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
             </Char>
           ))}
@@ -517,12 +517,12 @@ const Node: React.FC<NodeProps> = ({
     }
     case 'normal': {
       const { lineIndex, text } = node;
-      const [from] = node.range;
+      const [first] = node.range;
 
       return (
         <span>
           {[...text].map((char, index) => (
-            <Char key={from + index} lineIndex={lineIndex} charIndex={from + index}>
+            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
             </Char>
           ))}

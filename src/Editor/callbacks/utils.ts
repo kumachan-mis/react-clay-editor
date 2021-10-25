@@ -185,7 +185,6 @@ export function insertSuggestion(text: string, state: State, suggestion: string,
 
 export function positionToCursorCoordinate(
   text: string,
-  state: State,
   position: [number, number],
   element: HTMLElement
 ): CursorCoordinate | undefined {
@@ -203,7 +202,7 @@ export function positionToCursorCoordinate(
   const marginBottomElement = findElement(EditorConstants.body.selectIdRegex);
 
   if (charElement) {
-    const selectId = charElement.getAttribute('data-selectid') || '';
+    const selectId = charElement.getAttribute('data-selectid') as string;
     const groups = selectId.match(TextLinesConstants.char.selectIdRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const charIndex = Number.parseInt(groups['charIndex'], 10);
@@ -215,19 +214,22 @@ export function positionToCursorCoordinate(
   }
 
   if (charGroupElement) {
-    const selectId = charGroupElement.getAttribute('data-selectid') || '';
+    const selectId = charGroupElement.getAttribute('data-selectid') as string;
     const groups = selectId.match(TextLinesConstants.charGroup.selectIdRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
-    const fromCharIndex = Number.parseInt(groups['from'], 10);
-    const toCharIndex = Number.parseInt(groups['to'], 10);
+    const firstCharIndex = Number.parseInt(groups['first'], 10);
+    const lastCharIndex = Number.parseInt(groups['last'], 10);
     const charGroupRect = charGroupElement.getBoundingClientRect();
 
-    if (x <= charGroupRect.left + charGroupRect.width / 2) return { lineIndex, charIndex: fromCharIndex };
-    return { lineIndex, charIndex: toCharIndex };
+    if (x <= charGroupRect.left + charGroupRect.width / 2) {
+      return { lineIndex, charIndex: firstCharIndex };
+    } else {
+      return { lineIndex, charIndex: lastCharIndex + 1 };
+    }
   }
 
   if (lineElement) {
-    const selectId = lineElement.getAttribute('data-selectid') || '';
+    const selectId = lineElement.getAttribute('data-selectid') as string;
     const groups = selectId.match(TextLinesConstants.line.selectIdRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const currentLine = lines[lineIndex];
@@ -259,21 +261,24 @@ export function positionToCursorCoordinate(
   }
 
   if (lineGroupElement) {
-    const selectId = lineGroupElement.getAttribute('data-selectid') || '';
+    const selectId = lineGroupElement.getAttribute('data-selectid') as string;
     const groups = selectId.match(TextLinesConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
-    const fromLineIndex = Number.parseInt(groups['from'], 10);
-    const toLineIndex = Number.parseInt(groups['to'], 10);
+    const firstLineIndex = Number.parseInt(groups['first'], 10);
+    const lastLineIndex = Number.parseInt(groups['last'], 10);
     const lineGroupRect = lineGroupElement.getBoundingClientRect();
 
-    if (x <= lineGroupRect.left + lineGroupRect.width / 2) return { lineIndex: fromLineIndex, charIndex: 0 };
-    return { lineIndex: toLineIndex, charIndex: lines[toLineIndex].length };
+    if (x <= lineGroupRect.left + lineGroupRect.width / 2) {
+      return { lineIndex: firstLineIndex, charIndex: 0 };
+    } else {
+      return { lineIndex: lastLineIndex, charIndex: lines[lastLineIndex].length };
+    }
   }
 
   if (marginBottomElement) {
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
   }
 
-  return state.cursorCoordinate;
+  return undefined;
 }
 
 export function resetSuggestion(state: State): State {

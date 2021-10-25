@@ -12,12 +12,17 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "decoration",
+              "lineIndex": 0,
+              "range": [0, 18],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 0,
+                  "range": [6, 17],
                   "text": "Largest Text"
                 }
               ],
@@ -30,9 +35,13 @@
             },
             {
               "type": "decoration",
+              "lineIndex": 0,
+              "range": [19, 41],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 0,
+                  "range": [24, 40],
                   "text": "Also Largest Text"
                 }
               ],
@@ -45,9 +54,13 @@
             },
             {
               "type": "decoration",
+              "lineIndex": 0,
+              "range": [42, 57],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 0,
+                  "range": [46, 56],
                   "text": "Larger Text"
                 }
               ],
@@ -60,9 +73,13 @@
             },
             {
               "type": "decoration",
+              "lineIndex": 0,
+              "range": [58, 70],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 0,
+                  "range": [61, 69],
                   "text": "bold text"
                 }
               ],
@@ -75,9 +92,13 @@
             },
             {
               "type": "decoration",
+              "lineIndex": 0,
+              "range": [71, 85],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 0,
+                  "range": [74, 84],
                   "text": "italic text"
                 }
               ],
@@ -90,9 +111,13 @@
             },
             {
               "type": "decoration",
+              "lineIndex": 0,
+              "range": [86, 104],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 0,
+                  "range": [89, 103],
                   "text": "underlined text"
                 }
               ],
@@ -275,20 +300,26 @@
       "expectedNodes": [
         {
           "type": "itemization",
+          "lineIndex": 0,
           "indentDepth": 0,
           "children": [
             {
               "type": "normal",
+              "lineIndex": 0,
+              "range": [1, 13],
               "text": "itemized text"
             }
           ]
         },
         {
           "type": "itemization",
+          "lineIndex": 1,
           "indentDepth": 1,
           "children": [
             {
               "type": "normal",
+              "lineIndex": 1,
+              "range": [2, 21],
               "text": "nested itemized text"
             }
           ]

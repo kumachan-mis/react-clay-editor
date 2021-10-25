@@ -1,6 +1,6 @@
 export interface LineGroupProps {
-  fromLineIndex: number;
-  toLineIndex: number;
+  firstLineIndex: number;
+  lastLineIndex: number;
   divProps?: React.ComponentProps<'div'>;
 }
 
@@ -35,8 +35,8 @@ export interface LineContentProps {
 
 export interface CharGroupProps {
   lineIndex: number;
-  fromCharIndex: number;
-  toCharIndex: number;
+  firstCharIndex: number;
+  lastCharIndex: number;
   spanProps?: React.ComponentProps<'span'>;
 }
 

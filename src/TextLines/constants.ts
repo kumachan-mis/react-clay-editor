@@ -34,8 +34,8 @@ export const TextLinesConstants = {
   },
   lineGroup: {
     className: styles.lineGroup,
-    selectId: (from: number, to: number): string => `line-group-L${from}-${to}`,
-    selectIdRegex: RegExp('line-group-L(?<from>\\d+)-(?<to>\\d+)'),
+    selectId: (first: number, last: number): string => `line-group-L${first}-${last}`,
+    selectIdRegex: RegExp('line-group-L(?<first>\\d+)-(?<last>\\d+)'),
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
@@ -66,8 +66,8 @@ export const TextLinesConstants = {
   },
   charGroup: {
     className: styles.charGroup,
-    selectId: (lineIndex: number, from: number, to: number): string => `char-group-L${lineIndex}C${from}-${to}`,
-    selectIdRegex: RegExp('char-group-L(?<lineIndex>\\d+)C(?<from>\\d+)-(?<to>\\d+)'),
+    selectId: (lineIndex: number, first: number, last: number): string => `char-group-L${lineIndex}C${first}-${last}`,
+    selectIdRegex: RegExp('char-group-L(?<lineIndex>\\d+)C(?<first>\\d+)-(?<last>\\d+)'),
   },
   char: {
     className: styles.char,

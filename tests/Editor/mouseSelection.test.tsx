@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
 
-import { MockEditor } from '../mocks';
+import { MockEditor, spyOnCharGetBoundingClientRect } from '../mocks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import { TextSelection } from '../../src/Selection/types';
@@ -29,7 +29,7 @@ interface Common {
 const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
 
 beforeAll(() => {
-  spiedPositionToCursorCoordinate.mockImplementation((p, s, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
+  spiedPositionToCursorCoordinate.mockImplementation((text, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
 });
 
 afterAll(() => {
@@ -48,29 +48,14 @@ describe('mouseSelection in Editor', () => {
     const { rerender } = render(<MockEditor initText={text} />);
     const spiedGetBoundingClientRects: jest.SpyInstance<DOMRect, []>[] = [];
     for (const event of testCase.inputEvents) {
-      const charEl = screen.getByTestId(`char-L${event.coordinate.lineIndex}C${event.coordinate.charIndex}`);
-      const spiedGetBoundingClientRect = jest.spyOn(charEl, 'getBoundingClientRect');
-      spiedGetBoundingClientRect.mockImplementation(() => ({
-        width: 10,
-        height: 10,
-        top: 15 * event.coordinate.lineIndex,
-        left: 15 * event.coordinate.charIndex,
-        bottom: 15 * event.coordinate.lineIndex + 10,
-        right: 15 * event.coordinate.charIndex + 10,
-        x: 0,
-        y: 0,
-        toJSON: () => ({}),
-      }));
-      spiedGetBoundingClientRects.push(spiedGetBoundingClientRect);
+      const { lineIndex, charIndex } = event.coordinate;
+      spiedGetBoundingClientRects.push(spyOnCharGetBoundingClientRect(screen, lineIndex, charIndex));
     }
 
     const body = screen.getByTestId('editor-body');
     for (const event of testCase.inputEvents) {
-      fireEvent[event.type](body, {
-        clientX: event.coordinate.charIndex,
-        clientY: event.coordinate.lineIndex,
-        ...event.init,
-      });
+      const { lineIndex, charIndex } = event.coordinate;
+      fireEvent[event.type](body, { clientX: charIndex, clientY: lineIndex, ...event.init });
     }
 
     const expectedSelectionText = testCase.expectedSelectionLines.join('\n');

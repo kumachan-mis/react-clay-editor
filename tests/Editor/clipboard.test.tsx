@@ -48,7 +48,7 @@ const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionT
 
 beforeAll(() => {
   SpiedTextLines.mockImplementation(MockTextLines);
-  spiedPositionToCursorCoordinate.mockImplementation((p, s, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
+  spiedPositionToCursorCoordinate.mockImplementation((text, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
 });
 
 afterAll(() => {
