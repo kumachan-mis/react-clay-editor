@@ -217,12 +217,15 @@ export function positionToCursorCoordinate(
     const selectId = charGroupElement.getAttribute('data-selectid') as string;
     const groups = selectId.match(TextLinesConstants.charGroup.selectIdRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
-    const fromCharIndex = Number.parseInt(groups['from'], 10);
-    const toCharIndex = Number.parseInt(groups['to'], 10);
+    const firstCharIndex = Number.parseInt(groups['first'], 10);
+    const lastCharIndex = Number.parseInt(groups['last'], 10);
     const charGroupRect = charGroupElement.getBoundingClientRect();
 
-    if (x <= charGroupRect.left + charGroupRect.width / 2) return { lineIndex, charIndex: fromCharIndex };
-    return { lineIndex, charIndex: toCharIndex + 1 };
+    if (x <= charGroupRect.left + charGroupRect.width / 2) {
+      return { lineIndex, charIndex: firstCharIndex };
+    } else {
+      return { lineIndex, charIndex: lastCharIndex + 1 };
+    }
   }
 
   if (lineElement) {
@@ -260,12 +263,15 @@ export function positionToCursorCoordinate(
   if (lineGroupElement) {
     const selectId = lineGroupElement.getAttribute('data-selectid') as string;
     const groups = selectId.match(TextLinesConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
-    const fromLineIndex = Number.parseInt(groups['from'], 10);
-    const toLineIndex = Number.parseInt(groups['to'], 10);
+    const firstLineIndex = Number.parseInt(groups['first'], 10);
+    const lastLineIndex = Number.parseInt(groups['last'], 10);
     const lineGroupRect = lineGroupElement.getBoundingClientRect();
 
-    if (x <= lineGroupRect.left + lineGroupRect.width / 2) return { lineIndex: fromLineIndex, charIndex: 0 };
-    return { lineIndex: toLineIndex, charIndex: lines[toLineIndex].length };
+    if (x <= lineGroupRect.left + lineGroupRect.width / 2) {
+      return { lineIndex: firstLineIndex, charIndex: 0 };
+    } else {
+      return { lineIndex: lastLineIndex, charIndex: lines[lastLineIndex].length };
+    }
   }
 
   if (marginBottomElement) {

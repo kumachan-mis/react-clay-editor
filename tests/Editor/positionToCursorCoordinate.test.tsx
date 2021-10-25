@@ -64,9 +64,9 @@ describe('function positionToCursorCoordinate in Editor', () => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(TextLinesConstants.charGroup.selectIdRegex)?.groups as Record<string, string>;
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
-      const fromCharIndex = Number.parseInt(groups['from'], 10);
-      const toCharIndex = Number.parseInt(groups['to'], 10);
-      return spyOnCharGroupGetBoundingClientRect(screen, lineIndex, fromCharIndex, toCharIndex, config.size);
+      const firstCharIndex = Number.parseInt(groups['first'], 10);
+      const lastCharIndex = Number.parseInt(groups['last'], 10);
+      return spyOnCharGroupGetBoundingClientRect(screen, lineIndex, firstCharIndex, lastCharIndex, config.size);
     });
     const spiedLineGetBoundingClientRects = lineElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
@@ -77,9 +77,9 @@ describe('function positionToCursorCoordinate in Editor', () => {
     const spiedLineGroupGetBoundingClientRects = lineGroupElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(TextLinesConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
-      const fromLineIndex = Number.parseInt(groups['from'], 10);
-      const toLineIndex = Number.parseInt(groups['to'], 10);
-      return spyOnLineGroupGetBoundingClientRect(screen, fromLineIndex, toLineIndex, config.chars, config.size);
+      const firstLineIndex = Number.parseInt(groups['first'], 10);
+      const lastLineIndex = Number.parseInt(groups['last'], 10);
+      return spyOnLineGroupGetBoundingClientRect(screen, firstLineIndex, lastLineIndex, config.chars, config.size);
     });
     const spiedEditorBodyGetBoundingClientRect = spyOnEditorBodyGetBoundingClientRect(
       screen,
