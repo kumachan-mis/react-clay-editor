@@ -12,12 +12,17 @@
       "expectedNodes": [
         {
           "type": "normalLine",
+          "lineIndex": 0,
           "children": [
             {
               "type": "decoration",
+              "lineIndex": 0,
+              "range": [0, 13],
               "children": [
                 {
                   "type": "normal",
+                  "lineIndex": 0,
+                  "range": [2, 13],
                   "text": "Largest Text"
                 }
               ],
@@ -133,20 +138,26 @@
       "expectedNodes": [
         {
           "type": "itemization",
+          "lineIndex": 0,
           "indentDepth": 0,
           "children": [
             {
               "type": "normal",
+              "lineIndex": 0,
+              "range": [2, 14],
               "text": "itemized text"
             }
           ]
         },
         {
           "type": "itemization",
+          "lineIndex": 0,
           "indentDepth": 1,
           "children": [
             {
               "type": "normal",
+              "lineIndex": 1,
+              "range": [3, 22],
               "text": "nested itemized text"
             }
           ]
