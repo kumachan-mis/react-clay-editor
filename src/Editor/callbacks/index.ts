@@ -38,7 +38,7 @@ export function handleOnMouseDown(
   if (!element) return [text, state];
 
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
+  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
   const newState = resetSuggestion({
     ...state,
     cursorCoordinate,
@@ -62,7 +62,7 @@ export function handleOnMouseMove(
   }
 
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
+  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
   if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) {
     return [text, state];
   }
@@ -86,7 +86,7 @@ export function handleOnMouseUp(
   }
 
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
+  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = cursorCoordinate ? cursorCoordinate : { ...state.cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
@@ -102,7 +102,7 @@ export function handleOnClick(
   if (!element) return [text, state];
 
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, state, position, element);
+  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
   switch (event.detail) {
     case 2: {
       // double click

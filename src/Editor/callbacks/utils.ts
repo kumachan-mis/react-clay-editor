@@ -185,7 +185,6 @@ export function insertSuggestion(text: string, state: State, suggestion: string,
 
 export function positionToCursorCoordinate(
   text: string,
-  state: State,
   position: [number, number],
   element: HTMLElement
 ): CursorCoordinate | undefined {
@@ -223,7 +222,7 @@ export function positionToCursorCoordinate(
     const charGroupRect = charGroupElement.getBoundingClientRect();
 
     if (x <= charGroupRect.left + charGroupRect.width / 2) return { lineIndex, charIndex: fromCharIndex };
-    return { lineIndex, charIndex: toCharIndex };
+    return { lineIndex, charIndex: toCharIndex + 1 };
   }
 
   if (lineElement) {
@@ -273,7 +272,7 @@ export function positionToCursorCoordinate(
     return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
   }
 
-  return state.cursorCoordinate;
+  return undefined;
 }
 
 export function resetSuggestion(state: State): State {

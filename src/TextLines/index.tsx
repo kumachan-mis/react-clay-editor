@@ -370,7 +370,7 @@ const Node: React.FC<NodeProps> = ({
         <CharGroup
           lineIndex={lineIndex}
           fromCharIndex={from + facingMeta.length}
-          toCharIndex={to - trailingMeta.length}
+          toCharIndex={to - trailingMeta.length - 1}
           spanProps={{ ...spanElementProps, className }}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
