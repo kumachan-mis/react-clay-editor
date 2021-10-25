@@ -72,7 +72,52 @@
       "expectedLines": ["テキストエディタ"]
     },
     {
-      "name": "suggestion with index",
+      "name": "suggestion with active index",
+      "inputEvents": [
+        {
+          "type": "compositionStart"
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "ま"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "まー"
+          }
+        },
+        {
+          "type": "change",
+          "target": {
+            "value": "まーく"
+          }
+        },
+        {
+          "type": "compositionEnd",
+          "init": {
+            "data": "マーク"
+          }
+        },
+        {
+          "type": "keyDown",
+          "init": {
+            "key": "Enter"
+          }
+        }
+      ],
+      "options": {
+        "textProps": {
+          "suggestions": ["マークアップエディタ", "マークアップ言語"],
+          "initialSuggestionIndex": 1
+        }
+      },
+      "expectedLines": ["マークアップ言語"]
+    },
+    {
+      "name": "suggestion with inactive index",
       "inputEvents": [
         {
           "type": "compositionStart"

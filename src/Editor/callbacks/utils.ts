@@ -237,7 +237,7 @@ export function positionToCursorCoordinate(
     let [charIndex, minDistance] = [lines[lineIndex].length, Number.MAX_VALUE];
     for (let index = 0; index <= currentLine.length; index++) {
       const charElement = getTextCharElementAt(lineIndex, index, element);
-      const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+      const charRect = charElement?.getBoundingClientRect();
       if (!charRect) continue;
 
       const [ldx, ldy] = [charRect.left - x, (charRect.top + charRect.bottom) / 2 - y];

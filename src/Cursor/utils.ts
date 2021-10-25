@@ -30,7 +30,7 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const { coordinate } = props;
   const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
-  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+  const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
@@ -54,7 +54,7 @@ export function handleOnEditorScroll(props: Props, state: State, element: HTMLEl
 
   const { coordinate } = props;
   const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
-  const charRect = charElement?.firstElementChild?.getBoundingClientRect();
+  const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
