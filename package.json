@@ -77,7 +77,6 @@
     "deploy": "yarn build-sample && gh-pages -d sample/dist",
     "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
     "lint-fix": "yarn lint --fix",
-    "postinstall": "husky install",
     "prepack": "yarn build",
     "format": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
     "start": "rm -Rf sample/dist && webpack serve --config webpack.config.dev.js",
