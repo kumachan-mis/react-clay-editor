@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 
-import { runFixtureTests, BaseTestCase } from '../fixture';
 import { Viewer, ViewerProps } from '../../src';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -33,7 +33,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => voi
 
         let charIndex = 0;
         for (const char of [...viewLine]) {
-          expect(screen.getByTestId(`char-L${lineIndex}C${charIndex}`).textContent).toBe(char != '.' ? char : '');
+          expect(screen.getByTestId(`char-L${lineIndex}C${charIndex}`).textContent).toBe(char !== '.' ? char : '');
           charIndex++;
         }
 
@@ -55,7 +55,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => voi
 
       let charIndex = 0;
       for (const char of [...editLine]) {
-        expect(screen.getByTestId(`char-L${lineIndex}C${charIndex}`).textContent).toBe(char != '.' ? char : '');
+        expect(screen.getByTestId(`char-L${lineIndex}C${charIndex}`).textContent).toBe(char !== '.' ? char : '');
         charIndex++;
       }
 

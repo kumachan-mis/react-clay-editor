@@ -1,3 +1,5 @@
+import { TextLinesConstants } from '../constants';
+
 import { parseContent } from './parseContent';
 import {
   BlockCodeNode,
@@ -14,7 +16,6 @@ import {
   ParsingOptions,
   Decoration,
 } from './types';
-import { TextLinesConstants } from '../constants';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
   const originalLineIndex = context.lineIndex;
@@ -33,7 +34,7 @@ export function parseBlockCode(lines: string[], context: ParsingContext): BlockC
   while (context.lineIndex < lines.length) {
     if (metaRegex.test(lines[context.lineIndex])) {
       const mayTrailingMeta = parseBlockCodeMeta(lines[context.lineIndex], context);
-      if (mayTrailingMeta.indentDepth == facingMeta.indentDepth) {
+      if (mayTrailingMeta.indentDepth === facingMeta.indentDepth) {
         node.trailingMeta = mayTrailingMeta;
         context.lineIndex++;
       }
@@ -94,7 +95,7 @@ export function parseBlockFormula(lines: string[], context: ParsingContext): Blo
   while (context.lineIndex < lines.length) {
     if (metaRegex.test(lines[context.lineIndex])) {
       const mayTrailingMeta = parseBlockFormulaMeta(lines[context.lineIndex], context);
-      if (mayTrailingMeta.indentDepth == facingMeta.indentDepth) {
+      if (mayTrailingMeta.indentDepth === facingMeta.indentDepth) {
         node.trailingMeta = mayTrailingMeta;
         context.lineIndex++;
       }

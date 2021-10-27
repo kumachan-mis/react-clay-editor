@@ -1,3 +1,9 @@
+import { coordinatesAreEqual } from '../../Cursor/utils';
+import { getWordSelection, getLineSelection, getSelectionText } from '../../Selection/utils';
+import { TextLinesConstants } from '../../TextLines/constants';
+import { isMacOS } from '../../common/utils';
+import { Props, State } from '../types';
+
 import { shortcutCommand } from './shortcutCommands';
 import {
   handleOnShortcut,
@@ -22,12 +28,6 @@ import {
   resetSuggestion,
   positionToCursorCoordinate,
 } from './utils';
-
-import { Props, State } from '../types';
-import { coordinatesAreEqual } from '../../Cursor/utils';
-import { getWordSelection, getLineSelection, getSelectionText } from '../../Selection/utils';
-import { TextLinesConstants } from '../../TextLines/constants';
-import { isMacOS } from '../../common/utils';
 
 export function handleOnMouseDown(
   text: string,
@@ -54,10 +54,10 @@ export function handleOnMouseMove(
   event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.selectionWithMouse == 'inactive' || !element) {
+  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) {
     return [text, state];
   }
-  if (state.selectionWithMouse == 'fired') {
+  if (state.selectionWithMouse === 'fired') {
     return [text, { ...state, selectionWithMouse: 'active' }];
   }
 
@@ -78,10 +78,10 @@ export function handleOnMouseUp(
   event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.selectionWithMouse == 'inactive' || !element) {
+  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) {
     return [text, state];
   }
-  if (state.selectionWithMouse != 'active') {
+  if (state.selectionWithMouse !== 'active') {
     return [text, { ...state, selectionWithMouse: 'inactive' }];
   }
 
@@ -126,7 +126,7 @@ export function handleOnKeyDown(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   const command = shortcutCommand(event);
-  if (!state.cursorCoordinate || state.isComposing || (event.key.length == 1 && !command)) return [text, state];
+  if (!state.cursorCoordinate || state.isComposing || (event.key.length === 1 && !command)) return [text, state];
 
   event.preventDefault();
 
@@ -135,7 +135,7 @@ export function handleOnKeyDown(
       return insertText(text, state, '\t');
     }
     case 'Enter': {
-      if (state.suggestionType != 'none') {
+      if (state.suggestionType !== 'none') {
         return insertSuggestion(text, state, state.suggestions[state.suggestionIndex], state.suggestionStart);
       }
       const [newText, newState] = insertText(text, state, '\n');
@@ -144,7 +144,7 @@ export function handleOnKeyDown(
       const lines = newText.split('\n');
       const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
 
-      if (!props.syntax || props.syntax == 'bracket') {
+      if (!props.syntax || props.syntax === 'bracket') {
         // bracket syntax
         const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
@@ -215,7 +215,7 @@ export function handleOnKeyDown(
       return handleOnMoveLineBottom(text, state, event);
     }
     case 'Escape': {
-      if (state.suggestionType == 'none') return [text, state];
+      if (state.suggestionType === 'none') return [text, state];
       return [text, resetSuggestion(state)];
     }
     default:

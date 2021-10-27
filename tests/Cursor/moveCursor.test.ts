@@ -1,7 +1,6 @@
-import { runFixtureTests, BaseTestCase } from '../fixture';
-
-import { moveCursor } from '../../src/Cursor/utils';
 import { CursorCoordinate } from '../../src/Cursor/types';
+import { moveCursor } from '../../src/Cursor/utils';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
   name: string;

@@ -1,8 +1,8 @@
-import { Props, State, CursorCoordinate } from './types';
-import { CursorConstants } from './constants';
-
-import { getTextCharElementAt } from '../TextLines/utils';
 import { getRoot, getBody } from '../Editor/utils';
+import { getTextCharElementAt } from '../TextLines/utils';
+
+import { CursorConstants } from './constants';
+import { Props, State, CursorCoordinate } from './types';
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
   const root = getRoot(element);
@@ -63,13 +63,13 @@ export function handleOnEditorScroll(props: Props, state: State, element: HTMLEl
 }
 
 export function moveCursor(text: string, coordinate: CursorCoordinate, amount: number): CursorCoordinate {
-  if (amount == 0) return coordinate;
+  if (amount === 0) return coordinate;
 
   const lines = text.split('\n');
   let { lineIndex, charIndex } = { ...coordinate };
   if (amount > 0) {
     while (amount > 0) {
-      if (lineIndex == lines.length - 1) {
+      if (lineIndex === lines.length - 1) {
         charIndex += Math.min(amount, lines[lineIndex].length - charIndex);
         break;
       }
@@ -85,7 +85,7 @@ export function moveCursor(text: string, coordinate: CursorCoordinate, amount: n
   } else {
     amount = -amount;
     while (amount > 0) {
-      if (lineIndex == 0) {
+      if (lineIndex === 0) {
         charIndex -= Math.min(amount, charIndex);
         break;
       }
@@ -113,5 +113,5 @@ export function cursorCoordinateToTextIndex(text: string, coordinate: CursorCoor
 }
 
 export function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): boolean {
-  return a.lineIndex == b.lineIndex && a.charIndex == b.charIndex;
+  return a.lineIndex === b.lineIndex && a.charIndex === b.charIndex;
 }

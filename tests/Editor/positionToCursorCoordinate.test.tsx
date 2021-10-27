@@ -1,15 +1,15 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 
+import { positionToCursorCoordinate } from '../../src/Editor/callbacks/utils';
+import { TextLinesConstants } from '../../src/TextLines/constants';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 import {
   MockEditor,
   SpyOnGetBoundingClientRect,
   SpyOnGetBoundingClientRectConfig,
   mockElementsFromPoint,
 } from '../mocks';
-import { runFixtureTests, BaseTestCase } from '../fixture';
-import { TextLinesConstants } from '../../src/TextLines/constants';
-import { positionToCursorCoordinate } from '../../src/Editor/callbacks/utils';
 
 interface TestCase extends BaseTestCase {
   name: string;

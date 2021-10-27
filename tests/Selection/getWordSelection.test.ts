@@ -1,7 +1,6 @@
-import { runFixtureTests, BaseTestCase } from '../fixture';
-
-import { getSelectionText, getWordSelection } from '../../src/Selection/utils';
 import { CursorCoordinate } from '../../src/Cursor/types';
+import { getSelectionText, getWordSelection } from '../../src/Selection/utils';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
   name: string;

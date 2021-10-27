@@ -46,6 +46,8 @@
     "css-loader": "6.4.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
+    "eslint-import-resolver-node": "^0.3.6",
+    "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-hooks": "4.2.0",
     "gh-pages": "3.2.3",
@@ -71,7 +73,7 @@
     "react-dom": ">=16.0.0"
   },
   "scripts": {
-    "build": "rm -Rf dist && tsc --build tsconfig.json && cpx \"src/**/*.css\" dist",
+    "build": "rm -Rf dist && tsc --build tsconfig.build.json && cpx \"src/**/*.css\" dist",
     "build-sample": "rm -Rf sample/dist && webpack --config webpack.config.prod.js",
     "clean": "rm -Rf dist sample/dist ",
     "deploy": "yarn build-sample && gh-pages -d sample/dist",

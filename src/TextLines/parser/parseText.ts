@@ -1,3 +1,5 @@
+import { TextLinesConstants } from '../constants';
+
 import {
   parseBlockCode,
   parseBlockFormula,
@@ -8,7 +10,6 @@ import {
   parseNormalLine,
 } from './parseLine';
 import { LineNode, ParsingContext, ParsingOptions } from './types';
-import { TextLinesConstants } from '../constants';
 
 export function parseText(text: string, options: ParsingOptions): LineNode[] {
   const { blockCodeMeta, blockFormulaMeta, quotation } = TextLinesConstants.regexes.common;
@@ -21,7 +22,7 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     decoration: { fontlevel: 'normal', bold: false, italic: false, underline: false },
   };
 
-  if (options.syntax == 'bracket') {
+  if (options.syntax === 'bracket') {
     // bracket syntax
     const { itemization } = TextLinesConstants.regexes.bracketSyntax;
     while (context.lineIndex < lines.length) {

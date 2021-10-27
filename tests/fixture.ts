@@ -1,5 +1,5 @@
-import { resolve } from 'path';
 import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 export interface BaseTestCase {
   name: string;

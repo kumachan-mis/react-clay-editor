@@ -1,10 +1,10 @@
-import { Props, State, EditAction } from '../types';
-import { EditorConstants } from '../constants';
+import { CursorCoordinate } from '../../Cursor/types';
 import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
 import { selectionToRange } from '../../Selection/utils';
-import { getTextCharElementAt } from '../../TextLines/utils';
-import { CursorCoordinate } from '../../Cursor/types';
 import { TextLinesConstants } from '../../TextLines/constants';
+import { getTextCharElementAt } from '../../TextLines/utils';
+import { EditorConstants } from '../constants';
+import { Props, State, EditAction } from '../types';
 
 export function insertText(
   text: string,
@@ -38,10 +38,10 @@ export function insertText(
 }
 
 function addEditActions(state: State, actions: EditAction[]): State {
-  const validActions = actions.filter((action) => action.text != '');
-  if (validActions.length == 0) return state;
+  const validActions = actions.filter((action) => action.text !== '');
+  if (validActions.length === 0) return state;
 
-  if (state.historyHead == -1) {
+  if (state.historyHead === -1) {
     return { ...state, editActionHistory: validActions, historyHead: validActions.length - 1 };
   }
 
@@ -79,14 +79,14 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
     if (!regexes.facingRegex.test(facingText) || !regexes.trailingRegex.test(trailingText)) return undefined;
 
     const allSuggestions = config.suggestions;
-    if (!allSuggestions || allSuggestions.length == 0 || config.disabled) return resetSuggestion(state);
+    if (!allSuggestions || allSuggestions.length === 0 || config.disabled) return resetSuggestion(state);
 
     const groups = facingText.match(regexes.facingRegex)?.groups as Record<string, string>;
     const suggestions = allSuggestions.filter((suggestion) => suggestion.startsWith(groups.text || ''));
-    if (suggestions.length == 0) return resetSuggestion(state);
+    if (suggestions.length === 0) return resetSuggestion(state);
 
     let suggestionIndex = config.initialSuggestionIndex;
-    if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
+    if (!suggestionIndex || suggestions.length !== allSuggestions.length) suggestionIndex = 0;
     const suggestionStart = config.getSuggestionStart?.(groups.text) || groups.text?.length || 0;
     return { ...state, suggestionType: config.suggestionType, suggestions, suggestionIndex, suggestionStart };
   }
@@ -154,13 +154,13 @@ export function showIMEBasedSuggestion(
   specifiedText: string
 ): [string, State] {
   const allSuggestions = props.textProps?.suggestions;
-  if (!allSuggestions || allSuggestions.length == 0) return [text, resetSuggestion(state)];
+  if (!allSuggestions || allSuggestions.length === 0) return [text, resetSuggestion(state)];
 
   const suggestions = allSuggestions.filter((suggestion) => suggestion.startsWith(specifiedText));
-  if (suggestions.length == 0) return [text, resetSuggestion(state)];
+  if (suggestions.length === 0) return [text, resetSuggestion(state)];
 
   let suggestionIndex = props.textProps?.initialSuggestionIndex;
-  if (!suggestionIndex || suggestions.length != allSuggestions.length) suggestionIndex = 0;
+  if (!suggestionIndex || suggestions.length !== allSuggestions.length) suggestionIndex = 0;
   const suggestionStart = specifiedText.length;
   return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex, suggestionStart }];
 }
@@ -207,7 +207,7 @@ export function positionToCursorCoordinate(
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const charIndex = Number.parseInt(groups['charIndex'], 10);
 
-    if (charIndex == lines[lineIndex].length) return { lineIndex, charIndex };
+    if (charIndex === lines[lineIndex].length) return { lineIndex, charIndex };
     const charRect = charElement.getBoundingClientRect();
     if (x <= charRect.left + charRect.width / 2) return { lineIndex, charIndex };
     return { lineIndex, charIndex: charIndex + 1 };
@@ -247,7 +247,7 @@ export function positionToCursorCoordinate(
         charIndex = index;
       }
 
-      if (index == currentLine.length) break;
+      if (index === currentLine.length) break;
 
       const [rdx, rdy] = [charRect.right - x, (charRect.top + charRect.bottom) / 2 - y];
       const rightDistance = rdx * rdx + lineElement.clientWidth * rdy * rdy;
