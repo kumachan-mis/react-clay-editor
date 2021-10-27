@@ -1,3 +1,5 @@
+import { TextLinesConstants } from '../constants';
+
 import {
   ContentNode,
   InlineCodeNode,
@@ -12,13 +14,12 @@ import {
   ParsingOptions,
   Decoration,
 } from './types';
-import { TextLinesConstants } from '../constants';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const { inlineCode, displayFormula, inlineFormula, bracketLink, hashTag, normal } = TextLinesConstants.regexes.common;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
-  if (options.syntax == 'bracket') {
+  if (options.syntax === 'bracket') {
     // bracket syntax
     const { decoration } = TextLinesConstants.regexes.bracketSyntax;
     if (!options.disabledMap.code && inlineCode.test(text)) {
@@ -162,9 +163,9 @@ function stringToDecoration(decostring: string): Decoration {
       case '*':
         if (!decoration.bold) {
           decoration.bold = true;
-        } else if (decoration.fontlevel == 'normal') {
+        } else if (decoration.fontlevel === 'normal') {
           decoration.fontlevel = 'larger';
-        } else if (decoration.fontlevel == 'larger') {
+        } else if (decoration.fontlevel === 'larger') {
           decoration.fontlevel = 'largest';
         }
         break;

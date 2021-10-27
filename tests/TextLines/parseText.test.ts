@@ -1,8 +1,7 @@
-import { runFixtureTests, BaseTestCase } from '../fixture';
-
+import { TextLinesConstants } from '../../src/TextLines/constants';
 import { parseText } from '../../src/TextLines/parser';
 import { Node } from '../../src/TextLines/parser/types';
-import { TextLinesConstants } from '../../src/TextLines/constants';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
   name: string;

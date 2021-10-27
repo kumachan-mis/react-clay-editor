@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { ParseError, renderToString } from 'katex';
+import React from 'react';
 
-import { Props } from './types';
 import { KaTeXConstants } from './constants';
+import { Props } from './types';
 
 export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options, children, ...props }) => {
   const innerHtml = React.useMemo(() => {

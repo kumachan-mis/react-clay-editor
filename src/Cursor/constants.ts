@@ -1,5 +1,5 @@
-import { Position } from './types';
 import styles from './style.css';
+import { Position } from './types';
 
 export const CursorConstants = {
   cursorBar: {

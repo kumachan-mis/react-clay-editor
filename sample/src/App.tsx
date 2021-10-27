@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 
 import { Editor } from '../../src';
+
 import styles from './style.css';
 
 // prettier-ignore

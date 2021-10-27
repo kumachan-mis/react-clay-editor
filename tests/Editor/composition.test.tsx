@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
-import { MockEditor, MockTextLines } from '../mocks';
-import { runFixtureTests, BaseTestCase } from '../fixture';
 import { EditorProps } from '../../src';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
 import * as textLinesModule from '../../src/TextLines';
+import { runFixtureTests, BaseTestCase } from '../fixture';
+import { MockEditor, MockTextLines } from '../mocks';
 
 interface TestCase extends BaseTestCase {
   name: string;

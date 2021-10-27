@@ -1,7 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 
-import { Props, State } from './types';
-import { EditorConstants } from './constants';
+import { Cursor } from '../Cursor';
+import { Selection } from '../Selection';
+import { TextLines } from '../TextLines';
+import { mergeClassNames } from '../common/utils';
+
 import {
   handleOnMouseDown,
   handleOnMouseMove,
@@ -16,11 +19,8 @@ import {
   handleOnTextCompositionEnd,
   handleOnSuggectionMouseDown,
 } from './callbacks';
-
-import { Cursor } from '../Cursor';
-import { Selection } from '../Selection';
-import { TextLines } from '../TextLines';
-import { mergeClassNames } from '../common/utils';
+import { EditorConstants } from './constants';
+import { Props, State } from './types';
 
 export const Editor: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({
@@ -43,10 +43,10 @@ export const Editor: React.FC<Props> = (props) => {
       handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
     ): ((event: Event) => void) => {
       return (event) => {
-        if (props.readonly || event.button != 0) return;
+        if (props.readonly || event.button !== 0) return;
         const [newText, newState] = handler(props.text, state, event, rootRef.current);
-        if (newState != state) setState(newState);
-        if (newText != props.text) props.onChangeText(newText);
+        if (newState !== state) setState(newState);
+        if (newText !== props.text) props.onChangeText(newText);
       };
     },
     [state, props, setState, rootRef]
@@ -57,8 +57,8 @@ export const Editor: React.FC<Props> = (props) => {
       return (event) => {
         if (props.readonly) return;
         const [newText, newState] = handler(props.text, state, event);
-        if (newState != state) setState(newState);
-        if (newText != props.text) props.onChangeText(newText);
+        if (newState !== state) setState(newState);
+        if (newText !== props.text) props.onChangeText(newText);
       };
     },
     [state, props, setState]
@@ -71,8 +71,8 @@ export const Editor: React.FC<Props> = (props) => {
       return (event) => {
         if (props.readonly) return;
         const [newText, newState] = handler(props.text, props, state, event);
-        if (newState != state) setState(newState);
-        if (newText != props.text) props.onChangeText(newText);
+        if (newState !== state) setState(newState);
+        if (newText !== props.text) props.onChangeText(newText);
       };
     },
     [state, props, setState]

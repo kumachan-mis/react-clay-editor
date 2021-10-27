@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
 import { EventType } from '@testing-library/dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
 
-import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
-import { runFixtureTests, BaseTestCase } from '../fixture';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
+import * as SelectionModule from '../../src/Selection';
 import { TextSelection } from '../../src/Selection/types';
 import { getSelectionText } from '../../src/Selection/utils';
-import * as SelectionModule from '../../src/Selection';
+import { runFixtureTests, BaseTestCase } from '../fixture';
+import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
 
 interface TestCase extends BaseTestCase {
   name: string;

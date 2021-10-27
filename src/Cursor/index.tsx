@@ -1,10 +1,10 @@
-import * as React from 'react';
-
-import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
-import { CursorConstants } from './constants';
-import { cursorPropsToState, handleOnEditorScroll } from './utils';
+import React from 'react';
 
 import { getRoot } from '../Editor/utils';
+
+import { CursorConstants } from './constants';
+import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
+import { cursorPropsToState, handleOnEditorScroll } from './utils';
 
 export const Cursor: React.FC<Props> = (props) => {
   const rootRef = React.useRef<HTMLSpanElement | null>(null);
@@ -13,7 +13,7 @@ export const Cursor: React.FC<Props> = (props) => {
   const _handleOnEditorScroll = React.useCallback((): void => {
     if (!rootRef.current) return;
     const newState = handleOnEditorScroll(props, state, rootRef.current);
-    if (newState != state) setState(newState);
+    if (newState !== state) setState(newState);
   }, [props, state, setState, rootRef]);
 
   React.useEffect(() => {
@@ -28,7 +28,7 @@ export const Cursor: React.FC<Props> = (props) => {
   React.useEffect(() => {
     if (!rootRef.current) return;
     const newState = cursorPropsToState(props, state, rootRef.current);
-    if (newState != state) setState(newState);
+    if (newState !== state) setState(newState);
     // state should not be in dependencies because of infinite recursion
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, rootRef]);
@@ -102,7 +102,7 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
   const constants = CursorConstants.suggestion;
   const { suggestions, suggestionIndex, position, cursorSize } = props;
 
-  if (suggestions.length == 0) return <></>;
+  if (suggestions.length === 0) return <></>;
 
   return (
     <div className={constants.list.className} style={constants.list.style(position, cursorSize)}>
@@ -117,7 +117,7 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
         {suggestions.map((suggestion, index) => (
           <li
             key={index}
-            aria-selected={suggestionIndex == index}
+            aria-selected={suggestionIndex === index}
             className={constants.item.className}
             data-selectid={constants.item.selectId(index)}
             data-testid={constants.item.selectId(index)}

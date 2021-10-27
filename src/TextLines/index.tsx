@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 
-import { Props, NodeProps } from './types';
-import { TextLinesConstants } from './constants';
+import { KaTeX } from '../KaTeX';
 import { mergeClassNames } from '../common/utils';
+
 import {
   LineGroup,
   LineGroupIndent,
@@ -14,9 +14,10 @@ import {
   Char,
   EmbededLink,
 } from './components';
+import { TextLinesConstants } from './constants';
 import { parseText, getHashTagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
-import { KaTeX } from '../KaTeX';
+import { Props, NodeProps } from './types';
 
 export const TextLines: React.FC<Props> = ({
   text,
@@ -124,7 +125,7 @@ const Node: React.FC<NodeProps> = ({
     case 'blockCodeMeta':
     case 'blockCodeLine': {
       const { lineIndex, indentDepth } = node;
-      const code = node.type == 'blockCodeMeta' ? node.codeMeta : node.codeLine;
+      const code = node.type === 'blockCodeMeta' ? node.codeMeta : node.codeLine;
       const lineLength = indentDepth + code.length;
       const codeElementProps = codeProps.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
@@ -204,7 +205,7 @@ const Node: React.FC<NodeProps> = ({
     case 'blockFormulaMeta':
     case 'blockFormulaLine': {
       const { lineIndex, indentDepth } = node;
-      const formula = node.type == 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
+      const formula = node.type === 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
       const lineLength = indentDepth + formula.length;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
@@ -230,7 +231,7 @@ const Node: React.FC<NodeProps> = ({
     case 'quotation': {
       const { lineIndex, indentDepth, meta, contentLength, children } = node;
       const lineLength = indentDepth + meta.length + contentLength;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
 
       return (
         <Line lineIndex={lineIndex}>
@@ -265,7 +266,7 @@ const Node: React.FC<NodeProps> = ({
     case 'itemization': {
       const { lineIndex, indentDepth, bullet, contentLength, children } = node;
       const lineLength = indentDepth + bullet.length + contentLength;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
       const constants = TextLinesConstants.itemization;
 
       return (
@@ -325,7 +326,7 @@ const Node: React.FC<NodeProps> = ({
     case 'inlineCode': {
       const { lineIndex, facingMeta, code, trailingMeta } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
       const codeElementProps = codeProps.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
@@ -360,9 +361,9 @@ const Node: React.FC<NodeProps> = ({
     case 'displayFormula':
     case 'inlineFormula': {
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
-      const displayMode = node.type == 'displayFormula';
+      const displayMode = node.type === 'displayFormula';
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
       const spanElementProps = formulaProps.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
@@ -388,7 +389,7 @@ const Node: React.FC<NodeProps> = ({
     case 'decoration': {
       const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
 
       return (
         <span className={TextLinesConstants.decoration.className(decoration)}>
@@ -424,7 +425,7 @@ const Node: React.FC<NodeProps> = ({
     case 'taggedLink': {
       const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
       const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
       const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
 
@@ -468,7 +469,7 @@ const Node: React.FC<NodeProps> = ({
     case 'bracketLink': {
       const { lineIndex, facingMeta, linkName, trailingMeta } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
       const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
 
       return (
@@ -502,7 +503,7 @@ const Node: React.FC<NodeProps> = ({
     case 'hashTag': {
       const { lineIndex, hashTag } = node;
       const [first] = node.range;
-      const cursorOn = cursorLineIndex == lineIndex;
+      const cursorOn = cursorLineIndex === lineIndex;
       const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
 
       return (

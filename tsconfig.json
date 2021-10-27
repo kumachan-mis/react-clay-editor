@@ -3,6 +3,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "target": "ESNext",
     "module": "ESNext",
     "outDir": "./dist",
@@ -10,5 +11,5 @@
     "alwaysStrict": true,
     "declaration": true
   },
-  "include": ["src/**/*", "@types/**/*"]
+  "include": ["src/**/*", "@types/**/*", "sample/**/*", "tests/**/*"]
 }

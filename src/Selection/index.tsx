@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 
-import { Props, State } from './types';
 import { SelectionConstants } from './constants';
+import { Props, State } from './types';
 import { selectionPropsToState } from './utils';
 
 export const Selection: React.FC<Props> = (props) => {
@@ -15,7 +15,7 @@ export const Selection: React.FC<Props> = (props) => {
   React.useEffect(() => {
     if (!rootRef.current) return;
     const newState = selectionPropsToState(props, rootRef.current);
-    if (newState != state) setState(newState);
+    if (newState !== state) setState(newState);
     // state should not be in dependencies because of infinite recursion
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, rootRef]);

@@ -1,9 +1,9 @@
-import { insertText, resetSuggestion, resetTextSelectionAndSuggestion } from './utils';
-
-import { State, ShortcutCommand } from '../types';
 import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../../Cursor/utils';
 import { getSelectionText } from '../../Selection/utils';
 import { TextLinesConstants } from '../../TextLines/constants';
+import { State, ShortcutCommand } from '../types';
+
+import { insertText, resetSuggestion, resetTextSelectionAndSuggestion } from './utils';
 
 export function handleOnShortcut(
   command: ShortcutCommand | undefined,
@@ -108,7 +108,7 @@ export function handleOnUndo(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   const { editActionHistory, historyHead } = state;
-  if (historyHead == -1 || state.textAreaValue != '') return [text, state];
+  if (historyHead === -1 || state.textAreaValue !== '') return [text, state];
 
   const action = editActionHistory[historyHead];
   switch (action.actionType) {
@@ -143,7 +143,7 @@ export function handleOnRedo(
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, State] {
   const { editActionHistory, historyHead } = state;
-  if (historyHead == editActionHistory.length - 1 || state.textAreaValue != '') {
+  if (historyHead === editActionHistory.length - 1 || state.textAreaValue !== '') {
     return [text, state];
   }
 
@@ -183,7 +183,7 @@ export function handleOnMoveUp(
   const { cursorCoordinate, textSelection } = state;
 
   const newCursorCoordinate = (() => {
-    if (cursorCoordinate.lineIndex == 0) return { lineIndex: 0, charIndex: 0 };
+    if (cursorCoordinate.lineIndex === 0) return { lineIndex: 0, charIndex: 0 };
     const lines = text.split('\n');
     const prevLineIndex = cursorCoordinate.lineIndex - 1;
     if (cursorCoordinate.charIndex > lines[prevLineIndex].length) {
@@ -212,7 +212,7 @@ export function handleOnMoveDown(
 
   const newCursorCoordinate = (() => {
     const lines = text.split('\n');
-    if (cursorCoordinate.lineIndex == lines.length - 1) {
+    if (cursorCoordinate.lineIndex === lines.length - 1) {
       return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
     }
     const nextLineIndex = cursorCoordinate.lineIndex + 1;
@@ -280,7 +280,7 @@ export function handleOnMoveWordTop(
     let charIndex: number | undefined = undefined;
     let match: RegExpExecArray | null = null;
     while ((match = wordRegex.exec(currentLine))) {
-      if (match === null) break;
+      if (!match) break;
       const candidateIndex = wordRegex.lastIndex - match[0].length;
       if (candidateIndex >= state.cursorCoordinate.charIndex) break;
       charIndex = candidateIndex;
@@ -310,7 +310,7 @@ export function handleOnMoveWordBottom(
     const currentLine = lines[state.cursorCoordinate.lineIndex];
     let match: RegExpExecArray | null = null;
     while ((match = wordRegex.exec(currentLine))) {
-      if (match === null) break;
+      if (!match) break;
       const candidateIndex = wordRegex.lastIndex;
       if (candidateIndex > state.cursorCoordinate.charIndex) {
         return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: candidateIndex };

@@ -1,7 +1,6 @@
-import { runFixtureTests, BaseTestCase } from '../fixture';
-
-import { getSelectionText } from '../../src/Selection/utils';
 import { TextSelection } from '../../src/Selection/types';
+import { getSelectionText } from '../../src/Selection/utils';
+import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
   name: string;

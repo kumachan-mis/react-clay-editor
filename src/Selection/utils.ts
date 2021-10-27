@@ -1,10 +1,10 @@
-import { Props, State, TextSelection, TextRange } from './types';
-
-import { getBody } from '../Editor/utils';
-import { getTextCharElementAt } from '../TextLines/utils';
-import { TextLinesConstants } from '../TextLines/constants';
 import { CursorCoordinate } from '../Cursor/types';
 import { cursorCoordinateToTextIndex } from '../Cursor/utils';
+import { getBody } from '../Editor/utils';
+import { TextLinesConstants } from '../TextLines/constants';
+import { getTextCharElementAt } from '../TextLines/utils';
+
+import { Props, State, TextSelection, TextRange } from './types';
 
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
   const bodyRect = getBody(element)?.getBoundingClientRect();
@@ -70,7 +70,7 @@ export function getWordSelection(
   const currentLine = lines[cursorCoordinate.lineIndex];
   let match: RegExpExecArray | null = null;
   while ((match = wordRegex.exec(currentLine))) {
-    if (match === null) break;
+    if (!match) break;
     const from = wordRegex.lastIndex - match[0].length;
     const to = wordRegex.lastIndex;
     if (to < cursorCoordinate.charIndex) continue;

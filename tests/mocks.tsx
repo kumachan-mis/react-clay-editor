@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Screen } from '@testing-library/dom';
+import React from 'react';
 
 import { Editor, EditorProps } from '../src';
 

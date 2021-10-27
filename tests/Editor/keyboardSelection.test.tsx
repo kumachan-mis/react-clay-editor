@@ -1,14 +1,14 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
-import { MockEditor } from '../mocks';
-import { runFixtureTests, BaseTestCase } from '../fixture';
-import { osUserAgents } from '../constants';
 import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
+import * as SelectionModule from '../../src/Selection';
 import { TextSelection } from '../../src/Selection/types';
 import { getSelectionText } from '../../src/Selection/utils';
-import * as SelectionModule from '../../src/Selection';
+import { osUserAgents } from '../constants';
+import { runFixtureTests, BaseTestCase } from '../fixture';
+import { MockEditor } from '../mocks';
 
 interface TestCase extends BaseTestCase {
   name: string;

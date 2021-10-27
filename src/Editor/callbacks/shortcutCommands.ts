@@ -1,5 +1,5 @@
-import { ShortcutCommand } from '../types';
 import { isMacOS } from '../../common/utils';
+import { ShortcutCommand } from '../types';
 
 export function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>): ShortcutCommand | undefined {
   if (forwardDeleteTriggered(event)) return 'forwardDelete';
@@ -24,13 +24,13 @@ export function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>)
 }
 
 function forwardDeleteTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return isMacOS() && event.key == 'd' && event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey;
+  return isMacOS() && event.key === 'd' && event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey;
 }
 
 function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
     (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-    event.key == 'a' &&
+    event.key === 'a' &&
     !event.altKey &&
     !event.shiftKey
   );
@@ -39,7 +39,7 @@ function selectAllTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): bo
 function undoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
     (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-    event.key == 'z' &&
+    event.key === 'z' &&
     !event.altKey &&
     !event.shiftKey
   );
@@ -48,31 +48,31 @@ function undoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean
 function redoTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
   return (
     (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
-    ((event.shiftKey && event.key == 'z') || (!event.shiftKey && event.key == 'y')) &&
+    ((event.shiftKey && event.key === 'z') || (!event.shiftKey && event.key === 'y')) &&
     !event.altKey
   );
 }
 
 function moveUpTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == 'p' || event.key == 'P') && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key === 'p' || event.key === 'P') && !event.metaKey && !event.altKey;
 }
 
 function moveDownTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == 'n' || event.key == 'N') && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key === 'n' || event.key === 'N') && !event.metaKey && !event.altKey;
 }
 
 function moveLeftTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == 'b' || event.key == 'B') && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key === 'b' || event.key === 'B') && !event.metaKey && !event.altKey;
 }
 
 function moveRightTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return event.ctrlKey && (event.key == 'f' || event.key == 'F') && !event.metaKey && !event.altKey;
+  return event.ctrlKey && (event.key === 'f' || event.key === 'F') && !event.metaKey && !event.altKey;
 }
 
 function moveLineTopTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return isMacOS() && event.ctrlKey && (event.key == 'a' || event.key == 'A') && !event.metaKey && !event.altKey;
+  return isMacOS() && event.ctrlKey && (event.key === 'a' || event.key === 'A') && !event.metaKey && !event.altKey;
 }
 
 function moveLineBottomTriggered(event: React.KeyboardEvent<HTMLTextAreaElement>): boolean {
-  return isMacOS() && event.ctrlKey && (event.key == 'e' || event.key == 'E') && !event.metaKey && !event.altKey;
+  return isMacOS() && event.ctrlKey && (event.key === 'e' || event.key === 'E') && !event.metaKey && !event.altKey;
 }
