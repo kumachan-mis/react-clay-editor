@@ -1965,7 +1965,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
+"@types/react@npm:*, @types/react@npm:17.0.29":
   version: 17.0.29
   resolution: "@types/react@npm:17.0.29"
   dependencies:
@@ -1973,17 +1973,6 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 39280743f6fec1bbc5c8e705976c1738a5526aaa0e693052badf5cd2dd599b6536dd815b651017737a533bf1c03db6a5738498796ff44f806e55324dc7867723
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:17.0.33":
-  version: 17.0.33
-  resolution: "@types/react@npm:17.0.33"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 5f53f3dae034229ff1eccb5de1c16d046696e883f8eae81b86e95c532798e655015e4edff8a6c9ec8f1c0ef12bb60dec43622d06256ba33ba6069e67a74b8d4e
   languageName: node
   linkType: hard
 
@@ -8720,7 +8709,7 @@ fsevents@^1.0.0:
     "@types/jest": 27.0.2
     "@types/katex": 0.11.1
     "@types/node": 16.11.6
-    "@types/react": 17.0.33
+    "@types/react": 17.0.29
     "@types/react-dom": 17.0.10
     "@types/testing-library__jest-dom": 5.14.1
     "@typescript-eslint/eslint-plugin": 5.2.0
