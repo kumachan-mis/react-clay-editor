@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
-import * as textLinesModule from '../../src/TextLines';
+import * as utils from '../../src/Editor/callbacks/utils';
+import * as textLines from '../../src/TextLines';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, MockTextLines } from '../mocks';
@@ -47,8 +47,8 @@ function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, 
   return resolvedTyping;
 }
 
-const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
-const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
+const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
+const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   SpiedTextLines.mockImplementation(MockTextLines);

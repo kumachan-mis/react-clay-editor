@@ -2,8 +2,8 @@ import { EventType } from '@testing-library/dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
-import * as textLinesModule from '../../src/TextLines';
+import * as utils from '../../src/Editor/callbacks/utils';
+import * as textLines from '../../src/TextLines';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, MockTextLines } from '../mocks';
 
@@ -43,8 +43,8 @@ interface Common {
   textLines: string[];
 }
 
-const SpiedTextLines = jest.spyOn(textLinesModule, 'TextLines');
-const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
+const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
+const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   SpiedTextLines.mockImplementation(MockTextLines);

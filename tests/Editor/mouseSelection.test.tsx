@@ -2,8 +2,8 @@ import { EventType } from '@testing-library/dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
-import * as SelectionModule from '../../src/Selection';
+import * as utils from '../../src/Editor/callbacks/utils';
+import * as selection from '../../src/Selection';
 import { TextSelection } from '../../src/Selection/types';
 import { getSelectionText } from '../../src/Selection/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
@@ -26,7 +26,7 @@ interface Common {
   textLines: string[];
 }
 
-const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
+const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   spiedPositionToCursorCoordinate.mockImplementation((text, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
@@ -42,7 +42,7 @@ describe('mouseSelection in Editor', () => {
   });
 
   runFixtureTests<TestCase, Common>('Editor', 'mouseSelection', (testCase, common) => {
-    const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
+    const SpiedTextLines = jest.spyOn(selection, 'Selection');
 
     const text = common.textLines.join('\n');
     const { rerender } = render(<MockEditor initText={text} />);
