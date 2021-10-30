@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { getRoot } from '../Editor/utils';
+import { selectIdProps } from '../common/utils';
 
 import { CursorConstants } from './constants';
 import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
@@ -106,22 +107,17 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
 
   return (
     <div className={constants.list.className} style={constants.list.style(position, cursorSize)}>
-      <div
-        className={constants.header.className}
-        data-selectid={constants.header.selectId}
-        data-testid={constants.header.selectId}
-      >
+      <div className={constants.header.className} {...selectIdProps(constants.header.selectId)}>
         {constants.header.name(props.suggestionType)}
       </div>
       <ul className={constants.container.className}>
         {suggestions.map((suggestion, index) => (
           <li
             key={index}
-            aria-selected={suggestionIndex === index}
             className={constants.item.className}
-            data-selectid={constants.item.selectId(index)}
-            data-testid={constants.item.selectId(index)}
+            aria-selected={suggestionIndex === index}
             onMouseDown={(event) => props.onSuggectionMouseDown(event)}
+            {...selectIdProps(constants.item.selectId(index))}
           >
             {suggestion}
           </li>

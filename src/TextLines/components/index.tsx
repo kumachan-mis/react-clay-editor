@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mergeClassNames } from '../../common/utils';
+import { mergeClassNames, selectIdProps } from '../../common/utils';
 import { TextLinesConstants } from '../constants';
 
 import {
@@ -21,9 +21,8 @@ export const LineGroup: React.FC<LineGroupProps> = ({ firstLineIndex, lastLineIn
   return (
     <div
       className={mergeClassNames(constants.className, className)}
-      data-selectid={constants.selectId(firstLineIndex, lastLineIndex)}
-      data-testid={constants.selectId(firstLineIndex, lastLineIndex)}
       {...rest}
+      {...selectIdProps(constants.selectId(firstLineIndex, lastLineIndex))}
     >
       {children}
     </div>
@@ -69,9 +68,8 @@ export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }
   return (
     <div
       className={mergeClassNames(constants.className, className)}
-      data-selectid={constants.selectId(lineIndex)}
-      data-testid={constants.selectId(lineIndex)}
       {...rest}
+      {...selectIdProps(constants.selectId(lineIndex))}
     >
       {children}
     </div>
@@ -137,9 +135,8 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   return (
     <span
       className={mergeClassNames(constants.className, className)}
-      data-selectid={constants.selectId(lineIndex, firstCharIndex, lastCharIndex)}
-      data-testid={constants.selectId(lineIndex, firstCharIndex, lastCharIndex)}
       {...rest}
+      {...selectIdProps(constants.selectId(lineIndex, firstCharIndex, lastCharIndex))}
     >
       {children}
     </span>
@@ -152,9 +149,8 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
   return (
     <span
       className={mergeClassNames(constants.className, className)}
-      data-selectid={constants.selectId(lineIndex, charIndex)}
-      data-testid={constants.selectId(lineIndex, charIndex)}
       {...rest}
+      {...selectIdProps(constants.selectId(lineIndex, charIndex))}
     >
       {children}
     </span>
@@ -182,9 +178,8 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps 
         else event.preventDefault();
       }}
       {...rest}
+      {...selectIdProps(constants.selectId)}
       data-active={active}
-      data-selectid={constants.selectId}
-      data-testid={constants.selectId}
     >
       {children}
     </a>
