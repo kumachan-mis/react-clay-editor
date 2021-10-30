@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import * as editorUtilsModule from '../../src/Editor/callbacks/utils';
-import * as SelectionModule from '../../src/Selection';
+import * as utils from '../../src/Editor/callbacks/utils';
+import * as selection from '../../src/Selection';
 import { TextSelection } from '../../src/Selection/types';
 import { getSelectionText } from '../../src/Selection/utils';
 import { osUserAgents } from '../constants';
@@ -36,8 +36,8 @@ describe('keyboardSelection in Editor', () => {
   });
 
   runFixtureTests<TestCase, Common>('Editor', 'keyboardSelection', (testCase, common) => {
-    const spiedPositionToCursorCoordinate = jest.spyOn(editorUtilsModule, 'positionToCursorCoordinate');
-    const SpiedTextLines = jest.spyOn(SelectionModule, 'Selection');
+    const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+    const SpiedTextLines = jest.spyOn(selection, 'Selection');
 
     const text = common.textLines.join('\n');
     const { rerender } = render(<MockEditor initText={text} />);
