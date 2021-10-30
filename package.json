@@ -1,6 +1,5 @@
 {
   "name": "react-realtime-markup-editor",
-  "homepage": "https://kumachan-mis.github.io/react-realtime-markup-editor",
   "version": "0.23.0",
   "description": "A text document editor which is syntactically formattable in real time",
   "keywords": [
@@ -10,20 +9,36 @@
     "real time",
     "syntactic"
   ],
+  "homepage": "https://kumachan-mis.github.io/react-realtime-markup-editor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumachan-mis/react-realtime-markup-editor.git"
+  },
+  "license": "MIT",
+  "author": "Yuya Suwa (@kumachan-mis)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "figures/**/*",
     "README.md",
     "LICENSE"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kumachan-mis/react-realtime-markup-editor.git"
+  "scripts": {
+    "build": "yarn clean && tsc --build tsconfig.build.json && cpx \"src/**/*.css\" dist",
+    "build-sample": "yarn clean-sample && cross-env ENVIRONMENT=production webpack",
+    "clean": "rm -Rf dist",
+    "clean-sample": "rm -Rf sample/dist",
+    "deploy": "yarn build-sample && gh-pages -d sample/dist",
+    "format": "sort-package-json && yarn prettierify",
+    "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
+    "lint-fix": "yarn lint --fix",
+    "prepack": "yarn build",
+    "prettierify": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
+    "start": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
+    "test": "cross-env ENVIRONMENT=test jest",
+    "typecheck": "yarn tsc --noEmit"
   },
-  "author": "Yuya Suwa (@kumachan-mis)",
-  "license": "MIT",
   "devDependencies": {
     "@babel/core": "7.16.0",
     "@babel/preset-env": "7.16.0",
@@ -43,6 +58,7 @@
     "@typescript-eslint/parser": "5.2.0",
     "babel-loader": "8.2.3",
     "cpx": "1.5.0",
+    "cross-env": "7.0.3",
     "css-loader": "6.5.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
@@ -59,31 +75,18 @@
     "prettier": "2.4.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "sort-package-json": "1.52.0",
     "style-loader": "3.3.1",
     "ts-jest": "27.0.7",
     "typescript": "4.4.4",
     "webpack": "5.61.0",
     "webpack-cli": "4.9.1",
-    "webpack-dev-server": "4.4.0",
-    "webpack-merge": "5.8.0"
+    "webpack-dev-server": "4.4.0"
   },
   "peerDependencies": {
     "katex": ">=0.13.0",
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0"
-  },
-  "scripts": {
-    "build": "rm -Rf dist && tsc --build tsconfig.build.json && cpx \"src/**/*.css\" dist",
-    "build-sample": "rm -Rf sample/dist && webpack --config webpack.config.prod.js",
-    "clean": "rm -Rf dist sample/dist ",
-    "deploy": "yarn build-sample && gh-pages -d sample/dist",
-    "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
-    "lint-fix": "yarn lint --fix",
-    "prepack": "yarn build",
-    "format": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
-    "start": "rm -Rf sample/dist && webpack serve --config webpack.config.dev.js",
-    "test": "jest",
-    "typecheck": "yarn tsc --noEmit"
   },
   "packageManager": "yarn@3.0.2"
 }

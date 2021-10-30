@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { selectIdProps } from '../common/utils';
+
 import { SelectionConstants } from './constants';
 import { Props, State } from './types';
 import { selectionPropsToState } from './utils';
@@ -25,22 +27,22 @@ export const Selection: React.FC<Props> = (props) => {
       {state.topDivPosition && (
         <div
           className={SelectionConstants.div.className}
-          data-testid={SelectionConstants.div.selectId}
           style={SelectionConstants.div.style(state.topDivPosition)}
+          {...selectIdProps(SelectionConstants.div.selectId)}
         />
       )}
       {state.centerDivPosition && (
         <div
           className={SelectionConstants.div.className}
-          data-testid={SelectionConstants.div.selectId}
           style={SelectionConstants.div.style(state.centerDivPosition)}
+          {...selectIdProps(SelectionConstants.div.selectId)}
         />
       )}
       {state.bottomDivPosition && (
         <div
           className={SelectionConstants.div.className}
-          data-testid={SelectionConstants.div.selectId}
           style={SelectionConstants.div.style(state.bottomDivPosition)}
+          {...selectIdProps(SelectionConstants.div.selectId)}
         />
       )}
     </span>

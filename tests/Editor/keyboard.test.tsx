@@ -20,33 +20,6 @@ interface Common {
   typingAlias?: Record<string, string[] | undefined>;
 }
 
-function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
-  return (testCase, common) => {
-    render(<MockEditor syntax={syntax} {...common?.options} />);
-    userEvent.click(screen.getByTestId('editor-body'));
-    userEvent.keyboard(resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
-
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
-    }
-    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
-  };
-}
-
-function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, string[] | undefined>): string[] {
-  if (!typingAlias) return inputTyping;
-
-  const resolvedTyping: string[] = [];
-  for (const typingLine of inputTyping) {
-    const resolvedTypingLines = typingAlias[typingLine];
-    if (!resolvedTypingLines) resolvedTyping.push(typingLine);
-    else resolvedTyping.push(...resolvedTypingLines);
-  }
-
-  return resolvedTyping;
-}
-
 const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
 const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
@@ -127,3 +100,30 @@ describe('keyboardShortcuts (macos) in Editor', () => {
     runFixtureTests<TestCase, Common | undefined>('Editor', fixtureName, testfn);
   }
 });
+
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
+  return (testCase, common) => {
+    render(<MockEditor syntax={syntax} {...common?.options} />);
+    userEvent.click(screen.getByTestId('editor-body'));
+    userEvent.keyboard(resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
+
+    for (let i = 0; i < testCase.expectedLines.length; i++) {
+      const line = testCase.expectedLines[i];
+      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
+    }
+    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
+  };
+}
+
+function resolveTypingAlias(inputTyping: string[], typingAlias?: Record<string, string[] | undefined>): string[] {
+  if (!typingAlias) return inputTyping;
+
+  const resolvedTyping: string[] = [];
+  for (const typingLine of inputTyping) {
+    const resolvedTypingLines = typingAlias[typingLine];
+    if (!resolvedTypingLines) resolvedTyping.push(typingLine);
+    else resolvedTyping.push(...resolvedTypingLines);
+  }
+
+  return resolvedTyping;
+}

@@ -15,6 +15,20 @@ interface TestCase extends BaseTestCase {
   expectedEditLines?: string[];
 }
 
+describe('UI of Viwer (bracket syntax)', () => {
+  const testfun = createTest('bracket');
+  for (const fixtureName of ['uiTextLinesCommon', 'uiTextLinesBracket']) {
+    runFixtureTests<TestCase>('TextLines', fixtureName, testfun);
+  }
+});
+
+describe('UI of Viwer (markdown syntax)', () => {
+  const testfun = createTest('markdown');
+  for (const fixtureName of ['uiTextLinesCommon', 'uiTextLinesMarkdown']) {
+    runFixtureTests<TestCase>('TextLines', fixtureName, testfun);
+  }
+});
+
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => void {
   return (testCase) => {
     const text = testCase.inputLines.join('\n');
@@ -66,17 +80,3 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => voi
     expect(screen.queryByTestId(`line-L${lineIndex}`)).not.toBeInTheDocument();
   };
 }
-
-describe('UI of Viwer (bracket syntax)', () => {
-  const testfun = createTest('bracket');
-  for (const fixtureName of ['uiTextLinesCommon', 'uiTextLinesBracket']) {
-    runFixtureTests<TestCase>('TextLines', fixtureName, testfun);
-  }
-});
-
-describe('UI of Viwer (markdown syntax)', () => {
-  const testfun = createTest('markdown');
-  for (const fixtureName of ['uiTextLinesCommon', 'uiTextLinesMarkdown']) {
-    runFixtureTests<TestCase>('TextLines', fixtureName, testfun);
-  }
-});

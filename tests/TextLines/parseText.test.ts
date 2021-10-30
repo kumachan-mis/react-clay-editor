@@ -22,6 +22,20 @@ interface Common {
   }[];
 }
 
+describe('function parseText in TextLines (bracket syntax)', () => {
+  const testfn = createTest('bracket');
+  for (const fixtureName of ['parseCommonText', 'parseBracketText']) {
+    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
+  }
+});
+
+describe('function parseText in TextLines (markdown syntax)', () => {
+  const testfn = createTest('markdown');
+  for (const fixtureName of ['parseCommonText', 'parseMarkdownText']) {
+    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
+  }
+});
+
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
     const disabledMap = {
@@ -40,17 +54,3 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
     expect(actualNodes).toMatchObject(testCase.expectedNodes);
   };
 }
-
-describe('function parseText in TextLines (bracket syntax)', () => {
-  const testfn = createTest('bracket');
-  for (const fixtureName of ['parseCommonText', 'parseBracketText']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
-  }
-});
-
-describe('function parseText in TextLines (markdown syntax)', () => {
-  const testfn = createTest('markdown');
-  for (const fixtureName of ['parseCommonText', 'parseMarkdownText']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
-  }
-});

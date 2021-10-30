@@ -3,7 +3,7 @@ import React from 'react';
 import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
 import { TextLines } from '../TextLines';
-import { mergeClassNames } from '../common/utils';
+import { mergeClassNames, selectIdProps } from '../common/utils';
 
 import {
   handleOnMouseDown,
@@ -135,18 +135,12 @@ export const Editor: React.FC<Props> = (props) => {
 
   return (
     <div className={mergeClassNames(EditorConstants.editor.className, props.className)} style={props.style}>
-      <div
-        className={EditorConstants.root.className}
-        data-selectid={EditorConstants.root.selectId}
-        data-testid={EditorConstants.root.selectId}
-        ref={rootRef}
-      >
+      <div className={EditorConstants.root.className} ref={rootRef} {...selectIdProps(EditorConstants.root.selectId)}>
         <div
           className={EditorConstants.body.className}
-          data-selectid={EditorConstants.body.selectId}
-          data-testid={EditorConstants.body.selectId}
           onMouseDown={_handleOnMouseDown}
           onClick={createMouseEventHandler(handleOnClick)}
+          {...selectIdProps(EditorConstants.body.selectId)}
         >
           <Cursor
             coordinate={state.cursorCoordinate}
