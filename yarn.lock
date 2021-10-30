@@ -4008,7 +4008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^7.0.3":
+"cross-env@npm:7.0.3":
   version: 7.0.3
   resolution: "cross-env@npm:7.0.3"
   dependencies:
@@ -9121,7 +9121,7 @@ fsevents@^1.0.0:
     "@typescript-eslint/parser": 5.2.0
     babel-loader: 8.2.3
     cpx: 1.5.0
-    cross-env: ^7.0.3
+    cross-env: 7.0.3
     css-loader: 6.5.0
     eslint: 7.32.0
     eslint-config-prettier: 8.3.0
@@ -9138,7 +9138,7 @@ fsevents@^1.0.0:
     prettier: 2.4.1
     react: 17.0.2
     react-dom: 17.0.2
-    sort-package-json: ^1.52.0
+    sort-package-json: 1.52.0
     style-loader: 3.3.1
     ts-jest: 27.0.7
     typescript: 4.4.4
@@ -9921,7 +9921,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"sort-package-json@npm:^1.52.0":
+"sort-package-json@npm:1.52.0":
   version: 1.52.0
   resolution: "sort-package-json@npm:1.52.0"
   dependencies:
