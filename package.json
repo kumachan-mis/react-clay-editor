@@ -16,8 +16,9 @@
   },
   "license": "MIT",
   "author": "Yuya Suwa (@kumachan-mis)",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/lib/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/lib/index.d.ts",
   "files": [
     "dist/**/*",
     "figures/**/*",
@@ -25,9 +26,13 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "yarn clean && tsc --build tsconfig.build.json && cpx \"src/**/*.css\" dist",
+    "build": "yarn clean && yarn build-cjs && yarn build-esm",
+    "build-cjs": "yarn clean-cjs && tsc --build tsconfig.cjs.json && cpx \"src/**/*.css\" dist/lib",
+    "build-esm": "yarn clean-esm && tsc --build tsconfig.esm.json && cpx \"src/**/*.css\" dist/esm",
     "build-sample": "yarn clean-sample && cross-env ENVIRONMENT=production webpack",
     "clean": "rm -Rf dist",
+    "clean-cjs": "rm -Rf dist/lib",
+    "clean-esm": "rm -Rf dist/esm",
     "clean-sample": "rm -Rf sample/dist",
     "deploy": "yarn build-sample && gh-pages -d sample/dist",
     "format": "sort-package-json && yarn prettierify",
