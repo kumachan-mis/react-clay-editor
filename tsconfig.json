@@ -5,11 +5,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "ESNext",
-    "module": "ESNext",
-    "outDir": "./dist",
     "strict": true,
     "alwaysStrict": true,
-    "declaration": true
+    "skipLibCheck": true
   },
   "include": ["src/**/*", "@types/**/*", "sample/**/*", "tests/**/*"]
 }
