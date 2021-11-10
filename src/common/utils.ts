@@ -9,5 +9,5 @@ export function mergeClassNames(...classNames: (string | undefined)[]): string {
 }
 
 export function selectIdProps(selectId: string): SelectIdProps {
-  return { 'data-selectid': selectId, 'data-testid': process?.env?.ENVIRONMENT === 'test' ? selectId : undefined };
+  return { 'data-selectid': selectId, 'data-testid': selectId };
 }
