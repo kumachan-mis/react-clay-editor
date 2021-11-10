@@ -191,6 +191,84 @@
           ]
         }
       ]
+    },
+    {
+      "name": "left and right",
+      "inputLines": ["left *bold text* right", "left _italic text_ right"],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "lineIndex": 0,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 0,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "decoration",
+              "lineIndex": 0,
+              "range": [5, 15],
+              "children": [
+                {
+                  "type": "normal",
+                  "range": [6, 14],
+                  "text": "bold text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": false,
+                "underline": false
+              }
+            },
+            {
+              "type": "normal",
+              "lineIndex": 0,
+              "range": [16, 21],
+              "text": " right"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "lineIndex": 1,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 1,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "decoration",
+              "lineIndex": 1,
+              "range": [5, 17],
+              "children": [
+                {
+                  "type": "normal",
+                  "range": [6, 16],
+                  "text": "italic text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": false,
+                "italic": true,
+                "underline": false
+              }
+            },
+            {
+              "type": "normal",
+              "lineIndex": 1,
+              "range": [18, 23],
+              "text": " right"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

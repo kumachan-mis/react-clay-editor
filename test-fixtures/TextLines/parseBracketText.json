@@ -365,6 +365,48 @@
           ]
         }
       ]
+    },
+    {
+      "name": "left and right",
+      "inputLines": ["left [* decoration text] right"],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "lineIndex": 0,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 0,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "decoration",
+              "lineIndex": 0,
+              "range": [5, 23],
+              "children": [
+                {
+                  "type": "normal",
+                  "range": [8, 22],
+                  "text": "decoration text"
+                }
+              ],
+              "decoration": {
+                "fontlevel": "normal",
+                "bold": true,
+                "italic": false,
+                "underline": false
+              }
+            },
+            {
+              "type": "normal",
+              "lineIndex": 0,
+              "range": [24, 29],
+              "text": " right"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

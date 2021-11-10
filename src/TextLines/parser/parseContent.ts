@@ -83,7 +83,7 @@ function parseInlineCode(text: string, context: ParsingContext, options: Parsing
   return [
     ...parseContent(left, context, options),
     node,
-    ...parseContent(right, { ...context, charIndex: last }, options),
+    ...parseContent(right, { ...context, charIndex: last + 1 }, options),
   ];
 }
 function parseDisplayFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
