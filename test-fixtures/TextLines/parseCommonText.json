@@ -366,6 +366,139 @@
       ]
     },
     {
+      "name": "left and right",
+      "inputLines": [
+        "left `code` right",
+        "left $f(x)$ right",
+        "left [@: tagged link] right",
+        "left [bracket link] right",
+        "left #hashtag_link right"
+      ],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "lineIndex": 0,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 0,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "inlineCode",
+              "lineIndex": 0,
+              "range": [5, 10],
+              "code": "code"
+            },
+            {
+              "type": "normal",
+              "lineIndex": 0,
+              "range": [11, 16],
+              "text": " right"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "lineIndex": 1,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 1,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "inlineFormula",
+              "lineIndex": 1,
+              "range": [5, 10],
+              "formula": "f(x)"
+            },
+            {
+              "type": "normal",
+              "lineIndex": 1,
+              "range": [11, 16],
+              "text": " right"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "lineIndex": 2,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 2,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "taggedLink",
+              "lineIndex": 2,
+              "range": [5, 20],
+              "tag": "@: ",
+              "linkName": "tagged link"
+            },
+            {
+              "type": "normal",
+              "lineIndex": 2,
+              "range": [21, 26],
+              "text": " right"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "lineIndex": 3,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 3,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "bracketLink",
+              "lineIndex": 3,
+              "range": [5, 18],
+              "linkName": "bracket link"
+            },
+            {
+              "type": "normal",
+              "lineIndex": 3,
+              "range": [19, 24],
+              "text": " right"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "lineIndex": 4,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 4,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "hashTag",
+              "lineIndex": 4,
+              "range": [5, 17],
+              "hashTag": "#hashtag_link"
+            },
+            {
+              "type": "normal",
+              "lineIndex": 4,
+              "range": [18, 23],
+              "text": " right"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "empty text",
       "inputLines": [""],
       "expectedNodes": [
