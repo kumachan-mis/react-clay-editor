@@ -162,9 +162,13 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps 
   const { className, onClick, onMouseEnter, onMouseLeave, ...rest } = anchorProps;
   const [active, setActive] = React.useState(false);
 
+  const classNames = active
+    ? [constants.hover.className, constants.className, className]
+    : [constants.className, className];
+
   return (
     <a
-      className={mergeClassNames(constants.className, className)}
+      className={mergeClassNames(...classNames)}
       onMouseEnter={(event) => {
         onMouseEnter?.(event);
         setActive(!cursorOn);

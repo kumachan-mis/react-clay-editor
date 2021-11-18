@@ -78,6 +78,7 @@ export const TextLinesConstants = {
   embededLink: {
     className: styles.embededLink,
     selectId: 'embeded-link',
+    hover: { className: 'hover' },
   },
   regexes: {
     bracketSyntax: {
