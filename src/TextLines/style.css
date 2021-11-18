@@ -103,7 +103,7 @@
   color: #5e8af7;
   cursor: text;
 }
-.embededLink:hover {
+.embededLink:global(.hover) {
   color: #425a9d;
   cursor: pointer;
 }
