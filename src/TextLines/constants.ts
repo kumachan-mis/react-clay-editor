@@ -6,7 +6,7 @@ import styles from './style.css';
 export const defaultLinkNameRegex = /[^[\]]+/;
 
 export const TextLinesConstants = {
-  className: styles.textlines,
+  className: mergeClassNames(styles.textlines, styles.normal),
   itemization: {
     className: styles.itemBulletContent,
     bullet: {
@@ -26,7 +26,7 @@ export const TextLinesConstants = {
   decoration: {
     className: (decoration: Decoration): string => {
       const classNames: string[] = [];
-      if (decoration.fontlevel !== 'normal') classNames.push(styles[decoration.fontlevel]);
+      classNames.push(styles[decoration.fontlevel]);
       if (decoration.bold) classNames.push(styles.bold);
       if (decoration.italic) classNames.push(styles.italic);
       if (decoration.underline) classNames.push(styles.underline);
