@@ -9,6 +9,7 @@ export interface Props {
   suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
+  isHeld: boolean;
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;

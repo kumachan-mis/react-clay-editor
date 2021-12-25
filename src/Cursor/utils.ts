@@ -33,11 +33,13 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
   const [cursorSize, margin] = [charRect.height, charRect.height];
-  if (charRect.top - rootRect.top - margin < 0) {
-    root.scrollTop += charRect.top - rootRect.top - margin;
-    return handleOnEditorScrollOrResize(props, state, element);
-  } else if (charRect.top + cursorSize - rootRect.top > rootRect.height - margin) {
-    root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height + margin;
+
+  if (!props.isHeld) {
+    if (charRect.top - rootRect.top - margin < 0) {
+      root.scrollTop += charRect.top - rootRect.top - margin;
+    } else if (charRect.top + cursorSize - rootRect.top > rootRect.height - margin) {
+      root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height + margin;
+    }
     return handleOnEditorScrollOrResize(props, state, element);
   }
   return { ...state, position, cursorSize };

@@ -148,6 +148,7 @@ export const Editor: React.FC<Props> = (props) => {
             suggestionType={state.suggestionType}
             suggestions={state.suggestions}
             suggestionIndex={state.suggestionIndex}
+            isHeld={state.selectionWithMouse === 'active'}
             onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
             onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
             onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
