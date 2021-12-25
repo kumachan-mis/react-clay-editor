@@ -96,7 +96,7 @@ export const Editor: React.FC<Props> = (props) => {
 
   const handleOnEditorBlur = React.useCallback(
     (event: MouseEvent) => {
-      if (props.readonly || rootRef.current?.contains(event.target as Node) || !state.cursorCoordinate) return;
+      if (props.readonly || rootRef.current?.contains(event.target as Node)) return;
       setState({
         ...state,
         cursorCoordinate: undefined,
@@ -148,6 +148,7 @@ export const Editor: React.FC<Props> = (props) => {
             suggestionType={state.suggestionType}
             suggestions={state.suggestions}
             suggestionIndex={state.suggestionIndex}
+            isHeld={state.selectionWithMouse == 'active'}
             onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
             onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
             onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
