@@ -29,6 +29,7 @@ export const CursorConstants = {
   suggestion: {
     list: {
       className: styles.suggestionList,
+      selectId: 'suggestion-list',
       style: (position: Position, cursorSize: number): React.CSSProperties => ({
         top: `${position.top + cursorSize + 2}px`,
         left: `${position.left}px`,

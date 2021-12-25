@@ -12,6 +12,8 @@ import {
   LineContent,
   CharGroup,
   Char,
+  ItemBullet,
+  ItemBulletContent,
   EmbededLink,
 } from './components';
 import { TextLinesConstants } from './constants';
@@ -267,24 +269,13 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth, bullet, contentLength, children } = node;
       const lineLength = indentDepth + bullet.length + contentLength;
       const cursorOn = cursorLineIndex === lineIndex;
-      const constants = TextLinesConstants.itemization;
 
       return (
         <Line lineIndex={lineIndex}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-          <Char
-            charIndex={indentDepth}
-            lineIndex={lineIndex}
-            spanProps={{ className: constants.className, style: constants.style(indentDepth) }}
-          >
-            <span className={constants.bullet.className} />
-          </Char>
+          <ItemBullet lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} />
           <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
-            {[...Array(bullet.length - 1).keys()].map((charIndex) => (
-              <Char key={indentDepth + charIndex + 1} lineIndex={lineIndex} charIndex={indentDepth + charIndex + 1}>
-                {cursorOn ? ' ' : ''}
-              </Char>
-            ))}
+            <ItemBulletContent lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} cursorOn={cursorOn} />
             {children.map((child, index) => (
               <Node
                 key={index}

@@ -23,20 +23,20 @@
         "　　　　ネストした箇条書きテキスト"
       ],
       "expectedViewLines": [
-        ".itemized text",
-        " .nested itemized text",
-        ".itemized text",
-        "  .nested itemized text",
-        ".箇条書きテキスト",
-        "   .ネストした箇条書きテキスト"
+        " itemized text",
+        "  nested itemized text",
+        " itemized text",
+        "   nested itemized text",
+        " 箇条書きテキスト",
+        "    ネストした箇条書きテキスト"
       ],
       "expectedEditLines": [
-        ".itemized text",
-        " .nested itemized text",
-        ".itemized text",
-        "  .nested itemized text",
-        ".箇条書きテキスト",
-        "   .ネストした箇条書きテキスト"
+        " itemized text",
+        "  nested itemized text",
+        " itemized text",
+        "   nested itemized text",
+        " 箇条書きテキスト",
+        "    ネストした箇条書きテキスト"
       ]
     }
   ]
