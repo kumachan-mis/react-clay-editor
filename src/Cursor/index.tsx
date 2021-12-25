@@ -18,11 +18,13 @@ export const Cursor: React.FC<Props> = (props) => {
   }, [props, state, setState, rootRef]);
 
   React.useEffect(() => {
+    window.addEventListener('resize', _handleOnEditorScroll);
     const editorRoot = rootRef.current && getRoot(rootRef.current);
     if (editorRoot) editorRoot.addEventListener('scroll', _handleOnEditorScroll);
 
     return () => {
       if (editorRoot) editorRoot.removeEventListener('scroll', _handleOnEditorScroll);
+      window.removeEventListener('resize', _handleOnEditorScroll);
     };
   }, [_handleOnEditorScroll]);
 
