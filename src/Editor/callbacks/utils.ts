@@ -286,14 +286,14 @@ export function resetSuggestion(state: State): State {
 }
 
 export function resetTextSelection(state: State): State {
-  return { ...state, textSelection: undefined, selectionWithMouse: 'inactive' };
+  return { ...state, textSelection: undefined, selectionMouse: 'deactive' };
 }
 
 export function resetTextSelectionAndSuggestion(state: State): State {
   return {
     ...state,
     textSelection: undefined,
-    selectionWithMouse: 'inactive',
+    selectionMouse: 'deactive',
     suggestionType: 'none',
     suggestions: [],
     suggestionIndex: -1,

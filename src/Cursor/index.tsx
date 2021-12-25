@@ -8,8 +8,8 @@ import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps 
 import { cursorPropsToState, handleOnEditorScrollOrResize } from './utils';
 
 export const Cursor: React.FC<Props> = (props) => {
-  const rootRef = React.useRef<HTMLSpanElement | null>(null);
   const [state, setState] = React.useState<State>({ position: { top: 0, left: 0 }, cursorSize: 0 });
+  const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
   const _handleOnEditorScrollOrResize = React.useCallback((): void => {
     if (!rootRef.current) return;

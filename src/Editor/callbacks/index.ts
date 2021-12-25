@@ -43,7 +43,7 @@ export function handleOnMouseDown(
     ...state,
     cursorCoordinate,
     textSelection: undefined,
-    selectionWithMouse: 'fired',
+    selectionMouse: 'fired',
   });
   return [text, newState];
 }
@@ -54,17 +54,25 @@ export function handleOnMouseMove(
   event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) return [text, state];
-  if (state.selectionWithMouse === 'fired') return [text, { ...state, selectionWithMouse: 'active' }];
+  if (!state.cursorCoordinate || state.selectionMouse === 'deactive' || !element) return [text, state];
+
+  const elementRect = element.getBoundingClientRect();
+  let selectionMouse: 'active-in' | 'active-up' | 'active-down' = 'active-in';
+  if (event.clientY < elementRect.top) selectionMouse = 'active-up';
+  else if (event.clientY > elementRect.bottom) selectionMouse = 'active-down';
+
+  if (state.selectionMouse === 'fired') return [text, { ...state, selectionMouse }];
 
   const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state];
+  if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) {
+    return [text, { ...state, selectionMouse }];
+  }
 
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection }];
+  return [text, { ...state, cursorCoordinate, textSelection, selectionMouse }];
 }
 
 export function handleOnMouseUp(
@@ -73,15 +81,17 @@ export function handleOnMouseUp(
   event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) return [text, state];
-  if (state.selectionWithMouse !== 'active') return [text, { ...state, selectionWithMouse: 'inactive' }];
+  if (!state.cursorCoordinate || state.selectionMouse === 'deactive' || !element) return [text, state];
+  if (['active-in', 'active-up', 'active-down'].includes(state.selectionMouse)) {
+    return [text, { ...state, selectionMouse: 'deactive' }];
+  }
 
   const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, position, element);
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = cursorCoordinate ? cursorCoordinate : { ...state.cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection, selectionWithMouse: 'inactive' }];
+  return [text, { ...state, cursorCoordinate, textSelection, selectionMouse: 'deactive' }];
 }
 
 export function handleOnClick(
@@ -108,6 +118,16 @@ export function handleOnClick(
     default:
       return [text, state];
   }
+}
+
+export function handleOnMouseScrollUp(text: string, state: State): State {
+  const [, newState] = handleOnMoveUp(text, state, undefined, true);
+  return newState;
+}
+
+export function handleOnMouseScrollDown(text: string, state: State): State {
+  const [, newState] = handleOnMoveDown(text, state, undefined, true);
+  return newState;
 }
 
 export function handleOnKeyDown(

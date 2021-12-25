@@ -64,7 +64,7 @@ export interface State {
   textAreaValue: string;
   isComposing: boolean;
   textSelection: TextSelection | undefined;
-  selectionWithMouse: 'inactive' | 'fired' | 'active';
+  selectionMouse: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down';
   historyHead: number;
   editActionHistory: EditAction[];
   suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';

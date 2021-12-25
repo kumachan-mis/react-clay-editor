@@ -14,14 +14,14 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   root?.querySelector('textarea')?.focus({ preventScroll: true });
 
-  if (props.suggestions.length > 0) {
-    const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`;
-    const listSelector = `li[data-selectid="${CursorConstants.suggestion.list.selectId}"]`;
-    const listItem = root?.querySelector(listItemSelector) as HTMLLIElement | null;
-    const list = root?.querySelector(listSelector) as HTMLUListElement | null;
-    if (list && listItem && listItem.offsetTop < list.scrollTop) {
+  const listSelector = `li[data-selectid="${CursorConstants.suggestion.list.selectId}"]`;
+  const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`;
+  const list = root?.querySelector(listSelector) as HTMLUListElement | null;
+  const listItem = root?.querySelector(listItemSelector) as HTMLLIElement | null;
+  if (props.suggestions.length > 0 && list && listItem) {
+    if (listItem.offsetTop < list.scrollTop) {
       list.scrollTop = listItem.offsetTop;
-    } else if (list && listItem && listItem.offsetTop + listItem.clientHeight > list.scrollTop + list.clientHeight) {
+    } else if (listItem.offsetTop + listItem.clientHeight > list.scrollTop + list.clientHeight) {
       list.scrollTop = listItem.offsetTop + listItem.clientHeight - list.clientHeight;
     }
   }
@@ -32,16 +32,17 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
-  const [cursorSize, margin] = [charRect.height, charRect.height];
-
-  if (!props.isHeld) {
+  const [cursorSize, margin] = [charRect.height, CursorConstants.cursorBar.margin];
+  if (props.mouseHold != 'active-in') {
     if (charRect.top - rootRect.top - margin < 0) {
-      root.scrollTop += charRect.top - rootRect.top - margin;
+      root.scrollTop += charRect.top - rootRect.top;
+      return handleOnEditorScrollOrResize(props, state, element);
     } else if (charRect.top + cursorSize - rootRect.top > rootRect.height - margin) {
-      root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height + margin;
+      root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height;
+      return handleOnEditorScrollOrResize(props, state, element);
     }
-    return handleOnEditorScrollOrResize(props, state, element);
   }
+
   return { ...state, position, cursorSize };
 }
 

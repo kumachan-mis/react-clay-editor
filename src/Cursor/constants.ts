@@ -3,6 +3,7 @@ import { Position } from './types';
 
 export const CursorConstants = {
   cursorBar: {
+    margin: 4,
     className: styles.cursorBar,
     style: (position: Position, cursorSize: number): React.CSSProperties => ({
       top: `${position.top}px`,
