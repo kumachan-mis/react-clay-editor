@@ -54,18 +54,13 @@ export function handleOnMouseMove(
   event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) {
-    return [text, state];
-  }
-  if (state.selectionWithMouse === 'fired') {
-    return [text, { ...state, selectionWithMouse: 'active' }];
-  }
+  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) return [text, state];
+  if (state.selectionWithMouse === 'fired') return [text, { ...state, selectionWithMouse: 'active' }];
 
   const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) {
-    return [text, state];
-  }
+  if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) return [text, state];
+
   const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
   const free = { ...cursorCoordinate };
   const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
@@ -78,12 +73,8 @@ export function handleOnMouseUp(
   event: MouseEvent,
   element: HTMLElement | null
 ): [string, State] {
-  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) {
-    return [text, state];
-  }
-  if (state.selectionWithMouse !== 'active') {
-    return [text, { ...state, selectionWithMouse: 'inactive' }];
-  }
+  if (!state.cursorCoordinate || state.selectionWithMouse === 'inactive' || !element) return [text, state];
+  if (state.selectionWithMouse !== 'active') return [text, { ...state, selectionWithMouse: 'inactive' }];
 
   const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, position, element);

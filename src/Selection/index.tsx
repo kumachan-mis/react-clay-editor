@@ -14,6 +14,19 @@ export const Selection: React.FC<Props> = (props) => {
   });
   const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
+  const handleOnEditorResize = React.useCallback((): void => {
+    if (!rootRef.current) return;
+    const newState = selectionPropsToState(props, rootRef.current);
+    if (newState !== state) setState(newState);
+  }, [props, state, setState, rootRef]);
+
+  React.useEffect(() => {
+    window.addEventListener('resize', handleOnEditorResize);
+    return () => {
+      window.removeEventListener('resize', handleOnEditorResize);
+    };
+  }, [handleOnEditorResize]);
+
   React.useEffect(() => {
     if (!rootRef.current) return;
     const newState = selectionPropsToState(props, rootRef.current);
