@@ -70,7 +70,25 @@
       "expectedLines": ["(){}[]"]
     },
     {
-      "name": "parens/braces/brackets auto-fill",
+      "name": "parens/braces/brackets auto-fill with single-line selection",
+      "inputTyping": [
+        "Hello{space}Parens{home}{shift}{end}{/shift}({arrowright}.{enter}",
+        "Hello{space}Braces{home}{shift}{end}{/shift}{{{arrowright}.{enter}",
+        "Hello{space}Brackets{home}{shift}{end}{/shift}[[{arrowright}."
+      ],
+      "expectedLines": ["(Hello Parens).", "{Hello Braces}.", "[Hello Brackets]."]
+    },
+    {
+      "name": "parens/braces/brackets auto-fill with multi-lines selection",
+      "inputTyping": [
+        "Hello{enter}Parens{arrowup}{home}{shift}{arrowdown}{end}{/shift}({arrowright}.{enter}",
+        "Hello{enter}Braces{arrowup}{home}{shift}{arrowdown}{end}{/shift}{{{arrowright}.{enter}",
+        "Hello{enter}Brackets{arrowup}{home}{shift}{arrowdown}{end}{/shift}[[{arrowright}."
+      ],
+      "expectedLines": ["(Hello", "Parens).", "{Hello", "Braces}.", "[Hello", "Brackets]."]
+    },
+    {
+      "name": "parens/braces/brackets auto-del",
       "inputTyping": [
         "({arrowright}{{{arrowright}[[{arrowright}",
         "{arrowleft}{backspace}{arrowleft}{backspace}{arrowleft}{backspace}."
