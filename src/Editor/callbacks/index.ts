@@ -82,7 +82,7 @@ export function handleOnMouseUp(
   element: HTMLElement | null
 ): [string, State] {
   if (!state.cursorCoordinate || state.selectionMouse === 'deactive' || !element) return [text, state];
-  if (['active-in', 'active-up', 'active-down'].includes(state.selectionMouse)) {
+  if (!['active-in', 'active-up', 'active-down'].includes(state.selectionMouse)) {
     return [text, { ...state, selectionMouse: 'deactive' }];
   }
 
