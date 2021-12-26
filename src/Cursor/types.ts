@@ -9,6 +9,7 @@ export interface Props {
   suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
+  mouseHold: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down';
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;

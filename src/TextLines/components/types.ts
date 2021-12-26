@@ -46,6 +46,19 @@ export interface CharProps {
   spanProps?: React.ComponentProps<'span'>;
 }
 
+export interface ItemBulletProps {
+  lineIndex: number;
+  indentDepth: number;
+  bullet: string;
+}
+
+export interface ItemBulletContentProps {
+  lineIndex: number;
+  indentDepth: number;
+  bullet: string;
+  cursorOn: boolean;
+}
+
 export interface EmbededLinkProps {
   cursorOn: boolean;
   anchorProps?: React.ComponentProps<'a'>;

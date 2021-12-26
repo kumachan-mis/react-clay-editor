@@ -5,26 +5,28 @@ import { selectIdProps } from '../common/utils';
 
 import { CursorConstants } from './constants';
 import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
-import { cursorPropsToState, handleOnEditorScroll } from './utils';
+import { cursorPropsToState, handleOnEditorScrollOrResize } from './utils';
 
 export const Cursor: React.FC<Props> = (props) => {
-  const rootRef = React.useRef<HTMLSpanElement | null>(null);
   const [state, setState] = React.useState<State>({ position: { top: 0, left: 0 }, cursorSize: 0 });
+  const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
-  const _handleOnEditorScroll = React.useCallback((): void => {
+  const _handleOnEditorScrollOrResize = React.useCallback((): void => {
     if (!rootRef.current) return;
-    const newState = handleOnEditorScroll(props, state, rootRef.current);
+    const newState = handleOnEditorScrollOrResize(props, state, rootRef.current);
     if (newState !== state) setState(newState);
   }, [props, state, setState, rootRef]);
 
   React.useEffect(() => {
+    window.addEventListener('resize', _handleOnEditorScrollOrResize);
     const editorRoot = rootRef.current && getRoot(rootRef.current);
-    if (editorRoot) editorRoot.addEventListener('scroll', _handleOnEditorScroll);
+    if (editorRoot) editorRoot.addEventListener('scroll', _handleOnEditorScrollOrResize);
 
     return () => {
-      if (editorRoot) editorRoot.removeEventListener('scroll', _handleOnEditorScroll);
+      if (editorRoot) editorRoot.removeEventListener('scroll', _handleOnEditorScrollOrResize);
+      window.removeEventListener('resize', _handleOnEditorScrollOrResize);
     };
-  }, [_handleOnEditorScroll]);
+  }, [_handleOnEditorScrollOrResize]);
 
   React.useEffect(() => {
     if (!rootRef.current) return;

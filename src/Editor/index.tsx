@@ -10,6 +10,8 @@ import {
   handleOnMouseMove,
   handleOnMouseUp,
   handleOnClick,
+  handleOnMouseScrollUp,
+  handleOnMouseScrollDown,
   handleOnKeyDown,
   handleOnTextChange,
   handleOnTextCut,
@@ -28,7 +30,7 @@ export const Editor: React.FC<Props> = (props) => {
     textAreaValue: '',
     isComposing: false,
     textSelection: undefined,
-    selectionWithMouse: 'inactive',
+    selectionMouse: 'deactive',
     historyHead: -1,
     editActionHistory: [],
     suggestionType: 'none',
@@ -37,6 +39,33 @@ export const Editor: React.FC<Props> = (props) => {
     suggestionStart: 0,
   });
   const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const timeIdRef = React.useRef<number>(0);
+
+  React.useEffect(() => {
+    switch (state.selectionMouse) {
+      case 'active-up':
+        if (props.readonly || timeIdRef.current) break;
+        timeIdRef.current = window.setInterval(() => {
+          setState((state) => handleOnMouseScrollUp(props.text, state));
+        });
+        break;
+      case 'active-down':
+        if (props.readonly || timeIdRef.current) break;
+        timeIdRef.current = window.setInterval(() => {
+          setState((state) => handleOnMouseScrollDown(props.text, state));
+        });
+        break;
+      default:
+        if (timeIdRef.current) window.clearInterval(timeIdRef.current);
+        timeIdRef.current = 0;
+        break;
+    }
+
+    return () => {
+      if (timeIdRef.current) window.clearInterval(timeIdRef.current);
+      timeIdRef.current = 0;
+    };
+  }, [state.selectionMouse]);
 
   const createMouseEventHandler = React.useCallback(
     <Event extends MouseEvent | React.MouseEvent>(
@@ -52,7 +81,7 @@ export const Editor: React.FC<Props> = (props) => {
     [state, props, setState, rootRef]
   );
 
-  const createCursorEventHandler = React.useCallback(
+  const createKeyboardEventHandler = React.useCallback(
     <Event,>(handler: (text: string, state: State, event: Event) => [string, State]): ((event: Event) => void) => {
       return (event) => {
         if (props.readonly) return;
@@ -64,7 +93,7 @@ export const Editor: React.FC<Props> = (props) => {
     [state, props, setState]
   );
 
-  const createCursorEventHandlerWithProps = React.useCallback(
+  const createKeyboardEventHandlerWithProps = React.useCallback(
     <Event,>(
       handler: (text: string, props: Props, state: State, event: Event) => [string, State]
     ): ((event: Event) => void) => {
@@ -96,14 +125,14 @@ export const Editor: React.FC<Props> = (props) => {
 
   const handleOnEditorBlur = React.useCallback(
     (event: MouseEvent) => {
-      if (props.readonly || rootRef.current?.contains(event.target as Node) || !state.cursorCoordinate) return;
+      if (props.readonly || rootRef.current?.contains(event.target as Node)) return;
       setState({
         ...state,
         cursorCoordinate: undefined,
         textAreaValue: '',
         isComposing: false,
         textSelection: undefined,
-        selectionWithMouse: 'inactive',
+        selectionMouse: 'deactive',
         suggestionType: 'none',
         suggestions: [],
         suggestionIndex: -1,
@@ -148,14 +177,15 @@ export const Editor: React.FC<Props> = (props) => {
             suggestionType={state.suggestionType}
             suggestions={state.suggestions}
             suggestionIndex={state.suggestionIndex}
-            onKeyDown={createCursorEventHandlerWithProps(handleOnKeyDown)}
-            onTextChange={createCursorEventHandlerWithProps(handleOnTextChange)}
-            onTextCompositionStart={createCursorEventHandler(handleOnTextCompositionStart)}
-            onTextCompositionEnd={createCursorEventHandlerWithProps(handleOnTextCompositionEnd)}
-            onTextCut={createCursorEventHandler(handleOnTextCut)}
-            onTextCopy={createCursorEventHandler(handleOnTextCopy)}
-            onTextPaste={createCursorEventHandler(handleOnTextPaste)}
-            onSuggectionMouseDown={createCursorEventHandler(handleOnSuggectionMouseDown)}
+            mouseHold={state.selectionMouse}
+            onKeyDown={createKeyboardEventHandlerWithProps(handleOnKeyDown)}
+            onTextChange={createKeyboardEventHandlerWithProps(handleOnTextChange)}
+            onTextCompositionStart={createKeyboardEventHandler(handleOnTextCompositionStart)}
+            onTextCompositionEnd={createKeyboardEventHandlerWithProps(handleOnTextCompositionEnd)}
+            onTextCut={createKeyboardEventHandler(handleOnTextCut)}
+            onTextCopy={createKeyboardEventHandler(handleOnTextCopy)}
+            onTextPaste={createKeyboardEventHandler(handleOnTextPaste)}
+            onSuggectionMouseDown={createKeyboardEventHandler(handleOnSuggectionMouseDown)}
           />
           <Selection textSelection={state.textSelection} />
           <TextLines

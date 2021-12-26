@@ -14,17 +14,15 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   root?.querySelector('textarea')?.focus({ preventScroll: true });
 
-  if (props.suggestions.length > 0) {
-    const index = props.suggestionIndex;
-    const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(index)}"]`;
-    const listItem = root?.querySelector(listItemSelector) as HTMLLIElement | null;
-    const list = listItem?.parentElement;
-    if (list && listItem) {
-      if (listItem.offsetTop < list.scrollTop) {
-        list.scrollTop = listItem.offsetTop;
-      } else if (listItem.offsetTop + listItem.clientHeight > list.scrollTop + list.clientHeight) {
-        list.scrollTop = listItem.offsetTop + listItem.clientHeight - list.clientHeight;
-      }
+  const listSelector = `li[data-selectid="${CursorConstants.suggestion.list.selectId}"]`;
+  const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`;
+  const list = root?.querySelector(listSelector) as HTMLUListElement | null;
+  const listItem = root?.querySelector(listItemSelector) as HTMLLIElement | null;
+  if (props.suggestions.length > 0 && list && listItem) {
+    if (listItem.offsetTop < list.scrollTop) {
+      list.scrollTop = listItem.offsetTop;
+    } else if (listItem.offsetTop + listItem.clientHeight > list.scrollTop + list.clientHeight) {
+      list.scrollTop = listItem.offsetTop + listItem.clientHeight - list.clientHeight;
     }
   }
 
@@ -34,23 +32,23 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
-  const cursorSize = charRect.height;
-  const margin = 1.5 * cursorSize;
-  if (charRect.top - rootRect.top - margin < 0) {
-    root.scrollTop += charRect.top - rootRect.top - margin;
-    return handleOnEditorScroll(props, state, element);
-  } else if (charRect.top + cursorSize - rootRect.top > rootRect.height - margin) {
-    root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height + margin;
-    return handleOnEditorScroll(props, state, element);
+  const [cursorSize, margin] = [charRect.height, CursorConstants.cursorBar.margin];
+  if (props.mouseHold != 'active-in') {
+    if (charRect.top - rootRect.top - margin < 0) {
+      root.scrollTop += charRect.top - rootRect.top;
+      return handleOnEditorScrollOrResize(props, state, element);
+    } else if (charRect.top + cursorSize - rootRect.top > rootRect.height - margin) {
+      root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height;
+      return handleOnEditorScrollOrResize(props, state, element);
+    }
   }
+
   return { ...state, position, cursorSize };
 }
 
-export function handleOnEditorScroll(props: Props, state: State, element: HTMLElement): State {
+export function handleOnEditorScrollOrResize(props: Props, state: State, element: HTMLElement): State {
   const bodyRect = getBody(element)?.getBoundingClientRect();
-  if (!props.coordinate || !bodyRect) {
-    return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
-  }
+  if (!props.coordinate || !bodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const { coordinate } = props;
   const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);

@@ -176,7 +176,8 @@ export function handleOnRedo(
 export function handleOnMoveUp(
   text: string,
   state: State,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event?: React.KeyboardEvent<HTMLTextAreaElement>,
+  mouseScroll?: boolean
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -193,7 +194,7 @@ export function handleOnMoveUp(
   })();
 
   const newTextSelection = (() => {
-    if (!event.shiftKey) return undefined;
+    if (!event?.shiftKey && !mouseScroll) return undefined;
     const fixed = textSelection ? textSelection.fixed : cursorCoordinate;
     const free = { ...newCursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
@@ -204,7 +205,8 @@ export function handleOnMoveUp(
 export function handleOnMoveDown(
   text: string,
   state: State,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event?: React.KeyboardEvent<HTMLTextAreaElement>,
+  mouseScroll?: boolean
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -223,7 +225,7 @@ export function handleOnMoveDown(
   })();
 
   const newTextSelection = (() => {
-    if (!event.shiftKey) return undefined;
+    if (!event?.shiftKey && !mouseScroll) return undefined;
     const fixed = textSelection ? textSelection.fixed : cursorCoordinate;
     const free = { ...newCursorCoordinate };
     return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
