@@ -245,14 +245,16 @@ export function handleOnTextChange(
   const textAreaValue = event.target.value;
   if (state.isComposing) return [text, resetSuggestion({ ...state, textAreaValue })];
 
+  const selectionText = getSelectionText(text, state.textSelection);
+
   const [newText, newState] = (() => {
     switch (textAreaValue) {
       case '[':
-        return insertText(text, state, '[]', 1);
+        return insertText(text, state, `[${selectionText}]`, selectionText.length + 1);
       case '{':
-        return insertText(text, state, '{}', 1);
+        return insertText(text, state, `{${selectionText}}`, selectionText.length + 1);
       case '(':
-        return insertText(text, state, '()', 1);
+        return insertText(text, state, `(${selectionText})`, selectionText.length + 1);
       default:
         return insertText(text, state, textAreaValue);
     }
