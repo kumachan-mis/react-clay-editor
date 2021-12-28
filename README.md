@@ -1,7 +1,9 @@
 # react-realtime-markup-editor
 
-A text document editor which is syntactically formattable in real time  
-Inspired by [Scrapbox](https://scrapbox.io/product)
+A text document editor which is syntactically formattable in real time
+
+- The document editor is inspired by [Scrapbox](https://scrapbox.io/product)
+- Icons made from [Icon Fonts](http://www.onlinewebfonts.com/icon) is licensed by CC BY 3.0
 
 ## TL;DR
 
@@ -37,7 +39,7 @@ const App: React.FC = () => {
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | last 2 versions                                                                                                                                                                                                   | last 2 versions                                                                                                                                                                                               |
 
-## Demo
+### Demo
 
 [demo](https://kumachan-mis.github.io/react-realtime-markup-editor) on github pages
 
