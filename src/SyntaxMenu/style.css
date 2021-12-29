@@ -37,9 +37,31 @@ button.dropdownArrow {
 }
 
 ul.dropdownMenu {
+  position: absolute;
+  min-width: 120px;
+  font-size: 14px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255);
+  z-index: 1;
 }
 
 li.dropdownMenuItem {
+  list-style-type: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+li.dropdownMenuItem[aria-selected='true'] {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+li.dropdownMenuItem:hover {
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 svg.syntaxIcon {
