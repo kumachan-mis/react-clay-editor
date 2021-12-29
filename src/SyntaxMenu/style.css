@@ -5,7 +5,7 @@ button.iconButton {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 0, 0, 0.04);
   cursor: pointer;
 }
@@ -20,6 +20,7 @@ button.iconButton:active {
 
 div.dropdownAnchor {
   border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   display: inline-flex;
 }
 
@@ -28,10 +29,12 @@ div.dropdownAnchor:hover {
 }
 
 button.dropdownIcon {
+  border: unset;
   border-radius: 8px 0px 0px 8px;
 }
 
 button.dropdownArrow {
+  border: unset;
   width: 16px;
   border-radius: 0px 8px 8px 0px;
 }
