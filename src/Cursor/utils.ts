@@ -33,7 +33,7 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
   const [cursorSize, margin] = [charRect.height, CursorConstants.cursorBar.margin];
-  if (props.mouseHold != 'active-in') {
+  if (props.mouseHold !== 'active-in') {
     if (charRect.top - rootRect.top - margin < 0) {
       root.scrollTop += charRect.top - rootRect.top;
       return handleOnEditorScrollOrResize(props, state, element);

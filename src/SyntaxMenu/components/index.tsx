@@ -5,12 +5,12 @@ import { SyntaxMenuConstants } from '../constants';
 import { ArrowIcon } from '../icons';
 
 import {
-  MenuContainerProps,
   DropdownMenuProps,
   DropdownMenuAnchorProps,
   DropdownMenuItemProps,
   DropdownMenuListProps,
   IconButtonMenuProps,
+  MenuContainerProps,
 } from './types';
 
 export const MenuContainer: React.FC<MenuContainerProps> = ({ className, children, ...rest }) => {
