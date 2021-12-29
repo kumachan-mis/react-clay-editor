@@ -4,7 +4,7 @@ button.iconButton {
   padding: 1px;
   align-items: center;
   justify-content: center;
-  border-radius: 30%;
+  border-radius: 8px;
   border: none;
   background-color: rgba(0, 0, 0, 0.04);
   cursor: pointer;
@@ -18,23 +18,38 @@ button.iconButton:active {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-svg.syntaxIcon {
-  color: #000000;
-  width: 16px;
-  height: 16px;
+div.dropdownAnchor {
+  border-radius: 8px;
+  display: inline-flex;
 }
 
-svg.arrowIcon {
-  color: #303030;
-  width: 8px;
-  height: 8px;
+div.dropdownAnchor:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+button.dropdownIcon {
+  border-radius: 8px 0px 0px 8px;
 }
 
 button.dropdownArrow {
+  width: 16px;
+  border-radius: 0px 8px 8px 0px;
 }
 
 ul.dropdownMenu {
 }
 
 li.dropdownMenuItem {
+}
+
+svg.syntaxIcon {
+  color: rgba(0, 0, 0);
+  width: 16px;
+  height: 16px;
+}
+
+svg.arrowIcon {
+  color: rgba(0, 0, 0, 0.8);
+  width: 8px;
+  height: 8px;
 }
