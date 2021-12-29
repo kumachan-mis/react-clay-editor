@@ -24,65 +24,115 @@ import {
   UnderlineIcon,
 } from './icons';
 
-export const SyntaxMenu: React.FC = () => {
-  const [sectionOpen, sectionAnchorEl, onOpenSection, onCloseSection] = useDropdownMenu();
-  const [codeOpen, codeAnchorEl, onOpenCode, onCloseCode] = useDropdownMenu();
-  const [formulaOpen, formulaAnchorEl, onOpenFormula, onCloseFormula] = useDropdownMenu();
+export const SyntaxMenu: React.FC = () => (
+  <MenuContainer>
+    <SectionMenu />
+    <ItemizeMenu />
+    <BoldMenu />
+    <ItalicMenu />
+    <UnderlineMenu />
+    <BracketMenu />
+    <HashtagMenu />
+    <TaggedlinkMenu />
+    <CodeMenu />
+    <FormulaMenu />
+    <QuoteMenu />
+  </MenuContainer>
+);
+
+const SectionMenu: React.FC = () => {
+  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
 
   return (
-    <MenuContainer>
-      <DropdownMenu onClose={onCloseSection}>
-        <DropdownMenuAnchor open={sectionOpen} onOpen={onOpenSection} onClose={onCloseSection}>
-          <SectionIcon />
-        </DropdownMenuAnchor>
-        <DropdownMenuList open={sectionOpen} anchorEl={sectionAnchorEl}>
-          <DropdownMenuItem>section</DropdownMenuItem>
-          <DropdownMenuItem>subsection</DropdownMenuItem>
-        </DropdownMenuList>
-      </DropdownMenu>
-      <IconButtonMenu>
-        <ItemizeIcon />
-      </IconButtonMenu>
-      <IconButtonMenu>
-        <BoldIcon />
-      </IconButtonMenu>
-      <IconButtonMenu>
-        <ItalicIcon />
-      </IconButtonMenu>
-      <IconButtonMenu>
-        <UnderlineIcon />
-      </IconButtonMenu>
-      <IconButtonMenu>
-        <BracketIcon />
-      </IconButtonMenu>
-      <IconButtonMenu>
-        <HashtagIcon />
-      </IconButtonMenu>
-      <IconButtonMenu>
-        <TaggedlinkIcon />
-      </IconButtonMenu>
-      <DropdownMenu onClose={onCloseCode}>
-        <DropdownMenuAnchor open={codeOpen} onOpen={onOpenCode} onClose={onCloseCode}>
-          <CodeIcon />
-        </DropdownMenuAnchor>
-        <DropdownMenuList open={codeOpen} anchorEl={codeAnchorEl}>
-          <DropdownMenuItem>inline code</DropdownMenuItem>
-          <DropdownMenuItem>block code</DropdownMenuItem>
-        </DropdownMenuList>
-      </DropdownMenu>
-      <DropdownMenu onClose={onCloseFormula}>
-        <DropdownMenuAnchor open={formulaOpen} onOpen={onOpenFormula} onClose={onCloseFormula}>
-          <FormulaIcon />
-        </DropdownMenuAnchor>
-        <DropdownMenuList open={formulaOpen} anchorEl={formulaAnchorEl}>
-          <DropdownMenuItem>inline formula</DropdownMenuItem>
-          <DropdownMenuItem>display formula</DropdownMenuItem>
-          <DropdownMenuItem>block formula</DropdownMenuItem>
-        </DropdownMenuList>
-      </DropdownMenu>
-      <IconButtonMenu>
-        <QuoteIcon />
-      </IconButtonMenu>
-    </MenuContainer>
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose}>
+        <SectionIcon />
+      </DropdownMenuAnchor>
+      <DropdownMenuList open={open} anchorEl={anchorEl}>
+        <DropdownMenuItem>section</DropdownMenuItem>
+        <DropdownMenuItem>subsection</DropdownMenuItem>
+      </DropdownMenuList>
+    </DropdownMenu>
   );
 };
+
+const ItemizeMenu: React.FC = () => (
+  <IconButtonMenu>
+    <ItemizeIcon />
+  </IconButtonMenu>
+);
+
+const BoldMenu: React.FC = () => (
+  <IconButtonMenu>
+    <BoldIcon />
+  </IconButtonMenu>
+);
+
+const ItalicMenu: React.FC = () => (
+  <IconButtonMenu>
+    <ItalicIcon />
+  </IconButtonMenu>
+);
+
+const UnderlineMenu: React.FC = () => (
+  <IconButtonMenu>
+    <UnderlineIcon />
+  </IconButtonMenu>
+);
+
+const BracketMenu: React.FC = () => (
+  <IconButtonMenu>
+    <BracketIcon />
+  </IconButtonMenu>
+);
+
+const HashtagMenu: React.FC = () => (
+  <IconButtonMenu>
+    <HashtagIcon />
+  </IconButtonMenu>
+);
+
+const TaggedlinkMenu: React.FC = () => (
+  <IconButtonMenu>
+    <TaggedlinkIcon />
+  </IconButtonMenu>
+);
+
+const CodeMenu: React.FC = () => {
+  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+
+  return (
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose}>
+        <CodeIcon />
+      </DropdownMenuAnchor>
+      <DropdownMenuList open={open} anchorEl={anchorEl}>
+        <DropdownMenuItem>inline code</DropdownMenuItem>
+        <DropdownMenuItem>block code</DropdownMenuItem>
+      </DropdownMenuList>
+    </DropdownMenu>
+  );
+};
+
+const FormulaMenu: React.FC = () => {
+  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+
+  return (
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose}>
+        <FormulaIcon />
+      </DropdownMenuAnchor>
+      <DropdownMenuList open={open} anchorEl={anchorEl}>
+        <DropdownMenuItem>inline formula</DropdownMenuItem>
+        <DropdownMenuItem>display formula</DropdownMenuItem>
+        <DropdownMenuItem>block formula</DropdownMenuItem>
+      </DropdownMenuList>
+    </DropdownMenu>
+  );
+};
+
+const QuoteMenu: React.FC = () => (
+  <IconButtonMenu>
+    <QuoteIcon />
+  </IconButtonMenu>
+);

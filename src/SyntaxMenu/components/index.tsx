@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import { mergeClassNames } from '../../common/utils';
-import { SyntaxMenuConstants } from '../constants';
 import { ArrowIcon } from '../icons';
 
+import { ComponentConstants } from './constants';
 import {
   DropdownMenuProps,
   DropdownMenuAnchorProps,
@@ -14,7 +14,7 @@ import {
 } from './types';
 
 export const MenuContainer: React.FC<MenuContainerProps> = ({ className, children, ...rest }) => {
-  const constants = SyntaxMenuConstants.menuContainer;
+  const constants = ComponentConstants.menuContainer;
   return (
     <div className={mergeClassNames(className, constants.className)} {...rest}>
       {children}
@@ -23,7 +23,7 @@ export const MenuContainer: React.FC<MenuContainerProps> = ({ className, childre
 };
 
 export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ className, children, ...rest }) => {
-  const constants = SyntaxMenuConstants.iconButtonMenu;
+  const constants = ComponentConstants.iconButtonMenu;
   return (
     <button className={mergeClassNames(className, constants.className)} {...rest}>
       {children}
@@ -64,7 +64,7 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
     (event: React.MouseEvent<HTMLButtonElement>) => (open ? onClose() : onOpen(event.currentTarget)),
     [open, onOpen, onClose]
   );
-  const constants = SyntaxMenuConstants.dropdownMenuAnchor;
+  const constants = ComponentConstants.dropdownMenuAnchor;
 
   return (
     <div className={constants.className}>
@@ -88,7 +88,7 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
 }) => {
   const anchorRect = anchorEl?.getBoundingClientRect();
   const [left, top] = [anchorRect?.left || 0, anchorRect?.bottom || 0];
-  const constants = SyntaxMenuConstants.dropdownMenuList;
+  const constants = ComponentConstants.dropdownMenuList;
 
   return !open ? (
     <></>
@@ -100,7 +100,7 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
 };
 
 export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({ className, children, ...rest }) => {
-  const constants = SyntaxMenuConstants.dropdownMenuItem;
+  const constants = ComponentConstants.dropdownMenuItem;
   return (
     <li className={mergeClassNames(className, constants.className)} {...rest}>
       {children}

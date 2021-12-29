@@ -1,7 +1,7 @@
 import { CursorCoordinate } from '../../Cursor/types';
 import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
 import { selectionToRange } from '../../Selection/utils';
-import { TextLinesConstants } from '../../TextLines/constants';
+import { ComponentConstants } from '../../TextLines/components/constants';
 import { getTextCharElementAt } from '../../TextLines/utils';
 import { EditorConstants } from '../constants';
 import { Props, State, EditAction } from '../types';
@@ -195,15 +195,15 @@ export function positionToCursorCoordinate(
   const findElement = (selectIdRegex: RegExp): Element | undefined =>
     elements.find((e) => selectIdRegex.test(e.getAttribute('data-selectid') || '') && element.contains(e));
 
-  const charElement = findElement(TextLinesConstants.char.selectIdRegex);
-  const charGroupElement = findElement(TextLinesConstants.charGroup.selectIdRegex);
-  const lineElement = findElement(TextLinesConstants.line.selectIdRegex);
-  const lineGroupElement = findElement(TextLinesConstants.lineGroup.selectIdRegex);
+  const charElement = findElement(ComponentConstants.char.selectIdRegex);
+  const charGroupElement = findElement(ComponentConstants.charGroup.selectIdRegex);
+  const lineElement = findElement(ComponentConstants.line.selectIdRegex);
+  const lineGroupElement = findElement(ComponentConstants.lineGroup.selectIdRegex);
   const marginBottomElement = findElement(EditorConstants.body.selectIdRegex);
 
   if (charElement) {
     const selectId = charElement.getAttribute('data-selectid') as string;
-    const groups = selectId.match(TextLinesConstants.char.selectIdRegex)?.groups as Record<string, string>;
+    const groups = selectId.match(ComponentConstants.char.selectIdRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const charIndex = Number.parseInt(groups['charIndex'], 10);
 
@@ -215,7 +215,7 @@ export function positionToCursorCoordinate(
 
   if (charGroupElement) {
     const selectId = charGroupElement.getAttribute('data-selectid') as string;
-    const groups = selectId.match(TextLinesConstants.charGroup.selectIdRegex)?.groups as Record<string, string>;
+    const groups = selectId.match(ComponentConstants.charGroup.selectIdRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const firstCharIndex = Number.parseInt(groups['first'], 10);
     const lastCharIndex = Number.parseInt(groups['last'], 10);
@@ -230,7 +230,7 @@ export function positionToCursorCoordinate(
 
   if (lineElement) {
     const selectId = lineElement.getAttribute('data-selectid') as string;
-    const groups = selectId.match(TextLinesConstants.line.selectIdRegex)?.groups as Record<string, string>;
+    const groups = selectId.match(ComponentConstants.line.selectIdRegex)?.groups as Record<string, string>;
     const lineIndex = Number.parseInt(groups['lineIndex'], 10);
     const currentLine = lines[lineIndex];
 
@@ -262,7 +262,7 @@ export function positionToCursorCoordinate(
 
   if (lineGroupElement) {
     const selectId = lineGroupElement.getAttribute('data-selectid') as string;
-    const groups = selectId.match(TextLinesConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
+    const groups = selectId.match(ComponentConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
     const firstLineIndex = Number.parseInt(groups['first'], 10);
     const lastLineIndex = Number.parseInt(groups['last'], 10);
     const lineGroupRect = lineGroupElement.getBoundingClientRect();

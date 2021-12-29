@@ -1,0 +1,11 @@
+svg.syntaxIcon {
+  color: rgba(0, 0, 0);
+  width: 16px;
+  height: 16px;
+}
+
+svg.arrowIcon {
+  color: rgba(0, 0, 0, 0.8);
+  width: 8px;
+  height: 8px;
+}

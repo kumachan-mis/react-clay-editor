@@ -1,64 +1,6 @@
-/**********************
- *  General Stylings  *
- **********************/
-
 .textlines {
   white-space: pre-wrap;
   word-wrap: break-word;
-}
-
-.char {
-  display: inline;
-}
-
-.charGroup {
-  display: inline-block;
-}
-
-.indent {
-  left: 0px;
-  top: 0px;
-  position: absolute;
-}
-
-.indentPad {
-  display: inline-block;
-  width: 1.5em;
-  overflow: hidden;
-}
-
-.content {
-  display: block;
-}
-
-.line {
-  display: block;
-  position: relative;
-}
-
-.lineGroup {
-  display: block;
-  position: relative;
-}
-
-/***************************
- *  Syntax Based Stylings  *
- ***************************/
-
-.itemBulletContent {
-  width: 1.5em;
-  position: absolute;
-}
-
-.itemBullet {
-  top: 0.5em;
-  right: 0.75em;
-  position: absolute;
-  display: block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background-color: #000000;
 }
 
 .quotation {
@@ -96,17 +38,4 @@
 
 .underline {
   border-bottom: 1px solid;
-}
-
-.embededLink {
-  text-decoration-line: none;
-  color: #5e8af7;
-  cursor: text;
-}
-.embededLink:global(.hover) {
-  color: #425a9d;
-  cursor: pointer;
-}
-.embededLink[data-active='false'] {
-  cursor: text;
 }

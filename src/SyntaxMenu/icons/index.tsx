@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { mergeClassNames } from '../common/utils';
+import { mergeClassNames } from '../../common/utils';
 
 import styles from './style.css';
 

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { positionToCursorCoordinate } from '../../src/Editor/callbacks/utils';
-import { TextLinesConstants } from '../../src/TextLines/constants';
+import { ComponentConstants } from '../../src/TextLines/components/constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import {
   MockEditor,
@@ -48,14 +48,14 @@ describe('function positionToCursorCoordinate in Editor', () => {
 
     const spiedCharGetBoundingClientRects = charElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
-      const groups = testId.match(TextLinesConstants.char.selectIdRegex)?.groups as Record<string, string>;
+      const groups = testId.match(ComponentConstants.char.selectIdRegex)?.groups as Record<string, string>;
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
       const charIndex = Number.parseInt(groups['charIndex'], 10);
       return spyOnGetBoundingClientRect.char(lineIndex, charIndex);
     });
     const spiedCharGroupGetBoundingClientRects = charGroupElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
-      const groups = testId.match(TextLinesConstants.charGroup.selectIdRegex)?.groups as Record<string, string>;
+      const groups = testId.match(ComponentConstants.charGroup.selectIdRegex)?.groups as Record<string, string>;
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
       const firstCharIndex = Number.parseInt(groups['first'], 10);
       const lastCharIndex = Number.parseInt(groups['last'], 10);
@@ -63,13 +63,13 @@ describe('function positionToCursorCoordinate in Editor', () => {
     });
     const spiedLineGetBoundingClientRects = lineElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
-      const groups = testId.match(TextLinesConstants.line.selectIdRegex)?.groups as Record<string, string>;
+      const groups = testId.match(ComponentConstants.line.selectIdRegex)?.groups as Record<string, string>;
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
       return spyOnGetBoundingClientRect.line(lineIndex);
     });
     const spiedLineGroupGetBoundingClientRects = lineGroupElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
-      const groups = testId.match(TextLinesConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
+      const groups = testId.match(ComponentConstants.lineGroup.selectIdRegex)?.groups as Record<string, string>;
       const firstLineIndex = Number.parseInt(groups['first'], 10);
       const lastLineIndex = Number.parseInt(groups['last'], 10);
       return spyOnGetBoundingClientRect.lineGroup(firstLineIndex, lastLineIndex);
