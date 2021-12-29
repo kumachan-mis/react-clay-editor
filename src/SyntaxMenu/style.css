@@ -18,10 +18,16 @@ button.iconButton:active {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-svg.icon {
+svg.syntaxIcon {
   color: #000000;
   width: 16px;
   height: 16px;
+}
+
+svg.arrowIcon {
+  color: #303030;
+  width: 8px;
+  height: 8px;
 }
 
 button.dropdownArrow {

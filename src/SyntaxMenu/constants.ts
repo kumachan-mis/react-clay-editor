@@ -1,9 +1,6 @@
 import styles from './style.css';
 
 export const SyntaxMenuConstants = {
-  icon: {
-    className: styles.icon,
-  },
   iconButton: {
     className: styles.iconButton,
   },
