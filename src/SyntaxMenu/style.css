@@ -54,6 +54,7 @@ ul.dropdownMenu {
 
 li.dropdownMenuItem {
   list-style-type: none;
+  user-select: none;
   cursor: pointer;
   padding: 2px 8px;
   border-radius: 8px;
@@ -69,6 +70,10 @@ li.dropdownMenuItem[aria-selected='true'] {
 
 li.dropdownMenuItem:hover {
   background-color: rgba(0, 0, 0, 0.12);
+}
+
+li.dropdownMenuItem:active {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 svg.syntaxIcon {
