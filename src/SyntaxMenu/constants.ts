@@ -3,10 +3,13 @@ import { mergeClassNames } from '../common/utils';
 import styles from './style.css';
 
 export const SyntaxMenuConstants = {
-  iconButton: {
+  menuContainer: {
+    className: styles.container,
+  },
+  iconButtonMenu: {
     className: styles.iconButton,
   },
-  dropdownAnchor: {
+  dropdownMenuAnchor: {
     className: styles.dropdownAnchor,
     icon: {
       className: mergeClassNames(styles.iconButton, styles.dropdownIcon),
@@ -15,8 +18,8 @@ export const SyntaxMenuConstants = {
       className: mergeClassNames(styles.iconButton, styles.dropdownArrow),
     },
   },
-  dropdownMenu: {
-    className: styles.dropdownMenu,
+  dropdownMenuList: {
+    className: mergeClassNames(styles.dropdownMenu, styles.absolute),
   },
   dropdownMenuItem: {
     className: styles.dropdownMenuItem,

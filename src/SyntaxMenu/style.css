@@ -1,6 +1,22 @@
+.absolute {
+  position: absolute;
+}
+
+div.container {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+}
+
+div.container > :not(.absolute) {
+  margin: 0px 4px;
+}
+
 button.iconButton {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   padding: 1px;
   align-items: center;
   justify-content: center;
@@ -19,9 +35,10 @@ button.iconButton:active {
 }
 
 div.dropdownAnchor {
+  height: 26px;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  display: inline-flex;
+  display: flex;
 }
 
 div.dropdownAnchor:hover {
@@ -40,7 +57,6 @@ button.dropdownArrow {
 }
 
 ul.dropdownMenu {
-  position: absolute;
   min-width: 120px;
   margin: 0px;
   padding: 0px;
