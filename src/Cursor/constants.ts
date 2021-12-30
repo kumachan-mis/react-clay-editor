@@ -30,7 +30,6 @@ export const CursorConstants = {
   suggestion: {
     list: {
       className: styles.suggestionList,
-      testId: 'suggestion-list',
       style: (position: Position, cursorSize: number): React.CSSProperties => ({
         top: `${position.top + cursorSize + 2}px`,
         left: `${position.left}px`,
@@ -56,9 +55,12 @@ export const CursorConstants = {
     },
     container: {
       className: styles.suggestionContainer,
+      selectId: 'suggestion-list-container',
+      testId: 'suggestion-list-container',
     },
     item: {
       className: styles.suggestionItem,
+      selectId: (index: number): string => `suggestion-item-${index}`,
       testId: (index: number): string => `suggestion-item-${index}`,
     },
   },
