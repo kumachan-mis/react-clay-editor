@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mergeClassNames, selectIdProps } from '../../common/utils';
+import { mergeClassNames, createTestId } from '../../common/utils';
 
 import { ComponentConstants } from './constants';
 import {
@@ -24,7 +24,8 @@ export const LineGroup: React.FC<LineGroupProps> = ({ firstLineIndex, lastLineIn
     <div
       className={mergeClassNames(constants.className, className)}
       {...rest}
-      {...selectIdProps(constants.selectId(firstLineIndex, lastLineIndex))}
+      data-selectid={constants.selectId(firstLineIndex, lastLineIndex)}
+      data-testid={createTestId(constants.testId(firstLineIndex, lastLineIndex))}
     >
       {children}
     </div>
@@ -71,7 +72,8 @@ export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }
     <div
       className={mergeClassNames(constants.className, className)}
       {...rest}
-      {...selectIdProps(constants.selectId(lineIndex))}
+      data-selectid={constants.selectId(lineIndex)}
+      data-testid={createTestId(constants.testId(lineIndex))}
     >
       {children}
     </div>
@@ -138,7 +140,8 @@ export const CharGroup: React.FC<CharGroupProps> = ({
     <span
       className={mergeClassNames(constants.className, className)}
       {...rest}
-      {...selectIdProps(constants.selectId(lineIndex, firstCharIndex, lastCharIndex))}
+      data-selectid={constants.selectId(lineIndex, firstCharIndex, lastCharIndex)}
+      data-testid={createTestId(constants.testId(lineIndex, firstCharIndex, lastCharIndex))}
     >
       {children}
     </span>
@@ -152,7 +155,8 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
     <span
       className={mergeClassNames(constants.className, className)}
       {...rest}
-      {...selectIdProps(constants.selectId(lineIndex, charIndex))}
+      data-selectid={constants.selectId(lineIndex, charIndex)}
+      data-testid={createTestId(constants.testId(lineIndex, charIndex))}
     >
       {children}
     </span>
@@ -193,24 +197,39 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps 
     ? [constants.hover.className, constants.className, className]
     : [constants.className, className];
 
+  const handleOnMouseEnter = React.useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      onMouseEnter?.(event);
+      setActive(!cursorOn);
+    },
+    [cursorOn, onMouseEnter]
+  );
+
+  const handleOnMouseLeave = React.useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      onMouseLeave?.(event);
+      setActive(false);
+    },
+    [onMouseLeave]
+  );
+
+  const handleOnClick = React.useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      if (active) onClick?.(event);
+      else event.preventDefault();
+    },
+    [active, onClick]
+  );
+
   return (
     <a
       className={mergeClassNames(...classNames)}
-      onMouseEnter={(event) => {
-        onMouseEnter?.(event);
-        setActive(!cursorOn);
-      }}
-      onMouseLeave={(event) => {
-        onMouseLeave?.(event);
-        setActive(false);
-      }}
-      onClick={(event) => {
-        if (active) onClick?.(event);
-        else event.preventDefault();
-      }}
-      {...rest}
-      {...selectIdProps(constants.selectId)}
+      onMouseEnter={handleOnMouseEnter}
+      onMouseLeave={handleOnMouseLeave}
+      onClick={handleOnClick}
+      data-testid={createTestId(constants.testId)}
       data-active={active}
+      {...rest}
     >
       {children}
     </a>

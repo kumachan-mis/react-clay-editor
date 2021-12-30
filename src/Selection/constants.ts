@@ -4,7 +4,7 @@ import { Position } from './types';
 export const SelectionConstants = {
   div: {
     className: styles.selection,
-    selectId: 'selection',
+    testId: 'selection',
     style: (position: Position): React.CSSProperties => ({
       top: `${position.top}px`,
       left: `${position.left}px`,
