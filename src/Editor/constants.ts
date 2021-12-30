@@ -8,11 +8,13 @@ export const EditorConstants = {
     className: styles.root,
     selectId: 'editor-root',
     selectIdRegex: /editor-root/,
+    testId: 'editor-root',
   },
   body: {
     className: styles.body,
     selectId: 'editor-body',
     selectIdRegex: /editor-body/,
+    testId: 'editor-body',
   },
   suggestion: {
     bracketLink: {
