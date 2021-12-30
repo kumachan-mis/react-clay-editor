@@ -16,7 +16,7 @@ import {
 export const MenuContainer: React.FC<MenuContainerProps> = ({ className, children, ...rest }) => {
   const constants = ComponentConstants.menuContainer;
   return (
-    <div className={mergeClassNames(className, constants.className)} {...rest}>
+    <div className={mergeClassNames(className, constants.className)} role="menubar" {...rest}>
       {children}
     </div>
   );
@@ -25,7 +25,7 @@ export const MenuContainer: React.FC<MenuContainerProps> = ({ className, childre
 export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ className, children, ...rest }) => {
   const constants = ComponentConstants.iconButtonMenu;
   return (
-    <button className={mergeClassNames(className, constants.className)} {...rest}>
+    <button className={mergeClassNames(className, constants.className)} role="menuitem" {...rest}>
       {children}
     </button>
   );
@@ -49,7 +49,11 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ onClose, children })
     };
   }, [handleOnClickAway]);
 
-  return <span ref={(ref) => (rootRef.current = ref)}>{children}</span>;
+  return (
+    <span role="menuitem" ref={(ref) => (rootRef.current = ref)}>
+      {children}
+    </span>
+  );
 };
 
 export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
@@ -76,7 +80,13 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
       <button className={mergeClassNames(className, constants.icon.className)} disabled={disabled} {...rest}>
         {children}
       </button>
-      <button className={constants.arrow.className} disabled={disabled} onClick={handleOnArrowClick}>
+      <button
+        className={constants.arrow.className}
+        disabled={disabled}
+        onClick={handleOnArrowClick}
+        aria-haspopup="true"
+        aria-expanded={open}
+      >
         <ArrowIcon />
       </button>
     </div>
@@ -98,7 +108,12 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
   return !open ? (
     <></>
   ) : (
-    <ul className={mergeClassNames(className, constants.className)} style={{ left, top, ...style }} {...rest}>
+    <ul
+      className={mergeClassNames(className, constants.className)}
+      role="menu"
+      style={{ left, top, ...style }}
+      {...rest}
+    >
       {children}
     </ul>
   );
@@ -107,7 +122,7 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
 export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({ className, children, ...rest }) => {
   const constants = ComponentConstants.dropdownMenuItem;
   return (
-    <li className={mergeClassNames(className, constants.className)} {...rest}>
+    <li className={mergeClassNames(className, constants.className)} role="menuitem button" {...rest}>
       {children}
     </li>
   );
