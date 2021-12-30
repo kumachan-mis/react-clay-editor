@@ -55,8 +55,8 @@ export const CursorConstants = {
     },
     container: {
       className: styles.suggestionContainer,
-      selectId: 'suggestion-list-container',
-      testId: 'suggestion-list-container',
+      selectId: 'suggestion-container',
+      testId: 'suggestion-container',
     },
     item: {
       className: styles.suggestionItem,
