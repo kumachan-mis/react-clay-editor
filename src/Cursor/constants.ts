@@ -30,7 +30,7 @@ export const CursorConstants = {
   suggestion: {
     list: {
       className: styles.suggestionList,
-      selectId: 'suggestion-list',
+      testId: 'suggestion-list',
       style: (position: Position, cursorSize: number): React.CSSProperties => ({
         top: `${position.top + cursorSize + 2}px`,
         left: `${position.left}px`,
@@ -38,7 +38,7 @@ export const CursorConstants = {
     },
     header: {
       className: styles.suggestionHeader,
-      selectId: 'suggestion-header',
+      testId: 'suggestion-header',
       name: (suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none'): string => {
         switch (suggestionType) {
           case 'text':
@@ -59,7 +59,7 @@ export const CursorConstants = {
     },
     item: {
       className: styles.suggestionItem,
-      selectId: (index: number): string => `suggestion-item-${index}`,
+      testId: (index: number): string => `suggestion-item-${index}`,
     },
   },
 };

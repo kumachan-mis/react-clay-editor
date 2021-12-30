@@ -1,3 +1,3 @@
 export const KaTeXConstants = {
-  selectId: 'katex',
+  testId: 'katex',
 };

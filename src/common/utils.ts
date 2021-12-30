@@ -6,6 +6,7 @@ export function mergeClassNames(...classNames: (string | undefined)[]): string {
   return classNames.filter((className) => !!className).join(' ');
 }
 
-export function selectIdProps(selectId: string): { 'data-selectid': string } {
-  return { 'data-selectid': selectId };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function createTestId(testId: string): string | undefined {
+  return undefined;
 }

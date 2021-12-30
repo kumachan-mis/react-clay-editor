@@ -1,16 +1,16 @@
 import '@testing-library/jest-dom';
 import * as utils from '../src/common/utils';
 
-const spiedSelectIdProps = jest.spyOn(utils, 'selectIdProps');
+const spiedCreateTestId = jest.spyOn(utils, 'createTestId');
 
 beforeAll(() => {
-  spiedSelectIdProps.mockImplementation((selectId) => ({ 'data-selectid': selectId, 'data-testid': selectId }));
+  spiedCreateTestId.mockImplementation((testId) => testId);
 });
 
 afterAll(() => {
-  spiedSelectIdProps.mockRestore();
+  spiedCreateTestId.mockRestore();
 });
 
 afterEach(() => {
-  spiedSelectIdProps.mockClear();
+  spiedCreateTestId.mockClear();
 });
