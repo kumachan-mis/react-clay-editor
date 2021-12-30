@@ -65,6 +65,7 @@ export const Editor: React.FC<Props> = (props) => {
       if (timeIdRef.current) window.clearInterval(timeIdRef.current);
       timeIdRef.current = 0;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectionMouse]);
 
   const createMouseEventHandler = React.useCallback(
