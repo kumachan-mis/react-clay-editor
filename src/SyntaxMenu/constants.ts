@@ -1,30 +1,77 @@
 export const SyntaxMenuConstants = {
   section: {
-    defaultLabels: {
-      normal: 'normal',
-      larger: 'larger',
-      largest: 'largest',
+    selectId: 'section-menu',
+    items: {
+      normal: {
+        selectId: 'normal-section-menu-item',
+        label: 'normal',
+      },
+      larger: {
+        selectId: 'larger-section-menu-item',
+        label: 'larger',
+      },
+      largest: {
+        selectId: 'largest-section-menu-item',
+        label: 'largest',
+      },
     },
   },
-  itemize: {},
-  bold: {},
-  italic: {},
-  underline: {},
-  bracket: {},
-  hashtag: {},
-  taggedLink: {},
+  itemize: {
+    selectId: 'itemize-menu',
+  },
+  bold: {
+    selectId: 'bold-menu',
+  },
+  italic: {
+    selectId: 'italic-menu',
+  },
+  underline: {
+    selectId: 'underline-menu',
+  },
+  bracket: {
+    selectId: 'bracket-menu',
+  },
+  hashtag: {
+    selectId: 'hashtag-menu',
+  },
+  taggedLink: {
+    selectId: 'tagged-link-menu',
+    items: {
+      selectId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
+      defaultLabel: (tagName: string) => `"${tagName}" tagged link`,
+    },
+  },
   code: {
-    defaultLabels: {
-      inline: 'inline code',
-      block: 'block code',
+    selectId: 'code-menu',
+    items: {
+      inline: {
+        selectId: 'inline-code-menu-item',
+        label: 'inline code',
+      },
+      block: {
+        selectId: 'block-code-menu-item',
+        label: 'block code',
+      },
     },
   },
   formula: {
-    defaultLabels: {
-      inline: 'inline formula',
-      display: 'display formula',
-      block: 'block formula',
+    selectId: 'formula-menu',
+    items: {
+      inline: {
+        selectId: 'inline-formula-menu-item',
+        label: 'inline formula',
+      },
+      display: {
+        selectId: 'display-formula-menu-item',
+        label: 'display formula',
+      },
+      block: {
+        selectId: 'block-formula-menu-item',
+        label: 'block code',
+      },
     },
   },
-  quote: {},
+  quote: {
+    selectId: 'quote-menu',
+  },
 };

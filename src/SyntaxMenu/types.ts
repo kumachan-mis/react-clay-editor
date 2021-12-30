@@ -34,7 +34,9 @@ export interface TaggedLinkMenuProps {
   disabled?: boolean;
 }
 
-export type TaggedLinkMenuPropsMap = { [tagName: string]: TaggedLinkMenuProps };
+export interface TaggedLinkMenuPropsMap {
+  tags: { [tagName: string]: TaggedLinkMenuProps };
+}
 
 export interface CodeMenuProps {
   inlineLabel?: string;
@@ -49,7 +51,8 @@ export interface FormulaMenuProps {
   disabled?: boolean;
 }
 
-export interface EditionCommunicator {
+export interface MenuCommonProps {
   editorState: [string, State];
   setEditorState: (editorState: [string, State]) => void;
+  disabled?: boolean;
 }
