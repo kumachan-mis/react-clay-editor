@@ -1,77 +1,77 @@
 export const SyntaxMenuConstants = {
   section: {
-    selectId: 'section-menu',
+    testId: 'section-menu',
     items: {
       normal: {
-        selectId: 'normal-section-menu-item',
-        label: 'normal',
+        defaultLabel: 'normal',
+        testId: 'normal-section-menu-item',
       },
       larger: {
-        selectId: 'larger-section-menu-item',
-        label: 'larger',
+        defaultLabel: 'larger',
+        testId: 'larger-section-menu-item',
       },
       largest: {
-        selectId: 'largest-section-menu-item',
-        label: 'largest',
+        defaultLabel: 'largest',
+        testId: 'largest-section-menu-item',
       },
     },
   },
   itemize: {
-    selectId: 'itemize-menu',
+    testId: 'itemize-menu',
   },
   bold: {
-    selectId: 'bold-menu',
+    testId: 'bold-menu',
   },
   italic: {
-    selectId: 'italic-menu',
+    testId: 'italic-menu',
   },
   underline: {
-    selectId: 'underline-menu',
+    testId: 'underline-menu',
   },
   bracket: {
-    selectId: 'bracket-menu',
+    testId: 'bracket-menu',
   },
   hashtag: {
-    selectId: 'hashtag-menu',
+    testId: 'hashtag-menu',
   },
   taggedLink: {
-    selectId: 'tagged-link-menu',
+    testId: 'tagged-link-menu',
     items: {
-      selectId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
       defaultLabel: (tagName: string) => `"${tagName}" tagged link`,
+      testId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
     },
   },
   code: {
-    selectId: 'code-menu',
+    testId: 'code-menu',
     items: {
       inline: {
-        selectId: 'inline-code-menu-item',
-        label: 'inline code',
+        defaultLabel: 'inline code',
+        testId: 'inline-code-menu-item',
       },
       block: {
-        selectId: 'block-code-menu-item',
-        label: 'block code',
+        defaultLabel: 'block code',
+        testId: 'block-code-menu-item',
       },
     },
   },
   formula: {
-    selectId: 'formula-menu',
+    testId: 'formula-menu',
     items: {
       inline: {
-        selectId: 'inline-formula-menu-item',
-        label: 'inline formula',
+        defaultLabel: 'inline formula',
+        testId: 'inline-formula-menu-item',
       },
       display: {
-        selectId: 'display-formula-menu-item',
-        label: 'display formula',
+        defaultLabel: 'display formula',
+        testId: 'display-formula-menu-item',
       },
       block: {
-        selectId: 'block-formula-menu-item',
-        label: 'block code',
+        defaultLabel: 'block code',
+        testId: 'block-formula-menu-item',
       },
     },
   },
   quote: {
-    selectId: 'quote-menu',
+    testId: 'quote-menu',
   },
 };

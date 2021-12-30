@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { selectIdProps } from '../common/utils';
+import { createTestId } from '../common/utils';
 
 import {
   MenuContainer,
@@ -74,18 +74,18 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
 
   return (
     <DropdownMenu onClose={onClose} disabled={disabled}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} {...selectIdProps(constants.selectId)}>
+      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
         <SectionIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem {...selectIdProps(constants.items.normal.selectId)}>
-          {normalLabel || constants.items.normal.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>
+          {normalLabel || constants.items.normal.defaultLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem {...selectIdProps(constants.items.normal.selectId)}>
-          {largerLabel || constants.items.larger.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>
+          {largerLabel || constants.items.larger.defaultLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem {...selectIdProps(constants.items.normal.selectId)}>
-          {largestLabel || constants.items.largest.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>
+          {largestLabel || constants.items.largest.defaultLabel}
         </DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
@@ -96,7 +96,7 @@ const ItemizeMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, d
   const constants = SyntaxMenuConstants.itemize;
 
   return (
-    <IconButtonMenu disabled={disabled} {...selectIdProps(constants.selectId)}>
+    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
       <ItemizeIcon />
     </IconButtonMenu>
   );
@@ -106,7 +106,7 @@ const BoldMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, disa
   const constants = SyntaxMenuConstants.bold;
 
   return (
-    <IconButtonMenu disabled={disabled} {...selectIdProps(constants.selectId)}>
+    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
       <BoldIcon />
     </IconButtonMenu>
   );
@@ -116,7 +116,7 @@ const ItalicMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, di
   const constants = SyntaxMenuConstants.italic;
 
   return (
-    <IconButtonMenu disabled={disabled} {...selectIdProps(constants.selectId)}>
+    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
       <ItalicIcon />
     </IconButtonMenu>
   );
@@ -126,7 +126,7 @@ const UnderlineMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState,
   const constants = SyntaxMenuConstants.underline;
 
   return (
-    <IconButtonMenu disabled={disabled} {...selectIdProps(constants.selectId)}>
+    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
       <UnderlineIcon />
     </IconButtonMenu>
   );
@@ -142,7 +142,7 @@ const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
   const constants = SyntaxMenuConstants.bracket;
 
   return (
-    <IconButtonMenu disabled={disabled} {...selectIdProps(constants.selectId)}>
+    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
       <BracketIcon />
     </IconButtonMenu>
   );
@@ -158,7 +158,7 @@ const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
   const constants = SyntaxMenuConstants.hashtag;
 
   return (
-    <IconButtonMenu disabled={disabled} {...selectIdProps(constants.selectId)}>
+    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
       <HashtagIcon />
     </IconButtonMenu>
   );
@@ -176,12 +176,12 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
 
   return (
     <DropdownMenu onClose={onClose} disabled={disabled || tagEntries.length === 0}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} {...selectIdProps(constants.selectId)}>
+      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
         <TaggedLinkIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         {tagEntries.map(([tagName, taggedLinkMenu]) => (
-          <DropdownMenuItem key={tagName} {...selectIdProps(constants.items.selectId(tagName))}>
+          <DropdownMenuItem key={tagName} data-testid={createTestId(constants.items.testId(tagName))}>
             {taggedLinkMenu.label || constants.items.defaultLabel(tagName)}
           </DropdownMenuItem>
         ))}
@@ -202,15 +202,15 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
 
   return (
     <DropdownMenu onClose={onClose} disabled={disabled}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} {...selectIdProps(constants.selectId)}>
+      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
         <CodeIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem {...selectIdProps(constants.items.inline.selectId)}>
-          {inlineLabel || constants.items.inline.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.inline.testId)}>
+          {inlineLabel || constants.items.inline.defaultLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem {...selectIdProps(constants.items.block.selectId)}>
-          {blockLabel || constants.items.block.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.block.testId)}>
+          {blockLabel || constants.items.block.defaultLabel}
         </DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
@@ -230,18 +230,18 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
 
   return (
     <DropdownMenu onClose={onClose} disabled={disabled}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} {...selectIdProps(constants.selectId)}>
+      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
         <FormulaIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem {...selectIdProps(constants.items.inline.selectId)}>
-          {inlineLabel || constants.items.inline.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.inline.testId)}>
+          {inlineLabel || constants.items.inline.defaultLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem {...selectIdProps(constants.items.display.selectId)}>
-          {displayLabel || constants.items.display.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.display.testId)}>
+          {displayLabel || constants.items.display.defaultLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem {...selectIdProps(constants.items.block.selectId)}>
-          {blockLabel || constants.items.block.label}
+        <DropdownMenuItem data-testid={createTestId(constants.items.block.testId)}>
+          {blockLabel || constants.items.block.defaultLabel}
         </DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
@@ -252,7 +252,7 @@ const QuoteMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, dis
   const constants = SyntaxMenuConstants.quote;
 
   return (
-    <IconButtonMenu disabled={disabled} {...selectIdProps(constants.selectId)}>
+    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
       <QuoteIcon />
     </IconButtonMenu>
   );
