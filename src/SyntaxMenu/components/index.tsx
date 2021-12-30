@@ -57,21 +57,26 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   onOpen,
   onClose,
   className,
+  disabled,
   children,
   ...rest
 }) => {
-  const handleOnClick = React.useCallback(
+  const handleOnArrowClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => (open ? onClose() : onOpen(event.currentTarget)),
-    [open, onOpen, onClose]
+    [open, onClose, onOpen]
   );
+
   const constants = ComponentConstants.dropdownMenuAnchor;
+  const anchorClassName = disabled
+    ? mergeClassNames(ComponentConstants.disabled.className, constants.className)
+    : constants.className;
 
   return (
-    <div className={constants.className}>
-      <button className={mergeClassNames(className, constants.icon.className)} {...rest}>
+    <div className={anchorClassName}>
+      <button className={mergeClassNames(className, constants.icon.className)} disabled={disabled} {...rest}>
         {children}
       </button>
-      <button className={constants.arrow.className} onClick={handleOnClick}>
+      <button className={constants.arrow.className} disabled={disabled} onClick={handleOnArrowClick}>
         <ArrowIcon />
       </button>
     </div>

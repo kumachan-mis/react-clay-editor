@@ -24,4 +24,7 @@ export const ComponentConstants = {
   dropdownMenuItem: {
     className: styles.dropdownMenuItem,
   },
+  disabled: {
+    className: styles.disabled,
+  },
 };

@@ -73,8 +73,14 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   const constants = SyntaxMenuConstants.section;
 
   return (
-    <DropdownMenu onClose={onClose} disabled={disabled}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor
+        open={open}
+        onOpen={onOpen}
+        onClose={onClose}
+        disabled={disabled}
+        data-testid={createTestId(constants.testId)}
+      >
         <SectionIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
@@ -175,8 +181,14 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
   const constants = SyntaxMenuConstants.taggedLink;
 
   return (
-    <DropdownMenu onClose={onClose} disabled={disabled || tagEntries.length === 0}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor
+        open={open}
+        onOpen={onOpen}
+        onClose={onClose}
+        disabled={disabled || tagEntries.length === 0}
+        data-testid={createTestId(constants.testId)}
+      >
         <TaggedLinkIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
@@ -201,8 +213,14 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
   const constants = SyntaxMenuConstants.code;
 
   return (
-    <DropdownMenu onClose={onClose} disabled={disabled}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor
+        open={open}
+        onOpen={onOpen}
+        onClose={onClose}
+        disabled={disabled}
+        data-testid={createTestId(constants.testId)}
+      >
         <CodeIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
@@ -229,8 +247,14 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
   const constants = SyntaxMenuConstants.formula;
 
   return (
-    <DropdownMenu onClose={onClose} disabled={disabled}>
-      <DropdownMenuAnchor open={open} onOpen={onOpen} onClose={onClose} data-testid={createTestId(constants.testId)}>
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor
+        open={open}
+        onOpen={onOpen}
+        onClose={onClose}
+        disabled={disabled}
+        data-testid={createTestId(constants.testId)}
+      >
         <FormulaIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>

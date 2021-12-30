@@ -17,9 +17,15 @@ button.iconButton {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.4);
   background-color: rgba(0, 0, 0, 0.04);
   cursor: pointer;
+}
+
+button.iconButton svg {
+  fill: rgba(0, 0, 0);
+  width: 16px;
+  height: 16px;
 }
 
 button.iconButton:hover {
@@ -33,12 +39,17 @@ button.iconButton:active {
 div.dropdownAnchor {
   height: 26px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.4);
   display: flex;
 }
 
 div.dropdownAnchor:hover {
   background-color: rgba(0, 0, 0, 0.08);
+}
+
+div.dropdownAnchor.disabled {
+  background-color: unset;
+  cursor: unset;
 }
 
 button.dropdownIcon {
@@ -52,13 +63,19 @@ button.dropdownArrow {
   border-radius: 0px 8px 8px 0px;
 }
 
+button.dropdownArrow svg {
+  fill: rgba(0, 0, 0, 0.8);
+  width: 8px;
+  height: 8px;
+}
+
 ul.dropdownMenu {
   min-width: 120px;
   margin: 0px;
   padding: 0px;
   font-size: 14px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.4);
   background-color: rgba(0, 0, 0, 0.04);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
   z-index: 1;
@@ -90,4 +107,15 @@ li.dropdownMenuItem:active {
 
 .absolute {
   position: absolute;
+}
+
+button.iconButton:disabled,
+div.dropdownAnchor.disabled {
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  cursor: unset;
+}
+
+button.iconButton:disabled svg {
+  fill: rgba(0, 0, 0, 0.2);
 }
