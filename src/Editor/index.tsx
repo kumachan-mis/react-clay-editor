@@ -193,7 +193,7 @@ export const Editor: React.FC<Props> = (props) => {
             syntax={props.syntax}
             cursorCoordinate={state.cursorCoordinate}
             bracketLinkProps={props.bracketLinkProps}
-            hashTagProps={props.hashTagProps}
+            hashtagProps={props.hashtagProps}
             codeProps={props.codeProps}
             formulaProps={props.formulaProps}
             taggedLinkPropsMap={props.taggedLinkPropsMap}

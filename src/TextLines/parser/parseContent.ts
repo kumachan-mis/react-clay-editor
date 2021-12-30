@@ -8,7 +8,7 @@ import {
   DecorationNode,
   TaggedLinkNode,
   BracketLinkNode,
-  HashTagNode,
+  HashtagNode,
   NormalNode,
   ParsingContext,
   ParsingOptions,
@@ -16,7 +16,7 @@ import {
 } from './types';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashTag, normal } = TextLinesConstants.regexes.common;
+  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, normal } = TextLinesConstants.regexes.common;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
   if (options.syntax === 'bracket') {
@@ -34,8 +34,8 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseTaggedLink(text, context, options, taggedLink);
     } else if (!options.disabledMap.bracketLink && bracketLink.test(text)) {
       return parseBracketLink(text, context, options);
-    } else if (!options.disabledMap.hashTag && hashTag.test(text)) {
-      return parseHashTag(text, context, options);
+    } else if (!options.disabledMap.hashtag && hashtag.test(text)) {
+      return parseHashtag(text, context, options);
     } else if (normal.test(text)) {
       return parseNormal(text, context);
     }
@@ -57,8 +57,8 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseTaggedLink(text, context, options, taggedLink);
     } else if (!options.disabledMap.bracketLink && bracketLink.test(text)) {
       return parseBracketLink(text, context, options);
-    } else if (!options.disabledMap.hashTag && hashTag.test(text)) {
-      return parseHashTag(text, context, options);
+    } else if (!options.disabledMap.hashtag && hashtag.test(text)) {
+      return parseHashtag(text, context, options);
     } else if (normal.test(text)) {
       return parseNormal(text, context);
     }
@@ -267,16 +267,16 @@ function parseBracketLink(text: string, context: ParsingContext, options: Parsin
   ];
 }
 
-function parseHashTag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.common.hashTag;
-  const { left, hashTag, right } = text.match(regex)?.groups as Record<string, string>;
+function parseHashtag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
+  const regex = TextLinesConstants.regexes.common.hashtag;
+  const { left, hashtag, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
-  const node: HashTagNode = {
-    type: 'hashTag',
+  const node: HashtagNode = {
+    type: 'hashtag',
     lineIndex: context.lineIndex,
     range: [first, last],
-    hashTag,
+    hashtag,
   };
   return [
     ...parseContent(left, context, options),

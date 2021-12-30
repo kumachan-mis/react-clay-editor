@@ -7,7 +7,7 @@ export interface ParsingContext {
 
 export interface ParsingOptions {
   syntax: 'bracket' | 'markdown';
-  disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
+  disabledMap: { [key in 'bracketLink' | 'hashtag' | 'code' | 'formula']: boolean | undefined };
   taggedLinkRegexes: RegExp[];
 }
 
@@ -107,7 +107,7 @@ export type ContentNode =
   | DecorationNode
   | TaggedLinkNode
   | BracketLinkNode
-  | HashTagNode
+  | HashtagNode
   | NormalNode;
 
 export interface InlineCodeNode {
@@ -166,11 +166,11 @@ export interface BracketLinkNode {
   trailingMeta: string;
 }
 
-export interface HashTagNode {
-  type: 'hashTag';
+export interface HashtagNode {
+  type: 'hashtag';
   lineIndex: number;
   range: [number, number];
-  hashTag: string;
+  hashtag: string;
 }
 
 export interface NormalNode {

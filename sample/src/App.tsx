@@ -49,7 +49,7 @@ and so on
 [** Links]
  bracket-link
   [react-realtime-markup-editor]
- hash-tag-link
+ hashtag-link
   #react-realtime-markup-editor
  tagged-link
   [github: @kumachan-mis/react-realtime-markup-editor]
@@ -131,7 +131,7 @@ combination of text decorations is not supported yet
 ## Links
 - bracket-link
  - [react-realtime-markup-editor]
-- hash-tag-link
+- hashtag-link
  - #react-realtime-markup-editor
 - tagged-link
  - [github: @kumachan-mis/react-realtime-markup-editor]
@@ -196,9 +196,9 @@ export const App: React.FC = () => {
             }),
             suggestions: ['react-realtime-markup-editor'],
           }}
-          hashTagProps={{
-            anchorProps: (hashTagName) => ({
-              href: `https://www.npmjs.com/package/${hashTagName}`,
+          hashtagProps={{
+            anchorProps: (hashtagName) => ({
+              href: `https://www.npmjs.com/package/${hashtagName}`,
             }),
             suggestions: ['react-realtime-markup-editor'],
           }}

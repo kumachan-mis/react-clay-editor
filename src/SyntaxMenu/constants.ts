@@ -1,5 +1,11 @@
 export const SyntaxMenuConstants = {
-  section: {},
+  section: {
+    defaultLabels: {
+      normal: 'normal',
+      larger: 'larger',
+      largest: 'largest',
+    },
+  },
   itemize: {},
   bold: {},
   italic: {},
@@ -7,7 +13,18 @@ export const SyntaxMenuConstants = {
   bracket: {},
   hashtag: {},
   taggedLink: {},
-  formula: {},
-  code: {},
+  code: {
+    defaultLabels: {
+      inline: 'inline code',
+      block: 'block code',
+    },
+  },
+  formula: {
+    defaultLabels: {
+      inline: 'inline formula',
+      display: 'display formula',
+      block: 'block formula',
+    },
+  },
   quote: {},
 };

@@ -6,7 +6,7 @@ export interface CursorCoordinate {
 export interface Props {
   coordinate: CursorCoordinate | undefined;
   textAreaValue: string;
-  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   mouseHold: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down';
@@ -49,7 +49,7 @@ export interface HiddenTextAreaProps {
 }
 
 export interface SuggestionListProps {
-  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   position: Position;

@@ -13,8 +13,8 @@ export interface BracketLinkProps {
   disabled?: boolean;
 }
 
-export interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'>;
+export interface HashtagProps {
+  anchorProps?: (hashtagName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -44,7 +44,7 @@ export interface Props {
   syntax?: 'bracket' | 'markdown';
   textProps?: TextProps;
   bracketLinkProps?: BracketLinkProps;
-  hashTagProps?: HashTagProps;
+  hashtagProps?: HashtagProps;
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
@@ -67,7 +67,7 @@ export interface State {
   selectionMouse: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down';
   historyHead: number;
   editActionHistory: EditAction[];
-  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   suggestionStart: number;

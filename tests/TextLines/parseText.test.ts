@@ -12,7 +12,7 @@ interface TestCase extends BaseTestCase {
 interface Common {
   disabledMap?: {
     bracketLink?: boolean;
-    hashTag?: boolean;
+    hashtag?: boolean;
     code?: boolean;
     formula?: boolean;
   };
@@ -40,7 +40,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
   return (testCase, common) => {
     const disabledMap = {
       bracketLink: false,
-      hashTag: false,
+      hashtag: false,
       code: false,
       formula: false,
       ...common?.disabledMap,

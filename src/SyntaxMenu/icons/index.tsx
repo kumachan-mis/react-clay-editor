@@ -88,7 +88,7 @@ export const HashtagIcon = ({ className, ...rest }: React.SVGProps<SVGSVGElement
   </svg>
 );
 
-export const TaggedlinkIcon = ({ className, ...rest }: React.SVGProps<SVGSVGElement>) => (
+export const TaggedLinkIcon = ({ className, ...rest }: React.SVGProps<SVGSVGElement>) => (
   <svg
     className={mergeClassNames(className, styles.syntaxIcon)}
     xmlns="http://www.w3.org/2000/svg"

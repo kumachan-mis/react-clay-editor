@@ -314,30 +314,30 @@
           "lineIndex": 0,
           "children": [
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 0,
               "range": [0, 11],
-              "hashTag": "#hashtagtest"
+              "hashtag": "#hashtagtest"
             },
             {
               "type": "normal",
               "text": ", "
             },
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 0,
               "range": [14, 26],
-              "hashTag": "#hashtag_test"
+              "hashtag": "#hashtag_test"
             },
             {
               "type": "normal",
               "text": ", "
             },
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 0,
               "range": [29, 41],
-              "hashTag": "#hashtag-test"
+              "hashtag": "#hashtag-test"
             },
             {
               "type": "normal",
@@ -483,10 +483,10 @@
               "text": "left "
             },
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 4,
               "range": [5, 17],
-              "hashTag": "#hashtag_link"
+              "hashtag": "#hashtag_link"
             },
             {
               "type": "normal",

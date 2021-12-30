@@ -1,5 +1,5 @@
 import { CursorCoordinate } from '../Cursor/types';
-import { BracketLinkProps, HashTagProps, TaggedLinkProps, CodeProps, FormulaProps } from '../Editor/types';
+import { BracketLinkProps, HashtagProps, TaggedLinkProps, CodeProps, FormulaProps } from '../Editor/types';
 
 import { Node } from './parser/types';
 
@@ -8,7 +8,7 @@ export interface Props {
   syntax?: 'bracket' | 'markdown';
   cursorCoordinate?: CursorCoordinate;
   bracketLinkProps?: BracketLinkProps;
-  hashTagProps?: HashTagProps;
+  hashtagProps?: HashtagProps;
   taggedLinkPropsMap?: TaggedLinkPropsMap;
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
@@ -19,7 +19,7 @@ export interface Props {
 export interface NodeProps {
   node: Node;
   bracketLinkProps: BracketLinkProps;
-  hashTagProps: HashTagProps;
+  hashtagProps: HashtagProps;
   taggedLinkPropsMap: TaggedLinkPropsMap;
   codeProps: CodeProps;
   formulaProps: FormulaProps;

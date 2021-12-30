@@ -20,7 +20,7 @@ import {
   ItemizeIcon,
   QuoteIcon,
   SectionIcon,
-  TaggedlinkIcon,
+  TaggedLinkIcon,
   UnderlineIcon,
 } from './icons';
 
@@ -33,7 +33,7 @@ export const SyntaxMenu: React.FC = () => (
     <UnderlineMenu />
     <BracketMenu />
     <HashtagMenu />
-    <TaggedlinkMenu />
+    <TaggedLinkMenu />
     <CodeMenu />
     <FormulaMenu />
     <QuoteMenu />
@@ -42,6 +42,7 @@ export const SyntaxMenu: React.FC = () => (
 
 const SectionMenu: React.FC = () => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const constants = SyntaxMenuConstants.section;
 
   return (
     <DropdownMenu onClose={onClose}>
@@ -49,8 +50,9 @@ const SectionMenu: React.FC = () => {
         <SectionIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem>section</DropdownMenuItem>
-        <DropdownMenuItem>subsection</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.normal}</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.larger}</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.largest}</DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
   );
@@ -92,14 +94,15 @@ const HashtagMenu: React.FC = () => (
   </IconButtonMenu>
 );
 
-const TaggedlinkMenu: React.FC = () => (
+const TaggedLinkMenu: React.FC = () => (
   <IconButtonMenu>
-    <TaggedlinkIcon />
+    <TaggedLinkIcon />
   </IconButtonMenu>
 );
 
 const CodeMenu: React.FC = () => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const constants = SyntaxMenuConstants.code;
 
   return (
     <DropdownMenu onClose={onClose}>
@@ -107,8 +110,8 @@ const CodeMenu: React.FC = () => {
         <CodeIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem>inline code</DropdownMenuItem>
-        <DropdownMenuItem>block code</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.inline}</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.block}</DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
   );
@@ -116,6 +119,7 @@ const CodeMenu: React.FC = () => {
 
 const FormulaMenu: React.FC = () => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const constants = SyntaxMenuConstants.formula;
 
   return (
     <DropdownMenu onClose={onClose}>
@@ -123,9 +127,9 @@ const FormulaMenu: React.FC = () => {
         <FormulaIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem>inline formula</DropdownMenuItem>
-        <DropdownMenuItem>display formula</DropdownMenuItem>
-        <DropdownMenuItem>block formula</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.inline}</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.display}</DropdownMenuItem>
+        <DropdownMenuItem>{constants.defaultLabels.block}</DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
   );

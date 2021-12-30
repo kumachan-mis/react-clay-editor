@@ -1,2 +1,2 @@
 export { parseText } from './parseText';
-export { getHashTagName, getTagName } from './utils';
+export { getHashtagName, getTagName } from './utils';

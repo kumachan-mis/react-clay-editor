@@ -68,7 +68,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
   }
 
   interface SuggestionConfig {
-    suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+    suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
     suggestions?: string[];
     initialSuggestionIndex?: number;
     getSuggestionStart?: (text: string | undefined) => number;
@@ -132,7 +132,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
 
   {
     const regexes: RegexObject = constants.hashtag;
-    const config: SuggestionConfig = { suggestionType: 'hashTag', ...props.hashTagProps };
+    const config: SuggestionConfig = { suggestionType: 'hashtag', ...props.hashtagProps };
     const newState = typedSuggestion(state, regexes, config);
     if (newState) return [text, newState];
   }
@@ -170,7 +170,7 @@ export function insertSuggestion(text: string, state: State, suggestion: string,
     switch (state.suggestionType) {
       case 'bracketLink':
         return insertText(text, state, suggestion.substring(start));
-      case 'hashTag':
+      case 'hashtag':
         return insertText(text, state, `${suggestion.replaceAll(' ', '_')} `.substring(start));
       case 'taggedLink':
         return insertText(text, state, ` ${suggestion}`.substring(start));

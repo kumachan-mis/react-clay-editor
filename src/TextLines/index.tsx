@@ -17,7 +17,7 @@ import {
   EmbededLink,
 } from './components';
 import { TextLinesConstants } from './constants';
-import { parseText, getHashTagName, getTagName } from './parser';
+import { parseText, getHashtagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
 import { Props, NodeProps } from './types';
 
@@ -26,7 +26,7 @@ export const TextLines: React.FC<Props> = ({
   syntax = 'bracket',
   cursorCoordinate,
   bracketLinkProps = {},
-  hashTagProps = {},
+  hashtagProps = {},
   taggedLinkPropsMap = {},
   codeProps = {},
   formulaProps = {},
@@ -38,7 +38,7 @@ export const TextLines: React.FC<Props> = ({
       syntax,
       disabledMap: {
         bracketLink: bracketLinkProps.disabled,
-        hashTag: hashTagProps.disabled,
+        hashtag: hashtagProps.disabled,
         code: codeProps.disabled,
         formula: formulaProps.disabled,
       },
@@ -52,7 +52,7 @@ export const TextLines: React.FC<Props> = ({
     bracketLinkProps.disabled,
     codeProps.disabled,
     formulaProps.disabled,
-    hashTagProps.disabled,
+    hashtagProps.disabled,
     taggedLinkPropsMap,
     text,
   ]);
@@ -64,7 +64,7 @@ export const TextLines: React.FC<Props> = ({
           key={index}
           node={node}
           bracketLinkProps={bracketLinkProps}
-          hashTagProps={hashTagProps}
+          hashtagProps={hashtagProps}
           taggedLinkPropsMap={taggedLinkPropsMap}
           codeProps={codeProps}
           formulaProps={formulaProps}
@@ -78,7 +78,7 @@ export const TextLines: React.FC<Props> = ({
 const Node: React.FC<NodeProps> = ({
   node,
   bracketLinkProps,
-  hashTagProps,
+  hashtagProps,
   taggedLinkPropsMap,
   codeProps,
   formulaProps,
@@ -92,7 +92,7 @@ const Node: React.FC<NodeProps> = ({
           <Node
             node={facingMeta}
             bracketLinkProps={bracketLinkProps}
-            hashTagProps={hashTagProps}
+            hashtagProps={hashtagProps}
             taggedLinkPropsMap={taggedLinkPropsMap}
             codeProps={codeProps}
             formulaProps={formulaProps}
@@ -103,7 +103,7 @@ const Node: React.FC<NodeProps> = ({
               key={index}
               node={child}
               bracketLinkProps={bracketLinkProps}
-              hashTagProps={hashTagProps}
+              hashtagProps={hashtagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
@@ -114,7 +114,7 @@ const Node: React.FC<NodeProps> = ({
             <Node
               node={trailingMeta}
               bracketLinkProps={bracketLinkProps}
-              hashTagProps={hashTagProps}
+              hashtagProps={hashtagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
@@ -172,7 +172,7 @@ const Node: React.FC<NodeProps> = ({
           <Node
             node={facingMeta}
             bracketLinkProps={bracketLinkProps}
-            hashTagProps={hashTagProps}
+            hashtagProps={hashtagProps}
             taggedLinkPropsMap={taggedLinkPropsMap}
             codeProps={codeProps}
             formulaProps={formulaProps}
@@ -183,7 +183,7 @@ const Node: React.FC<NodeProps> = ({
               key={index}
               node={child}
               bracketLinkProps={bracketLinkProps}
-              hashTagProps={hashTagProps}
+              hashtagProps={hashtagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
@@ -194,7 +194,7 @@ const Node: React.FC<NodeProps> = ({
             <Node
               node={trailingMeta}
               bracketLinkProps={bracketLinkProps}
-              hashTagProps={hashTagProps}
+              hashtagProps={hashtagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
@@ -254,7 +254,7 @@ const Node: React.FC<NodeProps> = ({
                 key={index}
                 node={child}
                 bracketLinkProps={bracketLinkProps}
-                hashTagProps={hashTagProps}
+                hashtagProps={hashtagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
@@ -281,7 +281,7 @@ const Node: React.FC<NodeProps> = ({
                 key={index}
                 node={child}
                 bracketLinkProps={bracketLinkProps}
-                hashTagProps={hashTagProps}
+                hashtagProps={hashtagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
@@ -303,7 +303,7 @@ const Node: React.FC<NodeProps> = ({
                 key={index}
                 node={child}
                 bracketLinkProps={bracketLinkProps}
-                hashTagProps={hashTagProps}
+                hashtagProps={hashtagProps}
                 taggedLinkPropsMap={taggedLinkPropsMap}
                 codeProps={codeProps}
                 formulaProps={formulaProps}
@@ -394,7 +394,7 @@ const Node: React.FC<NodeProps> = ({
               key={index}
               node={child}
               bracketLinkProps={bracketLinkProps}
-              hashTagProps={hashTagProps}
+              hashtagProps={hashtagProps}
               taggedLinkPropsMap={taggedLinkPropsMap}
               codeProps={codeProps}
               formulaProps={formulaProps}
@@ -491,15 +491,15 @@ const Node: React.FC<NodeProps> = ({
         </EmbededLink>
       );
     }
-    case 'hashTag': {
-      const { lineIndex, hashTag } = node;
+    case 'hashtag': {
+      const { lineIndex, hashtag } = node;
       const [first] = node.range;
       const cursorOn = cursorLineIndex === lineIndex;
-      const anchorElementProps = hashTagProps.anchorProps?.(getHashTagName(hashTag));
+      const anchorElementProps = hashtagProps.anchorProps?.(getHashtagName(hashtag));
 
       return (
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
-          {[...hashTag].map((char, index) => (
+          {[...hashtag].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
             </Char>

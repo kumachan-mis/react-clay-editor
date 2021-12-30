@@ -6,7 +6,7 @@ export type {
   Props as EditorProps,
   TextProps,
   BracketLinkProps,
-  HashTagProps,
+  HashtagProps,
   TaggedLinkProps,
   CodeProps,
   FormulaProps,
