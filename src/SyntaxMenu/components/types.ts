@@ -10,7 +10,9 @@ export type DropdownMenuAnchorProps = {
   open: boolean;
   onOpen: (anchorEl: HTMLElement) => void;
   onClose: () => void;
-} & React.ComponentProps<'button'>;
+  buttonProps?: React.ComponentProps<'button'>;
+  disabled?: boolean;
+} & React.ComponentProps<'div'>;
 
 export type DropdownMenuListProps = {
   open: boolean;

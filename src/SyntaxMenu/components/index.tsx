@@ -60,8 +60,9 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   open,
   onOpen,
   onClose,
-  className,
+  buttonProps,
   disabled,
+  className,
   children,
   ...rest
 }) => {
@@ -71,13 +72,19 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   );
 
   const constants = ComponentConstants.dropdownMenuAnchor;
-  const anchorClassName = disabled
-    ? mergeClassNames(ComponentConstants.disabled.className, constants.className)
-    : constants.className;
+
+  let anchorClassName = mergeClassNames(className, constants.className);
+  if (disabled) anchorClassName = mergeClassNames(anchorClassName, ComponentConstants.disabled.className);
+
+  const { className: buttonClassName, disabled: buttonDisabled, ...buttonRest } = buttonProps || {};
 
   return (
-    <div className={anchorClassName}>
-      <button className={mergeClassNames(className, constants.icon.className)} disabled={disabled} {...rest}>
+    <div className={anchorClassName} {...rest}>
+      <button
+        className={mergeClassNames(buttonClassName, constants.icon.className)}
+        disabled={disabled || buttonDisabled}
+        {...buttonRest}
+      >
         {children}
       </button>
       <button
