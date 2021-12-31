@@ -81,9 +81,9 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   return (
     <div className={anchorClassName} {...rest}>
       <button
-        className={mergeClassNames(buttonClassName, constants.icon.className)}
+        className={mergeClassNames(buttonClassName, constants.button.className)}
         disabled={disabled || buttonDisabled}
-        data-testid={createTestId(constants.icon.testId)}
+        data-testid={createTestId(constants.button.testId)}
         {...buttonRest}
       >
         {children}

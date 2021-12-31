@@ -11,9 +11,9 @@ export const ComponentConstants = {
   },
   dropdownMenuAnchor: {
     className: styles.dropdownAnchor,
-    icon: {
-      className: mergeClassNames(styles.iconButton, styles.dropdownIcon),
-      testId: 'dropdown-anchor-icon',
+    button: {
+      className: mergeClassNames(styles.iconButton, styles.dropdownButton),
+      testId: 'dropdown-anchor-button',
     },
     arrow: {
       className: mergeClassNames(styles.iconButton, styles.dropdownArrow),

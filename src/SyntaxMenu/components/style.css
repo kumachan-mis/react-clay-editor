@@ -52,7 +52,7 @@ div.dropdownAnchor.disabled {
   cursor: unset;
 }
 
-button.dropdownIcon {
+button.dropdownButton {
   border: unset;
   border-radius: 8px 0px 0px 8px;
 }
