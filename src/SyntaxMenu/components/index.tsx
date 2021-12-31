@@ -5,7 +5,6 @@ import { ArrowIcon } from '../icons';
 
 import { ComponentConstants } from './constants';
 import {
-  DropdownMenuProps,
   DropdownMenuAnchorProps,
   DropdownMenuItemProps,
   DropdownMenuListProps,
@@ -31,30 +30,7 @@ export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ className, child
   );
 };
 
-export const DropdownMenu: React.FC<DropdownMenuProps> = ({ onClose, children }) => {
-  const rootRef = React.useRef<HTMLSpanElement | null>(null);
-
-  const handleOnClickAway = React.useCallback(
-    (event: MouseEvent) => {
-      if (!rootRef.current || rootRef.current.contains(event.target as Node)) return;
-      onClose();
-    },
-    [onClose, rootRef]
-  );
-
-  React.useEffect(() => {
-    document.addEventListener('click', handleOnClickAway);
-    return () => {
-      document.removeEventListener('click', handleOnClickAway);
-    };
-  }, [handleOnClickAway]);
-
-  return (
-    <span role="menuitem" ref={(ref) => (rootRef.current = ref)}>
-      {children}
-    </span>
-  );
-};
+export const DropdownMenu: React.FC = ({ children }) => <span role="menuitem">{children}</span>;
 
 export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   open,
@@ -66,10 +42,26 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   children,
   ...rest
 }) => {
+  const arrowRef = React.useRef<HTMLButtonElement | null>(null);
+
+  const handleOnClickAway = React.useCallback(
+    (event: MouseEvent) => {
+      if (!arrowRef.current || arrowRef.current.contains(event.target as Node)) return;
+      onClose();
+    },
+    [onClose, arrowRef]
+  );
   const handleOnArrowClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => (open ? onClose() : onOpen(event.currentTarget)),
     [open, onClose, onOpen]
   );
+
+  React.useEffect(() => {
+    document.addEventListener('click', handleOnClickAway);
+    return () => {
+      document.removeEventListener('click', handleOnClickAway);
+    };
+  }, [handleOnClickAway]);
 
   const constants = ComponentConstants.dropdownMenuAnchor;
 
@@ -94,6 +86,7 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
         onClick={handleOnArrowClick}
         aria-haspopup="true"
         aria-expanded={open}
+        ref={(ref) => (arrowRef.current = ref)}
         data-testid={createTestId(constants.arrow.testId)}
       >
         <ArrowIcon />

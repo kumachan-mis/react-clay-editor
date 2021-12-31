@@ -2,10 +2,6 @@ export type MenuContainerProps = React.ComponentProps<'div'>;
 
 export type IconButtonMenuProps = React.ComponentProps<'button'>;
 
-export type DropdownMenuProps = {
-  onClose: () => void;
-};
-
 export type DropdownMenuAnchorProps = {
   open: boolean;
   onOpen: (anchorEl: HTMLElement) => void;

@@ -84,7 +84,7 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   largestLabel ||= constants.items.largest.defaultLabel;
 
   return (
-    <DropdownMenu onClose={onClose}>
+    <DropdownMenu>
       <DropdownMenuAnchor
         open={open}
         onOpen={onOpen}
@@ -118,7 +118,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
   outdentLabel ||= constants.items.outdent.defaultLabel;
 
   return (
-    <DropdownMenu onClose={onClose}>
+    <DropdownMenu>
       <DropdownMenuAnchor
         open={open}
         onOpen={onOpen}
@@ -212,7 +212,7 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
   const constants = SyntaxMenuConstants.taggedLink;
 
   return (
-    <DropdownMenu onClose={onClose}>
+    <DropdownMenu>
       <DropdownMenuAnchor
         open={open}
         onOpen={onOpen}
@@ -248,7 +248,7 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
   blockLabel ||= constants.items.block.defaultLabel;
 
   return (
-    <DropdownMenu onClose={onClose}>
+    <DropdownMenu>
       <DropdownMenuAnchor
         open={open}
         onOpen={onOpen}
@@ -283,7 +283,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
   blockLabel ||= constants.items.block.defaultLabel;
 
   return (
-    <DropdownMenu onClose={onClose}>
+    <DropdownMenu>
       <DropdownMenuAnchor
         open={open}
         onOpen={onOpen}
@@ -317,7 +317,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
   outdentLabel ||= constants.items.outdent.defaultLabel;
 
   return (
-    <DropdownMenu onClose={onClose}>
+    <DropdownMenu>
       <DropdownMenuAnchor
         open={open}
         onOpen={onOpen}
