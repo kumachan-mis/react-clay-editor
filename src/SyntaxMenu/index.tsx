@@ -19,8 +19,8 @@ import {
   FormulaIcon,
   HashtagIcon,
   ItalicIcon,
-  ItemizeIcon,
-  QuoteIcon,
+  ItemizationIcon,
+  QuotationIcon,
   SectionIcon,
   TaggedLinkIcon,
   UnderlineIcon,
@@ -34,30 +34,36 @@ import {
   SectionMenuProps,
   SyntaxMenuProps,
   TaggedLinkMenuPropsMap,
+  ItemizationMenuProps,
+  QuotationMenuProps,
 } from './types';
 
-export const SyntaxMenu: React.FC<SyntaxMenuProps & MenuCommonProps> = ({
+export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
+  editorState,
+  setEditorState,
+  syntax = 'bracket',
   section,
+  itemization,
   bracket,
   hashtag,
   taggedLink,
   code,
   formula,
-  editorState,
-  setEditorState,
+  quotation,
+  containerProps,
 }) => (
-  <MenuContainer>
-    <SectionMenu editorState={editorState} setEditorState={setEditorState} {...section} />
-    <ItemizeMenu editorState={editorState} setEditorState={setEditorState} />
-    <BoldMenu editorState={editorState} setEditorState={setEditorState} />
-    <ItalicMenu editorState={editorState} setEditorState={setEditorState} />
-    <UnderlineMenu editorState={editorState} setEditorState={setEditorState} />
-    <BracketMenu editorState={editorState} setEditorState={setEditorState} {...bracket} />
-    <HashtagMenu editorState={editorState} setEditorState={setEditorState} {...hashtag} />
-    <TaggedLinkMenu editorState={editorState} setEditorState={setEditorState} {...taggedLink} />
-    <CodeMenu editorState={editorState} setEditorState={setEditorState} {...code} />
-    <FormulaMenu editorState={editorState} setEditorState={setEditorState} {...formula} />
-    <QuoteMenu editorState={editorState} setEditorState={setEditorState} />
+  <MenuContainer {...containerProps}>
+    <SectionMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...section} />
+    <ItemizationMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...itemization} />
+    <BoldMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} />
+    <ItalicMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} />
+    <UnderlineMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} />
+    <BracketMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...bracket} />
+    <HashtagMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...hashtag} />
+    <TaggedLinkMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...taggedLink} />
+    <CodeMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...code} />
+    <FormulaMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...formula} />
+    <QuotationMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...quotation} />
   </MenuContainer>
 );
 
@@ -65,12 +71,17 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   normalLabel,
   largerLabel,
   largestLabel,
+  syntax,
   editorState,
   setEditorState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const constants = SyntaxMenuConstants.section;
+
+  normalLabel ||= constants.items.normal.defaultLabel;
+  largerLabel ||= constants.items.larger.defaultLabel;
+  largestLabel ||= constants.items.largest.defaultLabel;
 
   return (
     <DropdownMenu onClose={onClose}>
@@ -84,31 +95,48 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         <SectionIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>
-          {normalLabel || constants.items.normal.defaultLabel}
-        </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>
-          {largerLabel || constants.items.larger.defaultLabel}
-        </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>
-          {largestLabel || constants.items.largest.defaultLabel}
-        </DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>{normalLabel}</DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>{largerLabel}</DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.normal.testId)}>{largestLabel}</DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
   );
 };
 
-const ItemizeMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, disabled }) => {
-  const constants = SyntaxMenuConstants.itemize;
+const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
+  indentLabel,
+  outdentLabel,
+  syntax,
+  editorState,
+  setEditorState,
+  disabled,
+}) => {
+  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const constants = SyntaxMenuConstants.itemization;
+
+  indentLabel ||= constants.items.indent.defaultLabel;
+  outdentLabel ||= constants.items.outdent.defaultLabel;
 
   return (
-    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
-      <ItemizeIcon />
-    </IconButtonMenu>
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor
+        open={open}
+        onOpen={onOpen}
+        onClose={onClose}
+        disabled={disabled}
+        data-testid={createTestId(constants.testId)}
+      >
+        <ItemizationIcon />
+      </DropdownMenuAnchor>
+      <DropdownMenuList open={open} anchorEl={anchorEl}>
+        <DropdownMenuItem data-testid={createTestId(constants.items.indent.testId)}>{indentLabel}</DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.outdent.testId)}>{outdentLabel}</DropdownMenuItem>
+      </DropdownMenuList>
+    </DropdownMenu>
   );
 };
 
-const BoldMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, disabled }) => {
+const BoldMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorState, disabled }) => {
   const constants = SyntaxMenuConstants.bold;
 
   return (
@@ -118,7 +146,7 @@ const BoldMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, disa
   );
 };
 
-const ItalicMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, disabled }) => {
+const ItalicMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorState, disabled }) => {
   const constants = SyntaxMenuConstants.italic;
 
   return (
@@ -128,7 +156,7 @@ const ItalicMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, di
   );
 };
 
-const UnderlineMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, disabled }) => {
+const UnderlineMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorState, disabled }) => {
   const constants = SyntaxMenuConstants.underline;
 
   return (
@@ -141,6 +169,7 @@ const UnderlineMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState,
 const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
   suggestions,
   initialSuggestionIndex,
+  syntax,
   editorState,
   setEditorState,
   disabled,
@@ -157,6 +186,7 @@ const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
 const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
   suggestions,
   initialSuggestionIndex,
+  syntax,
   editorState,
   setEditorState,
   disabled,
@@ -172,12 +202,13 @@ const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
 
 const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
   tags,
+  syntax,
   editorState,
   setEditorState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const tagEntries = Object.entries(tags);
+  const tagEntries = Object.entries(tags || {});
   const constants = SyntaxMenuConstants.taggedLink;
 
   return (
@@ -205,12 +236,16 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
 const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
   inlineLabel,
   blockLabel,
+  syntax,
   editorState,
   setEditorState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const constants = SyntaxMenuConstants.code;
+
+  inlineLabel ||= constants.items.inline.defaultLabel;
+  blockLabel ||= constants.items.block.defaultLabel;
 
   return (
     <DropdownMenu onClose={onClose}>
@@ -224,12 +259,8 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
         <CodeIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(constants.items.inline.testId)}>
-          {inlineLabel || constants.items.inline.defaultLabel}
-        </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(constants.items.block.testId)}>
-          {blockLabel || constants.items.block.defaultLabel}
-        </DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.inline.testId)}>{inlineLabel}</DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.block.testId)}>{blockLabel}</DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
   );
@@ -239,12 +270,17 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
   inlineLabel,
   displayLabel,
   blockLabel,
+  syntax,
   editorState,
   setEditorState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const constants = SyntaxMenuConstants.formula;
+
+  inlineLabel ||= constants.items.inline.defaultLabel;
+  displayLabel ||= constants.items.display.defaultLabel;
+  blockLabel ||= constants.items.block.defaultLabel;
 
   return (
     <DropdownMenu onClose={onClose}>
@@ -258,26 +294,43 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
         <FormulaIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(constants.items.inline.testId)}>
-          {inlineLabel || constants.items.inline.defaultLabel}
-        </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(constants.items.display.testId)}>
-          {displayLabel || constants.items.display.defaultLabel}
-        </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(constants.items.block.testId)}>
-          {blockLabel || constants.items.block.defaultLabel}
-        </DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.inline.testId)}>{inlineLabel}</DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.display.testId)}>{displayLabel}</DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.block.testId)}>{blockLabel}</DropdownMenuItem>
       </DropdownMenuList>
     </DropdownMenu>
   );
 };
 
-const QuoteMenu: React.FC<MenuCommonProps> = ({ editorState, setEditorState, disabled }) => {
-  const constants = SyntaxMenuConstants.quote;
+const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
+  indentLabel,
+  outdentLabel,
+  syntax,
+  editorState,
+  setEditorState,
+  disabled,
+}) => {
+  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const constants = SyntaxMenuConstants.quotation;
+
+  indentLabel ||= constants.items.indent.defaultLabel;
+  outdentLabel ||= constants.items.outdent.defaultLabel;
 
   return (
-    <IconButtonMenu disabled={disabled} data-testid={createTestId(constants.testId)}>
-      <QuoteIcon />
-    </IconButtonMenu>
+    <DropdownMenu onClose={onClose}>
+      <DropdownMenuAnchor
+        open={open}
+        onOpen={onOpen}
+        onClose={onClose}
+        disabled={disabled}
+        data-testid={createTestId(constants.testId)}
+      >
+        <QuotationIcon />
+      </DropdownMenuAnchor>
+      <DropdownMenuList open={open} anchorEl={anchorEl}>
+        <DropdownMenuItem data-testid={createTestId(constants.items.indent.testId)}>{indentLabel}</DropdownMenuItem>
+        <DropdownMenuItem data-testid={createTestId(constants.items.outdent.testId)}>{outdentLabel}</DropdownMenuItem>
+      </DropdownMenuList>
+    </DropdownMenu>
   );
 };

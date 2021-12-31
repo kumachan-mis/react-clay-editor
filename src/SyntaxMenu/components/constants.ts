@@ -22,6 +22,9 @@ export const ComponentConstants = {
   },
   dropdownMenuList: {
     className: mergeClassNames(styles.dropdownMenu, styles.absolute),
+    container: {
+      className: styles.dropdownMenuContainer,
+    },
   },
   dropdownMenuItem: {
     className: styles.dropdownMenuItem,

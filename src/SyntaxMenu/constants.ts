@@ -16,8 +16,18 @@ export const SyntaxMenuConstants = {
       },
     },
   },
-  itemize: {
-    testId: 'itemize-menu',
+  itemization: {
+    testId: 'itemization-menu',
+    items: {
+      indent: {
+        defaultLabel: 'indent',
+        testId: 'indent-itemization-menu-item',
+      },
+      outdent: {
+        defaultLabel: 'outdent',
+        testId: 'outdent-itemization-menu-item',
+      },
+    },
   },
   bold: {
     testId: 'bold-menu',
@@ -71,7 +81,17 @@ export const SyntaxMenuConstants = {
       },
     },
   },
-  quote: {
-    testId: 'quote-menu',
+  quotation: {
+    testId: 'quotation-menu',
+    items: {
+      indent: {
+        defaultLabel: 'indent',
+        testId: 'indent-quotation-menu-item',
+      },
+      outdent: {
+        defaultLabel: 'outdent',
+        testId: 'outdent-quotation-menu-item',
+      },
+    },
   },
 };

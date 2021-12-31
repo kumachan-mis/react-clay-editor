@@ -16,6 +16,9 @@ export const EditorConstants = {
     selectIdRegex: /editor-body/,
     testId: 'editor-body',
   },
+  syntaxMenu: {
+    className: styles.syntaxMenu,
+  },
   suggestion: {
     bracketLink: {
       facingRegex: /^.*\[(?<text>[^[\]]*)$/,

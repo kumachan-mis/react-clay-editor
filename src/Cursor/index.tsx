@@ -15,7 +15,7 @@ export const Cursor: React.FC<Props> = (props) => {
     if (!rootRef.current) return;
     const newState = handleOnEditorScrollOrResize(props, state, rootRef.current);
     if (newState !== state) setState(newState);
-  }, [props, state, setState, rootRef]);
+  }, [props, state]);
 
   React.useEffect(() => {
     window.addEventListener('resize', _handleOnEditorScrollOrResize);
@@ -34,7 +34,7 @@ export const Cursor: React.FC<Props> = (props) => {
     if (newState !== state) setState(newState);
     // state should not be in dependencies because of infinite recursion
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props, rootRef]);
+  }, [props]);
 
   return (
     <span ref={rootRef}>

@@ -7,7 +7,7 @@
     "    - single-line-selection: no-section-line section-line",
     "    - multi-lines-selection",
     "  - menuitem: button normal larger largest",
-    "- itemize menu",
+    "- itemization menu",
     "  - selection: no-selection selection",
     "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line",
     "    - selection: no-itemized-line has-itemized-line",
@@ -20,11 +20,40 @@
     "                             in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
     "    - multi-lines-selection",
     "  - menuitem: bold italic underline",
-    "- quote",
+    "- quotation",
     "  - selection: no-selection selection",
     "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line itemized-line nested-itemized-line",
     "    - selection: no-quoted-line has-quoted-line",
     "  - menuitem: button indent outdent"
   ],
-  "testCases": []
+  "testCases": [
+    {
+      "name": "section menu: no-selection, empty-line, button",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["[** larger]"],
+      "expectedSelectionLines": ["larger"],
+      "expectedLinesAfterTyping": ["[** React Realtime Markup Editor]"]
+    }
+  ]
 }

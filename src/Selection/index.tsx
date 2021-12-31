@@ -18,7 +18,7 @@ export const Selection: React.FC<Props> = (props) => {
     if (!rootRef.current) return;
     const newState = selectionPropsToState(props, rootRef.current);
     if (newState !== state) setState(newState);
-  }, [props, state, setState, rootRef]);
+  }, [props, state]);
 
   React.useEffect(() => {
     window.addEventListener('resize', handleOnEditorResize);
@@ -33,7 +33,7 @@ export const Selection: React.FC<Props> = (props) => {
     if (newState !== state) setState(newState);
     // state should not be in dependencies because of infinite recursion
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props, rootRef]);
+  }, [props]);
 
   return (
     <span ref={rootRef}>

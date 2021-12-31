@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
+import { SyntaxMenu } from '../SyntaxMenu';
 import { TextLines } from '../TextLines';
 import { mergeClassNames, createTestId } from '../common/utils';
 
@@ -79,7 +80,7 @@ export const Editor: React.FC<Props> = (props) => {
         if (newText !== props.text) props.onChangeText(newText);
       };
     },
-    [state, props, setState, rootRef]
+    [state, props]
   );
 
   const createKeyboardEventHandler = React.useCallback(
@@ -91,7 +92,7 @@ export const Editor: React.FC<Props> = (props) => {
         if (newText !== props.text) props.onChangeText(newText);
       };
     },
-    [state, props, setState]
+    [state, props]
   );
 
   const createKeyboardEventHandlerWithProps = React.useCallback(
@@ -105,7 +106,7 @@ export const Editor: React.FC<Props> = (props) => {
         if (newText !== props.text) props.onChangeText(newText);
       };
     },
-    [state, props, setState]
+    [state, props]
   );
 
   const _handleOnMouseDown = React.useCallback(
@@ -139,7 +140,7 @@ export const Editor: React.FC<Props> = (props) => {
         suggestionIndex: -1,
       });
     },
-    [props.readonly, state, setState]
+    [props.readonly, state]
   );
 
   React.useEffect(() => {
@@ -165,6 +166,31 @@ export const Editor: React.FC<Props> = (props) => {
 
   return (
     <div className={mergeClassNames(EditorConstants.editor.className, props.className)} style={props.style}>
+      <SyntaxMenu
+        editorState={[props.text, state]}
+        setEditorState={([newText, newState]) => {
+          if (newState !== state) setState(newState);
+          if (newText !== props.text) props.onChangeText(newText);
+        }}
+        syntax={props.syntax}
+        bracket={{
+          suggestions: props.bracketLinkProps?.suggestions,
+          initialSuggestionIndex: props.bracketLinkProps?.initialSuggestionIndex,
+        }}
+        hashtag={{
+          suggestions: props.hashtagProps?.suggestions,
+          initialSuggestionIndex: props.hashtagProps?.initialSuggestionIndex,
+        }}
+        taggedLink={{
+          tags: Object.fromEntries(
+            Object.entries(props.taggedLinkPropsMap || {}).map(([tagName, linkProps]) => [
+              tagName,
+              { suggestions: linkProps.suggestions, initialSuggestionIndex: linkProps.initialSuggestionIndex },
+            ])
+          ),
+        }}
+        containerProps={{ className: EditorConstants.syntaxMenu.className }}
+      />
       <div
         className={EditorConstants.root.className}
         ref={rootRef}
