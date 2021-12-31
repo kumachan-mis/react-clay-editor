@@ -1,0 +1,28 @@
+{
+  "note": [
+    "There are some categories in these tests:",
+    "- bracket/hashtag/tagged link menu",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-bracket/hashtag/tagged in-normal other",
+    "    - single-line-selection: empty-line in-bracket/hashtag/tagged in-normal other",
+    "    - multi-lines-selection",
+    "- block code",
+    "- inline code",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-inline-code in-normal other",
+    "    - single-line-selection: empty-line in-inline-code in-normal other",
+    "    - multi-lines-selection",
+    "- block formula",
+    "- inline/display formula",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-inline/display-formula in-normal other",
+    "    - single-line-selection: empty-line in-inline/display-formula in-normal other",
+    "    - multi-lines-selection",
+    "- quote",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line",
+    "    - selection: no-quoted-line has-quoted-line",
+    "  - menuitem: button indent outdent"
+  ],
+  "testCases": []
+}

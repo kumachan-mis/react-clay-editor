@@ -1,0 +1,29 @@
+{
+  "note": [
+    "There are some categories in these tests:",
+    "- section menu",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line no-section-line section-line",
+    "    - single-line-selection: no-section-line section-line",
+    "    - multi-lines-selection",
+    "  - menuitem: button normal larger largest",
+    "- itemize menu",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line",
+    "    - selection: no-itemized-line has-itemized-line",
+    "  - menuitem: button indent outdent",
+    "- bold menu",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-bold in-normal other",
+    "    - single-line-selection: empty-line in-bold in-normal other",
+    "    - multi-lines-selection",
+    "- italic menu",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-italic in-normal other",
+    "    - single-line-selection: empty-line in-italic in-normal other",
+    "    - multi-lines-selection",
+    "- underline menu",
+    "  - disabled"
+  ],
+  "testCases": []
+}
