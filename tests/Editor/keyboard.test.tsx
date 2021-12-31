@@ -7,7 +7,7 @@ import * as utils from '../../src/Editor/callbacks/utils';
 import * as textLines from '../../src/TextLines';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { MockEditor, MockTextLines } from '../mocks';
+import { MockEditor, MockTextLines, expectTextLinesToBe } from '../mocks';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -106,12 +106,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
     render(<MockEditor syntax={syntax} {...common?.options} />);
     userEvent.click(screen.getByTestId('editor-body'));
     userEvent.keyboard(resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
-
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
-    }
-    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
+    expectTextLinesToBe(screen, testCase.expectedLines);
   };
 }
 

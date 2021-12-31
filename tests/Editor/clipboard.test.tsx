@@ -5,7 +5,7 @@ import React from 'react';
 import * as utils from '../../src/Editor/callbacks/utils';
 import * as textLines from '../../src/TextLines';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { MockEditor, MockTextLines } from '../mocks';
+import { MockEditor, MockTextLines, expectTextLinesToBe } from '../mocks';
 
 interface ReadTestCase extends BaseTestCase {
   name: string;
@@ -79,11 +79,7 @@ describe('clipboardEvents (read) in Editor', () => {
       clipboardData: { getData: () => testCase.inputClipboardEvent.data },
     });
 
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
-    }
-    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
+    expectTextLinesToBe(screen, testCase.expectedLines);
   });
 });
 
@@ -114,10 +110,6 @@ describe('clipboardEvents (write) in Editor', () => {
       },
     });
 
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
-    }
-    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
+    expectTextLinesToBe(screen, testCase.expectedLines);
   });
 });

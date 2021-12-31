@@ -24,6 +24,14 @@ export const MockTextLines: React.FC<MockTextLinesProps> = ({ text }) => {
   );
 };
 
+export function expectTextLinesToBe(screen: Screen, expectedLines: string[]): void {
+  for (let i = 0; i < expectedLines.length; i++) {
+    const line = expectedLines[i];
+    expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
+  }
+  expect(screen.queryByTestId(`mock-line-${expectedLines.length}`)).not.toBeInTheDocument();
+}
+
 export interface SpyOnGetBoundingClientRectConfig {
   chars: number;
   lines: number;
