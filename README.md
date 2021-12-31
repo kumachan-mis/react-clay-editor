@@ -53,10 +53,10 @@ const App: React.FC = () => {
 
 #### markdown-like syntax
 
-| style         | syntax  |
-| ------------- | ------- |
-| <li>item</li> | `-item` |
-| <li>item</li> | `*item` |
+| style         | syntax   |
+| ------------- | -------- |
+| <li>item</li> | `- item` |
+| <li>item</li> | `* item` |
 
 **Note**  
 Multiple spaces will provide nested itemizations.
@@ -104,7 +104,26 @@ Combinations of `*` and `_` are NOT available yet...
 | <a>#hash-tag</a>        | `#hash-tag`          |
 
 **Note**
-A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
+
+1. A space(`␣`) in a hashtag name will get converted to an underscore(`_`)
+
+2. Tagged links are useful when you want to make some link groups  
+   Here are some examples:
+
+- Can make `[github: @user_name/repository_name]` go to
+
+```html
+<a href="https://github.com/user_name/repository_name"> @user_name/repository_name </a>
+```
+
+- Can make `[npm: package_name]` go to
+
+```html
+<a href="https://www.npmjs.com/package/package_name"> package_name </a>
+```
+
+3. Can show input suggestions of links  
+   For example, you can provide users with webpage list which may be refered from the document
 
 ### Code Strings
 
@@ -168,27 +187,10 @@ A space(`␣`) in a hashtag name will get converted to an underscore(`_`).
 - style
   > quotation
 - syntax  
-  `>quotation`
+   `> quotation`
 
-**Note**
-
-1. Tagged links are useful when you want to make some link groups  
-   Here are some examples:
-
-- Can make `[github: @user_name/repository_name]` go to
-
-```html
-<a href="https://github.com/user_name/repository_name"> @user_name/repository_name </a>
-```
-
-- Can make `[npm: package_name]` go to
-
-```html
-<a href="https://www.npmjs.com/package/package_name"> package_name </a>
-```
-
-2. Can show input suggestions of links  
-   For example, you can provide users with webpage list which may be refered from the document
+**Note**  
+Multiple spaces will provide nested quotations.
 
 ## Public API
 

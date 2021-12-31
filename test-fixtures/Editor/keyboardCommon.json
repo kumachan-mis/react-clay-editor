@@ -96,9 +96,22 @@
       "expectedLines": ["."]
     },
     {
-      "name": "quotation enter",
-      "inputTyping": [">{space}first{space}quotation{enter}", "second{space}quotation"],
-      "expectedLines": ["> first quotation", "> second quotation"]
+      "name": "quotation enter (empty text line)",
+      "inputTyping": [
+        ">{space}quotation{space}1{enter}",
+        "quotation{space}2{enter}",
+        "{arrowleft}{arrowleft}{space}{arrowright}{arrowright}quotation{space}3{enter}",
+        "quotation{space}4"
+      ],
+      "expectedLines": ["> quotation 1", "> quotation 2", " > quotation 3", " > quotation 4"]
+    },
+    {
+      "name": "quotation enter (non-empty text line)",
+      "inputTyping": [
+        ">{space}pp{arrowleft}{enter}{arrowright}{enter}",
+        "{arrowleft}{arrowleft}{space}{arrowright}{arrowright}qq{arrowleft}{enter}{arrowright}"
+      ],
+      "expectedLines": ["> p", "> p", " > q", " > q"]
     },
     {
       "name": "quotation backspace",
