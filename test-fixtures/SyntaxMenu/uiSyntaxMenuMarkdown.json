@@ -9,7 +9,7 @@
     "  - menuitem: button normal larger largest",
     "- itemize menu",
     "  - selection: no-selection selection",
-    "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line",
+    "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line quoted-line nested-quoted-line",
     "    - selection: no-itemized-line has-itemized-line",
     "  - menuitem: button indent outdent",
     "- bold menu",
@@ -25,7 +25,12 @@
     "                             in-normal in-normal-with-italic-left in-normal-with-italic-right other",
     "    - multi-lines-selection",
     "- underline menu",
-    "  - disabled"
+    "  - disabled",
+    "- quote",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line itemized-line nested-itemized-line",
+    "    - selection: no-quoted-line has-quoted-line",
+    "  - menuitem: button indent outdent"
   ],
   "testCases": []
 }

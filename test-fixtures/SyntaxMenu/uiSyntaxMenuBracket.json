@@ -19,7 +19,12 @@
     "                             in-lacked in-lacked-with-decoration-left in-lacked-with-decoration-right",
     "                             in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
     "    - multi-lines-selection",
-    "  - menuitem: bold italic underline"
+    "  - menuitem: bold italic underline",
+    "- quote",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line itemized-line nested-itemized-line",
+    "    - selection: no-quoted-line has-quoted-line",
+    "  - menuitem: button indent outdent"
   ],
   "testCases": []
 }

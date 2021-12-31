@@ -7,6 +7,9 @@
     "    - single-line-selection: empty-line in-link in-normal other",
     "    - multi-lines-selection",
     "- block code",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line indented-line other",
+    "    - selection",
     "- inline code",
     "  - selection: no-selection single-line-selection multi-lines-selection",
     "    - no-selection: empty-line in-code in-normal other",
@@ -14,17 +17,15 @@
     "                             in-normal in-normal-with-code-left in-normal-with-code-right other",
     "    - multi-lines-selection",
     "- block formula",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line indented-line other",
+    "    - selection",
     "- inline/display formula",
     "  - selection: no-selection single-line-selection multi-lines-selection",
     "    - no-selection: empty-line in-formula in-normal other",
     "    - single-line-selection: empty-line in-formula-all in-formula-left in-formula-mid in-formula-right",
     "                             in-normal in-normal-with-formula-left in-normal-with-formula-right other",
-    "    - multi-lines-selection",
-    "- quote",
-    "  - selection: no-selection selection",
-    "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line",
-    "    - selection: no-quoted-line has-quoted-line",
-    "  - menuitem: button indent outdent"
+    "    - multi-lines-selection"
   ],
   "testCases": []
 }
