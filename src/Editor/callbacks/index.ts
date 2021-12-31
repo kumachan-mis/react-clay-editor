@@ -155,6 +155,9 @@ export function handleOnKeyDown(
       const lines = newText.split('\n');
       const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
 
+      const groups = newPrevLine.match(TextLinesConstants.regexes.common.quotation)?.groups;
+      if (groups) return insertText(newText, newState, groups.indent + groups.meta);
+
       if (!props.syntax || props.syntax === 'bracket') {
         // bracket syntax
         const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
@@ -164,8 +167,6 @@ export function handleOnKeyDown(
         const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }
-      const groups = newPrevLine.match(TextLinesConstants.regexes.common.quotation)?.groups;
-      if (groups) return insertText(newText, newState, groups.indent + groups.meta);
 
       return [newText, newState];
     }
