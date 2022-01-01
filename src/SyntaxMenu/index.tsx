@@ -4,11 +4,11 @@ import { createTestId } from '../common/utils';
 
 import {
   MenuContainer,
+  IconButtonMenu,
   DropdownMenu,
   DropdownMenuAnchor,
   DropdownMenuList,
   DropdownMenuItem,
-  IconButtonMenu,
 } from './components';
 import { useDropdownMenu } from './components/hooks';
 import {
@@ -25,29 +25,29 @@ import {
   QuotationMenuConstants,
 } from './constants';
 import {
+  SectionIcon,
+  ItemizationIcon,
   BoldIcon,
+  ItalicIcon,
+  UnderlineIcon,
   BracketIcon,
+  HashtagIcon,
+  TaggedLinkIcon,
   CodeIcon,
   FormulaIcon,
-  HashtagIcon,
-  ItalicIcon,
-  ItemizationIcon,
   QuotationIcon,
-  SectionIcon,
-  TaggedLinkIcon,
-  UnderlineIcon,
 } from './icons';
 import {
-  BracketMenuProps,
-  CodeMenuProps,
-  MenuCommonProps,
-  FormulaMenuProps,
-  HashtagMenuProps,
-  SectionMenuProps,
   SyntaxMenuProps,
-  TaggedLinkMenuPropsMap,
+  SectionMenuProps,
   ItemizationMenuProps,
+  BracketMenuProps,
+  HashtagMenuProps,
+  TaggedLinkMenuPropsMap,
+  CodeMenuProps,
+  FormulaMenuProps,
   QuotationMenuProps,
+  MenuCommonProps,
 } from './types';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
