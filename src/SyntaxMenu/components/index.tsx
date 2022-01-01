@@ -110,7 +110,7 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
   return !open ? (
     <></>
   ) : (
-    <div className={constants.className}>
+    <div className={constants.className} data-testid={createTestId(constants.testId)}>
       <ul
         className={mergeClassNames(className, constants.container.className)}
         role="menu"

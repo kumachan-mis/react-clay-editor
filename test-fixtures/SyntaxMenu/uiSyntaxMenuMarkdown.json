@@ -2,16 +2,16 @@
   "note": [
     "There are some categories in these tests:",
     "- section menu",
-    "  - selection: no-selection single-line-selection multi-lines-selection",
-    "    - no-selection: empty-line no-section-line section-line",
-    "    - single-line-selection: no-section-line section-line",
-    "    - multi-lines-selection",
     "  - menuitem: button normal larger largest",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line normal-line section-line other",
+    "    - single-line-selection: normal-line section-line other",
+    "    - multi-lines-selection",
     "- itemization menu",
+    "  - menuitem: button indent outdent",
     "  - selection: no-selection selection",
     "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line quoted-line nested-quoted-line",
     "    - selection: no-itemized-line has-itemized-line",
-    "  - menuitem: button indent outdent",
     "- bold menu",
     "  - selection: no-selection single-line-selection multi-lines-selection",
     "    - no-selection: empty-line in-bold in-normal other",
@@ -27,14 +27,14 @@
     "- underline menu",
     "  - disabled",
     "- quotation",
+    "  - menuitem: button indent outdent",
     "  - selection: no-selection selection",
     "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line itemized-line nested-itemized-line",
-    "    - selection: no-quoted-line has-quoted-line",
-    "  - menuitem: button indent outdent"
+    "    - selection: no-quoted-line has-quoted-line"
   ],
   "testCases": [
     {
-      "name": "section menu: no-selection, empty-line, button",
+      "name": "section menu: button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -61,7 +61,61 @@
       "expectedLinesAfterTyping": ["## React Realtime Markup Editor"]
     },
     {
-      "name": "undo menu",
+      "name": "section menu: button, no-selection, normal-line (normal text)",
+      "textLines": ["WYSIWYG Editor"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["## WYSIWYG Editor"],
+      "expectedLinesAfterTyping": ["## .WYSIWYG Editor"]
+    },
+    {
+      "name": "section menu: button, no-selection, normal-line (decorated text)",
+      "textLines": ["#WYSIWYG_Editor"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["## #WYSIWYG_Editor"],
+      "expectedLinesAfterTyping": ["## #WYSIWY.G_Editor."]
+    },
+    {
+      "name": "undo section menu",
       "textLines": [""],
       "inputMouse": [
         {

@@ -2,33 +2,33 @@
   "note": [
     "There are some categories in these tests:",
     "- section menu",
-    "  - selection: no-selection single-line-selection multi-lines-selection",
-    "    - no-selection: empty-line no-section-line section-line",
-    "    - single-line-selection: no-section-line section-line",
-    "    - multi-lines-selection",
     "  - menuitem: button normal larger largest",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line normal-line section-line section-like-line other",
+    "    - single-line-selection: normal-line section-line section-like-line other",
+    "    - multi-lines-selection",
     "- itemization menu",
-    "  - selection: no-selection selection",
-    "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line",
-    "    - selection: no-itemized-line has-itemized-line",
     "  - menuitem: button indent outdent",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line quoted-line nested-quoted-line",
+    "    - selection: no-itemized-line has-itemized-line",
     "- decoration menu",
+    "  - menuitem: bold italic underline",
     "  - selection: no-selection single-line-selection multi-lines-selection",
     "    - no-selection: empty-line in-decoration in-lacked in-normal other",
     "    - single-line-selection: empty-line in-decoration-all in-decoration-left in-decoration-mid in-decoration-right",
     "                             in-lacked in-lacked-with-decoration-left in-lacked-with-decoration-right",
     "                             in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
     "    - multi-lines-selection",
-    "  - menuitem: bold italic underline",
     "- quotation",
+    "  - menuitem: button indent outdent",
     "  - selection: no-selection selection",
     "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line itemized-line nested-itemized-line",
-    "    - selection: no-quoted-line has-quoted-line",
-    "  - menuitem: button indent outdent"
+    "    - selection: no-quoted-line has-quoted-line"
   ],
   "testCases": [
     {
-      "name": "section menu: no-selection, empty-line, button",
+      "name": "section menu: button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -39,7 +39,7 @@
           }
         },
         {
-          "type": "mouseMove",
+          "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
             "charIndex": 0
@@ -55,7 +55,586 @@
       "expectedLinesAfterTyping": ["[** React Realtime Markup Editor]"]
     },
     {
-      "name": "undo menu",
+      "name": "section menu: button, no-selection, normal-line (normal text)",
+      "textLines": ["WYSIWYG Editor"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[** WYSIWYG Editor]"],
+      "expectedLinesAfterTyping": ["[** .WYSIWYG Editor]"]
+    },
+    {
+      "name": "section menu: normal, no-selection, normal-line (normal text)",
+      "textLines": ["WYSIWYG Editor"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "normal-section-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[* WYSIWYG Editor]"],
+      "expectedLinesAfterTyping": ["[* W.YSIWYG Editor]"]
+    },
+    {
+      "name": "section menu: larger, selection, normal-line (normal text)",
+      "textLines": ["WYSIWYG Editor"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "larger-section-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[** WYSIWYG Editor]"],
+      "expectedLinesAfterTyping": ["[** WYS.ditor]"]
+    },
+    {
+      "name": "section menu: button, no-selection, normal-line (decorated text)",
+      "textLines": ["`WYSIWYG` Editor"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[** `WYSIWYG` Editor]"],
+      "expectedLinesAfterTyping": ["[** `WYSIWYG.` Editor]"]
+    },
+    {
+      "name": "section menu: largest, selection, normal-line (decorated text)",
+      "textLines": ["`WYSIWYG` Editor"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "largest-section-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[*** `WYSIWYG` Editor]"],
+      "expectedLinesAfterTyping": ["[*** `WYSIWYG.Editor]"]
+    },
+    {
+      "name": "section menu: button, no-selection, section-line (normal text)",
+      "textLines": ["[* WYSIWYG Editor]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["WYSIWYG Editor"],
+      "expectedLinesAfterTyping": ["WYS.IWYG` Editor"]
+    },
+    {
+      "name": "section menu: normal, no-selection, section-line (normal text)",
+      "textLines": ["[* WYSIWYG Editor]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "normal-section-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["WYSIWYG Editor"],
+      "expectedLinesAfterTyping": ["WYS.IWYG` Editor"]
+    },
+    {
+      "name": "section menu: button, no-selection, section-line (decorated text)",
+      "textLines": ["[* $f(x)$]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$f(x)$"],
+      "expectedLinesAfterTyping": [".$f(x)$"]
+    },
+    {
+      "name": "section menu: largest, selection, section-line (decorated text)",
+      "textLines": ["[* $f(x)$]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "largest-section-menu-item"
+      },
+      "inputTyping": ["g"],
+      "expectedLinesAfterMenu": ["[*** $f(x)$]"],
+      "expectedLinesAfterTyping": ["$g(x)$"]
+    },
+    {
+      "name": "section menu: button, selection, section-line (larger text)",
+      "textLines": ["[** WYSIWYG Editor]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["WYSIWYG Editor"],
+      "expectedLinesAfterTyping": ["WY.WYG Editor"]
+    },
+    {
+      "name": "section menu: normal, no-selection, section-line (larger text)",
+      "textLines": ["[** WYSIWYG Editor]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "normmal-section-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[* WYSIWYG Editor]"],
+      "expectedLinesAfterTyping": ["[* WY.SIWYG Editor]"]
+    },
+    {
+      "name": "section menu: button, no-selection, section-like-line",
+      "textLines": ["[** WYSIWYG Editor][bracket]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[** WYSIWYG Editor][bracket]"],
+      "expectedLinesAfterTyping": ["[** WYSIWY.G Editor][bracket]"]
+    },
+    {
+      "name": "section menu: disabled, selection, section-like-line",
+      "textLines": ["[** WYSIWYG Editor][bracket]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 20
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[** WYSIWYG Editor][bracket]"],
+      "expectedLinesAfterTyping": ["[** WYSIWY.bracket]"]
+    },
+    {
+      "name": "section menu: button, no-selection, other (line node)",
+      "textLines": ["> [** Markup Editor]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 17
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 17
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["> [** Markup Editor]"],
+      "expectedLinesAfterTyping": ["> [** Markup Edit.or]"]
+    },
+    {
+      "name": "section menu: disabled, no-selection, other (line node)",
+      "textLines": ["  [** Markup Editor]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 17
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 17
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["  [** Markup Editor]"],
+      "expectedLinesAfterTyping": ["  [** Markup Edit.or]"]
+    },
+    {
+      "name": "section menu: button, no-selection, other (block node)",
+      "textLines": ["```", "[* block code]", "```"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 4
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["```", "[* block code]", "```"],
+      "expectedLinesAfterTyping": ["```", "[* b.lock code]", "```"]
+    },
+    {
+      "name": "section menu: disabled, selection, other (block node)",
+      "textLines": ["```", "[* block code]", "```"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["```", "[* block code]", "```"],
+      "expectedLinesAfterTyping": ["```", "[* .lock code]", "```"]
+    },
+    {
+      "name": "section menu: button, multi-lines-selection",
+      "textLines": ["Editor", "Source code editor, for editing source code", "Text editor, for editing plain text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [
+        "Editor",
+        "Source code editor, for editing source code",
+        "Text editor, for editing plain text"
+      ],
+      "expectedLinesAfterTyping": [". editor, for editing source code", "Text editor, for editing plain text"]
+    },
+    {
+      "name": "section menu: disabled, multi-lines-selection",
+      "textLines": ["Editor", ""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["Editor", ""],
+      "expectedLinesAfterTyping": ["."]
+    },
+    {
+      "name": "undo section menu",
       "textLines": [""],
       "inputMouse": [
         {

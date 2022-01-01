@@ -90,11 +90,12 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => voi
         userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuButton));
         break;
       case 'dropdown-anchor-arrow':
-        if (!testCase.inputMenu.menuItemName) {
-          throw new Error('Test is broken. menuItemName is required');
-        }
         userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuButton));
-        userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuItemName));
+        if (testCase.inputMenu.menuItemName) {
+          expect(screen.getByTestId('dropdown-menu-list')).toBeInTheDocument();
+          userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuItemName));
+        }
+        expect(screen.getByTestId('dropdown-menu-list')).not.toBeInTheDocument();
         break;
       default:
         throw new Error(`Test is broken. Unknown menuButton: ${testCase.inputMenu.menuButton}`);
