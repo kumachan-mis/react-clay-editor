@@ -21,6 +21,7 @@ import {
   handleOnMoveTextBottom,
 } from './shortcutHandlers';
 import {
+  updateSelectionByCursor,
   insertText,
   showSuggestion,
   showIMEBasedSuggestion,
@@ -63,16 +64,14 @@ export function handleOnMouseMove(
 
   if (state.selectionMouse === 'fired') return [text, { ...state, selectionMouse }];
 
+  const { cursorCoordinate, textSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) {
+  const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
+  if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
     return [text, { ...state, selectionMouse }];
   }
-
-  const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
-  const free = { ...cursorCoordinate };
-  const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection, selectionMouse }];
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate);
+  return [text, { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse }];
 }
 
 export function handleOnMouseUp(
@@ -86,12 +85,14 @@ export function handleOnMouseUp(
     return [text, { ...state, selectionMouse: 'deactive' }];
   }
 
+  const { cursorCoordinate, textSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
-  const free = cursorCoordinate ? cursorCoordinate : { ...state.cursorCoordinate };
-  const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection, selectionMouse: 'deactive' }];
+  const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate);
+  return [
+    text,
+    { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse: 'deactive' },
+  ];
 }
 
 export function handleOnClick(

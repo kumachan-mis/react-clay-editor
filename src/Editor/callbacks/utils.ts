@@ -1,10 +1,23 @@
 import { CursorCoordinate } from '../../Cursor/types';
-import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
+import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../../Cursor/utils';
+import { TextSelection } from '../../Selection/types';
 import { selectionToRange } from '../../Selection/utils';
 import { ComponentConstants } from '../../TextLines/components/constants';
 import { getTextCharElementAt } from '../../TextLines/utils';
 import { EditorConstants } from '../constants';
 import { Props, State, EditAction } from '../types';
+
+export function updateSelectionByCursor(
+  textSelection: TextSelection | undefined,
+  cursorCoordinate: CursorCoordinate | undefined,
+  newCursorCoordinate: CursorCoordinate | undefined,
+  disabled = false
+): TextSelection | undefined {
+  if (disabled || !cursorCoordinate) return undefined;
+  const fixed = textSelection ? textSelection.fixed : cursorCoordinate;
+  const free = newCursorCoordinate ? newCursorCoordinate : cursorCoordinate;
+  return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
+}
 
 export function insertText(
   text: string,
