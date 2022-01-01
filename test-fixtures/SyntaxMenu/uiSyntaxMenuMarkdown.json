@@ -32,5 +32,60 @@
     "    - selection: no-quoted-line has-quoted-line",
     "  - menuitem: button indent outdent"
   ],
-  "testCases": []
+  "testCases": [
+    {
+      "name": "section menu: no-selection, empty-line, button",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["## larger"],
+      "expectedLinesAfterTyping": ["## React Realtime Markup Editor"]
+    },
+    {
+      "name": "undo menu",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["{ctrl}z{/ctrl}."],
+      "expectedLinesAfterMenu": ["## larger"],
+      "expectedLinesAfterTyping": ["."]
+    }
+  ]
 }
