@@ -1,8 +1,9 @@
 import { State } from '../Editor/types';
 
 export interface SyntaxMenuProps {
-  editorState: [string, State];
-  setEditorState: (editorState: [string, State]) => void;
+  text: string;
+  state: State;
+  setTextAndState: ([text, state]: [string, State]) => void;
   syntax?: 'bracket' | 'markdown';
   section?: SectionMenuProps;
   itemization?: ItemizationMenuProps;
@@ -63,8 +64,9 @@ export interface QuotationMenuProps {
 }
 
 export interface MenuCommonProps {
-  editorState: [string, State];
-  setEditorState: (editorState: [string, State]) => void;
+  text: string;
+  state: State;
+  setTextAndState: ([text, state]: [string, State]) => void;
   syntax?: 'bracket' | 'markdown';
   disabled?: boolean;
 }

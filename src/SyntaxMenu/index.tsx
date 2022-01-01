@@ -39,8 +39,9 @@ import {
 } from './types';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   syntax = 'bracket',
   section,
   itemization,
@@ -53,17 +54,17 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   containerProps,
 }) => (
   <MenuContainer {...containerProps}>
-    <SectionMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...section} />
-    <ItemizationMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...itemization} />
-    <BoldMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} />
-    <ItalicMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} />
-    <UnderlineMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} />
-    <BracketMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...bracket} />
-    <HashtagMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...hashtag} />
-    <TaggedLinkMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...taggedLink} />
-    <CodeMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...code} />
-    <FormulaMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...formula} />
-    <QuotationMenu syntax={syntax} editorState={editorState} setEditorState={setEditorState} {...quotation} />
+    <SectionMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...section} />
+    <ItemizationMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...itemization} />
+    <BoldMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} />
+    <ItalicMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} />
+    <UnderlineMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} />
+    <BracketMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...bracket} />
+    <HashtagMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...hashtag} />
+    <TaggedLinkMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...taggedLink} />
+    <CodeMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...code} />
+    <FormulaMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...formula} />
+    <QuotationMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...quotation} />
   </MenuContainer>
 );
 
@@ -72,8 +73,9 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   largerLabel,
   largestLabel,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
@@ -107,8 +109,9 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
   indentLabel,
   outdentLabel,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
@@ -136,7 +139,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
   );
 };
 
-const BoldMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorState, disabled }) => {
+const BoldMenu: React.FC<MenuCommonProps> = ({ syntax, text, state, setTextAndState, disabled }) => {
   const constants = SyntaxMenuConstants.bold;
 
   return (
@@ -146,7 +149,7 @@ const BoldMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorSta
   );
 };
 
-const ItalicMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorState, disabled }) => {
+const ItalicMenu: React.FC<MenuCommonProps> = ({ syntax, text, state, setTextAndState, disabled }) => {
   const constants = SyntaxMenuConstants.italic;
 
   return (
@@ -156,7 +159,7 @@ const ItalicMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorS
   );
 };
 
-const UnderlineMenu: React.FC<MenuCommonProps> = ({ syntax, editorState, setEditorState, disabled }) => {
+const UnderlineMenu: React.FC<MenuCommonProps> = ({ syntax, text, state, setTextAndState, disabled }) => {
   const constants = SyntaxMenuConstants.underline;
 
   return (
@@ -170,8 +173,9 @@ const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
   suggestions,
   initialSuggestionIndex,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const constants = SyntaxMenuConstants.bracket;
@@ -187,8 +191,9 @@ const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
   suggestions,
   initialSuggestionIndex,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const constants = SyntaxMenuConstants.hashtag;
@@ -203,8 +208,9 @@ const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
 const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
   tags,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
@@ -237,8 +243,9 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
   inlineLabel,
   blockLabel,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
@@ -271,8 +278,9 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
   displayLabel,
   blockLabel,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
@@ -306,8 +314,9 @@ const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
   indentLabel,
   outdentLabel,
   syntax,
-  editorState,
-  setEditorState,
+  text,
+  state,
+  setTextAndState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();

@@ -167,8 +167,9 @@ export const Editor: React.FC<Props> = (props) => {
   return (
     <div className={mergeClassNames(EditorConstants.editor.className, props.className)} style={props.style}>
       <SyntaxMenu
-        editorState={[props.text, state]}
-        setEditorState={([newText, newState]) => {
+        text={props.text}
+        state={state}
+        setTextAndState={([newText, newState]) => {
           if (newState !== state) setState(newState);
           if (newText !== props.text) props.onChangeText(newText);
         }}
