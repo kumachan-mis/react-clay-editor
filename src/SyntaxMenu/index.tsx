@@ -49,7 +49,7 @@ import {
   QuotationMenuProps,
   MenuCommonProps,
 } from './types';
-import { handleOnSectionButtonClick } from './utils';
+import { handleSectionMenu } from './utils';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   text,
@@ -92,6 +92,7 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   largestLabel = SectionMenuConstants.items.largest.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const props: Required<SectionMenuProps> = { normalLabel, largerLabel, largestLabel };
 
   return (
     <DropdownMenu>
@@ -100,7 +101,7 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         onOpen={onOpen}
         onClose={onClose}
         disabled={disabled}
-        buttonProps={{ onClick: () => setTextAndState(handleOnSectionButtonClick(text, state, largerLabel)) }}
+        buttonProps={{ onClick: () => setTextAndState(handleSectionMenu(text, state, props, 'larger', syntax)) }}
         data-testid={createTestId(SectionMenuConstants.testId)}
       >
         <SectionIcon />
