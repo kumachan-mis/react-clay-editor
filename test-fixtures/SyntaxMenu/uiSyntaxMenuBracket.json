@@ -52,7 +52,6 @@
       },
       "inputTyping": ["React Realtime Markup Editor"],
       "expectedLinesAfterMenu": ["[** larger]"],
-      "expectedSelectionLines": ["larger"],
       "expectedLinesAfterTyping": ["[** React Realtime Markup Editor]"]
     }
   ]

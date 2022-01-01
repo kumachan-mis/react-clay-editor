@@ -1,14 +1,14 @@
-.editor {
+.root {
   width: 400px;
   height: 400px;
 }
-.editor :global(.katex-display) {
+.root :global(.katex-display) {
   display: inline-block;
   margin: 0;
   text-align: inherit;
 }
 
-.root {
+.editor {
   width: 100%;
   height: calc(100% - 36px);
   overflow-y: scroll;

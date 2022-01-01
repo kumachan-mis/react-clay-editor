@@ -12,17 +12,15 @@ export const MockEditor: React.FC<MockEditorProps> = ({ initText = '', ...props 
 
 export type MockTextLinesProps = { text: string };
 
-export const MockTextLines: React.FC<MockTextLinesProps> = ({ text }) => {
-  return (
-    <div>
-      {text.split('\n').map((line, i) => (
-        <div key={i} data-testid={`mock-line-${i}`}>
-          {line}
-        </div>
-      ))}
-    </div>
-  );
-};
+export const MockTextLines: React.FC<MockTextLinesProps> = ({ text }) => (
+  <div>
+    {text.split('\n').map((line, i) => (
+      <div key={i} data-testid={`mock-line-${i}`}>
+        {line}
+      </div>
+    ))}
+  </div>
+);
 
 export function expectTextLinesToBe(screen: Screen, expectedLines: string[]): void {
   for (let i = 0; i < expectedLines.length; i++) {

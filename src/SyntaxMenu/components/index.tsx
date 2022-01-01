@@ -83,10 +83,10 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
       <button
         className={constants.arrow.className}
         disabled={disabled}
+        ref={arrowRef}
         onClick={handleOnArrowClick}
         aria-haspopup="true"
         aria-expanded={open}
-        ref={(ref) => (arrowRef.current = ref)}
         data-testid={createTestId(constants.arrow.testId)}
       >
         <ArrowIcon />

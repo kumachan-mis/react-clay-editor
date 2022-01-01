@@ -76,8 +76,8 @@ describe('function positionToCursorCoordinate in Editor', () => {
     });
     const spiedEditorBodyGetBoundingClientRect = spyOnGetBoundingClientRect.editorBody();
 
-    const root = screen.getByTestId('editor-root');
-    expect(positionToCursorCoordinate(text, testCase.inputPosition, root)).toEqual(testCase.expectedCoordinate);
+    const editor = screen.getByTestId('editor');
+    expect(positionToCursorCoordinate(text, testCase.inputPosition, editor)).toEqual(testCase.expectedCoordinate);
 
     for (const spiedGetBoundingClientRects of [
       ...spiedCharGetBoundingClientRects,

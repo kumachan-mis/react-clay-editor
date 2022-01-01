@@ -40,6 +40,7 @@ export const Editor: React.FC<Props> = (props) => {
     suggestionStart: 0,
   });
   const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const editorRef = React.useRef<HTMLDivElement | null>(null);
   const timeIdRef = React.useRef<number>(0);
 
   React.useEffect(() => {
@@ -75,7 +76,7 @@ export const Editor: React.FC<Props> = (props) => {
     ): ((event: Event) => void) => {
       return (event) => {
         if (props.readonly || event.button !== 0) return;
-        const [newText, newState] = handler(props.text, state, event, rootRef.current);
+        const [newText, newState] = handler(props.text, state, event, editorRef.current);
         if (newState !== state) setState(newState);
         if (newText !== props.text) props.onChangeText(newText);
       };
@@ -165,7 +166,7 @@ export const Editor: React.FC<Props> = (props) => {
   }, [handleOnEditorBlur]);
 
   return (
-    <div className={mergeClassNames(EditorConstants.editor.className, props.className)} style={props.style}>
+    <div className={mergeClassNames(EditorConstants.root.className, props.className)} style={props.style} ref={rootRef}>
       <SyntaxMenu
         text={props.text}
         state={state}
@@ -193,10 +194,10 @@ export const Editor: React.FC<Props> = (props) => {
         containerProps={{ className: EditorConstants.syntaxMenu.className }}
       />
       <div
-        className={EditorConstants.root.className}
-        ref={rootRef}
-        data-selectid={EditorConstants.root.selectId}
-        data-testid={createTestId(EditorConstants.root.testId)}
+        className={EditorConstants.editor.className}
+        ref={editorRef}
+        data-selectid={EditorConstants.editor.selectId}
+        data-testid={createTestId(EditorConstants.editor.testId)}
       >
         <div
           className={EditorConstants.body.className}

@@ -49,6 +49,7 @@ import {
   QuotationMenuProps,
   MenuCommonProps,
 } from './types';
+import { handleOnSectionButtonClick } from './utils';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   text,
@@ -99,6 +100,7 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         onOpen={onOpen}
         onClose={onClose}
         disabled={disabled}
+        buttonProps={{ onClick: () => setTextAndState(handleOnSectionButtonClick(text, state, largerLabel)) }}
         data-testid={createTestId(SectionMenuConstants.testId)}
       >
         <SectionIcon />

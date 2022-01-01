@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getRoot } from '../Editor/utils';
+import { getEditor } from '../Editor/utils';
 import { createTestId } from '../common/utils';
 
 import { CursorConstants } from './constants';
@@ -19,11 +19,11 @@ export const Cursor: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     window.addEventListener('resize', _handleOnEditorScrollOrResize);
-    const editorRoot = rootRef.current && getRoot(rootRef.current);
-    if (editorRoot) editorRoot.addEventListener('scroll', _handleOnEditorScrollOrResize);
+    const editorElement = rootRef.current && getEditor(rootRef.current);
+    if (editorElement) editorElement.addEventListener('scroll', _handleOnEditorScrollOrResize);
 
     return () => {
-      if (editorRoot) editorRoot.removeEventListener('scroll', _handleOnEditorScrollOrResize);
+      if (editorElement) editorElement.removeEventListener('scroll', _handleOnEditorScrollOrResize);
       window.removeEventListener('resize', _handleOnEditorScrollOrResize);
     };
   }, [_handleOnEditorScrollOrResize]);

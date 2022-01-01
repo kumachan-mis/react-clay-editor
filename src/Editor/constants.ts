@@ -1,14 +1,14 @@
 import styles from './style.css';
 
 export const EditorConstants = {
-  editor: {
-    className: styles.editor,
-  },
   root: {
     className: styles.root,
-    selectId: 'editor-root',
-    selectIdRegex: /editor-root/,
-    testId: 'editor-root',
+  },
+  editor: {
+    className: styles.editor,
+    selectId: 'editor',
+    selectIdRegex: /editor/,
+    testId: 'editor',
   },
   body: {
     className: styles.body,
