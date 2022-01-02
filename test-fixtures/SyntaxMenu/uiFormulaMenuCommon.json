@@ -1,0 +1,16 @@
+{
+  "note": [
+    "There are some categories in these tests:",
+    "- block formula",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line indented-line other",
+    "    - selection",
+    "- inline/display formula",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-formula in-normal other",
+    "    - single-line-selection: empty-line in-formula-all in-formula-left in-formula-mid in-formula-right",
+    "                             in-normal in-normal-with-formula-left in-normal-with-formula-right other",
+    "    - multi-lines-selection"
+  ],
+  "testCases": []
+}

@@ -1,0 +1,11 @@
+{
+  "note": [
+    "There are some categories in these tests:",
+    "- bracket/hashtag/tagged link menu",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-link in-normal other",
+    "    - single-line-selection: empty-line in-link in-normal other",
+    "    - multi-lines-selection"
+  ],
+  "testCases": []
+}

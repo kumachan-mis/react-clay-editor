@@ -1,0 +1,16 @@
+{
+  "note": [
+    "There are some categories in these tests:",
+    "- block code",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line indented-line other",
+    "    - selection",
+    "- inline code",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-code in-normal other",
+    "    - single-line-selection: empty-line in-code-all in-code-left in-code-mid in-code-right",
+    "                             in-normal in-normal-with-code-left in-normal-with-code-right other",
+    "    - multi-lines-selection"
+  ],
+  "testCases": []
+}

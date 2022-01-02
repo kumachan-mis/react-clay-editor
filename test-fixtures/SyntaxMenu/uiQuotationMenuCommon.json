@@ -1,0 +1,11 @@
+{
+  "note": [
+    "There are some categories in these tests:",
+    "- quotation",
+    "  - menuitem: button indent outdent",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line normal-line quoted-line nested-quoted-line other-line",
+    "    - selection: all-normal-or-quoted-line has-other-line"
+  ],
+  "testCases": []
+}
