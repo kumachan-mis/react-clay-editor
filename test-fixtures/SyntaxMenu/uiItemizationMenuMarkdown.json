@@ -1,11 +1,10 @@
 {
   "note": [
     "There are some categories in these tests:",
-    "- itemization menu",
-    "  - menuitem: button indent outdent",
-    "  - selection: no-selection selection",
-    "    - no-selection: empty-line normal-line itemized-line nested-itemized-line other-line",
-    "    - selection: all-normal-or-itemized-line has-other-line"
+    "- menuitem: button indent outdent",
+    "- selection: no-selection selection",
+    "  - no-selection: empty-line normal-line itemized-line nested-itemized-line other-line",
+    "  - selection: all-normal-or-itemized-line has-other-line"
   ],
   "testCases": []
 }
