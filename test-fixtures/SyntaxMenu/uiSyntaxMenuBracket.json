@@ -629,7 +629,7 @@
       "expectedLinesAfterTyping": ["."]
     },
     {
-      "name": "undo section menu",
+      "name": "section menu: undo",
       "textLines": [""],
       "inputMouse": [
         {
