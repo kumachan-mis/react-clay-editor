@@ -1,19 +1,14 @@
 {
   "note": [
     "There are some categories in these tests:",
-    "- bold menu",
+    "- menuitem: bold italic",
     "  - selection: no-selection single-line-selection multi-lines-selection",
-    "    - no-selection: empty-line in-bold in-normal other",
-    "    - single-line-selection: empty-line in-bold-all in-bold-left in-bold-mid in-bold-right",
-    "                             in-normal in-normal-with-bold-left in-normal-with-bold-right other",
+    "    - no-selection: empty-line in-decoration",
+    "                    in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
+    "    - single-line-selection: empty-line in-decoration-all in-decoration-left in-decoration-mid in-decoration-right",
+    "                             in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
     "    - multi-lines-selection",
-    "- italic menu",
-    "  - selection: no-selection single-line-selection multi-lines-selection",
-    "    - no-selection: empty-line in-italic in-normal other",
-    "    - single-line-selection: empty-line in-italic-all in-italic-left in-italic-mid in-italic-right",
-    "                             in-normal in-normal-with-italic-left in-normal-with-italic-right other",
-    "    - multi-lines-selection",
-    "- underline menu",
+    "- menuitem: underline",
     "  - disabled"
   ],
   "testCases": []

@@ -7,7 +7,7 @@
     "    - selection",
     "- inline code",
     "  - selection: no-selection single-line-selection multi-lines-selection",
-    "    - no-selection: empty-line in-code in-normal other",
+    "    - no-selection: empty-line in-code in-normal in-normal-with-code-left in-normal-with-code-right other",
     "    - single-line-selection: empty-line in-code-all in-code-left in-code-mid in-code-right",
     "                             in-normal in-normal-with-code-left in-normal-with-code-right other",
     "    - multi-lines-selection"
