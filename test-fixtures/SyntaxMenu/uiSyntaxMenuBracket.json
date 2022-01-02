@@ -10,7 +10,7 @@
     "- itemization menu",
     "  - menuitem: button indent outdent",
     "  - selection: no-selection selection",
-    "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line quoted-line nested-quoted-line",
+    "    - no-selection: empty-line no-itemized-line itemized-line nested-itemized-line",
     "    - selection: no-itemized-line has-itemized-line",
     "- decoration menu",
     "  - menuitem: bold italic underline",
