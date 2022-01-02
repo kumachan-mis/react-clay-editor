@@ -11,7 +11,7 @@
     "  - menuitem: button indent outdent",
     "  - selection: no-selection selection",
     "    - no-selection: empty-line normal-line itemized-line nested-itemized-line other-line",
-    "    - selection: all-itemized-or-normal-line has-other-line",
+    "    - selection: all-normal-or-itemized-line has-other-line",
     "- bold menu",
     "  - selection: no-selection single-line-selection multi-lines-selection",
     "    - no-selection: empty-line in-bold in-normal other",
