@@ -321,7 +321,7 @@
       },
       "inputTyping": ["g"],
       "expectedLinesAfterMenu": ["[*** $f(x)$]"],
-      "expectedLinesAfterTyping": ["$g(x)$"]
+      "expectedLinesAfterTyping": ["[*** $g(x)$]"]
     },
     {
       "name": "section menu: button, selection, section-line (larger text)",
