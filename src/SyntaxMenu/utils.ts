@@ -18,53 +18,49 @@ export function handleSectionMenu(
   const lines = text.split('\n');
   const { lineIndex } = state.cursorCoordinate;
 
-  function handleBracketSyntax(): [string, State] {
-    if (!state.textSelection && lines[lineIndex].length === 0) {
-      let [insertedText, selectedText] = ['', ''];
-      switch (item) {
-        case 'normal':
-          [insertedText, selectedText] = [`[* ${props.normalLabel}]`, props.normalLabel];
-          break;
-        case 'larger':
-          [insertedText, selectedText] = [`[** ${props.largerLabel}]`, props.largerLabel];
-          break;
-        case 'largest':
-          [insertedText, selectedText] = [`[*** ${props.largestLabel}]`, props.largestLabel];
-          break;
-        default:
-          return [text, state];
-      }
-      const [newText, newState] = insertText(text, state, insertedText, insertedText.length - 1);
-      const newTextSelection = updateSelectionByMenu(newText, newState.cursorCoordinate, -selectedText.length);
-      return [newText, { ...newState, textSelection: newTextSelection }];
+  if (!state.textSelection && lines[lineIndex].length === 0) {
+    let [facingMeta, sectionName, trailingMeta] = ['', '', ''];
+    switch (item) {
+      case 'normal':
+        sectionName = props.normalLabel;
+        if (!syntax || syntax === 'bracket') {
+          // bracket syntax
+          [facingMeta, trailingMeta] = ['[* ', ']'];
+        } else {
+          // markdown syntax
+          [facingMeta, trailingMeta] = ['### ', ''];
+        }
+        break;
+      case 'larger':
+        sectionName = props.largerLabel;
+        if (!syntax || syntax === 'bracket') {
+          // bracket syntax
+          [facingMeta, trailingMeta] = ['[* ', ']'];
+        } else {
+          // markdown syntax
+          [facingMeta, trailingMeta] = ['### ', ''];
+        }
+        break;
+      case 'largest':
+        sectionName = props.largestLabel;
+        if (!syntax || syntax === 'bracket') {
+          // bracket syntax
+          [facingMeta, trailingMeta] = ['[* ', ']'];
+        } else {
+          // markdown syntax
+          [facingMeta, trailingMeta] = ['### ', ''];
+        }
+        break;
+      default:
+        return [text, state];
     }
-    return [text, state];
+    const insertedText = facingMeta + sectionName + trailingMeta;
+    const cursourMoveAmount = facingMeta.length + sectionName.length;
+    const [newText, newState] = insertText(text, state, insertedText, cursourMoveAmount);
+    const newTextSelection = updateSelectionByMenu(newText, newState.cursorCoordinate, -sectionName.length);
+    return [newText, { ...newState, textSelection: newTextSelection }];
   }
-
-  function handleMarkdownSyntax(): [string, State] {
-    if (!state.textSelection && lines[lineIndex].length === 0) {
-      let [insertedText, selectedText] = ['', ''];
-      switch (item) {
-        case 'normal':
-          [insertedText, selectedText] = [`### ${props.normalLabel}`, props.normalLabel];
-          break;
-        case 'larger':
-          [insertedText, selectedText] = [`## ${props.largerLabel}`, props.largerLabel];
-          break;
-        case 'largest':
-          [insertedText, selectedText] = [`# ${props.largestLabel}`, props.largestLabel];
-          break;
-        default:
-          return [text, state];
-      }
-      const [newText, newState] = insertText(text, state, insertedText, insertedText.length);
-      const newTextSelection = updateSelectionByMenu(newText, newState.cursorCoordinate, -selectedText.length);
-      return [newText, { ...newState, textSelection: newTextSelection }];
-    }
-    return [text, state];
-  }
-
-  return !syntax || syntax === 'bracket' ? handleBracketSyntax() : handleMarkdownSyntax();
+  return [text, state];
 }
 
 function updateSelectionByMenu(
