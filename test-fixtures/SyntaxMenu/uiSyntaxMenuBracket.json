@@ -19,12 +19,7 @@
     "    - single-line-selection: empty-line in-decoration-all in-decoration-left in-decoration-mid in-decoration-right",
     "                             in-lacked in-lacked-with-decoration-left in-lacked-with-decoration-right",
     "                             in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
-    "    - multi-lines-selection",
-    "- quotation",
-    "  - menuitem: button indent outdent",
-    "  - selection: no-selection selection",
-    "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line itemized-line nested-itemized-line",
-    "    - selection: no-quoted-line has-quoted-line"
+    "    - multi-lines-selection"
   ],
   "testCases": [
     {

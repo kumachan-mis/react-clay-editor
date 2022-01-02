@@ -25,7 +25,12 @@
     "    - no-selection: empty-line in-formula in-normal other",
     "    - single-line-selection: empty-line in-formula-all in-formula-left in-formula-mid in-formula-right",
     "                             in-normal in-normal-with-formula-left in-normal-with-formula-right other",
-    "    - multi-lines-selection"
+    "    - multi-lines-selection",
+    "- quotation",
+    "  - menuitem: button indent outdent",
+    "  - selection: no-selection selection",
+    "    - no-selection: empty-line no-quoted-line quoted-line nested-quoted-line",
+    "    - selection: no-quoted-line has-quoted-line"
   ],
   "testCases": []
 }
