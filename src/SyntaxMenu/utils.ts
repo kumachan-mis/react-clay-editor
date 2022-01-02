@@ -35,20 +35,20 @@ export function handleSectionMenu(
         sectionName = props.largerLabel;
         if (!syntax || syntax === 'bracket') {
           // bracket syntax
-          [facingMeta, trailingMeta] = ['[* ', ']'];
+          [facingMeta, trailingMeta] = ['[** ', ']'];
         } else {
           // markdown syntax
-          [facingMeta, trailingMeta] = ['### ', ''];
+          [facingMeta, trailingMeta] = ['## ', ''];
         }
         break;
       case 'largest':
         sectionName = props.largestLabel;
         if (!syntax || syntax === 'bracket') {
           // bracket syntax
-          [facingMeta, trailingMeta] = ['[* ', ']'];
+          [facingMeta, trailingMeta] = ['[*** ', ']'];
         } else {
           // markdown syntax
-          [facingMeta, trailingMeta] = ['### ', ''];
+          [facingMeta, trailingMeta] = ['# ', ''];
         }
         break;
       default:
