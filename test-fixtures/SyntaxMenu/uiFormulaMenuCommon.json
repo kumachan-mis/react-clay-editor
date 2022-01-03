@@ -1,16 +1,18 @@
 {
   "note": [
     "There are some categories in these tests:",
-    "- inline/display formula",
+    "- inline/display-formula",
     "  - selection: no-selection single-line-selection multi-lines-selection",
     "    - no-selection: empty-line in-formula in-normal in-normal-with-formula-left in-normal-with-formula-right other",
     "    - single-line-selection: empty-line in-formula-all in-formula-left in-formula-mid in-formula-right",
     "                             in-normal in-normal-with-formula-left in-normal-with-formula-right other",
     "    - multi-lines-selection",
-    "- block formula",
+    "- block-formula",
     "  - selection: no-selection selection",
-    "    - no-selection: empty-line indented-line other",
-    "    - selection"
+    "    - no-selection: empty-line in-formula-top in-formula-mid in-formula-bottom",
+    "                    in-other-line in-other-with-formula-above in-other-with-formula-below",
+    "    - selection: all-formula-lines all-formula-lines-top all-formula-lines-mid all-formula-lines-bottom",
+    "                 all-other-lines in-normal-with-formula-above in-normal-with-formula-below mixed-lines"
   ],
   "testCases": []
 }

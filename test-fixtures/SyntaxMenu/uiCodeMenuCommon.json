@@ -1,16 +1,619 @@
 {
   "note": [
     "There are some categories in these tests:",
-    "- inline code",
+    "- inline-code",
     "  - selection: no-selection single-line-selection multi-lines-selection",
     "    - no-selection: empty-line in-code in-normal in-normal-with-code-left in-normal-with-code-right other",
-    "    - single-line-selection: empty-line in-code-all in-code-left in-code-mid in-code-right",
+    "    - single-line-selection: in-code-all in-code-left in-code-mid in-code-right",
     "                             in-normal in-normal-with-code-left in-normal-with-code-right other",
     "    - multi-lines-selection",
-    "- block code",
+    "- block-code",
     "  - selection: no-selection selection",
-    "    - no-selection: empty-line indented-line other",
-    "    - selection"
+    "    - no-selection: empty-line in-code-top in-code-mid in-code-bottom",
+    "                    in-other-line in-other-with-code-above in-other-with-code-below",
+    "    - selection: all-code-lines all-code-lines-top all-code-lines-mid all-code-lines-bottom",
+    "                 all-other-lines in-normal-with-code-above in-normal-with-code-below mixed-lines"
   ],
-  "testCases": []
+  "testCases": [
+    {
+      "name": "inline-code-button, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["`inline code`"],
+      "expectedLinesAfterTyping": ["`React Realtime Markup Editor`"]
+    },
+    {
+      "name": "inline-code-dropdown, no-selection, in-code",
+      "textLines": ["`import { Editor } from 'react-realtime-markup-editor'`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["import { Editor } from 'react-realtime-markup-editor'"],
+      "expectedLinesAfterTyping": ["impor.t { Editor } from 'react-realtime-markup-editor'"]
+    },
+    {
+      "name": "inline-code-button, no-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["const x = 1;"],
+      "expectedLinesAfterMenu": ["normal te`inline code`xt"],
+      "expectedLinesAfterTyping": ["normal te`const x = 1;`xt"]
+    },
+    {
+      "name": "inline-code-dropdown, no-selection, in-normal-with-code-left",
+      "textLines": ["`code a = 0;`normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": [" const y = 2;"],
+      "expectedLinesAfterMenu": ["`const a = 0;inline code`normal text"],
+      "expectedLinesAfterTyping": ["`const a = 0; const y = 2;`normal text"]
+    },
+    {
+      "name": "inline-code-button, no-selection, in-normal-with-code-right",
+      "textLines": ["normal text`const a = 0;`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["const z = 3; "],
+      "expectedLinesAfterMenu": ["normal text`inline codeconst a = 0;`"],
+      "expectedLinesAfterTyping": ["normal text`const z = 3; const a = 0;`"]
+    },
+    {
+      "name": "inline-code-dropdown, no-selection, other (content node)",
+      "textLines": ["[bracket link]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[bracket link]"],
+      "expectedLinesAfterTyping": ["[bracket li.nk]"]
+    },
+    {
+      "name": "inline-code-dropdown, no-selection, other (block node)",
+      "textLines": ["```", "nothing happened", "```"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["```", "nothing happened", "```"],
+      "expectedLinesAfterTyping": ["```", "not.hing happened", "```"]
+    },
+    {
+      "name": "inline-code-button, single-line-selection, in-code-all (syntax and text)",
+      "textLines": ["`import 'react'`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 16
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["import 'react'"],
+      "expectedLinesAfterTyping": [".'"]
+    },
+    {
+      "name": "inline-code-dropdown, single-line-selection, in-code-all (text)",
+      "textLines": ["`import 'react'`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["import 'react'"],
+      "expectedLinesAfterTyping": ["."]
+    },
+    {
+      "name": "inline-code-button, single-line-selection, in-code-all (syntax)",
+      "textLines": ["`import 'react'`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["import 'react'"],
+      "expectedLinesAfterTyping": [".import 'react'"]
+    },
+    {
+      "name": "inline-code-dropdown, single-line-selection, in-code-left",
+      "textLines": ["`import 'react'`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["import '`react'`"],
+      "expectedLinesAfterTyping": [".`react'`"]
+    },
+    {
+      "name": "inline-code-button, single-line-selection, in-code-mid",
+      "textLines": ["`import 'react'`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["`im`port 'r`eact'`"],
+      "expectedLinesAfterTyping": ["`im`.`eact'`"]
+    },
+    {
+      "name": "inline-code-dropdown, single-line-selection, in-code-right",
+      "textLines": ["`import 'react'`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["`import `'react'"],
+      "expectedLinesAfterTyping": ["`import `."]
+    },
+    {
+      "name": "inline-code-button, single-line-selection, in-normal",
+      "textLines": ["`left code`mid normal text`right code`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 16
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 20
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 24
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["`left code`mid n`ormal te`xt`right code`"],
+      "expectedLinesAfterTyping": ["`left code`mid n`.`xt`right code`"]
+    },
+    {
+      "name": "inline-code-dropdown, single-line-selection, in-normal-with-code-left",
+      "textLines": ["`left code`mid normal text`right code`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 19
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["`left codemid norm`al text`right code`"],
+      "expectedLinesAfterTyping": ["`left code.`al text`right code`"]
+    },
+    {
+      "name": "inline-code-button, single-line-selection, in-normal-with-code-right",
+      "textLines": ["`left code`mid normal text`right code`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 20
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 23
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 26
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["`left code`mid norma`l textright code`"],
+      "expectedLinesAfterTyping": ["`left code`mid norma`.right code`"]
+    },
+    {
+      "name": "inline-code-dropdown, single-line-selection, other (mixed with foreigner)",
+      "textLines": ["$$\\int_a^b f(x)g(x) dx$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-code-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$\\int_a^b f(x)g(x) dx$$"],
+      "expectedLinesAfterTyping": ["$$\\.^b f(x)g(x) dx$$"]
+    },
+    {
+      "name": "inline-code-button, single-line-selection, other (mixed with friend)",
+      "textLines": ["`left code`mid normal text`right code`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 19
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 30
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["`left code`mid normal text`right code`"],
+      "expectedLinesAfterTyping": ["`left co.ht code`"]
+    },
+    {
+      "name": "block-code, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "code-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-code-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["```", "block code", "```"],
+      "expectedLinesAfterTyping": ["```", "React Realtime Markup Editor", "```"]
+    }
+  ]
 }
