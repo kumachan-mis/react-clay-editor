@@ -845,13 +845,13 @@
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 8
+            "charIndex": 9
           }
         }
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$f(x)g(x)$"],

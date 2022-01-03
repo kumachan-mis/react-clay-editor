@@ -3,6 +3,7 @@ import { render, screen, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import { EditorProps } from '../../src';
 import * as utils from '../../src/Editor/callbacks/utils';
 import * as textLines from '../../src/TextLines';
 import { osUserAgents } from '../constants';
@@ -28,6 +29,10 @@ interface TestCase extends BaseTestCase {
   inputTyping: string[];
   expectedLinesAfterMenu: string[];
   expectedLinesAfterTyping: string[];
+}
+
+interface Common {
+  options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
 }
 
 const originalUserAgent = window.navigator.userAgent;
@@ -82,14 +87,14 @@ describe('UI of SyntaxMenu (markdown syntax)', () => {
     'uiFormulaMenuCommon',
     'uiQuotationMenuCommon',
   ]) {
-    runFixtureTests<TestCase>('SyntaxMenu', fixtureName, testfun);
+    runFixtureTests<TestCase, Common | undefined>('SyntaxMenu', fixtureName, testfun);
   }
 });
 
-function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => void {
-  return (testCase) => {
+function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
+  return (testCase, common) => {
     const text = testCase.textLines.join('\n');
-    render(<MockEditor syntax={syntax} initText={text} />);
+    render(<MockEditor syntax={syntax} initText={text} {...common?.options} />);
 
     const body = screen.getByTestId('editor-body');
     for (const event of testCase.inputMouse) {
@@ -105,14 +110,16 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => voi
       case 'dropdown-anchor-button':
         userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuButton));
         break;
-      case 'dropdown-anchor-arrow':
+      case 'dropdown-anchor-arrow': {
         userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuButton));
+        const menuList = screen.getByTestId('dropdown-menu-list');
         if (testCase.inputMenu.menuItemName) {
-          expect(screen.getByTestId('dropdown-menu-list')).toBeInTheDocument();
-          userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuItemName));
+          expect(menuList).toBeInTheDocument();
+          userEvent.click(within(menuList).getByTestId(testCase.inputMenu.menuItemName));
         }
-        expect(screen.getByTestId('dropdown-menu-list')).not.toBeInTheDocument();
+        expect(menuList).not.toBeInTheDocument();
         break;
+      }
       default:
         throw new Error(`Test is broken. Unknown menuButton: ${testCase.inputMenu.menuButton}`);
     }

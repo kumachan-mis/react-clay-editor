@@ -110,10 +110,10 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.normal.testId)}>
           {normalLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.normal.testId)}>
+        <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.larger.testId)}>
           {largerLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.normal.testId)}>
+        <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.largest.testId)}>
           {largestLabel}
         </DropdownMenuItem>
       </DropdownMenuList>

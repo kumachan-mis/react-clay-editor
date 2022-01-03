@@ -12,8 +12,6 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  editorElement.querySelector('textarea')?.focus({ preventScroll: true });
-
   const listSelector = `ul[data-selectid="${CursorConstants.suggestion.container.selectId}"]`;
   const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`;
   const list = editorElement.querySelector(listSelector) as HTMLUListElement | null;

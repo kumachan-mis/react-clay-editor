@@ -166,7 +166,12 @@ export const Editor: React.FC<Props> = (props) => {
   }, [handleOnEditorBlur]);
 
   return (
-    <div className={mergeClassNames(EditorConstants.root.className, props.className)} style={props.style} ref={rootRef}>
+    <div
+      className={mergeClassNames(EditorConstants.root.className, props.className)}
+      onMouseUp={() => rootRef.current?.querySelector('textarea')?.focus({ preventScroll: true })}
+      style={props.style}
+      ref={rootRef}
+    >
       <SyntaxMenu
         text={props.text}
         state={state}
