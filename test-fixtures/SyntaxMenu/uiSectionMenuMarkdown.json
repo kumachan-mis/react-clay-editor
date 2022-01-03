@@ -36,6 +36,90 @@
       "expectedLinesAfterTyping": ["## React Realtime Markup Editor"]
     },
     {
+      "name": "normal, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "normal-section-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["### normal"],
+      "expectedLinesAfterTyping": ["### React Realtime Markup Editor"]
+    },
+    {
+      "name": "larger, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "larger-section-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["## larger"],
+      "expectedLinesAfterTyping": ["## React Realtime Markup Editor"]
+    },
+    {
+      "name": "largest, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "section-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "largest-section-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["# largest"],
+      "expectedLinesAfterTyping": ["# React Realtime Markup Editor"]
+    },
+    {
       "name": "button, no-selection, normal-line (normal text)",
       "textLines": ["WYSIWYG Editor"],
       "inputMouse": [
@@ -360,7 +444,7 @@
       "inputMenu": {
         "name": "section-menu",
         "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "normmal-section-menu-item"
+        "menuItemName": "normal-section-menu-item"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["### WYSIWYG Editor"],

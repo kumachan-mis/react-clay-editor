@@ -35,6 +35,62 @@
       "expectedLinesAfterTyping": [" React Realtime Markup Editor"]
     },
     {
+      "name": "indent, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": [" "],
+      "expectedLinesAfterTyping": [" React Realtime Markup Editor"]
+    },
+    {
+      "name": "outdent, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "outdent-itemization-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": [""],
+      "expectedLinesAfterTyping": ["React Realtime Markup Editor"]
+    },
+    {
       "name": "button, no-selection, normal-line",
       "textLines": ["This will be an item"],
       "inputMouse": [
