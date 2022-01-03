@@ -1,11 +1,997 @@
 {
   "note": [
     "There are some categories in these tests:",
-    "- menuitem: bracket hashtag tagged-link",
+    "- menuitem: bracket hashtag tagged-link-button tagged-link-dropdown",
     "- selection: no-selection single-line-selection multi-lines-selection",
     "  - no-selection: empty-line in-link in-normal other",
-    "  - single-line-selection: empty-line in-link in-normal other",
+    "  - single-line-selection: in-link in-normal other",
     "  - multi-lines-selection"
   ],
-  "testCases": []
+  "common": {
+    "options": {
+      "bracketLinkProps": {
+        "suggestions": ["blueberries", "cantaloupe", "breadfruit"]
+      },
+      "hashtagProps": {
+        "suggestions": ["cherries", "durian", "coconut meat"]
+      },
+      "taggedLinkPropsMap": {
+        "tag": {
+          "suggestions": ["feijoa", "elderberries", "figs"]
+        },
+        "@": {
+          "suggestions": ["feIjOa", "eldErberrIes", "fiGs"]
+        }
+      }
+    }
+  },
+  "testCases": [
+    {
+      "name": "bracket, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["{enter}"],
+      "expectedLinesAfterMenu": ["[bracket link]"],
+      "expectedLinesAfterTyping": ["[blueberries]"]
+    },
+    {
+      "name": "hashtag, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["{arrowdown}{arrowdown}{enter}"],
+      "expectedLinesAfterMenu": ["#hashtag_link "],
+      "expectedLinesAfterTyping": ["#coconut_meat "]
+    },
+    {
+      "name": "tagged-link-button, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["{enter}"],
+      "expectedLinesAfterMenu": ["[tag: tagged link]"],
+      "expectedLinesAfterTyping": ["[tag: feijoa]"]
+    },
+    {
+      "name": "tagged-link-dropdown, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "@-tagged-link-menu-item"
+      },
+      "inputTyping": ["{enter}"],
+      "expectedLinesAfterMenu": ["[@: tagged link]"],
+      "expectedLinesAfterTyping": ["[tag: feIjOa]"]
+    },
+    {
+      "name": "bracket, no-selection, in-bracket-link",
+      "textLines": ["[This is normal text]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text"],
+      "expectedLinesAfterTyping": ["This is normal. text"]
+    },
+    {
+      "name": "bracket, no-selection, in-hashtag-link",
+      "textLines": ["#nothing_happened"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["#nothing_happened"],
+      "expectedLinesAfterTyping": ["#noth.ing_happened"]
+    },
+    {
+      "name": "hashtag, no-selection, in-hashtag-link",
+      "textLines": ["#normal_text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["normal_text"],
+      "expectedLinesAfterTyping": ["norm.al_text"]
+    },
+    {
+      "name": "hashtag, no-selection, in-tagged-link",
+      "textLines": ["[tag: nothing happend]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[tag: nothing happend]"],
+      "expectedLinesAfterTyping": ["[tag: no.thing happend]"]
+    },
+    {
+      "name": "tagged-link-button, no-selection, in-tagged-link",
+      "textLines": ["[tag: This is normal text]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text"],
+      "expectedLinesAfterTyping": [".This is normal text"]
+    },
+    {
+      "name": "tagged-link-dropdown, no-selection, in-tagged-link (same tag)",
+      "textLines": ["[tag: This is normal text]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "tag-tagged-link-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text"],
+      "expectedLinesAfterTyping": [".This is normal text"]
+    },
+    {
+      "name": "tagged-link-dropdown, no-selection, in-tagged-link (other tag)",
+      "textLines": ["[tag: tag will be changed]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "@-tagged-link-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[@: tag will be changed]"],
+      "expectedLinesAfterTyping": ["[@.: tag will be changed]"]
+    },
+    {
+      "name": "tagged-link-button, no-selection, in-bracket-link",
+      "textLines": ["[nothing happend]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[nothing happend]"],
+      "expectedLinesAfterTyping": ["[.nothing happend]"]
+    },
+    {
+      "name": "bracket, no-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["hello world"],
+      "expectedLinesAfterMenu": ["n[bracket link]ormal text"],
+      "expectedLinesAfterTyping": ["n[hello world]ormal text"]
+    },
+    {
+      "name": "hashtag, no-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["hello_world"],
+      "expectedLinesAfterMenu": ["nor#hashtag_link mal text"],
+      "expectedLinesAfterTyping": ["nor#hello_world mal text"]
+    },
+    {
+      "name": "tagged-link-button, no-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["hello world"],
+      "expectedLinesAfterMenu": ["no[tag: tagged link]rmal text"],
+      "expectedLinesAfterTyping": ["no[tag: hello world]rmal text"]
+    },
+    {
+      "name": "tagged-link-dropdown, no-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "tag-tagged-link-menu-item"
+      },
+      "inputTyping": ["hello world"],
+      "expectedLinesAfterMenu": ["normal[tag: tagged link] text"],
+      "expectedLinesAfterTyping": ["normal[tag: hello world] text"]
+    },
+    {
+      "name": "bracket, no-selection, other (content node)",
+      "textLines": ["$f(x)g(x)$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$f(x)g(x)$"],
+      "expectedLinesAfterTyping": ["$f(x)g.(x)$"]
+    },
+    {
+      "name": "tagged-link-dropdown, no-selection, other (block node)",
+      "textLines": ["$$", "\\sum_{i=0}^{n-1}a_nb_n", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 17
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 17
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "\\sum_{i=0}^{n-1}a_nb_n", "$$"],
+      "expectedLinesAfterTyping": ["$$", "\\sum_{i=0}^{n-1}a._nb_n", "$$"]
+    },
+    {
+      "name": "bracket, single-line-selection, in-bracket-link",
+      "textLines": ["[This is normal text]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text"],
+      "expectedLinesAfterTyping": ["This is . text"]
+    },
+    {
+      "name": "bracket, single-line-selection, in-tagged-link",
+      "textLines": ["[tag: nothing happened]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[tag: nothing happened]"],
+      "expectedLinesAfterTyping": ["[tag:nothing happened]"]
+    },
+    {
+      "name": "hashtag, single-line-selection, in-hashtag-link",
+      "textLines": ["#normal_text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["normal_text"],
+      "expectedLinesAfterTyping": ["._text"]
+    },
+    {
+      "name": "hashtag, single-line-selection, in-bracket-link",
+      "textLines": ["[nothing happend]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[nothing happend]"],
+      "expectedLinesAfterTyping": ["[n. happend]"]
+    },
+    {
+      "name": "tagged-link-dropdown, single-line-selection, in-tagged-link",
+      "textLines": ["[tag: This is normal text]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 16
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "tag-tagged-link-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text"],
+      "expectedLinesAfterTyping": [".rmal text"]
+    },
+    {
+      "name": "tagged-link-dropdown, single-line-selection, in-bracket-link",
+      "textLines": ["[nothing happend]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 17
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[nothing happend]"],
+      "expectedLinesAfterTyping": ["[nothing happ."]
+    },
+    {
+      "name": "bracket, single-line-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["{enter}"],
+      "expectedLinesAfterMenu": ["n[ormal] text"],
+      "expectedLinesAfterTyping": ["n[", "] text"]
+    },
+    {
+      "name": "hashtag, single-line-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["{enter}"],
+      "expectedLinesAfterMenu": ["nor#mal_ text"],
+      "expectedLinesAfterTyping": ["nor", "text"]
+    },
+    {
+      "name": "tagged-link-button, single-line-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["{enter}"],
+      "expectedLinesAfterMenu": ["no[tag: rmal] text"],
+      "expectedLinesAfterTyping": ["no[tag: ", "] text"]
+    },
+    {
+      "name": "tagged-link-button, single-line-selection, other (content node)",
+      "textLines": ["$f(x)g(x)$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$f(x)g(x)$"],
+      "expectedLinesAfterTyping": ["$f(x)g.$"]
+    },
+    {
+      "name": "bracket, single-line-selection, other (block node)",
+      "textLines": ["$$", "\\sum_{i=0}^{n-1}a_nb_n", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 17
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 16
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 14
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "\\sum_{i=0}^{n-1}a_nb_n", "$$"],
+      "expectedLinesAfterTyping": ["$$", "\\sum_{i=0}^{n-._nb_n", "$$"]
+    },
+    {
+      "name": "hashtag, single-line-selection, other (mixed with friend)",
+      "textLines": ["#hashtag #hashtag2"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "hashtag-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["#hashtag #hashtag2"],
+      "expectedLinesAfterTyping": ["#.shtag2"]
+    },
+    {
+      "name": "tagged-link-dropdown, single-line-selection, other (mixed with foreigner)",
+      "textLines": ["[@: nothing_happened] `code string`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 19
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 24
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 29
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "tagged-link-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[@: nothing_happened] `code string`"],
+      "expectedLinesAfterTyping": ["[@: nothing_happene.tring`"]
+    },
+    {
+      "name": "bracket, multi-lines-selection",
+      "textLines": ["normal text", "normal text too"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 4
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bracket-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["normal text", "normal text too"],
+      "expectedLinesAfterTyping": ["normal .al text too"]
+    }
+  ]
 }
