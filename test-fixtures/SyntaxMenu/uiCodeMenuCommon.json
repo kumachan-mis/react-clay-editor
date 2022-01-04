@@ -99,7 +99,7 @@
     },
     {
       "name": "inline-code-dropdown, no-selection, in-normal-with-code-left",
-      "textLines": ["`code a = 0;`normal text"],
+      "textLines": ["`const a = 0;`normal text"],
       "inputMouse": [
         {
           "type": "mouseDown",
