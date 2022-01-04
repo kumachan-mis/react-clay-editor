@@ -92,7 +92,6 @@
       "expectedLinesAfterMenu": ["[_ underline]"],
       "expectedLinesAfterTyping": ["[_ React Realtime Markup Editor]"]
     },
-
     {
       "name": "bold, no-selection, in-decoration",
       "textLines": ["[* bold text]"],
@@ -155,14 +154,14 @@
           "type": "mouseDown",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 0
+            "charIndex": 2
           }
         },
         {
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 0
+            "charIndex": 2
           }
         }
       ],
@@ -171,7 +170,7 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["{shift}{ctrl}{arrowleft}{/ctrl}{/shift}{backspace}{backspace}"],
-      "expectedLinesAfterMenu": ["[/_ italic underline text]"],
+      "expectedLinesAfterMenu": ["[/ italic underline text]"],
       "expectedLinesAfterTyping": ["[/ italic text]"]
     },
     {
@@ -415,7 +414,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["```", "code string", "```"],
-      "expectedLinesAfterTyping": ["```", "code s．tring", "```"]
+      "expectedLinesAfterTyping": ["```", "code s.tring", "```"]
     },
     {
       "name": "bold, single-line-selection, in-decoration-all",
@@ -585,7 +584,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[*/ left][*  mid right]"],
-      "expectedLinesAfterTyping": [".][*  mid right]"]
+      "expectedLinesAfterTyping": ["[*/ .][*  mid right]"]
     },
     {
       "name": "underline, single-line-selection, in-decoration-right (without-deco)",
@@ -653,7 +652,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[*_ left mid ][* right]"],
-      "expectedLinesAfterTyping": ["[*_ left mid ][* ."]
+      "expectedLinesAfterTyping": ["[*_ left mid ][* .]"]
     },
     {
       "name": "bold, single-line-selection, in-decoration-mid",
