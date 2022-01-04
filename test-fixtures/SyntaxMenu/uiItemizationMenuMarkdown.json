@@ -6,5 +6,727 @@
     "  - no-selection: empty-line normal-line itemized-line nested-itemized-line other-line",
     "  - selection: all-normal-or-itemized-line has-other-line"
   ],
-  "testCases": []
+  "testCases": [
+    {
+      "name": "button, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["- "],
+      "expectedLinesAfterTyping": ["- React Realtime Markup Editor"]
+    },
+    {
+      "name": "indent, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["- "],
+      "expectedLinesAfterTyping": ["- React Realtime Markup Editor"]
+    },
+    {
+      "name": "outdent, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "outdent-itemization-menu-item"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": [""],
+      "expectedLinesAfterTyping": ["React Realtime Markup Editor"]
+    },
+    {
+      "name": "button, no-selection, normal-line",
+      "textLines": ["This will be an item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["- This will be an item"],
+      "expectedLinesAfterTyping": ["- This .will be an item"]
+    },
+    {
+      "name": "indent, no-selection, normal-line",
+      "textLines": ["This will be an item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["- This will be an item"],
+      "expectedLinesAfterTyping": ["- This .will be an item"]
+    },
+    {
+      "name": "outdent, selection, normal-line",
+      "textLines": ["This will not be an item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "outdent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["- This will not be an item"],
+      "expectedLinesAfterTyping": ["This .l not be an item"]
+    },
+    {
+      "name": "button, no-selection, itemized-line",
+      "textLines": ["- This will be a normal line"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This will be a normal line"],
+      "expectedLinesAfterTyping": ["This. will be a normal line"]
+    },
+    {
+      "name": "indent, selection, itemized-line",
+      "textLines": ["- This will be a nested item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" - This will be a nested item"],
+      "expectedLinesAfterTyping": [" - This.ll be a nested item"]
+    },
+    {
+      "name": "outdent, no-selection, itemized-line",
+      "textLines": ["- This will be a normal line"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "outdent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This will be a normal line"],
+      "expectedLinesAfterTyping": ["This. will be a normal line"]
+    },
+    {
+      "name": "button, no-selection, nested-itemized-line",
+      "textLines": ["\t- This will be also a normal line"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This will be also a normal line"],
+      "expectedLinesAfterTyping": ["Thi.s will be also a normal line"]
+    },
+    {
+      "name": "indent, no-selection, nested-itemized-line",
+      "textLines": ["\t- This will be a deep nested item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" \t This will be a deep nested item"],
+      "expectedLinesAfterTyping": [" \t Thi.s will be a deep nested item"]
+    },
+    {
+      "name": "outdent, no-selection, nested-itemized-line",
+      "textLines": ["\t- This will be a shallow nested item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "outdent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["- This will be a shallow nested item"],
+      "expectedLinesAfterTyping": ["- This will be a shallow nested item"]
+    },
+    {
+      "name": "button, no-selection, other-line (line node)",
+      "textLines": ["> This is a quotation"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["> This is a quotation"],
+      "expectedLinesAfterTyping": ["> This is a q.uotation"]
+    },
+    {
+      "name": "button, no-selection, other-line (block node)",
+      "textLines": ["$$", "\\int_a^b f(x) dx", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "\\int_a^b f(x) dx", "$$"],
+      "expectedLinesAfterTyping": ["$$", "\\int_a.^b f(x) dx", "$$"]
+    },
+    {
+      "name": "disabled, no-selection, other-line (line node)",
+      "textLines": ["> This is a quotation"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["> This is a quotation"],
+      "expectedLinesAfterTyping": ["> This is a q.uotation"]
+    },
+    {
+      "name": "disabled, no-selection, other-line (block node)",
+      "textLines": ["$$", "\\int_a^b f(x) dx", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "\\int_a^b f(x) dx", "$$"],
+      "expectedLinesAfterTyping": ["$$", "\\int_a.^b f(x) dx", "$$"]
+    },
+    {
+      "name": "button, selection, all-normal-or-itemized-line",
+      "textLines": ["- This is normal text", "This is an item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 19
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["- This is normal text", " This is an item"],
+      "expectedLinesAfterTyping": ["- This .This is an item"]
+    },
+    {
+      "name": "button, selection, all-itemized-line",
+      "textLines": ["- This is an item", "\t- This is also an item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text", "This is an item"],
+      "expectedLinesAfterTyping": ["This is normal text", ".This is an item"]
+    },
+    {
+      "name": "indent, selection, all-normal-or-itemized-line",
+      "textLines": ["This is normal text", "- This is an item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" This is normal text", " \tThis is an item"],
+      "expectedLinesAfterTyping": [" This is nor.This is an item"]
+    },
+    {
+      "name": "outdent, selection, all-normal-or-itemized-line",
+      "textLines": ["This is normal text", "- This is an item"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "outdent-itemization-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text", "This is an item"],
+      "expectedLinesAfterTyping": ["This is normal text", ".This is an item"]
+    },
+    {
+      "name": "button, selection, has-other-line",
+      "textLines": ["This is normal text", " ```", " code string", " ```"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text", " ```", " code string", " ```"],
+      "expectedLinesAfterTyping": ["This is nor.de string", " ```"]
+    },
+    {
+      "name": "disabled, selection, has-other-line",
+      "textLines": ["This is normal text", " ```", " code string", " ```"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-arrow"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["This is normal text", " ```", " code string", " ```"],
+      "expectedLinesAfterTyping": ["This is nor.de string", " ```"]
+    },
+    {
+      "name": "undo no-selection",
+      "textLines": ["This is normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["{ctrl}z{/ctrl}."],
+      "expectedLinesAfterMenu": ["- This is normal text"],
+      "expectedLinesAfterTyping": [".This is normal text"]
+    },
+    {
+      "name": "undo selection",
+      "textLines": ["This is normal text", "This is also normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 18
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "itemization-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["{ctrl}z{/ctrl}."],
+      "expectedLinesAfterMenu": ["- This is normal text", "- This is also normal text"],
+      "expectedLinesAfterTyping": ["This is normal text", "This is also normal text."]
+    }
+  ]
 }

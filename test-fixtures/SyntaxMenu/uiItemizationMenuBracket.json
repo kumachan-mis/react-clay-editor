@@ -351,7 +351,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [" This will be a shallow nested item"],
-      "expectedLinesAfterTyping": [" This will be a shallow nested item"]
+      "expectedLinesAfterTyping": [" Thi.s will be a shallow nested item"]
     },
     {
       "name": "button, no-selection, other-line (line node)",
@@ -726,7 +726,7 @@
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": [" This is normal text", " This is also normal text"],
-      "expectedLinesAfterTyping": [" This is normal text", ".This is also normal text"]
+      "expectedLinesAfterTyping": ["This is normal text", "This is also normal text."]
     }
   ]
 }
