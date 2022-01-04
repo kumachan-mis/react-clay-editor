@@ -22,14 +22,14 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     decoration: { fontlevel: 'normal', bold: false, italic: false, underline: false },
   };
 
-  if (options.syntax === 'bracket') {
+  if (!options.syntax || options.syntax === 'bracket') {
     // bracket syntax
     const { itemization } = TextLinesConstants.regexes.bracketSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
-      if (!options.disabledMap.code && blockCodeMeta.test(line)) {
+      if (!options.disables.code && blockCodeMeta.test(line)) {
         nodes.push(parseBlockCode(lines, context));
-      } else if (!options.disabledMap.formula && blockFormulaMeta.test(line)) {
+      } else if (!options.disables.formula && blockFormulaMeta.test(line)) {
         nodes.push(parseBlockFormula(lines, context));
       } else if (quotation.test(line)) {
         nodes.push(parseQuotation(line, context, options));
@@ -44,9 +44,9 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     const { heading, itemization } = TextLinesConstants.regexes.markdownSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
-      if (!options.disabledMap.code && blockCodeMeta.test(line)) {
+      if (!options.disables.code && blockCodeMeta.test(line)) {
         nodes.push(parseBlockCode(lines, context));
-      } else if (!options.disabledMap.formula && blockFormulaMeta.test(line)) {
+      } else if (!options.disables.formula && blockFormulaMeta.test(line)) {
         nodes.push(parseBlockFormula(lines, context));
       } else if (heading.test(line)) {
         nodes.push(parseHeading(line, context, options));

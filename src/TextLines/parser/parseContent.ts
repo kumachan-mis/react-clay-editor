@@ -22,19 +22,19 @@ export function parseContent(text: string, context: ParsingContext, options: Par
   if (options.syntax === 'bracket') {
     // bracket syntax
     const { decoration } = TextLinesConstants.regexes.bracketSyntax;
-    if (!options.disabledMap.code && inlineCode.test(text)) {
+    if (!options.disables.code && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
-    } else if (!options.disabledMap.formula && displayFormula.test(text)) {
+    } else if (!options.disables.formula && displayFormula.test(text)) {
       return parseDisplayFormula(text, context, options);
-    } else if (!options.disabledMap.formula && inlineFormula.test(text)) {
+    } else if (!options.disables.formula && inlineFormula.test(text)) {
       return parseInlineFormula(text, context, options);
     } else if (!context.nested && decoration.test(text)) {
       return parseDecoration(text, context, options);
     } else if (taggedLink) {
       return parseTaggedLink(text, context, options, taggedLink);
-    } else if (!options.disabledMap.bracketLink && bracketLink.test(text)) {
+    } else if (!options.disables.bracketLink && bracketLink.test(text)) {
       return parseBracketLink(text, context, options);
-    } else if (!options.disabledMap.hashtag && hashtag.test(text)) {
+    } else if (!options.disables.hashtag && hashtag.test(text)) {
       return parseHashtag(text, context, options);
     } else if (normal.test(text)) {
       return parseNormal(text, context);
@@ -43,11 +43,11 @@ export function parseContent(text: string, context: ParsingContext, options: Par
   } else {
     // markdown syntax
     const { bold, italic } = TextLinesConstants.regexes.markdownSyntax;
-    if (!options.disabledMap.code && inlineCode.test(text)) {
+    if (!options.disables.code && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
-    } else if (!options.disabledMap.formula && displayFormula.test(text)) {
+    } else if (!options.disables.formula && displayFormula.test(text)) {
       return parseDisplayFormula(text, context, options);
-    } else if (!options.disabledMap.formula && inlineFormula.test(text)) {
+    } else if (!options.disables.formula && inlineFormula.test(text)) {
       return parseInlineFormula(text, context, options);
     } else if (!context.nested && bold.test(text)) {
       return parseBold(text, context, options);
@@ -55,9 +55,9 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseItalic(text, context, options);
     } else if (taggedLink) {
       return parseTaggedLink(text, context, options, taggedLink);
-    } else if (!options.disabledMap.bracketLink && bracketLink.test(text)) {
+    } else if (!options.disables.bracketLink && bracketLink.test(text)) {
       return parseBracketLink(text, context, options);
-    } else if (!options.disabledMap.hashtag && hashtag.test(text)) {
+    } else if (!options.disables.hashtag && hashtag.test(text)) {
       return parseHashtag(text, context, options);
     } else if (normal.test(text)) {
       return parseNormal(text, context);

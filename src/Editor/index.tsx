@@ -180,22 +180,9 @@ export const Editor: React.FC<Props> = (props) => {
           if (newText !== props.text) props.onChangeText(newText);
         }}
         syntax={props.syntax}
-        bracket={{
-          suggestions: props.bracketLinkProps?.suggestions,
-          initialSuggestionIndex: props.bracketLinkProps?.initialSuggestionIndex,
-        }}
-        hashtag={{
-          suggestions: props.hashtagProps?.suggestions,
-          initialSuggestionIndex: props.hashtagProps?.initialSuggestionIndex,
-        }}
-        taggedLink={{
-          tags: Object.fromEntries(
-            Object.entries(props.taggedLinkPropsMap || {}).map(([tagName, linkProps]) => [
-              tagName,
-              { suggestions: linkProps.suggestions, initialSuggestionIndex: linkProps.initialSuggestionIndex },
-            ])
-          ),
-        }}
+        bracket={props.bracketLinkProps}
+        hashtag={props.hashtagProps}
+        taggedLink={{ tags: props.taggedLinkPropsMap }}
         containerProps={{ className: EditorConstants.syntaxMenu.className }}
       />
       <div

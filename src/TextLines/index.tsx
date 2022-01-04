@@ -23,36 +23,36 @@ import { Props, NodeProps } from './types';
 
 export const TextLines: React.FC<Props> = ({
   text,
-  syntax = 'bracket',
+  syntax,
   cursorCoordinate,
-  bracketLinkProps = {},
-  hashtagProps = {},
-  taggedLinkPropsMap = {},
-  codeProps = {},
-  formulaProps = {},
+  bracketLinkProps,
+  hashtagProps,
+  taggedLinkPropsMap,
+  codeProps,
+  formulaProps,
   className,
   style,
 }) => {
   const nodes = React.useMemo(() => {
     const options: ParsingOptions = {
       syntax,
-      disabledMap: {
-        bracketLink: bracketLinkProps.disabled,
-        hashtag: hashtagProps.disabled,
-        code: codeProps.disabled,
-        formula: formulaProps.disabled,
+      disables: {
+        bracketLink: bracketLinkProps?.disabled,
+        hashtag: hashtagProps?.disabled,
+        code: codeProps?.disabled,
+        formula: formulaProps?.disabled,
       },
-      taggedLinkRegexes: Object.entries(taggedLinkPropsMap).map(([tagName, linkProps]) =>
+      taggedLinkRegexes: Object.entries(taggedLinkPropsMap || {}).map(([tagName, linkProps]) =>
         TextLinesConstants.regexes.common.taggedLink(tagName, linkProps.linkNameRegex)
       ),
     };
     return parseText(text, options);
   }, [
     syntax,
-    bracketLinkProps.disabled,
-    codeProps.disabled,
-    formulaProps.disabled,
-    hashtagProps.disabled,
+    bracketLinkProps?.disabled,
+    codeProps?.disabled,
+    formulaProps?.disabled,
+    hashtagProps?.disabled,
     taggedLinkPropsMap,
     text,
   ]);
@@ -129,7 +129,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth } = node;
       const code = node.type === 'blockCodeMeta' ? node.codeMeta : node.codeLine;
       const lineLength = indentDepth + code.length;
-      const codeElementProps = codeProps.codeProps?.(code);
+      const codeElementProps = codeProps?.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
@@ -157,7 +157,7 @@ const Node: React.FC<NodeProps> = ({
       const [first, last] = node.range;
       const formula = children.map((child) => child.formulaLine).join('\n');
       const cursorOn = cursorLineIndex !== undefined && first <= cursorLineIndex && cursorLineIndex <= last;
-      const spanElementProps = formulaProps.spanProps?.(formula);
+      const spanElementProps = formulaProps?.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
@@ -209,7 +209,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, indentDepth } = node;
       const formula = node.type === 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
       const lineLength = indentDepth + formula.length;
-      const spanElementProps = formulaProps.spanProps?.(formula);
+      const spanElementProps = formulaProps?.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return (
@@ -318,7 +318,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, facingMeta, code, trailingMeta } = node;
       const [first, last] = node.range;
       const cursorOn = cursorLineIndex === lineIndex;
-      const codeElementProps = codeProps.codeProps?.(code);
+      const codeElementProps = codeProps?.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
@@ -355,7 +355,7 @@ const Node: React.FC<NodeProps> = ({
       const displayMode = node.type === 'displayFormula';
       const [first, last] = node.range;
       const cursorOn = cursorLineIndex === lineIndex;
-      const spanElementProps = formulaProps.spanProps?.(formula);
+      const spanElementProps = formulaProps?.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn ? (
@@ -417,8 +417,8 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
       const [first, last] = node.range;
       const cursorOn = cursorLineIndex === lineIndex;
-      const taggedLinkProps = taggedLinkPropsMap[getTagName(tag)];
-      const anchorElementProps = taggedLinkProps.anchorProps?.(linkName);
+      const taggedLinkProps = taggedLinkPropsMap?.[getTagName(tag)];
+      const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
 
       return (
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
@@ -433,7 +433,7 @@ const Node: React.FC<NodeProps> = ({
               lineIndex={lineIndex}
               charIndex={first + facingMeta.length + index}
             >
-              {cursorOn || !taggedLinkProps.tagHidden ? char : ''}
+              {cursorOn || !taggedLinkProps?.tagHidden ? char : ''}
             </Char>
           ))}
           {[...linkName].map((char, index) => (
@@ -461,7 +461,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, facingMeta, linkName, trailingMeta } = node;
       const [first, last] = node.range;
       const cursorOn = cursorLineIndex === lineIndex;
-      const anchorElementProps = bracketLinkProps.anchorProps?.(linkName);
+      const anchorElementProps = bracketLinkProps?.anchorProps?.(linkName);
 
       return (
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
@@ -495,7 +495,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, hashtag } = node;
       const [first] = node.range;
       const cursorOn = cursorLineIndex === lineIndex;
-      const anchorElementProps = hashtagProps.anchorProps?.(getHashtagName(hashtag));
+      const anchorElementProps = hashtagProps?.anchorProps?.(getHashtagName(hashtag));
 
       return (
         <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>

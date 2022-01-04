@@ -6,8 +6,8 @@ export interface ParsingContext {
 }
 
 export interface ParsingOptions {
-  syntax: 'bracket' | 'markdown';
-  disabledMap: { [key in 'bracketLink' | 'hashtag' | 'code' | 'formula']: boolean | undefined };
+  syntax?: 'bracket' | 'markdown';
+  disables: { [key in 'bracketLink' | 'hashtag' | 'code' | 'formula']: boolean | undefined };
   taggedLinkRegexes: RegExp[];
 }
 

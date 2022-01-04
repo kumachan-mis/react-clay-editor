@@ -18,11 +18,11 @@ export interface Props {
 
 export interface NodeProps {
   node: Node;
-  bracketLinkProps: BracketLinkProps;
-  hashtagProps: HashtagProps;
-  taggedLinkPropsMap: TaggedLinkPropsMap;
-  codeProps: CodeProps;
-  formulaProps: FormulaProps;
+  bracketLinkProps?: BracketLinkProps;
+  hashtagProps?: HashtagProps;
+  taggedLinkPropsMap?: TaggedLinkPropsMap;
+  codeProps?: CodeProps;
+  formulaProps?: FormulaProps;
   cursorLineIndex: number | undefined;
 }
 
