@@ -16,7 +16,7 @@
   ],
   "testCases": [
     {
-      "name": "inline-formula-button, no-selection, empty-line",
+      "name": "formula menu: inline-formula-button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -43,7 +43,7 @@
       "expectedLinesAfterTyping": ["$f(x)g(y)$"]
     },
     {
-      "name": "display-formula-dropdown, no-selection, empty-line",
+      "name": "formula menu: display-formula-dropdown, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -71,7 +71,7 @@
       "expectedLinesAfterTyping": ["$$f(x)g(y)$$"]
     },
     {
-      "name": "inline-formula-dropdown, no-selection, in-formula (inline)",
+      "name": "formula menu: inline-formula-dropdown, no-selection, in-formula (inline)",
       "textLines": ["$f(x)$"],
       "inputMouse": [
         {
@@ -99,7 +99,7 @@
       "expectedLinesAfterTyping": ["f.(x)"]
     },
     {
-      "name": "inline-formula-dropdown, no-selection, in-formula (display)",
+      "name": "formula menu: inline-formula-dropdown, no-selection, in-formula (display)",
       "textLines": ["$$f(x)$$"],
       "inputMouse": [
         {
@@ -127,7 +127,7 @@
       "expectedLinesAfterTyping": ["$f(x).$"]
     },
     {
-      "name": "display-formula-dropdown, no-selection, in-formula (inline)",
+      "name": "formula menu: display-formula-dropdown, no-selection, in-formula (inline)",
       "textLines": ["$f(x)$"],
       "inputMouse": [
         {
@@ -155,7 +155,7 @@
       "expectedLinesAfterTyping": ["$$f.(x)$$"]
     },
     {
-      "name": "display-formula-button, no-selection, in-formula (inline)",
+      "name": "formula menu: display-formula-button, no-selection, in-formula (inline)",
       "textLines": ["$$f(x)$$"],
       "inputMouse": [
         {
@@ -182,7 +182,7 @@
       "expectedLinesAfterTyping": ["f(.x)"]
     },
     {
-      "name": "inline-formula-button, no-selection, in-normal",
+      "name": "formula menu: inline-formula-button, no-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -209,7 +209,7 @@
       "expectedLinesAfterTyping": ["normal te$g(y)$xt"]
     },
     {
-      "name": "inline-formula-dropdown, no-selection, in-normal-with-nextto-display",
+      "name": "formula menu: inline-formula-dropdown, no-selection, in-normal-with-nextto-display",
       "textLines": ["$$f(x)g(x)$$text"],
       "inputMouse": [
         {
@@ -237,7 +237,7 @@
       "expectedLinesAfterTyping": ["$$f(x)g(x)$$$h(t)$text"]
     },
     {
-      "name": "display-formula-dropdown, no-selection, in-normal",
+      "name": "formula menu: display-formula-dropdown, no-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -264,7 +264,7 @@
       "expectedLinesAfterTyping": ["normal te$$g(y)$$xt"]
     },
     {
-      "name": "display-formula-dropdown, no-selection, in-normal-with-nextto-inline",
+      "name": "formula menu: display-formula-dropdown, no-selection, in-normal-with-nextto-inline",
       "textLines": ["text$f(x)g(x)$"],
       "inputMouse": [
         {
@@ -292,7 +292,7 @@
       "expectedLinesAfterTyping": ["text$$h(t)$$$f(x)g(x)$"]
     },
     {
-      "name": "inline-formula-dropdown, no-selection, in-normal-with-formula-left",
+      "name": "formula menu: inline-formula-dropdown, no-selection, in-normal-with-formula-left",
       "textLines": ["$f(x)$normal text"],
       "inputMouse": [
         {
@@ -320,7 +320,7 @@
       "expectedLinesAfterTyping": ["$f(x) g(y)$normal text"]
     },
     {
-      "name": "inline-formula-button, no-selection, in-normal-with-formula-right",
+      "name": "formula menu: inline-formula-button, no-selection, in-normal-with-formula-right",
       "textLines": ["normal text$$g(y)$$"],
       "inputMouse": [
         {
@@ -347,7 +347,7 @@
       "expectedLinesAfterTyping": ["normal text$f(x) g(y)$"]
     },
     {
-      "name": "inline-formula-dropdown, no-selection, other (content node)",
+      "name": "formula menu: inline-formula-dropdown, no-selection, other (content node)",
       "textLines": ["[bracket link]"],
       "inputMouse": [
         {
@@ -375,7 +375,7 @@
       "expectedLinesAfterTyping": ["[bracket li.nk]"]
     },
     {
-      "name": "display-formula-dropdown, no-selection, other (block node)",
+      "name": "formula menu: display-formula-dropdown, no-selection, other (block node)",
       "textLines": ["$$", "nothing happened", "$$"],
       "inputMouse": [
         {
@@ -403,7 +403,7 @@
       "expectedLinesAfterTyping": ["$$", "not.hing happened", "$$"]
     },
     {
-      "name": "inline-formula-button, single-line-selection, in-formula-all (syntax and text)",
+      "name": "formula menu: inline-formula-button, single-line-selection, in-formula-all (syntax and text)",
       "textLines": ["$formula string$"],
       "inputMouse": [
         {
@@ -437,7 +437,7 @@
       "expectedLinesAfterTyping": [".'"]
     },
     {
-      "name": "display-formula-dropdown, single-line-selection, in-formula-all (text)",
+      "name": "formula menu: display-formula-dropdown, single-line-selection, in-formula-all (text)",
       "textLines": ["$$formula string$$"],
       "inputMouse": [
         {
@@ -472,7 +472,7 @@
       "expectedLinesAfterTyping": ["."]
     },
     {
-      "name": "inline-formula-button, single-line-selection, in-formula-all (syntax)",
+      "name": "formula menu: inline-formula-button, single-line-selection, in-formula-all (syntax)",
       "textLines": ["$formula string$"],
       "inputMouse": [
         {
@@ -506,7 +506,7 @@
       "expectedLinesAfterTyping": [".formula string"]
     },
     {
-      "name": "inline-formula-dropdown, single-line-selection, in-formula-left",
+      "name": "formula menu: inline-formula-dropdown, single-line-selection, in-formula-left",
       "textLines": ["$\\sum_{i = 0}^{n-1} a_ib_i$"],
       "inputMouse": [
         {
@@ -541,7 +541,7 @@
       "expectedLinesAfterTyping": [".$^{n-1} a_ib_i$"]
     },
     {
-      "name": "inline-formula-button, single-line-selection, in-formula-mid",
+      "name": "formula menu: inline-formula-button, single-line-selection, in-formula-mid",
       "textLines": ["$\\sum_{i = 0}^{n-1} a_ib_i$"],
       "inputMouse": [
         {
@@ -575,7 +575,7 @@
       "expectedLinesAfterTyping": ["$\\sum_{$.$n-1} a_ib_i$"]
     },
     {
-      "name": "display-formula-dropdown, single-line-selection, in-formula-right",
+      "name": "formula menu: display-formula-dropdown, single-line-selection, in-formula-right",
       "textLines": ["$$\\sum_{i = 0}^{n-1} a_ib_i$$"],
       "inputMouse": [
         {
@@ -610,7 +610,7 @@
       "expectedLinesAfterTyping": ["$$\\sum_{i = 0}^{n-1} $$."]
     },
     {
-      "name": "inline-formula-button, single-line-selection, in-normal",
+      "name": "formula menu: inline-formula-button, single-line-selection, in-normal",
       "textLines": ["$left formula$mid normal text$right formula$"],
       "inputMouse": [
         {
@@ -644,7 +644,7 @@
       "expectedLinesAfterTyping": ["$left formula$mi$.$ text$right formula$"]
     },
     {
-      "name": "inline-formula-dropdown, single-line-selection, in-normal-with-formula-left",
+      "name": "formula menu: inline-formula-dropdown, single-line-selection, in-normal-with-formula-left",
       "textLines": ["$left formula$mid normal text$right formula$"],
       "inputMouse": [
         {
@@ -679,7 +679,7 @@
       "expectedLinesAfterTyping": ["$left formula.$al text$right formula$"]
     },
     {
-      "name": "display-formula-dropdown, single-line-selection, in-normal-with-formula-right",
+      "name": "formula menu: display-formula-dropdown, single-line-selection, in-normal-with-formula-right",
       "textLines": ["$left formula$mid normal text$right formula$"],
       "inputMouse": [
         {
@@ -713,7 +713,7 @@
       "expectedLinesAfterTyping": ["$left formula$mid norma$.right formula$"]
     },
     {
-      "name": "inline-formula-dropdown, single-line-selection, other (mixed with foreigner)",
+      "name": "formula menu: inline-formula-dropdown, single-line-selection, other (mixed with foreigner)",
       "textLines": ["`code string`"],
       "inputMouse": [
         {
@@ -748,7 +748,7 @@
       "expectedLinesAfterTyping": ["`co.ring`"]
     },
     {
-      "name": "inline-formula-button, single-line-selection, other (mixed with friend)",
+      "name": "formula menu: inline-formula-button, single-line-selection, other (mixed with friend)",
       "textLines": ["$left formula$mid normal text$right formula$"],
       "inputMouse": [
         {
@@ -782,7 +782,7 @@
       "expectedLinesAfterTyping": ["$left fo.right formula$"]
     },
     {
-      "name": "block-formula, no-selection, empty-line",
+      "name": "formula menu: block-formula, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -810,7 +810,7 @@
       "expectedLinesAfterTyping": ["$$", "\\int f(x)g(x) dx", "$$"]
     },
     {
-      "name": "block-formula, no-selection, in-formula (formula)",
+      "name": "formula menu: block-formula, no-selection, in-formula (formula)",
       "textLines": [" $$", " f(x)g(y)", " $$"],
       "inputMouse": [
         {
@@ -838,7 +838,7 @@
       "expectedLinesAfterTyping": [" f(.x)g(y)"]
     },
     {
-      "name": "block-formula, no-selection, in-formula (syntax)",
+      "name": "formula menu: block-formula, no-selection, in-formula (syntax)",
       "textLines": ["$$", "f(x)g(y)", "\\lim_{z \\to 0} h(z)", "$$"],
       "inputMouse": [
         {
@@ -865,7 +865,7 @@
       "expectedLinesAfterTyping": ["f(x)g(y)", "\\lim_{z \\to 0} h(z)."]
     },
     {
-      "name": "block-formula, no-selection, in-formula-top",
+      "name": "formula menu: block-formula, no-selection, in-formula-top",
       "textLines": ["  $$", "  f(x)g(y)", "  r(x)\\theta(y)", "  $$"],
       "inputMouse": [
         {
@@ -892,7 +892,7 @@
       "expectedLinesAfterTyping": ["  f(x).g(y)", "  $$", "  r(x)\\theta(y)", "  $$"]
     },
     {
-      "name": "block-formula, no-selection, in-formula-mid",
+      "name": "formula menu: block-formula, no-selection, in-formula-mid",
       "textLines": ["$$", "x = \\cos \\theta", "y = \\sin \\theta", "z = z_0", "$$"],
       "inputMouse": [
         {
@@ -920,7 +920,7 @@
       "expectedLinesAfterTyping": ["$$", "x = \\cos \\theta", "$$", "y. = \\sin \\theta", "$$", "z = z_0", "$$"]
     },
     {
-      "name": "block-formula, no-selection, in-formula-bottom",
+      "name": "formula menu: block-formula, no-selection, in-formula-bottom",
       "textLines": ["  $$", "  x = \\cos \\theta;", "  y = \\sin \\theta", "  $$"],
       "inputMouse": [
         {
@@ -948,7 +948,7 @@
       "expectedLinesAfterTyping": ["  $$", "  x = \\cos \\theta;", "  $$", "  y = \\si.n \\theta"]
     },
     {
-      "name": "block-formula, no-selection, in-other-line",
+      "name": "formula menu: block-formula, no-selection, in-other-line",
       "textLines": [" normal line"],
       "inputMouse": [
         {
@@ -976,7 +976,7 @@
       "expectedLinesAfterTyping": ["$$", " no.rmal line", "$$"]
     },
     {
-      "name": "block-formula, no-selection, in-other-line (with nested formula)",
+      "name": "formula menu: block-formula, no-selection, in-other-line (with nested formula)",
       "textLines": [" $$", " f(x)g(x)", " $$", " normal line"],
       "inputMouse": [
         {
@@ -1004,7 +1004,7 @@
       "expectedLinesAfterTyping": [" $$", " f(x)g(x)", " $$", "$$", " no.rmal line", "$$"]
     },
     {
-      "name": "block-formula, no-selection, in-other-with-formula-above",
+      "name": "formula menu: block-formula, no-selection, in-other-with-formula-above",
       "textLines": ["$$", "f(x)g(x)", " normal line"],
       "inputMouse": [
         {
@@ -1032,7 +1032,7 @@
       "expectedLinesAfterTyping": ["$$", "f(x)g(x)", " norm.al line", "$$"]
     },
     {
-      "name": "block-formula, no-selection, in-other-with-formula-below",
+      "name": "formula menu: block-formula, no-selection, in-other-with-formula-below",
       "textLines": [" normal line", "$$", "f(x)g(x)", "$$"],
       "inputMouse": [
         {
@@ -1060,7 +1060,7 @@
       "expectedLinesAfterTyping": ["$$", " norm.al line", "f(x)g(x)", "$$"]
     },
     {
-      "name": "block-formula, selection, all-formula-lines (syntax)",
+      "name": "formula menu: block-formula, selection, all-formula-lines (syntax)",
       "textLines": ["$$", "x = \\cos \\theta;", "y = \\sin \\theta", "$$"],
       "inputMouse": [
         {
@@ -1095,7 +1095,7 @@
       "expectedLinesAfterTyping": [".x = \\cos \\theta;", "y = \\sin \\theta"]
     },
     {
-      "name": "block-formula, selection, all-formula-lines (formula)",
+      "name": "formula menu: block-formula, selection, all-formula-lines (formula)",
       "textLines": [" $$", " x = \\cos \\theta;", " y = \\sin \\theta"],
       "inputMouse": [
         {
@@ -1129,7 +1129,7 @@
       "expectedLinesAfterTyping": [" x =.sin \\theta"]
     },
     {
-      "name": "block-formula, selection, all-formula-lines (formula and syntax)",
+      "name": "formula menu: block-formula, selection, all-formula-lines (formula and syntax)",
       "textLines": [" $$", " x = \\cos \\theta;", " y = \\sin \\theta"],
       "inputMouse": [
         {
@@ -1164,7 +1164,7 @@
       "expectedLinesAfterTyping": [".sin \\theta"]
     },
     {
-      "name": "block-formula, selection, all-formula-lines-top",
+      "name": "formula menu: block-formula, selection, all-formula-lines-top",
       "textLines": [" $$", " x = \\cos \\theta;", " y = \\sin \\theta", " $$"],
       "inputMouse": [
         {
@@ -1199,7 +1199,7 @@
       "expectedLinesAfterTyping": [".\\cos \\theta;", " y = \\sin \\theta", " $$"]
     },
     {
-      "name": "block-formula, selection, in-formula-mid",
+      "name": "formula menu: block-formula, selection, in-formula-mid",
       "textLines": [" $$", " x = \\cos \\theta", " y = \\sin \\theta", " z = z_0", " $$"],
       "inputMouse": [
         {
@@ -1234,7 +1234,7 @@
       "expectedLinesAfterTyping": [" $$", " x = \\cos \\theta", " $$", ".n \\theta", " $$", " z = z_0", " $$"]
     },
     {
-      "name": "block-formula, selection, all-formula-lines-bottom",
+      "name": "formula menu: block-formula, selection, all-formula-lines-bottom",
       "textLines": [" $$", " x = \\cos \\theta", " y = \\sin \\theta"],
       "inputMouse": [
         {
@@ -1268,7 +1268,7 @@
       "expectedLinesAfterTyping": [" $$", " x = \\cos \\theta", " $$", " .\\sin \\theta"]
     },
     {
-      "name": "block-formula, selection, all-other-lines",
+      "name": "formula menu: block-formula, selection, all-other-lines",
       "textLines": ["normal line `formula string`", "$f(x)$ normal line"],
       "inputMouse": [
         {
@@ -1303,7 +1303,7 @@
       "expectedLinesAfterTyping": ["$$", "n.x)$ normal line", "$$"]
     },
     {
-      "name": "block-formula, selection, in-other-with-formula-above",
+      "name": "formula menu: block-formula, selection, in-other-with-formula-above",
       "textLines": ["normal text", "normal text", "$$", "f(x)g(x)"],
       "inputMouse": [
         {
@@ -1338,7 +1338,7 @@
       "expectedLinesAfterTyping": ["$$", "n.mal text", "f(x)g(x)"]
     },
     {
-      "name": "block-formula, selection, in-other-with-formula-below",
+      "name": "formula menu: block-formula, selection, in-other-with-formula-below",
       "textLines": ["$$", "f(x)g(x)", "$$", "normal text", "normal text"],
       "inputMouse": [
         {
@@ -1373,7 +1373,7 @@
       "expectedLinesAfterTyping": ["$$", "f(x)g(x)", "normal te.", "$$", "normal text"]
     },
     {
-      "name": "block-formula, selection, mixed-lines (formula and other)",
+      "name": "formula menu: block-formula, selection, mixed-lines (formula and other)",
       "textLines": ["$$", "f(x)g(x)", "$$", "normal text", "normal text"],
       "inputMouse": [
         {
@@ -1407,7 +1407,7 @@
       "expectedLinesAfterTyping": ["$$", "f(x)g(x)", "$. text", "normal text"]
     },
     {
-      "name": "block-formula, selection, mixed-lines (double formula)",
+      "name": "formula menu: block-formula, selection, mixed-lines (double formula)",
       "textLines": ["$$", "x = \\cos \\theta", "$$", "$$", "y = \\sin \\theta"],
       "inputMouse": [
         {

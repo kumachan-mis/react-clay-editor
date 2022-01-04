@@ -9,7 +9,7 @@
   ],
   "testCases": [
     {
-      "name": "button, no-selection, empty-line",
+      "name": "section menu: button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -36,7 +36,7 @@
       "expectedLinesAfterTyping": ["## React Realtime Markup Editor"]
     },
     {
-      "name": "normal, no-selection, empty-line",
+      "name": "section menu: normal, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -64,7 +64,7 @@
       "expectedLinesAfterTyping": ["### React Realtime Markup Editor"]
     },
     {
-      "name": "larger, no-selection, empty-line",
+      "name": "section menu: larger, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -92,7 +92,7 @@
       "expectedLinesAfterTyping": ["## React Realtime Markup Editor"]
     },
     {
-      "name": "largest, no-selection, empty-line",
+      "name": "section menu: largest, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -120,7 +120,7 @@
       "expectedLinesAfterTyping": ["# React Realtime Markup Editor"]
     },
     {
-      "name": "button, no-selection, normal-line (normal text)",
+      "name": "section menu: button, no-selection, normal-line (normal text)",
       "textLines": ["WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -147,7 +147,7 @@
       "expectedLinesAfterTyping": ["## .WYSIWYG Editor"]
     },
     {
-      "name": "normal, no-selection, normal-line (normal text)",
+      "name": "section menu: normal, no-selection, normal-line (normal text)",
       "textLines": ["WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -175,7 +175,7 @@
       "expectedLinesAfterTyping": ["### W.YSIWYG Editor"]
     },
     {
-      "name": "larger, selection, normal-line (normal text)",
+      "name": "section menu: larger, selection, normal-line (normal text)",
       "textLines": ["WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -210,7 +210,7 @@
       "expectedLinesAfterTyping": ["### WYS.ditor"]
     },
     {
-      "name": "button, no-selection, normal-line (decorated text)",
+      "name": "section menu: button, no-selection, normal-line (decorated text)",
       "textLines": ["`WYSIWYG` Editor"],
       "inputMouse": [
         {
@@ -237,7 +237,7 @@
       "expectedLinesAfterTyping": ["## `WYSIWYG.` Editor"]
     },
     {
-      "name": "largest, selection, normal-line (decorated text)",
+      "name": "section menu: largest, selection, normal-line (decorated text)",
       "textLines": ["`WYSIWYG` Editor"],
       "inputMouse": [
         {
@@ -272,7 +272,7 @@
       "expectedLinesAfterTyping": ["# `WYSIWYG.Editor"]
     },
     {
-      "name": "button, no-selection, section-line (normal text)",
+      "name": "section menu: button, no-selection, section-line (normal text)",
       "textLines": ["### WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -299,7 +299,7 @@
       "expectedLinesAfterTyping": ["WY.SIWYG` Editor"]
     },
     {
-      "name": "normal, no-selection, section-line (normal text)",
+      "name": "section menu: normal, no-selection, section-line (normal text)",
       "textLines": ["### WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -327,7 +327,7 @@
       "expectedLinesAfterTyping": ["WY.SIWYG` Editor"]
     },
     {
-      "name": "button, no-selection, section-line (decorated text)",
+      "name": "section menu: button, no-selection, section-line (decorated text)",
       "textLines": ["### $f(x)$"],
       "inputMouse": [
         {
@@ -354,7 +354,7 @@
       "expectedLinesAfterTyping": [".$f(x)$"]
     },
     {
-      "name": "largest, selection, section-line (decorated text)",
+      "name": "section menu: largest, selection, section-line (decorated text)",
       "textLines": ["### $f(x)$"],
       "inputMouse": [
         {
@@ -389,7 +389,7 @@
       "expectedLinesAfterTyping": ["# $g(x)$"]
     },
     {
-      "name": "button, selection, section-line (larger text)",
+      "name": "section menu: button, selection, section-line (larger text)",
       "textLines": ["## WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -423,7 +423,7 @@
       "expectedLinesAfterTyping": ["WYS.YG Editor"]
     },
     {
-      "name": "normal, no-selection, section-line (larger text)",
+      "name": "section menu: normal, no-selection, section-line (larger text)",
       "textLines": ["## WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -451,7 +451,7 @@
       "expectedLinesAfterTyping": ["### WYS.IWYG Editor"]
     },
     {
-      "name": "button, no-selection, section-like-line",
+      "name": "section menu: button, no-selection, section-like-line",
       "textLines": ["[bracket]## WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -478,7 +478,7 @@
       "expectedLinesAfterTyping": ["[bracket]#.# WYSIWYG Editor"]
     },
     {
-      "name": "disabled, selection, section-like-line",
+      "name": "section menu: disabled, selection, section-like-line",
       "textLines": ["[bracket]## WYSIWYG Editor"],
       "inputMouse": [
         {
@@ -512,7 +512,7 @@
       "expectedLinesAfterTyping": ["[bracket]#.Editor"]
     },
     {
-      "name": "button, no-selection, other (line node)",
+      "name": "section menu: button, no-selection, other (line node)",
       "textLines": ["> ## Markup Editor"],
       "inputMouse": [
         {
@@ -539,7 +539,7 @@
       "expectedLinesAfterTyping": ["> ## Markup Edito.r]"]
     },
     {
-      "name": "disabled, no-selection, other (line node)",
+      "name": "section menu: disabled, no-selection, other (line node)",
       "textLines": ["- ## Markup Editor"],
       "inputMouse": [
         {
@@ -566,7 +566,7 @@
       "expectedLinesAfterTyping": ["- ## Markup Edito.r"]
     },
     {
-      "name": "button, no-selection, other (block node)",
+      "name": "section menu: button, no-selection, other (block node)",
       "textLines": ["```", "### block code", "```"],
       "inputMouse": [
         {
@@ -593,7 +593,7 @@
       "expectedLinesAfterTyping": ["```", "### b.lock code", "```"]
     },
     {
-      "name": "disabled, selection, other (block node)",
+      "name": "section menu: disabled, selection, other (block node)",
       "textLines": ["```", "### block code", "```"],
       "inputMouse": [
         {
@@ -627,7 +627,7 @@
       "expectedLinesAfterTyping": ["```", "### .lock code", "```"]
     },
     {
-      "name": "button, multi-lines-selection",
+      "name": "section menu: button, multi-lines-selection",
       "textLines": ["Editor", "Source code editor, for editing source code", "Text editor, for editing plain text"],
       "inputMouse": [
         {
@@ -665,7 +665,7 @@
       "expectedLinesAfterTyping": [". editor, for editing source code", "Text editor, for editing plain text"]
     },
     {
-      "name": "disabled, multi-lines-selection",
+      "name": "section menu: disabled, multi-lines-selection",
       "textLines": ["Editor", ""],
       "inputMouse": [
         {
@@ -699,7 +699,7 @@
       "expectedLinesAfterTyping": ["."]
     },
     {
-      "name": "undo",
+      "name": "section menu: undo",
       "textLines": [""],
       "inputMouse": [
         {

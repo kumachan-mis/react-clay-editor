@@ -8,7 +8,7 @@
   ],
   "testCases": [
     {
-      "name": "button, no-selection, empty-line",
+      "name": "itemization menu: button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -35,7 +35,7 @@
       "expectedLinesAfterTyping": ["- React Realtime Markup Editor"]
     },
     {
-      "name": "indent, no-selection, empty-line",
+      "name": "itemization menu: indent, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -63,7 +63,7 @@
       "expectedLinesAfterTyping": ["- React Realtime Markup Editor"]
     },
     {
-      "name": "outdent, no-selection, empty-line",
+      "name": "itemization menu: outdent, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -91,7 +91,7 @@
       "expectedLinesAfterTyping": ["React Realtime Markup Editor"]
     },
     {
-      "name": "button, no-selection, normal-line",
+      "name": "itemization menu: button, no-selection, normal-line",
       "textLines": ["This will be an item"],
       "inputMouse": [
         {
@@ -118,7 +118,7 @@
       "expectedLinesAfterTyping": ["- This .will be an item"]
     },
     {
-      "name": "indent, no-selection, normal-line",
+      "name": "itemization menu: indent, no-selection, normal-line",
       "textLines": ["This will be an item"],
       "inputMouse": [
         {
@@ -146,7 +146,7 @@
       "expectedLinesAfterTyping": ["- This .will be an item"]
     },
     {
-      "name": "outdent, selection, normal-line",
+      "name": "itemization menu: outdent, selection, normal-line",
       "textLines": ["This will not be an item"],
       "inputMouse": [
         {
@@ -181,7 +181,7 @@
       "expectedLinesAfterTyping": ["This .l not be an item"]
     },
     {
-      "name": "button, no-selection, itemized-line",
+      "name": "itemization menu: button, no-selection, itemized-line",
       "textLines": ["- This will be a normal line"],
       "inputMouse": [
         {
@@ -208,7 +208,7 @@
       "expectedLinesAfterTyping": ["This. will be a normal line"]
     },
     {
-      "name": "indent, selection, itemized-line",
+      "name": "itemization menu: indent, selection, itemized-line",
       "textLines": ["- This will be a nested item"],
       "inputMouse": [
         {
@@ -243,7 +243,7 @@
       "expectedLinesAfterTyping": [" - This.ll be a nested item"]
     },
     {
-      "name": "outdent, no-selection, itemized-line",
+      "name": "itemization menu: outdent, no-selection, itemized-line",
       "textLines": ["* This will be a normal line"],
       "inputMouse": [
         {
@@ -271,7 +271,7 @@
       "expectedLinesAfterTyping": ["This. will be a normal line"]
     },
     {
-      "name": "button, no-selection, nested-itemized-line",
+      "name": "itemization menu: button, no-selection, nested-itemized-line",
       "textLines": ["\t- This will be also a normal line"],
       "inputMouse": [
         {
@@ -298,7 +298,7 @@
       "expectedLinesAfterTyping": ["Thi.s will be also a normal line"]
     },
     {
-      "name": "indent, no-selection, nested-itemized-line",
+      "name": "itemization menu: indent, no-selection, nested-itemized-line",
       "textLines": ["\t* This will be a deep nested item"],
       "inputMouse": [
         {
@@ -326,7 +326,7 @@
       "expectedLinesAfterTyping": [" \t* Thi.s will be a deep nested item"]
     },
     {
-      "name": "outdent, no-selection, nested-itemized-line",
+      "name": "itemization menu: outdent, no-selection, nested-itemized-line",
       "textLines": ["\t- This will be a shallow nested item"],
       "inputMouse": [
         {
@@ -354,7 +354,7 @@
       "expectedLinesAfterTyping": ["- This will be a shallow nested item"]
     },
     {
-      "name": "button, no-selection, other-line (line node)",
+      "name": "itemization menu: button, no-selection, other-line (line node)",
       "textLines": ["> This is a quotation"],
       "inputMouse": [
         {
@@ -381,7 +381,7 @@
       "expectedLinesAfterTyping": ["> This is a q.uotation"]
     },
     {
-      "name": "button, no-selection, other-line (block node)",
+      "name": "itemization menu: button, no-selection, other-line (block node)",
       "textLines": ["$$", "\\int_a^b f(x) dx", "$$"],
       "inputMouse": [
         {
@@ -408,7 +408,7 @@
       "expectedLinesAfterTyping": ["$$", "\\int_a.^b f(x) dx", "$$"]
     },
     {
-      "name": "disabled, no-selection, other-line (line node)",
+      "name": "itemization menu: disabled, no-selection, other-line (line node)",
       "textLines": ["> This is a quotation"],
       "inputMouse": [
         {
@@ -435,7 +435,7 @@
       "expectedLinesAfterTyping": ["> This is a q.uotation"]
     },
     {
-      "name": "disabled, no-selection, other-line (block node)",
+      "name": "itemization menu: disabled, no-selection, other-line (block node)",
       "textLines": ["$$", "\\int_a^b f(x) dx", "$$"],
       "inputMouse": [
         {
@@ -462,7 +462,7 @@
       "expectedLinesAfterTyping": ["$$", "\\int_a.^b f(x) dx", "$$"]
     },
     {
-      "name": "button, selection, all-normal-or-itemized-line",
+      "name": "itemization menu: button, selection, all-normal-or-itemized-line",
       "textLines": ["This is normal text", "* This is an item"],
       "inputMouse": [
         {
@@ -496,7 +496,7 @@
       "expectedLinesAfterTyping": ["- This . This is an item"]
     },
     {
-      "name": "button, selection, all-itemized-line",
+      "name": "itemization menu: button, selection, all-itemized-line",
       "textLines": ["- This is an item", "\t* This is also an item"],
       "inputMouse": [
         {
@@ -530,7 +530,7 @@
       "expectedLinesAfterTyping": ["This.This is an item"]
     },
     {
-      "name": "indent, selection, all-normal-or-itemized-line",
+      "name": "itemization menu: indent, selection, all-normal-or-itemized-line",
       "textLines": ["This is normal text", "- This is an item"],
       "inputMouse": [
         {
@@ -565,7 +565,7 @@
       "expectedLinesAfterTyping": [" This is nor. This is an item"]
     },
     {
-      "name": "outdent, selection, all-normal-or-itemized-line",
+      "name": "itemization menu: outdent, selection, all-normal-or-itemized-line",
       "textLines": ["This is normal text", "* This is an item"],
       "inputMouse": [
         {
@@ -600,7 +600,7 @@
       "expectedLinesAfterTyping": ["This is nor.This is an item"]
     },
     {
-      "name": "button, selection, has-other-line",
+      "name": "itemization menu: button, selection, has-other-line",
       "textLines": ["This is normal text", " ```", " code string", " ```"],
       "inputMouse": [
         {
@@ -634,7 +634,7 @@
       "expectedLinesAfterTyping": ["This is nor.de string", " ```"]
     },
     {
-      "name": "disabled, selection, has-other-line",
+      "name": "itemization menu: disabled, selection, has-other-line",
       "textLines": ["This is normal text", " ```", " code string", " ```"],
       "inputMouse": [
         {
@@ -668,7 +668,7 @@
       "expectedLinesAfterTyping": ["This is nor.de string", " ```"]
     },
     {
-      "name": "undo no-selection",
+      "name": "itemization menu: undo no-selection",
       "textLines": ["This is normal text"],
       "inputMouse": [
         {
@@ -695,7 +695,7 @@
       "expectedLinesAfterTyping": ["This is normal text."]
     },
     {
-      "name": "undo selection",
+      "name": "itemization menu: undo selection",
       "textLines": ["This is normal text", "This is also normal text"],
       "inputMouse": [
         {

@@ -16,7 +16,7 @@
   ],
   "testCases": [
     {
-      "name": "inline-code-button, no-selection, empty-line",
+      "name": "code menu: inline-code-button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -43,7 +43,7 @@
       "expectedLinesAfterTyping": ["`React Realtime Markup Editor`"]
     },
     {
-      "name": "inline-code-dropdown, no-selection, in-code",
+      "name": "code menu: inline-code-dropdown, no-selection, in-code",
       "textLines": ["`import { Editor } from 'react-realtime-markup-editor'`"],
       "inputMouse": [
         {
@@ -71,7 +71,7 @@
       "expectedLinesAfterTyping": ["impor.t { Editor } from 'react-realtime-markup-editor'"]
     },
     {
-      "name": "inline-code-button, no-selection, in-normal",
+      "name": "code menu: inline-code-button, no-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -98,7 +98,7 @@
       "expectedLinesAfterTyping": ["normal te`const x = 1;`xt"]
     },
     {
-      "name": "inline-code-dropdown, no-selection, in-normal-with-code-left",
+      "name": "code menu: inline-code-dropdown, no-selection, in-normal-with-code-left",
       "textLines": ["`const a = 0;`normal text"],
       "inputMouse": [
         {
@@ -126,7 +126,7 @@
       "expectedLinesAfterTyping": ["`const a = 0; const y = 2;`normal text"]
     },
     {
-      "name": "inline-code-button, no-selection, in-normal-with-code-right",
+      "name": "code menu: inline-code-button, no-selection, in-normal-with-code-right",
       "textLines": ["normal text`const a = 0;`"],
       "inputMouse": [
         {
@@ -153,7 +153,7 @@
       "expectedLinesAfterTyping": ["normal text`const z = 3; const a = 0;`"]
     },
     {
-      "name": "inline-code-dropdown, no-selection, other (content node)",
+      "name": "code menu: inline-code-dropdown, no-selection, other (content node)",
       "textLines": ["[bracket link]"],
       "inputMouse": [
         {
@@ -181,7 +181,7 @@
       "expectedLinesAfterTyping": ["[bracket li.nk]"]
     },
     {
-      "name": "inline-code-dropdown, no-selection, other (block node)",
+      "name": "code menu: inline-code-dropdown, no-selection, other (block node)",
       "textLines": ["```", "nothing happened", "```"],
       "inputMouse": [
         {
@@ -209,7 +209,7 @@
       "expectedLinesAfterTyping": ["```", "not.hing happened", "```"]
     },
     {
-      "name": "inline-code-button, single-line-selection, in-code-all (syntax and text)",
+      "name": "code menu: inline-code-button, single-line-selection, in-code-all (syntax and text)",
       "textLines": ["`import 'react'`"],
       "inputMouse": [
         {
@@ -243,7 +243,7 @@
       "expectedLinesAfterTyping": [".'"]
     },
     {
-      "name": "inline-code-dropdown, single-line-selection, in-code-all (text)",
+      "name": "code menu: inline-code-dropdown, single-line-selection, in-code-all (text)",
       "textLines": ["`import 'react'`"],
       "inputMouse": [
         {
@@ -278,7 +278,7 @@
       "expectedLinesAfterTyping": ["."]
     },
     {
-      "name": "inline-code-button, single-line-selection, in-code-all (syntax)",
+      "name": "code menu: inline-code-button, single-line-selection, in-code-all (syntax)",
       "textLines": ["`import 'react'`"],
       "inputMouse": [
         {
@@ -312,7 +312,7 @@
       "expectedLinesAfterTyping": [".import 'react'"]
     },
     {
-      "name": "inline-code-dropdown, single-line-selection, in-code-left",
+      "name": "code menu: inline-code-dropdown, single-line-selection, in-code-left",
       "textLines": ["`import 'react'`"],
       "inputMouse": [
         {
@@ -347,7 +347,7 @@
       "expectedLinesAfterTyping": [".`react'`"]
     },
     {
-      "name": "inline-code-button, single-line-selection, in-code-mid",
+      "name": "code menu: inline-code-button, single-line-selection, in-code-mid",
       "textLines": ["`import 'react'`"],
       "inputMouse": [
         {
@@ -381,7 +381,7 @@
       "expectedLinesAfterTyping": ["`im`.`eact'`"]
     },
     {
-      "name": "inline-code-dropdown, single-line-selection, in-code-right",
+      "name": "code menu: inline-code-dropdown, single-line-selection, in-code-right",
       "textLines": ["`import 'react'`"],
       "inputMouse": [
         {
@@ -416,7 +416,7 @@
       "expectedLinesAfterTyping": ["`import `."]
     },
     {
-      "name": "inline-code-button, single-line-selection, in-normal",
+      "name": "code menu: inline-code-button, single-line-selection, in-normal",
       "textLines": ["`left code`mid normal text`right code`"],
       "inputMouse": [
         {
@@ -450,7 +450,7 @@
       "expectedLinesAfterTyping": ["`left code`mid n`.`xt`right code`"]
     },
     {
-      "name": "inline-code-dropdown, single-line-selection, in-normal-with-code-left",
+      "name": "code menu: inline-code-dropdown, single-line-selection, in-normal-with-code-left",
       "textLines": ["`left code`mid normal text`right code`"],
       "inputMouse": [
         {
@@ -485,7 +485,7 @@
       "expectedLinesAfterTyping": ["`left code.`al text`right code`"]
     },
     {
-      "name": "inline-code-button, single-line-selection, in-normal-with-code-right",
+      "name": "code menu: inline-code-button, single-line-selection, in-normal-with-code-right",
       "textLines": ["`left code`mid normal text`right code`"],
       "inputMouse": [
         {
@@ -519,7 +519,7 @@
       "expectedLinesAfterTyping": ["`left code`mid norma`.right code`"]
     },
     {
-      "name": "inline-code-dropdown, single-line-selection, other (mixed with foreigner)",
+      "name": "code menu: inline-code-dropdown, single-line-selection, other (mixed with foreigner)",
       "textLines": ["$$\\int_a^b f(x)g(x) dx$$"],
       "inputMouse": [
         {
@@ -554,7 +554,7 @@
       "expectedLinesAfterTyping": ["$$\\.^b f(x)g(x) dx$$"]
     },
     {
-      "name": "inline-code-button, single-line-selection, other (mixed with friend)",
+      "name": "code menu: inline-code-button, single-line-selection, other (mixed with friend)",
       "textLines": ["`left code`mid normal text`right code`"],
       "inputMouse": [
         {
@@ -588,7 +588,7 @@
       "expectedLinesAfterTyping": ["`left co.ht code`"]
     },
     {
-      "name": "block-code, no-selection, empty-line",
+      "name": "code menu: block-code, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -616,7 +616,7 @@
       "expectedLinesAfterTyping": ["```", "React Realtime Markup Editor", "```"]
     },
     {
-      "name": "block-code, no-selection, in-code (code)",
+      "name": "code menu: block-code, no-selection, in-code (code)",
       "textLines": [" ```", " const a = 1;", " ```"],
       "inputMouse": [
         {
@@ -644,7 +644,7 @@
       "expectedLinesAfterTyping": [" co.nst a = 1;"]
     },
     {
-      "name": "block-code, no-selection, in-code (syntax)",
+      "name": "code menu: block-code, no-selection, in-code (syntax)",
       "textLines": ["```", "const a = 1;", "const b = 2;", "```"],
       "inputMouse": [
         {
@@ -671,7 +671,7 @@
       "expectedLinesAfterTyping": ["const a = 1;", "const b = 2;."]
     },
     {
-      "name": "block-code, no-selection, in-code-top",
+      "name": "code menu: block-code, no-selection, in-code-top",
       "textLines": ["  ```", "  const a = 1;", "  const b = 2;", "  ```"],
       "inputMouse": [
         {
@@ -698,7 +698,7 @@
       "expectedLinesAfterTyping": ["  cons.t a = 1;", "  ```", "  const b = 2;", "  ```"]
     },
     {
-      "name": "block-code, no-selection, in-code-mid",
+      "name": "code menu: block-code, no-selection, in-code-mid",
       "textLines": ["```", "const a = 1;", "const b = 2;", "const c = 3;", "```"],
       "inputMouse": [
         {
@@ -726,7 +726,7 @@
       "expectedLinesAfterTyping": ["```", "const a = 1;", "```", "c.onst b = 2;", "```", "const c = 3;", "```"]
     },
     {
-      "name": "block-code, no-selection, in-code-bottom",
+      "name": "code menu: block-code, no-selection, in-code-bottom",
       "textLines": ["  ```", "  const a = 1;", "  const b = 2;", "  ```"],
       "inputMouse": [
         {
@@ -753,7 +753,7 @@
       "expectedLinesAfterTyping": ["  ```", "  const a = 1;", "  ```", "  const b. = 2;"]
     },
     {
-      "name": "block-code, no-selection, in-other-line",
+      "name": "code menu: block-code, no-selection, in-other-line",
       "textLines": [" normal line"],
       "inputMouse": [
         {
@@ -781,7 +781,7 @@
       "expectedLinesAfterTyping": ["```", " no.rmal line", "```"]
     },
     {
-      "name": "block-code, no-selection, in-other-line (with nested code)",
+      "name": "code menu: block-code, no-selection, in-other-line (with nested code)",
       "textLines": [" ```", " const a = 1", " ```", " normal line"],
       "inputMouse": [
         {
@@ -809,7 +809,7 @@
       "expectedLinesAfterTyping": [" ```", " const a = 1", " ```", "```", " no.rmal line", "```"]
     },
     {
-      "name": "block-code, no-selection, in-other-with-code-above",
+      "name": "code menu: block-code, no-selection, in-other-with-code-above",
       "textLines": ["```", "const a = 1;", " normal line"],
       "inputMouse": [
         {
@@ -837,7 +837,7 @@
       "expectedLinesAfterTyping": ["```", "const a = 1;", " norm.al line", "```"]
     },
     {
-      "name": "block-code, no-selection, in-other-with-code-below",
+      "name": "code menu: block-code, no-selection, in-other-with-code-below",
       "textLines": [" normal line", "```", "const a = 1;", "```"],
       "inputMouse": [
         {
@@ -865,7 +865,7 @@
       "expectedLinesAfterTyping": ["```", " norm.al line", "const a = 1;", "```"]
     },
     {
-      "name": "block-code, selection, all-code-lines (syntax)",
+      "name": "code menu: block-code, selection, all-code-lines (syntax)",
       "textLines": ["```", "const a = 1;", "const b = 2;", "```"],
       "inputMouse": [
         {
@@ -899,7 +899,7 @@
       "expectedLinesAfterTyping": [".const a = 1;", "const b = 2;"]
     },
     {
-      "name": "block-code, selection, all-code-lines (code)",
+      "name": "code menu: block-code, selection, all-code-lines (code)",
       "textLines": [" ```", " const a = 1;", " const b = 2;"],
       "inputMouse": [
         {
@@ -934,7 +934,7 @@
       "expectedLinesAfterTyping": [" con. b = 2;"]
     },
     {
-      "name": "block-code, selection, all-code-lines (code and syntax)",
+      "name": "code menu: block-code, selection, all-code-lines (code and syntax)",
       "textLines": [" ```", " const a = 1;", " const b = 2;"],
       "inputMouse": [
         {
@@ -969,7 +969,7 @@
       "expectedLinesAfterTyping": [". b = 2;"]
     },
     {
-      "name": "block-code, selection, all-code-lines-top",
+      "name": "code menu: block-code, selection, all-code-lines-top",
       "textLines": [" ```", " const a = 1;", " const b = 2;", " ```"],
       "inputMouse": [
         {
@@ -1004,7 +1004,7 @@
       "expectedLinesAfterTyping": [".t a = 1;", " ```", " const b = 2;", " ```"]
     },
     {
-      "name": "block-code, selection, in-code-mid",
+      "name": "code menu: block-code, selection, in-code-mid",
       "textLines": [" ```", " const a = 1;", " const b = 2;", " const c = 3;", " ```"],
       "inputMouse": [
         {
@@ -1039,7 +1039,7 @@
       "expectedLinesAfterTyping": [" ```", " const a = 1;", " ```", ". = 2;", " ```", " const c = 3;", " ```"]
     },
     {
-      "name": "block-code, selection, all-code-lines-bottom",
+      "name": "code menu: block-code, selection, all-code-lines-bottom",
       "textLines": [" ```", " const a = 1;", " const b = 2;"],
       "inputMouse": [
         {
@@ -1073,7 +1073,7 @@
       "expectedLinesAfterTyping": [" ```", " const a = 1;", " ```", " .t b = 2;"]
     },
     {
-      "name": "block-code, selection, all-other-lines",
+      "name": "code menu: block-code, selection, all-other-lines",
       "textLines": ["normal line `code string`", "$f(x)$ normal line"],
       "inputMouse": [
         {
@@ -1108,7 +1108,7 @@
       "expectedLinesAfterTyping": ["```", "n.x)$ normal line", "```"]
     },
     {
-      "name": "block-code, selection, in-other-with-code-above",
+      "name": "code menu: block-code, selection, in-other-with-code-above",
       "textLines": ["normal text", "normal text", "```", "const a = 1;"],
       "inputMouse": [
         {
@@ -1143,7 +1143,7 @@
       "expectedLinesAfterTyping": ["```", "n.mal text", "const a = 1;"]
     },
     {
-      "name": "block-code, selection, in-other-with-code-below",
+      "name": "code menu: block-code, selection, in-other-with-code-below",
       "textLines": ["```", "const a = 1;", "```", "normal text", "normal text"],
       "inputMouse": [
         {
@@ -1178,7 +1178,7 @@
       "expectedLinesAfterTyping": ["```", "const a = 1;", "normal te.", "```", "normal text"]
     },
     {
-      "name": "block-code, selection, mixed-lines (code and other)",
+      "name": "code menu: block-code, selection, mixed-lines (code and other)",
       "textLines": ["```", "const a = 1;", "```", "normal text", "normal text"],
       "inputMouse": [
         {
@@ -1212,7 +1212,7 @@
       "expectedLinesAfterTyping": ["```", "const a = 1;", "`. text", "normal text"]
     },
     {
-      "name": "block-code, selection, mixed-lines (double code)",
+      "name": "code menu: block-code, selection, mixed-lines (double code)",
       "textLines": ["```", "const a = 1;", "```", "```", "const b = 2;"],
       "inputMouse": [
         {

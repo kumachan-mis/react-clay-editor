@@ -27,7 +27,7 @@
   },
   "testCases": [
     {
-      "name": "bracket, no-selection, empty-line",
+      "name": "link menus: bracket, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -54,7 +54,7 @@
       "expectedLinesAfterTyping": ["[blueberries]"]
     },
     {
-      "name": "hashtag, no-selection, empty-line",
+      "name": "link menus: hashtag, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -81,7 +81,7 @@
       "expectedLinesAfterTyping": ["#coconut_meat "]
     },
     {
-      "name": "tagged-link-button, no-selection, empty-line",
+      "name": "link menus: tagged-link-button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -108,7 +108,7 @@
       "expectedLinesAfterTyping": ["[tag: feijoa]"]
     },
     {
-      "name": "tagged-link-dropdown, no-selection, empty-line",
+      "name": "link menus: tagged-link-dropdown, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -136,7 +136,7 @@
       "expectedLinesAfterTyping": ["[tag: feIjOa]"]
     },
     {
-      "name": "bracket, no-selection, in-bracket-link",
+      "name": "link menus: bracket, no-selection, in-bracket-link",
       "textLines": ["[This is normal text]"],
       "inputMouse": [
         {
@@ -163,7 +163,7 @@
       "expectedLinesAfterTyping": ["This is normal. text"]
     },
     {
-      "name": "bracket, no-selection, in-hashtag-link",
+      "name": "link menus: bracket, no-selection, in-hashtag-link",
       "textLines": ["#nothing_happened"],
       "inputMouse": [
         {
@@ -190,7 +190,7 @@
       "expectedLinesAfterTyping": ["#noth.ing_happened"]
     },
     {
-      "name": "hashtag, no-selection, in-hashtag-link",
+      "name": "link menus: hashtag, no-selection, in-hashtag-link",
       "textLines": ["#normal_text"],
       "inputMouse": [
         {
@@ -217,7 +217,7 @@
       "expectedLinesAfterTyping": ["norm.al_text"]
     },
     {
-      "name": "hashtag, no-selection, in-tagged-link",
+      "name": "link menus: hashtag, no-selection, in-tagged-link",
       "textLines": ["[tag: nothing happend]"],
       "inputMouse": [
         {
@@ -244,7 +244,7 @@
       "expectedLinesAfterTyping": ["[tag: no.thing happend]"]
     },
     {
-      "name": "tagged-link-button, no-selection, in-tagged-link",
+      "name": "link menus: tagged-link-button, no-selection, in-tagged-link",
       "textLines": ["[tag: This is normal text]"],
       "inputMouse": [
         {
@@ -271,7 +271,7 @@
       "expectedLinesAfterTyping": [".This is normal text"]
     },
     {
-      "name": "tagged-link-dropdown, no-selection, in-tagged-link (same tag)",
+      "name": "link menus: tagged-link-dropdown, no-selection, in-tagged-link (same tag)",
       "textLines": ["[tag: This is normal text]"],
       "inputMouse": [
         {
@@ -299,7 +299,7 @@
       "expectedLinesAfterTyping": [".This is normal text"]
     },
     {
-      "name": "tagged-link-dropdown, no-selection, in-tagged-link (other tag)",
+      "name": "link menus: tagged-link-dropdown, no-selection, in-tagged-link (other tag)",
       "textLines": ["[tag: tag will be changed]"],
       "inputMouse": [
         {
@@ -327,7 +327,7 @@
       "expectedLinesAfterTyping": ["[@.: tag will be changed]"]
     },
     {
-      "name": "tagged-link-button, no-selection, in-bracket-link",
+      "name": "link menus: tagged-link-button, no-selection, in-bracket-link",
       "textLines": ["[nothing happend]"],
       "inputMouse": [
         {
@@ -354,7 +354,7 @@
       "expectedLinesAfterTyping": ["[.nothing happend]"]
     },
     {
-      "name": "bracket, no-selection, in-normal",
+      "name": "link menus: bracket, no-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -381,7 +381,7 @@
       "expectedLinesAfterTyping": ["n[hello world]ormal text"]
     },
     {
-      "name": "hashtag, no-selection, in-normal",
+      "name": "link menus: hashtag, no-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -408,7 +408,7 @@
       "expectedLinesAfterTyping": ["nor#hello_world mal text"]
     },
     {
-      "name": "tagged-link-button, no-selection, in-normal",
+      "name": "link menus: tagged-link-button, no-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -435,7 +435,7 @@
       "expectedLinesAfterTyping": ["no[tag: hello world]rmal text"]
     },
     {
-      "name": "tagged-link-dropdown, no-selection, in-normal",
+      "name": "link menus: tagged-link-dropdown, no-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -463,7 +463,7 @@
       "expectedLinesAfterTyping": ["normal[tag: hello world] text"]
     },
     {
-      "name": "bracket, no-selection, other (content node)",
+      "name": "link menus: bracket, no-selection, other (content node)",
       "textLines": ["$f(x)g(x)$"],
       "inputMouse": [
         {
@@ -490,7 +490,7 @@
       "expectedLinesAfterTyping": ["$f(x)g.(x)$"]
     },
     {
-      "name": "tagged-link-dropdown, no-selection, other (block node)",
+      "name": "link menus: tagged-link-dropdown, no-selection, other (block node)",
       "textLines": ["$$", "\\sum_{i=0}^{n-1}a_nb_n", "$$"],
       "inputMouse": [
         {
@@ -517,7 +517,7 @@
       "expectedLinesAfterTyping": ["$$", "\\sum_{i=0}^{n-1}a._nb_n", "$$"]
     },
     {
-      "name": "bracket, single-line-selection, in-bracket-link",
+      "name": "link menus: bracket, single-line-selection, in-bracket-link",
       "textLines": ["[This is normal text]"],
       "inputMouse": [
         {
@@ -551,7 +551,7 @@
       "expectedLinesAfterTyping": ["This is . text"]
     },
     {
-      "name": "bracket, single-line-selection, in-tagged-link",
+      "name": "link menus: bracket, single-line-selection, in-tagged-link",
       "textLines": ["[tag: nothing happened]"],
       "inputMouse": [
         {
@@ -585,7 +585,7 @@
       "expectedLinesAfterTyping": ["[tag:nothing happened]"]
     },
     {
-      "name": "hashtag, single-line-selection, in-hashtag-link",
+      "name": "link menus: hashtag, single-line-selection, in-hashtag-link",
       "textLines": ["#normal_text"],
       "inputMouse": [
         {
@@ -619,7 +619,7 @@
       "expectedLinesAfterTyping": ["._text"]
     },
     {
-      "name": "hashtag, single-line-selection, in-bracket-link",
+      "name": "link menus: hashtag, single-line-selection, in-bracket-link",
       "textLines": ["[nothing happend]"],
       "inputMouse": [
         {
@@ -653,7 +653,7 @@
       "expectedLinesAfterTyping": ["[n. happend]"]
     },
     {
-      "name": "tagged-link-dropdown, single-line-selection, in-tagged-link",
+      "name": "link menus: tagged-link-dropdown, single-line-selection, in-tagged-link",
       "textLines": ["[tag: This is normal text]"],
       "inputMouse": [
         {
@@ -688,7 +688,7 @@
       "expectedLinesAfterTyping": [".rmal text"]
     },
     {
-      "name": "tagged-link-dropdown, single-line-selection, in-bracket-link",
+      "name": "link menus: tagged-link-dropdown, single-line-selection, in-bracket-link",
       "textLines": ["[nothing happend]"],
       "inputMouse": [
         {
@@ -722,7 +722,7 @@
       "expectedLinesAfterTyping": ["[nothing happ."]
     },
     {
-      "name": "bracket, single-line-selection, in-normal",
+      "name": "link menus: bracket, single-line-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -756,7 +756,7 @@
       "expectedLinesAfterTyping": ["n[", "] text"]
     },
     {
-      "name": "hashtag, single-line-selection, in-normal",
+      "name": "link menus: hashtag, single-line-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -790,7 +790,7 @@
       "expectedLinesAfterTyping": ["nor", "text"]
     },
     {
-      "name": "tagged-link-button, single-line-selection, in-normal",
+      "name": "link menus: tagged-link-button, single-line-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -824,7 +824,7 @@
       "expectedLinesAfterTyping": ["no[tag: ", "] text"]
     },
     {
-      "name": "tagged-link-button, single-line-selection, other (content node)",
+      "name": "link menus: tagged-link-button, single-line-selection, other (content node)",
       "textLines": ["$f(x)g(x)$"],
       "inputMouse": [
         {
@@ -858,7 +858,7 @@
       "expectedLinesAfterTyping": ["$f(x)g.$"]
     },
     {
-      "name": "bracket, single-line-selection, other (block node)",
+      "name": "link menus: bracket, single-line-selection, other (block node)",
       "textLines": ["$$", "\\sum_{i=0}^{n-1}a_nb_n", "$$"],
       "inputMouse": [
         {
@@ -892,7 +892,7 @@
       "expectedLinesAfterTyping": ["$$", "\\sum_{i=0}^{n-._nb_n", "$$"]
     },
     {
-      "name": "hashtag, single-line-selection, other (mixed with friend)",
+      "name": "link menus: hashtag, single-line-selection, other (mixed with friend)",
       "textLines": ["#hashtag #hashtag2"],
       "inputMouse": [
         {
@@ -926,7 +926,7 @@
       "expectedLinesAfterTyping": ["#.shtag2"]
     },
     {
-      "name": "tagged-link-dropdown, single-line-selection, other (mixed with foreigner)",
+      "name": "link menus: tagged-link-dropdown, single-line-selection, other (mixed with foreigner)",
       "textLines": ["[@: nothing_happened] `code string`"],
       "inputMouse": [
         {
@@ -960,7 +960,7 @@
       "expectedLinesAfterTyping": ["[@: nothing_happene.tring`"]
     },
     {
-      "name": "bracket, multi-lines-selection",
+      "name": "link menus: bracket, multi-lines-selection",
       "textLines": ["normal text", "normal text too"],
       "inputMouse": [
         {

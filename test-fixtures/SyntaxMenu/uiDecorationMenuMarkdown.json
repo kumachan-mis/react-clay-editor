@@ -13,7 +13,7 @@
   ],
   "testCases": [
     {
-      "name": "bold, no-selection, empty-line",
+      "name": "decoration menus: bold, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -40,7 +40,7 @@
       "expectedLinesAfterTyping": ["*React Realtime Markup Editor*"]
     },
     {
-      "name": "italic, no-selection, empty-line",
+      "name": "decoration menus: italic, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -67,7 +67,7 @@
       "expectedLinesAfterTyping": ["_React Realtime Markup Editor_"]
     },
     {
-      "name": "underline, no-selection, empty-line",
+      "name": "decoration menus: underline, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -94,7 +94,7 @@
       "expectedLinesAfterTyping": ["React Realtime Markup Editor"]
     },
     {
-      "name": "bold, no-selection, in-decoration",
+      "name": "decoration menus: bold, no-selection, in-decoration",
       "textLines": ["*bold text*"],
       "inputMouse": [
         {
@@ -121,7 +121,7 @@
       "expectedLinesAfterTyping": ["b.old text"]
     },
     {
-      "name": "italic, no-selection, in-decoration",
+      "name": "decoration menus: italic, no-selection, in-decoration",
       "textLines": ["_italic text_"],
       "inputMouse": [
         {
@@ -148,7 +148,7 @@
       "expectedLinesAfterTyping": ["ita.lic text"]
     },
     {
-      "name": "bold, no-selection, in-decoration",
+      "name": "decoration menus: bold, no-selection, in-decoration",
       "textLines": ["_italic text_"],
       "inputMouse": [
         {
@@ -175,7 +175,7 @@
       "expectedLinesAfterTyping": ["_italic. text_"]
     },
     {
-      "name": "italic, no-selection, in-decoration",
+      "name": "decoration menus: italic, no-selection, in-decoration",
       "textLines": ["*bold text*"],
       "inputMouse": [
         {
@@ -202,7 +202,7 @@
       "expectedLinesAfterTyping": ["*bold. text*"]
     },
     {
-      "name": "bold, no-selection, in-normal-with-decoration-left",
+      "name": "decoration menus: bold, no-selection, in-normal-with-decoration-left",
       "textLines": ["*important*"],
       "inputMouse": [
         {
@@ -229,7 +229,7 @@
       "expectedLinesAfterTyping": ["*important, really important*"]
     },
     {
-      "name": "italic, no-selection, in-normal-with-decoration-right",
+      "name": "decoration menus: italic, no-selection, in-normal-with-decoration-right",
       "textLines": ["_important_"],
       "inputMouse": [
         {
@@ -256,7 +256,7 @@
       "expectedLinesAfterTyping": ["_This is important_"]
     },
     {
-      "name": "bold, no-selection, other (content node)",
+      "name": "decoration menus: bold, no-selection, other (content node)",
       "textLines": ["[bracket link]"],
       "inputMouse": [
         {
@@ -283,7 +283,7 @@
       "expectedLinesAfterTyping": ["[bra.cket link]"]
     },
     {
-      "name": "italic, no-selection, other (block node)",
+      "name": "decoration menus: italic, no-selection, other (block node)",
       "textLines": ["```", "code string", "```"],
       "inputMouse": [
         {
@@ -310,7 +310,7 @@
       "expectedLinesAfterTyping": ["```", "code s.tring", "```"]
     },
     {
-      "name": "bold, single-line-selection, in-decoration-all",
+      "name": "decoration menus: bold, single-line-selection, in-decoration-all",
       "textLines": ["*bold text*"],
       "inputMouse": [
         {
@@ -344,7 +344,7 @@
       "expectedLinesAfterTyping": ["."]
     },
     {
-      "name": "italic, single-line-selection, in-decoration-all",
+      "name": "decoration menus: italic, single-line-selection, in-decoration-all",
       "textLines": ["_italic text_"],
       "inputMouse": [
         {
@@ -378,7 +378,7 @@
       "expectedLinesAfterTyping": [".italic text"]
     },
     {
-      "name": "bold, single-line-selection, in-decoration-left (without-deco)",
+      "name": "decoration menus: bold, single-line-selection, in-decoration-left (without-deco)",
       "textLines": ["*left mid right*"],
       "inputMouse": [
         {
@@ -412,7 +412,7 @@
       "expectedLinesAfterTyping": [".* mid right*"]
     },
     {
-      "name": "italic, single-line-selection, in-decoration-left (with-deco)",
+      "name": "decoration menus: italic, single-line-selection, in-decoration-left (with-deco)",
       "textLines": ["_left mid right_"],
       "inputMouse": [
         {
@@ -446,7 +446,7 @@
       "expectedLinesAfterTyping": ["._ mid right_"]
     },
     {
-      "name": "italic, single-line-selection, in-decoration-right (without-deco)",
+      "name": "decoration menus: italic, single-line-selection, in-decoration-right (without-deco)",
       "textLines": ["_left mid right_"],
       "inputMouse": [
         {
@@ -480,7 +480,7 @@
       "expectedLinesAfterTyping": ["_left mid _."]
     },
     {
-      "name": "bold, single-line-selection, in-decoration-right (with-deco)",
+      "name": "decoration menus: bold, single-line-selection, in-decoration-right (with-deco)",
       "textLines": ["*left mid right*"],
       "inputMouse": [
         {
@@ -514,7 +514,7 @@
       "expectedLinesAfterTyping": ["*left mid *."]
     },
     {
-      "name": "bold, single-line-selection, in-decoration-mid",
+      "name": "decoration menus: bold, single-line-selection, in-decoration-mid",
       "textLines": ["*left mid right*"],
       "inputMouse": [
         {
@@ -548,7 +548,7 @@
       "expectedLinesAfterTyping": ["[*left*.* right*"]
     },
     {
-      "name": "italic, single-line-selection, in-decoration-mid",
+      "name": "decoration menus: italic, single-line-selection, in-decoration-mid",
       "textLines": ["_left mid right_"],
       "inputMouse": [
         {
@@ -582,7 +582,7 @@
       "expectedLinesAfterTyping": ["_left_._ right_"]
     },
     {
-      "name": "bold, single-line-selection, in-normal",
+      "name": "decoration menus: bold, single-line-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -616,7 +616,7 @@
       "expectedLinesAfterTyping": ["no*.*t"]
     },
     {
-      "name": "italic, single-line-selection, in-normal",
+      "name": "decoration menus: italic, single-line-selection, in-normal",
       "textLines": ["normal text"],
       "inputMouse": [
         {
@@ -650,7 +650,7 @@
       "expectedLinesAfterTyping": ["no_._t"]
     },
     {
-      "name": "italic, single-line-selection, in-normal-with-decoration-left",
+      "name": "decoration menus: italic, single-line-selection, in-normal-with-decoration-left",
       "textLines": ["_normal_ text"],
       "inputMouse": [
         {
@@ -684,7 +684,7 @@
       "expectedLinesAfterTyping": ["_normal._xt"]
     },
     {
-      "name": "bold, single-line-selection, in-normal-with-decoration-right",
+      "name": "decoration menus: bold, single-line-selection, in-normal-with-decoration-right",
       "textLines": ["normal *text*"],
       "inputMouse": [
         {
@@ -718,7 +718,7 @@
       "expectedLinesAfterTyping": ["no*.text*"]
     },
     {
-      "name": "bold, single-line-selection, other (mixed with friends)",
+      "name": "decoration menus: bold, single-line-selection, other (mixed with friends)",
       "textLines": ["normal *text*"],
       "inputMouse": [
         {
@@ -752,7 +752,7 @@
       "expectedLinesAfterTyping": ["no.xt*"]
     },
     {
-      "name": "italic, single-line-selection, other (mixed with foreigner)",
+      "name": "decoration menus: italic, single-line-selection, other (mixed with foreigner)",
       "textLines": ["normal #hashtag_link"],
       "inputMouse": [
         {
@@ -786,7 +786,7 @@
       "expectedLinesAfterTyping": ["no.tag_link"]
     },
     {
-      "name": "bold, multi-lines-selection",
+      "name": "decoration menus: bold, multi-lines-selection",
       "textLines": ["normal text", "normal text too"],
       "inputMouse": [
         {

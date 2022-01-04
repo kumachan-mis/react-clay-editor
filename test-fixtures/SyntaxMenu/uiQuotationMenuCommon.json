@@ -8,7 +8,7 @@
   ],
   "testCases": [
     {
-      "name": "button, no-selection, empty-line",
+      "name": "quotation menu: button, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -35,7 +35,7 @@
       "expectedLinesAfterTyping": ["> React Realtime Markup Editor"]
     },
     {
-      "name": "indent, no-selection, empty-line",
+      "name": "quotation menu: indent, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -63,7 +63,7 @@
       "expectedLinesAfterTyping": ["> React Realtime Markup Editor"]
     },
     {
-      "name": "outdent, no-selection, empty-line",
+      "name": "quotation menu: outdent, no-selection, empty-line",
       "textLines": [""],
       "inputMouse": [
         {
@@ -91,7 +91,7 @@
       "expectedLinesAfterTyping": ["React Realtime Markup Editor"]
     },
     {
-      "name": "button, no-selection, normal-line",
+      "name": "quotation menu: button, no-selection, normal-line",
       "textLines": ["This will be a quotation text"],
       "inputMouse": [
         {
@@ -118,7 +118,7 @@
       "expectedLinesAfterTyping": ["> This .will be a quotation text"]
     },
     {
-      "name": "indent, no-selection, normal-line",
+      "name": "quotation menu: indent, no-selection, normal-line",
       "textLines": ["This will be a quotation text"],
       "inputMouse": [
         {
@@ -146,7 +146,7 @@
       "expectedLinesAfterTyping": ["> This .will be a quotation text"]
     },
     {
-      "name": "outdent, selection, normal-line",
+      "name": "quotation menu: outdent, selection, normal-line",
       "textLines": ["This will not be a quotation text"],
       "inputMouse": [
         {
@@ -181,7 +181,7 @@
       "expectedLinesAfterTyping": ["This .l not be a quotation text"]
     },
     {
-      "name": "button, no-selection, quoted-line",
+      "name": "quotation menu: button, no-selection, quoted-line",
       "textLines": ["> This will be a normal line"],
       "inputMouse": [
         {
@@ -208,7 +208,7 @@
       "expectedLinesAfterTyping": ["This. will be a normal line"]
     },
     {
-      "name": "indent, selection, quoted-line",
+      "name": "quotation menu: indent, selection, quoted-line",
       "textLines": ["> This will be a nested quotation text"],
       "inputMouse": [
         {
@@ -243,7 +243,7 @@
       "expectedLinesAfterTyping": [" > This.ll be a nested quotation text"]
     },
     {
-      "name": "outdent, no-selection, quoted-line",
+      "name": "quotation menu: outdent, no-selection, quoted-line",
       "textLines": ["> This will be a normal line"],
       "inputMouse": [
         {
@@ -271,7 +271,7 @@
       "expectedLinesAfterTyping": ["This. will be a normal line"]
     },
     {
-      "name": "button, no-selection, nested-quoted-line",
+      "name": "quotation menu: button, no-selection, nested-quoted-line",
       "textLines": ["\t> This will be also a normal line"],
       "inputMouse": [
         {
@@ -298,7 +298,7 @@
       "expectedLinesAfterTyping": ["Thi.s will be also a normal line"]
     },
     {
-      "name": "indent, no-selection, nested-quoted-line",
+      "name": "quotation menu: indent, no-selection, nested-quoted-line",
       "textLines": ["\t> This will be a deep nested quotation text"],
       "inputMouse": [
         {
@@ -326,7 +326,7 @@
       "expectedLinesAfterTyping": [" \t> Thi.s will be a deep nested quotation text"]
     },
     {
-      "name": "outdent, no-selection, nested-quoted-line",
+      "name": "quotation menu: outdent, no-selection, nested-quoted-line",
       "textLines": ["\t> This will be a shallow nested quotation text"],
       "inputMouse": [
         {
@@ -354,7 +354,7 @@
       "expectedLinesAfterTyping": ["> This will be a shallow nested quotation text"]
     },
     {
-      "name": "button, no-selection, other-line (block node)",
+      "name": "quotation menu: button, no-selection, other-line (block node)",
       "textLines": ["$$", "\\int_a^b f(x) dx", "$$"],
       "inputMouse": [
         {
@@ -381,7 +381,7 @@
       "expectedLinesAfterTyping": ["$$", "\\int_a.^b f(x) dx", "$$"]
     },
     {
-      "name": "button, selection, all-normal-or-quoted-line",
+      "name": "quotation menu: button, selection, all-normal-or-quoted-line",
       "textLines": ["This is normal text", "> This is a quotation text"],
       "inputMouse": [
         {
@@ -415,7 +415,7 @@
       "expectedLinesAfterTyping": ["> This . This is a quotation text"]
     },
     {
-      "name": "button, selection, all-quoted-line",
+      "name": "quotation menu: button, selection, all-quoted-line",
       "textLines": ["> This is a quotation text", "\t> This is also a quotation text"],
       "inputMouse": [
         {
@@ -449,7 +449,7 @@
       "expectedLinesAfterTyping": ["This.This is a quotation text"]
     },
     {
-      "name": "indent, selection, all-normal-or-quoted-line",
+      "name": "quotation menu: indent, selection, all-normal-or-quoted-line",
       "textLines": ["This is normal text", "> This is a quotation text"],
       "inputMouse": [
         {
@@ -484,7 +484,7 @@
       "expectedLinesAfterTyping": [" This is nor. This is a quotation text"]
     },
     {
-      "name": "outdent, selection, all-normal-or-quoted-line",
+      "name": "quotation menu: outdent, selection, all-normal-or-quoted-line",
       "textLines": ["This is normal text", "> This is a quotation text"],
       "inputMouse": [
         {
@@ -519,7 +519,7 @@
       "expectedLinesAfterTyping": ["This is nor.This is a quotation text"]
     },
     {
-      "name": "button, selection, has-other-line",
+      "name": "quotation menu: button, selection, has-other-line",
       "textLines": ["This is normal text", " ```", " code string", " ```"],
       "inputMouse": [
         {
@@ -553,7 +553,7 @@
       "expectedLinesAfterTyping": ["This is nor.de string", " ```"]
     },
     {
-      "name": "disabled, selection, has-other-line",
+      "name": "quotation menu: disabled, selection, has-other-line",
       "textLines": ["This is normal text", " ```", " code string", " ```"],
       "inputMouse": [
         {
@@ -587,7 +587,7 @@
       "expectedLinesAfterTyping": ["This is nor.de string", " ```"]
     },
     {
-      "name": "undo no-selection",
+      "name": "quotation menu: undo no-selection",
       "textLines": ["This is normal text"],
       "inputMouse": [
         {
@@ -614,7 +614,7 @@
       "expectedLinesAfterTyping": ["This is normal text."]
     },
     {
-      "name": "undo selection",
+      "name": "quotation menu: undo selection",
       "textLines": ["This is normal text", "This is also normal text"],
       "inputMouse": [
         {
