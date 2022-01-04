@@ -1205,12 +1205,11 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-code-menu-item"
+        "menuButton": "dropdown-anchor-arrow"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["```", "const a = 1;", "```", "normal text", "normal text"],
-      "expectedLinesAfterTyping": ["```", "const a = 1;", "``. text", "normal text"]
+      "expectedLinesAfterTyping": ["```", "const a = 1;", "`. text", "normal text"]
     },
     {
       "name": "block-code, selection, mixed-lines (double code)",
@@ -1240,8 +1239,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-code-menu-item"
+        "menuButton": "dropdown-anchor-arrow"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["```", "const a = 1;", "```", "```", "const b = 2;"],

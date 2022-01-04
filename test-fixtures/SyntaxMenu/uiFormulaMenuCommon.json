@@ -888,8 +888,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["  $$", "  f(x)g(y)", "  r(x)\\theta(y)", "  $$"],
-      "expectedLinesAfterTyping": ["  $$", "  f(x).g(y)", "  r(x)\\theta(y)", "  $$"]
+      "expectedLinesAfterMenu": ["  f(x)g(y)", "  $$", "  r(x)\\theta(y)", "  $$"],
+      "expectedLinesAfterTyping": ["  f(x).g(y)", "  $$", "  r(x)\\theta(y)", "  $$"]
     },
     {
       "name": "block-formula, no-selection, in-formula-mid",
@@ -1400,8 +1400,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-formula-menu-item"
+        "menuButton": "dropdown-anchor-arrow"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "f(x)g(x)", "$$", "normal text", "normal text"],
@@ -1435,8 +1434,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-formula-menu-item"
+        "menuButton": "dropdown-anchor-arrow"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "x = \\cos \\theta", "$$", "$$", "y = \\sin \\theta"],
