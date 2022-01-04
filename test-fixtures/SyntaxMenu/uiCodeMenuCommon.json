@@ -250,7 +250,7 @@
           "type": "mouseDown",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 0
+            "charIndex": 1
           }
         },
         {
@@ -658,7 +658,7 @@
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 3,
-            "charIndex": 1
+            "charIndex": 3
           }
         }
       ],
@@ -1004,8 +1004,8 @@
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": [" const a = 1;", " ```", " const b = 2;", "```"],
-      "expectedLinesAfterTyping": [".t a = 1;", " ```", " const b = 2;", "```"]
+      "expectedLinesAfterMenu": [" const a = 1;", " ```", " const b = 2;", " ```"],
+      "expectedLinesAfterTyping": [".t a = 1;", " ```", " const b = 2;", " ```"]
     },
     {
       "name": "block-code, selection, in-code-mid",

@@ -14,5 +14,1437 @@
     "    - selection: all-formula-lines all-formula-lines-top all-formula-lines-mid all-formula-lines-bottom",
     "                 all-other-lines in-other-with-formula-above in-other-with-formula-below mixed-lines"
   ],
-  "testCases": []
+  "testCases": [
+    {
+      "name": "inline-formula-button, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["f(x)g(y)"],
+      "expectedLinesAfterMenu": ["$inline formula$"],
+      "expectedLinesAfterTyping": ["$f(x)g(y)$"]
+    },
+    {
+      "name": "display-formula-dropdown, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "display-formula-menu-item"
+      },
+      "inputTyping": ["f(x)g(y)"],
+      "expectedLinesAfterMenu": ["$$display formula$$"],
+      "expectedLinesAfterTyping": ["$$f(x)g(y)$$"]
+    },
+    {
+      "name": "inline-formula-dropdown, no-selection, in-formula (inline)",
+      "textLines": ["$f(x)$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["f(x)"],
+      "expectedLinesAfterTyping": ["f.(x)"]
+    },
+    {
+      "name": "inline-formula-dropdown, no-selection, in-formula (display)",
+      "textLines": ["$$f(x)$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$f(x)$"],
+      "expectedLinesAfterTyping": ["$f(x).$"]
+    },
+    {
+      "name": "display-formula-dropdown, no-selection, in-formula (inline)",
+      "textLines": ["$f(x)$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-display-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$f(x)$$"],
+      "expectedLinesAfterTyping": ["$$f.(x)$$"]
+    },
+    {
+      "name": "display-formula-button, no-selection, in-formula (inline)",
+      "textLines": ["$$f(x)$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["f(x)"],
+      "expectedLinesAfterTyping": ["f(.x)"]
+    },
+    {
+      "name": "inline-formula-button, no-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["g(y)"],
+      "expectedLinesAfterMenu": ["normal te$inline formula$xt"],
+      "expectedLinesAfterTyping": ["normal te$g(y)$xt"]
+    },
+    {
+      "name": "inline-formula-dropdown, no-selection, in-normal-with-nextto-display",
+      "textLines": ["$$f(x)g(x)$$text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["h(t)"],
+      "expectedLinesAfterMenu": ["$$f(x)g(x)$$$inline formula$text"],
+      "expectedLinesAfterTyping": ["$$f(x)g(x)$$$h(t)$text"]
+    },
+    {
+      "name": "display-formula-dropdown, no-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["g(y)"],
+      "expectedLinesAfterMenu": ["normal te$$display formula$$xt"],
+      "expectedLinesAfterTyping": ["normal te$$g(y)$$xt"]
+    },
+    {
+      "name": "display-formula-dropdown, no-selection, in-normal-with-nextto-inline",
+      "textLines": ["text$f(x)g(x)$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "display-formula-menu-item"
+      },
+      "inputTyping": ["h(t)"],
+      "expectedLinesAfterMenu": ["text$$display formula$$$f(x)g(x)$"],
+      "expectedLinesAfterTyping": ["text$$h(t)$$$f(x)g(x)$"]
+    },
+    {
+      "name": "inline-formula-dropdown, no-selection, in-normal-with-formula-left",
+      "textLines": ["$f(x)$normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": [" g(y)"],
+      "expectedLinesAfterMenu": ["$f(x)inline formula$normal text"],
+      "expectedLinesAfterTyping": ["$f(x) g(y)$normal text"]
+    },
+    {
+      "name": "inline-formula-button, no-selection, in-normal-with-formula-right",
+      "textLines": ["normal text$$g(y)$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["f(x) "],
+      "expectedLinesAfterMenu": ["normal text$inline formulag(y)$"],
+      "expectedLinesAfterTyping": ["normal text$f(x) g(y)$"]
+    },
+    {
+      "name": "inline-formula-dropdown, no-selection, other (content node)",
+      "textLines": ["[bracket link]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[bracket link]"],
+      "expectedLinesAfterTyping": ["[bracket li.nk]"]
+    },
+    {
+      "name": "display-formula-dropdown, no-selection, other (block node)",
+      "textLines": ["$$", "nothing happened", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "display-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "nothing happened", "$$"],
+      "expectedLinesAfterTyping": ["$$", "not.hing happened", "$$"]
+    },
+    {
+      "name": "inline-formula-button, single-line-selection, in-formula-all (syntax and text)",
+      "textLines": ["$formula string$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 16
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["formula string"],
+      "expectedLinesAfterTyping": [".'"]
+    },
+    {
+      "name": "display-formula-dropdown, single-line-selection, in-formula-all (text)",
+      "textLines": ["$$formula string$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 16
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["import 'react'"],
+      "expectedLinesAfterTyping": ["."]
+    },
+    {
+      "name": "inline-formula-button, single-line-selection, in-formula-all (syntax)",
+      "textLines": ["$formula string$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["formula string"],
+      "expectedLinesAfterTyping": [".formula string"]
+    },
+    {
+      "name": "inline-formula-dropdown, single-line-selection, in-formula-left",
+      "textLines": ["$\\sum_{i = 0}^{n-1} a_ib_i$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["\\sum_{i = 0}$^{n-1} a_ib_i$"],
+      "expectedLinesAfterTyping": [".$^{n-1} a_ib_i$"]
+    },
+    {
+      "name": "inline-formula-button, single-line-selection, in-formula-mid",
+      "textLines": ["$\\sum_{i = 0}^{n-1} a_ib_i$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 14
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$\\sum_{$i = 0}^{$n-1} a_ib_i$"],
+      "expectedLinesAfterTyping": ["$\\sum_{$.$n-1} a_ib_i$"]
+    },
+    {
+      "name": "display-formula-dropdown, single-line-selection, in-formula-right",
+      "textLines": ["$$\\sum_{i = 0}^{n-1} a_ib_i$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 22
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 25
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 28
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "display-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$\\sum_{i = 0}^{n-1} $$a_ib_i"],
+      "expectedLinesAfterTyping": ["$$\\sum_{i = 0}^{n-1} $$."]
+    },
+    {
+      "name": "inline-formula-button, single-line-selection, in-normal",
+      "textLines": ["$left formula$mid normal text$right formula$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 16
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 20
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 24
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$left formula$mi$d normal$ text$right formula$"],
+      "expectedLinesAfterTyping": ["$left formula$mi$.$ text$right formula$"]
+    },
+    {
+      "name": "inline-formula-dropdown, single-line-selection, in-normal-with-formula-left",
+      "textLines": ["$left formula$mid normal text$right formula$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 14
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 18
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 22
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$left formulamid norm$al text$right formula$"],
+      "expectedLinesAfterTyping": ["$left formula.$al text$right formula$"]
+    },
+    {
+      "name": "display-formula-dropdown, single-line-selection, in-normal-with-formula-right",
+      "textLines": ["$left formula$mid normal text$right formula$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 23
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 26
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 29
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$left formula$mid norma$l textright formula$"],
+      "expectedLinesAfterTyping": ["$left formula$mid norma$.right formula$"]
+    },
+    {
+      "name": "inline-formula-dropdown, single-line-selection, other (mixed with foreigner)",
+      "textLines": ["`code string`"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "inline-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["`code string`"],
+      "expectedLinesAfterTyping": ["`co.ring`"]
+    },
+    {
+      "name": "inline-formula-button, single-line-selection, other (mixed with friend)",
+      "textLines": ["$left formula$mid normal text$right formula$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 19
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 30
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$left formula$mid normal text$right formula$"],
+      "expectedLinesAfterTyping": ["$left fo.right formula$"]
+    },
+    {
+      "name": "block-formula, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["\\int f(x)g(x) dx"],
+      "expectedLinesAfterMenu": ["$$", "block formula", "$$"],
+      "expectedLinesAfterTyping": ["$$", "\\int f(x)g(x) dx", "$$"]
+    },
+    {
+      "name": "block-formula, no-selection, in-formula (formula)",
+      "textLines": [" $$", " f(x)g(y)", " $$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" f(x)g(y)"],
+      "expectedLinesAfterTyping": [" f(.x)g(y)"]
+    },
+    {
+      "name": "block-formula, no-selection, in-formula (syntax)",
+      "textLines": ["$$", "f(x)g(y)", "\\lim_{z \\to 0} h(z)", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["f(x)g(y)", "\\lim_{z \\to 0} h(z)"],
+      "expectedLinesAfterTyping": ["f(x)g(y)", "\\lim_{z \\to 0} h(z)."]
+    },
+    {
+      "name": "block-formula, no-selection, in-formula-top",
+      "textLines": ["  $$", "  f(x)g(y)", "  r(x)\\theta(y)", "  $$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["  $$", "  f(x)g(y)", "  r(x)\\theta(y)", "  $$"],
+      "expectedLinesAfterTyping": ["  $$", "  f(x).g(y)", "  r(x)\\theta(y)", "  $$"]
+    },
+    {
+      "name": "block-formula, no-selection, in-formula-mid",
+      "textLines": ["$$", "x = \\cos \\theta", "y = \\sin \\theta", "z = z_0", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "x = \\cos \\theta", "y = \\sin \\theta", "z = z_0", "$$"],
+      "expectedLinesAfterTyping": ["$$", "x = \\cos \\theta", "$$", "y. = \\sin \\theta", "$$", "z = z_0", "$$"]
+    },
+    {
+      "name": "block-formula, no-selection, in-formula-bottom",
+      "textLines": ["  $$", "  x = \\cos \\theta;", "  y = \\sin \\theta", "  $$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 9
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["  $$", "  x = \\cos \\theta;", "  $$", "  y = \\sin \\theta"],
+      "expectedLinesAfterTyping": ["  $$", "  x = \\cos \\theta;", "  $$", "  y = \\si.n \\theta"]
+    },
+    {
+      "name": "block-formula, no-selection, in-other-line",
+      "textLines": [" normal line"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", " normal line", "$$"],
+      "expectedLinesAfterTyping": ["$$", " no.rmal line", "$$"]
+    },
+    {
+      "name": "block-formula, no-selection, in-other-line (with nested formula)",
+      "textLines": [" $$", " f(x)g(x)", " $$", " normal line"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" $$", " f(x)g(x)", " $$", "$$", " normal line", "$$"],
+      "expectedLinesAfterTyping": [" $$", " f(x)g(x)", " $$", "$$", " no.rmal line", "$$"]
+    },
+    {
+      "name": "block-formula, no-selection, in-other-with-formula-above",
+      "textLines": ["$$", "f(x)g(x)", " normal line"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "f(x)g(x)", " normal line", "$$"],
+      "expectedLinesAfterTyping": ["$$", "f(x)g(x)", " norm.al line", "$$"]
+    },
+    {
+      "name": "block-formula, no-selection, in-other-with-formula-below",
+      "textLines": [" normal line", "$$", "f(x)g(x)", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", " normal line", "f(x)g(x)", "$$"],
+      "expectedLinesAfterTyping": ["$$", " norm.al line", "f(x)g(x)", "$$"]
+    },
+    {
+      "name": "block-formula, selection, all-formula-lines (syntax)",
+      "textLines": ["$$", "x = \\cos \\theta;", "y = \\sin \\theta", "$$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["x = \\cos \\theta;", "y = \\sin \\theta"],
+      "expectedLinesAfterTyping": [".x = \\cos \\theta;", "y = \\sin \\theta"]
+    },
+    {
+      "name": "block-formula, selection, all-formula-lines (formula)",
+      "textLines": [" $$", " x = \\cos \\theta;", " y = \\sin \\theta"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" x = \\cos \\theta;", " y = \\sin \\theta"],
+      "expectedLinesAfterTyping": [" x =.sin \\theta"]
+    },
+    {
+      "name": "block-formula, selection, all-formula-lines (formula and syntax)",
+      "textLines": [" $$", " x = \\cos \\theta;", " y = \\sin \\theta"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" x = \\cos \\theta;", " y = \\sin \\theta"],
+      "expectedLinesAfterTyping": [".sin \\theta"]
+    },
+    {
+      "name": "block-formula, selection, all-formula-lines-top",
+      "textLines": [" $$", " x = \\cos \\theta;", " y = \\sin \\theta", " $$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" x = \\cos \\theta;", " $$", " y = \\sin \\theta", " $$"],
+      "expectedLinesAfterTyping": [".\\cos \\theta;", " y = \\sin \\theta", " $$"]
+    },
+    {
+      "name": "block-formula, selection, in-formula-mid",
+      "textLines": [" $$", " x = \\cos \\theta", " y = \\sin \\theta", " z = z_0", " $$"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" $$", " x = \\cos \\theta", " y = \\sin \\theta", " z = z_0", " $$"],
+      "expectedLinesAfterTyping": [" $$", " x = \\cos \\theta", " $$", ".n \\theta", " $$", " z = z_0", " $$"]
+    },
+    {
+      "name": "block-formula, selection, all-formula-lines-bottom",
+      "textLines": [" $$", " x = \\cos \\theta", " y = \\sin \\theta"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": [" $$", " x = \\cos \\theta", " y = \\sin \\theta"],
+      "expectedLinesAfterTyping": [" $$", " x = \\cos \\theta", " .\\sin \\theta"]
+    },
+    {
+      "name": "block-formula, selection, all-other-lines",
+      "textLines": ["normal line `formula string`", "$f(x)$ normal line"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "normal line `formula string`", "$f(x)$ normal line", "$$"],
+      "expectedLinesAfterTyping": ["$$", "n.x)$ normal line", "$$"]
+    },
+    {
+      "name": "block-formula, selection, in-other-with-formula-above",
+      "textLines": ["normal text", "normal text", "$$", "f(x)g(x)"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 3
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "normal text", "normal text", "f(x)g(x)"],
+      "expectedLinesAfterTyping": ["$$", "n.mal text", "f(x)g(x)"]
+    },
+    {
+      "name": "block-formula, selection, in-other-with-formula-below",
+      "textLines": ["$$", "f(x)g(x)", "$$", "normal text", "normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 10
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "f(x)g(x)", "normal text", "$$", "normal text"],
+      "expectedLinesAfterTyping": ["$$", "f(x)g(x)", "normal te.", "$$", "normal text"]
+    },
+    {
+      "name": "block-formula, selection, mixed-lines (formula and other)",
+      "textLines": ["$$", "f(x)g(x)", "$$", "normal text", "normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "f(x)g(x)", "$$", "normal text", "normal text"],
+      "expectedLinesAfterTyping": ["$$", "f(x)g(x)", "$. text", "normal text"]
+    },
+    {
+      "name": "block-formula, selection, mixed-lines (double formula)",
+      "textLines": ["$$", "x = \\cos \\theta", "$$", "$$", "y = \\sin \\theta"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 3,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 2,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "formula-menu",
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "block-formula-menu-item"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["$$", "x = \\cos \\theta", "$$", "$$", "y = \\sin \\theta"],
+      "expectedLinesAfterTyping": ["$$", "x = \\.$", "y = \\sin \\theta"]
+    }
+  ]
 }
