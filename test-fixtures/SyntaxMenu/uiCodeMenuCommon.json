@@ -664,8 +664,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-code-menu-item"
+        "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["const a = 1;", "const b = 2;"],
@@ -692,8 +691,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-code-menu-item"
+        "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["  const a = 1;", "  ```", "  const b = 2;", "  ```"],
@@ -748,8 +746,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-code-menu-item"
+        "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["  ```", "  const a = 1;", "  ```", "  const b = 2;"],
@@ -895,8 +892,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-code-menu-item"
+        "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["const a = 1;", "const b = 2;"],
@@ -1070,8 +1066,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
-        "menuItemName": "block-code-menu-item"
+        "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [" ```", " const a = 1;", " ```", " const b = 2;"],
