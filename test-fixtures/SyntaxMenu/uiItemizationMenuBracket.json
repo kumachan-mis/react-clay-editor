@@ -463,7 +463,7 @@
     },
     {
       "name": "button, selection, all-normal-or-itemized-line",
-      "textLines": ["\tThis is normal text", "This is an item"],
+      "textLines": ["\tThis is an item", "This is normal text"],
       "inputMouse": [
         {
           "type": "mouseDown",
@@ -476,7 +476,7 @@
           "type": "mouseMove",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 19
+            "charIndex": 16
           }
         },
         {
@@ -492,8 +492,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["\tThis is normal text", " This is an item"],
-      "expectedLinesAfterTyping": ["\tThis .This is an item"]
+      "expectedLinesAfterMenu": ["\tThis is an item", " This is normal text"],
+      "expectedLinesAfterTyping": ["\tThis .This is normal text"]
     },
     {
       "name": "button, selection, all-itemized-line",
@@ -527,7 +527,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is normal text", "This is an item"],
-      "expectedLinesAfterTyping": ["This is normal text", ".This is an item"]
+      "expectedLinesAfterTyping": ["This .This is an item"]
     },
     {
       "name": "indent, selection, all-normal-or-itemized-line",
@@ -597,7 +597,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is normal text", "This is an item"],
-      "expectedLinesAfterTyping": ["This is normal text", ".This is an item"]
+      "expectedLinesAfterTyping": ["This is nor.This is an item"]
     },
     {
       "name": "button, selection, has-other-line",
@@ -692,7 +692,7 @@
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": [" This is normal text"],
-      "expectedLinesAfterTyping": [".This is normal text"]
+      "expectedLinesAfterTyping": ["This is normal text."]
     },
     {
       "name": "undo selection",
