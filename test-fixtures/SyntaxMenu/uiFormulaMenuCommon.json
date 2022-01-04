@@ -12,7 +12,7 @@
     "    - no-selection: empty-line in-formula-top in-formula-mid in-formula-bottom",
     "                    in-other-line in-other-with-formula-above in-other-with-formula-below",
     "    - selection: all-formula-lines all-formula-lines-top all-formula-lines-mid all-formula-lines-bottom",
-    "                 all-other-lines in-normal-with-formula-above in-normal-with-formula-below mixed-lines"
+    "                 all-other-lines in-other-with-formula-above in-other-with-formula-below mixed-lines"
   ],
   "testCases": []
 }
