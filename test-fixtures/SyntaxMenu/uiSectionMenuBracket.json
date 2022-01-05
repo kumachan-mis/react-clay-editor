@@ -306,14 +306,14 @@
           "type": "mouseDown",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 6
+            "charIndex": 18
           }
         },
         {
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 6
+            "charIndex": 18
           }
         }
       ],
@@ -324,7 +324,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["WYSIWYG Editor"],
-      "expectedLinesAfterTyping": ["WYS.IWYG` Editor"]
+      "expectedLinesAfterTyping": ["WYSIWYG Editor."]
     },
     {
       "name": "section menu: button, no-selection, section-line (decorated text)",

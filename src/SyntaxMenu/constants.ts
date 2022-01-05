@@ -14,6 +14,10 @@ export const SectionMenuConstants = {
       testId: 'largest-section-menu-item',
     },
   },
+  regex: {
+    bracket: /^(?<facingMeta>\[(?<heading>\*+) )(?<body>(\[[^\]]+\]|[^\]])+)(?<trailingMeta>\])$/,
+    markdown: /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/,
+  },
 };
 
 export const ItemizationMenuConstants = {
