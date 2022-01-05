@@ -45,11 +45,11 @@ export const Cursor: React.FC<Props> = (props) => {
         cursorSize={state.cursorSize}
         onKeyDown={props.onKeyDown}
         onTextChange={props.onTextChange}
+        onTextCompositionStart={props.onTextCompositionStart}
+        onTextCompositionEnd={props.onTextCompositionEnd}
         onTextCut={props.onTextCut}
         onTextCopy={props.onTextCopy}
         onTextPaste={props.onTextPaste}
-        onTextCompositionStart={props.onTextCompositionStart}
-        onTextCompositionEnd={props.onTextCompositionEnd}
       />
       <SuggestionList
         suggestionType={props.suggestionType}
@@ -91,11 +91,11 @@ const HiddenTextArea: React.FC<HiddenTextAreaProps> = (props) => {
       autoCapitalize={constants.autoCapitalize}
       onKeyDown={(event) => props.onKeyDown(event)}
       onChange={(event) => props.onTextChange(event)}
+      onCompositionStart={(event) => props.onTextCompositionStart(event)}
+      onCompositionEnd={(event) => props.onTextCompositionEnd(event)}
       onCut={(event) => props.onTextCut(event)}
       onCopy={(event) => props.onTextCopy(event)}
       onPaste={(event) => props.onTextPaste(event)}
-      onCompositionStart={(event) => props.onTextCompositionStart(event)}
-      onCompositionEnd={(event) => props.onTextCompositionEnd(event)}
       style={constants.style(position, cursorSize, textAreaValue.length)}
     />
   );
