@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import { createTestId } from '../common/utils';
 
-import { handleSectionMenu } from './callbacks/section';
+import { handleOnSectionButtonClick, handleOnSectionItemClick } from './callbacks/section';
+import { MenuHandler } from './callbacks/types';
 import {
   MenuContainer,
   IconButtonMenu,
@@ -92,7 +93,7 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   largestLabel = SectionMenuConstants.items.largest.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const props: Required<SectionMenuProps> = { normalLabel, largerLabel, largestLabel };
+  const props: MenuHandler<SectionMenuProps> = { syntax, normalLabel, largerLabel, largestLabel };
 
   return (
     <DropdownMenu>
@@ -103,7 +104,7 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         disabled={disabled}
         buttonProps={{
           onClick: (event) => {
-            const [newText, newState] = handleSectionMenu(text, state, props, event.currentTarget, 'larger', syntax);
+            const [newText, newState] = handleOnSectionButtonClick(text, state, props, event.currentTarget);
             setTextAndState(newText, newState);
           },
         }}
@@ -112,13 +113,31 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         <SectionIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.normal.testId)}>
+        <DropdownMenuItem
+          onClick={(event) => {
+            const [newText, newState] = handleOnSectionItemClick(text, state, props, event.currentTarget, 'normal');
+            setTextAndState(newText, newState);
+          }}
+          data-testid={createTestId(SectionMenuConstants.items.normal.testId)}
+        >
           {normalLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.larger.testId)}>
+        <DropdownMenuItem
+          onClick={(event) => {
+            const [newText, newState] = handleOnSectionItemClick(text, state, props, event.currentTarget, 'larger');
+            setTextAndState(newText, newState);
+          }}
+          data-testid={createTestId(SectionMenuConstants.items.larger.testId)}
+        >
           {largerLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(SectionMenuConstants.items.largest.testId)}>
+        <DropdownMenuItem
+          onClick={(event) => {
+            const [newText, newState] = handleOnSectionItemClick(text, state, props, event.currentTarget, 'largest');
+            setTextAndState(newText, newState);
+          }}
+          data-testid={createTestId(SectionMenuConstants.items.largest.testId)}
+        >
           {largestLabel}
         </DropdownMenuItem>
       </DropdownMenuList>

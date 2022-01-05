@@ -4,13 +4,14 @@ import { State } from '../../Editor/types';
 import { getTextLineElementAt } from '../../TextLines/utils';
 import { SectionMenuProps } from '../types';
 
+import { MenuHandler } from './types';
 import { updateSelectionByMenu } from './utils';
 
 export function sectionMenuSwitch(
+  syntax: 'bracket' | 'markdown' | undefined,
   state: State,
-  element: HTMLElement | null,
-  syntax?: 'bracket' | 'markdown'
-): 'disabled' | 'off' | 'normal' | 'larger' | 'largest' {
+  element: HTMLElement | null
+): 'off' | 'normal' | 'larger' | 'largest' | 'disabled' {
   const { cursorCoordinate, textSelection } = state;
   if (!element || !cursorCoordinate) return 'disabled';
   if (textSelection && Math.abs(textSelection.free.lineIndex - textSelection.fixed.lineIndex) > 0) return 'disabled';
@@ -40,17 +41,29 @@ export function sectionMenuSwitch(
   return 'disabled';
 }
 
-export function handleSectionMenu(
+export function handleOnSectionButtonClick(
   text: string,
   state: State,
-  props: Required<SectionMenuProps>,
-  element: HTMLElement | null,
-  item: 'normal' | 'larger' | 'largest',
-  syntax?: 'bracket' | 'markdown'
+  props: MenuHandler<SectionMenuProps>,
+  element: HTMLElement | null
 ): [string, State] {
-  const menuSwitch = sectionMenuSwitch(state, element, syntax);
-  console.log(menuSwitch);
+  const menuSwitch = sectionMenuSwitch(props.syntax, state, element);
   if (menuSwitch === 'disabled') return [text, state];
+
+  let menuItem: 'normal' | 'larger' | 'largest' = 'larger';
+  if (menuSwitch !== 'off') menuItem = menuSwitch;
+  return handleOnSectionItemClick(text, state, props, element, menuItem);
+}
+export function handleOnSectionItemClick(
+  text: string,
+  state: State,
+  props: MenuHandler<SectionMenuProps>,
+  element: HTMLElement | null,
+  menuItem: 'normal' | 'larger' | 'largest'
+): [string, State] {
+  const { cursorCoordinate, textSelection } = state;
+  const menuSwitch = sectionMenuSwitch(props.syntax, state, element);
+  if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
 
   return [text, state];
 }
