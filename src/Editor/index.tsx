@@ -8,12 +8,14 @@ import { mergeClassNames, createTestId } from '../common/utils';
 
 import { EditorConstants } from './constants';
 import { Props } from './types';
-import { useCursorEventHandlers, useEditor, useMouseEventHandlers } from './utils';
+import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScrollbyHoldingMouse } from './utils';
 
 export const Editor: React.FC<Props> = (props) => {
   const [state, setState, rootRef, editorRef] = useEditor();
   const [docHandlers, rootHandlers, editorHandlers] = useMouseEventHandlers(props, state, setState, rootRef, editorRef);
   const cursorEventHandlers = useCursorEventHandlers(props, state, setState);
+
+  useScrollbyHoldingMouse(props.text, state.selectionMouse, props.readonly, setState);
 
   React.useEffect(() => {
     document.addEventListener('mousedown', docHandlers.onMouseDown);
