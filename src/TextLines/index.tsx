@@ -87,8 +87,10 @@ const Node: React.FC<NodeProps> = ({
   switch (node.type) {
     case 'blockCode': {
       const { facingMeta, children, trailingMeta } = node;
+      const [first, last] = node.range;
+
       return (
-        <>
+        <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last} data-textblock={node.type}>
           <Node
             node={facingMeta}
             bracketLinkProps={bracketLinkProps}
@@ -121,7 +123,7 @@ const Node: React.FC<NodeProps> = ({
               cursorLineIndex={cursorLineIndex}
             />
           )}
-        </>
+        </LineGroup>
       );
     }
     case 'blockCodeMeta':
@@ -133,7 +135,7 @@ const Node: React.FC<NodeProps> = ({
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
-        <Line lineIndex={lineIndex}>
+        <Line lineIndex={lineIndex} data-textline={node.type}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} className={className}>
             <code {...codeElementProps} className={className}>
@@ -156,7 +158,7 @@ const Node: React.FC<NodeProps> = ({
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return !cursorOn && !/^\s*$/.test(formula) ? (
-        <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
+        <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last} data-textblock={node.type}>
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
           <LineGroupContent indentDepth={facingMeta.indentDepth} {...spanElementProps} className={className}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
@@ -208,7 +210,7 @@ const Node: React.FC<NodeProps> = ({
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
       return (
-        <Line lineIndex={lineIndex}>
+        <Line lineIndex={lineIndex} data-textline={node.type}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
@@ -232,7 +234,7 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = cursorLineIndex === lineIndex;
 
       return (
-        <Line lineIndex={lineIndex}>
+        <Line lineIndex={lineIndex} data-textline={node.type}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <LineContent
             lineIndex={lineIndex}
@@ -267,7 +269,7 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = cursorLineIndex === lineIndex;
 
       return (
-        <Line lineIndex={lineIndex}>
+        <Line lineIndex={lineIndex} data-textline={node.type}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
           <ItemBullet lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} />
           <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
@@ -292,7 +294,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, contentLength, children } = node;
 
       return (
-        <Line lineIndex={lineIndex}>
+        <Line lineIndex={lineIndex} data-textline={node.type}>
           <LineContent lineIndex={lineIndex} lineLength={contentLength}>
             {children.map((child, index) => (
               <Node
@@ -318,7 +320,7 @@ const Node: React.FC<NodeProps> = ({
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
       return (
-        <code {...codeElementProps} className={className}>
+        <code {...codeElementProps} className={className} data-textcontent={node.type}>
           {[...facingMeta].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
@@ -361,6 +363,7 @@ const Node: React.FC<NodeProps> = ({
           lastCharIndex={last - trailingMeta.length}
           {...spanElementProps}
           className={className}
+          data-textcontent={node.type}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
         </CharGroup>
@@ -380,7 +383,7 @@ const Node: React.FC<NodeProps> = ({
       const cursorOn = cursorLineIndex === lineIndex;
 
       return (
-        <span className={TextLinesConstants.decoration.className(decoration)}>
+        <span className={TextLinesConstants.decoration.className(decoration)} data-textcontent={node.type}>
           {[...facingMeta].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
@@ -418,7 +421,7 @@ const Node: React.FC<NodeProps> = ({
       const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
 
       return (
-        <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
+        <EmbededLink cursorOn={cursorOn} {...anchorElementProps} data-textcontent={node.type}>
           {[...facingMeta].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
@@ -461,7 +464,7 @@ const Node: React.FC<NodeProps> = ({
       const anchorElementProps = bracketLinkProps?.anchorProps?.(linkName);
 
       return (
-        <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
+        <EmbededLink cursorOn={cursorOn} {...anchorElementProps} data-textcontent={node.type}>
           {[...facingMeta].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
@@ -495,7 +498,7 @@ const Node: React.FC<NodeProps> = ({
       const anchorElementProps = hashtagProps?.anchorProps?.(getHashtagName(hashtag));
 
       return (
-        <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
+        <EmbededLink cursorOn={cursorOn} {...anchorElementProps} data-textcontent={node.type}>
           {[...hashtag].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
@@ -509,7 +512,7 @@ const Node: React.FC<NodeProps> = ({
       const [first] = node.range;
 
       return (
-        <span>
+        <span data-textcontent={node.type}>
           {[...text].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
