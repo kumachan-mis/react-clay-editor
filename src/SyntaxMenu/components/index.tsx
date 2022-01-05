@@ -8,6 +8,7 @@ import {
   DropdownMenuAnchorProps,
   DropdownMenuItemProps,
   DropdownMenuListProps,
+  DropdownMenuProps,
   IconButtonMenuProps,
   MenuContainerProps,
 } from './types';
@@ -30,7 +31,11 @@ export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ className, child
   );
 };
 
-export const DropdownMenu: React.FC = ({ children }) => <span role="menuitem">{children}</span>;
+export const DropdownMenu: React.FC<DropdownMenuProps> = ({ children, ...rest }) => (
+  <span role="menuitem" {...rest}>
+    {children}
+  </span>
+);
 
 export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   open,
