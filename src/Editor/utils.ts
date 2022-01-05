@@ -19,6 +19,10 @@ import {
 import { EditorConstants } from './constants';
 import { Props, State } from './types';
 
+export function getRoot(element: HTMLElement): HTMLElement | null {
+  return element.closest(`div[data-selectid="${EditorConstants.root.selectId}"]`);
+}
+
 export function getEditor(element: HTMLElement): HTMLElement | null {
   return element.closest(`div[data-selectid="${EditorConstants.editor.selectId}"]`);
 }

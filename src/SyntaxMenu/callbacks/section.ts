@@ -1,74 +1,56 @@
 import { CursorCoordinate } from '../../Cursor/types';
 import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
+import { getTextLineElementAt } from '../../TextLines/utils';
 import { SectionMenuProps } from '../types';
 
 import { updateSelectionByMenu } from './utils';
 
-export function sectionMenuDisabled(text: string, state: State): boolean {
+export function sectionMenuSwitch(
+  state: State,
+  element: HTMLElement | null,
+  syntax?: 'bracket' | 'markdown'
+): 'disabled' | 'off' | 'normal' | 'larger' | 'largest' {
   const { cursorCoordinate, textSelection } = state;
-  if (
-    !cursorCoordinate ||
-    (textSelection && Math.abs(textSelection.free.lineIndex - textSelection.fixed.lineIndex) > 0)
-  ) {
-    return true;
+  if (!element || !cursorCoordinate) return 'disabled';
+  if (textSelection && Math.abs(textSelection.free.lineIndex - textSelection.fixed.lineIndex) > 0) return 'disabled';
+
+  const lineElement = getTextLineElementAt(cursorCoordinate.lineIndex, element);
+  if (!lineElement || lineElement.getAttribute('data-textline') !== 'normalLine') return 'disabled';
+
+  const decorationElements = lineElement.querySelectorAll('span[data-textcontent="decoration"]');
+  if (decorationElements.length > 1) return 'disabled';
+  if (decorationElements.length === 0) return 'off';
+
+  const line = lineElement.textContent?.slice(0, -1) || '';
+  if (line !== decorationElements[0].textContent) return 'disabled';
+
+  if (!syntax || syntax === 'bracket') {
+    // bracket syntax
+    if (/^\[\* [^\]]+\]$/.test(line)) return 'normal';
+    if (/^\[\*{2} [^\]]+\]$/.test(line)) return 'larger';
+    if (/^\[\*{3,} [^\]]+\]$/.test(line)) return 'largest';
+  } else {
+    // markdown syntax
+    if (/^#{3,} .+$/.test(line)) return 'normal';
+    if (/^#{2} .+$/.test(line)) return 'larger';
+    if (/^# .+$/.test(line)) return 'largest';
   }
-  return false;
+
+  return 'disabled';
 }
 
 export function handleSectionMenu(
   text: string,
   state: State,
   props: Required<SectionMenuProps>,
+  element: HTMLElement | null,
   item: 'normal' | 'larger' | 'largest',
   syntax?: 'bracket' | 'markdown'
 ): [string, State] {
-  if (sectionMenuDisabled(text, state)) return [text, state];
+  const menuSwitch = sectionMenuSwitch(state, element, syntax);
+  console.log(menuSwitch);
+  if (menuSwitch === 'disabled') return [text, state];
 
-  const lines = text.split('\n');
-  const { lineIndex } = state.cursorCoordinate as CursorCoordinate;
-
-  if (!state.textSelection && lines[lineIndex].length === 0) {
-    let [facingMeta, sectionName, trailingMeta] = ['', '', ''];
-    switch (item) {
-      case 'normal':
-        sectionName = props.normalLabel;
-        if (!syntax || syntax === 'bracket') {
-          // bracket syntax
-          [facingMeta, trailingMeta] = ['[* ', ']'];
-        } else {
-          // markdown syntax
-          [facingMeta, trailingMeta] = ['### ', ''];
-        }
-        break;
-      case 'larger':
-        sectionName = props.largerLabel;
-        if (!syntax || syntax === 'bracket') {
-          // bracket syntax
-          [facingMeta, trailingMeta] = ['[** ', ']'];
-        } else {
-          // markdown syntax
-          [facingMeta, trailingMeta] = ['## ', ''];
-        }
-        break;
-      case 'largest':
-        sectionName = props.largestLabel;
-        if (!syntax || syntax === 'bracket') {
-          // bracket syntax
-          [facingMeta, trailingMeta] = ['[*** ', ']'];
-        } else {
-          // markdown syntax
-          [facingMeta, trailingMeta] = ['# ', ''];
-        }
-        break;
-      default:
-        return [text, state];
-    }
-    const insertedText = facingMeta + sectionName + trailingMeta;
-    const cursourMoveAmount = facingMeta.length + sectionName.length;
-    const [newText, newState] = insertText(text, state, insertedText, cursourMoveAmount);
-    const newTextSelection = updateSelectionByMenu(newText, newState.cursorCoordinate, -sectionName.length);
-    return [newText, { ...newState, textSelection: newTextSelection }];
-  }
   return [text, state];
 }

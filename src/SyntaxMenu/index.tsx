@@ -101,7 +101,12 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         onOpen={onOpen}
         onClose={onClose}
         disabled={disabled}
-        buttonProps={{ onClick: () => setTextAndState(handleSectionMenu(text, state, props, 'larger', syntax)) }}
+        buttonProps={{
+          onClick: (event) => {
+            const [newText, newState] = handleSectionMenu(text, state, props, event.currentTarget, 'larger', syntax);
+            setTextAndState(newText, newState);
+          },
+        }}
         data-testid={createTestId(SectionMenuConstants.testId)}
       >
         <SectionIcon />

@@ -3,11 +3,11 @@ import styles from './style.css';
 export const EditorConstants = {
   root: {
     className: styles.root,
+    selectId: 'editor-root',
   },
   editor: {
     className: styles.editor,
     selectId: 'editor',
-    selectIdRegex: /editor/,
     testId: 'editor',
   },
   body: {

@@ -43,12 +43,13 @@ export const Editor: React.FC<Props> = (props) => {
       className={mergeClassNames(EditorConstants.root.className, props.className)}
       style={props.style}
       ref={rootRef}
+      data-selectid={EditorConstants.root.selectId}
       {...rootHandlers}
     >
       <SyntaxMenu
         text={props.text}
         state={state}
-        setTextAndState={([newText, newState]) => {
+        setTextAndState={(newText, newState) => {
           if (newState !== state) setState(newState);
           if (newText !== props.text) props.onChangeText(newText);
         }}
