@@ -165,7 +165,7 @@ const Node: React.FC<NodeProps> = ({
           </LineGroupContent>
         </LineGroup>
       ) : (
-        <>
+        <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last} data-textblock={node.type}>
           <Node
             node={facingMeta}
             bracketLinkProps={bracketLinkProps}
@@ -198,7 +198,7 @@ const Node: React.FC<NodeProps> = ({
               cursorLineIndex={cursorLineIndex}
             />
           )}
-        </>
+        </LineGroup>
       );
     }
     case 'blockFormulaMeta':
@@ -356,7 +356,7 @@ const Node: React.FC<NodeProps> = ({
       const spanElementProps = formulaProps?.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
-      return !cursorOn ? (
+      return (
         <CharGroup
           lineIndex={lineIndex}
           firstCharIndex={first + facingMeta.length}
@@ -365,16 +365,16 @@ const Node: React.FC<NodeProps> = ({
           className={className}
           data-textcontent={node.type}
         >
-          <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
+          {!cursorOn ? (
+            <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
+          ) : (
+            [...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
+              <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+                {char}
+              </Char>
+            ))
+          )}
         </CharGroup>
-      ) : (
-        <span {...spanElementProps} className={className}>
-          {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
-            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
-              {char}
-            </Char>
-          ))}
-        </span>
       );
     }
     case 'decoration': {
