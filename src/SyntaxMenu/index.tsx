@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { createTestId } from '../common/utils';
 
+import { handleSectionMenu } from './callbacks/section';
 import {
   MenuContainer,
   IconButtonMenu,
@@ -49,7 +50,6 @@ import {
   QuotationMenuProps,
   MenuCommonProps,
 } from './types';
-import { handleSectionMenu } from './utils';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   text,

@@ -1,10 +1,20 @@
-import { CursorCoordinate } from '../Cursor/types';
-import { moveCursor } from '../Cursor/utils';
-import { insertText } from '../Editor/callbacks/utils';
-import { State } from '../Editor/types';
-import { TextSelection } from '../Selection/types';
+import { CursorCoordinate } from '../../Cursor/types';
+import { insertText } from '../../Editor/callbacks/utils';
+import { State } from '../../Editor/types';
+import { SectionMenuProps } from '../types';
 
-import { SectionMenuProps } from './types';
+import { updateSelectionByMenu } from './utils';
+
+export function sectionMenuDisabled(text: string, state: State): boolean {
+  const { cursorCoordinate, textSelection } = state;
+  if (
+    !cursorCoordinate ||
+    (textSelection && Math.abs(textSelection.free.lineIndex - textSelection.fixed.lineIndex) > 0)
+  ) {
+    return true;
+  }
+  return false;
+}
 
 export function handleSectionMenu(
   text: string,
@@ -13,10 +23,10 @@ export function handleSectionMenu(
   item: 'normal' | 'larger' | 'largest',
   syntax?: 'bracket' | 'markdown'
 ): [string, State] {
-  if (!state.cursorCoordinate) return [text, state];
+  if (sectionMenuDisabled(text, state)) return [text, state];
 
   const lines = text.split('\n');
-  const { lineIndex } = state.cursorCoordinate;
+  const { lineIndex } = state.cursorCoordinate as CursorCoordinate;
 
   if (!state.textSelection && lines[lineIndex].length === 0) {
     let [facingMeta, sectionName, trailingMeta] = ['', '', ''];
@@ -61,23 +71,4 @@ export function handleSectionMenu(
     return [newText, { ...newState, textSelection: newTextSelection }];
   }
   return [text, state];
-}
-
-function updateSelectionByMenu(
-  newText: string,
-  newCursorCoordinate: CursorCoordinate | undefined,
-  selectionAmount: number
-): TextSelection | undefined {
-  if (!newCursorCoordinate) return undefined;
-
-  if (selectionAmount > 0) {
-    const fixed = newCursorCoordinate;
-    const free = moveCursor(newText, newCursorCoordinate, selectionAmount);
-    return { fixed, free };
-  } else if (selectionAmount < 0) {
-    const fixed = moveCursor(newText, newCursorCoordinate, selectionAmount);
-    const free = newCursorCoordinate;
-    return { fixed, free };
-  }
-  return undefined;
 }
