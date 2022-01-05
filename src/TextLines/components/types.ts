@@ -1,65 +1,56 @@
-export interface LineGroupProps {
+export type LineGroupProps = {
   firstLineIndex: number;
   lastLineIndex: number;
-  divProps?: React.ComponentProps<'div'>;
-}
+} & React.ComponentProps<'div'>;
 
-export interface LineGroupIndentProps {
+export type LineGroupIndentProps = {
   indentDepth: number;
-  spanProps?: React.ComponentProps<'span'>;
-}
+} & React.ComponentProps<'span'>;
 
-export interface LineGroupContentProps {
+export type LineGroupContentProps = {
   indentDepth: number;
-  spanProps?: React.ComponentProps<'span'>;
-}
+} & React.ComponentProps<'span'>;
 
-export interface LineProps {
+export type LineProps = {
   lineIndex: number;
-  divProps?: React.ComponentProps<'div'>;
-}
+} & React.ComponentProps<'div'>;
 
-export interface LineIndentProps {
+export type LineIndentProps = {
   lineIndex: number;
   indentDepth: number;
-  spanProps?: React.ComponentProps<'span'>;
-}
+} & React.ComponentProps<'span'>;
 
-export interface LineContentProps {
+export type LineContentProps = {
   lineIndex: number;
   lineLength: number;
   indentDepth?: number;
   itemized?: boolean;
-  spanProps?: React.ComponentProps<'span'>;
-}
+} & React.ComponentProps<'span'>;
 
-export interface CharGroupProps {
+export type CharGroupProps = {
   lineIndex: number;
   firstCharIndex: number;
   lastCharIndex: number;
-  spanProps?: React.ComponentProps<'span'>;
-}
+} & React.ComponentProps<'span'>;
 
-export interface CharProps {
+export type CharProps = {
   lineIndex: number;
   charIndex: number;
-  spanProps?: React.ComponentProps<'span'>;
-}
+} & React.ComponentProps<'span'>;
 
-export interface ItemBulletProps {
+export type ItemBulletProps = {
   lineIndex: number;
   indentDepth: number;
   bullet: string;
-}
+};
 
-export interface ItemBulletContentProps {
+export type ItemBulletContentProps = {
   lineIndex: number;
   indentDepth: number;
   bullet: string;
   cursorOn: boolean;
-}
+};
 
-export interface EmbededLinkProps {
+export type EmbededLinkProps = {
   cursorOn: boolean;
-  anchorProps?: React.ComponentProps<'a'>;
-}
+} & React.ComponentProps<'a'>;

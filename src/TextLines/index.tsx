@@ -135,12 +135,7 @@ const Node: React.FC<NodeProps> = ({
       return (
         <Line lineIndex={lineIndex}>
           <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-          <LineContent
-            lineIndex={lineIndex}
-            indentDepth={indentDepth}
-            lineLength={lineLength}
-            spanProps={{ className }}
-          >
+          <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} className={className}>
             <code {...codeElementProps} className={className}>
               {[...code].map((char, index) => (
                 <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -163,7 +158,7 @@ const Node: React.FC<NodeProps> = ({
       return !cursorOn && !/^\s*$/.test(formula) ? (
         <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
           <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-          <LineGroupContent indentDepth={facingMeta.indentDepth} spanProps={{ ...spanElementProps, className }}>
+          <LineGroupContent indentDepth={facingMeta.indentDepth} {...spanElementProps} className={className}>
             <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
           </LineGroupContent>
         </LineGroup>
@@ -219,7 +214,8 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             lineLength={lineLength}
-            spanProps={{ ...spanElementProps, className }}
+            {...spanElementProps}
+            className={className}
           >
             {[...formula].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -242,7 +238,7 @@ const Node: React.FC<NodeProps> = ({
             lineIndex={lineIndex}
             indentDepth={indentDepth}
             lineLength={lineLength}
-            spanProps={{ className: TextLinesConstants.quotation.className }}
+            className={TextLinesConstants.quotation.className}
           >
             {[...meta].map((char, index) => (
               <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -363,7 +359,8 @@ const Node: React.FC<NodeProps> = ({
           lineIndex={lineIndex}
           firstCharIndex={first + facingMeta.length}
           lastCharIndex={last - trailingMeta.length}
-          spanProps={{ ...spanElementProps, className }}
+          {...spanElementProps}
+          className={className}
         >
           <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
         </CharGroup>
@@ -421,7 +418,7 @@ const Node: React.FC<NodeProps> = ({
       const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
 
       return (
-        <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
+        <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
           {[...facingMeta].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
@@ -464,7 +461,7 @@ const Node: React.FC<NodeProps> = ({
       const anchorElementProps = bracketLinkProps?.anchorProps?.(linkName);
 
       return (
-        <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
+        <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
           {[...facingMeta].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {cursorOn ? char : ''}
@@ -498,7 +495,7 @@ const Node: React.FC<NodeProps> = ({
       const anchorElementProps = hashtagProps?.anchorProps?.(getHashtagName(hashtag));
 
       return (
-        <EmbededLink cursorOn={cursorOn} anchorProps={anchorElementProps}>
+        <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
           {[...hashtag].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
