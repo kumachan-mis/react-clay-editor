@@ -1,5 +1,4 @@
-import { TextLinesConstants } from '../constants';
-
+import { parserConstants } from './constants';
 import { parseContent } from './parseContent';
 import {
   BlockCodeNode,
@@ -21,8 +20,8 @@ export function parseBlockCode(lines: string[], context: ParsingContext): BlockC
   const originalLineIndex = context.lineIndex;
   const facingMeta = parseBlockCodeMeta(lines[context.lineIndex], context);
   context.lineIndex++;
-  const metaRegex = TextLinesConstants.regexes.common.blockCodeMeta;
-  const lineRegex = TextLinesConstants.regexes.common.blockCodeLine(facingMeta.indentDepth);
+  const metaRegex = parserConstants.common.blockCodeMeta;
+  const lineRegex = parserConstants.common.blockCodeLine(facingMeta.indentDepth);
 
   const node: BlockCodeNode = {
     type: 'blockCode',
@@ -52,7 +51,7 @@ export function parseBlockCode(lines: string[], context: ParsingContext): BlockC
 }
 
 function parseBlockCodeMeta(line: string, context: ParsingContext): BlockCodeMetaNode {
-  const regex = TextLinesConstants.regexes.common.blockCodeMeta;
+  const regex = parserConstants.common.blockCodeMeta;
   const { indent, codeMeta } = line.match(regex)?.groups as Record<string, string>;
 
   const node: BlockCodeMetaNode = {
@@ -82,8 +81,8 @@ export function parseBlockFormula(lines: string[], context: ParsingContext): Blo
   const originalLineIndex = context.lineIndex;
   const facingMeta = parseBlockFormulaMeta(lines[context.lineIndex], context);
   context.lineIndex++;
-  const metaRegex = TextLinesConstants.regexes.common.blockFormulaMeta;
-  const lineRegex = TextLinesConstants.regexes.common.blockFormulaLine(facingMeta.indentDepth);
+  const metaRegex = parserConstants.common.blockFormulaMeta;
+  const lineRegex = parserConstants.common.blockFormulaLine(facingMeta.indentDepth);
 
   const node: BlockFormulaNode = {
     type: 'blockFormula',
@@ -113,7 +112,7 @@ export function parseBlockFormula(lines: string[], context: ParsingContext): Blo
 }
 
 function parseBlockFormulaMeta(line: string, context: ParsingContext): BlockFormulaMetaNode {
-  const regex = TextLinesConstants.regexes.common.blockFormulaMeta;
+  const regex = parserConstants.common.blockFormulaMeta;
   const { indent, formulaMeta } = line.match(regex)?.groups as Record<string, string>;
 
   const node: BlockFormulaMetaNode = {
@@ -140,7 +139,7 @@ function parseBlockFormulaLine(line: string, context: ParsingContext, regex: Reg
 }
 
 export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
-  const regex = TextLinesConstants.regexes.markdownSyntax.heading;
+  const regex = parserConstants.markdownSyntax.heading;
   const { heading, body } = line.match(regex)?.groups as Record<string, string>;
   const decoration = getHeadingStyle(heading);
 
@@ -186,7 +185,7 @@ export function parseBracketItemization(
   context: ParsingContext,
   options: ParsingOptions
 ): ItemizationNode {
-  const regex = TextLinesConstants.regexes.bracketSyntax.itemization;
+  const regex = parserConstants.bracketSyntax.itemization;
   const { indent, bullet, content } = line.match(regex)?.groups as Record<string, string>;
 
   const node: ItemizationNode = {
@@ -204,7 +203,7 @@ export function parseBracketItemization(
 }
 
 export function parseQuotation(line: string, context: ParsingContext, options: ParsingOptions): QuotationNode {
-  const regex = TextLinesConstants.regexes.common.quotation;
+  const regex = parserConstants.common.quotation;
   const { indent, meta, content } = line.match(regex)?.groups as Record<string, string>;
 
   const node: QuotationNode = {
@@ -226,7 +225,7 @@ export function parseMarkdownItemization(
   context: ParsingContext,
   options: ParsingOptions
 ): ItemizationNode {
-  const regex = TextLinesConstants.regexes.markdownSyntax.itemization;
+  const regex = parserConstants.markdownSyntax.itemization;
   const { indent, bullet, content } = line.match(regex)?.groups as Record<string, string>;
 
   const node: ItemizationNode = {

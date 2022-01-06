@@ -1,5 +1,4 @@
-import { TextLinesConstants } from '../constants';
-
+import { parserConstants } from './constants';
 import {
   parseBlockCode,
   parseBlockFormula,
@@ -12,7 +11,7 @@ import {
 import { LineNode, ParsingContext, ParsingOptions } from './types';
 
 export function parseText(text: string, options: ParsingOptions): LineNode[] {
-  const { blockCodeMeta, blockFormulaMeta, quotation } = TextLinesConstants.regexes.common;
+  const { blockCodeMeta, blockFormulaMeta, quotation } = parserConstants.common;
   const lines = text.split('\n');
   const nodes: LineNode[] = [];
   const context: ParsingContext = {
@@ -24,7 +23,7 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
 
   if (!options.syntax || options.syntax === 'bracket') {
     // bracket syntax
-    const { itemization } = TextLinesConstants.regexes.bracketSyntax;
+    const { itemization } = parserConstants.bracketSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
       if (!options.disables.code && blockCodeMeta.test(line)) {
@@ -41,7 +40,7 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     }
   } else {
     // markdown syntax
-    const { heading, itemization } = TextLinesConstants.regexes.markdownSyntax;
+    const { heading, itemization } = parserConstants.markdownSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
       if (!options.disables.code && blockCodeMeta.test(line)) {

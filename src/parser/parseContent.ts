@@ -1,5 +1,4 @@
-import { TextLinesConstants } from '../constants';
-
+import { parserConstants } from './constants';
 import {
   ContentNode,
   InlineCodeNode,
@@ -16,12 +15,12 @@ import {
 } from './types';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, normal } = TextLinesConstants.regexes.common;
+  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, normal } = parserConstants.common;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
   if (options.syntax === 'bracket') {
     // bracket syntax
-    const { decoration } = TextLinesConstants.regexes.bracketSyntax;
+    const { decoration } = parserConstants.bracketSyntax;
     if (!options.disables.code && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
     } else if (!options.disables.formula && displayFormula.test(text)) {
@@ -42,7 +41,7 @@ export function parseContent(text: string, context: ParsingContext, options: Par
     return [];
   } else {
     // markdown syntax
-    const { bold, italic } = TextLinesConstants.regexes.markdownSyntax;
+    const { bold, italic } = parserConstants.markdownSyntax;
     if (!options.disables.code && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
     } else if (!options.disables.formula && displayFormula.test(text)) {
@@ -67,7 +66,7 @@ export function parseContent(text: string, context: ParsingContext, options: Par
 }
 
 function parseInlineCode(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.common.inlineCode;
+  const regex = parserConstants.common.inlineCode;
   const { left, code, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
@@ -87,7 +86,7 @@ function parseInlineCode(text: string, context: ParsingContext, options: Parsing
   ];
 }
 function parseDisplayFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.common.displayFormula;
+  const regex = parserConstants.common.displayFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
@@ -108,7 +107,7 @@ function parseDisplayFormula(text: string, context: ParsingContext, options: Par
 }
 
 function parseInlineFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.common.inlineFormula;
+  const regex = parserConstants.common.inlineFormula;
   const { left, formula, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
@@ -129,7 +128,7 @@ function parseInlineFormula(text: string, context: ParsingContext, options: Pars
 }
 
 function parseDecoration(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.bracketSyntax.decoration;
+  const regex = parserConstants.bracketSyntax.decoration;
   const { left, decoration: decostring, body, right } = text.match(regex)?.groups as Record<string, string>;
   const decoration = stringToDecoration(decostring);
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
@@ -182,7 +181,7 @@ function stringToDecoration(decostring: string): Decoration {
 }
 
 function parseBold(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.markdownSyntax.bold;
+  const regex = parserConstants.markdownSyntax.bold;
   const { left, body, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
@@ -204,7 +203,7 @@ function parseBold(text: string, context: ParsingContext, options: ParsingOption
 }
 
 function parseItalic(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.markdownSyntax.italic;
+  const regex = parserConstants.markdownSyntax.italic;
   const { left, body, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
@@ -247,7 +246,7 @@ function parseTaggedLink(text: string, context: ParsingContext, options: Parsing
 }
 
 function parseBracketLink(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.common.bracketLink;
+  const regex = parserConstants.common.bracketLink;
   const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
@@ -268,7 +267,7 @@ function parseBracketLink(text: string, context: ParsingContext, options: Parsin
 }
 
 function parseHashtag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const regex = TextLinesConstants.regexes.common.hashtag;
+  const regex = parserConstants.common.hashtag;
   const { left, hashtag, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 

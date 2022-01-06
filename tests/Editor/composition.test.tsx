@@ -7,7 +7,7 @@ import { EditorProps } from '../../src';
 import * as utils from '../../src/Editor/callbacks/utils';
 import * as textLines from '../../src/TextLines';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { MockEditor, MockTextLines, expectTextLinesToBe } from '../mocks';
+import { MockEditor, expectTextLinesToBe } from '../mocks';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -23,7 +23,6 @@ const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
 const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
-  SpiedTextLines.mockImplementation(MockTextLines);
   spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
 });
 

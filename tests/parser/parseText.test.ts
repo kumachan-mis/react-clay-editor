@@ -1,6 +1,6 @@
-import { TextLinesConstants } from '../../src/TextLines/constants';
-import { parseText } from '../../src/TextLines/parser';
-import { Node } from '../../src/TextLines/parser/types';
+import { parseText } from '../../src/parser';
+import { parserConstants } from '../../src/parser/constants';
+import { Node } from '../../src/parser/types';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
@@ -22,17 +22,17 @@ interface Common {
   }[];
 }
 
-describe('function parseText in TextLines (bracket syntax)', () => {
+describe('function parseText (bracket syntax)', () => {
   const testfn = createTest('bracket');
   for (const fixtureName of ['parseCommonText', 'parseBracketText']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
+    runFixtureTests<TestCase, Common | undefined>('parser', fixtureName, testfn);
   }
 });
 
-describe('function parseText in TextLines (markdown syntax)', () => {
+describe('function parseText (markdown syntax)', () => {
   const testfn = createTest('markdown');
   for (const fixtureName of ['parseCommonText', 'parseMarkdownText']) {
-    runFixtureTests<TestCase, Common | undefined>('TextLines', fixtureName, testfn);
+    runFixtureTests<TestCase, Common | undefined>('parser', fixtureName, testfn);
   }
 });
 
@@ -41,8 +41,8 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
     const disables = { bracketLink: false, hashtag: false, code: false, formula: false, ...common?.disables };
     const taggedLinkRegexes = (common?.taggedLinks || []).map((link) =>
       link.linkNamePattern
-        ? TextLinesConstants.regexes.common.taggedLink(link.tagName, new RegExp(link.linkNamePattern))
-        : TextLinesConstants.regexes.common.taggedLink(link.tagName)
+        ? parserConstants.common.taggedLink(link.tagName, new RegExp(link.linkNamePattern))
+        : parserConstants.common.taggedLink(link.tagName)
     );
     const actualNodes = parseText(testCase.inputLines.join('\n'), { syntax, disables, taggedLinkRegexes });
     expect(actualNodes).toMatchObject(testCase.expectedNodes);

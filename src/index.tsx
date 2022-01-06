@@ -1,14 +1,14 @@
 export { Editor } from './Editor';
-export { TextLines as Viewer } from './TextLines';
-export { defaultLinkNameRegex } from './TextLines/constants';
+export { Viewer } from './Viewer';
+export { defaultLinkNameRegex } from './parser/constants';
 
+export type { Props as EditorProps } from './Editor/types';
+export type { Props as ViewerProps } from './Viewer/types';
 export type {
-  Props as EditorProps,
   TextProps,
   BracketLinkProps,
   HashtagProps,
   TaggedLinkProps,
   CodeProps,
   FormulaProps,
-} from './Editor/types';
-export type { Props as ViewerProps } from './TextLines/types';
+} from './common/types';

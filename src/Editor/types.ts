@@ -1,42 +1,13 @@
 import { CursorCoordinate } from '../Cursor/types';
 import { TextSelection } from '../Selection/types';
-
-export interface TextProps {
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-}
-
-export interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
-}
-
-export interface HashtagProps {
-  anchorProps?: (hashtagName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
-}
-
-export interface TaggedLinkProps {
-  linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  tagHidden?: boolean;
-}
-
-export interface CodeProps {
-  codeProps?: (code: string) => React.ComponentProps<'code'>;
-  disabled?: boolean;
-}
-
-export interface FormulaProps {
-  spanProps?: (formula: string) => React.ComponentProps<'span'>;
-  disabled?: boolean;
-}
+import {
+  TextProps,
+  BracketLinkProps,
+  HashtagProps,
+  TaggedLinkPropsMap,
+  CodeProps,
+  FormulaProps,
+} from '../common/types';
 
 export interface Props {
   text: string;
@@ -45,7 +16,7 @@ export interface Props {
   textProps?: TextProps;
   bracketLinkProps?: BracketLinkProps;
   hashtagProps?: HashtagProps;
-  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
+  taggedLinkPropsMap?: TaggedLinkPropsMap;
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   readonly?: boolean;

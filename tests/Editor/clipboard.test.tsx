@@ -3,9 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
 import * as utils from '../../src/Editor/callbacks/utils';
-import * as textLines from '../../src/TextLines';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { MockEditor, MockTextLines, expectTextLinesToBe } from '../mocks';
+import { MockEditor, expectTextLinesToBe } from '../mocks';
 
 interface ReadTestCase extends BaseTestCase {
   name: string;
@@ -43,22 +42,18 @@ interface Common {
   textLines: string[];
 }
 
-const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
 const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
-  SpiedTextLines.mockImplementation(MockTextLines);
   spiedPositionToCursorCoordinate.mockImplementation((text, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
 });
 
 afterAll(() => {
-  SpiedTextLines.mockRestore();
   spiedPositionToCursorCoordinate.mockRestore();
 });
 
 describe('clipboardEvents (read) in Editor', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
@@ -85,7 +80,6 @@ describe('clipboardEvents (read) in Editor', () => {
 
 describe('clipboardEvents (write) in Editor', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 

@@ -1,6 +1,6 @@
 import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
 import { getSelectionText } from '../../Selection/utils';
-import { TextLinesConstants } from '../../TextLines/constants';
+import { parserConstants } from '../../parser/constants';
 import { State, ShortcutCommand } from '../types';
 
 import { updateSelectionByCursor, insertText, resetSuggestion, resetTextSelectionAndSuggestion } from './utils';
@@ -268,7 +268,7 @@ export function handleOnMoveWordTop(
   const { cursorCoordinate, textSelection } = state;
 
   const newCursorCoordinate = (() => {
-    const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+    const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
     const lines = text.split('\n');
     const currentLine = lines[cursorCoordinate.lineIndex];
     let charIndex: number | undefined = undefined;
@@ -298,7 +298,7 @@ export function handleOnMoveWordBottom(
   const { cursorCoordinate, textSelection } = state;
 
   const newCursorCoordinate = (() => {
-    const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+    const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
     const lines = text.split('\n');
     const currentLine = lines[cursorCoordinate.lineIndex];
     let match: RegExpExecArray | null = null;

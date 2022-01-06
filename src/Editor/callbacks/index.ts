@@ -1,7 +1,7 @@
 import { coordinatesAreEqual } from '../../Cursor/utils';
 import { getWordSelection, getLineSelection, getSelectionText } from '../../Selection/utils';
-import { TextLinesConstants } from '../../TextLines/constants';
 import { isMacOS } from '../../common/utils';
+import { parserConstants } from '../../parser/constants';
 import { Props, State } from '../types';
 
 import { shortcutCommand } from './shortcutCommands';
@@ -156,16 +156,16 @@ export function handleOnKeyDown(
       const lines = newText.split('\n');
       const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
 
-      const groups = newPrevLine.match(TextLinesConstants.regexes.common.quotation)?.groups;
+      const groups = newPrevLine.match(parserConstants.common.quotation)?.groups;
       if (groups) return insertText(newText, newState, groups.indent + groups.meta);
 
       if (!props.syntax || props.syntax === 'bracket') {
         // bracket syntax
-        const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
+        const groups = newPrevLine.match(parserConstants.bracketSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       } else {
         // markdown syntax
-        const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
+        const groups = newPrevLine.match(parserConstants.markdownSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }
 

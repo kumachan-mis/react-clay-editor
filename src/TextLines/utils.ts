@@ -1,7 +1,7 @@
 import { getRoot } from '../Editor/utils';
+import { Node } from '../parser/types';
 
 import { ComponentConstants } from './components/constants';
-import { Node } from './parser/types';
 
 export function getTextLineElementAt(lineIndex: number, element: HTMLElement): HTMLElement | null {
   let rootElement = getRoot(element);

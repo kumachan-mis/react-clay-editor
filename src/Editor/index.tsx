@@ -5,6 +5,7 @@ import { Selection } from '../Selection';
 import { SyntaxMenu } from '../SyntaxMenu';
 import { TextLines } from '../TextLines';
 import { mergeClassNames, createTestId } from '../common/utils';
+import { useParser } from '../parser';
 
 import { EditorConstants } from './constants';
 import { Props } from './types';
@@ -37,6 +38,16 @@ export const Editor: React.FC<Props> = (props) => {
       document.removeEventListener('mouseup', docHandlers.onMouseUp);
     };
   }, [docHandlers.onMouseUp]);
+
+  const nodes = useParser(
+    props.text,
+    props.syntax,
+    props.bracketLinkProps,
+    props.hashtagProps,
+    props.taggedLinkPropsMap,
+    props.codeProps,
+    props.formulaProps
+  );
 
   return (
     <div
@@ -82,8 +93,7 @@ export const Editor: React.FC<Props> = (props) => {
           />
           <Selection textSelection={state.textSelection} />
           <TextLines
-            text={props.text}
-            syntax={props.syntax}
+            nodes={nodes}
             cursorCoordinate={state.cursorCoordinate}
             bracketLinkProps={props.bracketLinkProps}
             hashtagProps={props.hashtagProps}
