@@ -31,8 +31,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["React Realtime Markup Editor"],
-      "expectedLinesAfterMenu": ["- "],
-      "expectedLinesAfterTyping": ["- React Realtime Markup Editor"]
+      "expectedLinesAfterMenu": ["  "],
+      "expectedLinesAfterTyping": ["  React Realtime Markup Editor"]
     },
     {
       "name": "itemization menu: indent, no-selection, empty-line",
@@ -59,8 +59,8 @@
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
-      "expectedLinesAfterMenu": ["- "],
-      "expectedLinesAfterTyping": ["- React Realtime Markup Editor"]
+      "expectedLinesAfterMenu": ["  "],
+      "expectedLinesAfterTyping": ["  React Realtime Markup Editor"]
     },
     {
       "name": "itemization menu: outdent, no-selection, empty-line",
@@ -114,8 +114,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["- This will be an item"],
-      "expectedLinesAfterTyping": ["- This .will be an item"]
+      "expectedLinesAfterMenu": ["  This will be an item"],
+      "expectedLinesAfterTyping": ["  This .will be an item"]
     },
     {
       "name": "itemization menu: indent, no-selection, normal-line",
@@ -142,8 +142,8 @@
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["- This will be an item"],
-      "expectedLinesAfterTyping": ["- This .will be an item"]
+      "expectedLinesAfterMenu": ["  This will be an item"],
+      "expectedLinesAfterTyping": ["  This .will be an item"]
     },
     {
       "name": "itemization menu: outdent, selection, normal-line",
@@ -177,7 +177,7 @@
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["- This will not be an item"],
+      "expectedLinesAfterMenu": ["  This will not be an item"],
       "expectedLinesAfterTyping": ["This .l not be an item"]
     },
     {
@@ -239,8 +239,8 @@
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": [" - This will be a nested item"],
-      "expectedLinesAfterTyping": [" - This.ll be a nested item"]
+      "expectedLinesAfterMenu": ["   This will be a nested item"],
+      "expectedLinesAfterTyping": ["   This.ll be a nested item"]
     },
     {
       "name": "itemization menu: outdent, no-selection, itemized-line",
@@ -322,8 +322,8 @@
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": [" \t* This will be a deep nested item"],
-      "expectedLinesAfterTyping": [" \t* Thi.s will be a deep nested item"]
+      "expectedLinesAfterMenu": ["    This will be a deep nested item"],
+      "expectedLinesAfterTyping": ["    Thi.s will be a deep nested item"]
     },
     {
       "name": "itemization menu: outdent, no-selection, nested-itemized-line",
@@ -350,8 +350,8 @@
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["- This will be a shallow nested item"],
-      "expectedLinesAfterTyping": ["- This will be a shallow nested item"]
+      "expectedLinesAfterMenu": ["  This will be a shallow nested item"],
+      "expectedLinesAfterTyping": ["  This will be a shallow nested item"]
     },
     {
       "name": "itemization menu: button, no-selection, other-line (line node)",
@@ -492,8 +492,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["- This is normal text", "* This is an item"],
-      "expectedLinesAfterTyping": ["- This . This is an item"]
+      "expectedLinesAfterMenu": ["  This is normal text", "  This is an item"],
+      "expectedLinesAfterTyping": ["  This . This is an item"]
     },
     {
       "name": "itemization menu: button, selection, all-itemized-line",
@@ -561,7 +561,7 @@
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["- This is normal text", " - This is an item"],
+      "expectedLinesAfterMenu": ["  This is normal text", "   This is an item"],
       "expectedLinesAfterTyping": [" This is nor. This is an item"]
     },
     {
@@ -691,7 +691,7 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
-      "expectedLinesAfterMenu": ["- This is normal text"],
+      "expectedLinesAfterMenu": ["  This is normal text"],
       "expectedLinesAfterTyping": ["This is normal text."]
     },
     {
@@ -725,7 +725,7 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
-      "expectedLinesAfterMenu": ["- This is normal text", "- This is also normal text"],
+      "expectedLinesAfterMenu": ["  This is normal text", "  This is also normal text"],
       "expectedLinesAfterTyping": ["This is normal text", "This is also normal text."]
     }
   ]

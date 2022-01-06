@@ -4,8 +4,9 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as utils from '../../src/Editor/callbacks/utils';
+import * as editorUtils from '../../src/Editor/callbacks/utils';
 import { ComponentConstants } from '../../src/TextLines/components/constants';
+import * as textLinesUtils from '../../src/TextLines/utils';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor } from '../mocks';
@@ -36,21 +37,25 @@ interface Common {
 }
 
 const originalUserAgent = window.navigator.userAgent;
-const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+const spiedPositionToCursorCoordinate = jest.spyOn(editorUtils, 'positionToCursorCoordinate');
+const spiedCursorOnNode = jest.spyOn(textLinesUtils, 'cursorOnNode');
 
 beforeAll(() => {
   Object.defineProperty(window.navigator, 'userAgent', { value: osUserAgents.windows, configurable: true });
   spiedPositionToCursorCoordinate.mockImplementation((text, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
+  spiedCursorOnNode.mockImplementation(() => true);
 });
 
 afterAll(() => {
   Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
   spiedPositionToCursorCoordinate.mockRestore();
+  spiedCursorOnNode.mockRestore();
 });
 
 describe('UI of SyntaxMenu (bracket syntax)', () => {
   afterEach(() => {
     spiedPositionToCursorCoordinate.mockClear();
+    spiedCursorOnNode.mockClear();
   });
 
   const testfun = createTest('bracket');
@@ -70,6 +75,7 @@ describe('UI of SyntaxMenu (bracket syntax)', () => {
 describe('UI of SyntaxMenu (markdown syntax)', () => {
   afterEach(() => {
     spiedPositionToCursorCoordinate.mockClear();
+    spiedCursorOnNode.mockClear();
   });
 
   const testfun = createTest('markdown');
@@ -125,13 +131,9 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
 }
 
 function expectTextLinesToBe(screen: Screen, expectedLines: string[]): void {
-  const body = screen.getByTestId('editor-body');
-
   let lineElement: HTMLElement | null = null;
   for (let i = 0; i < expectedLines.length; i++) {
     const line = expectedLines[i];
-    fireEvent.mouseDown(body, { clientX: 0, clientY: i });
-    fireEvent.mouseUp(body, { clientX: 0, clientY: i });
     lineElement = screen.getByTestId(ComponentConstants.line.testId(i));
     expect(lineElement.textContent).toBeTruthy();
     expect(lineElement.textContent?.slice(0, lineElement.textContent?.length - 1)).toBe(line);

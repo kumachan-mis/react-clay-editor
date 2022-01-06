@@ -20,6 +20,7 @@ import { TextLinesConstants } from './constants';
 import { parseText, getHashtagName, getTagName } from './parser';
 import { ParsingOptions } from './parser/types';
 import { Props, NodeProps } from './types';
+import { cursorOnNode } from './utils';
 
 export const TextLines: React.FC<Props> = ({
   text,
@@ -153,7 +154,7 @@ const Node: React.FC<NodeProps> = ({
       const { facingMeta, children, trailingMeta } = node;
       const [first, last] = node.range;
       const formula = children.map((child) => child.formulaLine).join('\n');
-      const cursorOn = cursorLineIndex !== undefined && first <= cursorLineIndex && cursorLineIndex <= last;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
       const spanElementProps = formulaProps?.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
@@ -231,7 +232,7 @@ const Node: React.FC<NodeProps> = ({
     case 'quotation': {
       const { lineIndex, indentDepth, meta, contentLength, children } = node;
       const lineLength = indentDepth + meta.length + contentLength;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
 
       return (
         <Line lineIndex={lineIndex} data-textline={node.type}>
@@ -266,7 +267,7 @@ const Node: React.FC<NodeProps> = ({
     case 'itemization': {
       const { lineIndex, indentDepth, bullet, contentLength, children } = node;
       const lineLength = indentDepth + bullet.length + contentLength;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
 
       return (
         <Line lineIndex={lineIndex} data-textline={node.type}>
@@ -315,7 +316,7 @@ const Node: React.FC<NodeProps> = ({
     case 'inlineCode': {
       const { lineIndex, facingMeta, code, trailingMeta } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
       const codeElementProps = codeProps?.codeProps?.(code);
       const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
@@ -352,7 +353,7 @@ const Node: React.FC<NodeProps> = ({
       const { lineIndex, facingMeta, formula, trailingMeta } = node;
       const displayMode = node.type === 'displayFormula';
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
       const spanElementProps = formulaProps?.spanProps?.(formula);
       const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
@@ -380,7 +381,7 @@ const Node: React.FC<NodeProps> = ({
     case 'decoration': {
       const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
 
       return (
         <span className={TextLinesConstants.decoration.className(decoration)} data-textcontent={node.type}>
@@ -416,7 +417,7 @@ const Node: React.FC<NodeProps> = ({
     case 'taggedLink': {
       const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
       const taggedLinkProps = taggedLinkPropsMap?.[getTagName(tag)];
       const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
 
@@ -460,7 +461,7 @@ const Node: React.FC<NodeProps> = ({
     case 'bracketLink': {
       const { lineIndex, facingMeta, linkName, trailingMeta } = node;
       const [first, last] = node.range;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
       const anchorElementProps = bracketLinkProps?.anchorProps?.(linkName);
 
       return (
@@ -494,7 +495,7 @@ const Node: React.FC<NodeProps> = ({
     case 'hashtag': {
       const { lineIndex, hashtag } = node;
       const [first] = node.range;
-      const cursorOn = cursorLineIndex === lineIndex;
+      const cursorOn = cursorOnNode(cursorLineIndex, node);
       const anchorElementProps = hashtagProps?.anchorProps?.(getHashtagName(hashtag));
 
       return (
