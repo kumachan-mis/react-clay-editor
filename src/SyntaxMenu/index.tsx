@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { createTestId } from '../common/utils';
 
-import { handleOnSectionButtonClick, handleOnSectionItemClick } from './callbacks/section';
+import { handleOnSectionButtonClick, handleOnSectionItemClick, sectionMenuSwitch } from './callbacks/section';
 import { MenuHandler } from './callbacks/types';
 import {
   MenuContainer,
@@ -43,6 +43,9 @@ import {
   SyntaxMenuProps,
   SectionMenuProps,
   ItemizationMenuProps,
+  BoldMenuProps,
+  ItalicMenuProps,
+  UnderlineMenuProps,
   BracketMenuProps,
   HashtagMenuProps,
   TaggedLinkMenuPropsMap,
@@ -53,10 +56,6 @@ import {
 } from './types';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
-  text,
-  state,
-  setTextAndState,
-  syntax,
   section,
   itemization,
   bracket,
@@ -66,33 +65,39 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   formula,
   quotation,
   containerProps,
-}) => (
-  <MenuContainer {...containerProps}>
-    <SectionMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...section} />
-    <ItemizationMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...itemization} />
-    <BoldMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} />
-    <ItalicMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} />
-    <UnderlineMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} />
-    <BracketMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...bracket} />
-    <HashtagMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...hashtag} />
-    <TaggedLinkMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...taggedLink} />
-    <CodeMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...code} />
-    <FormulaMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...formula} />
-    <QuotationMenu syntax={syntax} text={text} state={state} setTextAndState={setTextAndState} {...quotation} />
-  </MenuContainer>
-);
+  ...common
+}) => {
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  return (
+    <MenuContainer {...containerProps} ref={containerRef}>
+      <SectionMenu element={containerRef.current} {...section} {...common} />
+      <ItemizationMenu element={containerRef.current} {...itemization} {...common} />
+      <BoldMenu element={containerRef.current} {...common} />
+      <ItalicMenu element={containerRef.current} {...common} />
+      <UnderlineMenu element={containerRef.current} {...common} />
+      <BracketMenu element={containerRef.current} {...bracket} {...common} />
+      <HashtagMenu element={containerRef.current} {...hashtag} {...common} />
+      <TaggedLinkMenu element={containerRef.current} {...taggedLink} {...common} />
+      <CodeMenu element={containerRef.current} {...code} {...common} />
+      <FormulaMenu element={containerRef.current} {...formula} {...common} />
+      <QuotationMenu element={containerRef.current} {...quotation} {...common} />
+    </MenuContainer>
+  );
+};
 
 const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   syntax,
   text,
   state,
   setTextAndState,
+  element,
   disabled,
   normalLabel = SectionMenuConstants.items.normal.defaultLabel,
   largerLabel = SectionMenuConstants.items.larger.defaultLabel,
   largestLabel = SectionMenuConstants.items.largest.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const menuSwitch = sectionMenuSwitch(syntax, state, element);
   const props: MenuHandler<SectionMenuProps> = { syntax, normalLabel, largerLabel, largestLabel };
 
   return (
@@ -101,41 +106,27 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        disabled={disabled}
-        buttonProps={{
-          onClick: (event) => {
-            const [newText, newState] = handleOnSectionButtonClick(text, state, props, event.currentTarget);
-            setTextAndState(newText, newState);
-          },
-        }}
+        disabled={disabled || menuSwitch === 'disabled'}
+        buttonProps={{ onClick: () => setTextAndState(...handleOnSectionButtonClick(text, state, props, menuSwitch)) }}
         data-testid={createTestId(SectionMenuConstants.testId)}
       >
         <SectionIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuItem
-          onClick={(event) => {
-            const [newText, newState] = handleOnSectionItemClick(text, state, props, event.currentTarget, 'normal');
-            setTextAndState(newText, newState);
-          }}
+          onClick={() => setTextAndState(...handleOnSectionItemClick(text, state, props, 'normal', menuSwitch))}
           data-testid={createTestId(SectionMenuConstants.items.normal.testId)}
         >
           {normalLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={(event) => {
-            const [newText, newState] = handleOnSectionItemClick(text, state, props, event.currentTarget, 'larger');
-            setTextAndState(newText, newState);
-          }}
+          onClick={() => setTextAndState(...handleOnSectionItemClick(text, state, props, 'larger', menuSwitch))}
           data-testid={createTestId(SectionMenuConstants.items.larger.testId)}
         >
           {largerLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={(event) => {
-            const [newText, newState] = handleOnSectionItemClick(text, state, props, event.currentTarget, 'largest');
-            setTextAndState(newText, newState);
-          }}
+          onClick={() => setTextAndState(...handleOnSectionItemClick(text, state, props, 'largest', menuSwitch))}
           data-testid={createTestId(SectionMenuConstants.items.largest.testId)}
         >
           {largestLabel}
@@ -179,19 +170,31 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
   );
 };
 
-const BoldMenu: React.FC<MenuCommonProps> = ({ syntax, text, state, setTextAndState, disabled }) => (
+const BoldMenu: React.FC<BoldMenuProps & MenuCommonProps> = ({ syntax, text, state, setTextAndState, disabled }) => (
   <IconButtonMenu disabled={disabled} data-testid={createTestId(BoldMenuConstants.testId)}>
     <BoldIcon />
   </IconButtonMenu>
 );
 
-const ItalicMenu: React.FC<MenuCommonProps> = ({ syntax, text, state, setTextAndState, disabled }) => (
+const ItalicMenu: React.FC<ItalicMenuProps & MenuCommonProps> = ({
+  syntax,
+  text,
+  state,
+  setTextAndState,
+  disabled,
+}) => (
   <IconButtonMenu disabled={disabled} data-testid={createTestId(ItalicMenuConstants.testId)}>
     <ItalicIcon />
   </IconButtonMenu>
 );
 
-const UnderlineMenu: React.FC<MenuCommonProps> = ({ syntax, text, state, setTextAndState, disabled }) => (
+const UnderlineMenu: React.FC<UnderlineMenuProps & MenuCommonProps> = ({
+  syntax,
+  text,
+  state,
+  setTextAndState,
+  disabled,
+}) => (
   <IconButtonMenu disabled={disabled} data-testid={createTestId(UnderlineMenuConstants.testId)}>
     <UnderlineIcon />
   </IconButtonMenu>

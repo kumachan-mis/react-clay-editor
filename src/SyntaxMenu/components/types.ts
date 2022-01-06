@@ -1,4 +1,4 @@
-export type MenuContainerProps = React.ComponentProps<'div'>;
+export type MenuContainerProps = Omit<React.ComponentProps<'div'>, 'ref'>;
 
 export type IconButtonMenuProps = React.ComponentProps<'button'>;
 

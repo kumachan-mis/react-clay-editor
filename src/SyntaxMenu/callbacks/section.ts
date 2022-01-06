@@ -61,25 +61,23 @@ export function handleOnSectionButtonClick(
   text: string,
   state: State,
   props: MenuHandler<SectionMenuProps>,
-  element: HTMLElement | null
+  menuSwitch: 'normal' | 'larger' | 'largest' | 'disabled' | 'off'
 ): [string, State] {
-  const menuSwitch = sectionMenuSwitch(props.syntax, state, element);
   if (menuSwitch === 'disabled') return [text, state];
 
   let menuItem: 'normal' | 'larger' | 'largest' = 'larger';
   if (menuSwitch !== 'off') menuItem = menuSwitch;
-  return handleOnSectionItemClick(text, state, props, element, menuItem);
+  return handleOnSectionItemClick(text, state, props, menuItem, menuSwitch);
 }
 
 export function handleOnSectionItemClick(
   text: string,
   state: State,
   props: MenuHandler<SectionMenuProps>,
-  element: HTMLElement | null,
-  menuItem: 'normal' | 'larger' | 'largest'
+  menuItem: 'normal' | 'larger' | 'largest',
+  menuSwitch: 'normal' | 'larger' | 'largest' | 'disabled' | 'off'
 ): [string, State] {
   const { cursorCoordinate, textSelection } = state;
-  const menuSwitch = sectionMenuSwitch(props.syntax, state, element);
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
 
   const [facingMeta, sectionName, trailingMeta] = getSectionMeta(props.syntax, menuItem, props);
@@ -95,7 +93,11 @@ export function handleOnSectionItemClick(
     return [newText, { ...newState, textSelection: { fixed, free } }];
   }
 
-  const [newCursorCoordinate, newTextSelection] = [cursorCoordinate, textSelection];
+  const [newCursorCoordinate, newTextSelection] = [
+    { ...cursorCoordinate },
+    textSelection ? { fixed: { ...textSelection.fixed }, free: { ...textSelection.free } } : undefined,
+  ];
+
   let body = line;
   if (menuSwitch !== 'off') {
     const regex = SectionMenuConstants.regex[props.syntax || 'bracket'];

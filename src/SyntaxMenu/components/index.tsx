@@ -13,14 +13,17 @@ import {
   MenuContainerProps,
 } from './types';
 
-export const MenuContainer: React.FC<MenuContainerProps> = ({ className, children, ...rest }) => {
-  const constants = ComponentConstants.menuContainer;
-  return (
-    <div className={mergeClassNames(className, constants.className)} role="menubar" {...rest}>
-      {children}
-    </div>
-  );
-};
+// eslint-disable-next-line react/display-name
+export const MenuContainer = React.forwardRef<HTMLDivElement, MenuContainerProps>(
+  ({ className, children, ...rest }, ref) => {
+    const constants = ComponentConstants.menuContainer;
+    return (
+      <div className={mergeClassNames(className, constants.className)} role="menubar" ref={ref} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
 
 export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ className, children, ...rest }) => {
   const constants = ComponentConstants.iconButtonMenu;
