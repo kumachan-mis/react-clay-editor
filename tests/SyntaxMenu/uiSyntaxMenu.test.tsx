@@ -55,12 +55,12 @@ describe('UI of SyntaxMenu (bracket syntax)', () => {
   const testfun = createTest('bracket');
   for (const fixtureName of [
     'uiSectionMenuBracket',
-    // 'uiItemizationMenuBracket',
+    'uiItemizationMenuBracket',
     // 'uiDecorationMenuBracket',
     // 'uiLinkMenuCommon',
     // 'uiCodeMenuCommon',
     // 'uiFormulaMenuCommon',
-    // 'uiQuotationMenuCommon',
+    'uiQuotationMenuCommon',
   ]) {
     runFixtureTests<TestCase>('SyntaxMenu', fixtureName, testfun);
   }
@@ -74,12 +74,12 @@ describe('UI of SyntaxMenu (markdown syntax)', () => {
   const testfun = createTest('markdown');
   for (const fixtureName of [
     'uiSectionMenuMarkdown',
-    // 'uiItemizationMenuMarkdown',
+    'uiItemizationMenuMarkdown',
     // 'uiDecorationMenuMarkdown',
     // 'uiLinkMenuCommon',
     // 'uiCodeMenuCommon',
     // 'uiFormulaMenuCommon',
-    // 'uiQuotationMenuCommon',
+    'uiQuotationMenuCommon',
   ]) {
     runFixtureTests<TestCase, Common | undefined>('SyntaxMenu', fixtureName, testfun);
   }
