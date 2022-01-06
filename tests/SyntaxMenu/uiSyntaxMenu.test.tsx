@@ -5,7 +5,6 @@ import React from 'react';
 
 import { EditorProps } from '../../src';
 import * as utils from '../../src/Editor/callbacks/utils';
-import * as textLines from '../../src/TextLines';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
@@ -36,7 +35,6 @@ interface Common {
 }
 
 const originalUserAgent = window.navigator.userAgent;
-const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
 const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
@@ -46,13 +44,11 @@ beforeAll(() => {
 
 afterAll(() => {
   Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
-  SpiedTextLines.mockRestore();
   spiedPositionToCursorCoordinate.mockRestore();
 });
 
 describe('UI of SyntaxMenu (bracket syntax)', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
@@ -72,7 +68,6 @@ describe('UI of SyntaxMenu (bracket syntax)', () => {
 
 describe('UI of SyntaxMenu (markdown syntax)', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
