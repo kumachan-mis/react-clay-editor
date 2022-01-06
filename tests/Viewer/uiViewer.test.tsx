@@ -16,7 +16,7 @@ interface TestCase extends BaseTestCase {
 
 describe('UI of Viwer (bracket syntax)', () => {
   const testfun = createTest('bracket');
-  for (const fixtureName of ['uiTViwerCommon', 'uiViwerBracket']) {
+  for (const fixtureName of ['uiViwerCommon', 'uiViwerBracket']) {
     runFixtureTests<TestCase>('Viwer', fixtureName, testfun);
   }
 });
