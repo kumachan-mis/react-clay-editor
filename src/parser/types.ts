@@ -18,18 +18,9 @@ export interface Decoration {
   underline: boolean;
 }
 
-export type Node = LineNode | ContentNode;
+export type Node = BlockNode | LineNode | ContentNode;
 
-export type LineNode =
-  | BlockCodeNode
-  | BlockFormulaNode
-  | BlockCodeMetaNode
-  | BlockCodeLineNode
-  | BlockFormulaMetaNode
-  | BlockFormulaLineNode
-  | QuotationNode
-  | ItemizationNode
-  | NormalLineNode;
+export type BlockNode = BlockCodeNode | BlockFormulaNode;
 
 export interface BlockCodeNode {
   type: 'blockCode';
@@ -46,6 +37,15 @@ export interface BlockFormulaNode {
   children: BlockFormulaLineNode[];
   trailingMeta?: BlockFormulaMetaNode;
 }
+
+export type LineNode =
+  | BlockCodeMetaNode
+  | BlockCodeLineNode
+  | BlockFormulaMetaNode
+  | BlockFormulaLineNode
+  | QuotationNode
+  | ItemizationNode
+  | NormalLineNode;
 
 export interface BlockCodeMetaNode {
   type: 'blockCodeMeta';

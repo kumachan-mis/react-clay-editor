@@ -112,3 +112,8 @@ export function selectionToRange(textSelection: TextSelection): TextRange {
   else if (fixed.charIndex <= free.charIndex) return { start: fixed, end: free };
   else return { start: free, end: fixed };
 }
+
+export function copySelection(textSelection: TextSelection | undefined): TextSelection | undefined {
+  if (!textSelection) return undefined;
+  return { fixed: { ...textSelection.fixed }, free: { ...textSelection.free } };
+}

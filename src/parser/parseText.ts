@@ -8,12 +8,12 @@ import {
   parseMarkdownItemization,
   parseNormalLine,
 } from './parseLine';
-import { LineNode, ParsingContext, ParsingOptions } from './types';
+import { BlockNode, LineNode, ParsingContext, ParsingOptions } from './types';
 
-export function parseText(text: string, options: ParsingOptions): LineNode[] {
+export function parseText(text: string, options: ParsingOptions): (BlockNode | LineNode)[] {
   const { blockCodeMeta, blockFormulaMeta, quotation } = parserConstants.common;
   const lines = text.split('\n');
-  const nodes: LineNode[] = [];
+  const nodes: (BlockNode | LineNode)[] = [];
   const context: ParsingContext = {
     lineIndex: 0,
     charIndex: 0,
