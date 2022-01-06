@@ -501,8 +501,8 @@
         "menuButton": "dropdown-anchor-arrow"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["  ## Markup Editor"],
-      "expectedLinesAfterTyping": ["  ## Markup Edito.r"]
+      "expectedLinesAfterMenu": ["- ## Markup Editor"],
+      "expectedLinesAfterTyping": ["- ## Markup Edito.r"]
     },
     {
       "name": "section menu: button, no-selection, other (block node)",
