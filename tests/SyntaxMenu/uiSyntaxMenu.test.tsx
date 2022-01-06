@@ -1,15 +1,14 @@
 import { EventType } from '@testing-library/dom';
-import { render, screen, Screen, fireEvent, within } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as editorUtils from '../../src/Editor/callbacks/utils';
-import { ComponentConstants } from '../../src/TextLines/components/constants';
-import * as textLinesUtils from '../../src/TextLines/utils';
+import * as utils from '../../src/Editor/callbacks/utils';
+import * as textLines from '../../src/TextLines';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { MockEditor } from '../mocks';
+import { MockEditor, MockTextLines, expectTextLinesToBe } from '../mocks';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -37,25 +36,25 @@ interface Common {
 }
 
 const originalUserAgent = window.navigator.userAgent;
-const spiedPositionToCursorCoordinate = jest.spyOn(editorUtils, 'positionToCursorCoordinate');
-const spiedCursorOnNode = jest.spyOn(textLinesUtils, 'cursorOnNode');
+const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
+const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   Object.defineProperty(window.navigator, 'userAgent', { value: osUserAgents.windows, configurable: true });
+  SpiedTextLines.mockImplementation(MockTextLines);
   spiedPositionToCursorCoordinate.mockImplementation((text, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
-  spiedCursorOnNode.mockImplementation(() => true);
 });
 
 afterAll(() => {
   Object.defineProperty(window.navigator, 'userAgent', { value: originalUserAgent, configurable: true });
+  SpiedTextLines.mockRestore();
   spiedPositionToCursorCoordinate.mockRestore();
-  spiedCursorOnNode.mockRestore();
 });
 
 describe('UI of SyntaxMenu (bracket syntax)', () => {
   afterEach(() => {
+    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
-    spiedCursorOnNode.mockClear();
   });
 
   const testfun = createTest('bracket');
@@ -74,8 +73,8 @@ describe('UI of SyntaxMenu (bracket syntax)', () => {
 
 describe('UI of SyntaxMenu (markdown syntax)', () => {
   afterEach(() => {
+    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
-    spiedCursorOnNode.mockClear();
   });
 
   const testfun = createTest('markdown');
@@ -128,16 +127,4 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
     userEvent.keyboard(testCase.inputTyping.join(''));
     expectTextLinesToBe(screen, testCase.expectedLinesAfterTyping);
   };
-}
-
-function expectTextLinesToBe(screen: Screen, expectedLines: string[]): void {
-  let lineElement: HTMLElement | null = null;
-  for (let i = 0; i < expectedLines.length; i++) {
-    const line = expectedLines[i];
-    lineElement = screen.getByTestId(ComponentConstants.line.testId(i));
-    expect(lineElement.textContent).toBeTruthy();
-    expect(lineElement.textContent?.slice(0, lineElement.textContent?.length - 1)).toBe(line);
-  }
-  lineElement = screen.queryByTestId(ComponentConstants.line.testId(expectedLines.length));
-  expect(lineElement).not.toBeInTheDocument();
 }

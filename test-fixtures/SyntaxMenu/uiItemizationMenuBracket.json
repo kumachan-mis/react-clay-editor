@@ -322,8 +322,8 @@
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["   This will be a deep nested item"],
-      "expectedLinesAfterTyping": ["   Thi.s will be a deep nested item"]
+      "expectedLinesAfterMenu": [" \t This will be a deep nested item"],
+      "expectedLinesAfterTyping": [" \t Thi.s will be a deep nested item"]
     },
     {
       "name": "itemization menu: outdent, no-selection, nested-itemized-line",
@@ -492,8 +492,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": [" This is an item", " This is normal text"],
-      "expectedLinesAfterTyping": [" This .This is normal text"]
+      "expectedLinesAfterMenu": ["\tThis is an item", " This is normal text"],
+      "expectedLinesAfterTyping": ["\tThis .This is normal text"]
     },
     {
       "name": "itemization menu: button, selection, all-itemized-line",
@@ -561,7 +561,7 @@
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": [" This is normal text", "  This is an item"],
+      "expectedLinesAfterMenu": [" This is normal text", " \tThis is an item"],
       "expectedLinesAfterTyping": [" This is nor.This is an item"]
     },
     {
