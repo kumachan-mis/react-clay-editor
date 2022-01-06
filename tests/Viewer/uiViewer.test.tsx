@@ -14,17 +14,17 @@ interface TestCase extends BaseTestCase {
   expectedEditLines?: string[];
 }
 
-describe('UI of Viwer (bracket syntax)', () => {
+describe('UI of Viewer (bracket syntax)', () => {
   const testfun = createTest('bracket');
-  for (const fixtureName of ['uiViwerCommon', 'uiViwerBracket']) {
-    runFixtureTests<TestCase>('Viwer', fixtureName, testfun);
+  for (const fixtureName of ['uiViewerCommon', 'uiViewerBracket']) {
+    runFixtureTests<TestCase>('Viewer', fixtureName, testfun);
   }
 });
 
-describe('UI of Viwer (markdown syntax)', () => {
+describe('UI of Viewer (markdown syntax)', () => {
   const testfun = createTest('markdown');
-  for (const fixtureName of ['uiViwerCommon', 'uiViwerMarkdown']) {
-    runFixtureTests<TestCase>('Viwer', fixtureName, testfun);
+  for (const fixtureName of ['uiViewerCommon', 'uiViewerMarkdown']) {
+    runFixtureTests<TestCase>('Viewer', fixtureName, testfun);
   }
 });
 
