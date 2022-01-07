@@ -1,24 +1,22 @@
-import { moveCursor } from '../../Cursor/utils';
 import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
 import { copySelection } from '../../Selection/utils';
+import { parserConstants } from '../../parser/constants';
 import { DecorationNode, LineNode } from '../../parser/types';
 import { SectionMenuProps } from '../types';
 
 import { MenuHandler } from './types';
+import { undefinedIfZeroSelection } from './utils';
 
 export function sectionMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
-  state: State,
-  element: HTMLElement | null
+  state: State
 ): 'off' | 'normal' | 'larger' | 'largest' | 'disabled' {
-  if (!element) return 'disabled';
+  if (!state.cursorCoordinate) return 'disabled';
 
   const { cursorCoordinate, textSelection } = state;
-  if (!cursorCoordinate || (textSelection && textSelection.free.lineIndex !== textSelection.fixed.lineIndex)) {
-    return 'disabled';
-  }
+  if (textSelection && textSelection.free.lineIndex !== textSelection.fixed.lineIndex) return 'disabled';
 
   const lineNode = nodes[cursorCoordinate.lineIndex];
   if (lineNode.type !== 'normalLine') return 'disabled';
@@ -60,7 +58,7 @@ export function handleOnSectionItemClick(
   const { cursorCoordinate, textSelection } = state;
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
 
-  const { facingMeta, sectionName, trailingMeta, regex } = getSectionMeta(props.syntax, menuItem, props);
+  const { facingMeta, sectionName, trailingMeta, regex } = getSectionMeta(props, menuItem);
   const line = text.split('\n')[cursorCoordinate.lineIndex];
   if (!line) {
     const insertedText = facingMeta + sectionName + trailingMeta;
@@ -68,7 +66,7 @@ export function handleOnSectionItemClick(
     const [newText, newState] = insertText(text, state, insertedText, cursourMoveAmount);
     if (!newState.cursorCoordinate) return [newText, { ...newState, textSelection: undefined }];
 
-    const fixed = moveCursor(newText, newState.cursorCoordinate, -sectionName.length);
+    const fixed = { ...newState.cursorCoordinate, charIndex: newState.cursorCoordinate.charIndex - sectionName.length };
     const free = newState.cursorCoordinate;
     return [newText, { ...newState, textSelection: { fixed, free } }];
   }
@@ -99,7 +97,10 @@ export function handleOnSectionItemClick(
 
   if (menuSwitch === menuItem) {
     const [newText, newState] = insertText(text, { ...state, textSelection: lineSelection }, body);
-    return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection }];
+    return [
+      newText,
+      { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    ];
   }
 
   const insertedText = facingMeta + body + trailingMeta;
@@ -109,37 +110,37 @@ export function handleOnSectionItemClick(
     newTextSelection.fixed.charIndex = newTextSelection.fixed.charIndex + facingMeta.length;
     newTextSelection.free.charIndex = newTextSelection.free.charIndex + facingMeta.length;
   }
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection }];
+  return [
+    newText,
+    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+  ];
 }
 
 function getSectionMeta(
-  syntax: 'bracket' | 'markdown' | undefined,
-  menuItem: 'normal' | 'larger' | 'largest',
-  props: MenuHandler<SectionMenuProps>
+  props: MenuHandler<SectionMenuProps>,
+  menuItem: 'normal' | 'larger' | 'largest'
 ): { facingMeta: string; sectionName: string; trailingMeta: string; regex: RegExp } {
-  if (!syntax || syntax === 'bracket') {
+  if (!props.syntax || props.syntax === 'bracket') {
     // bracket syntax
-    const trailingMeta = ']';
-    const regex = /^(?<facingMeta>\[(?<heading>\*+) )(?<body>(\[[^\]]+\]|[^\]])+)(?<trailingMeta>\])$/;
+    const regex = parserConstants.bracketSyntax.heading;
     switch (menuItem) {
       case 'normal':
-        return { facingMeta: '[* ', sectionName: props.normalLabel, trailingMeta, regex };
+        return { facingMeta: '[* ', sectionName: props.normalLabel, trailingMeta: ']', regex };
       case 'larger':
-        return { facingMeta: '[** ', sectionName: props.largerLabel, trailingMeta, regex };
+        return { facingMeta: '[** ', sectionName: props.largerLabel, trailingMeta: ']', regex };
       case 'largest':
-        return { facingMeta: '[*** ', sectionName: props.largestLabel, trailingMeta, regex };
+        return { facingMeta: '[*** ', sectionName: props.largestLabel, trailingMeta: ']', regex };
     }
   } else {
     // markdown syntax
-    const trailingMeta = '';
-    const regex = /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/;
+    const regex = parserConstants.markdownSyntax.heading;
     switch (menuItem) {
       case 'normal':
-        return { facingMeta: '### ', sectionName: props.normalLabel, trailingMeta, regex };
+        return { facingMeta: '### ', sectionName: props.normalLabel, trailingMeta: '', regex };
       case 'larger':
-        return { facingMeta: '## ', sectionName: props.largerLabel, trailingMeta, regex };
+        return { facingMeta: '## ', sectionName: props.largerLabel, trailingMeta: '', regex };
       case 'largest':
-        return { facingMeta: '# ', sectionName: props.largestLabel, trailingMeta, regex };
+        return { facingMeta: '# ', sectionName: props.largestLabel, trailingMeta: '', regex };
     }
   }
 }

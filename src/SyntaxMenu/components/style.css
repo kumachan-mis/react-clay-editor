@@ -88,15 +88,13 @@
 }
 
 .dropdownMenuItem {
-  list-style-type: none;
-  user-select: none;
-  cursor: pointer;
   padding: 2px 8px;
   border-radius: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .dropdownMenuItem[aria-selected='true'] {
@@ -116,12 +114,18 @@
 }
 
 .iconButton:disabled,
-.dropdownAnchor.disabled {
+.dropdownAnchor.disabled,
+.dropdownMenuItem.disabled {
   background-color: rgba(0, 0, 0, 0.02);
   border: 1px solid rgba(0, 0, 0, 0.04);
   cursor: unset;
+  pointer-events: none;
 }
 
 .iconButton:disabled svg {
   fill: rgba(0, 0, 0, 0.2);
+}
+
+.dropdownMenuItem.disabled {
+  color: rgba(0, 0, 0, 0.2);
 }

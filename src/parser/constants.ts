@@ -2,12 +2,13 @@ export const defaultLinkNameRegex = /[^[\]]+/;
 
 export const parserConstants = {
   bracketSyntax: {
+    heading: /^(?<facingMeta>\[(?<heading>\*+) )(?<body>(\[[^\]]+\]|[^\]])+)(?<trailingMeta>\])$/,
     itemization: /^(?<indent>\s*)(?<bullet>\s)(?<content>(\S.*)?)$/,
     decoration: /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/,
   },
   markdownSyntax: {
+    heading: /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/,
     itemization: /^(?<indent>\s*)(?<bullet>[*-] )(?<content>(.*)?)$/,
-    heading: /^(?<heading>#+) (?<body>.+)$/,
     bold: /^(?<left>.*?)\*(?<body>[^*\s](.*[^*\s])?)\*(?<right>.*)$/,
     italic: /^(?<left>.*?)_(?<body>[^_\s](.*[^_\s])?)_(?<right>.*)$/,
   },

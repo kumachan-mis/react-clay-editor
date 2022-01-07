@@ -91,6 +91,5 @@ export interface MenuCommonProps {
   nodes: LineNode[];
   state: State;
   setTextAndState: (text: string, state: State) => void;
-  element: HTMLElement | null;
   syntax?: 'bracket' | 'markdown';
 }

@@ -2,7 +2,13 @@ import * as React from 'react';
 
 import { createTestId } from '../common/utils';
 
-import { handleOnSectionButtonClick, handleOnSectionItemClick, sectionMenuSwitch } from './callbacks/section';
+import {
+  itemizationMenuSwitch,
+  handleOnItemizationButtonClick,
+  handleOnItemizationItemClick,
+} from './callbacks/itemization';
+import { quotationMenuSwitch, handleOnQuotationButtonClick, handleOnQuotationItemClick } from './callbacks/quotation';
+import { sectionMenuSwitch, handleOnSectionButtonClick, handleOnSectionItemClick } from './callbacks/section';
 import { MenuHandler } from './callbacks/types';
 import {
   MenuContainer,
@@ -66,24 +72,21 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   quotation,
   containerProps,
   ...common
-}) => {
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-  return (
-    <MenuContainer {...containerProps} ref={containerRef}>
-      <SectionMenu element={containerRef.current} {...section} {...common} />
-      <ItemizationMenu element={containerRef.current} {...itemization} {...common} />
-      <BoldMenu element={containerRef.current} {...common} />
-      <ItalicMenu element={containerRef.current} {...common} />
-      <UnderlineMenu element={containerRef.current} {...common} />
-      <BracketMenu element={containerRef.current} {...bracket} {...common} />
-      <HashtagMenu element={containerRef.current} {...hashtag} {...common} />
-      <TaggedLinkMenu element={containerRef.current} {...taggedLink} {...common} />
-      <CodeMenu element={containerRef.current} {...code} {...common} />
-      <FormulaMenu element={containerRef.current} {...formula} {...common} />
-      <QuotationMenu element={containerRef.current} {...quotation} {...common} />
-    </MenuContainer>
-  );
-};
+}) => (
+  <MenuContainer {...containerProps}>
+    <SectionMenu {...section} {...common} />
+    <ItemizationMenu {...itemization} {...common} />
+    <BoldMenu {...common} />
+    <ItalicMenu {...common} />
+    <UnderlineMenu {...common} />
+    <BracketMenu {...bracket} {...common} />
+    <HashtagMenu {...hashtag} {...common} />
+    <TaggedLinkMenu {...taggedLink} {...common} />
+    <CodeMenu {...code} {...common} />
+    <FormulaMenu {...formula} {...common} />
+    <QuotationMenu {...quotation} {...common} />
+  </MenuContainer>
+);
 
 const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   syntax,
@@ -91,14 +94,13 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   nodes,
   state,
   setTextAndState,
-  element,
   disabled,
   normalLabel = SectionMenuConstants.items.normal.defaultLabel,
   largerLabel = SectionMenuConstants.items.larger.defaultLabel,
   largestLabel = SectionMenuConstants.items.largest.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const menuSwitch = sectionMenuSwitch(syntax, nodes, state, element);
+  const menuSwitch = sectionMenuSwitch(syntax, nodes, state);
   const props: MenuHandler<SectionMenuProps> = { syntax, normalLabel, largerLabel, largestLabel };
 
   return (
@@ -150,6 +152,8 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
   outdentLabel = ItemizationMenuConstants.items.outdent.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const menuSwitch = itemizationMenuSwitch(syntax, nodes, state);
+  const props: MenuHandler<ItemizationMenuProps> = { syntax, indentLabel, outdentLabel };
 
   return (
     <DropdownMenu>
@@ -157,16 +161,30 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        disabled={disabled}
+        disabled={disabled || menuSwitch === 'disabled'}
+        buttonProps={{
+          onClick: () => setTextAndState(...handleOnItemizationButtonClick(text, nodes, state, props, menuSwitch)),
+        }}
         data-testid={createTestId(ItemizationMenuConstants.testId)}
       >
         <ItemizationIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(ItemizationMenuConstants.items.indent.testId)}>
+        <DropdownMenuItem
+          onClick={() =>
+            setTextAndState(...handleOnItemizationItemClick(text, nodes, state, props, 'indent', menuSwitch))
+          }
+          data-testid={createTestId(ItemizationMenuConstants.items.indent.testId)}
+        >
           {indentLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(ItemizationMenuConstants.items.outdent.testId)}>
+        <DropdownMenuItem
+          disabled={menuSwitch !== 'on'}
+          onClick={() =>
+            setTextAndState(...handleOnItemizationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
+          }
+          data-testid={createTestId(ItemizationMenuConstants.items.outdent.testId)}
+        >
           {outdentLabel}
         </DropdownMenuItem>
       </DropdownMenuList>
@@ -362,6 +380,8 @@ const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
   outdentLabel = QuotationMenuConstants.items.outdent.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const menuSwitch = itemizationMenuSwitch(syntax, nodes, state);
+  const props: MenuHandler<QuotationMenuProps> = { syntax, indentLabel, outdentLabel };
 
   return (
     <DropdownMenu>
@@ -369,16 +389,30 @@ const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        disabled={disabled}
+        disabled={disabled || menuSwitch === 'disabled'}
+        buttonProps={{
+          onClick: () => setTextAndState(...handleOnQuotationButtonClick(text, nodes, state, props, menuSwitch)),
+        }}
         data-testid={createTestId(QuotationMenuConstants.testId)}
       >
-        <QuotationIcon />
+        <ItemizationIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(QuotationMenuConstants.items.indent.testId)}>
+        <DropdownMenuItem
+          onClick={() =>
+            setTextAndState(...handleOnQuotationItemClick(text, nodes, state, props, 'indent', menuSwitch))
+          }
+          data-testid={createTestId(QuotationMenuConstants.items.indent.testId)}
+        >
           {indentLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(QuotationMenuConstants.items.outdent.testId)}>
+        <DropdownMenuItem
+          disabled={menuSwitch !== 'on'}
+          onClick={() =>
+            setTextAndState(...handleOnQuotationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
+          }
+          data-testid={createTestId(QuotationMenuConstants.items.outdent.testId)}
+        >
           {outdentLabel}
         </DropdownMenuItem>
       </DropdownMenuList>

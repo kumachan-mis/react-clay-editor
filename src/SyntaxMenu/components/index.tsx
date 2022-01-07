@@ -13,17 +13,14 @@ import {
   MenuContainerProps,
 } from './types';
 
-// eslint-disable-next-line react/display-name
-export const MenuContainer = React.forwardRef<HTMLDivElement, MenuContainerProps>(
-  ({ className, children, ...rest }, ref) => {
-    const constants = ComponentConstants.menuContainer;
-    return (
-      <div className={mergeClassNames(className, constants.className)} role="menubar" ref={ref} {...rest}>
-        {children}
-      </div>
-    );
-  }
-);
+export const MenuContainer: React.FC<MenuContainerProps> = ({ className, children, ...rest }) => {
+  const constants = ComponentConstants.menuContainer;
+  return (
+    <div className={mergeClassNames(className, constants.className)} role="menubar" {...rest}>
+      {children}
+    </div>
+  );
+};
 
 export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ className, children, ...rest }) => {
   const constants = ComponentConstants.iconButtonMenu;
@@ -131,10 +128,13 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
   );
 };
 
-export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({ className, children, ...rest }) => {
+export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({ disabled, className, children, ...rest }) => {
   const constants = ComponentConstants.dropdownMenuItem;
+  let itemClassName = mergeClassNames(className, constants.className);
+  if (disabled) itemClassName = mergeClassNames(itemClassName, ComponentConstants.disabled.className);
+
   return (
-    <li className={mergeClassNames(className, constants.className)} role="menuitem button" {...rest}>
+    <li className={itemClassName} role="menuitem button" {...rest}>
       {children}
     </li>
   );

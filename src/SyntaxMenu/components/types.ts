@@ -17,4 +17,6 @@ export type DropdownMenuListProps = {
   anchorEl: HTMLElement | null;
 } & React.ComponentProps<'ul'>;
 
-export type DropdownMenuItemProps = React.ComponentProps<'li'>;
+export type DropdownMenuItemProps = {
+  disabled?: boolean;
+} & React.ComponentProps<'li'>;
