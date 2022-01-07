@@ -177,7 +177,7 @@
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["- This will not be an item"],
+      "expectedLinesAfterMenu": ["This will not be an item"],
       "expectedLinesAfterTyping": ["This .l not be an item"]
     },
     {
@@ -219,7 +219,7 @@
           }
         },
         {
-          "type": "mouseUp",
+          "type": "mouseMove",
           "coordinate": {
             "lineIndex": 0,
             "charIndex": 7
@@ -229,7 +229,7 @@
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 8
+            "charIndex": 9
           }
         }
       ],
@@ -351,7 +351,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["- This will be a shallow nested item"],
-      "expectedLinesAfterTyping": ["- This will be a shallow nested item"]
+      "expectedLinesAfterTyping": ["- Thi.s will be a shallow nested item"]
     },
     {
       "name": "itemization menu: button, no-selection, other-line (line node)",
@@ -493,7 +493,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["- This is normal text", "* This is an item"],
-      "expectedLinesAfterTyping": ["- This . This is an item"]
+      "expectedLinesAfterTyping": ["- This is.* This is an item"]
     },
     {
       "name": "itemization menu: button, selection, all-itemized-line",
@@ -526,8 +526,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["This is normal text", "This is an item"],
-      "expectedLinesAfterTyping": ["This.This is an item"]
+      "expectedLinesAfterMenu": ["This is an item", "This is also an item"],
+      "expectedLinesAfterTyping": ["This.This is also an item"]
     },
     {
       "name": "itemization menu: indent, selection, all-normal-or-itemized-line",
@@ -562,7 +562,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["- This is normal text", " - This is an item"],
-      "expectedLinesAfterTyping": [" This is nor. This is an item"]
+      "expectedLinesAfterTyping": ["- This is nor. This is an item"]
     },
     {
       "name": "itemization menu: outdent, selection, all-normal-or-itemized-line",

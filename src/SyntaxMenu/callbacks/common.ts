@@ -15,15 +15,16 @@ export function lineMenuSwitch(
   nodes: LineNode[],
   state: State,
   menu: 'itemization' | 'quotation'
-): 'off' | 'on' | 'disabled' {
+): 'alloff' | 'allon' | 'both' | 'disabled' {
   if (!state.cursorCoordinate) return 'disabled';
 
   const { cursorCoordinate, textSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
   const rangeNodes = nodes.slice(firstLineIndex, lastLineIndex + 1);
   if (rangeNodes.some((node) => !['normalLine', menu].includes(node.type))) return 'disabled';
-  if (rangeNodes.every((node) => node.type === menu)) return 'on';
-  return 'off';
+  if (rangeNodes.every((node) => node.type === menu)) return 'allon';
+  if (rangeNodes.every((node) => node.type === 'normalLine')) return 'alloff';
+  return 'both';
 }
 
 export function handleOnLineMenuClick(
@@ -32,11 +33,11 @@ export function handleOnLineMenuClick(
   state: State,
   props: MenuHandler<ItemizationMenuProps | QuotationMenuProps>,
   menuItem: 'button' | 'indent' | 'outdent',
-  menuSwitch: 'off' | 'on' | 'disabled',
+  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled',
   menu: 'itemization' | 'quotation'
 ): [string, State] {
   const { cursorCoordinate, textSelection } = state;
-  if (!cursorCoordinate || menuSwitch === 'disabled' || (menuItem === 'outdent' && menuSwitch === 'off')) {
+  if (!cursorCoordinate || menuSwitch === 'disabled' || (menuItem === 'outdent' && menuSwitch === 'alloff')) {
     return [text, state];
   }
 
@@ -47,7 +48,7 @@ export function handleOnLineMenuClick(
   const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
   const insertedLines: string[] = [];
 
-  function updateForButtonOff(): void {
+  function updateForButtonOffOrBoth(): void {
     for (let lineIndex = firstLineIndex; lineIndex <= lastLineIndex; lineIndex++) {
       if (nodes[lineIndex].type !== 'normalLine') {
         insertedLines.push(lines[lineIndex]);
@@ -105,6 +106,11 @@ export function handleOnLineMenuClick(
 
   function updateForOutdent(): void {
     for (let lineIndex = firstLineIndex; lineIndex <= lastLineIndex; lineIndex++) {
+      if (nodes[lineIndex].type === 'normalLine') {
+        insertedLines.push(lines[lineIndex]);
+        continue;
+      }
+
       const groups = lines[lineIndex].match(regex)?.groups as Record<string, string>;
       const deletionLength = groups.indent.length === 0 ? meta.length : 1;
       const moveCharIndexByMetaDeletion = (charIndex: number): number => {
@@ -126,10 +132,10 @@ export function handleOnLineMenuClick(
 
   switch (menuItem) {
     case 'button':
-      if (menuSwitch === 'off') {
-        updateForButtonOff();
-      } else {
+      if (menuSwitch === 'allon') {
         updateForButtonOn();
+      } else {
+        updateForButtonOffOrBoth();
       }
       break;
     case 'indent':

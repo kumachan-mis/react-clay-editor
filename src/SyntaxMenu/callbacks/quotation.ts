@@ -9,7 +9,7 @@ export function quotationMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
   state: State
-): 'off' | 'on' | 'disabled' {
+): 'alloff' | 'allon' | 'both' | 'disabled' {
   return lineMenuSwitch(syntax, nodes, state, 'quotation');
 }
 
@@ -18,7 +18,7 @@ export function handleOnQuotationButtonClick(
   nodes: LineNode[],
   state: State,
   props: MenuHandler<QuotationMenuProps>,
-  menuSwitch: 'off' | 'on' | 'disabled'
+  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
   return handleOnLineMenuClick(text, nodes, state, props, 'button', menuSwitch, 'quotation');
 }
@@ -29,7 +29,7 @@ export function handleOnQuotationItemClick(
   state: State,
   props: MenuHandler<QuotationMenuProps>,
   menuItem: 'indent' | 'outdent',
-  menuSwitch: 'off' | 'on' | 'disabled'
+  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
   return handleOnLineMenuClick(text, nodes, state, props, menuItem, menuSwitch, 'quotation');
 }

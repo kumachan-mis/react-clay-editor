@@ -219,7 +219,7 @@
           }
         },
         {
-          "type": "mouseUp",
+          "type": "mouseMove",
           "coordinate": {
             "lineIndex": 0,
             "charIndex": 6
@@ -229,7 +229,7 @@
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 7
+            "charIndex": 8
           }
         }
       ],
@@ -526,8 +526,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["This is normal text", "This is an item"],
-      "expectedLinesAfterTyping": ["This .This is an item"]
+      "expectedLinesAfterMenu": ["This is an item", "This is also an item"],
+      "expectedLinesAfterTyping": ["This .This is also an item"]
     },
     {
       "name": "itemization menu: indent, selection, all-normal-or-itemized-line",

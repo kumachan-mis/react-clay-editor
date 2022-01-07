@@ -179,7 +179,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
           {indentLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
-          disabled={menuSwitch !== 'on'}
+          disabled={menuSwitch === 'alloff'}
           onClick={() =>
             setTextAndState(...handleOnItemizationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
           }
@@ -380,7 +380,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
   outdentLabel = QuotationMenuConstants.items.outdent.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const menuSwitch = itemizationMenuSwitch(syntax, nodes, state);
+  const menuSwitch = quotationMenuSwitch(syntax, nodes, state);
   const props: MenuHandler<QuotationMenuProps> = { syntax, indentLabel, outdentLabel };
 
   return (
@@ -407,7 +407,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
           {indentLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
-          disabled={menuSwitch !== 'on'}
+          disabled={menuSwitch === 'alloff'}
           onClick={() =>
             setTextAndState(...handleOnQuotationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
           }

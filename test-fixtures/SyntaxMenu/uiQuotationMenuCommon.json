@@ -177,7 +177,7 @@
         "menuItemName": "outdent-quotation-menu-item"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["> This will not be a quotation text"],
+      "expectedLinesAfterMenu": ["This will not be a quotation text"],
       "expectedLinesAfterTyping": ["This .l not be a quotation text"]
     },
     {
@@ -219,7 +219,7 @@
           }
         },
         {
-          "type": "mouseUp",
+          "type": "mouseMove",
           "coordinate": {
             "lineIndex": 0,
             "charIndex": 7
@@ -229,7 +229,7 @@
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 8
+            "charIndex": 9
           }
         }
       ],
@@ -351,7 +351,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> This will be a shallow nested quotation text"],
-      "expectedLinesAfterTyping": ["> This will be a shallow nested quotation text"]
+      "expectedLinesAfterTyping": ["> Thi.s will be a shallow nested quotation text"]
     },
     {
       "name": "quotation menu: button, no-selection, other-line (block node)",
@@ -412,7 +412,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> This is normal text", "> This is a quotation text"],
-      "expectedLinesAfterTyping": ["> This . This is a quotation text"]
+      "expectedLinesAfterTyping": ["> This is.> This is a quotation text"]
     },
     {
       "name": "quotation menu: button, selection, all-quoted-line",
@@ -445,8 +445,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["This is normal text", "This is a quotation text"],
-      "expectedLinesAfterTyping": ["This.This is a quotation text"]
+      "expectedLinesAfterMenu": ["This is a quotation text", "This is also a quotation text"],
+      "expectedLinesAfterTyping": ["This.This is also a quotation text"]
     },
     {
       "name": "quotation menu: indent, selection, all-normal-or-quoted-line",
@@ -481,7 +481,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> This is normal text", " > This is a quotation text"],
-      "expectedLinesAfterTyping": [" This is nor. This is a quotation text"]
+      "expectedLinesAfterTyping": ["> This is nor. This is a quotation text"]
     },
     {
       "name": "quotation menu: outdent, selection, all-normal-or-quoted-line",

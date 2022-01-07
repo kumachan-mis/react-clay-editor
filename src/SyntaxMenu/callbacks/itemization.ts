@@ -9,7 +9,7 @@ export function itemizationMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
   state: State
-): 'off' | 'on' | 'disabled' {
+): 'alloff' | 'allon' | 'both' | 'disabled' {
   return lineMenuSwitch(syntax, nodes, state, 'itemization');
 }
 
@@ -18,7 +18,7 @@ export function handleOnItemizationButtonClick(
   nodes: LineNode[],
   state: State,
   props: MenuHandler<ItemizationMenuProps>,
-  menuSwitch: 'off' | 'on' | 'disabled'
+  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
   return handleOnLineMenuClick(text, nodes, state, props, 'button', menuSwitch, 'itemization');
 }
@@ -29,7 +29,7 @@ export function handleOnItemizationItemClick(
   state: State,
   props: MenuHandler<ItemizationMenuProps>,
   menuItem: 'indent' | 'outdent',
-  menuSwitch: 'off' | 'on' | 'disabled'
+  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
   return handleOnLineMenuClick(text, nodes, state, props, menuItem, menuSwitch, 'itemization');
 }
