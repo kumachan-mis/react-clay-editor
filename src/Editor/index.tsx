@@ -5,7 +5,7 @@ import { Selection } from '../Selection';
 import { SyntaxMenu } from '../SyntaxMenu';
 import { TextLines } from '../TextLines';
 import { mergeClassNames, createTestId } from '../common/utils';
-import { useParser, useLineNodes } from '../parser';
+import { useParser } from '../parser';
 
 import { EditorConstants } from './constants';
 import { Props } from './types';
@@ -48,7 +48,6 @@ export const Editor: React.FC<Props> = (props) => {
     props.codeProps,
     props.formulaProps
   );
-  const lineNodes = useLineNodes(nodes);
 
   return (
     <div
@@ -60,7 +59,7 @@ export const Editor: React.FC<Props> = (props) => {
     >
       <SyntaxMenu
         text={props.text}
-        nodes={lineNodes}
+        nodes={nodes}
         state={state}
         setTextAndState={(newText, newState) => {
           if (newState !== state) setState(newState);

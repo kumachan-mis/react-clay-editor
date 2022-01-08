@@ -60,8 +60,10 @@ import {
   QuotationMenuProps,
   MenuCommonProps,
 } from './types';
+import { useContentPosition, useLineNodes } from './utils';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
+  nodes,
   section,
   itemization,
   bracket,
@@ -72,21 +74,26 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   quotation,
   containerProps,
   ...common
-}) => (
-  <MenuContainer {...containerProps}>
-    <SectionMenu {...section} {...common} />
-    <ItemizationMenu {...itemization} {...common} />
-    <BoldMenu {...common} />
-    <ItalicMenu {...common} />
-    <UnderlineMenu {...common} />
-    <BracketMenu {...bracket} {...common} />
-    <HashtagMenu {...hashtag} {...common} />
-    <TaggedLinkMenu {...taggedLink} {...common} />
-    <CodeMenu {...code} {...common} />
-    <FormulaMenu {...formula} {...common} />
-    <QuotationMenu {...quotation} {...common} />
-  </MenuContainer>
-);
+}) => {
+  const lineNodes = useLineNodes(nodes);
+  const contentPosition = useContentPosition(lineNodes, common.state.cursorCoordinate);
+
+  return (
+    <MenuContainer {...containerProps}>
+      <SectionMenu {...section} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <ItemizationMenu {...itemization} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <BoldMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <ItalicMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <UnderlineMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <BracketMenu {...bracket} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <HashtagMenu {...hashtag} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <TaggedLinkMenu {...taggedLink} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <CodeMenu {...code} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <FormulaMenu {...formula} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <QuotationMenu {...quotation} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+    </MenuContainer>
+  );
+};
 
 const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   syntax,

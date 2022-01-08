@@ -1,9 +1,9 @@
 import { State } from '../Editor/types';
-import { LineNode } from '../parser/types';
+import { BlockNode, LineNode } from '../parser/types';
 
 export interface SyntaxMenuProps {
   text: string;
-  nodes: LineNode[];
+  nodes: (LineNode | BlockNode)[];
   state: State;
   setTextAndState: (text: string, state: State) => void;
   syntax?: 'bracket' | 'markdown';
@@ -88,8 +88,15 @@ export interface QuotationMenuProps {
 
 export interface MenuCommonProps {
   text: string;
-  nodes: LineNode[];
   state: State;
+  nodes: LineNode[];
+  contentPosition: ContentPosition | undefined;
   setTextAndState: (text: string, state: State) => void;
   syntax?: 'bracket' | 'markdown';
+}
+
+export interface ContentPosition {
+  lineIndex: number;
+  contentShallowIndex: number;
+  contentDeepIndex?: number;
 }
