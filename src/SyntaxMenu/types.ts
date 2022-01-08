@@ -90,13 +90,6 @@ export interface MenuCommonProps {
   text: string;
   state: State;
   nodes: LineNode[];
-  contentPosition: ContentPosition | undefined;
   setTextAndState: (text: string, state: State) => void;
   syntax?: 'bracket' | 'markdown';
-}
-
-export interface ContentPosition {
-  lineIndex: number;
-  contentShallowIndex: number;
-  contentDeepIndex?: number;
 }

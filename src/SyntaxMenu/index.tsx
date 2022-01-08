@@ -60,7 +60,7 @@ import {
   QuotationMenuProps,
   MenuCommonProps,
 } from './types';
-import { useContentPosition, useLineNodes } from './utils';
+import { useLineNodes } from './utils';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   nodes,
@@ -76,21 +76,20 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   ...common
 }) => {
   const lineNodes = useLineNodes(nodes);
-  const contentPosition = useContentPosition(lineNodes, common.state.cursorCoordinate);
 
   return (
     <MenuContainer {...containerProps}>
-      <SectionMenu {...section} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <ItemizationMenu {...itemization} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <BoldMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <ItalicMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <UnderlineMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <BracketMenu {...bracket} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <HashtagMenu {...hashtag} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <TaggedLinkMenu {...taggedLink} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <CodeMenu {...code} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <FormulaMenu {...formula} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <QuotationMenu {...quotation} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <SectionMenu {...section} {...common} nodes={lineNodes} />
+      <ItemizationMenu {...itemization} {...common} nodes={lineNodes} />
+      <BoldMenu {...common} nodes={lineNodes} />
+      <ItalicMenu {...common} nodes={lineNodes} />
+      <UnderlineMenu {...common} nodes={lineNodes} />
+      <BracketMenu {...bracket} {...common} nodes={lineNodes} />
+      <HashtagMenu {...hashtag} {...common} nodes={lineNodes} />
+      <TaggedLinkMenu {...taggedLink} {...common} nodes={lineNodes} />
+      <CodeMenu {...code} {...common} nodes={lineNodes} />
+      <FormulaMenu {...formula} {...common} nodes={lineNodes} />
+      <QuotationMenu {...quotation} {...common} nodes={lineNodes} />
     </MenuContainer>
   );
 };
