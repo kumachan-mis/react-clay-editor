@@ -688,15 +688,16 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": [" This is normal text"],
-      "expectedLinesAfterTyping": ["This is normal text."]
+      "expectedLinesAfterTyping": [".This is normal text"]
     },
     {
       "name": "itemization menu: undo selection",
-      "textLines": ["This is normal text", "This is also normal text"],
+      "textLines": ["This is normal text", " This is also normal text"],
       "inputMouse": [
         {
           "type": "mouseDown",
@@ -722,11 +723,12 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-anchor-arrow",
+        "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
-      "expectedLinesAfterMenu": [" This is normal text", " This is also normal text"],
-      "expectedLinesAfterTyping": [" This is normal text", "This is also normal text."]
+      "expectedLinesAfterMenu": [" This is normal text", "  This is also normal text"],
+      "expectedLinesAfterTyping": [" This is normal text", ". This is also normal text"]
     }
   ]
 }

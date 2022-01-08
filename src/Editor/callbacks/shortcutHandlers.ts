@@ -112,6 +112,17 @@ export function handleOnUndo(
 
   const action = editActionHistory[historyHead];
   switch (action.actionType) {
+    case 'substitute': {
+      const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+      const endIndex = startIndex + action.insertedText.length;
+      const newText = text.substring(0, startIndex) + action.deletedText + text.substring(endIndex);
+      const newState = resetTextSelectionAndSuggestion({
+        ...state,
+        cursorCoordinate: moveCursor(newText, action.coordinate, action.deletedText.length),
+        historyHead: historyHead - 1,
+      });
+      return [newText, newState];
+    }
     case 'insert': {
       const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
       const endIndex = startIndex + action.text.length;
@@ -149,9 +160,20 @@ export function handleOnRedo(
 
   const action = editActionHistory[historyHead + 1];
   switch (action.actionType) {
+    case 'substitute': {
+      const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+      const endIndex = startIndex + action.deletedText.length;
+      const newText = text.substring(0, startIndex) + action.insertedText + text.substring(endIndex);
+      const newState = resetTextSelectionAndSuggestion({
+        ...state,
+        cursorCoordinate: moveCursor(newText, action.coordinate, action.insertedText.length),
+        historyHead: historyHead + 1,
+      });
+      return [newText, newState];
+    }
     case 'insert': {
-      const insertIndex = cursorCoordinateToTextIndex(text, action.coordinate);
-      const newText = text.substring(0, insertIndex) + action.text + text.substring(insertIndex);
+      const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+      const newText = text.substring(0, startIndex) + action.text + text.substring(startIndex);
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: moveCursor(newText, action.coordinate, action.text.length),

@@ -28,12 +28,12 @@ export function insertText(
   if (!state.cursorCoordinate) return [text, state];
 
   if (!state.textSelection) {
+    if (!insertedText) return [text, state];
     const insertIndex = cursorCoordinateToTextIndex(text, state.cursorCoordinate);
     const newText = text.substring(0, insertIndex) + insertedText + text.substring(insertIndex);
     const cursorCoordinate = moveCursor(newText, state.cursorCoordinate, cursourMoveAmount);
-    const newState = addEditActions(state, [
-      { actionType: 'insert', coordinate: state.cursorCoordinate, text: insertedText },
-    ]);
+    const action: EditAction = { actionType: 'insert', coordinate: state.cursorCoordinate, text: insertedText };
+    const newState = addEditAction(state, action);
     return [newText, resetTextSelection({ ...newState, cursorCoordinate })];
   }
 
@@ -43,23 +43,17 @@ export function insertText(
   const deletedText = text.substring(startIndex, endIndex);
   const newText = text.substring(0, startIndex) + insertedText + text.substring(endIndex);
   const cursorCoordinate = moveCursor(newText, start, cursourMoveAmount);
-  const newState = addEditActions(state, [
-    { actionType: 'delete', coordinate: start, text: deletedText },
-    { actionType: 'insert', coordinate: start, text: insertedText },
-  ]);
+  let action: EditAction = { actionType: 'substitute', coordinate: start, deletedText, insertedText };
+  if (!insertedText) action = { actionType: 'delete', coordinate: start, text: deletedText };
+  const newState = addEditAction(state, action);
   return [newText, resetTextSelection({ ...newState, cursorCoordinate })];
 }
 
-function addEditActions(state: State, actions: EditAction[]): State {
-  const validActions = actions.filter((action) => action.text !== '');
-  if (validActions.length === 0) return state;
-
-  if (state.historyHead === -1) {
-    return { ...state, editActionHistory: validActions, historyHead: validActions.length - 1 };
-  }
+function addEditAction(state: State, action: EditAction): State {
+  if (state.historyHead === -1) return { ...state, editActionHistory: [action], historyHead: 0 };
 
   const { editActionHistory, historyHead } = state;
-  const concatedHistory = [...editActionHistory.slice(0, historyHead + 1), ...validActions];
+  const concatedHistory = [...editActionHistory.slice(0, historyHead + 1), action];
   const newHistory = concatedHistory.slice(
     Math.max(0, concatedHistory.length - EditorConstants.history.maxLength),
     concatedHistory.length

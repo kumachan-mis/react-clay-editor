@@ -24,8 +24,23 @@ export interface Props {
   style?: React.CSSProperties;
 }
 
-export interface EditAction {
-  actionType: 'insert' | 'delete';
+export type EditAction = SubstituteAction | InsertAction | DeleteAction;
+
+export interface SubstituteAction {
+  actionType: 'substitute';
+  coordinate: CursorCoordinate;
+  deletedText: string;
+  insertedText: string;
+}
+
+export interface InsertAction {
+  actionType: 'insert';
+  coordinate: CursorCoordinate;
+  text: string;
+}
+
+export interface DeleteAction {
+  actionType: 'delete';
   coordinate: CursorCoordinate;
   text: string;
 }

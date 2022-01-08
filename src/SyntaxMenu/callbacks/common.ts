@@ -46,16 +46,18 @@ export function handleOnLineMenuClick(
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
 
   const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
-  const insertedLines: string[] = [];
+  let [newText, newState] = [text, state];
 
   function updateForButtonOffOrBoth(): void {
     for (let lineIndex = firstLineIndex; lineIndex <= lastLineIndex; lineIndex++) {
-      if (nodes[lineIndex].type !== 'normalLine') {
-        insertedLines.push(lines[lineIndex]);
-        continue;
-      }
+      if (nodes[lineIndex].type !== 'normalLine') continue;
 
-      insertedLines.push(meta + lines[lineIndex]);
+      const metaCursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
+      [newText, newState] = insertText(
+        newText,
+        { ...newState, cursorCoordinate: metaCursorCoordinate, textSelection: undefined },
+        meta
+      );
       if (newCursorCoordinate.lineIndex === lineIndex) {
         newCursorCoordinate.charIndex += meta.length;
       }
@@ -75,7 +77,17 @@ export function handleOnLineMenuClick(
         const newCharIndex = charIndex - groups.indent.length - meta.length;
         return newCharIndex >= 0 ? newCharIndex : 0;
       };
-      insertedLines.push(groups.content);
+
+      const metaCursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
+      const metaTextSelection: TextSelection = {
+        fixed: { lineIndex, charIndex: 0 },
+        free: { lineIndex, charIndex: groups.indent.length + meta.length },
+      };
+      [newText, newState] = insertText(
+        newText,
+        { ...newState, cursorCoordinate: metaCursorCoordinate, textSelection: metaTextSelection },
+        ''
+      );
       if (newCursorCoordinate.lineIndex === lineIndex) {
         newCursorCoordinate.charIndex = moveCharIndexByMetaDeletion(newCursorCoordinate.charIndex);
       }
@@ -91,7 +103,12 @@ export function handleOnLineMenuClick(
   function updateForIndent(): void {
     for (let lineIndex = firstLineIndex; lineIndex <= lastLineIndex; lineIndex++) {
       const heading = nodes[lineIndex].type === 'normalLine' ? meta : ' ';
-      insertedLines.push(heading + lines[lineIndex]);
+      const metaCursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
+      [newText, newState] = insertText(
+        newText,
+        { ...newState, cursorCoordinate: metaCursorCoordinate, textSelection: undefined },
+        heading
+      );
       if (newCursorCoordinate.lineIndex === lineIndex) {
         newCursorCoordinate.charIndex += heading.length;
       }
@@ -106,10 +123,7 @@ export function handleOnLineMenuClick(
 
   function updateForOutdent(): void {
     for (let lineIndex = firstLineIndex; lineIndex <= lastLineIndex; lineIndex++) {
-      if (nodes[lineIndex].type === 'normalLine') {
-        insertedLines.push(lines[lineIndex]);
-        continue;
-      }
+      if (nodes[lineIndex].type === 'normalLine') continue;
 
       const groups = lines[lineIndex].match(regex)?.groups as Record<string, string>;
       const deletionLength = groups.indent.length === 0 ? meta.length : 1;
@@ -117,7 +131,16 @@ export function handleOnLineMenuClick(
         const newCharIndex = charIndex - deletionLength;
         return newCharIndex >= 0 ? newCharIndex : 0;
       };
-      insertedLines.push(lines[lineIndex].slice(deletionLength));
+      const metaCursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
+      const metaTextSelection: TextSelection = {
+        fixed: { lineIndex, charIndex: 0 },
+        free: { lineIndex, charIndex: deletionLength },
+      };
+      [newText, newState] = insertText(
+        newText,
+        { ...newState, cursorCoordinate: metaCursorCoordinate, textSelection: metaTextSelection },
+        ''
+      );
       if (newCursorCoordinate.lineIndex === lineIndex) {
         newCursorCoordinate.charIndex = moveCharIndexByMetaDeletion(newCursorCoordinate.charIndex);
       }
@@ -146,11 +169,6 @@ export function handleOnLineMenuClick(
       break;
   }
 
-  const rangeSelection = {
-    fixed: { lineIndex: firstLineIndex, charIndex: 0 },
-    free: { lineIndex: lastLineIndex, charIndex: lines[lastLineIndex].length },
-  };
-  const [newText, newState] = insertText(text, { ...state, textSelection: rangeSelection }, insertedLines.join('\n'));
   return [
     newText,
     { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },

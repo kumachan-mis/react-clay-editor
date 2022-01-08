@@ -611,11 +611,11 @@
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": ["> This is normal text"],
-      "expectedLinesAfterTyping": ["This is normal text."]
+      "expectedLinesAfterTyping": [".This is normal text"]
     },
     {
       "name": "quotation menu: undo selection",
-      "textLines": ["This is normal text", "This is also normal text"],
+      "textLines": ["> This is normal text", "  > This is also normal text"],
       "inputMouse": [
         {
           "type": "mouseDown",
@@ -644,8 +644,8 @@
         "menuButton": "dropdown-anchor-button"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
-      "expectedLinesAfterMenu": ["> This is normal text", "> This is also normal text"],
-      "expectedLinesAfterTyping": ["> This is normal text", "This is also normal text."]
+      "expectedLinesAfterMenu": ["This is normal text", "This is also normal text"],
+      "expectedLinesAfterTyping": ["This is normal text", "  > .This is also normal text"]
     }
   ]
 }
