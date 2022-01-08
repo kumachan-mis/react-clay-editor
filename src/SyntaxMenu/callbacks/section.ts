@@ -3,10 +3,10 @@ import { State } from '../../Editor/types';
 import { copySelection } from '../../Selection/utils';
 import { parserConstants } from '../../parser/constants';
 import { DecorationNode, LineNode } from '../../parser/types';
+import { undefinedIfZeroSelection } from '../callbacksCommon/utils';
 import { SectionMenuProps } from '../types';
 
 import { MenuHandler } from './types';
-import { undefinedIfZeroSelection } from './utils';
 
 export function sectionMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
