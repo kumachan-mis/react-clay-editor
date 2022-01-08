@@ -1,8 +1,8 @@
 import { State } from '../../Editor/types';
 import { LineNode } from '../../parser/types';
+import { handleOnLineMenuClick, lineMenuSwitch } from '../callbacksCommon/common';
 import { ItemizationMenuProps } from '../types';
 
-import { handleOnLineMenuClick, lineMenuSwitch } from './common';
 import { MenuHandler } from './types';
 
 export function itemizationMenuSwitch(

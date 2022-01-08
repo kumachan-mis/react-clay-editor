@@ -5,9 +5,9 @@ import { TextSelection } from '../../Selection/types';
 import { copySelection } from '../../Selection/utils';
 import { parserConstants } from '../../parser/constants';
 import { LineNode } from '../../parser/types';
+import { MenuHandler } from '../callbacks/types';
 import { ItemizationMenuProps, QuotationMenuProps } from '../types';
 
-import { MenuHandler } from './types';
 import { undefinedIfZeroSelection } from './utils';
 
 export function lineMenuSwitch(
