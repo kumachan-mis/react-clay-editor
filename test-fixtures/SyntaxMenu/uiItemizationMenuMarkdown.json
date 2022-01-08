@@ -726,7 +726,7 @@
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": ["- This is normal text", "- This is also normal text"],
-      "expectedLinesAfterTyping": ["This is normal text", "This is also normal text."]
+      "expectedLinesAfterTyping": ["- This is normal text", "This is also normal text."]
     }
   ]
 }
