@@ -81,18 +81,20 @@ export function handleOnMouseUp(
   element: HTMLElement | null
 ): [string, State] {
   if (!state.cursorCoordinate || state.selectionMouse === 'deactive' || !element) return [text, state];
+
+  const selectionMouse = 'deactive';
   if (!['active-in', 'active-up', 'active-down'].includes(state.selectionMouse)) {
-    return [text, { ...state, selectionMouse: 'deactive' }];
+    return [text, { ...state, selectionMouse }];
   }
 
   const { cursorCoordinate, textSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
   const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
+  if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
+    return [text, { ...state, selectionMouse }];
+  }
   const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate);
-  return [
-    text,
-    { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse: 'deactive' },
-  ];
+  return [text, { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse }];
 }
 
 export function handleOnClick(
