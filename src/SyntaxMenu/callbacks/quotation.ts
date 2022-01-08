@@ -1,6 +1,6 @@
 import { State } from '../../Editor/types';
 import { LineNode } from '../../parser/types';
-import { handleOnLineMenuClick, lineMenuSwitch } from '../callbacksCommon/common';
+import { handleOnLineMenuClick, lineMenuSwitch } from '../callbacksCommon/line';
 import { QuotationMenuProps } from '../types';
 
 import { MenuHandler } from './types';
