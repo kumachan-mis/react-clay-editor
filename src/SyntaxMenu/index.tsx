@@ -395,7 +395,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
         }}
         data-testid={createTestId(QuotationMenuConstants.testId)}
       >
-        <ItemizationIcon />
+        <QuotationIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuItem
