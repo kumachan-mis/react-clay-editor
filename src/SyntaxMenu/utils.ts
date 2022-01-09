@@ -3,14 +3,9 @@ import React from 'react';
 import { CursorCoordinate } from '../Cursor/types';
 import { TextSelection } from '../Selection/types';
 import { BlockNode, ContentNode, LineNode } from '../parser/types';
+import { isPureLineNode } from '../parser/utils';
 
-import {
-  ContentPosition,
-  ContentPositionBetween,
-  ContentPositionInner,
-  ContentPositionLeftEnd,
-  ContentPositionRightEnd,
-} from './types';
+import { ContentPosition, ContentPositionNested } from './types';
 
 export function useLineNodes(nodes: (LineNode | BlockNode)[]): LineNode[] {
   const lineNodes = React.useMemo(() => {
@@ -38,9 +33,9 @@ export function useContentPosition(
   textSelection: TextSelection | undefined
 ): ContentPosition | undefined {
   const contentPosition = React.useMemo(() => {
+    if (!cursorCoordinate) return undefined;
     if (textSelection) return getContentPositionFromTextSelection(lineNodes, textSelection);
-    if (cursorCoordinate) return getContentPositionFromCursorCoordinate(lineNodes, cursorCoordinate);
-    return undefined;
+    return getContentPositionFromCursorCoordinate(lineNodes, cursorCoordinate);
   }, [lineNodes, cursorCoordinate, textSelection]);
   return contentPosition;
 }
@@ -52,9 +47,7 @@ function getContentPositionFromTextSelection(
   const { fixed, free } = textSelection;
   if (fixed.lineIndex !== free.lineIndex) return undefined;
   const lineNode = lineNodes[fixed.lineIndex];
-  if (lineNode.type !== 'itemization' && lineNode.type !== 'quotation' && lineNode.type !== 'normalLine') {
-    return undefined;
-  }
+  if (!isPureLineNode(lineNode)) return undefined;
   return recursiveGetContentPositionFromTextSelection(lineNode.children, textSelection);
 }
 
@@ -63,8 +56,8 @@ function recursiveGetContentPositionFromTextSelection(
   textSelection: TextSelection
 ): ContentPosition | undefined {
   const { fixed, free } = textSelection;
-  const fixedContentPosition = searchContentPosition(contentNodes, fixed.charIndex);
-  if (!fixedContentPosition) return undefined;
+  const fixedContentPosition = searchContentPosition(fixed, contentNodes);
+  if (!fixedContentPosition || fixedContentPosition.type === 'empty') return undefined;
   if (free.charIndex === fixed.charIndex) return fixedContentPosition;
 
   let contentIndex = fixedContentPosition.contentIndexes[0];
@@ -74,13 +67,15 @@ function recursiveGetContentPositionFromTextSelection(
   const contentNode = contentNodes[contentIndex];
 
   if (free.charIndex < contentNode.range[0] && free.charIndex > contentNode.range[1] + 1) return undefined;
-  if (contentNode.type !== 'decoration') return { type: 'inner', contentIndexes: [contentIndex] };
+  if (contentNode.type !== 'decoration') {
+    return { type: 'inner', lineIndex: fixed.lineIndex, contentIndexes: [contentIndex] };
+  }
 
   const childPosition = recursiveGetContentPositionFromTextSelection(contentNode.children, textSelection);
-  if (!childPosition || childPosition.type === 'nested') {
-    return { type: 'inner', contentIndexes: [contentIndex] };
+  if (!childPosition || childPosition.type === 'nested' || childPosition.type === 'empty') {
+    return { type: 'inner', lineIndex: fixed.lineIndex, contentIndexes: [contentIndex] };
   }
-  return { type: 'nested', contentIndexes: [contentIndex], childPosition };
+  return { type: 'nested', lineIndex: fixed.lineIndex, contentIndexes: [contentIndex], childPosition };
 }
 
 function getContentPositionFromCursorCoordinate(
@@ -88,9 +83,7 @@ function getContentPositionFromCursorCoordinate(
   cursorCoordinate: CursorCoordinate
 ): ContentPosition | undefined {
   const lineNode = lineNodes[cursorCoordinate.lineIndex];
-  if (lineNode.type !== 'itemization' && lineNode.type !== 'quotation' && lineNode.type !== 'normalLine') {
-    return undefined;
-  }
+  if (!isPureLineNode(lineNode)) return undefined;
   return recursiveGetContentPositionFromCursorCoordinate(lineNode.children, cursorCoordinate);
 }
 
@@ -98,36 +91,42 @@ function recursiveGetContentPositionFromCursorCoordinate(
   contentNodes: ContentNode[],
   cursorCoordinate: CursorCoordinate
 ): ContentPosition | undefined {
-  const contentPosition = searchContentPosition(contentNodes, cursorCoordinate.charIndex);
+  const contentPosition = searchContentPosition(cursorCoordinate, contentNodes);
   if (!contentPosition || contentPosition.type !== 'inner') return contentPosition;
   const contentNode = contentNodes[contentPosition.contentIndexes[0]];
   if (contentNode.type !== 'decoration') return contentPosition;
   const childPosition = recursiveGetContentPositionFromCursorCoordinate(contentNode.children, cursorCoordinate);
-  if (!childPosition || childPosition.type === 'nested') return contentPosition;
-  return { type: 'nested', contentIndexes: [...contentPosition.contentIndexes], childPosition };
+  if (!childPosition || childPosition.type === 'nested' || childPosition.type === 'empty') return contentPosition;
+  return {
+    type: 'nested',
+    lineIndex: contentPosition.lineIndex,
+    contentIndexes: [...contentPosition.contentIndexes],
+    childPosition,
+  };
 }
 
 function searchContentPosition(
-  sortedRangeObjs: { range: [number, number] }[],
-  position: number
-): ContentPositionLeftEnd | ContentPositionRightEnd | ContentPositionBetween | ContentPositionInner | undefined {
-  if (sortedRangeObjs.length === 0) return undefined;
+  cursorCoordinate: CursorCoordinate,
+  lineRangeObjs: ContentNode[]
+): Exclude<ContentPosition, ContentPositionNested> | undefined {
+  if (lineRangeObjs.length === 0) return { type: 'empty' };
 
-  const rangeMin = sortedRangeObjs[0].range[0];
-  const rangeMax = sortedRangeObjs[sortedRangeObjs.length - 1].range[1];
-  if (position < rangeMin || position > rangeMax + 1) return undefined;
+  const { charIndex, lineIndex } = cursorCoordinate;
+  const rangeMin = lineRangeObjs[0].range[0];
+  const rangeMax = lineRangeObjs[lineRangeObjs.length - 1].range[1];
+  if (charIndex < rangeMin || charIndex > rangeMax + 1) return undefined;
 
-  if (position === rangeMin) return { type: 'leftend', contentIndexes: [0] };
-  if (position === rangeMax + 1) return { type: 'rightend', contentIndexes: [sortedRangeObjs.length - 1] };
+  if (charIndex === rangeMin) return { type: 'leftend', lineIndex, contentIndexes: [0] };
+  if (charIndex === rangeMax + 1) return { type: 'rightend', lineIndex, contentIndexes: [lineRangeObjs.length - 1] };
 
   const found = (() => {
-    let [left, right] = [0, sortedRangeObjs.length - 1];
+    let [left, right] = [0, lineRangeObjs.length - 1];
     while (left < right) {
       const mid = Math.floor((left + right) / 2);
-      const rangeObj = sortedRangeObjs[mid];
-      if (position < rangeObj.range[0]) {
+      const rangeObj = lineRangeObjs[mid];
+      if (charIndex < rangeObj.range[0]) {
         right = mid - 1;
-      } else if (rangeObj.range[1] < position) {
+      } else if (rangeObj.range[1] < charIndex) {
         left = mid + 1;
       } else {
         return mid;
@@ -136,7 +135,7 @@ function searchContentPosition(
     return left;
   })();
 
-  const rangeObj = sortedRangeObjs[found];
-  if (position === rangeObj.range[0]) return { type: 'between', contentIndexes: [found - 1, found] };
-  return { type: 'inner', contentIndexes: [found] };
+  const rangeObj = lineRangeObjs[found];
+  if (charIndex === rangeObj.range[0]) return { type: 'between', lineIndex, contentIndexes: [found - 1, found] };
+  return { type: 'inner', lineIndex, contentIndexes: [found] };
 }

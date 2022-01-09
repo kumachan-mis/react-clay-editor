@@ -1,7 +1,6 @@
 import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
 import { copySelection } from '../../Selection/utils';
-import { parserConstants } from '../../parser/constants';
 import { DecorationNode, LineNode } from '../../parser/types';
 import { undefinedIfZeroSelection } from '../callbacksCommon/utils';
 import { SectionMenuProps } from '../types';
@@ -57,8 +56,11 @@ export function handleOnSectionItemClick(
 ): [string, State] {
   const { cursorCoordinate, textSelection } = state;
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
+  const lineNode = nodes[cursorCoordinate.lineIndex];
+  if (lineNode.type !== 'normalLine') return [text, state];
+  const decorationNode = lineNode.children[0];
 
-  const { facingMeta, sectionName, trailingMeta, regex } = getSectionMeta(props, menuItem);
+  const { facingMeta, sectionName, trailingMeta } = getSectionMeta(props, menuItem);
   const line = text.split('\n')[cursorCoordinate.lineIndex];
   if (!line) {
     const insertedText = facingMeta + sectionName + trailingMeta;
@@ -75,14 +77,17 @@ export function handleOnSectionItemClick(
 
   let body = line;
   if (menuSwitch !== 'off') {
-    const groups = line.match(regex)?.groups as Record<string, string>;
+    if (decorationNode.type !== 'decoration') return [text, state];
+
+    const { facingMeta, trailingMeta } = decorationNode;
     const moveCharIndexByMetaDeletion = (charIndex: number): number => {
-      const newCharIndex = charIndex - groups.facingMeta.length;
+      const newCharIndex = charIndex - facingMeta.length;
+      const bodyLength = line.length - facingMeta.length - trailingMeta.length;
       if (newCharIndex < 0) return 0;
-      if (newCharIndex > groups.body.length) return groups.body.length;
+      if (newCharIndex > bodyLength) return bodyLength;
       return newCharIndex;
     };
-    body = groups.body;
+    body = line.slice(facingMeta.length, line.length - trailingMeta.length);
     newCursorCoordinate.charIndex = moveCharIndexByMetaDeletion(newCursorCoordinate.charIndex);
     if (newTextSelection) {
       newTextSelection.fixed.charIndex = moveCharIndexByMetaDeletion(newTextSelection.fixed.charIndex);
@@ -119,28 +124,26 @@ export function handleOnSectionItemClick(
 function getSectionMeta(
   props: MenuHandler<SectionMenuProps>,
   menuItem: 'normal' | 'larger' | 'largest'
-): { facingMeta: string; sectionName: string; trailingMeta: string; regex: RegExp } {
+): { facingMeta: string; sectionName: string; trailingMeta: string } {
   if (!props.syntax || props.syntax === 'bracket') {
     // bracket syntax
-    const regex = parserConstants.bracketSyntax.heading;
     switch (menuItem) {
       case 'normal':
-        return { facingMeta: '[* ', sectionName: props.normalLabel, trailingMeta: ']', regex };
+        return { facingMeta: '[* ', sectionName: props.normalLabel, trailingMeta: ']' };
       case 'larger':
-        return { facingMeta: '[** ', sectionName: props.largerLabel, trailingMeta: ']', regex };
+        return { facingMeta: '[** ', sectionName: props.largerLabel, trailingMeta: ']' };
       case 'largest':
-        return { facingMeta: '[*** ', sectionName: props.largestLabel, trailingMeta: ']', regex };
+        return { facingMeta: '[*** ', sectionName: props.largestLabel, trailingMeta: ']' };
     }
   } else {
     // markdown syntax
-    const regex = parserConstants.markdownSyntax.heading;
     switch (menuItem) {
       case 'normal':
-        return { facingMeta: '### ', sectionName: props.normalLabel, trailingMeta: '', regex };
+        return { facingMeta: '### ', sectionName: props.normalLabel, trailingMeta: '' };
       case 'larger':
-        return { facingMeta: '## ', sectionName: props.largerLabel, trailingMeta: '', regex };
+        return { facingMeta: '## ', sectionName: props.largerLabel, trailingMeta: '' };
       case 'largest':
-        return { facingMeta: '# ', sectionName: props.largestLabel, trailingMeta: '', regex };
+        return { facingMeta: '# ', sectionName: props.largestLabel, trailingMeta: '' };
     }
   }
 }

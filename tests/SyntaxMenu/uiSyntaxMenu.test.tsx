@@ -56,7 +56,7 @@ describe('UI of SyntaxMenu (bracket syntax)', () => {
   for (const fixtureName of [
     'uiSectionMenuBracket',
     'uiItemizationMenuBracket',
-    // 'uiDecorationMenuBracket',
+    'uiDecorationMenuBracket',
     // 'uiLinkMenuCommon',
     // 'uiCodeMenuCommon',
     // 'uiFormulaMenuCommon',

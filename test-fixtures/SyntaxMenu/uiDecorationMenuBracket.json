@@ -85,7 +85,7 @@
         }
       ],
       "inputMenu": {
-        "name": "italic-menu",
+        "name": "underline-menu",
         "menuButton": "icon-button"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -154,14 +154,14 @@
           "type": "mouseDown",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 2
+            "charIndex": 20
           }
         },
         {
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 2
+            "charIndex": 20
           }
         }
       ],

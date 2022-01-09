@@ -86,7 +86,7 @@
         }
       ],
       "inputMenu": {
-        "name": "italic-menu",
+        "name": "underline-menu",
         "menuButton": "icon-button"
       },
       "inputTyping": ["React Realtime Markup Editor"],

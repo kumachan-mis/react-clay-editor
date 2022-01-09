@@ -38,14 +38,9 @@ export interface BlockFormulaNode {
   trailingMeta?: BlockFormulaMetaNode;
 }
 
-export type LineNode =
-  | BlockCodeMetaNode
-  | BlockCodeLineNode
-  | BlockFormulaMetaNode
-  | BlockFormulaLineNode
-  | QuotationNode
-  | ItemizationNode
-  | NormalLineNode;
+export type LineNode = BlockLineNode | PureLineNode;
+
+export type BlockLineNode = BlockCodeMetaNode | BlockCodeLineNode | BlockFormulaMetaNode | BlockFormulaLineNode;
 
 export interface BlockCodeMetaNode {
   type: 'blockCodeMeta';
@@ -75,6 +70,8 @@ export interface BlockFormulaLineNode {
   formulaLine: string;
 }
 
+export type PureLineNode = QuotationNode | ItemizationNode | NormalLineNode;
+
 export interface QuotationNode {
   type: 'quotation';
   lineIndex: number;
@@ -100,15 +97,13 @@ export interface NormalLineNode {
   children: ContentNode[];
 }
 
-export type ContentNode =
-  | InlineCodeNode
-  | DisplayFormulaNode
-  | InlineFormulaNode
-  | DecorationNode
-  | TaggedLinkNode
-  | BracketLinkNode
-  | HashtagNode
-  | NormalNode;
+export type ContentNode = ContentCodeNode | ContentFormulaNode | DecorationNode | LinkNode | NormalNode;
+
+export type ContentCodeNode = InlineCodeNode;
+
+export type ContentFormulaNode = DisplayFormulaNode | InlineFormulaNode;
+
+export type LinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode;
 
 export interface InlineCodeNode {
   type: 'inlineCode';

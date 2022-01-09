@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { createTestId } from '../common/utils';
 
+import { decorationMenuSwitch, handleOnDecorationClick } from './callbacks/decoration';
 import {
   itemizationMenuSwitch,
   handleOnItemizationButtonClick,
@@ -203,40 +204,76 @@ const BoldMenu: React.FC<BoldMenuProps & MenuCommonProps> = ({
   syntax,
   text,
   nodes,
+  contentPosition,
   state,
   setTextAndState,
   disabled,
-}) => (
-  <IconButtonMenu disabled={disabled} data-testid={createTestId(BoldMenuConstants.testId)}>
-    <BoldIcon />
-  </IconButtonMenu>
-);
+}) => {
+  const props: MenuHandler<BoldMenuProps> = { syntax };
+  const menuSwitch = decorationMenuSwitch(syntax, nodes, contentPosition);
+
+  return (
+    <IconButtonMenu
+      disabled={disabled || menuSwitch.bold === 'disabled'}
+      onClick={() =>
+        setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'bold', menuSwitch))
+      }
+      data-testid={createTestId(BoldMenuConstants.testId)}
+    >
+      <BoldIcon />
+    </IconButtonMenu>
+  );
+};
 
 const ItalicMenu: React.FC<ItalicMenuProps & MenuCommonProps> = ({
   syntax,
   text,
   nodes,
+  contentPosition,
   state,
   setTextAndState,
   disabled,
-}) => (
-  <IconButtonMenu disabled={disabled} data-testid={createTestId(ItalicMenuConstants.testId)}>
-    <ItalicIcon />
-  </IconButtonMenu>
-);
+}) => {
+  const props: MenuHandler<ItalicMenuProps> = { syntax };
+  const menuSwitch = decorationMenuSwitch(syntax, nodes, contentPosition);
+
+  return (
+    <IconButtonMenu
+      disabled={disabled || menuSwitch.italic === 'disabled'}
+      onClick={() =>
+        setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'italic', menuSwitch))
+      }
+      data-testid={createTestId(ItalicMenuConstants.testId)}
+    >
+      <ItalicIcon />
+    </IconButtonMenu>
+  );
+};
 
 const UnderlineMenu: React.FC<UnderlineMenuProps & MenuCommonProps> = ({
   syntax,
   text,
   nodes,
+  contentPosition,
   state,
   setTextAndState,
   disabled,
-}) => (
-  <IconButtonMenu disabled={disabled} data-testid={createTestId(UnderlineMenuConstants.testId)}>
-    <UnderlineIcon />
-  </IconButtonMenu>
-);
+}) => {
+  const props: MenuHandler<UnderlineMenuProps> = { syntax };
+  const menuSwitch = decorationMenuSwitch(syntax, nodes, contentPosition);
+
+  return (
+    <IconButtonMenu
+      disabled={disabled || menuSwitch.underline === 'disabled'}
+      onClick={() =>
+        setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'underline', menuSwitch))
+      }
+      data-testid={createTestId(UnderlineMenuConstants.testId)}
+    >
+      <UnderlineIcon />
+    </IconButtonMenu>
+  );
+};
 
 const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
   suggestions,
