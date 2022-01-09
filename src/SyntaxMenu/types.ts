@@ -90,6 +90,40 @@ export interface MenuCommonProps {
   text: string;
   state: State;
   nodes: LineNode[];
+  contentPosition: ContentPosition | undefined;
   setTextAndState: (text: string, state: State) => void;
   syntax?: 'bracket' | 'markdown';
+}
+
+export type ContentPosition =
+  | ContentPositionLeftEnd
+  | ContentPositionRightEnd
+  | ContentPositionBetween
+  | ContentPositionInner
+  | ContentPositionNested;
+
+export interface ContentPositionLeftEnd {
+  type: 'leftend';
+  contentIndexes: [number];
+}
+
+export interface ContentPositionRightEnd {
+  type: 'rightend';
+  contentIndexes: [number];
+}
+
+export interface ContentPositionBetween {
+  type: 'between';
+  contentIndexes: [number, number];
+}
+
+export interface ContentPositionInner {
+  type: 'inner';
+  contentIndexes: [number];
+}
+
+export interface ContentPositionNested {
+  type: 'nested';
+  contentIndexes: [number];
+  childPosition: ContentPositionLeftEnd | ContentPositionRightEnd | ContentPositionBetween | ContentPositionInner;
 }
