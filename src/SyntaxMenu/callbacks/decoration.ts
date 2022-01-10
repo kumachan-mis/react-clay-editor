@@ -1,10 +1,13 @@
-import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
-import { TextSelection } from '../../Selection/types';
-import { copySelection, selectionToRange } from '../../Selection/utils';
 import { ItemizationNode, LineNode, NormalLineNode, QuotationNode } from '../../parser/types';
 import { isPureLineNode } from '../../parser/utils';
-import { isEndPoint, undefinedIfZeroSelection } from '../callbacksCommon/utils';
+import {
+  createContentByTextSelection,
+  insertContentAtCursor,
+  splitContentByTextSelection,
+  substituteContentAtCursor,
+} from '../callbacksCommon/content';
+import { isEndPoint } from '../callbacksCommon/utils';
 import { BoldMenuProps, ContentPosition, ContentPositionEmpty, ItalicMenuProps, UnderlineMenuProps } from '../types';
 
 import { MenuHandler } from './types';
@@ -105,208 +108,109 @@ function handleOnBracketDecorationItemClick(
   menuItem: 'bold' | 'italic' | 'underline',
   menuSwitch: 'on' | 'off'
 ): [string, State] {
-  if (!state.cursorCoordinate) return [text, state];
   const meta = { bold: '*', italic: '/', underline: '_' }[menuItem];
 
-  if (contentPosition.type === 'empty') {
-    const insertedText = `[${meta} ${menuItem}]`;
-    const [newText, newState] = insertText(text, state, insertedText, insertedText.length - 1);
-    if (!newState.cursorCoordinate) return [newText, { ...newState, textSelection: undefined }];
-
-    const fixed = { ...newState.cursorCoordinate, charIndex: newState.cursorCoordinate.charIndex - menuItem.length };
-    const free = newState.cursorCoordinate;
-    return [newText, { ...newState, textSelection: { fixed, free } }];
-  }
-
-  const lineNode = nodes[contentPosition.lineIndex];
-  if (!isPureLineNode(lineNode)) return [text, state];
-
-  const { cursorCoordinate, textSelection } = state;
-  const line = text.split('\n')[contentPosition.lineIndex];
-  let [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
-  let [newText, newState] = [text, state];
-
-  function updateForItemOffWithoutSelection(
+  function handleItemOffWithoutSelection(
     lineNode: NormalLineNode | ItemizationNode | QuotationNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): void {
+  ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (isEndPoint(contentPosition) || contentNode.type === 'normal') {
-      const insertedText = `[${meta} ${menuItem}]`;
-      [newText, newState] = insertText(newText, newState, insertedText, insertedText.length - 1);
-      if (!newState.cursorCoordinate) return;
-      newCursorCoordinate = newState.cursorCoordinate;
-      const free = { ...newCursorCoordinate, charIndex: newCursorCoordinate.charIndex - menuItem.length };
-      const fixed = newState.cursorCoordinate;
-      newTextSelection = { fixed, free };
-    } else if (contentNode.type === 'decoration') {
-      const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
-      const insertIndex = start + contentNode.facingMeta.length - 1;
-      const insertedText = line.slice(start, insertIndex) + meta + line.slice(insertIndex, end);
-      const contentSelection: TextSelection = {
-        fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: start },
-        free: { lineIndex: cursorCoordinate.lineIndex, charIndex: end },
-      };
-      [newText, newState] = insertText(newText, { ...newState, textSelection: contentSelection }, insertedText);
-      if (newCursorCoordinate.charIndex > insertIndex) newCursorCoordinate.charIndex += meta.length;
+      const config = { facingMeta: `[${meta} `, content: menuItem, trailingMeta: ']' };
+      return insertContentAtCursor(text, nodes, state, config);
     }
+
+    if (contentNode.type === 'decoration') {
+      const newMeta = contentNode.facingMeta.substring(1, contentNode.facingMeta.length - 1) + meta;
+      const config = { facingMeta: `[${newMeta} `, trailingMeta: ']' };
+      return substituteContentAtCursor(text, nodes, contentPosition, state, config);
+    }
+
+    return [text, state];
   }
 
-  function updateForItemOnWithoutSelection(
+  function handleItemOnWithoutSelection(
     lineNode: NormalLineNode | ItemizationNode | QuotationNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): void {
+  ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (contentNode.type !== 'decoration') return;
+    if (contentNode.type !== 'decoration') return [text, state];
 
     let decoCount = 0;
     for (const decoItem of ['bold', 'italic', 'underline'] as const) {
       if (contentNode.decoration[decoItem]) decoCount++;
     }
 
-    const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
-    const contentSelection: TextSelection = {
-      fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: start },
-      free: { lineIndex: cursorCoordinate.lineIndex, charIndex: end },
-    };
-    const { facingMeta, trailingMeta } = contentNode;
-    if (decoCount <= 1) {
-      const moveCharIndexByMetaDeletion = (charIndex: number): number => {
-        const newCharIndex = charIndex - facingMeta.length;
-        const bodyLength = line.length - facingMeta.length - trailingMeta.length;
-        if (newCharIndex < 0) return 0;
-        if (newCharIndex > bodyLength) return bodyLength;
-        return newCharIndex;
-      };
-      const insertedText = line.slice(start + facingMeta.length, end - trailingMeta.length);
-      [newText, newState] = insertText(newText, { ...newState, textSelection: contentSelection }, insertedText);
-      newCursorCoordinate.charIndex = moveCharIndexByMetaDeletion(newCursorCoordinate.charIndex);
-    } else {
-      const newFacingMeta = facingMeta.replaceAll(meta, '');
-      const contentText = line.slice(start + facingMeta.length, end - trailingMeta.length);
-      const insertedText = newFacingMeta + contentText + trailingMeta;
-      [newText, newState] = insertText(newText, { ...newState, textSelection: contentSelection }, insertedText);
-      if (newCursorCoordinate.charIndex > start + facingMeta.length) {
-        newCursorCoordinate.charIndex -= facingMeta.length - newFacingMeta.length;
-      } else {
-        const countCharInString = (s: string, c: string): number => s.split(c).length - 1;
-        const facingMetaFragment = line.slice(start, newCursorCoordinate.charIndex);
-        newCursorCoordinate.charIndex -= countCharInString(facingMetaFragment, meta);
-      }
+    const config = { facingMeta: '', trailingMeta: '' };
+    if (decoCount > 1) {
+      config.facingMeta = contentNode.facingMeta.replaceAll(meta, '');
+      config.trailingMeta = contentNode.trailingMeta;
     }
+    return substituteContentAtCursor(text, nodes, contentPosition, state, config);
   }
 
-  function updateForItemOffWithSelection(
+  function handleItemOffWithSelection(
     lineNode: NormalLineNode | ItemizationNode | QuotationNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
-    textSelection: TextSelection
-  ): void {
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+  ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    const { start: selectionStart, end: selectionEnd } = selectionToRange(textSelection);
     if (contentNode.type === 'normal') {
-      const contentText = line.slice(selectionStart.charIndex, selectionEnd.charIndex);
-      const insertedText = `[${meta} ${contentText}]`;
-      [newText, newState] = insertText(newText, newState, insertedText, insertedText.length - 1);
-      if (!newState.cursorCoordinate) return;
-      newCursorCoordinate = newState.cursorCoordinate;
-      const free = { ...newCursorCoordinate, charIndex: newCursorCoordinate.charIndex - contentText.length };
-      const fixed = newState.cursorCoordinate;
-      newTextSelection = { fixed, free };
-      return;
+      const config = { facingMeta: `[${meta} `, trailingMeta: ']' };
+      return createContentByTextSelection(text, nodes, state, config);
     }
 
-    if (contentNode.type !== 'decoration') return;
-
-    const { facingMeta, trailingMeta } = contentNode;
-    const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
-    const contentSelection: TextSelection = {
-      fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: start },
-      free: { lineIndex: cursorCoordinate.lineIndex, charIndex: end },
-    };
-
-    let insertedText = '';
-    let [coordinateMoveAmount, fixedMoveAmount, freeMoveAmount] = [0, 0, 0];
-    if (selectionStart.charIndex > start + facingMeta.length) {
-      insertedText += facingMeta + line.slice(start + facingMeta.length, selectionStart.charIndex) + trailingMeta;
-      const charIndexMoveAmount = (charIndex: number): number => {
-        let amount = 0;
-        if (charIndex > start + facingMeta.length) amount += facingMeta.length;
-        if (charIndex >= selectionStart.charIndex) amount += trailingMeta.length;
-        return amount;
-      };
-      coordinateMoveAmount += charIndexMoveAmount(newCursorCoordinate.charIndex);
-      if (newTextSelection) {
-        fixedMoveAmount += charIndexMoveAmount(newTextSelection.fixed.charIndex);
-        freeMoveAmount += charIndexMoveAmount(newTextSelection.free.charIndex);
-      }
+    if (contentNode.type === 'decoration') {
+      const newMeta = contentNode.facingMeta.substring(1, contentNode.facingMeta.length - 1) + meta;
+      const config = { facingMeta: `[${newMeta} `, trailingMeta: ']' };
+      return splitContentByTextSelection(text, nodes, contentPosition, state, config);
     }
 
-    {
-      const newFacingMeta = facingMeta.slice(0, facingMeta.length - 1) + meta + facingMeta[facingMeta.length - 1];
-      const midContentStart = Math.max(selectionStart.charIndex, start + facingMeta.length);
-      const midContentEnd = Math.min(selectionEnd.charIndex, end - trailingMeta.length);
-      insertedText += newFacingMeta + line.slice(midContentStart, midContentEnd) + trailingMeta;
-      const charIndexMoveAmount = (charIndex: number): number => {
-        let amount = 0;
-        if (charIndex > start + facingMeta.length - 1) amount += meta.length;
-        return amount;
-      };
-      coordinateMoveAmount += charIndexMoveAmount(newCursorCoordinate.charIndex);
-      if (newTextSelection) {
-        fixedMoveAmount += charIndexMoveAmount(newTextSelection.fixed.charIndex);
-        freeMoveAmount += charIndexMoveAmount(newTextSelection.free.charIndex);
-      }
-    }
-
-    if (selectionEnd.charIndex < end - trailingMeta.length) {
-      insertedText += facingMeta + line.slice(selectionEnd.charIndex, end - trailingMeta.length) + trailingMeta;
-      const charIndexMoveAmount = (charIndex: number): number => {
-        let amount = 0;
-        if (charIndex > selectionEnd.charIndex) amount += facingMeta.length;
-        if (charIndex >= end - trailingMeta.length) amount += trailingMeta.length;
-        return amount;
-      };
-      coordinateMoveAmount += charIndexMoveAmount(newCursorCoordinate.charIndex);
-      if (newTextSelection) {
-        fixedMoveAmount += charIndexMoveAmount(newTextSelection.fixed.charIndex);
-        freeMoveAmount += charIndexMoveAmount(newTextSelection.free.charIndex);
-      }
-    }
-
-    [newText, newState] = insertText(newText, { ...newState, textSelection: contentSelection }, insertedText);
-    newCursorCoordinate.charIndex += coordinateMoveAmount;
-    if (newTextSelection) {
-      newTextSelection.fixed.charIndex += fixedMoveAmount;
-      newTextSelection.free.charIndex += freeMoveAmount;
-    }
+    return [text, state];
   }
 
-  function updateForItemOnWithSelection(
+  function handleItemOnWithSelection(
     lineNode: NormalLineNode | ItemizationNode | QuotationNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
-    textSelection: TextSelection
-  ): void {
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+  ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    const { start, end } = selectionToRange(textSelection);
+    if (contentNode.type !== 'decoration') return [text, state];
+
+    let decoCount = 0;
+    for (const decoItem of ['bold', 'italic', 'underline'] as const) {
+      if (contentNode.decoration[decoItem]) decoCount++;
+    }
+
+    const config = { facingMeta: '', trailingMeta: '' };
+    if (decoCount > 1) {
+      config.facingMeta = contentNode.facingMeta.replaceAll(meta, '');
+      config.trailingMeta = contentNode.trailingMeta;
+    }
+    return splitContentByTextSelection(text, nodes, contentPosition, state, config);
   }
 
-  if (!textSelection) {
+  if (!state.cursorCoordinate) return [text, state];
+
+  if (contentPosition.type === 'empty') {
+    const config = { facingMeta: `[${meta} `, content: menuItem, trailingMeta: ']' };
+    return insertContentAtCursor(text, nodes, state, config);
+  }
+
+  const lineNode = nodes[contentPosition.lineIndex];
+  if (!isPureLineNode(lineNode)) return [text, state];
+
+  if (!state.textSelection) {
     if (menuSwitch === 'off') {
-      updateForItemOffWithoutSelection(lineNode, contentPosition);
+      return handleItemOffWithoutSelection(lineNode, contentPosition);
     } else {
-      updateForItemOnWithoutSelection(lineNode, contentPosition);
+      return handleItemOnWithoutSelection(lineNode, contentPosition);
     }
   } else {
     if (menuSwitch === 'off') {
-      updateForItemOffWithSelection(lineNode, contentPosition, textSelection);
+      return handleItemOffWithSelection(lineNode, contentPosition);
     } else {
-      updateForItemOnWithSelection(lineNode, contentPosition, textSelection);
+      return handleItemOnWithSelection(lineNode, contentPosition);
     }
   }
-  return [
-    newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
-  ];
 }
 
 function handleOnMarkdownDecorationItemClick(
@@ -317,58 +221,70 @@ function handleOnMarkdownDecorationItemClick(
   menuItem: 'bold' | 'italic',
   menuSwitch: 'on' | 'off'
 ): [string, State] {
+  const meta = { bold: '*', italic: '_' }[menuItem];
+
+  function handleItemOffWithoutSelection(
+    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+  ): [string, State] {
+    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
+    if (isEndPoint(contentPosition) || contentNode.type === 'normal') {
+      const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
+      return insertContentAtCursor(text, nodes, state, config);
+    }
+
+    return [text, state];
+  }
+
+  function handleItemOnWithoutSelection(
+    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+  ): [string, State] {
+    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
+    if (contentNode.type !== 'decoration') return [text, state];
+    return substituteContentAtCursor(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
+  }
+
+  function handleItemOffWithSelection(
+    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+  ): [string, State] {
+    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
+    if (contentNode.type !== 'normal') return [text, state];
+    const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
+    return createContentByTextSelection(text, nodes, state, config);
+  }
+
+  function handleItemOnWithSelection(
+    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+  ): [string, State] {
+    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
+    if (contentNode.type !== 'decoration') return [text, state];
+    return splitContentByTextSelection(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
+  }
+
   if (!state.cursorCoordinate) return [text, state];
 
   if (contentPosition.type === 'empty') {
-    return [text, state];
+    const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
+    return insertContentAtCursor(text, nodes, state, config);
   }
 
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return [text, state];
 
-  const contentNode = lineNode.children[contentPosition.lineIndex];
-  const { cursorCoordinate, textSelection } = state;
-  const line = text.split('\n')[contentNode.lineIndex];
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
-  const [newText, newState] = [text, state];
-
-  function updateForItemOffWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): void {}
-
-  function updateForItemOnWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): void {}
-
-  function updateForItemOffWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
-    textSelection: TextSelection
-  ): void {}
-
-  function updateForItemOnWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
-    textSelection: TextSelection
-  ): void {}
-
-  if (!textSelection) {
+  if (!state.textSelection) {
     if (menuSwitch === 'off') {
-      updateForItemOffWithoutSelection(lineNode, contentPosition);
+      return handleItemOffWithoutSelection(lineNode, contentPosition);
     } else {
-      updateForItemOnWithoutSelection(lineNode, contentPosition);
+      return handleItemOnWithoutSelection(lineNode, contentPosition);
     }
   } else {
     if (menuSwitch === 'off') {
-      updateForItemOffWithSelection(lineNode, contentPosition, textSelection);
+      return handleItemOffWithSelection(lineNode, contentPosition);
     } else {
-      updateForItemOnWithSelection(lineNode, contentPosition, textSelection);
+      return handleItemOnWithSelection(lineNode, contentPosition);
     }
   }
-  return [
-    newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
-  ];
 }

@@ -347,14 +347,14 @@ const Node: React.FC<NodeProps> = ({ node, cursorLineIndex, ...syntaxProps }) =>
       );
     }
     case 'hashtag': {
-      const { lineIndex, hashtag } = node;
+      const { lineIndex, facingMeta, linkName, trailingMeta } = node;
       const [first] = node.range;
       const cursorOn = cursorOnNode(cursorLineIndex, node);
-      const anchorElementProps = syntaxProps.hashtagProps?.anchorProps?.(getHashtagName(hashtag));
+      const anchorElementProps = syntaxProps.hashtagProps?.anchorProps?.(getHashtagName(linkName));
 
       return (
         <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
-          {[...hashtag].map((char, index) => (
+          {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
             <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
               {char}
             </Char>

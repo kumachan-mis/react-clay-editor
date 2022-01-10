@@ -197,35 +197,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["[*/ lefttextright]"],
-      "expectedLinesAfterTyping": ["[*/ leftte.xtright]"]
-    },
-    {
-      "name": "decoration menus: italic, no-selection, in-lacked-with-decoration-left",
-      "textLines": ["[*/ left][* text][* right]"],
-      "inputMouse": [
-        {
-          "type": "mouseDown",
-          "coordinate": {
-            "lineIndex": 0,
-            "charIndex": 14
-          }
-        },
-        {
-          "type": "mouseUp",
-          "coordinate": {
-            "lineIndex": 0,
-            "charIndex": 14
-          }
-        }
-      ],
-      "inputMenu": {
-        "name": "italic-menu",
-        "menuButton": "icon-button"
-      },
-      "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["[*/ lefttext][* right]"],
-      "expectedLinesAfterTyping": ["[*/ leftte.xt][* right]"]
+      "expectedLinesAfterMenu": ["[*/ left][/* text][/* right]"],
+      "expectedLinesAfterTyping": ["[*/ left][/* te.xt][/* right]"]
     },
     {
       "name": "decoration menus: underline, no-selection, in-lacked-with-decoration-right",
@@ -251,8 +224,35 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["[[_*/ lefttext][_ right]"],
-      "expectedLinesAfterTyping": ["[*/ leftte.xt][_ right]"]
+      "expectedLinesAfterMenu": ["[_*/ left][/*_ text][_ right]"],
+      "expectedLinesAfterTyping": ["[_*/ left][/*_ te.xt][_ right]"]
+    },
+    {
+      "name": "decoration menus: italic, no-selection, in-lacked-with-decoration-right",
+      "textLines": ["[*/ left][* text][* right]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 14
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 14
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[*/ left][*/ text][* right]"],
+      "expectedLinesAfterTyping": ["[*/ left][*/ te.xt][* right]"]
     },
     {
       "name": "decoration menus: italic, no-selection, in-normal",
@@ -304,9 +304,9 @@
         "name": "bold-menu",
         "menuButton": "icon-button"
       },
-      "inputTyping": [", really important"],
-      "expectedLinesAfterMenu": ["[* importantbold]"],
-      "expectedLinesAfterTyping": ["[* important, really important]"]
+      "inputTyping": ["really important"],
+      "expectedLinesAfterMenu": ["[* important][* bold]"],
+      "expectedLinesAfterTyping": ["[* important][* really important]"]
     },
     {
       "name": "decoration menus: underline, no-selection, in-normal-with-decoration-right",
@@ -332,12 +332,12 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["This is "],
-      "expectedLinesAfterMenu": ["[_ underlineimportant]"],
-      "expectedLinesAfterTyping": ["[_ This is important]"]
+      "expectedLinesAfterMenu": ["[_ underline][_ important]"],
+      "expectedLinesAfterTyping": ["[_ This is ][_ important]"]
     },
     {
       "name": "decoration menus: bold, no-selection, other (section line)",
-      "textLines": ["[** WYSIWYG editor]"],
+      "textLines": ["`WYSIWYG` editor"],
       "inputMouse": [
         {
           "type": "mouseDown",
@@ -359,8 +359,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["[** WYSIWYG editor]"],
-      "expectedLinesAfterTyping": ["[** WY.SIWYG editor]"]
+      "expectedLinesAfterMenu": ["`WYSIWYG` editor"],
+      "expectedLinesAfterTyping": ["`WYSIW.YG` editor"]
     },
     {
       "name": "decoration menus: italic, no-selection, other (content node)",
@@ -482,7 +482,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[_/ underline text]"],
-      "expectedLinesAfterTyping": ["._/ underline text]"]
+      "expectedLinesAfterTyping": ["[_/ .underline text]"]
     },
     {
       "name": "decoration menus: underline, single-line-selection, in-decoration-all",
@@ -584,7 +584,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[*/ left][*  mid right]"],
-      "expectedLinesAfterTyping": ["[*/ .][*  mid right]"]
+      "expectedLinesAfterTyping": [".][*  mid right]"]
     },
     {
       "name": "decoration menus: underline, single-line-selection, in-decoration-right (without-deco)",
@@ -652,7 +652,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[*_ left mid ][* right]"],
-      "expectedLinesAfterTyping": ["[*_ left mid ][* .]"]
+      "expectedLinesAfterTyping": ["[*_ left mid ][* ."]
     },
     {
       "name": "decoration menus: bold, single-line-selection, in-decoration-mid",
@@ -719,8 +719,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["[*/ left mid][*  right]"],
-      "expectedLinesAfterTyping": ["[*/ left.][*  right]"]
+      "expectedLinesAfterMenu": ["[*/ left][*/  mid][*  right]"],
+      "expectedLinesAfterTyping": ["[*/ left][*/ .][*  right]"]
     },
     {
       "name": "decoration menus: underline, single-line-selection, in-lacked-with-decoration-right",
@@ -753,8 +753,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["[*_ l][* eft mid right]"],
-      "expectedLinesAfterTyping": ["[*_ l][* . mid right]"]
+      "expectedLinesAfterMenu": ["[*_ l][* eft][*  mid right]"],
+      "expectedLinesAfterTyping": ["[*_ l][* .[*  mid right]"]
     },
     {
       "name": "decoration menus: bold, single-line-selection, in-normal",
@@ -889,8 +889,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["[/ normal te]xt"],
-      "expectedLinesAfterTyping": ["[/ normal.]xt"]
+      "expectedLinesAfterMenu": ["[/ normal][/  te]xt"],
+      "expectedLinesAfterTyping": ["[/ normal][/ .]xt"]
     },
     {
       "name": "decoration menus: bold, single-line-selection, in-normal-with-decoration-right",
@@ -923,8 +923,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["no[* rmal text]"],
-      "expectedLinesAfterTyping": ["no[* .text]"]
+      "expectedLinesAfterMenu": ["no[* rmal ][* text]"],
+      "expectedLinesAfterTyping": ["no[* .][* text]"]
     },
     {
       "name": "decoration menus: underline, single-line-selection, other (mixed with friends)",

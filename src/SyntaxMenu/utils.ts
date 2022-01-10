@@ -66,7 +66,7 @@ function recursiveGetContentPositionFromTextSelection(
   }
   const contentNode = contentNodes[contentIndex];
 
-  if (free.charIndex < contentNode.range[0] && free.charIndex > contentNode.range[1] + 1) return undefined;
+  if (free.charIndex < contentNode.range[0] || free.charIndex > contentNode.range[1] + 1) return undefined;
   if (contentNode.type !== 'decoration') {
     return { type: 'inner', lineIndex: fixed.lineIndex, contentIndexes: [contentIndex] };
   }
@@ -109,9 +109,9 @@ function searchContentPosition(
   cursorCoordinate: CursorCoordinate,
   lineRangeObjs: ContentNode[]
 ): Exclude<ContentPosition, ContentPositionNested> | undefined {
-  if (lineRangeObjs.length === 0) return { type: 'empty' };
-
   const { charIndex, lineIndex } = cursorCoordinate;
+  if (lineRangeObjs.length === 0) return { type: 'empty', lineIndex };
+
   const rangeMin = lineRangeObjs[0].range[0];
   const rangeMax = lineRangeObjs[lineRangeObjs.length - 1].range[1];
   if (charIndex < rangeMin || charIndex > rangeMax + 1) return undefined;

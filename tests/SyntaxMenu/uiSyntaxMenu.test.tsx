@@ -75,7 +75,7 @@ describe('UI of SyntaxMenu (markdown syntax)', () => {
   for (const fixtureName of [
     'uiSectionMenuMarkdown',
     'uiItemizationMenuMarkdown',
-    // 'uiDecorationMenuMarkdown',
+    'uiDecorationMenuMarkdown',
     // 'uiLinkMenuCommon',
     // 'uiCodeMenuCommon',
     // 'uiFormulaMenuCommon',

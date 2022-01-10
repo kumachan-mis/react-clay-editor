@@ -317,7 +317,9 @@
               "type": "hashtag",
               "lineIndex": 0,
               "range": [0, 11],
-              "hashtag": "#hashtagtest"
+              "facingMeta": "#",
+              "linkName": "hashtagtest",
+              "trailingMeta": ""
             },
             {
               "type": "normal",
@@ -327,7 +329,9 @@
               "type": "hashtag",
               "lineIndex": 0,
               "range": [14, 26],
-              "hashtag": "#hashtag_test"
+              "facingMeta": "#",
+              "linkName": "hashtag_test",
+              "trailingMeta": ""
             },
             {
               "type": "normal",
@@ -337,7 +341,9 @@
               "type": "hashtag",
               "lineIndex": 0,
               "range": [29, 41],
-              "hashtag": "#hashtag-test"
+              "facingMeta": "#",
+              "linkName": "hashtag-test",
+              "trailingMeta": ""
             },
             {
               "type": "normal",
@@ -486,7 +492,9 @@
               "type": "hashtag",
               "lineIndex": 4,
               "range": [5, 17],
-              "hashtag": "#hashtag_link"
+              "facingMeta": "#",
+              "linkName": "hashtag_link",
+              "trailingMeta": ""
             },
             {
               "type": "normal",

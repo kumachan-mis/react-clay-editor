@@ -165,7 +165,9 @@ export interface HashtagNode {
   type: 'hashtag';
   lineIndex: number;
   range: [number, number];
-  hashtag: string;
+  facingMeta: string;
+  linkName: string;
+  trailingMeta: string;
 }
 
 export interface NormalNode {

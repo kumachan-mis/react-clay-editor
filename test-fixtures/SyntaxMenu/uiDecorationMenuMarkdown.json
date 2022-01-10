@@ -224,9 +224,9 @@
         "name": "bold-menu",
         "menuButton": "icon-button"
       },
-      "inputTyping": [", really important"],
-      "expectedLinesAfterMenu": ["*importantbold*"],
-      "expectedLinesAfterTyping": ["*important, really important*"]
+      "inputTyping": ["really important"],
+      "expectedLinesAfterMenu": ["*important**bold*"],
+      "expectedLinesAfterTyping": ["*important**really important*"]
     },
     {
       "name": "decoration menus: italic, no-selection, in-normal-with-decoration-right",
@@ -251,9 +251,9 @@
         "name": "italic-menu",
         "menuButton": "icon-button"
       },
-      "inputTyping": ["This is "],
-      "expectedLinesAfterMenu": ["_italicimportant_"],
-      "expectedLinesAfterTyping": ["_This is important_"]
+      "inputTyping": ["This is"],
+      "expectedLinesAfterMenu": ["_italic__important_"],
+      "expectedLinesAfterTyping": ["_This is__important_"]
     },
     {
       "name": "decoration menus: bold, no-selection, other (content node)",
@@ -453,7 +453,7 @@
           "type": "mouseDown",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 10
+            "charIndex": 9
           }
         },
         {
@@ -476,8 +476,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["_left mid _right"],
-      "expectedLinesAfterTyping": ["_left mid _."]
+      "expectedLinesAfterMenu": ["_left mid_ right"],
+      "expectedLinesAfterTyping": ["_left mid_."]
     },
     {
       "name": "decoration menus: bold, single-line-selection, in-decoration-right (with-deco)",
@@ -487,7 +487,7 @@
           "type": "mouseDown",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 10
+            "charIndex": 9
           }
         },
         {
@@ -510,8 +510,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["*left mid *right"],
-      "expectedLinesAfterTyping": ["*left mid *."]
+      "expectedLinesAfterMenu": ["*left mid* right"],
+      "expectedLinesAfterTyping": ["*left mid*."]
     },
     {
       "name": "decoration menus: bold, single-line-selection, in-decoration-mid",
@@ -535,7 +535,7 @@
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 9
+            "charIndex": 10
           }
         }
       ],
@@ -544,8 +544,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["*left* mid* right*"],
-      "expectedLinesAfterTyping": ["[*left*.* right*"]
+      "expectedLinesAfterMenu": ["*left* mid *right*"],
+      "expectedLinesAfterTyping": ["*left*.*right*"]
     },
     {
       "name": "decoration menus: italic, single-line-selection, in-decoration-mid",
@@ -569,7 +569,7 @@
           "type": "mouseUp",
           "coordinate": {
             "lineIndex": 0,
-            "charIndex": 9
+            "charIndex": 10
           }
         }
       ],
@@ -578,8 +578,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["_left_ mid_ right_"],
-      "expectedLinesAfterTyping": ["_left_._ right_"]
+      "expectedLinesAfterMenu": ["_left_ mid _right_"],
+      "expectedLinesAfterTyping": ["_left_._right_"]
     },
     {
       "name": "decoration menus: bold, single-line-selection, in-normal",
@@ -680,8 +680,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["_normal te_xt"],
-      "expectedLinesAfterTyping": ["_normal._xt"]
+      "expectedLinesAfterMenu": ["_normal__ te_xt"],
+      "expectedLinesAfterTyping": ["_normal__._xt"]
     },
     {
       "name": "decoration menus: bold, single-line-selection, in-normal-with-decoration-right",
@@ -714,8 +714,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["no*rmal text*"],
-      "expectedLinesAfterTyping": ["no*.text*"]
+      "expectedLinesAfterMenu": ["no*rmal **text*"],
+      "expectedLinesAfterTyping": ["no*.**text*"]
     },
     {
       "name": "decoration menus: bold, single-line-selection, other (mixed with friends)",

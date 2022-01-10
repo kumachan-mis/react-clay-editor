@@ -108,6 +108,11 @@ export function cursorCoordinateToTextIndex(text: string, coordinate: CursorCoor
   return textIndex;
 }
 
+export function copyCoordinate(coordinate: CursorCoordinate | undefined): CursorCoordinate | undefined {
+  if (!coordinate) return undefined;
+  return { ...coordinate };
+}
+
 export function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): boolean {
   return a.lineIndex === b.lineIndex && a.charIndex === b.charIndex;
 }

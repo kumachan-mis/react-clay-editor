@@ -111,6 +111,7 @@ export type ContentPositionEndPoint =
 
 export interface ContentPositionEmpty {
   type: 'empty';
+  lineIndex: number;
 }
 
 export interface ContentPositionLeftEnd {

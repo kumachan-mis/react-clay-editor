@@ -1,9 +1,16 @@
-import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
+import { TextSelection } from '../../Selection/types';
 import { copySelection } from '../../Selection/utils';
 import { DecorationNode, LineNode } from '../../parser/types';
+import {
+  insertContentAtCursor,
+  createContentByTextSelection,
+  newCharIndexAfterCreation,
+  substituteContentAtCursor,
+  newCharIndexAfterSubstitution,
+} from '../callbacksCommon/content';
 import { undefinedIfZeroSelection } from '../callbacksCommon/utils';
-import { SectionMenuProps } from '../types';
+import { ContentPosition, SectionMenuProps } from '../types';
 
 import { MenuHandler } from './types';
 
@@ -58,67 +65,52 @@ export function handleOnSectionItemClick(
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
   const lineNode = nodes[cursorCoordinate.lineIndex];
   if (lineNode.type !== 'normalLine') return [text, state];
-  const decorationNode = lineNode.children[0];
 
   const { facingMeta, sectionName, trailingMeta } = getSectionMeta(props, menuItem);
   const line = text.split('\n')[cursorCoordinate.lineIndex];
-  if (!line) {
-    const insertedText = facingMeta + sectionName + trailingMeta;
-    const cursourMoveAmount = facingMeta.length + sectionName.length;
-    const [newText, newState] = insertText(text, state, insertedText, cursourMoveAmount);
-    if (!newState.cursorCoordinate) return [newText, { ...newState, textSelection: undefined }];
+  if (!line) return insertContentAtCursor(text, nodes, state, { facingMeta, content: sectionName, trailingMeta });
 
-    const fixed = { ...newState.cursorCoordinate, charIndex: newState.cursorCoordinate.charIndex - sectionName.length };
-    const free = newState.cursorCoordinate;
-    return [newText, { ...newState, textSelection: { fixed, free } }];
-  }
-
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
-
-  let body = line;
-  if (menuSwitch !== 'off') {
-    if (decorationNode.type !== 'decoration') return [text, state];
-
-    const { facingMeta, trailingMeta } = decorationNode;
-    const moveCharIndexByMetaDeletion = (charIndex: number): number => {
-      const newCharIndex = charIndex - facingMeta.length;
-      const bodyLength = line.length - facingMeta.length - trailingMeta.length;
-      if (newCharIndex < 0) return 0;
-      if (newCharIndex > bodyLength) return bodyLength;
-      return newCharIndex;
-    };
-    body = line.slice(facingMeta.length, line.length - trailingMeta.length);
-    newCursorCoordinate.charIndex = moveCharIndexByMetaDeletion(newCursorCoordinate.charIndex);
-    if (newTextSelection) {
-      newTextSelection.fixed.charIndex = moveCharIndexByMetaDeletion(newTextSelection.fixed.charIndex);
-      newTextSelection.free.charIndex = moveCharIndexByMetaDeletion(newTextSelection.free.charIndex);
-    }
-  }
-
-  const lineSelection = {
+  const lineSelection: TextSelection = {
     fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 },
     free: { lineIndex: cursorCoordinate.lineIndex, charIndex: line.length },
   };
+  const dummyState = { ...state, textSelection: lineSelection };
 
-  if (menuSwitch === menuItem) {
-    const [newText, newState] = insertText(text, { ...state, textSelection: lineSelection }, body);
+  if (menuSwitch === 'off') {
+    const config = { facingMeta, trailingMeta };
+    const [newText, newState] = createContentByTextSelection(text, nodes, dummyState, config);
+    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+    const newCharIndex = (charIndex: number) => newCharIndexAfterCreation(charIndex, lineSelection, config);
+    newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
+    if (newTextSelection) {
+      newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
+      newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
+    }
     return [
       newText,
       { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
     ];
   }
 
-  const insertedText = facingMeta + body + trailingMeta;
-  const [newText, newState] = insertText(text, { ...state, textSelection: lineSelection }, insertedText);
-  newCursorCoordinate.charIndex = newCursorCoordinate.charIndex + facingMeta.length;
-  if (newTextSelection) {
-    newTextSelection.fixed.charIndex = newTextSelection.fixed.charIndex + facingMeta.length;
-    newTextSelection.free.charIndex = newTextSelection.free.charIndex + facingMeta.length;
+  const decorationNode = lineNode.children[0];
+  if (decorationNode.type === 'decoration') {
+    const config = menuSwitch === menuItem ? { facingMeta: '', trailingMeta: '' } : { facingMeta, trailingMeta };
+    const position: ContentPosition = { type: 'inner', lineIndex: cursorCoordinate.lineIndex, contentIndexes: [0] };
+    const [newText, newState] = substituteContentAtCursor(text, nodes, position, dummyState, config);
+    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+    const newCharIndex = (charIndex: number) => newCharIndexAfterSubstitution(charIndex, decorationNode, config);
+    newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
+    if (newTextSelection) {
+      newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
+      newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
+    }
+    return [
+      newText,
+      { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    ];
   }
-  return [
-    newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
-  ];
+
+  return [text, state];
 }
 
 function getSectionMeta(

@@ -268,14 +268,16 @@ function parseBracketLink(text: string, context: ParsingContext, options: Parsin
 
 function parseHashtag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const regex = parserConstants.common.hashtag;
-  const { left, hashtag, right } = text.match(regex)?.groups as Record<string, string>;
+  const { left, linkName, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: HashtagNode = {
     type: 'hashtag',
     lineIndex: context.lineIndex,
     range: [first, last],
-    hashtag,
+    facingMeta: '#',
+    linkName,
+    trailingMeta: '',
   };
   return [
     ...parseContent(left, context, options),

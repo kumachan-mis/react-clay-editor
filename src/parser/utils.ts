@@ -4,8 +4,8 @@ export function getTagName(tag: string): string {
   return tag.substring(0, tag.length - 2);
 }
 
-export function getHashtagName(hashtag: string): string {
-  return hashtag.substring(1).replaceAll('_', ' ');
+export function getHashtagName(linkName: string): string {
+  return linkName.replaceAll('_', ' ');
 }
 
 export function isPureLineNode(lineNode: LineNode): lineNode is PureLineNode {
