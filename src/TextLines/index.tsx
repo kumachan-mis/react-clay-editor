@@ -2,7 +2,7 @@ import React from 'react';
 
 import { KaTeX } from '../KaTeX';
 import { mergeClassNames } from '../common/utils';
-import { getHashtagName, getTagName } from '../parser';
+import { getHashtagName, splitTag, getTagName } from '../parser/utils';
 
 import {
   LineGroup,
@@ -269,10 +269,11 @@ const Node: React.FC<NodeProps> = ({ node, cursorLineIndex, ...syntaxProps }) =>
       );
     }
     case 'taggedLink': {
-      const { lineIndex, facingMeta, tag, linkName, trailingMeta } = node;
+      const { lineIndex, linkName, trailingMeta } = node;
+      const [facingMeta, tag] = splitTag(node.facingMeta);
       const [first, last] = node.range;
       const cursorOn = cursorOnNode(cursorLineIndex, node);
-      const taggedLinkProps = syntaxProps.taggedLinkPropsMap?.[getTagName(tag)];
+      const taggedLinkProps = syntaxProps.taggedLinkPropsMap?.[getTagName(node.facingMeta)];
       const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
 
       return (

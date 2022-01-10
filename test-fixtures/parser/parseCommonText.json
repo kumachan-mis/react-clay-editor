@@ -280,7 +280,6 @@
               "type": "taggedLink",
               "lineIndex": 0,
               "range": [0, 20],
-              "tag": "@: ",
               "linkName": "tagged link test"
             }
           ]
@@ -443,7 +442,6 @@
               "type": "taggedLink",
               "lineIndex": 2,
               "range": [5, 20],
-              "tag": "@: ",
               "linkName": "tagged link"
             },
             {

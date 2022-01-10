@@ -5,7 +5,6 @@ import { BracketLinkProps, HashtagProps, TaggedLinkPropsMap, CodeProps, FormulaP
 import { parserConstants } from './constants';
 import { parseText } from './parseText';
 import { BlockNode, LineNode, ParsingOptions } from './types';
-import { getHashtagName, getTagName } from './utils';
 
 export function useParser(
   text: string,
@@ -43,4 +42,4 @@ export function useParser(
   return nodes;
 }
 
-export { parseText, getHashtagName, getTagName };
+export { parseText };

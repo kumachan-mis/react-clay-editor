@@ -482,7 +482,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[_/ underline text]"],
-      "expectedLinesAfterTyping": ["[_/ .underline text]"]
+      "expectedLinesAfterTyping": [".underline text]"]
     },
     {
       "name": "decoration menus: underline, single-line-selection, in-decoration-all",

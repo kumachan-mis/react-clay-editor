@@ -147,7 +147,6 @@ export interface TaggedLinkNode {
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
-  tag: string;
   linkName: string;
   trailingMeta: string;
 }

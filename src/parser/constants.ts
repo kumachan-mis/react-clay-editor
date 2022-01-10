@@ -23,7 +23,7 @@ export const parserConstants = {
     taggedLink: (tagName: string, linkNameRegex = defaultLinkNameRegex): RegExp => {
       const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const linkName = linkNameRegex.source;
-      return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}: )(?<linkName>${linkName})\\](?<right>.*)$`);
+      return RegExp(`^(?<left>.*?)\\[(?<tag>${tag}:) (?<linkName>${linkName})\\](?<right>.*)$`);
     },
     bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
     hashtag: /^(?<left>.*?)#(?<linkName>[^\s!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]+)(?<right>.*)$/,

@@ -35,10 +35,9 @@ export function decorationMenuSwitch(
 }
 
 function bracketDecorationMenuSwitch(nodes: LineNode[], contentPosition: ContentPosition): MenuSwitch {
-  if (isEndPoint(contentPosition)) return { bold: 'off', italic: 'off', underline: 'off' };
-
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return { bold: 'disabled', italic: 'disabled', underline: 'disabled' };
+  if (isEndPoint(contentPosition)) return { bold: 'off', italic: 'off', underline: 'off' };
 
   const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
   switch (contentNode.type) {
@@ -57,10 +56,9 @@ function markdownDecorationMenuSwitch(
   nodes: LineNode[],
   contentPosition: ContentPosition
 ): MenuSwitch & { underline: 'disabled' } {
-  if (isEndPoint(contentPosition)) return { bold: 'off', italic: 'off', underline: 'disabled' };
-
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return { bold: 'disabled', italic: 'disabled', underline: 'disabled' };
+  if (isEndPoint(contentPosition)) return { bold: 'off', italic: 'off', underline: 'disabled' };
 
   const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
   switch (contentNode.type) {
@@ -228,12 +226,9 @@ function handleOnMarkdownDecorationItemClick(
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (isEndPoint(contentPosition) || contentNode.type === 'normal') {
-      const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
-      return insertContentAtCursor(text, nodes, state, config);
-    }
-
-    return [text, state];
+    if (!isEndPoint(contentPosition) && contentNode.type !== 'normal') return [text, state];
+    const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
+    return insertContentAtCursor(text, nodes, state, config);
   }
 
   function handleItemOnWithoutSelection(

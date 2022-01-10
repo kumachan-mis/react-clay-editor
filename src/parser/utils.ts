@@ -1,7 +1,11 @@
 import { LineNode, PureLineNode } from './types';
 
-export function getTagName(tag: string): string {
-  return tag.substring(0, tag.length - 2);
+export function splitTag(taggedLinkFacingMeta: string): [string, string] {
+  return [taggedLinkFacingMeta.substring(0, 1), taggedLinkFacingMeta.substring(1)];
+}
+
+export function getTagName(taggedLinkFacingMeta: string): string {
+  return taggedLinkFacingMeta.substring(1, taggedLinkFacingMeta.length - 2);
 }
 
 export function getHashtagName(linkName: string): string {

@@ -232,8 +232,7 @@ function parseTaggedLink(text: string, context: ParsingContext, options: Parsing
     type: 'taggedLink',
     lineIndex: context.lineIndex,
     range: [first, last],
-    facingMeta: '[',
-    tag,
+    facingMeta: `[${tag} `,
     linkName,
     trailingMeta: ']',
   };

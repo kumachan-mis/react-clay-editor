@@ -133,7 +133,7 @@
       },
       "inputTyping": ["{enter}"],
       "expectedLinesAfterMenu": ["[@: tagged link]"],
-      "expectedLinesAfterTyping": ["[tag: feIjOa]"]
+      "expectedLinesAfterTyping": ["[@: feIjOa]"]
     },
     {
       "name": "link menus: bracket, no-selection, in-bracket-link",
@@ -213,8 +213,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["normal_text"],
-      "expectedLinesAfterTyping": ["norm.al_text"]
+      "expectedLinesAfterMenu": ["normal text"],
+      "expectedLinesAfterTyping": ["norm.al text"]
     },
     {
       "name": "link menus: hashtag, no-selection, in-tagged-link",
@@ -324,7 +324,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[@: tag will be changed]"],
-      "expectedLinesAfterTyping": ["[@.: tag will be changed]"]
+      "expectedLinesAfterTyping": ["[@: .tag will be changed]"]
     },
     {
       "name": "link menus: tagged-link-button, no-selection, in-bracket-link",
@@ -403,7 +403,7 @@
         "name": "hashtag-menu",
         "menuButton": "icon-button"
       },
-      "inputTyping": ["hello_world"],
+      "inputTyping": ["hello_world "],
       "expectedLinesAfterMenu": ["nor#hashtag_link mal text"],
       "expectedLinesAfterTyping": ["nor#hello_world mal text"]
     },
@@ -528,7 +528,7 @@
           }
         },
         {
-          "type": "mouseUp",
+          "type": "mouseMove",
           "coordinate": {
             "lineIndex": 0,
             "charIndex": 12
@@ -582,7 +582,7 @@
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[tag: nothing happened]"],
-      "expectedLinesAfterTyping": ["[tag:nothing happened]"]
+      "expectedLinesAfterTyping": ["[tag:.nothing happened]"]
     },
     {
       "name": "link menus: hashtag, single-line-selection, in-hashtag-link",
@@ -615,8 +615,8 @@
         "menuButton": "icon-button"
       },
       "inputTyping": ["."],
-      "expectedLinesAfterMenu": ["normal_text"],
-      "expectedLinesAfterTyping": ["._text"]
+      "expectedLinesAfterMenu": ["normal text"],
+      "expectedLinesAfterTyping": [". text"]
     },
     {
       "name": "link menus: hashtag, single-line-selection, in-bracket-link",
@@ -699,7 +699,7 @@
           }
         },
         {
-          "type": "mouseUp",
+          "type": "mouseMove",
           "coordinate": {
             "lineIndex": 0,
             "charIndex": 15
@@ -787,7 +787,7 @@
       },
       "inputTyping": ["{enter}"],
       "expectedLinesAfterMenu": ["nor#mal_ text"],
-      "expectedLinesAfterTyping": ["nor", "text"]
+      "expectedLinesAfterTyping": ["nor#", " text"]
     },
     {
       "name": "link menus: tagged-link-button, single-line-selection, in-normal",

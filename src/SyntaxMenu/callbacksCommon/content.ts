@@ -14,17 +14,19 @@ export function insertContentAtCursor(
   text: string,
   nodes: LineNode[],
   state: State,
-  config: ContentConfig
+  config: ContentConfig,
+  getContent: (rawContent: string) => string = (rawContent) => rawContent
 ): [string, State] {
   const { cursorCoordinate } = state;
   if (!cursorCoordinate || !isPureLineNode(nodes[cursorCoordinate.lineIndex])) return [text, state];
 
-  const { facingMeta, content, trailingMeta } = config;
-  const insertedText = facingMeta + content + trailingMeta;
-  const [newText, newState] = insertText(text, state, insertedText, facingMeta.length + content.length);
+  const { facingMeta, content: rawContentText, trailingMeta } = config;
+  const contentText = getContent(rawContentText);
+  const insertedText = facingMeta + contentText + trailingMeta;
+  const [newText, newState] = insertText(text, state, insertedText, facingMeta.length + contentText.length);
   if (!newState.cursorCoordinate) return [newText, { ...newState, textSelection: undefined }];
 
-  const fixed = { ...newState.cursorCoordinate, charIndex: newState.cursorCoordinate.charIndex - content.length };
+  const fixed = { ...newState.cursorCoordinate, charIndex: newState.cursorCoordinate.charIndex - contentText.length };
   const free = newState.cursorCoordinate;
   return [newText, { ...newState, textSelection: { fixed, free } }];
 }
@@ -34,7 +36,8 @@ export function substituteContentAtCursor(
   nodes: LineNode[],
   contentPosition: ContentPosition,
   state: State,
-  config: ContentMetaConfig
+  config: ContentMetaConfig,
+  getContent: (rawContent: string) => string = (rawContent) => rawContent
 ): [string, State] {
   const lineNode = nodes[contentPosition.lineIndex];
   if (!state.cursorCoordinate || !isPureLineNode(lineNode) || isEndPoint(contentPosition)) return [text, state];
@@ -48,7 +51,8 @@ export function substituteContentAtCursor(
     free: { lineIndex: contentPosition.lineIndex, charIndex: end },
   };
 
-  const contentText = line.slice(start + contentNode.facingMeta.length, end - contentNode.trailingMeta.length);
+  const rawContentText = line.slice(start + contentNode.facingMeta.length, end - contentNode.trailingMeta.length);
+  const contentText = getContent(rawContentText);
   const insertedText = config.facingMeta + contentText + config.trailingMeta;
   const [newText, newState] = insertText(text, { ...state, textSelection: contentSelection }, insertedText);
 
@@ -59,7 +63,7 @@ export function substituteContentAtCursor(
   newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
   if (newTextSelection) {
     newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
-    newTextSelection.free.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
+    newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
   }
 
   return [
@@ -92,7 +96,8 @@ export function createContentByTextSelection(
   text: string,
   nodes: LineNode[],
   state: State,
-  config: ContentMetaConfig
+  config: ContentMetaConfig,
+  getContent: (rawContent: string) => string = (rawContent) => rawContent
 ): [string, State] {
   const { cursorCoordinate, textSelection } = state;
   if (!textSelection || textSelection.fixed.lineIndex !== textSelection.free.lineIndex) return [text, state];
@@ -102,7 +107,8 @@ export function createContentByTextSelection(
   const line = text.split('\n')[lineIndex];
   const { start: selectionStart, end: selectionEnd } = selectionToRange(textSelection);
 
-  const contentText = line.slice(selectionStart.charIndex, selectionEnd.charIndex);
+  const rawContentText = line.slice(selectionStart.charIndex, selectionEnd.charIndex);
+  const contentText = getContent(rawContentText);
   const insertedText = config.facingMeta + contentText + config.trailingMeta;
   const [newText, newState] = insertText(text, state, insertedText);
 
@@ -140,7 +146,8 @@ export function splitContentByTextSelection(
   nodes: LineNode[],
   contentPosition: ContentPosition,
   state: State,
-  config: ContentMetaConfig
+  config: ContentMetaConfig,
+  getContent: (rawContent: string) => string = (rawContent) => rawContent
 ): [string, State] {
   const lineNode = nodes[contentPosition.lineIndex];
   if (!state.textSelection || !isPureLineNode(lineNode) || isEndPoint(contentPosition)) return [text, state];
@@ -181,7 +188,8 @@ export function splitContentByTextSelection(
   {
     const midContentStart = Math.max(selectionStart.charIndex, start + contentNode.facingMeta.length);
     const midContentEnd = Math.min(selectionEnd.charIndex, end - contentNode.trailingMeta.length);
-    const contentText = line.slice(midContentStart, midContentEnd);
+    const rawContentText = line.slice(midContentStart, midContentEnd);
+    const contentText = getContent(rawContentText);
     insertedText += config.facingMeta + contentText + config.trailingMeta;
     const charIndexMoveAmount = (charIndex: number): number => {
       if (charIndex <= start) {

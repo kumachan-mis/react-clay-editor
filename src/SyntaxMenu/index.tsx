@@ -8,6 +8,7 @@ import {
   handleOnItemizationButtonClick,
   handleOnItemizationItemClick,
 } from './callbacks/itemization';
+import { handleOnLinkItemClick, linkMenuSwitch } from './callbacks/link';
 import { quotationMenuSwitch, handleOnQuotationButtonClick, handleOnQuotationItemClick } from './callbacks/quotation';
 import { sectionMenuSwitch, handleOnSectionButtonClick, handleOnSectionItemClick } from './callbacks/section';
 import { MenuHandler } from './callbacks/types';
@@ -60,6 +61,7 @@ import {
   FormulaMenuProps,
   QuotationMenuProps,
   MenuCommonProps,
+  TaggedLinkMenuProps,
 } from './types';
 import { useContentPosition, useLineNodes } from './utils';
 
@@ -276,46 +278,85 @@ const UnderlineMenu: React.FC<UnderlineMenuProps & MenuCommonProps> = ({
 };
 
 const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
-  suggestions,
-  initialSuggestionIndex,
   syntax,
   text,
   nodes,
+  contentPosition,
   state,
   setTextAndState,
   disabled,
-}) => (
-  <IconButtonMenu disabled={disabled} data-testid={createTestId(BracketMenuConstants.testId)}>
-    <BracketIcon />
-  </IconButtonMenu>
-);
+  suggestions = [],
+  initialSuggestionIndex = 0,
+}) => {
+  const props: MenuHandler<BracketMenuProps> = { syntax, suggestions, initialSuggestionIndex };
+  const menuItem = { type: 'bracketLink' } as const;
+  const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'bracketLink');
+
+  return (
+    <IconButtonMenu
+      disabled={disabled || menuSwitch === 'disabled'}
+      onClick={() =>
+        setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch))
+      }
+      data-testid={createTestId(BracketMenuConstants.testId)}
+    >
+      <BracketIcon />
+    </IconButtonMenu>
+  );
+};
 
 const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
-  suggestions,
-  initialSuggestionIndex,
   syntax,
   text,
   nodes,
+  contentPosition,
   state,
   setTextAndState,
   disabled,
-}) => (
-  <IconButtonMenu disabled={disabled} data-testid={createTestId(HashtagMenuConstants.testId)}>
-    <HashtagIcon />
-  </IconButtonMenu>
-);
+  suggestions = [],
+  initialSuggestionIndex = 0,
+}) => {
+  const props: MenuHandler<HashtagMenuProps> = { syntax, suggestions, initialSuggestionIndex };
+  const menuItem = { type: 'hashtag' } as const;
+  const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'hashtag');
+
+  return (
+    <IconButtonMenu
+      disabled={disabled || menuSwitch === 'disabled'}
+      onClick={() =>
+        setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch))
+      }
+      data-testid={createTestId(HashtagMenuConstants.testId)}
+    >
+      <HashtagIcon />
+    </IconButtonMenu>
+  );
+};
 
 const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
   tags,
   syntax,
   text,
   nodes,
+  contentPosition,
   state,
   setTextAndState,
   disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const tagEntries = Object.entries(tags || {});
+  const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'taggedLink');
+  const { defaultLabel } = TaggedLinkMenuConstants.items;
+
+  let handleOnButtonClick = undefined;
+  if (tagEntries.length > 0) {
+    const [tagName, linkProps] = tagEntries[0];
+    const defaultLinkProps = { label: defaultLabel(tagName), suggestions: [], initialSuggestionIndex: 0 };
+    const props: MenuHandler<TaggedLinkMenuProps> = { syntax, ...defaultLinkProps, ...linkProps };
+    const menuItem = { type: 'taggedLink', tag: tagName } as const;
+    handleOnButtonClick = () =>
+      setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch));
+  }
 
   return (
     <DropdownMenu>
@@ -323,17 +364,32 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        disabled={disabled || tagEntries.length === 0}
+        disabled={disabled || tagEntries.length === 0 || menuSwitch === 'disabled'}
+        buttonProps={{ onClick: handleOnButtonClick }}
         data-testid={createTestId(TaggedLinkMenuConstants.testId)}
       >
         <TaggedLinkIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        {tagEntries.map(([tagName, taggedLinkMenu]) => (
-          <DropdownMenuItem key={tagName} data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}>
-            {taggedLinkMenu.label || TaggedLinkMenuConstants.items.defaultLabel(tagName)}
-          </DropdownMenuItem>
-        ))}
+        {tagEntries.map(
+          ([tagName, { label = defaultLabel(tagName), suggestions = [], initialSuggestionIndex = 0 }]) => {
+            const props: MenuHandler<TaggedLinkMenuProps> = { syntax, label, suggestions, initialSuggestionIndex };
+            const menuItem = { type: 'taggedLink', tag: tagName } as const;
+            return (
+              <DropdownMenuItem
+                key={tagName}
+                onClick={() =>
+                  setTextAndState(
+                    ...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch)
+                  )
+                }
+                data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
+              >
+                {label}
+              </DropdownMenuItem>
+            );
+          }
+        )}
       </DropdownMenuList>
     </DropdownMenu>
   );
