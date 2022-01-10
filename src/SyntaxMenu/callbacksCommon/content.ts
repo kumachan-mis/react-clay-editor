@@ -3,7 +3,7 @@ import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
 import { TextSelection } from '../../Selection/types';
 import { copySelection, selectionToRange } from '../../Selection/utils';
-import { ContentNode, LineNode, NormalNode } from '../../parser/types';
+import { ContentNode, LineNode, NormalNode, PureLineNode } from '../../parser/types';
 import { isPureLineNode } from '../../parser/utils';
 import { ContentPosition } from '../types';
 
@@ -40,9 +40,9 @@ export function substituteContentAtCursor(
   getContent: (rawContent: string) => string = (rawContent) => rawContent
 ): [string, State] {
   const lineNode = nodes[contentPosition.lineIndex];
-  if (!state.cursorCoordinate || !isPureLineNode(lineNode) || isEndPoint(contentPosition)) return [text, state];
-  const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-  if (contentNode.type === 'normal') return [text, state];
+  if (!state.cursorCoordinate || !isPureLineNode(lineNode)) return [text, state];
+  const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition, !!config.nestedSearch);
+  if (!contentNode || contentNode.type === 'normal') return [text, state];
 
   const line = text.split('\n')[contentPosition.lineIndex];
   const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
@@ -150,9 +150,9 @@ export function splitContentByTextSelection(
   getContent: (rawContent: string) => string = (rawContent) => rawContent
 ): [string, State] {
   const lineNode = nodes[contentPosition.lineIndex];
-  if (!state.textSelection || !isPureLineNode(lineNode) || isEndPoint(contentPosition)) return [text, state];
-  const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-  if (contentNode.type === 'normal') return [text, state];
+  if (!state.textSelection || !isPureLineNode(lineNode)) return [text, state];
+  const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition, !!config.nestedSearch);
+  if (!contentNode || contentNode.type === 'normal') return [text, state];
 
   const line = text.split('\n')[contentPosition.lineIndex];
   const { cursorCoordinate, textSelection } = state;
@@ -240,4 +240,20 @@ export function splitContentByTextSelection(
     newText,
     { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
+}
+
+function getContentNodeIfNonEndPoint(
+  lineNode: PureLineNode,
+  contentPosition: ContentPosition,
+  nestedSearch: boolean
+): ContentNode | undefined {
+  if (isEndPoint(contentPosition)) return undefined;
+  const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
+  if (!nestedSearch || contentPosition.type !== 'nested' || contentNode.type !== 'decoration') {
+    return contentNode;
+  }
+
+  if (isEndPoint(contentPosition.childPosition)) return undefined;
+  const childContentNode = contentNode.children[contentPosition.childPosition.contentIndexes[0]];
+  return childContentNode;
 }

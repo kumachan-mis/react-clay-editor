@@ -7,4 +7,5 @@ export interface ContentConfig {
 export interface ContentMetaConfig {
   facingMeta: string;
   trailingMeta: string;
+  nestedSearch?: boolean;
 }

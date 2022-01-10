@@ -1,5 +1,5 @@
 import { State } from '../../Editor/types';
-import { ItemizationNode, LineNode, NormalLineNode, QuotationNode } from '../../parser/types';
+import { ContentNode, LineNode, PureLineNode } from '../../parser/types';
 import { isPureLineNode, getTagName } from '../../parser/utils';
 import {
   insertContentAtCursor,
@@ -26,9 +26,9 @@ export function linkMenuSwitch(
   if (!contentPosition) return 'disabled';
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return 'disabled';
-  if (isEndPoint(contentPosition)) return 'off';
+  const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+  if (!contentNode) return 'off';
 
-  const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
   if (contentNode.type === menu) return 'on';
   if (contentNode.type === 'normal') return 'off';
   return 'disabled';
@@ -48,45 +48,45 @@ export function handleOnLinkItemClick(
   const config = getLinkMeta(menuItem);
 
   function handleItemOffWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (!isEndPoint(contentPosition) && contentNode.type !== 'normal') return [text, state];
+    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    if (contentNode && contentNode.type !== 'normal') return [text, state];
     return showSuggestion(insertContentAtCursor(text, nodes, state, config));
   }
 
   function handleItemOnWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (contentNode.type !== menuItem.type) return [text, state];
-    let substitutionConfig = { facingMeta: '', trailingMeta: '' };
+    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
+    let substitutionConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
-      substitutionConfig = { facingMeta: config.facingMeta, trailingMeta: config.trailingMeta };
+      substitutionConfig = config;
     }
     return substituteContentAtCursor(text, nodes, contentPosition, state, substitutionConfig, onContent);
   }
 
   function handleItemOffWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (contentNode.type !== 'normal') return [text, state];
+    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    if (contentNode && contentNode.type !== 'normal') return [text, state];
     return createContentByTextSelection(text, nodes, state, config, offContent);
   }
 
   function handleItemOnWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (contentNode.type !== menuItem.type) return [text, state];
-    let substitutionConfig = { facingMeta: '', trailingMeta: '' };
+    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
+    let substitutionConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
-      substitutionConfig = { facingMeta: config.facingMeta, trailingMeta: config.trailingMeta };
+      substitutionConfig = config;
     }
     return substituteContentAtCursor(text, nodes, contentPosition, state, substitutionConfig, onContent);
   }
@@ -122,13 +122,44 @@ export function handleOnLinkItemClick(
 
 function getLinkMeta(
   menuItem: { type: 'bracketLink' } | { type: 'taggedLink'; tag: string } | { type: 'hashtag' }
-): ContentConfig & { suggestionStart: number } {
+): ContentConfig & { nestedSearch: true; suggestionStart: number } {
   switch (menuItem.type) {
     case 'bracketLink':
-      return { facingMeta: '[', content: 'bracket link', trailingMeta: ']', suggestionStart: 0 };
+      return {
+        facingMeta: '[',
+        content: 'bracket link',
+        trailingMeta: ']',
+        nestedSearch: true,
+        suggestionStart: 0,
+      };
     case 'taggedLink':
-      return { facingMeta: `[${menuItem.tag}: `, content: 'tagged link', trailingMeta: ']', suggestionStart: 1 };
+      return {
+        facingMeta: `[${menuItem.tag}: `,
+        content: 'tagged link',
+        trailingMeta: ']',
+        nestedSearch: true,
+        suggestionStart: 1,
+      };
     case 'hashtag':
-      return { facingMeta: '#', content: 'hashtag_link ', trailingMeta: '', suggestionStart: 0 };
+      return {
+        facingMeta: '#',
+        content: 'hashtag_link ',
+        trailingMeta: '',
+        nestedSearch: true,
+        suggestionStart: 0,
+      };
   }
+}
+
+function getContentNodeIfNonEndPoint(
+  lineNode: PureLineNode,
+  contentPosition: ContentPosition
+): ContentNode | undefined {
+  if (isEndPoint(contentPosition)) return undefined;
+  const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
+  if (contentPosition.type !== 'nested' || contentNode.type !== 'decoration') return contentNode;
+
+  if (isEndPoint(contentPosition.childPosition)) return undefined;
+  const childContentNode = contentNode.children[contentPosition.childPosition.contentIndexes[0]];
+  return childContentNode;
 }

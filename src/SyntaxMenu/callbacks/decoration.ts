@@ -1,5 +1,5 @@
 import { State } from '../../Editor/types';
-import { ItemizationNode, LineNode, NormalLineNode, QuotationNode } from '../../parser/types';
+import { LineNode, PureLineNode } from '../../parser/types';
 import { isPureLineNode } from '../../parser/utils';
 import {
   createContentByTextSelection,
@@ -109,7 +109,7 @@ function handleOnBracketDecorationItemClick(
   const meta = { bold: '*', italic: '/', underline: '_' }[menuItem];
 
   function handleItemOffWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -128,7 +128,7 @@ function handleOnBracketDecorationItemClick(
   }
 
   function handleItemOnWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -148,7 +148,7 @@ function handleOnBracketDecorationItemClick(
   }
 
   function handleItemOffWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -167,7 +167,7 @@ function handleOnBracketDecorationItemClick(
   }
 
   function handleItemOnWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -222,7 +222,7 @@ function handleOnMarkdownDecorationItemClick(
   const meta = { bold: '*', italic: '_' }[menuItem];
 
   function handleItemOffWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -232,7 +232,7 @@ function handleOnMarkdownDecorationItemClick(
   }
 
   function handleItemOnWithoutSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -241,7 +241,7 @@ function handleOnMarkdownDecorationItemClick(
   }
 
   function handleItemOffWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -251,7 +251,7 @@ function handleOnMarkdownDecorationItemClick(
   }
 
   function handleItemOnWithSelection(
-    lineNode: NormalLineNode | ItemizationNode | QuotationNode,
+    lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
