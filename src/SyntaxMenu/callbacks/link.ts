@@ -26,7 +26,7 @@ export function linkMenuSwitch(
   if (!contentPosition) return 'disabled';
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return 'disabled';
-  const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+  const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
   if (!contentNode) return 'off';
 
   if (contentNode.type === menu) return 'on';
@@ -51,7 +51,7 @@ export function handleOnLinkItemClick(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (contentNode && contentNode.type !== 'normal') return [text, state];
     return showSuggestion(insertContentAtCursor(text, nodes, state, config));
   }
@@ -60,7 +60,7 @@ export function handleOnLinkItemClick(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
     let substitutionConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
@@ -73,7 +73,7 @@ export function handleOnLinkItemClick(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (contentNode && contentNode.type !== 'normal') return [text, state];
     return createContentByTextSelection(text, nodes, state, config, offContent);
   }
@@ -82,7 +82,7 @@ export function handleOnLinkItemClick(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, State] {
-    const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition);
+    const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
     let substitutionConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
@@ -151,7 +151,7 @@ function getLinkMeta(
   }
 }
 
-function getContentNodeIfNonEndPoint(
+function getNestedContentNodeIfNonEndPoint(
   lineNode: PureLineNode,
   contentPosition: ContentPosition
 ): ContentNode | undefined {
