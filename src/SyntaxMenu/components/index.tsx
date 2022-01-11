@@ -22,10 +22,13 @@ export const MenuContainer: React.FC<MenuContainerProps> = ({ className, childre
   );
 };
 
-export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ className, children, ...rest }) => {
+export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ active, className, children, ...rest }) => {
   const constants = ComponentConstants.iconButtonMenu;
+  let buttonClassName = mergeClassNames(className, constants.className);
+  if (active) buttonClassName = mergeClassNames(buttonClassName, ComponentConstants.active.className);
+
   return (
-    <button className={mergeClassNames(className, constants.className)} role="menuitem" {...rest}>
+    <button className={buttonClassName} role="menuitem" {...rest}>
       {children}
     </button>
   );
@@ -42,6 +45,7 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   onOpen,
   onClose,
   buttonProps,
+  active,
   disabled,
   className,
   children,
@@ -71,6 +75,7 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
   const constants = ComponentConstants.dropdownMenuAnchor;
 
   let anchorClassName = mergeClassNames(className, constants.className);
+  if (active) anchorClassName = mergeClassNames(anchorClassName, ComponentConstants.active.className);
   if (disabled) anchorClassName = mergeClassNames(anchorClassName, ComponentConstants.disabled.className);
 
   const { className: buttonClassName, disabled: buttonDisabled, ...buttonRest } = buttonProps || {};
@@ -128,9 +133,16 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
   );
 };
 
-export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({ disabled, className, children, ...rest }) => {
+export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({
+  active,
+  disabled,
+  className,
+  children,
+  ...rest
+}) => {
   const constants = ComponentConstants.dropdownMenuItem;
   let itemClassName = mergeClassNames(className, constants.className);
+  if (active) itemClassName = mergeClassNames(itemClassName, ComponentConstants.active.className);
   if (disabled) itemClassName = mergeClassNames(itemClassName, ComponentConstants.disabled.className);
 
   return (

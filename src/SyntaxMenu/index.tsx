@@ -151,6 +151,7 @@ const SectionMenu: React.FC<SectionMenuProps & LineMenuProps & CommonMenuProps> 
         open={open}
         onOpen={onOpen}
         onClose={onClose}
+        active={menuSwitch !== 'off' && menuSwitch !== 'disabled'}
         disabled={disabled || menuSwitch === 'disabled'}
         buttonProps={{
           onClick: () => setTextAndState(...handleOnSectionButtonClick(text, nodes, state, props, menuSwitch)),
@@ -161,18 +162,21 @@ const SectionMenu: React.FC<SectionMenuProps & LineMenuProps & CommonMenuProps> 
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuItem
+          active={menuSwitch === 'normal'}
           onClick={() => setTextAndState(...handleOnSectionItemClick(text, nodes, state, props, 'normal', menuSwitch))}
           data-testid={createTestId(SectionMenuConstants.items.normal.testId)}
         >
           {normalLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
+          active={menuSwitch === 'larger'}
           onClick={() => setTextAndState(...handleOnSectionItemClick(text, nodes, state, props, 'larger', menuSwitch))}
           data-testid={createTestId(SectionMenuConstants.items.larger.testId)}
         >
           {largerLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
+          active={menuSwitch === 'largest'}
           onClick={() => setTextAndState(...handleOnSectionItemClick(text, nodes, state, props, 'largest', menuSwitch))}
           data-testid={createTestId(SectionMenuConstants.items.largest.testId)}
         >
@@ -203,6 +207,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMen
         open={open}
         onOpen={onOpen}
         onClose={onClose}
+        active={menuSwitch === 'allon'}
         disabled={disabled || menuSwitch === 'disabled'}
         buttonProps={{
           onClick: () => setTextAndState(...handleOnItemizationButtonClick(text, nodes, state, props, menuSwitch)),
@@ -248,6 +253,7 @@ const BoldMenu: React.FC<BoldMenuProps & ContentMenuProps & CommonMenuProps> = (
 
   return (
     <IconButtonMenu
+      active={menuSwitch.bold === 'on'}
       disabled={disabled || menuSwitch.bold === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'bold', menuSwitch))
@@ -273,6 +279,7 @@ const ItalicMenu: React.FC<ItalicMenuProps & ContentMenuProps & CommonMenuProps>
 
   return (
     <IconButtonMenu
+      active={menuSwitch.italic === 'on'}
       disabled={disabled || menuSwitch.italic === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'italic', menuSwitch))
@@ -298,6 +305,7 @@ const UnderlineMenu: React.FC<UnderlineMenuProps & ContentMenuProps & CommonMenu
 
   return (
     <IconButtonMenu
+      active={menuSwitch.underline === 'on'}
       disabled={disabled || menuSwitch.underline === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'underline', menuSwitch))
@@ -326,6 +334,7 @@ const BracketMenu: React.FC<BracketMenuProps & CommonMenuProps & ContentMenuProp
 
   return (
     <IconButtonMenu
+      active={menuSwitch === 'on'}
       disabled={disabled || menuSwitch === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch))
@@ -354,6 +363,7 @@ const HashtagMenu: React.FC<HashtagMenuProps & ContentMenuProps & CommonMenuProp
 
   return (
     <IconButtonMenu
+      active={menuSwitch === 'on'}
       disabled={disabled || menuSwitch === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch))
@@ -397,6 +407,7 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & Commo
         open={open}
         onOpen={onOpen}
         onClose={onClose}
+        active={menuSwitch === 'on'}
         disabled={disabled || !tags || tagEntries.length === 0 || menuSwitch === 'disabled'}
         buttonProps={{ onClick: handleOnButtonClick }}
         data-testid={createTestId(TaggedLinkMenuConstants.testId)}
@@ -411,6 +422,7 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & Commo
             return (
               <DropdownMenuItem
                 key={tagName}
+                active={tagNameOrUndefined === tagName}
                 onClick={() =>
                   setTextAndState(
                     ...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch)
@@ -452,6 +464,7 @@ const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & Com
         open={open}
         onOpen={onOpen}
         onClose={onClose}
+        active={inlineMenuSwitch === 'on' || blockMenuSwitch === 'on'}
         disabled={disabled || (inlineMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled')}
         buttonProps={{
           onClick: () =>
@@ -475,6 +488,7 @@ const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & Com
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuItem
+          active={inlineMenuSwitch === 'on'}
           disabled={inlineMenuSwitch === 'disabled'}
           onClick={() =>
             setTextAndState(...handleOnInlineCodeItemClick(text, lineNodes, contentPosition, state, inlineMenuSwitch))
@@ -484,6 +498,7 @@ const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & Com
           {inlineLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
+          active={blockMenuSwitch === 'on'}
           disabled={blockMenuSwitch === 'disabled'}
           onClick={() =>
             setTextAndState(...handleOnBlockCodeItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
@@ -522,6 +537,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
         open={open}
         onOpen={onOpen}
         onClose={onClose}
+        active={contentMenuSwitch === 'inline' || contentMenuSwitch === 'display' || blockMenuSwitch === 'on'}
         disabled={disabled || (contentMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled')}
         buttonProps={{
           onClick: () =>
@@ -545,6 +561,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuItem
+          active={contentMenuSwitch === 'inline'}
           disabled={contentMenuSwitch === 'disabled'}
           onClick={() =>
             setTextAndState(
@@ -556,6 +573,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
           {inlineLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
+          active={contentMenuSwitch === 'display'}
           disabled={contentMenuSwitch === 'disabled'}
           onClick={() =>
             setTextAndState(
@@ -567,6 +585,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
           {displayLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
+          active={blockMenuSwitch === 'on'}
           disabled={blockMenuSwitch === 'disabled'}
           onClick={() =>
             setTextAndState(...handleOnBlockFormulaItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
@@ -600,6 +619,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuPro
         open={open}
         onOpen={onOpen}
         onClose={onClose}
+        active={menuSwitch === 'allon'}
         disabled={disabled || menuSwitch === 'disabled'}
         buttonProps={{
           onClick: () => setTextAndState(...handleOnQuotationButtonClick(text, nodes, state, props, menuSwitch)),

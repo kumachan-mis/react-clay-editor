@@ -1,6 +1,9 @@
 export type MenuContainerProps = Omit<React.ComponentProps<'div'>, 'ref'>;
 
-export type IconButtonMenuProps = React.ComponentProps<'button'>;
+export type IconButtonMenuProps = {
+  active?: boolean;
+  disabled?: boolean;
+} & React.ComponentProps<'button'>;
 
 export type DropdownMenuProps = React.ComponentProps<'span'>;
 
@@ -9,6 +12,7 @@ export type DropdownMenuAnchorProps = {
   onOpen: (anchorEl: HTMLElement) => void;
   onClose: () => void;
   buttonProps?: React.ComponentProps<'button'>;
+  active?: boolean;
   disabled?: boolean;
 } & React.ComponentProps<'div'>;
 
@@ -18,5 +22,6 @@ export type DropdownMenuListProps = {
 } & React.ComponentProps<'ul'>;
 
 export type DropdownMenuItemProps = {
+  active?: boolean;
   disabled?: boolean;
 } & React.ComponentProps<'li'>;

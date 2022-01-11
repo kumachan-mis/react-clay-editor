@@ -33,7 +33,7 @@
   white-space: nowrap;
   text-align: center;
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 .suggestionContainer {
@@ -58,9 +58,9 @@
 }
 
 .suggestionItem[aria-selected='true'] {
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: #eff7ff;
 }
 
 .suggestionItem:hover {
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: #d9e9f7;
 }

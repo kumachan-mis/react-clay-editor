@@ -97,10 +97,6 @@
   cursor: pointer;
 }
 
-.dropdownMenuItem[aria-selected='true'] {
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
 .dropdownMenuItem:hover {
   background-color: rgba(0, 0, 0, 0.12);
 }
@@ -111,6 +107,18 @@
 
 .absolute {
   position: absolute;
+}
+
+.iconButton.menuActive,
+.dropdownAnchor.menuActive,
+.dropdownMenuItem.menuActive {
+  background-color: #d9ebff;
+}
+
+.iconButton.menuActive:hover,
+.dropdownAnchor.menuActive:hover,
+.dropdownMenuItem.menuActive:hover {
+  background-color: #d9e9f7;
 }
 
 .iconButton:disabled,
