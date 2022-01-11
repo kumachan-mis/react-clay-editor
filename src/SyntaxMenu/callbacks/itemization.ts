@@ -20,7 +20,8 @@ export function handleOnItemizationButtonClick(
   props: MenuHandler<ItemizationMenuProps>,
   menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
-  return handleOnLineMenuClick(text, nodes, state, props, 'button', menuSwitch, 'itemization');
+  const meta = !props.syntax || props.syntax === 'bracket' ? ' ' : '- ';
+  return handleOnLineMenuClick(text, nodes, state, 'button', menuSwitch, meta);
 }
 
 export function handleOnItemizationItemClick(
@@ -31,5 +32,6 @@ export function handleOnItemizationItemClick(
   menuItem: 'indent' | 'outdent',
   menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
-  return handleOnLineMenuClick(text, nodes, state, props, menuItem, menuSwitch, 'itemization');
+  const meta = !props.syntax || props.syntax === 'bracket' ? ' ' : '- ';
+  return handleOnLineMenuClick(text, nodes, state, menuItem, menuSwitch, meta);
 }

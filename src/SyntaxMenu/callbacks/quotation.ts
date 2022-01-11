@@ -20,7 +20,7 @@ export function handleOnQuotationButtonClick(
   props: MenuHandler<QuotationMenuProps>,
   menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
-  return handleOnLineMenuClick(text, nodes, state, props, 'button', menuSwitch, 'quotation');
+  return handleOnLineMenuClick(text, nodes, state, 'button', menuSwitch, '> ');
 }
 
 export function handleOnQuotationItemClick(
@@ -31,5 +31,5 @@ export function handleOnQuotationItemClick(
   menuItem: 'indent' | 'outdent',
   menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled'
 ): [string, State] {
-  return handleOnLineMenuClick(text, nodes, state, props, menuItem, menuSwitch, 'quotation');
+  return handleOnLineMenuClick(text, nodes, state, menuItem, menuSwitch, '> ');
 }
