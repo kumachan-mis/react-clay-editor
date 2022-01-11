@@ -8,7 +8,7 @@ import {
   handleOnItemizationButtonClick,
   handleOnItemizationItemClick,
 } from './callbacks/itemization';
-import { handleOnLinkItemClick, linkMenuSwitch } from './callbacks/link';
+import { linkMenuSwitch, getTagNameAtPosition, handleOnLinkItemClick } from './callbacks/link';
 import { quotationMenuSwitch, handleOnQuotationButtonClick, handleOnQuotationItemClick } from './callbacks/quotation';
 import { sectionMenuSwitch, handleOnSectionButtonClick, handleOnSectionItemClick } from './callbacks/section';
 import { MenuHandler } from './callbacks/types';
@@ -346,11 +346,12 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const tagEntries = Object.entries(tags || {});
   const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'taggedLink');
+  const tagNameOrUndefined = getTagNameAtPosition(nodes, contentPosition);
   const { defaultLabel } = TaggedLinkMenuConstants.items;
 
   let handleOnButtonClick = undefined;
-  if (tagEntries.length > 0) {
-    const [tagName, linkProps] = tagEntries[0];
+  if (tags && tagEntries.length > 0) {
+    const [tagName, linkProps] = tagNameOrUndefined ? [tagNameOrUndefined, tags[tagNameOrUndefined]] : tagEntries[0];
     const defaultLinkProps = { label: defaultLabel(tagName), suggestions: [], initialSuggestionIndex: 0 };
     const props: MenuHandler<TaggedLinkMenuProps> = { syntax, ...defaultLinkProps, ...linkProps };
     const menuItem = { type: 'taggedLink', tag: tagName } as const;
@@ -364,7 +365,7 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        disabled={disabled || tagEntries.length === 0 || menuSwitch === 'disabled'}
+        disabled={disabled || !tags || tagEntries.length === 0 || menuSwitch === 'disabled'}
         buttonProps={{ onClick: handleOnButtonClick }}
         data-testid={createTestId(TaggedLinkMenuConstants.testId)}
       >

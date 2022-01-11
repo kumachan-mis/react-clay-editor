@@ -34,6 +34,18 @@ export function linkMenuSwitch(
   return 'disabled';
 }
 
+export function getTagNameAtPosition(
+  nodes: LineNode[],
+  contentPosition: ContentPosition | undefined
+): string | undefined {
+  if (!contentPosition) return undefined;
+  const lineNode = nodes[contentPosition.lineIndex];
+  if (!isPureLineNode(lineNode)) return undefined;
+  const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
+  if (!contentNode || contentNode.type !== 'taggedLink') return undefined;
+  return getTagName(contentNode.facingMeta);
+}
+
 export function handleOnLinkItemClick(
   text: string,
   nodes: LineNode[],
@@ -45,7 +57,7 @@ export function handleOnLinkItemClick(
 ): [string, State] {
   const offContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll(' ', '_') + ' ' : content);
   const onContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll('_', ' ') : content);
-  const config = getLinkMeta(menuItem);
+  const [config, suggestionStart] = getLinkMeta(menuItem);
 
   function handleItemOffWithoutSelection(
     lineNode: PureLineNode,
@@ -62,11 +74,11 @@ export function handleOnLinkItemClick(
   ): [string, State] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
-    let substitutionConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
-      substitutionConfig = config;
+      return substituteContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }
-    return substituteContentAtCursor(text, nodes, contentPosition, state, substitutionConfig, onContent);
+    const normalConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
+    return hideSuggestion(substituteContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
   }
 
   function handleItemOffWithSelection(
@@ -84,18 +96,21 @@ export function handleOnLinkItemClick(
   ): [string, State] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
-    let substitutionConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
-      substitutionConfig = config;
+      return substituteContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }
-    return substituteContentAtCursor(text, nodes, contentPosition, state, substitutionConfig, onContent);
+    const normalConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
+    return hideSuggestion(substituteContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
   }
 
   function showSuggestion([newText, newState]: [string, State]): [string, State] {
     if ((newText === text && newState === state) || props.suggestions.length === 0) return [newText, newState];
     const { suggestions, initialSuggestionIndex: suggestionIndex } = props;
-    const { suggestionStart } = config;
     return [newText, { ...newState, suggestionType: menuItem.type, suggestions, suggestionIndex, suggestionStart }];
+  }
+
+  function hideSuggestion([newText, newState]: [string, State]): [string, State] {
+    return [newText, { ...newState, suggestionType: 'none', suggestions: [], suggestionIndex: -1, suggestionStart: 0 }];
   }
 
   if (!state.cursorCoordinate || !contentPosition || menuSwitch === 'disabled') return [text, state];
@@ -122,32 +137,14 @@ export function handleOnLinkItemClick(
 
 function getLinkMeta(
   menuItem: { type: 'bracketLink' } | { type: 'taggedLink'; tag: string } | { type: 'hashtag' }
-): ContentConfig & { nestedSearch: true; suggestionStart: number } {
+): [ContentConfig, number] {
   switch (menuItem.type) {
     case 'bracketLink':
-      return {
-        facingMeta: '[',
-        content: 'bracket link',
-        trailingMeta: ']',
-        nestedSearch: true,
-        suggestionStart: 0,
-      };
+      return [{ facingMeta: '[', content: 'bracket link', trailingMeta: ']', nestedSearch: true }, 0];
     case 'taggedLink':
-      return {
-        facingMeta: `[${menuItem.tag}: `,
-        content: 'tagged link',
-        trailingMeta: ']',
-        nestedSearch: true,
-        suggestionStart: 1,
-      };
+      return [{ facingMeta: `[${menuItem.tag}: `, content: 'tagged link', trailingMeta: ']', nestedSearch: true }, 1];
     case 'hashtag':
-      return {
-        facingMeta: '#',
-        content: 'hashtag_link ',
-        trailingMeta: '',
-        nestedSearch: true,
-        suggestionStart: 0,
-      };
+      return [{ facingMeta: '#', content: 'hashtag_link ', trailingMeta: '', nestedSearch: true }, 0];
   }
 }
 
