@@ -235,9 +235,6 @@ export function splitContentByTextSelection(
     newTextSelection.fixed.charIndex += fixedMoveAmount;
     newTextSelection.free.charIndex += freeMoveAmount;
   }
-  console.log('cursor:', coordinateMoveAmount);
-  console.log('fixed:', fixedMoveAmount);
-  console.log('free:', freeMoveAmount);
 
   return [
     newText,
