@@ -5,6 +5,7 @@ import { TextSelection } from '../../Selection/types';
 import { copySelection } from '../../Selection/utils';
 import { LineNode } from '../../parser/types';
 import { isPureLineNode } from '../../parser/utils';
+import { getLineRange } from '../utils';
 
 import { undefinedIfZeroSelection } from './utils';
 
@@ -65,7 +66,7 @@ export function handleOnLineMenuClick(
       const lineNode = nodes[lineIndex];
       if (lineNode.type !== 'itemization' && lineNode.type !== 'quotation') continue;
 
-      const moveCharIndexByMetaDeletion = (charIndex: number): number => {
+      const newCharIndex = (charIndex: number): number => {
         const newCharIndex = charIndex - lineNode.indentDepth - meta.length;
         return newCharIndex >= 0 ? newCharIndex : 0;
       };
@@ -77,13 +78,13 @@ export function handleOnLineMenuClick(
       };
       [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, textSelection }, '');
       if (newCursorCoordinate.lineIndex === lineIndex) {
-        newCursorCoordinate.charIndex = moveCharIndexByMetaDeletion(newCursorCoordinate.charIndex);
+        newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
       }
       if (newTextSelection && newTextSelection.fixed.lineIndex === lineIndex) {
-        newTextSelection.fixed.charIndex = moveCharIndexByMetaDeletion(newTextSelection.fixed.charIndex);
+        newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
       }
       if (newTextSelection && newTextSelection.free.lineIndex === lineIndex) {
-        newTextSelection.free.charIndex = moveCharIndexByMetaDeletion(newTextSelection.free.charIndex);
+        newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
       }
     }
   }
@@ -113,7 +114,7 @@ export function handleOnLineMenuClick(
       if (lineNode.type !== 'itemization' && lineNode.type !== 'quotation') continue;
 
       const deletionLength = lineNode.indentDepth === 0 ? meta.length : 1;
-      const moveCharIndexByMetaDeletion = (charIndex: number): number => {
+      const newCharIndex = (charIndex: number): number => {
         const newCharIndex = charIndex - deletionLength;
         return newCharIndex >= 0 ? newCharIndex : 0;
       };
@@ -124,13 +125,13 @@ export function handleOnLineMenuClick(
       };
       [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, textSelection }, '');
       if (newCursorCoordinate.lineIndex === lineIndex) {
-        newCursorCoordinate.charIndex = moveCharIndexByMetaDeletion(newCursorCoordinate.charIndex);
+        newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
       }
       if (newTextSelection && newTextSelection.fixed.lineIndex === lineIndex) {
-        newTextSelection.fixed.charIndex = moveCharIndexByMetaDeletion(newTextSelection.fixed.charIndex);
+        newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
       }
       if (newTextSelection && newTextSelection.free.lineIndex === lineIndex) {
-        newTextSelection.free.charIndex = moveCharIndexByMetaDeletion(newTextSelection.free.charIndex);
+        newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
       }
     }
   }
@@ -155,11 +156,4 @@ export function handleOnLineMenuClick(
     newText,
     { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
-}
-
-function getLineRange(cursorCoordinate: CursorCoordinate, textSelection: TextSelection | undefined): [number, number] {
-  let [firstLineIndex, lastLineIndex] = [cursorCoordinate.lineIndex, cursorCoordinate.lineIndex];
-  if (textSelection) [firstLineIndex, lastLineIndex] = [textSelection.fixed.lineIndex, textSelection.free.lineIndex];
-  if (firstLineIndex > lastLineIndex) [firstLineIndex, lastLineIndex] = [lastLineIndex, firstLineIndex];
-  return [firstLineIndex, lastLineIndex];
 }

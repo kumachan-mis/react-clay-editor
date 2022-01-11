@@ -86,11 +86,24 @@ export interface QuotationMenuProps {
   disabled?: boolean;
 }
 
-export interface MenuCommonProps {
+export interface ContentMenuProps {
+  lineNodes: LineNode[];
+  contentPosition: ContentPosition | undefined;
+}
+
+export interface LineMenuProps {
+  lineNodes: LineNode[];
+}
+
+export interface BlockMenuProps {
+  lineNodes: LineNode[];
+  nodes: (LineNode | BlockNode)[];
+  blockPosition: BlockPosition | undefined;
+}
+
+export interface CommonMenuProps {
   text: string;
   state: State;
-  nodes: LineNode[];
-  contentPosition: ContentPosition | undefined;
   setTextAndState: (text: string, state: State) => void;
   syntax?: 'bracket' | 'markdown';
 }
@@ -143,4 +156,8 @@ export interface ContentPositionNested {
   lineIndex: number;
   contentIndexes: [number];
   childPosition: Exclude<ContentPosition, ContentPositionEmpty | ContentPositionNested>;
+}
+
+export interface BlockPosition {
+  blockIndex: number;
 }

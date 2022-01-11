@@ -58,8 +58,8 @@ describe('UI of SyntaxMenu (bracket syntax)', () => {
     'uiItemizationMenuBracket',
     'uiDecorationMenuBracket',
     'uiLinkMenuCommon',
-    // 'uiCodeMenuCommon',
-    // 'uiFormulaMenuCommon',
+    'uiCodeMenuCommon',
+    'uiFormulaMenuCommon',
     'uiQuotationMenuCommon',
   ]) {
     runFixtureTests<TestCase>('SyntaxMenu', fixtureName, testfun);
@@ -77,8 +77,8 @@ describe('UI of SyntaxMenu (markdown syntax)', () => {
     'uiItemizationMenuMarkdown',
     'uiDecorationMenuMarkdown',
     'uiLinkMenuCommon',
-    // 'uiCodeMenuCommon',
-    // 'uiFormulaMenuCommon',
+    'uiCodeMenuCommon',
+    'uiFormulaMenuCommon',
     'uiQuotationMenuCommon',
   ]) {
     runFixtureTests<TestCase, Common | undefined>('SyntaxMenu', fixtureName, testfun);

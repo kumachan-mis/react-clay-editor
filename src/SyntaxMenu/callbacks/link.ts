@@ -59,12 +59,7 @@ export function handleOnLinkItemClick(
   const onContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll('_', ' ') : content);
   const [config, suggestionStart] = getLinkMeta(menuItem);
 
-  function handleItemOffWithoutSelection(
-    lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
-    const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
-    if (contentNode && contentNode.type !== 'normal') return [text, state];
+  function handleItemOffWithoutSelection(): [string, State] {
     return showSuggestion(insertContentAtCursor(text, nodes, state, config));
   }
 
@@ -81,12 +76,7 @@ export function handleOnLinkItemClick(
     return hideSuggestion(substituteContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
   }
 
-  function handleItemOffWithSelection(
-    lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
-    const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
-    if (contentNode && contentNode.type !== 'normal') return [text, state];
+  function handleItemOffWithSelection(): [string, State] {
     return createContentByTextSelection(text, nodes, state, config, offContent);
   }
 
@@ -122,13 +112,13 @@ export function handleOnLinkItemClick(
 
   if (!state.textSelection) {
     if (menuSwitch === 'off') {
-      return handleItemOffWithoutSelection(lineNode, contentPosition);
+      return handleItemOffWithoutSelection();
     } else {
       return handleItemOnWithoutSelection(lineNode, contentPosition);
     }
   } else {
     if (menuSwitch === 'off') {
-      return handleItemOffWithSelection(lineNode, contentPosition);
+      return handleItemOffWithSelection();
     } else {
       return handleItemOnWithSelection(lineNode, contentPosition);
     }

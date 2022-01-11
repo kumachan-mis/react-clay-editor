@@ -2,7 +2,21 @@ import * as React from 'react';
 
 import { createTestId } from '../common/utils';
 
+import {
+  blockCodeMenuSwitch,
+  handleOnBlockCodeItemClick,
+  handleOnCodeButtonClick,
+  handleOnInlineCodeItemClick,
+  inlineCodeMenuSwitch,
+} from './callbacks/code';
 import { decorationMenuSwitch, handleOnDecorationClick } from './callbacks/decoration';
+import {
+  blockFormulaMenuSwitch,
+  contentFormulaMenuSwitch,
+  handleOnBlockFormulaItemClick,
+  handleOnContentFormulaItemClick,
+  handleOnFormulaButtonClick,
+} from './callbacks/formula';
 import {
   itemizationMenuSwitch,
   handleOnItemizationButtonClick,
@@ -57,13 +71,16 @@ import {
   BracketMenuProps,
   HashtagMenuProps,
   TaggedLinkMenuPropsMap,
+  TaggedLinkMenuProps,
   CodeMenuProps,
   FormulaMenuProps,
   QuotationMenuProps,
-  MenuCommonProps,
-  TaggedLinkMenuProps,
+  ContentMenuProps,
+  LineMenuProps,
+  BlockMenuProps,
+  CommonMenuProps,
 } from './types';
-import { useContentPosition, useLineNodes } from './utils';
+import { useBlockPosition, useContentPosition, useLineNodes } from './utils';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   nodes,
@@ -80,28 +97,43 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
 }) => {
   const lineNodes = useLineNodes(nodes);
   const contentPosition = useContentPosition(lineNodes, common.state.cursorCoordinate, common.state.textSelection);
+  const blockPosition = useBlockPosition(nodes, common.state.cursorCoordinate, common.state.textSelection);
 
   return (
     <MenuContainer {...containerProps}>
-      <SectionMenu {...section} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <ItemizationMenu {...itemization} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <BoldMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <ItalicMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <UnderlineMenu {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <BracketMenu {...bracket} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <HashtagMenu {...hashtag} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <TaggedLinkMenu {...taggedLink} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <CodeMenu {...code} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <FormulaMenu {...formula} {...common} nodes={lineNodes} contentPosition={contentPosition} />
-      <QuotationMenu {...quotation} {...common} nodes={lineNodes} contentPosition={contentPosition} />
+      <SectionMenu {...section} {...common} lineNodes={lineNodes} />
+      <ItemizationMenu {...itemization} {...common} lineNodes={lineNodes} />
+      <BoldMenu {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      <ItalicMenu {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      <UnderlineMenu {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      <BracketMenu {...bracket} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      <HashtagMenu {...hashtag} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      <TaggedLinkMenu {...taggedLink} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      <CodeMenu
+        {...code}
+        {...common}
+        lineNodes={lineNodes}
+        nodes={nodes}
+        contentPosition={contentPosition}
+        blockPosition={blockPosition}
+      />
+      <FormulaMenu
+        {...formula}
+        {...common}
+        lineNodes={lineNodes}
+        nodes={nodes}
+        contentPosition={contentPosition}
+        blockPosition={blockPosition}
+      />
+      <QuotationMenu {...quotation} {...common} lineNodes={lineNodes} />
     </MenuContainer>
   );
 };
 
-const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
+const SectionMenu: React.FC<SectionMenuProps & LineMenuProps & CommonMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   state,
   setTextAndState,
   disabled,
@@ -151,10 +183,10 @@ const SectionMenu: React.FC<SectionMenuProps & MenuCommonProps> = ({
   );
 };
 
-const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
+const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   state,
   setTextAndState,
   disabled,
@@ -202,10 +234,10 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & MenuCommonProps> = ({
   );
 };
 
-const BoldMenu: React.FC<BoldMenuProps & MenuCommonProps> = ({
+const BoldMenu: React.FC<BoldMenuProps & ContentMenuProps & CommonMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
@@ -227,10 +259,10 @@ const BoldMenu: React.FC<BoldMenuProps & MenuCommonProps> = ({
   );
 };
 
-const ItalicMenu: React.FC<ItalicMenuProps & MenuCommonProps> = ({
+const ItalicMenu: React.FC<ItalicMenuProps & ContentMenuProps & CommonMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
@@ -252,10 +284,10 @@ const ItalicMenu: React.FC<ItalicMenuProps & MenuCommonProps> = ({
   );
 };
 
-const UnderlineMenu: React.FC<UnderlineMenuProps & MenuCommonProps> = ({
+const UnderlineMenu: React.FC<UnderlineMenuProps & ContentMenuProps & CommonMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
@@ -277,10 +309,10 @@ const UnderlineMenu: React.FC<UnderlineMenuProps & MenuCommonProps> = ({
   );
 };
 
-const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
+const BracketMenu: React.FC<BracketMenuProps & CommonMenuProps & ContentMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
@@ -305,10 +337,10 @@ const BracketMenu: React.FC<BracketMenuProps & MenuCommonProps> = ({
   );
 };
 
-const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
+const HashtagMenu: React.FC<HashtagMenuProps & ContentMenuProps & CommonMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
@@ -333,11 +365,11 @@ const HashtagMenu: React.FC<HashtagMenuProps & MenuCommonProps> = ({
   );
 };
 
-const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
+const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & CommonMenuProps> = ({
   tags,
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
@@ -396,10 +428,13 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & MenuCommonProps> = ({
   );
 };
 
-const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
+const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & CommonMenuProps> = ({
   syntax,
   text,
+  lineNodes,
   nodes,
+  contentPosition,
+  blockPosition,
   state,
   setTextAndState,
   disabled,
@@ -407,6 +442,9 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
   blockLabel = CodeMenuConstants.items.block.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const props: MenuHandler<CodeMenuProps> = { syntax, inlineLabel, blockLabel };
+  const inlineMenuSwitch = inlineCodeMenuSwitch(lineNodes, contentPosition);
+  const blockMenuSwitch = blockCodeMenuSwitch(lineNodes, nodes, blockPosition, state);
 
   return (
     <DropdownMenu>
@@ -414,16 +452,44 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        disabled={disabled}
+        disabled={disabled || (inlineMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled')}
+        buttonProps={{
+          onClick: () =>
+            setTextAndState(
+              ...handleOnCodeButtonClick(
+                text,
+                lineNodes,
+                nodes,
+                contentPosition,
+                blockPosition,
+                state,
+                props,
+                inlineMenuSwitch,
+                blockMenuSwitch
+              )
+            ),
+        }}
         data-testid={createTestId(CodeMenuConstants.testId)}
       >
         <CodeIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(CodeMenuConstants.items.inline.testId)}>
+        <DropdownMenuItem
+          disabled={inlineMenuSwitch === 'disabled'}
+          onClick={() =>
+            setTextAndState(...handleOnInlineCodeItemClick(text, lineNodes, contentPosition, state, inlineMenuSwitch))
+          }
+          data-testid={createTestId(CodeMenuConstants.items.inline.testId)}
+        >
           {inlineLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(CodeMenuConstants.items.block.testId)}>
+        <DropdownMenuItem
+          disabled={blockMenuSwitch === 'disabled'}
+          onClick={() =>
+            setTextAndState(...handleOnBlockCodeItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
+          }
+          data-testid={createTestId(CodeMenuConstants.items.block.testId)}
+        >
           {blockLabel}
         </DropdownMenuItem>
       </DropdownMenuList>
@@ -431,10 +497,13 @@ const CodeMenu: React.FC<CodeMenuProps & MenuCommonProps> = ({
   );
 };
 
-const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
+const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps & CommonMenuProps> = ({
   syntax,
   text,
+  lineNodes,
   nodes,
+  contentPosition,
+  blockPosition,
   state,
   setTextAndState,
   disabled,
@@ -443,6 +512,9 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
   blockLabel = FormulaMenuConstants.items.block.defaultLabel,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const props: MenuHandler<FormulaMenuProps> = { syntax, inlineLabel, displayLabel, blockLabel };
+  const contentMenuSwitch = contentFormulaMenuSwitch(lineNodes, contentPosition);
+  const blockMenuSwitch = blockFormulaMenuSwitch(lineNodes, nodes, blockPosition, state);
 
   return (
     <DropdownMenu>
@@ -450,19 +522,57 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        disabled={disabled}
+        disabled={disabled || (contentMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled')}
+        buttonProps={{
+          onClick: () =>
+            setTextAndState(
+              ...handleOnFormulaButtonClick(
+                text,
+                lineNodes,
+                nodes,
+                contentPosition,
+                blockPosition,
+                state,
+                props,
+                contentMenuSwitch,
+                blockMenuSwitch
+              )
+            ),
+        }}
         data-testid={createTestId(FormulaMenuConstants.testId)}
       >
         <FormulaIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuItem data-testid={createTestId(FormulaMenuConstants.items.inline.testId)}>
+        <DropdownMenuItem
+          disabled={contentMenuSwitch === 'disabled'}
+          onClick={() =>
+            setTextAndState(
+              ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'inline', contentMenuSwitch)
+            )
+          }
+          data-testid={createTestId(FormulaMenuConstants.items.inline.testId)}
+        >
           {inlineLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(FormulaMenuConstants.items.display.testId)}>
+        <DropdownMenuItem
+          disabled={contentMenuSwitch === 'disabled'}
+          onClick={() =>
+            setTextAndState(
+              ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'display', contentMenuSwitch)
+            )
+          }
+          data-testid={createTestId(FormulaMenuConstants.items.display.testId)}
+        >
           {displayLabel}
         </DropdownMenuItem>
-        <DropdownMenuItem data-testid={createTestId(FormulaMenuConstants.items.block.testId)}>
+        <DropdownMenuItem
+          disabled={blockMenuSwitch === 'disabled'}
+          onClick={() =>
+            setTextAndState(...handleOnBlockFormulaItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
+          }
+          data-testid={createTestId(FormulaMenuConstants.items.block.testId)}
+        >
           {blockLabel}
         </DropdownMenuItem>
       </DropdownMenuList>
@@ -470,10 +580,10 @@ const FormulaMenu: React.FC<FormulaMenuProps & MenuCommonProps> = ({
   );
 };
 
-const QuotationMenu: React.FC<QuotationMenuProps & MenuCommonProps> = ({
+const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuProps> = ({
   syntax,
   text,
-  nodes,
+  lineNodes: nodes,
   state,
   setTextAndState,
   disabled,

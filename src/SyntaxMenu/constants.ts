@@ -84,7 +84,7 @@ export const FormulaMenuConstants = {
       testId: 'display-formula-menu-item',
     },
     block: {
-      defaultLabel: 'block code',
+      defaultLabel: 'block formula',
       testId: 'block-formula-menu-item',
     },
   },

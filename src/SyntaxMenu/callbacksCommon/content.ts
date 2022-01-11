@@ -176,7 +176,7 @@ export function splitContentByTextSelection(
     insertedText += contentNode.facingMeta + contentText + contentNode.trailingMeta;
     const charIndexMoveAmount = (charIndex: number): number => {
       let amount = 0;
-      if (charIndex > start + contentNode.facingMeta.length) amount += contentNode.facingMeta.length;
+      if (charIndex >= start + contentNode.facingMeta.length) amount += contentNode.facingMeta.length;
       if (charIndex >= selectionStart.charIndex) amount += contentNode.trailingMeta.length;
       return amount;
     };
@@ -192,17 +192,17 @@ export function splitContentByTextSelection(
     const contentText = getContent(rawContentText);
     insertedText += config.facingMeta + contentText + config.trailingMeta;
     const charIndexMoveAmount = (charIndex: number): number => {
-      if (charIndex <= start) {
-        return 0;
-      } else if (charIndex <= start + contentNode.facingMeta.length) {
-        return start + config.facingMeta.length - charIndex;
-      } else if (charIndex <= end - contentNode.trailingMeta.length) {
-        return -contentNode.facingMeta.length + config.facingMeta.length;
+      if (midContentStart - contentNode.facingMeta.length < charIndex && charIndex < midContentStart) {
+        return config.facingMeta.length - contentNode.facingMeta.length + midContentStart - charIndex;
       }
-      return (
-        -(contentNode.facingMeta.length + contentNode.trailingMeta.length) +
-        (config.facingMeta.length + config.trailingMeta.length)
-      );
+      if (midContentEnd < charIndex && charIndex < midContentEnd + contentNode.trailingMeta.length) {
+        return config.facingMeta.length - contentNode.facingMeta.length + midContentEnd - charIndex;
+      }
+
+      let amount = 0;
+      if (charIndex >= midContentStart) amount += config.facingMeta.length - contentNode.facingMeta.length;
+      if (charIndex > midContentEnd) amount += config.trailingMeta.length - contentNode.trailingMeta.length;
+      return amount;
     };
     if (cursorCoordinate) coordinateMoveAmount += charIndexMoveAmount(cursorCoordinate.charIndex);
     fixedMoveAmount += charIndexMoveAmount(textSelection.fixed.charIndex);
@@ -215,7 +215,7 @@ export function splitContentByTextSelection(
     const charIndexMoveAmount = (charIndex: number): number => {
       let amount = 0;
       if (charIndex > selectionEnd.charIndex) amount += contentNode.facingMeta.length;
-      if (charIndex >= end - contentNode.trailingMeta.length) amount += contentNode.trailingMeta.length;
+      if (charIndex > end - contentNode.trailingMeta.length) amount += contentNode.trailingMeta.length;
       return amount;
     };
     if (cursorCoordinate) coordinateMoveAmount += charIndexMoveAmount(cursorCoordinate.charIndex);
@@ -235,6 +235,9 @@ export function splitContentByTextSelection(
     newTextSelection.fixed.charIndex += fixedMoveAmount;
     newTextSelection.free.charIndex += freeMoveAmount;
   }
+  console.log('cursor:', coordinateMoveAmount);
+  console.log('fixed:', fixedMoveAmount);
+  console.log('free:', freeMoveAmount);
 
   return [
     newText,
