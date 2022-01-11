@@ -1,7 +1,7 @@
 import { coordinatesAreEqual } from '../../Cursor/utils';
 import { getWordSelection, getLineSelection, getSelectionText } from '../../Selection/utils';
-import { TextLinesConstants } from '../../TextLines/constants';
 import { isMacOS } from '../../common/utils';
+import { parserConstants } from '../../parser/constants';
 import { Props, State } from '../types';
 
 import { shortcutCommand } from './shortcutCommands';
@@ -21,6 +21,7 @@ import {
   handleOnMoveTextBottom,
 } from './shortcutHandlers';
 import {
+  updateSelectionByCursor,
   insertText,
   showSuggestion,
   showIMEBasedSuggestion,
@@ -63,16 +64,14 @@ export function handleOnMouseMove(
 
   if (state.selectionMouse === 'fired') return [text, { ...state, selectionMouse }];
 
+  const { cursorCoordinate, textSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  if (!cursorCoordinate || coordinatesAreEqual(cursorCoordinate, state.cursorCoordinate)) {
+  const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
+  if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
     return [text, { ...state, selectionMouse }];
   }
-
-  const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
-  const free = { ...cursorCoordinate };
-  const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection, selectionMouse }];
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate);
+  return [text, { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse }];
 }
 
 export function handleOnMouseUp(
@@ -82,16 +81,20 @@ export function handleOnMouseUp(
   element: HTMLElement | null
 ): [string, State] {
   if (!state.cursorCoordinate || state.selectionMouse === 'deactive' || !element) return [text, state];
+
+  const selectionMouse = 'deactive';
   if (!['active-in', 'active-up', 'active-down'].includes(state.selectionMouse)) {
-    return [text, { ...state, selectionMouse: 'deactive' }];
+    return [text, { ...state, selectionMouse }];
   }
 
+  const { cursorCoordinate, textSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
-  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  const fixed = state.textSelection ? state.textSelection.fixed : { ...state.cursorCoordinate };
-  const free = cursorCoordinate ? cursorCoordinate : { ...state.cursorCoordinate };
-  const textSelection = !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  return [text, { ...state, cursorCoordinate, textSelection, selectionMouse: 'deactive' }];
+  const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
+  if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
+    return [text, { ...state, selectionMouse }];
+  }
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate);
+  return [text, { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse }];
 }
 
 export function handleOnClick(
@@ -155,16 +158,16 @@ export function handleOnKeyDown(
       const lines = newText.split('\n');
       const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
 
-      const groups = newPrevLine.match(TextLinesConstants.regexes.common.quotation)?.groups;
+      const groups = newPrevLine.match(parserConstants.common.quotation)?.groups;
       if (groups) return insertText(newText, newState, groups.indent + groups.meta);
 
       if (!props.syntax || props.syntax === 'bracket') {
         // bracket syntax
-        const groups = newPrevLine.match(TextLinesConstants.regexes.bracketSyntax.itemization)?.groups;
+        const groups = newPrevLine.match(parserConstants.bracketSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       } else {
         // markdown syntax
-        const groups = newPrevLine.match(TextLinesConstants.regexes.markdownSyntax.itemization)?.groups;
+        const groups = newPrevLine.match(parserConstants.markdownSyntax.itemization)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }
 

@@ -6,8 +6,8 @@ export interface ParsingContext {
 }
 
 export interface ParsingOptions {
-  syntax: 'bracket' | 'markdown';
-  disabledMap: { [key in 'bracketLink' | 'hashTag' | 'code' | 'formula']: boolean | undefined };
+  syntax?: 'bracket' | 'markdown';
+  disables: { [key in 'bracketLink' | 'hashtag' | 'code' | 'formula']: boolean | undefined };
   taggedLinkRegexes: RegExp[];
 }
 
@@ -18,18 +18,9 @@ export interface Decoration {
   underline: boolean;
 }
 
-export type Node = LineNode | ContentNode;
+export type Node = BlockNode | LineNode | ContentNode;
 
-export type LineNode =
-  | BlockCodeNode
-  | BlockFormulaNode
-  | BlockCodeMetaNode
-  | BlockCodeLineNode
-  | BlockFormulaMetaNode
-  | BlockFormulaLineNode
-  | QuotationNode
-  | ItemizationNode
-  | NormalLineNode;
+export type BlockNode = BlockCodeNode | BlockFormulaNode;
 
 export interface BlockCodeNode {
   type: 'blockCode';
@@ -46,6 +37,10 @@ export interface BlockFormulaNode {
   children: BlockFormulaLineNode[];
   trailingMeta?: BlockFormulaMetaNode;
 }
+
+export type LineNode = BlockLineNode | PureLineNode;
+
+export type BlockLineNode = BlockCodeMetaNode | BlockCodeLineNode | BlockFormulaMetaNode | BlockFormulaLineNode;
 
 export interface BlockCodeMetaNode {
   type: 'blockCodeMeta';
@@ -75,6 +70,8 @@ export interface BlockFormulaLineNode {
   formulaLine: string;
 }
 
+export type PureLineNode = QuotationNode | ItemizationNode | NormalLineNode;
+
 export interface QuotationNode {
   type: 'quotation';
   lineIndex: number;
@@ -100,15 +97,13 @@ export interface NormalLineNode {
   children: ContentNode[];
 }
 
-export type ContentNode =
-  | InlineCodeNode
-  | DisplayFormulaNode
-  | InlineFormulaNode
-  | DecorationNode
-  | TaggedLinkNode
-  | BracketLinkNode
-  | HashTagNode
-  | NormalNode;
+export type ContentNode = ContentCodeNode | ContentFormulaNode | DecorationNode | LinkNode | NormalNode;
+
+export type ContentCodeNode = InlineCodeNode;
+
+export type ContentFormulaNode = DisplayFormulaNode | InlineFormulaNode;
+
+export type LinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode;
 
 export interface InlineCodeNode {
   type: 'inlineCode';
@@ -152,7 +147,6 @@ export interface TaggedLinkNode {
   lineIndex: number;
   range: [number, number];
   facingMeta: string;
-  tag: string;
   linkName: string;
   trailingMeta: string;
 }
@@ -166,11 +160,13 @@ export interface BracketLinkNode {
   trailingMeta: string;
 }
 
-export interface HashTagNode {
-  type: 'hashTag';
+export interface HashtagNode {
+  type: 'hashtag';
   lineIndex: number;
   range: [number, number];
-  hashTag: string;
+  facingMeta: string;
+  linkName: string;
+  trailingMeta: string;
 }
 
 export interface NormalNode {

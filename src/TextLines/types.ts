@@ -1,14 +1,12 @@
 import { CursorCoordinate } from '../Cursor/types';
-import { BracketLinkProps, HashTagProps, TaggedLinkProps, CodeProps, FormulaProps } from '../Editor/types';
-
-import { Node } from './parser/types';
+import { BracketLinkProps, HashtagProps, TaggedLinkPropsMap, CodeProps, FormulaProps } from '../common/types';
+import { Node } from '../parser/types';
 
 export interface Props {
-  text: string;
-  syntax?: 'bracket' | 'markdown';
+  nodes: Node[];
   cursorCoordinate?: CursorCoordinate;
   bracketLinkProps?: BracketLinkProps;
-  hashTagProps?: HashTagProps;
+  hashtagProps?: HashtagProps;
   taggedLinkPropsMap?: TaggedLinkPropsMap;
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
@@ -18,12 +16,10 @@ export interface Props {
 
 export interface NodeProps {
   node: Node;
-  bracketLinkProps: BracketLinkProps;
-  hashTagProps: HashTagProps;
-  taggedLinkPropsMap: TaggedLinkPropsMap;
-  codeProps: CodeProps;
-  formulaProps: FormulaProps;
+  bracketLinkProps?: BracketLinkProps;
+  hashtagProps?: HashtagProps;
+  taggedLinkPropsMap?: TaggedLinkPropsMap;
+  codeProps?: CodeProps;
+  formulaProps?: FormulaProps;
   cursorLineIndex: number | undefined;
 }
-
-export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };

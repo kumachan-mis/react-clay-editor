@@ -1,5 +1,4 @@
-import { TextLinesConstants } from '../constants';
-
+import { parserConstants } from './constants';
 import {
   parseBlockCode,
   parseBlockFormula,
@@ -9,12 +8,12 @@ import {
   parseMarkdownItemization,
   parseNormalLine,
 } from './parseLine';
-import { LineNode, ParsingContext, ParsingOptions } from './types';
+import { BlockNode, LineNode, ParsingContext, ParsingOptions } from './types';
 
-export function parseText(text: string, options: ParsingOptions): LineNode[] {
-  const { blockCodeMeta, blockFormulaMeta, quotation } = TextLinesConstants.regexes.common;
+export function parseText(text: string, options: ParsingOptions): (BlockNode | LineNode)[] {
+  const { blockCodeMeta, blockFormulaMeta, quotation } = parserConstants.common;
   const lines = text.split('\n');
-  const nodes: LineNode[] = [];
+  const nodes: (BlockNode | LineNode)[] = [];
   const context: ParsingContext = {
     lineIndex: 0,
     charIndex: 0,
@@ -22,14 +21,14 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     decoration: { fontlevel: 'normal', bold: false, italic: false, underline: false },
   };
 
-  if (options.syntax === 'bracket') {
+  if (!options.syntax || options.syntax === 'bracket') {
     // bracket syntax
-    const { itemization } = TextLinesConstants.regexes.bracketSyntax;
+    const { itemization } = parserConstants.bracketSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
-      if (!options.disabledMap.code && blockCodeMeta.test(line)) {
+      if (!options.disables.code && blockCodeMeta.test(line)) {
         nodes.push(parseBlockCode(lines, context));
-      } else if (!options.disabledMap.formula && blockFormulaMeta.test(line)) {
+      } else if (!options.disables.formula && blockFormulaMeta.test(line)) {
         nodes.push(parseBlockFormula(lines, context));
       } else if (quotation.test(line)) {
         nodes.push(parseQuotation(line, context, options));
@@ -41,12 +40,12 @@ export function parseText(text: string, options: ParsingOptions): LineNode[] {
     }
   } else {
     // markdown syntax
-    const { heading, itemization } = TextLinesConstants.regexes.markdownSyntax;
+    const { heading, itemization } = parserConstants.markdownSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
-      if (!options.disabledMap.code && blockCodeMeta.test(line)) {
+      if (!options.disables.code && blockCodeMeta.test(line)) {
         nodes.push(parseBlockCode(lines, context));
-      } else if (!options.disabledMap.formula && blockFormulaMeta.test(line)) {
+      } else if (!options.disables.formula && blockFormulaMeta.test(line)) {
         nodes.push(parseBlockFormula(lines, context));
       } else if (heading.test(line)) {
         nodes.push(parseHeading(line, context, options));

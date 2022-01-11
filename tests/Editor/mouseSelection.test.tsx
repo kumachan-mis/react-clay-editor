@@ -42,7 +42,7 @@ describe('mouseSelection in Editor', () => {
   });
 
   runFixtureTests<TestCase, Common>('Editor', 'mouseSelection', (testCase, common) => {
-    const SpiedTextLines = jest.spyOn(selection, 'Selection');
+    const SpiedSelection = jest.spyOn(selection, 'Selection');
 
     const text = common.textLines.join('\n');
     const { rerender } = render(<MockEditor initText={text} />);
@@ -69,10 +69,10 @@ describe('mouseSelection in Editor', () => {
       <div data-testid="mock-selected-text">{getSelectionText(text, textSelection)}</div>
     );
 
-    SpiedTextLines.mockImplementation(MockSelection);
+    SpiedSelection.mockImplementation(MockSelection);
     rerender(<MockEditor initText={text} />);
     expect(screen.getByTestId('mock-selected-text').textContent).toBe(expectedSelectionText);
-    SpiedTextLines.mockRestore();
+    SpiedSelection.mockRestore();
     for (const spiedGetBoundingClientRect of spiedGetBoundingClientRects) {
       spiedGetBoundingClientRect.mockRestore();
     }

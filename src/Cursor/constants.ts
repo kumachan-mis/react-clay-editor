@@ -38,14 +38,14 @@ export const CursorConstants = {
     header: {
       className: styles.suggestionHeader,
       testId: 'suggestion-header',
-      name: (suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none'): string => {
+      name: (suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none'): string => {
         switch (suggestionType) {
           case 'text':
             return 'Text Suggestion';
           case 'bracketLink':
             return 'Bracket Link Suggestion';
-          case 'hashTag':
-            return 'HashTag Suggestion';
+          case 'hashtag':
+            return 'Hashtag Suggestion';
           case 'taggedLink':
             return 'Tagged Link Suggestion';
           default:

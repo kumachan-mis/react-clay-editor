@@ -2,178 +2,84 @@ import React from 'react';
 
 import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
+import { SyntaxMenu } from '../SyntaxMenu';
 import { TextLines } from '../TextLines';
 import { mergeClassNames, createTestId } from '../common/utils';
+import { useParser } from '../parser';
 
-import {
-  handleOnMouseDown,
-  handleOnMouseMove,
-  handleOnMouseUp,
-  handleOnClick,
-  handleOnMouseScrollUp,
-  handleOnMouseScrollDown,
-  handleOnKeyDown,
-  handleOnTextChange,
-  handleOnTextCut,
-  handleOnTextCopy,
-  handleOnTextPaste,
-  handleOnTextCompositionStart,
-  handleOnTextCompositionEnd,
-  handleOnSuggectionMouseDown,
-} from './callbacks';
 import { EditorConstants } from './constants';
-import { Props, State } from './types';
+import { Props } from './types';
+import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScrollbyHoldingMouse } from './utils';
 
 export const Editor: React.FC<Props> = (props) => {
-  const [state, setState] = React.useState<State>({
-    cursorCoordinate: undefined,
-    textAreaValue: '',
-    isComposing: false,
-    textSelection: undefined,
-    selectionMouse: 'deactive',
-    historyHead: -1,
-    editActionHistory: [],
-    suggestionType: 'none',
-    suggestions: [],
-    suggestionIndex: -1,
-    suggestionStart: 0,
-  });
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const timeIdRef = React.useRef<number>(0);
+  const [state, setState, rootRef, editorRef] = useEditor();
+  const [docHandlers, rootHandlers, editorHandlers] = useMouseEventHandlers(props, state, setState, rootRef, editorRef);
+  const cursorEventHandlers = useCursorEventHandlers(props, state, setState);
+
+  useScrollbyHoldingMouse(props.text, state.selectionMouse, props.readonly, setState);
 
   React.useEffect(() => {
-    switch (state.selectionMouse) {
-      case 'active-up':
-        if (props.readonly || timeIdRef.current) break;
-        timeIdRef.current = window.setInterval(() => {
-          setState((state) => handleOnMouseScrollUp(props.text, state));
-        });
-        break;
-      case 'active-down':
-        if (props.readonly || timeIdRef.current) break;
-        timeIdRef.current = window.setInterval(() => {
-          setState((state) => handleOnMouseScrollDown(props.text, state));
-        });
-        break;
-      default:
-        if (timeIdRef.current) window.clearInterval(timeIdRef.current);
-        timeIdRef.current = 0;
-        break;
-    }
-
+    document.addEventListener('mousedown', docHandlers.onMouseDown);
     return () => {
-      if (timeIdRef.current) window.clearInterval(timeIdRef.current);
-      timeIdRef.current = 0;
+      document.removeEventListener('mousedown', docHandlers.onMouseDown);
     };
-  }, [state.selectionMouse]);
-
-  const createMouseEventHandler = React.useCallback(
-    <Event extends MouseEvent | React.MouseEvent>(
-      handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
-    ): ((event: Event) => void) => {
-      return (event) => {
-        if (props.readonly || event.button !== 0) return;
-        const [newText, newState] = handler(props.text, state, event, rootRef.current);
-        if (newState !== state) setState(newState);
-        if (newText !== props.text) props.onChangeText(newText);
-      };
-    },
-    [state, props, setState, rootRef]
-  );
-
-  const createKeyboardEventHandler = React.useCallback(
-    <Event,>(handler: (text: string, state: State, event: Event) => [string, State]): ((event: Event) => void) => {
-      return (event) => {
-        if (props.readonly) return;
-        const [newText, newState] = handler(props.text, state, event);
-        if (newState !== state) setState(newState);
-        if (newText !== props.text) props.onChangeText(newText);
-      };
-    },
-    [state, props, setState]
-  );
-
-  const createKeyboardEventHandlerWithProps = React.useCallback(
-    <Event,>(
-      handler: (text: string, props: Props, state: State, event: Event) => [string, State]
-    ): ((event: Event) => void) => {
-      return (event) => {
-        if (props.readonly) return;
-        const [newText, newState] = handler(props.text, props, state, event);
-        if (newState !== state) setState(newState);
-        if (newText !== props.text) props.onChangeText(newText);
-      };
-    },
-    [state, props, setState]
-  );
-
-  const _handleOnMouseDown = React.useCallback(
-    (event: React.MouseEvent) => createMouseEventHandler(handleOnMouseDown)(event),
-    [createMouseEventHandler]
-  );
-
-  const _handleOnMouseMove = React.useCallback(
-    (event: MouseEvent) => createMouseEventHandler(handleOnMouseMove)(event),
-    [createMouseEventHandler]
-  );
-
-  const _handleOnMouseUp = React.useCallback(
-    (event: MouseEvent) => createMouseEventHandler(handleOnMouseUp)(event),
-
-    [createMouseEventHandler]
-  );
-
-  const handleOnEditorBlur = React.useCallback(
-    (event: MouseEvent) => {
-      if (props.readonly || rootRef.current?.contains(event.target as Node)) return;
-      setState({
-        ...state,
-        cursorCoordinate: undefined,
-        textAreaValue: '',
-        isComposing: false,
-        textSelection: undefined,
-        selectionMouse: 'deactive',
-        suggestionType: 'none',
-        suggestions: [],
-        suggestionIndex: -1,
-      });
-    },
-    [props.readonly, state, setState]
-  );
+  }, [docHandlers.onMouseDown]);
 
   React.useEffect(() => {
-    document.addEventListener('mousemove', _handleOnMouseMove);
+    document.addEventListener('mousemove', docHandlers.onMouseMove);
     return () => {
-      document.removeEventListener('mousemove', _handleOnMouseMove);
+      document.removeEventListener('mousemove', docHandlers.onMouseMove);
     };
-  }, [_handleOnMouseMove]);
+  }, [docHandlers.onMouseMove]);
 
   React.useEffect(() => {
-    document.addEventListener('mouseup', _handleOnMouseUp);
+    document.addEventListener('mouseup', docHandlers.onMouseUp);
     return () => {
-      document.removeEventListener('mouseup', _handleOnMouseUp);
+      document.removeEventListener('mouseup', docHandlers.onMouseUp);
     };
-  }, [_handleOnMouseUp]);
+  }, [docHandlers.onMouseUp]);
 
-  React.useEffect(() => {
-    document.addEventListener('mousedown', handleOnEditorBlur);
-    return () => {
-      document.removeEventListener('mousedown', handleOnEditorBlur);
-    };
-  }, [handleOnEditorBlur]);
+  const nodes = useParser(
+    props.text,
+    props.syntax,
+    props.bracketLinkProps,
+    props.hashtagProps,
+    props.taggedLinkPropsMap,
+    props.codeProps,
+    props.formulaProps
+  );
 
   return (
-    <div className={mergeClassNames(EditorConstants.editor.className, props.className)} style={props.style}>
+    <div
+      className={mergeClassNames(EditorConstants.root.className, props.className)}
+      style={props.style}
+      ref={rootRef}
+      data-selectid={EditorConstants.root.selectId}
+      {...rootHandlers}
+    >
+      <SyntaxMenu
+        text={props.text}
+        nodes={nodes}
+        state={state}
+        setTextAndState={(newText, newState) => {
+          if (newState !== state) setState(newState);
+          if (newText !== props.text) props.onChangeText(newText);
+        }}
+        syntax={props.syntax}
+        bracket={props.bracketLinkProps}
+        hashtag={props.hashtagProps}
+        taggedLink={{ tags: props.taggedLinkPropsMap }}
+        containerProps={{ className: EditorConstants.syntaxMenu.className }}
+      />
       <div
-        className={EditorConstants.root.className}
-        ref={rootRef}
-        data-selectid={EditorConstants.root.selectId}
-        data-testid={createTestId(EditorConstants.root.testId)}
+        className={EditorConstants.editor.className}
+        ref={editorRef}
+        data-selectid={EditorConstants.editor.selectId}
+        data-testid={createTestId(EditorConstants.editor.testId)}
       >
         <div
           className={EditorConstants.body.className}
-          onMouseDown={_handleOnMouseDown}
-          onClick={createMouseEventHandler(handleOnClick)}
+          {...editorHandlers}
           data-selectid={EditorConstants.body.selectId}
           data-testid={createTestId(EditorConstants.body.testId)}
         >
@@ -184,22 +90,14 @@ export const Editor: React.FC<Props> = (props) => {
             suggestions={state.suggestions}
             suggestionIndex={state.suggestionIndex}
             mouseHold={state.selectionMouse}
-            onKeyDown={createKeyboardEventHandlerWithProps(handleOnKeyDown)}
-            onTextChange={createKeyboardEventHandlerWithProps(handleOnTextChange)}
-            onTextCompositionStart={createKeyboardEventHandler(handleOnTextCompositionStart)}
-            onTextCompositionEnd={createKeyboardEventHandlerWithProps(handleOnTextCompositionEnd)}
-            onTextCut={createKeyboardEventHandler(handleOnTextCut)}
-            onTextCopy={createKeyboardEventHandler(handleOnTextCopy)}
-            onTextPaste={createKeyboardEventHandler(handleOnTextPaste)}
-            onSuggectionMouseDown={createKeyboardEventHandler(handleOnSuggectionMouseDown)}
+            {...cursorEventHandlers}
           />
           <Selection textSelection={state.textSelection} />
           <TextLines
-            text={props.text}
-            syntax={props.syntax}
+            nodes={nodes}
             cursorCoordinate={state.cursorCoordinate}
             bracketLinkProps={props.bracketLinkProps}
-            hashTagProps={props.hashTagProps}
+            hashtagProps={props.hashtagProps}
             codeProps={props.codeProps}
             formulaProps={props.formulaProps}
             taggedLinkPropsMap={props.taggedLinkPropsMap}

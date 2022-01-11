@@ -4,9 +4,8 @@ import React from 'react';
 
 import { EditorProps } from '../../src';
 import * as utils from '../../src/Editor/callbacks/utils';
-import * as textLines from '../../src/TextLines';
 import { runFixtureTests, BaseTestCase } from '../fixture';
-import { MockEditor, MockTextLines } from '../mocks';
+import { MockEditor, expectTextLinesToBe } from '../mocks';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -21,22 +20,18 @@ interface Common {
   options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
 }
 
-const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
 const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
-  SpiedTextLines.mockImplementation(MockTextLines);
   spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
 });
 
 afterAll(() => {
-  SpiedTextLines.mockRestore();
   spiedPositionToCursorCoordinate.mockRestore();
 });
 
 describe('UI of Suggestion List', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
@@ -54,10 +49,6 @@ describe('UI of Suggestion List', () => {
 
     userEvent.keyboard(testCase.inputTypingAfter.join(''));
 
-    for (let i = 0; i < testCase.expectedLines.length; i++) {
-      const line = testCase.expectedLines[i];
-      expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
-    }
-    expect(screen.queryByTestId(`mock-line-${testCase.expectedLines.length}`)).not.toBeInTheDocument();
+    expectTextLinesToBe(screen, testCase.expectedLines);
   });
 });

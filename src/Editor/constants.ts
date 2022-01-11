@@ -1,20 +1,23 @@
 import styles from './style.css';
 
 export const EditorConstants = {
-  editor: {
-    className: styles.editor,
-  },
   root: {
     className: styles.root,
     selectId: 'editor-root',
-    selectIdRegex: /editor-root/,
-    testId: 'editor-root',
+  },
+  editor: {
+    className: styles.editor,
+    selectId: 'editor',
+    testId: 'editor',
   },
   body: {
     className: styles.body,
     selectId: 'editor-body',
     selectIdRegex: /editor-body/,
     testId: 'editor-body',
+  },
+  syntaxMenu: {
+    className: styles.syntaxMenu,
   },
   suggestion: {
     bracketLink: {

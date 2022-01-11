@@ -1,8 +1,8 @@
 import { CursorCoordinate } from '../Cursor/types';
 import { cursorCoordinateToTextIndex } from '../Cursor/utils';
 import { getBody } from '../Editor/utils';
-import { TextLinesConstants } from '../TextLines/constants';
 import { getTextCharElementAt } from '../TextLines/utils';
+import { parserConstants } from '../parser/constants';
 
 import { Props, State, TextSelection, TextRange } from './types';
 
@@ -65,7 +65,7 @@ export function getWordSelection(
 ): TextSelection | undefined {
   if (!cursorCoordinate) return undefined;
 
-  const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+  const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
   const lines = text.split('\n');
   const currentLine = lines[cursorCoordinate.lineIndex];
   let match: RegExpExecArray | null = null;
@@ -111,4 +111,9 @@ export function selectionToRange(textSelection: TextSelection): TextRange {
   else if (fixed.lineIndex > free.lineIndex) return { start: free, end: fixed };
   else if (fixed.charIndex <= free.charIndex) return { start: fixed, end: free };
   else return { start: free, end: fixed };
+}
+
+export function copySelection(textSelection: TextSelection | undefined): TextSelection | undefined {
+  if (!textSelection) return undefined;
+  return { fixed: { ...textSelection.fixed }, free: { ...textSelection.free } };
 }

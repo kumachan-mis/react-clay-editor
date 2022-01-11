@@ -1,7 +1,9 @@
 # react-realtime-markup-editor
 
-A text document editor which is syntactically formattable in real time  
-Inspired by [Scrapbox](https://scrapbox.io/product)
+A text document editor which is syntactically formattable in real time
+
+- The document editor is inspired by [Scrapbox](https://scrapbox.io/product)
+- Icons made from [Icon Fonts](http://www.onlinewebfonts.com/icon) is licensed by CC BY 3.0
 
 ## TL;DR
 
@@ -37,7 +39,7 @@ const App: React.FC = () => {
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | last 2 versions                                                                                                                                                                                                   | last 2 versions                                                                                                                                                                                               |
 
-## Demo
+### Demo
 
 [demo](https://kumachan-mis.github.io/react-realtime-markup-editor) on github pages
 
@@ -101,7 +103,7 @@ Combinations of `*` and `_` are NOT available yet...
 | ----------------------- | -------------------- |
 | <a>blacket link</a>     | `[blacket link]`     |
 | <a>tag: tagged link</a> | `[tag: tagged link]` |
-| <a>#hash-tag</a>        | `#hash-tag`          |
+| <a>#hashtag</a>         | `#hashtag`           |
 
 **Note**
 
@@ -200,7 +202,7 @@ Multiple spaces will provide nested quotations.
 | `onChangeText`       | `(text: string) => void`                 | requried          | -                                         | callback function on `text` changed<br>you will use this like<br>`onChangeText={(text) => this.setState({ text })}` |
 | `textProps`          | `TextProps`                              | optional          | see [TextProps](#TextProps)               | general settings of text<br>details: [TextProps](#TextProps)                                                        |
 | `bracketLinkProps`   | `BracketLinkProps`                       | optional          | see [BracketLinkProps](#BracketLinkProps) | settings of bracket links<br>details: [BracketLinkProps](#BracketLinkProps)                                         |
-| `hashTagProps`       | `HashTagProps`                           | optional          | see [HashTagProps](#HashTagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashTagProps)                                                 |
+| `hashtagProps`       | `HashtagProps`                           | optional          | see [HashtagProps](#HashtagProps)         | settings of hash tags<br>details: [BracketLinkProps](#HashtagProps)                                                 |
 | `taggedLinkPropsMap` | `{ [tagName: string]: TaggedLinkProps }` | optional          | see [TaggedLinkProps](#TaggedLinkProps)   | key-value object which maps a tag name to settings of tagged links<br>details: [TaggedLinkProps](#TaggedLinkProps)  |
 | `codeProps`          | `CodeProps`                              | optional          | see [CodeProps](#CodeProps)               | settings of code strings<br>details: [CodeProps](#CodeProps)                                                        |
 | `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
@@ -248,13 +250,13 @@ interface BracketLinkProps {
 - disabled: if `true`, syntax of bracket links is ignored  
   default: `undefined` (falsy)
 
-### HashTagProps
+### HashtagProps
 
 settings of hash tags
 
 ```ts
-interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'>;
+interface HashtagProps {
+  anchorProps?: (hashtagName: string) => React.ComponentProps<'a'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;

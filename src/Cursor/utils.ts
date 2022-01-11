@@ -1,23 +1,21 @@
-import { getRoot, getBody } from '../Editor/utils';
+import { getEditor, getBody } from '../Editor/utils';
 import { getTextCharElementAt } from '../TextLines/utils';
 
 import { CursorConstants } from './constants';
 import { Props, State, CursorCoordinate } from './types';
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
-  const root = getRoot(element);
-  const rootRect = root?.getBoundingClientRect();
+  const editorElement = getEditor(element);
+  const editorRect = editorElement?.getBoundingClientRect();
   const bodyRect = getBody(element)?.getBoundingClientRect();
-  if (!props.coordinate || !bodyRect || !root || !rootRect) {
+  if (!props.coordinate || !bodyRect || !editorElement || !editorRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  root?.querySelector('textarea')?.focus({ preventScroll: true });
-
   const listSelector = `ul[data-selectid="${CursorConstants.suggestion.container.selectId}"]`;
   const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`;
-  const list = root?.querySelector(listSelector) as HTMLUListElement | null;
-  const listItem = root?.querySelector(listItemSelector) as HTMLLIElement | null;
+  const list = editorElement.querySelector(listSelector) as HTMLUListElement | null;
+  const listItem = editorElement.querySelector(listItemSelector) as HTMLLIElement | null;
   if (props.suggestions.length > 0 && list && listItem) {
     if (listItem.offsetTop < list.scrollTop) {
       list.scrollTop = listItem.offsetTop;
@@ -33,12 +31,12 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
   const [cursorSize, margin] = [charRect.height, CursorConstants.cursorBar.margin];
-  if (props.mouseHold != 'active-in') {
-    if (charRect.top - rootRect.top - margin < 0) {
-      root.scrollTop += charRect.top - rootRect.top;
+  if (props.mouseHold !== 'active-in') {
+    if (charRect.top - editorRect.top - margin < 0) {
+      editorElement.scrollTop += charRect.top - editorRect.top;
       return handleOnEditorScrollOrResize(props, state, element);
-    } else if (charRect.top + cursorSize - rootRect.top > rootRect.height - margin) {
-      root.scrollTop += charRect.top + cursorSize - rootRect.top - rootRect.height;
+    } else if (charRect.top + cursorSize - editorRect.top > editorRect.height - margin) {
+      editorElement.scrollTop += charRect.top + cursorSize - editorRect.top - editorRect.height;
       return handleOnEditorScrollOrResize(props, state, element);
     }
   }
@@ -108,6 +106,11 @@ export function cursorCoordinateToTextIndex(text: string, coordinate: CursorCoor
   }
   textIndex += coordinate.charIndex;
   return textIndex;
+}
+
+export function copyCoordinate(coordinate: CursorCoordinate | undefined): CursorCoordinate | undefined {
+  if (!coordinate) return undefined;
+  return { ...coordinate };
 }
 
 export function coordinatesAreEqual(a: CursorCoordinate, b: CursorCoordinate): boolean {

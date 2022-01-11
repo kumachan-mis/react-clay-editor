@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { mergeClassNames, createTestId } from '../../common/utils';
-import { TextLinesConstants } from '../constants';
 
+import { ComponentConstants } from './constants';
 import {
   LineGroupProps,
   LineGroupIndentProps,
@@ -17,9 +17,14 @@ import {
   EmbededLinkProps,
 } from './types';
 
-export const LineGroup: React.FC<LineGroupProps> = ({ firstLineIndex, lastLineIndex, divProps = {}, children }) => {
-  const constants = TextLinesConstants.lineGroup;
-  const { className, ...rest } = divProps;
+export const LineGroup: React.FC<LineGroupProps> = ({
+  firstLineIndex,
+  lastLineIndex,
+  children,
+  className,
+  ...rest
+}) => {
+  const constants = ComponentConstants.lineGroup;
   return (
     <div
       className={mergeClassNames(constants.className, className)}
@@ -32,9 +37,14 @@ export const LineGroup: React.FC<LineGroupProps> = ({ firstLineIndex, lastLineIn
   );
 };
 
-export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, spanProps = {}, children }) => {
-  const constants = TextLinesConstants.lineGroup.indent;
-  const { className, style, ...rest } = spanProps;
+export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({
+  indentDepth,
+  children,
+  className,
+  style,
+  ...rest
+}) => {
+  const constants = ComponentConstants.lineGroup.indent;
   return (
     <span
       className={mergeClassNames(constants.className, className)}
@@ -42,7 +52,7 @@ export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, s
       {...rest}
     >
       {[...Array(indentDepth).keys()].map((charIndex) => (
-        <span key={charIndex} className={TextLinesConstants.lineGroup.pad.className}>
+        <span key={charIndex} className={ComponentConstants.lineGroup.pad.className}>
           {' '}
         </span>
       ))}
@@ -51,9 +61,14 @@ export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, s
   );
 };
 
-export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth, spanProps = {}, children }) => {
-  const constants = TextLinesConstants.lineGroup.content;
-  const { className, style, ...rest } = spanProps;
+export const LineGroupContent: React.FC<LineGroupContentProps> = ({
+  indentDepth,
+  children,
+  className,
+  style,
+  ...rest
+}) => {
+  const constants = ComponentConstants.lineGroup.content;
   return (
     <span
       className={mergeClassNames(constants.className, className)}
@@ -65,9 +80,8 @@ export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth,
   );
 };
 
-export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }) => {
-  const constants = TextLinesConstants.line;
-  const { className, ...rest } = divProps;
+export const Line: React.FC<LineProps> = ({ lineIndex, children, className, ...rest }) => {
+  const constants = ComponentConstants.line;
   return (
     <div
       className={mergeClassNames(constants.className, className)}
@@ -80,9 +94,8 @@ export const Line: React.FC<LineProps> = ({ lineIndex, divProps = {}, children }
   );
 };
 
-export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, spanProps = {} }) => {
-  const constants = TextLinesConstants.line.indent;
-  const { className, style, ...rest } = spanProps;
+export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, className, style, ...rest }) => {
+  const constants = ComponentConstants.line.indent;
   return (
     <span
       className={mergeClassNames(constants.className, className)}
@@ -94,7 +107,7 @@ export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, 
           key={charIndex}
           charIndex={charIndex}
           lineIndex={lineIndex}
-          spanProps={{ className: TextLinesConstants.line.indentPad.className }}
+          className={ComponentConstants.line.indentPad.className}
         >
           {' '}
         </Char>
@@ -108,11 +121,12 @@ export const LineContent: React.FC<LineContentProps> = ({
   lineLength,
   indentDepth = 0,
   itemized = false,
-  spanProps = {},
   children,
+  className,
+  style,
+  ...rest
 }) => {
-  const constants = TextLinesConstants.line.content;
-  const { className, style, ...rest } = spanProps;
+  const constants = ComponentConstants.line.content;
   return (
     <span
       className={mergeClassNames(constants.className, className)}
@@ -131,11 +145,11 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   lineIndex,
   firstCharIndex,
   lastCharIndex,
-  spanProps = {},
   children,
+  className,
+  ...rest
 }) => {
-  const constants = TextLinesConstants.charGroup;
-  const { className, ...rest } = spanProps;
+  const constants = ComponentConstants.charGroup;
   return (
     <span
       className={mergeClassNames(constants.className, className)}
@@ -148,9 +162,8 @@ export const CharGroup: React.FC<CharGroupProps> = ({
   );
 };
 
-export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}, children }) => {
-  const constants = TextLinesConstants.char;
-  const { className, ...rest } = spanProps;
+export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, children, className, ...rest }) => {
+  const constants = ComponentConstants.char;
   return (
     <span
       className={mergeClassNames(constants.className, className)}
@@ -164,12 +177,13 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, spanProps = {}
 };
 
 export const ItemBullet: React.FC<ItemBulletProps> = ({ lineIndex, indentDepth }) => {
-  const constants = TextLinesConstants.itemization;
+  const constants = ComponentConstants.itemization;
   return (
     <Char
       charIndex={indentDepth}
       lineIndex={lineIndex}
-      spanProps={{ className: constants.className, style: constants.style(indentDepth) }}
+      className={constants.className}
+      style={constants.style(indentDepth)}
     >
       <span className={constants.bullet.className} />{' '}
     </Char>
@@ -188,9 +202,16 @@ export const ItemBulletContent: React.FC<ItemBulletContentProps> = ({ lineIndex,
   );
 };
 
-export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, anchorProps = {}, children }) => {
-  const constants = TextLinesConstants.embededLink;
-  const { className, onClick, onMouseEnter, onMouseLeave, ...rest } = anchorProps;
+export const EmbededLink: React.FC<EmbededLinkProps> = ({
+  cursorOn,
+  children,
+  className,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  ...rest
+}) => {
+  const constants = ComponentConstants.embededLink;
   const [active, setActive] = React.useState(false);
 
   const classNames = active

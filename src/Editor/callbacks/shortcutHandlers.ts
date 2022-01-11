@@ -1,9 +1,9 @@
-import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../../Cursor/utils';
+import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
 import { getSelectionText } from '../../Selection/utils';
-import { TextLinesConstants } from '../../TextLines/constants';
+import { parserConstants } from '../../parser/constants';
 import { State, ShortcutCommand } from '../types';
 
-import { insertText, resetSuggestion, resetTextSelectionAndSuggestion } from './utils';
+import { updateSelectionByCursor, insertText, resetSuggestion, resetTextSelectionAndSuggestion } from './utils';
 
 export function handleOnShortcut(
   command: ShortcutCommand | undefined,
@@ -112,6 +112,17 @@ export function handleOnUndo(
 
   const action = editActionHistory[historyHead];
   switch (action.actionType) {
+    case 'substitute': {
+      const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+      const endIndex = startIndex + action.insertedText.length;
+      const newText = text.substring(0, startIndex) + action.deletedText + text.substring(endIndex);
+      const newState = resetTextSelectionAndSuggestion({
+        ...state,
+        cursorCoordinate: moveCursor(newText, action.coordinate, action.deletedText.length),
+        historyHead: historyHead - 1,
+      });
+      return [newText, newState];
+    }
     case 'insert': {
       const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
       const endIndex = startIndex + action.text.length;
@@ -149,9 +160,20 @@ export function handleOnRedo(
 
   const action = editActionHistory[historyHead + 1];
   switch (action.actionType) {
+    case 'substitute': {
+      const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+      const endIndex = startIndex + action.deletedText.length;
+      const newText = text.substring(0, startIndex) + action.insertedText + text.substring(endIndex);
+      const newState = resetTextSelectionAndSuggestion({
+        ...state,
+        cursorCoordinate: moveCursor(newText, action.coordinate, action.insertedText.length),
+        historyHead: historyHead + 1,
+      });
+      return [newText, newState];
+    }
     case 'insert': {
-      const insertIndex = cursorCoordinateToTextIndex(text, action.coordinate);
-      const newText = text.substring(0, insertIndex) + action.text + text.substring(insertIndex);
+      const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
+      const newText = text.substring(0, startIndex) + action.text + text.substring(startIndex);
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: moveCursor(newText, action.coordinate, action.text.length),
@@ -193,12 +215,8 @@ export function handleOnMoveUp(
     return { lineIndex: prevLineIndex, charIndex: cursorCoordinate.charIndex };
   })();
 
-  const newTextSelection = (() => {
-    if (!event?.shiftKey && !mouseScroll) return undefined;
-    const fixed = textSelection ? textSelection.fixed : cursorCoordinate;
-    const free = { ...newCursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
+  const disabled = !event?.shiftKey && !mouseScroll;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
   return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
@@ -224,12 +242,8 @@ export function handleOnMoveDown(
     return { lineIndex: nextLineIndex, charIndex: cursorCoordinate.charIndex };
   })();
 
-  const newTextSelection = (() => {
-    if (!event?.shiftKey && !mouseScroll) return undefined;
-    const fixed = textSelection ? textSelection.fixed : cursorCoordinate;
-    const free = { ...newCursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
+  const disabled = !event?.shiftKey && !mouseScroll;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
   return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
@@ -240,14 +254,13 @@ export function handleOnMoveLeft(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const cursorCoordinate = moveCursor(text, state.cursorCoordinate, -1);
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+  const { cursorCoordinate, textSelection } = state;
+
+  const newCursorCoordinate = moveCursor(text, cursorCoordinate, -1);
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveRight(
@@ -257,14 +270,13 @@ export function handleOnMoveRight(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const cursorCoordinate = moveCursor(text, state.cursorCoordinate, 1);
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+  const { cursorCoordinate, textSelection } = state;
+
+  const newCursorCoordinate = moveCursor(text, cursorCoordinate, 1);
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveWordTop(
@@ -275,27 +287,26 @@ export function handleOnMoveWordTop(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const cursorCoordinate = (() => {
-    const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+  const { cursorCoordinate, textSelection } = state;
+
+  const newCursorCoordinate = (() => {
+    const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
     const lines = text.split('\n');
-    const currentLine = lines[state.cursorCoordinate.lineIndex];
+    const currentLine = lines[cursorCoordinate.lineIndex];
     let charIndex: number | undefined = undefined;
     let match: RegExpExecArray | null = null;
     while ((match = wordRegex.exec(currentLine))) {
       if (!match) break;
       const candidateIndex = wordRegex.lastIndex - match[0].length;
-      if (candidateIndex >= state.cursorCoordinate.charIndex) break;
+      if (candidateIndex >= cursorCoordinate.charIndex) break;
       charIndex = candidateIndex;
     }
-    return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: charIndex || 0 };
+    return { lineIndex: cursorCoordinate.lineIndex, charIndex: charIndex || 0 };
   })();
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveWordBottom(
@@ -306,27 +317,26 @@ export function handleOnMoveWordBottom(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const cursorCoordinate = (() => {
-    const wordRegex = new RegExp(TextLinesConstants.wordRegex, 'g');
+  const { cursorCoordinate, textSelection } = state;
+
+  const newCursorCoordinate = (() => {
+    const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
     const lines = text.split('\n');
-    const currentLine = lines[state.cursorCoordinate.lineIndex];
+    const currentLine = lines[cursorCoordinate.lineIndex];
     let match: RegExpExecArray | null = null;
     while ((match = wordRegex.exec(currentLine))) {
       if (!match) break;
       const candidateIndex = wordRegex.lastIndex;
-      if (candidateIndex > state.cursorCoordinate.charIndex) {
-        return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: candidateIndex };
+      if (candidateIndex > cursorCoordinate.charIndex) {
+        return { lineIndex: cursorCoordinate.lineIndex, charIndex: candidateIndex };
       }
     }
-    return { lineIndex: state.cursorCoordinate.lineIndex, charIndex: currentLine.length };
+    return { lineIndex: cursorCoordinate.lineIndex, charIndex: currentLine.length };
   })();
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveLineTop(
@@ -336,14 +346,13 @@ export function handleOnMoveLineTop(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const cursorCoordinate = { lineIndex: state.cursorCoordinate.lineIndex, charIndex: 0 };
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+  const { cursorCoordinate, textSelection } = state;
+
+  const newCursorCoordinate = { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 };
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveLineBottom(
@@ -353,18 +362,17 @@ export function handleOnMoveLineBottom(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
+  const { cursorCoordinate, textSelection } = state;
+
   const lines = text.split('\n');
-  const cursorCoordinate = {
-    lineIndex: state.cursorCoordinate.lineIndex,
-    charIndex: lines[state.cursorCoordinate.lineIndex].length,
+  const newCursorCoordinate = {
+    lineIndex: cursorCoordinate.lineIndex,
+    charIndex: lines[cursorCoordinate.lineIndex].length,
   };
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveTextTop(
@@ -374,14 +382,13 @@ export function handleOnMoveTextTop(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const cursorCoordinate = { lineIndex: 0, charIndex: 0 };
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+  const { cursorCoordinate, textSelection } = state;
+
+  const newCursorCoordinate = { lineIndex: 0, charIndex: 0 };
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }
 
 export function handleOnMoveTextBottom(
@@ -391,16 +398,12 @@ export function handleOnMoveTextBottom(
 ): [string, State] {
   if (!state.cursorCoordinate) return [text, state];
 
+  const { cursorCoordinate, textSelection } = state;
+
   const lines = text.split('\n');
-  const cursorCoordinate = {
-    lineIndex: lines.length - 1,
-    charIndex: lines[lines.length - 1].length,
-  };
-  const textSelection = (() => {
-    if (!event.shiftKey) return undefined;
-    const fixed = state.textSelection ? state.textSelection.fixed : state.cursorCoordinate;
-    const free = { ...cursorCoordinate };
-    return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
-  })();
-  return [text, resetSuggestion({ ...state, cursorCoordinate, textSelection })];
+  const newCursorCoordinate = { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
+
+  const disabled = !event?.shiftKey;
+  const newTextSelection = updateSelectionByCursor(textSelection, cursorCoordinate, newCursorCoordinate, disabled);
+  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
 }

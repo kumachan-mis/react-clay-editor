@@ -7,7 +7,7 @@
       "bracketLinkProps": {
         "suggestions": ["blueberries", "cantaloupe", "breadfruit"]
       },
-      "hashTagProps": {
+      "hashtagProps": {
         "suggestions": ["cherries", "durian", "coconut meat"]
       },
       "taggedLinkPropsMap": {

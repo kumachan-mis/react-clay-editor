@@ -1,42 +1,13 @@
 import { CursorCoordinate } from '../Cursor/types';
 import { TextSelection } from '../Selection/types';
-
-export interface TextProps {
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-}
-
-export interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
-}
-
-export interface HashTagProps {
-  anchorProps?: (hashTagName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
-}
-
-export interface TaggedLinkProps {
-  linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  tagHidden?: boolean;
-}
-
-export interface CodeProps {
-  codeProps?: (code: string) => React.ComponentProps<'code'>;
-  disabled?: boolean;
-}
-
-export interface FormulaProps {
-  spanProps?: (formula: string) => React.ComponentProps<'span'>;
-  disabled?: boolean;
-}
+import {
+  TextProps,
+  BracketLinkProps,
+  HashtagProps,
+  TaggedLinkPropsMap,
+  CodeProps,
+  FormulaProps,
+} from '../common/types';
 
 export interface Props {
   text: string;
@@ -44,8 +15,8 @@ export interface Props {
   syntax?: 'bracket' | 'markdown';
   textProps?: TextProps;
   bracketLinkProps?: BracketLinkProps;
-  hashTagProps?: HashTagProps;
-  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
+  hashtagProps?: HashtagProps;
+  taggedLinkPropsMap?: TaggedLinkPropsMap;
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   readonly?: boolean;
@@ -53,8 +24,23 @@ export interface Props {
   style?: React.CSSProperties;
 }
 
-export interface EditAction {
-  actionType: 'insert' | 'delete';
+export type EditAction = SubstituteAction | InsertAction | DeleteAction;
+
+export interface SubstituteAction {
+  actionType: 'substitute';
+  coordinate: CursorCoordinate;
+  deletedText: string;
+  insertedText: string;
+}
+
+export interface InsertAction {
+  actionType: 'insert';
+  coordinate: CursorCoordinate;
+  text: string;
+}
+
+export interface DeleteAction {
+  actionType: 'delete';
   coordinate: CursorCoordinate;
   text: string;
 }
@@ -67,7 +53,7 @@ export interface State {
   selectionMouse: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down';
   historyHead: number;
   editActionHistory: EditAction[];
-  suggestionType: 'text' | 'bracketLink' | 'hashTag' | 'taggedLink' | 'none';
+  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
   suggestionStart: number;

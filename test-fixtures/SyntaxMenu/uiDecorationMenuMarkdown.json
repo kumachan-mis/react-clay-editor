@@ -1,0 +1,823 @@
+{
+  "note": [
+    "There are some categories in these tests:",
+    "- menuitem: bold italic",
+    "  - selection: no-selection single-line-selection multi-lines-selection",
+    "    - no-selection: empty-line in-decoration",
+    "                    in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
+    "    - single-line-selection: empty-line in-decoration-all in-decoration-left in-decoration-mid in-decoration-right",
+    "                             in-normal in-normal-with-decoration-left in-normal-with-decoration-right other",
+    "    - multi-lines-selection",
+    "- menuitem: underline",
+    "  - disabled"
+  ],
+  "testCases": [
+    {
+      "name": "decoration menus: bold, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["*bold*"],
+      "expectedLinesAfterTyping": ["*React Realtime Markup Editor*"]
+    },
+    {
+      "name": "decoration menus: italic, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": ["_italic_"],
+      "expectedLinesAfterTyping": ["_React Realtime Markup Editor_"]
+    },
+    {
+      "name": "decoration menus: underline, no-selection, empty-line",
+      "textLines": [""],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "underline-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["React Realtime Markup Editor"],
+      "expectedLinesAfterMenu": [""],
+      "expectedLinesAfterTyping": ["React Realtime Markup Editor"]
+    },
+    {
+      "name": "decoration menus: bold, no-selection, in-decoration",
+      "textLines": ["*bold text*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["bold text"],
+      "expectedLinesAfterTyping": ["b.old text"]
+    },
+    {
+      "name": "decoration menus: italic, no-selection, in-decoration",
+      "textLines": ["_italic text_"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["italic text"],
+      "expectedLinesAfterTyping": ["ita.lic text"]
+    },
+    {
+      "name": "decoration menus: bold, no-selection, in-decoration",
+      "textLines": ["_italic text_"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["_italic text_"],
+      "expectedLinesAfterTyping": ["_italic. text_"]
+    },
+    {
+      "name": "decoration menus: italic, no-selection, in-decoration",
+      "textLines": ["*bold text*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["*bold text*"],
+      "expectedLinesAfterTyping": ["*bold. text*"]
+    },
+    {
+      "name": "decoration menus: bold, no-selection, in-normal-with-decoration-left",
+      "textLines": ["*important*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["really important"],
+      "expectedLinesAfterMenu": ["*important**bold*"],
+      "expectedLinesAfterTyping": ["*important**really important*"]
+    },
+    {
+      "name": "decoration menus: italic, no-selection, in-normal-with-decoration-right",
+      "textLines": ["_important_"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["This is"],
+      "expectedLinesAfterMenu": ["_italic__important_"],
+      "expectedLinesAfterTyping": ["_This is__important_"]
+    },
+    {
+      "name": "decoration menus: bold, no-selection, other (content node)",
+      "textLines": ["[bracket link]"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["[bracket link]"],
+      "expectedLinesAfterTyping": ["[bra.cket link]"]
+    },
+    {
+      "name": "decoration menus: italic, no-selection, other (block node)",
+      "textLines": ["```", "code string", "```"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 6
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["```", "code string", "```"],
+      "expectedLinesAfterTyping": ["```", "code s.tring", "```"]
+    },
+    {
+      "name": "decoration menus: bold, single-line-selection, in-decoration-all",
+      "textLines": ["*bold text*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["bold text"],
+      "expectedLinesAfterTyping": ["."]
+    },
+    {
+      "name": "decoration menus: italic, single-line-selection, in-decoration-all",
+      "textLines": ["_italic text_"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["italic text"],
+      "expectedLinesAfterTyping": [".italic text"]
+    },
+    {
+      "name": "decoration menus: bold, single-line-selection, in-decoration-left (without-deco)",
+      "textLines": ["*left mid right*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 1
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["left* mid right*"],
+      "expectedLinesAfterTyping": [".* mid right*"]
+    },
+    {
+      "name": "decoration menus: italic, single-line-selection, in-decoration-left (with-deco)",
+      "textLines": ["_left mid right_"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 0
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 3
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["left_ mid right_"],
+      "expectedLinesAfterTyping": ["._ mid right_"]
+    },
+    {
+      "name": "decoration menus: italic, single-line-selection, in-decoration-right (without-deco)",
+      "textLines": ["_left mid right_"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 15
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["_left mid_ right"],
+      "expectedLinesAfterTyping": ["_left mid_."]
+    },
+    {
+      "name": "decoration menus: bold, single-line-selection, in-decoration-right (with-deco)",
+      "textLines": ["*left mid right*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 9
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 13
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 16
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["*left mid* right"],
+      "expectedLinesAfterTyping": ["*left mid*."]
+    },
+    {
+      "name": "decoration menus: bold, single-line-selection, in-decoration-mid",
+      "textLines": ["*left mid right*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["*left* mid *right*"],
+      "expectedLinesAfterTyping": ["*left*.*right*"]
+    },
+    {
+      "name": "decoration menus: italic, single-line-selection, in-decoration-mid",
+      "textLines": ["_left mid right_"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 5
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["_left_ mid _right_"],
+      "expectedLinesAfterTyping": ["_left_._right_"]
+    },
+    {
+      "name": "decoration menus: bold, single-line-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["no*rmal tex*t"],
+      "expectedLinesAfterTyping": ["no*.*t"]
+    },
+    {
+      "name": "decoration menus: italic, single-line-selection, in-normal",
+      "textLines": ["normal text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["no_rmal tex_t"],
+      "expectedLinesAfterTyping": ["no_._t"]
+    },
+    {
+      "name": "decoration menus: italic, single-line-selection, in-normal-with-decoration-left",
+      "textLines": ["_normal_ text"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 8
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 11
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["_normal__ te_xt"],
+      "expectedLinesAfterTyping": ["_normal__._xt"]
+    },
+    {
+      "name": "decoration menus: bold, single-line-selection, in-normal-with-decoration-right",
+      "textLines": ["normal *text*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 4
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["no*rmal **text*"],
+      "expectedLinesAfterTyping": ["no*.**text*"]
+    },
+    {
+      "name": "decoration menus: bold, single-line-selection, other (mixed with friends)",
+      "textLines": ["normal *text*"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 6
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 10
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["normal *text*"],
+      "expectedLinesAfterTyping": ["no.xt*"]
+    },
+    {
+      "name": "decoration menus: italic, single-line-selection, other (mixed with foreigner)",
+      "textLines": ["normal #hashtag_link"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 12
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "italic-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["normal #hashtag_link"],
+      "expectedLinesAfterTyping": ["no.tag_link"]
+    },
+    {
+      "name": "decoration menus: bold, multi-lines-selection",
+      "textLines": ["normal text", "normal text too"],
+      "inputMouse": [
+        {
+          "type": "mouseDown",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 2
+          }
+        },
+        {
+          "type": "mouseMove",
+          "coordinate": {
+            "lineIndex": 0,
+            "charIndex": 7
+          }
+        },
+        {
+          "type": "mouseUp",
+          "coordinate": {
+            "lineIndex": 1,
+            "charIndex": 4
+          }
+        }
+      ],
+      "inputMenu": {
+        "name": "bold-menu",
+        "menuButton": "icon-button"
+      },
+      "inputTyping": ["."],
+      "expectedLinesAfterMenu": ["normal text", "normal text too"],
+      "expectedLinesAfterTyping": ["no.al text too"]
+    }
+  ]
+}

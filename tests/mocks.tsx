@@ -7,22 +7,31 @@ export type MockEditorProps = Omit<EditorProps, 'text' | 'onChangeText'> & { ini
 
 export const MockEditor: React.FC<MockEditorProps> = ({ initText = '', ...props }) => {
   const [text, setText] = React.useState(initText);
-  return <Editor text={text} onChangeText={setText} {...props} />;
-};
-
-export type MockTextLinesProps = { text: string };
-
-export const MockTextLines: React.FC<MockTextLinesProps> = ({ text }) => {
   return (
-    <div>
-      {text.split('\n').map((line, i) => (
-        <div key={i} data-testid={`mock-line-${i}`}>
-          {line}
-        </div>
-      ))}
-    </div>
+    <>
+      <Editor text={text} onChangeText={setText} {...props} />
+      <MockTextLines text={text} />
+    </>
   );
 };
+
+export const MockTextLines: React.FC<{ text: string }> = ({ text }) => (
+  <div>
+    {text.split('\n').map((line, i) => (
+      <div key={i} data-testid={`mock-line-${i}`}>
+        {line}
+      </div>
+    ))}
+  </div>
+);
+
+export function expectTextLinesToBe(screen: Screen, expectedLines: string[]): void {
+  for (let i = 0; i < expectedLines.length; i++) {
+    const line = expectedLines[i];
+    expect(screen.getByTestId(`mock-line-${i}`).textContent).toBe(line);
+  }
+  expect(screen.queryByTestId(`mock-line-${expectedLines.length}`)).not.toBeInTheDocument();
+}
 
 export interface SpyOnGetBoundingClientRectConfig {
   chars: number;

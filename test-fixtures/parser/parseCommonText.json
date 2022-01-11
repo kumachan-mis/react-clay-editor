@@ -280,7 +280,6 @@
               "type": "taggedLink",
               "lineIndex": 0,
               "range": [0, 20],
-              "tag": "@: ",
               "linkName": "tagged link test"
             }
           ]
@@ -314,30 +313,36 @@
           "lineIndex": 0,
           "children": [
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 0,
               "range": [0, 11],
-              "hashTag": "#hashtagtest"
+              "facingMeta": "#",
+              "linkName": "hashtagtest",
+              "trailingMeta": ""
             },
             {
               "type": "normal",
               "text": ", "
             },
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 0,
               "range": [14, 26],
-              "hashTag": "#hashtag_test"
+              "facingMeta": "#",
+              "linkName": "hashtag_test",
+              "trailingMeta": ""
             },
             {
               "type": "normal",
               "text": ", "
             },
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 0,
               "range": [29, 41],
-              "hashTag": "#hashtag-test"
+              "facingMeta": "#",
+              "linkName": "hashtag-test",
+              "trailingMeta": ""
             },
             {
               "type": "normal",
@@ -437,7 +442,6 @@
               "type": "taggedLink",
               "lineIndex": 2,
               "range": [5, 20],
-              "tag": "@: ",
               "linkName": "tagged link"
             },
             {
@@ -483,10 +487,12 @@
               "text": "left "
             },
             {
-              "type": "hashTag",
+              "type": "hashtag",
               "lineIndex": 4,
               "range": [5, 17],
-              "hashTag": "#hashtag_link"
+              "facingMeta": "#",
+              "linkName": "hashtag_link",
+              "trailingMeta": ""
             },
             {
               "type": "normal",
