@@ -38,12 +38,11 @@ export function contentFormulaMenuSwitch(
 }
 
 export function blockFormulaMenuSwitch(
-  lineNodes: LineNode[],
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
   state: State
 ): 'on' | 'off' | 'disabled' {
-  return blockMenuSwitch(lineNodes, nodes, blockPosition, state, 'blockFormula');
+  return blockMenuSwitch(nodes, blockPosition, state, 'blockFormula');
 }
 
 export function handleOnFormulaButtonClick(

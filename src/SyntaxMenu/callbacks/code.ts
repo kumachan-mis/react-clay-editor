@@ -36,12 +36,11 @@ export function inlineCodeMenuSwitch(
 }
 
 export function blockCodeMenuSwitch(
-  lineNodes: LineNode[],
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
   state: State
 ): 'on' | 'off' | 'disabled' {
-  return blockMenuSwitch(lineNodes, nodes, blockPosition, state, 'blockCode');
+  return blockMenuSwitch(nodes, blockPosition, state, 'blockCode');
 }
 
 export function handleOnCodeButtonClick(

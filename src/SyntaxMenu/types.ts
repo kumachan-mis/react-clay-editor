@@ -96,7 +96,6 @@ export interface LineMenuProps {
 }
 
 export interface BlockMenuProps {
-  lineNodes: LineNode[];
   nodes: (LineNode | BlockNode)[];
   blockPosition: BlockPosition | undefined;
 }
