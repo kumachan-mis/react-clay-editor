@@ -456,7 +456,7 @@ const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & Com
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const props: MenuHandler<CodeMenuProps> = { syntax, inlineLabel, blockLabel };
   const inlineMenuSwitch = inlineCodeMenuSwitch(lineNodes, contentPosition);
-  const blockMenuSwitch = blockCodeMenuSwitch(lineNodes, nodes, blockPosition, state);
+  const blockMenuSwitch = blockCodeMenuSwitch(nodes, blockPosition, state);
 
   return (
     <DropdownMenu>
@@ -529,7 +529,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const props: MenuHandler<FormulaMenuProps> = { syntax, inlineLabel, displayLabel, blockLabel };
   const contentMenuSwitch = contentFormulaMenuSwitch(lineNodes, contentPosition);
-  const blockMenuSwitch = blockFormulaMenuSwitch(lineNodes, nodes, blockPosition, state);
+  const blockMenuSwitch = blockFormulaMenuSwitch(nodes, blockPosition, state);
 
   return (
     <DropdownMenu>

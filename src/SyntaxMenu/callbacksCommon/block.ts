@@ -4,13 +4,12 @@ import { State } from '../../Editor/types';
 import { TextSelection } from '../../Selection/types';
 import { copySelection } from '../../Selection/utils';
 import { BlockNode, LineNode } from '../../parser/types';
-import { isBlockNode, isPureLineNode } from '../../parser/utils';
+import { isBlockNode } from '../../parser/utils';
 import { MenuHandler } from '../callbacks/types';
 import { BlockPosition, CodeMenuProps, FormulaMenuProps } from '../types';
 import { getLineRange } from '../utils';
 
 export function blockMenuSwitch(
-  lineNodes: LineNode[],
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
   state: State,
@@ -25,8 +24,10 @@ export function blockMenuSwitch(
 
   const { cursorCoordinate, textSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
-  const rangeNodes = lineNodes.slice(firstLineIndex, lastLineIndex + 1);
-  if (rangeNodes.every((node) => !isBlockNode(node) && isPureLineNode(node))) return 'off';
+
+  if (nodes.every((node) => !isBlockNode(node) || node.range[1] < firstLineIndex || lastLineIndex < node.range[0])) {
+    return 'off';
+  }
   return 'disabled';
 }
 
