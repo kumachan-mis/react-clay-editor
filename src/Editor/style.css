@@ -10,7 +10,6 @@
 
 .editor {
   width: 100%;
-  height: calc(100% - 36px);
   overflow-y: scroll;
   position: relative;
   user-select: none;

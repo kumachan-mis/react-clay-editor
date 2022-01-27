@@ -57,25 +57,28 @@ export const Editor: React.FC<Props> = (props) => {
       data-selectid={EditorConstants.root.selectId}
       {...rootHandlers}
     >
-      <SyntaxMenu
-        text={props.text}
-        nodes={nodes}
-        state={state}
-        setTextAndState={(newText, newState) => {
-          if (newState !== state) setState(newState);
-          if (newText !== props.text) props.onChangeText(newText);
-        }}
-        syntax={props.syntax}
-        section={props.textProps}
-        bracket={props.bracketLinkProps}
-        hashtag={props.hashtagProps}
-        taggedLink={{ tags: props.taggedLinkPropsMap }}
-        code={props.codeProps}
-        formula={props.formulaProps}
-        containerProps={{ className: EditorConstants.syntaxMenu.className }}
-      />
+      {!props.hideSyntaxMenu && (
+        <SyntaxMenu
+          text={props.text}
+          nodes={nodes}
+          state={state}
+          setTextAndState={(newText, newState) => {
+            if (newState !== state) setState(newState);
+            if (newText !== props.text) props.onChangeText(newText);
+          }}
+          syntax={props.syntax}
+          section={props.textProps}
+          bracket={props.bracketLinkProps}
+          hashtag={props.hashtagProps}
+          taggedLink={{ tags: props.taggedLinkPropsMap }}
+          code={props.codeProps}
+          formula={props.formulaProps}
+          containerProps={{ className: EditorConstants.syntaxMenu.className }}
+        />
+      )}
       <div
         className={EditorConstants.editor.className}
+        style={EditorConstants.editor.style(props.hideSyntaxMenu)}
         ref={editorRef}
         data-selectid={EditorConstants.editor.selectId}
         data-testid={createTestId(EditorConstants.editor.testId)}

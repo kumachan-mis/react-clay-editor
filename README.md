@@ -207,6 +207,7 @@ Multiple spaces will provide nested quotations.
 | `codeProps`          | `CodeProps`                              | optional          | see [CodeProps](#CodeProps)               | settings of code strings<br>details: [CodeProps](#CodeProps)                                                        |
 | `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
 | `readonly`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
+| `hideSyntaxMenu`     | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, Syntax Menu is hidden                                                                                    |
 | `className`          | `string`                                 | optional          | `undefined`                               | className of `Editor`                                                                                               |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
