@@ -389,12 +389,11 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & Commo
   const tagEntries = Object.entries(tags || {});
   const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'taggedLink');
   const tagNameOrUndefined = getTagNameAtPosition(nodes, contentPosition);
-  const { defaultLabel } = TaggedLinkMenuConstants.items;
 
   let handleOnButtonClick = undefined;
   if (tags && tagEntries.length > 0) {
     const [tagName, linkProps] = tagNameOrUndefined ? [tagNameOrUndefined, tags[tagNameOrUndefined]] : tagEntries[0];
-    const defaultLinkProps = { label: defaultLabel(tagName), suggestions: [], initialSuggestionIndex: 0 };
+    const defaultLinkProps = { suggestions: [], initialSuggestionIndex: 0 };
     const props: MenuHandler<TaggedLinkMenuProps> = { syntax, ...defaultLinkProps, ...linkProps };
     const menuItem = { type: 'taggedLink', tag: tagName } as const;
     handleOnButtonClick = () =>
@@ -415,26 +414,24 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & Commo
         <TaggedLinkIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        {tagEntries.map(
-          ([tagName, { label = defaultLabel(tagName), suggestions = [], initialSuggestionIndex = 0 }]) => {
-            const props: MenuHandler<TaggedLinkMenuProps> = { syntax, label, suggestions, initialSuggestionIndex };
-            const menuItem = { type: 'taggedLink', tag: tagName } as const;
-            return (
-              <DropdownMenuItem
-                key={tagName}
-                active={tagNameOrUndefined === tagName}
-                onClick={() =>
-                  setTextAndState(
-                    ...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch)
-                  )
-                }
-                data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
-              >
-                {label}
-              </DropdownMenuItem>
-            );
-          }
-        )}
+        {tagEntries.map(([tagName, { suggestions = [], initialSuggestionIndex = 0 }]) => {
+          const props: MenuHandler<TaggedLinkMenuProps> = { syntax, suggestions, initialSuggestionIndex };
+          const menuItem = { type: 'taggedLink', tag: tagName } as const;
+          return (
+            <DropdownMenuItem
+              key={tagName}
+              active={tagNameOrUndefined === tagName}
+              onClick={() =>
+                setTextAndState(
+                  ...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch)
+                )
+              }
+              data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
+            >
+              {TaggedLinkMenuConstants.items.label(tagName)}
+            </DropdownMenuItem>
+          );
+        })}
       </DropdownMenuList>
     </DropdownMenu>
   );

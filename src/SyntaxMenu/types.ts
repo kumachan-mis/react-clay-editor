@@ -56,7 +56,6 @@ export interface HashtagMenuProps {
 }
 
 export interface TaggedLinkMenuProps {
-  label?: string;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;

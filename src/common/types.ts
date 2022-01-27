@@ -1,6 +1,9 @@
 export interface TextProps {
   suggestions?: string[];
   initialSuggestionIndex?: number;
+  largestLabel?: string;
+  largerLabel?: string;
+  normalLabel?: string;
 }
 
 export interface BracketLinkProps {
@@ -28,10 +31,15 @@ export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };
 
 export interface CodeProps {
   codeProps?: (code: string) => React.ComponentProps<'code'>;
+  inlineLabel?: string;
+  blockLabel?: string;
   disabled?: boolean;
 }
 
 export interface FormulaProps {
   spanProps?: (formula: string) => React.ComponentProps<'span'>;
+  inlineLabel?: string;
+  displayLabel?: string;
+  blockLabel?: string;
   disabled?: boolean;
 }
