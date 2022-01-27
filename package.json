@@ -1,6 +1,6 @@
 {
   "name": "react-realtime-markup-editor",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "description": "A text document editor which is syntactically formattable in real time",
   "keywords": [
     "react",
