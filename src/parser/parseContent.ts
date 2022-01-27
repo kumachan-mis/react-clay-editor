@@ -18,7 +18,7 @@ export function parseContent(text: string, context: ParsingContext, options: Par
   const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, normal } = parserConstants.common;
   const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
 
-  if (options.syntax === 'bracket') {
+  if (!options.syntax || options.syntax === 'bracket') {
     // bracket syntax
     const { decoration } = parserConstants.bracketSyntax;
     if (!options.disables.code && inlineCode.test(text)) {
