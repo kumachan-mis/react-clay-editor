@@ -1,9 +1,9 @@
 export interface TextProps {
   suggestions?: string[];
   initialSuggestionIndex?: number;
-  largestLabel?: string;
-  largerLabel?: string;
   normalLabel?: string;
+  largerLabel?: string;
+  largestLabel?: string;
 }
 
 export interface BracketLinkProps {

@@ -218,6 +218,9 @@ general settings of text
 interface TextProps {
   suggestions?: string[];
   initialSuggestionIndex?: number;
+  normalLabel?: string
+  largerLabel?: string;
+  largestLabel?: string;;
 }
 ```
 
@@ -225,6 +228,12 @@ interface TextProps {
   default: `[]`
 - initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
   default: `0`
+- normalLabel: label name of normal section in Syntax Menu. This is also used as the default section name
+  default: `normal`
+- largerLabel: label name of larger section in Syntax Menu. This is also used as the default section name
+  default: `larger`
+- largestLabel: label name of largest section in Syntax Menu. This is also used as the default section name
+  default: `largest`
 
 ### BracketLinkProps
 
@@ -308,6 +317,8 @@ settings of code strings
 ```ts
 interface CodeProps {
   codeProps?: (code: string) => React.ComponentProps<'code'>;
+  inlineLabel?: string;
+  blockLabel?: string;
   disabled?: boolean;
 }
 ```
@@ -316,6 +327,10 @@ interface CodeProps {
 
 - codeProps: given `code`, this function returns props of `<code>` tag  
   default: `undefined`
+- inlineLabel: label name of inline code in Syntax Menu. This is also used as the default code value
+  default: `inline code`
+- blockLabel: label name of block code in Syntax Menu. This is also used as the default code value
+  default: `block code`
 - disabled: if `true`, syntax of code strings is ignored  
   default: `undefined` (falsy)
 
@@ -326,6 +341,9 @@ settings of math formulas
 ```ts
 interface FormulaProps {
   spanProps?: (formula: string) => React.ComponentProps<'span'>;
+  inlineLabel?: string;
+  displayLabel?: string;
+  blockLabel?: string;
   disabled?: boolean;
 }
 ```
@@ -334,5 +352,11 @@ interface FormulaProps {
 
 - spanProps: given `formula`, this function returns props of `<formula>` tag  
   default: `undefined`
+- inlineLabel: label name of inline formula in Syntax Menu. This is also used as the default formula value
+  default: `inline formula`
+- displayLabel: label name of display formula in Syntax Menu. This is also used as the default formula value
+  default: `display formula`
+- blockLabel: label name of block formula in Syntax Menu. This is also used as the default formula value
+  default: `block formula`
 - disabled: if `true`, syntax of math formulas is ignored  
   default: `undefined` (falsy)
