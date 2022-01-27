@@ -20,6 +20,7 @@ export interface Props {
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   readonly?: boolean;
+  hideSyntaxMenu?: boolean;
   className?: string;
   style?: React.CSSProperties;
 }

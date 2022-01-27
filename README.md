@@ -69,9 +69,10 @@ Multiple spaces will provide nested itemizations.
 
 | style            | syntax          |
 | ---------------- | --------------- |
-| <b>bold</b>      | `[* bold]`      |
+| <b>normal</b>    | `[* normal]`    |
 | <h3>larger</h3>  | `[** larger]`   |
 | <h2>largest</h2> | `[*** largest]` |
+| <b>bold</b>      | `[* bold]`      |
 | <i>italic</i>    | `[/ italic]`    |
 | <u>underline</u> | `[_ underline]` |
 
@@ -87,12 +88,13 @@ Here are some examples:
 
 #### markdown-like syntax
 
-| style            | syntax      |
-| ---------------- | ----------- |
-| <b>bold</b>      | `*bold*`    |
-| <h3>larger</h3>  | `## larger` |
-| <h2>largest</h2> | `# largest` |
-| <i>italic</i>    | `_italic_`  |
+| style            | syntax       |
+| ---------------- | ------------ |
+| <b>normal</b>    | `### normal` |
+| <h3>larger</h3>  | `## larger`  |
+| <h2>largest</h2> | `# largest`  |
+| <b>bold</b>      | `*bold*`     |
+| <i>italic</i>    | `_italic_`   |
 
 **Note**  
 Combinations of `*` and `_` are NOT available yet...
@@ -207,6 +209,7 @@ Multiple spaces will provide nested quotations.
 | `codeProps`          | `CodeProps`                              | optional          | see [CodeProps](#CodeProps)               | settings of code strings<br>details: [CodeProps](#CodeProps)                                                        |
 | `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
 | `readonly`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
+| `hideSyntaxMenu`     | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, Syntax Menu is hidden                                                                                    |
 | `className`          | `string`                                 | optional          | `undefined`                               | className of `Editor`                                                                                               |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
@@ -218,6 +221,9 @@ general settings of text
 interface TextProps {
   suggestions?: string[];
   initialSuggestionIndex?: number;
+  normalLabel?: string
+  largerLabel?: string;
+  largestLabel?: string;;
 }
 ```
 
@@ -225,6 +231,12 @@ interface TextProps {
   default: `[]`
 - initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
   default: `0`
+- normalLabel: label name of normal section in Syntax Menu. This is also used as the default section name
+  default: `normal`
+- largerLabel: label name of larger section in Syntax Menu. This is also used as the default section name
+  default: `larger`
+- largestLabel: label name of largest section in Syntax Menu. This is also used as the default section name
+  default: `largest`
 
 ### BracketLinkProps
 
@@ -308,6 +320,8 @@ settings of code strings
 ```ts
 interface CodeProps {
   codeProps?: (code: string) => React.ComponentProps<'code'>;
+  inlineLabel?: string;
+  blockLabel?: string;
   disabled?: boolean;
 }
 ```
@@ -316,6 +330,10 @@ interface CodeProps {
 
 - codeProps: given `code`, this function returns props of `<code>` tag  
   default: `undefined`
+- inlineLabel: label name of inline code in Syntax Menu. This is also used as the default code value
+  default: `inline code`
+- blockLabel: label name of block code in Syntax Menu. This is also used as the default code value
+  default: `block code`
 - disabled: if `true`, syntax of code strings is ignored  
   default: `undefined` (falsy)
 
@@ -326,6 +344,9 @@ settings of math formulas
 ```ts
 interface FormulaProps {
   spanProps?: (formula: string) => React.ComponentProps<'span'>;
+  inlineLabel?: string;
+  displayLabel?: string;
+  blockLabel?: string;
   disabled?: boolean;
 }
 ```
@@ -334,5 +355,11 @@ interface FormulaProps {
 
 - spanProps: given `formula`, this function returns props of `<formula>` tag  
   default: `undefined`
+- inlineLabel: label name of inline formula in Syntax Menu. This is also used as the default formula value
+  default: `inline formula`
+- displayLabel: label name of display formula in Syntax Menu. This is also used as the default formula value
+  default: `display formula`
+- blockLabel: label name of block formula in Syntax Menu. This is also used as the default formula value
+  default: `block formula`
 - disabled: if `true`, syntax of math formulas is ignored  
   default: `undefined` (falsy)
