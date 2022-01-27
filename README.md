@@ -69,9 +69,10 @@ Multiple spaces will provide nested itemizations.
 
 | style            | syntax          |
 | ---------------- | --------------- |
-| <b>bold</b>      | `[* bold]`      |
+| <b>normal</b>    | `[* normal]`    |
 | <h3>larger</h3>  | `[** larger]`   |
 | <h2>largest</h2> | `[*** largest]` |
+| <b>bold</b>      | `[* bold]`      |
 | <i>italic</i>    | `[/ italic]`    |
 | <u>underline</u> | `[_ underline]` |
 
@@ -87,12 +88,13 @@ Here are some examples:
 
 #### markdown-like syntax
 
-| style            | syntax      |
-| ---------------- | ----------- |
-| <b>bold</b>      | `*bold*`    |
-| <h3>larger</h3>  | `## larger` |
-| <h2>largest</h2> | `# largest` |
-| <i>italic</i>    | `_italic_`  |
+| style            | syntax       |
+| ---------------- | ------------ |
+| <b>normal</b>    | `### normal` |
+| <h3>larger</h3>  | `## larger`  |
+| <h2>largest</h2> | `# largest`  |
+| <b>bold</b>      | `*bold*`     |
+| <i>italic</i>    | `_italic_`   |
 
 **Note**  
 Combinations of `*` and `_` are NOT available yet...
