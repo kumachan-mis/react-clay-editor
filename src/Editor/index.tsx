@@ -66,9 +66,12 @@ export const Editor: React.FC<Props> = (props) => {
           if (newText !== props.text) props.onChangeText(newText);
         }}
         syntax={props.syntax}
+        section={props.textProps}
         bracket={props.bracketLinkProps}
         hashtag={props.hashtagProps}
         taggedLink={{ tags: props.taggedLinkPropsMap }}
+        code={props.codeProps}
+        formula={props.formulaProps}
         containerProps={{ className: EditorConstants.syntaxMenu.className }}
       />
       <div
