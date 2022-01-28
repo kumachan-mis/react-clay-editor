@@ -14,8 +14,8 @@ export interface Props {
   style?: React.CSSProperties;
 }
 
-export interface NodeProps {
-  node: Node;
+export interface NodeProps<_Node extends Node = Node> {
+  node: _Node;
   bracketLinkProps?: BracketLinkProps;
   hashtagProps?: HashtagProps;
   taggedLinkPropsMap?: TaggedLinkPropsMap;

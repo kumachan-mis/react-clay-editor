@@ -97,9 +97,7 @@ export interface NormalLineNode {
   children: ContentNode[];
 }
 
-export type ContentNode = ContentCodeNode | ContentFormulaNode | DecorationNode | LinkNode | NormalNode;
-
-export type ContentCodeNode = InlineCodeNode;
+export type ContentNode = InlineCodeNode | ContentFormulaNode | DecorationNode | LinkNode | NormalNode;
 
 export type ContentFormulaNode = DisplayFormulaNode | InlineFormulaNode;
 
