@@ -37,15 +37,25 @@ import {
 } from './components';
 import { TextLinesConstants } from './constants';
 import { Props, NodeProps } from './types';
-import { cursorOnNode } from './utils';
+import { cursorOnNode, useLinkForceActive } from './utils';
 
-export const TextLines: React.FC<Props> = ({ nodes, cursorCoordinate, className, style, ...syntaxProps }) => (
-  <div className={mergeClassNames(TextLinesConstants.className, className)} style={style}>
-    {nodes.map((node, index) => (
-      <Node key={index} node={node} cursorLineIndex={cursorCoordinate?.lineIndex} {...syntaxProps} />
-    ))}
-  </div>
-);
+export const TextLines: React.FC<Props> = ({ nodes, cursorCoordinate, className, style, ...syntaxProps }) => {
+  const linkForceActive = useLinkForceActive();
+
+  return (
+    <div className={mergeClassNames(TextLinesConstants.className, className)} style={style}>
+      {nodes.map((node, index) => (
+        <Node
+          key={index}
+          node={node}
+          cursorLineIndex={cursorCoordinate?.lineIndex}
+          linkForceActive={linkForceActive}
+          {...syntaxProps}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Node: React.FC<NodeProps> = ({ node, ...rest }) => {
   switch (node.type) {
@@ -339,7 +349,12 @@ const Decoration: React.FC<NodeProps<DecorationNode>> = ({ node, cursorLineIndex
   );
 };
 
-const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({ node, cursorLineIndex, taggedLinkPropsMap }) => {
+const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
+  node,
+  cursorLineIndex,
+  linkForceActive,
+  taggedLinkPropsMap,
+}) => {
   const { lineIndex, linkName, trailingMeta } = node;
   const [facingMeta, tag] = splitTag(node.facingMeta);
   const [first, last] = node.range;
@@ -348,7 +363,7 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({ node, cursorLineIndex
   const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
 
   return (
-    <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
+    <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {cursorOn ? char : ''}
@@ -385,14 +400,19 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({ node, cursorLineIndex
   );
 };
 
-const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({ node, cursorLineIndex, bracketLinkProps }) => {
+const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
+  node,
+  cursorLineIndex,
+  linkForceActive,
+  bracketLinkProps,
+}) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
   const cursorOn = cursorOnNode(cursorLineIndex, node);
   const anchorElementProps = bracketLinkProps?.anchorProps?.(linkName);
 
   return (
-    <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
+    <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {cursorOn ? char : ''}
@@ -420,14 +440,14 @@ const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({ node, cursorLineInd
   );
 };
 
-const Hashtag: React.FC<NodeProps<HashtagNode>> = ({ node, cursorLineIndex, hashtagProps }) => {
+const Hashtag: React.FC<NodeProps<HashtagNode>> = ({ node, cursorLineIndex, linkForceActive, hashtagProps }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
   const cursorOn = cursorOnNode(cursorLineIndex, node);
   const anchorElementProps = hashtagProps?.anchorProps?.(getHashtagName(linkName));
 
   return (
-    <EmbededLink cursorOn={cursorOn} {...anchorElementProps}>
+    <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {char}

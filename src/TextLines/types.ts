@@ -22,4 +22,5 @@ export interface NodeProps<_Node extends Node = Node> {
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   cursorLineIndex: number | undefined;
+  linkForceActive: boolean;
 }
