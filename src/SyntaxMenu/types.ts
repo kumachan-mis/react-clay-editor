@@ -22,25 +22,11 @@ export interface SectionMenuProps {
   normalLabel?: string;
   largerLabel?: string;
   largestLabel?: string;
-  disabled?: boolean;
 }
 
 export interface ItemizationMenuProps {
   indentLabel?: string;
   outdentLabel?: string;
-  disabled?: boolean;
-}
-
-export interface BoldMenuProps {
-  disabled?: boolean;
-}
-
-export interface ItalicMenuProps {
-  disabled?: boolean;
-}
-
-export interface UnderlineMenuProps {
-  disabled?: boolean;
 }
 
 export interface BracketMenuProps {
@@ -58,12 +44,10 @@ export interface HashtagMenuProps {
 export interface TaggedLinkMenuProps {
   suggestions?: string[];
   initialSuggestionIndex?: number;
-  disabled?: boolean;
 }
 
 export interface TaggedLinkMenuPropsMap {
   tags?: { [tagName: string]: TaggedLinkMenuProps };
-  disabled?: boolean;
 }
 
 export interface CodeMenuProps {
@@ -82,7 +66,6 @@ export interface FormulaMenuProps {
 export interface QuotationMenuProps {
   indentLabel?: string;
   outdentLabel?: string;
-  disabled?: boolean;
 }
 
 export interface ContentMenuProps {
