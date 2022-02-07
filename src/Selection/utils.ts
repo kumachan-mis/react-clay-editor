@@ -75,10 +75,9 @@ export function getWordSelection(
     const to = wordRegex.lastIndex;
     if (to < cursorCoordinate.charIndex) continue;
     if (from > cursorCoordinate.charIndex) break;
-    return {
-      fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: from },
-      free: { lineIndex: cursorCoordinate.lineIndex, charIndex: to },
-    };
+    if (from === to) return undefined;
+
+    return { fixed: { ...cursorCoordinate, charIndex: from }, free: { ...cursorCoordinate, charIndex: to } };
   }
   return undefined;
 }
@@ -91,10 +90,8 @@ export function getLineSelection(
 
   const lines = text.split('\n');
   const currentLine = lines[cursorCoordinate.lineIndex];
-  return {
-    fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 },
-    free: { lineIndex: cursorCoordinate.lineIndex, charIndex: currentLine.length },
-  };
+  if (currentLine.length === 0) return undefined;
+  return { fixed: { ...cursorCoordinate, charIndex: 0 }, free: { ...cursorCoordinate, charIndex: currentLine.length } };
 }
 
 export function getSelectionText(text: string, textSelection: TextSelection | undefined): string {
