@@ -65,9 +65,6 @@ import {
   SyntaxMenuProps,
   SectionMenuProps,
   ItemizationMenuProps,
-  BoldMenuProps,
-  ItalicMenuProps,
-  UnderlineMenuProps,
   BracketMenuProps,
   HashtagMenuProps,
   TaggedLinkMenuPropsMap,
@@ -105,26 +102,38 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
       <ItemizationMenu {...itemization} {...common} lineNodes={lineNodes} />
       <BoldMenu {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
       <ItalicMenu {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
-      <UnderlineMenu {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
-      <BracketMenu {...bracket} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
-      <HashtagMenu {...hashtag} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
-      <TaggedLinkMenu {...taggedLink} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
-      <CodeMenu
-        {...code}
-        {...common}
-        lineNodes={lineNodes}
-        nodes={nodes}
-        contentPosition={contentPosition}
-        blockPosition={blockPosition}
-      />
-      <FormulaMenu
-        {...formula}
-        {...common}
-        lineNodes={lineNodes}
-        nodes={nodes}
-        contentPosition={contentPosition}
-        blockPosition={blockPosition}
-      />
+      {common.syntax !== 'markdown' && (
+        <UnderlineMenu {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      )}
+      {!bracket?.disabled && (
+        <BracketMenu {...bracket} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      )}
+      {!hashtag?.disabled && (
+        <HashtagMenu {...hashtag} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      )}
+      {Object.keys(taggedLink || {}).length > 0 && (
+        <TaggedLinkMenu {...taggedLink} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+      )}
+      {!code?.disabled && (
+        <CodeMenu
+          {...code}
+          {...common}
+          lineNodes={lineNodes}
+          nodes={nodes}
+          contentPosition={contentPosition}
+          blockPosition={blockPosition}
+        />
+      )}
+      {!formula?.disabled && (
+        <FormulaMenu
+          {...formula}
+          {...common}
+          lineNodes={lineNodes}
+          nodes={nodes}
+          contentPosition={contentPosition}
+          blockPosition={blockPosition}
+        />
+      )}
       <QuotationMenu {...quotation} {...common} lineNodes={lineNodes} />
     </MenuContainer>
   );
@@ -136,7 +145,6 @@ const SectionMenu: React.FC<SectionMenuProps & LineMenuProps & CommonMenuProps> 
   lineNodes: nodes,
   state,
   setTextAndState,
-  disabled,
   normalLabel = SectionMenuConstants.items.normal.defaultLabel,
   largerLabel = SectionMenuConstants.items.larger.defaultLabel,
   largestLabel = SectionMenuConstants.items.largest.defaultLabel,
@@ -152,7 +160,7 @@ const SectionMenu: React.FC<SectionMenuProps & LineMenuProps & CommonMenuProps> 
         onOpen={onOpen}
         onClose={onClose}
         active={menuSwitch !== 'off' && menuSwitch !== 'disabled'}
-        disabled={disabled || menuSwitch === 'disabled'}
+        disabled={menuSwitch === 'disabled'}
         buttonProps={{
           onClick: () => setTextAndState(...handleOnSectionButtonClick(text, nodes, state, props, menuSwitch)),
         }}
@@ -193,7 +201,6 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMen
   lineNodes: nodes,
   state,
   setTextAndState,
-  disabled,
   indentLabel = ItemizationMenuConstants.items.indent.defaultLabel,
   outdentLabel = ItemizationMenuConstants.items.outdent.defaultLabel,
 }) => {
@@ -208,7 +215,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMen
         onOpen={onOpen}
         onClose={onClose}
         active={menuSwitch === 'allon'}
-        disabled={disabled || menuSwitch === 'disabled'}
+        disabled={menuSwitch === 'disabled'}
         buttonProps={{
           onClick: () => setTextAndState(...handleOnItemizationButtonClick(text, nodes, state, props, menuSwitch)),
         }}
@@ -239,22 +246,21 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMen
   );
 };
 
-const BoldMenu: React.FC<BoldMenuProps & ContentMenuProps & CommonMenuProps> = ({
+const BoldMenu: React.FC<ContentMenuProps & CommonMenuProps> = ({
   syntax,
   text,
   lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
-  disabled,
 }) => {
-  const props: MenuHandler<BoldMenuProps> = { syntax };
+  const props: MenuHandler = { syntax };
   const menuSwitch = decorationMenuSwitch(syntax, nodes, contentPosition);
 
   return (
     <IconButtonMenu
       active={menuSwitch.bold === 'on'}
-      disabled={disabled || menuSwitch.bold === 'disabled'}
+      disabled={menuSwitch.bold === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'bold', menuSwitch))
       }
@@ -265,22 +271,21 @@ const BoldMenu: React.FC<BoldMenuProps & ContentMenuProps & CommonMenuProps> = (
   );
 };
 
-const ItalicMenu: React.FC<ItalicMenuProps & ContentMenuProps & CommonMenuProps> = ({
+const ItalicMenu: React.FC<ContentMenuProps & CommonMenuProps> = ({
   syntax,
   text,
   lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
-  disabled,
 }) => {
-  const props: MenuHandler<ItalicMenuProps> = { syntax };
+  const props: MenuHandler = { syntax };
   const menuSwitch = decorationMenuSwitch(syntax, nodes, contentPosition);
 
   return (
     <IconButtonMenu
       active={menuSwitch.italic === 'on'}
-      disabled={disabled || menuSwitch.italic === 'disabled'}
+      disabled={menuSwitch.italic === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'italic', menuSwitch))
       }
@@ -291,22 +296,21 @@ const ItalicMenu: React.FC<ItalicMenuProps & ContentMenuProps & CommonMenuProps>
   );
 };
 
-const UnderlineMenu: React.FC<UnderlineMenuProps & ContentMenuProps & CommonMenuProps> = ({
+const UnderlineMenu: React.FC<ContentMenuProps & CommonMenuProps> = ({
   syntax,
   text,
   lineNodes: nodes,
   contentPosition,
   state,
   setTextAndState,
-  disabled,
 }) => {
-  const props: MenuHandler<UnderlineMenuProps> = { syntax };
+  const props: MenuHandler = { syntax };
   const menuSwitch = decorationMenuSwitch(syntax, nodes, contentPosition);
 
   return (
     <IconButtonMenu
       active={menuSwitch.underline === 'on'}
-      disabled={disabled || menuSwitch.underline === 'disabled'}
+      disabled={menuSwitch.underline === 'disabled'}
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'underline', menuSwitch))
       }
@@ -383,7 +387,6 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & Commo
   contentPosition,
   state,
   setTextAndState,
-  disabled,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const tagEntries = Object.entries(tags || {});
@@ -407,7 +410,7 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & Commo
         onOpen={onOpen}
         onClose={onClose}
         active={menuSwitch === 'on'}
-        disabled={disabled || !tags || tagEntries.length === 0 || menuSwitch === 'disabled'}
+        disabled={tagEntries.length === 0 || menuSwitch === 'disabled'}
         buttonProps={{ onClick: handleOnButtonClick }}
         data-testid={createTestId(TaggedLinkMenuConstants.testId)}
       >
@@ -602,7 +605,6 @@ const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuPro
   lineNodes: nodes,
   state,
   setTextAndState,
-  disabled,
   indentLabel = QuotationMenuConstants.items.indent.defaultLabel,
   outdentLabel = QuotationMenuConstants.items.outdent.defaultLabel,
 }) => {
@@ -617,7 +619,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuPro
         onOpen={onOpen}
         onClose={onClose}
         active={menuSwitch === 'allon'}
-        disabled={disabled || menuSwitch === 'disabled'}
+        disabled={menuSwitch === 'disabled'}
         buttonProps={{
           onClick: () => setTextAndState(...handleOnQuotationButtonClick(text, nodes, state, props, menuSwitch)),
         }}

@@ -8,7 +8,7 @@ import {
   substituteContentAtCursor,
 } from '../callbacksCommon/content';
 import { isEndPoint } from '../callbacksCommon/utils';
-import { BoldMenuProps, ContentPosition, ContentPositionEmpty, ItalicMenuProps, UnderlineMenuProps } from '../types';
+import { ContentPosition, ContentPositionEmpty } from '../types';
 
 import { MenuHandler } from './types';
 
@@ -80,7 +80,7 @@ export function handleOnDecorationClick(
   nodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   state: State,
-  props: MenuHandler<BoldMenuProps | ItalicMenuProps | UnderlineMenuProps>,
+  props: MenuHandler,
   menuItem: 'bold' | 'italic' | 'underline',
   menuSwitch: MenuSwitch
 ): [string, State] {
