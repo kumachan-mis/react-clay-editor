@@ -17,6 +17,8 @@ describe('function getLineSelection in Selection', () => {
     const text = common.inputLines.join('\n');
     const actualSelection = getLineSelection(text, testCase.inputCursorCoordinate);
     const actualText = getSelectionText(text, actualSelection);
-    expect(actualText).toEqual(testCase.expectedSelectionLines.join('\n'));
+    const expectedText = testCase.expectedSelectionLines.join('\n');
+    if (!expectedText) expect(actualSelection).toBeUndefined();
+    expect(actualText).toEqual(expectedText);
   });
 });
