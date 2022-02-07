@@ -67,33 +67,6 @@
       "expectedLinesAfterTyping": ["_React Realtime Markup Editor_"]
     },
     {
-      "name": "decoration menus: underline, no-selection, empty-line",
-      "textLines": [""],
-      "inputMouse": [
-        {
-          "type": "mouseDown",
-          "coordinate": {
-            "lineIndex": 0,
-            "charIndex": 0
-          }
-        },
-        {
-          "type": "mouseUp",
-          "coordinate": {
-            "lineIndex": 0,
-            "charIndex": 0
-          }
-        }
-      ],
-      "inputMenu": {
-        "name": "underline-menu",
-        "menuButton": "icon-button"
-      },
-      "inputTyping": ["React Realtime Markup Editor"],
-      "expectedLinesAfterMenu": [""],
-      "expectedLinesAfterTyping": ["React Realtime Markup Editor"]
-    },
-    {
       "name": "decoration menus: bold, no-selection, in-decoration",
       "textLines": ["*bold text*"],
       "inputMouse": [
