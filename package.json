@@ -78,7 +78,7 @@
     "husky": "7.0.4",
     "jest": "27.5.0",
     "katex": "0.15.2",
-    "lint-staged": "11.2.6",
+    "lint-staged": "12.3.3",
     "prettier": "2.5.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -94,5 +94,5 @@
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0"
   },
-  "packageManager": "yarn@3.0.2"
+  "packageManager": "yarn@3.1.1"
 }
