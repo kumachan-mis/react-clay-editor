@@ -96,23 +96,20 @@ export function useMouseEventHandlers(
     [props, state, editorRef, setState]
   );
 
-  const handleOnDocMouseDown = React.useCallback(
-    (event: MouseEvent) => {
-      if (props.readonly || rootRef.current?.contains(event.target as Node)) return;
-      setState({
-        ...state,
-        cursorCoordinate: undefined,
-        textAreaValue: '',
-        isComposing: false,
-        textSelection: undefined,
-        selectionMouse: 'deactive',
-        suggestionType: 'none',
-        suggestions: [],
-        suggestionIndex: -1,
-      });
-    },
-    [props.readonly, state, rootRef, setState]
-  );
+  const handleOnDocMouseDown = React.useCallback(() => {
+    if (props.readonly) return;
+    setState({
+      ...state,
+      cursorCoordinate: undefined,
+      textAreaValue: '',
+      isComposing: false,
+      textSelection: undefined,
+      selectionMouse: 'deactive',
+      suggestionType: 'none',
+      suggestions: [],
+      suggestionIndex: -1,
+    });
+  }, [props.readonly, state, setState]);
   const handleOnDocMouseMove = React.useCallback(
     (event: MouseEvent) => createMouseEventHandler(handleOnMouseMove)(event),
     [createMouseEventHandler]
@@ -126,6 +123,10 @@ export function useMouseEventHandlers(
     () => rootRef.current?.querySelector('textarea')?.focus({ preventScroll: true }),
     [rootRef]
   );
+  const handleOnRootMouseDown = React.useCallback(
+    (event: React.MouseEvent) => event.nativeEvent.stopImmediatePropagation(),
+    []
+  );
 
   const handleOnBodyMouseDown = React.useCallback(
     (event: React.MouseEvent) => createMouseEventHandler(handleOnMouseDown)(event),
@@ -138,7 +139,7 @@ export function useMouseEventHandlers(
 
   return [
     { onMouseDown: handleOnDocMouseDown, onMouseMove: handleOnDocMouseMove, onMouseUp: handleOnDocMouseUp },
-    { onMouseUp: handleOnRootMouseUp },
+    { onMouseDown: handleOnRootMouseDown, onMouseUp: handleOnRootMouseUp },
     { onMouseDown: handleOnBodyMouseDown, onClick: handleOnBodyClick },
   ];
 }
