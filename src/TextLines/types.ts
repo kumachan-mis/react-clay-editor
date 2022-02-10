@@ -24,6 +24,7 @@ export interface Props {
 
 export interface NodeProps<_Node extends Node = Node> {
   node: _Node;
+  textVisual?: TextVisual;
   bracketLinkVisual?: BracketLinkVisual;
   hashtagVisual?: HashtagVisual;
   taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };

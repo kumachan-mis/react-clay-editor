@@ -115,15 +115,20 @@ const BlockCode: React.FC<NodeProps<BlockCodeNode>> = ({ node, ...rest }) => {
   );
 };
 
-const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMetaNode>> = ({ node, codeVisual }) => {
+const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMetaNode>> = ({
+  node,
+  textVisual,
+  codeVisual,
+}) => {
   const { lineIndex, indentDepth } = node;
   const code = node.type === 'blockCodeMeta' ? node.codeMeta : node.codeLine;
   const lineLength = indentDepth + code.length;
+  const lineProps = textVisual?.lineProps?.(lineIndex);
   const codeElementProps = codeVisual?.codeProps?.(code);
   const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} className={className}>
         <code {...codeElementProps} className={className}>
@@ -168,16 +173,18 @@ const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineI
 
 const BlockFormulaLineAndMeta: React.FC<NodeProps<BlockFormulaLineNode | BlockFormulaMetaNode>> = ({
   node,
+  textVisual,
   formulaVisual,
 }) => {
   const { lineIndex, indentDepth } = node;
   const formula = node.type === 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
   const lineLength = indentDepth + formula.length;
+  const lineProps = textVisual?.lineProps?.(lineIndex);
   const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <LineContent
         lineIndex={lineIndex}
@@ -196,13 +203,14 @@ const BlockFormulaLineAndMeta: React.FC<NodeProps<BlockFormulaLineNode | BlockFo
   );
 };
 
-const Quotation: React.FC<NodeProps<QuotationNode>> = ({ node, cursorLineIndex, ...rest }) => {
+const Quotation: React.FC<NodeProps<QuotationNode>> = ({ node, cursorLineIndex, textVisual, ...rest }) => {
   const { lineIndex, indentDepth, meta, contentLength, children } = node;
   const lineLength = indentDepth + meta.length + contentLength;
+  const lineProps = textVisual?.lineProps?.(lineIndex);
   const cursorOn = cursorOnNode(cursorLineIndex, node);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <LineContent
         lineIndex={lineIndex}
@@ -216,40 +224,42 @@ const Quotation: React.FC<NodeProps<QuotationNode>> = ({ node, cursorLineIndex, 
           </Char>
         ))}
         {children.map((child, index) => (
-          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} {...rest} />
+          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} textVisual={textVisual} {...rest} />
         ))}
       </LineContent>
     </Line>
   );
 };
 
-const Itemization: React.FC<NodeProps<ItemizationNode>> = ({ node, cursorLineIndex, ...rest }) => {
+const Itemization: React.FC<NodeProps<ItemizationNode>> = ({ node, cursorLineIndex, textVisual, ...rest }) => {
   const { lineIndex, indentDepth, bullet, contentLength, children } = node;
   const lineLength = indentDepth + bullet.length + contentLength;
+  const lineProps = textVisual?.lineProps?.(lineIndex);
   const cursorOn = cursorOnNode(cursorLineIndex, node);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <ItemBullet lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} />
       <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
         <ItemBulletContent lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} cursorOn={cursorOn} />
         {children.map((child, index) => (
-          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} {...rest} />
+          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} textVisual={textVisual} {...rest} />
         ))}
       </LineContent>
     </Line>
   );
 };
 
-const NormalLine: React.FC<NodeProps<NormalLineNode>> = ({ node, cursorLineIndex, ...rest }) => {
+const NormalLine: React.FC<NodeProps<NormalLineNode>> = ({ node, cursorLineIndex, textVisual, ...rest }) => {
   const { lineIndex, contentLength, children } = node;
+  const lineProps = textVisual?.lineProps?.(lineIndex);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineContent lineIndex={lineIndex} lineLength={contentLength}>
         {children.map((child, index) => (
-          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} {...rest} />
+          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} textVisual={textVisual} {...rest} />
         ))}
       </LineContent>
     </Line>

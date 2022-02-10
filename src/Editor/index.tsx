@@ -102,6 +102,7 @@ export const Editor: React.FC<Props> = (props) => {
           <TextLines
             nodes={nodes}
             cursorCoordinate={state.cursorCoordinate}
+            textVisual={props.textProps}
             bracketLinkVisual={props.bracketLinkProps}
             hashtagVisual={props.hashtagProps}
             codeVisual={props.codeProps}

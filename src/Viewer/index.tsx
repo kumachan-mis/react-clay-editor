@@ -19,6 +19,7 @@ export const Viewer: React.FC<Props> = (props) => {
   return (
     <TextLines
       nodes={nodes}
+      textVisual={props.textProps}
       bracketLinkVisual={props.bracketLinkProps}
       hashtagVisual={props.hashtagProps}
       codeVisual={props.codeProps}

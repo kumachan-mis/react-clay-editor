@@ -5,7 +5,7 @@ import React from 'react';
  */
 
 export interface TextVisual {
-  colors?: TextColor[];
+  lineProps?: (lineIndex: number) => React.ComponentProps<'div'>;
 }
 
 export interface BracketLinkVisual {
@@ -99,12 +99,6 @@ export interface FormulaParsing {
 /**
  * Misc
  */
-
-export interface TextColor {
-  backgroundColor?: string;
-  color?: string;
-  lineRange: [number, number];
-}
 
 export interface Suggestion {
   suggestions?: string[];
