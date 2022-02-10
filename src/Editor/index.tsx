@@ -89,6 +89,18 @@ export const Editor: React.FC<Props> = (props) => {
           data-selectid={EditorConstants.body.selectId}
           data-testid={createTestId(EditorConstants.body.testId)}
         >
+          <TextLines
+            nodes={nodes}
+            cursorCoordinate={state.cursorCoordinate}
+            textSelection={state.textSelection}
+            textVisual={props.textProps}
+            bracketLinkVisual={props.bracketLinkProps}
+            hashtagVisual={props.hashtagProps}
+            codeVisual={props.codeProps}
+            formulaVisual={props.formulaProps}
+            taggedLinkVisualMap={props.taggedLinkPropsMap}
+          />
+          <Selection textSelection={state.textSelection} />
           <Cursor
             coordinate={state.cursorCoordinate}
             textAreaValue={state.textAreaValue}
@@ -97,17 +109,6 @@ export const Editor: React.FC<Props> = (props) => {
             suggestionIndex={state.suggestionIndex}
             mouseHold={state.selectionMouse}
             {...cursorEventHandlers}
-          />
-          <Selection textSelection={state.textSelection} />
-          <TextLines
-            nodes={nodes}
-            cursorCoordinate={state.cursorCoordinate}
-            textVisual={props.textProps}
-            bracketLinkVisual={props.bracketLinkProps}
-            hashtagVisual={props.hashtagProps}
-            codeVisual={props.codeProps}
-            formulaVisual={props.formulaProps}
-            taggedLinkVisualMap={props.taggedLinkPropsMap}
           />
         </div>
       </div>
