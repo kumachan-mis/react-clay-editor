@@ -44,14 +44,17 @@ export const UnderlineMenuConstants = {
 
 export const BracketMenuConstants = {
   testId: 'bracket-menu',
+  defaultLabel: 'bracket link',
 };
 
 export const HashtagMenuConstants = {
   testId: 'hashtag-menu',
+  defaultLabel: 'hashtag link',
 };
 
 export const TaggedLinkMenuConstants = {
   testId: 'tagged-link-menu',
+  defaultLabel: 'tagged link',
   items: {
     label: (tagName: string) => `"${tagName}" tagged link`,
     testId: (tagName: string) => `${tagName}-tagged-link-menu-item`,

@@ -67,7 +67,6 @@ import {
   ItemizationMenuProps,
   BracketMenuProps,
   HashtagMenuProps,
-  TaggedLinkMenuPropsMap,
   TaggedLinkMenuProps,
   CodeMenuProps,
   FormulaMenuProps,
@@ -112,7 +111,7 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
         <HashtagMenu {...hashtag} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
       )}
       {Object.keys(taggedLink || {}).length > 0 && (
-        <TaggedLinkMenu {...taggedLink} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
+        <TaggedLinkMenu tags={taggedLink} {...common} lineNodes={lineNodes} contentPosition={contentPosition} />
       )}
       {!code?.disabled && (
         <CodeMenu
@@ -331,8 +330,9 @@ const BracketMenu: React.FC<BracketMenuProps & CommonMenuProps & ContentMenuProp
   disabled,
   suggestions = [],
   initialSuggestionIndex = 0,
+  label = BracketMenuConstants.defaultLabel,
 }) => {
-  const props: MenuHandler<BracketMenuProps> = { syntax, suggestions, initialSuggestionIndex };
+  const props: MenuHandler<BracketMenuProps> = { syntax, label, suggestions, initialSuggestionIndex };
   const menuItem = { type: 'bracketLink' } as const;
   const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'bracketLink');
 
@@ -360,8 +360,9 @@ const HashtagMenu: React.FC<HashtagMenuProps & ContentMenuProps & CommonMenuProp
   disabled,
   suggestions = [],
   initialSuggestionIndex = 0,
+  label = HashtagMenuConstants.defaultLabel,
 }) => {
-  const props: MenuHandler<HashtagMenuProps> = { syntax, suggestions, initialSuggestionIndex };
+  const props: MenuHandler<HashtagMenuProps> = { syntax, label, suggestions, initialSuggestionIndex };
   const menuItem = { type: 'hashtag' } as const;
   const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'hashtag');
 
@@ -379,24 +380,18 @@ const HashtagMenu: React.FC<HashtagMenuProps & ContentMenuProps & CommonMenuProp
   );
 };
 
-const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & CommonMenuProps> = ({
-  tags,
-  syntax,
-  text,
-  lineNodes: nodes,
-  contentPosition,
-  state,
-  setTextAndState,
-}) => {
+const TaggedLinkMenu: React.FC<
+  { tags?: { [tagName: string]: TaggedLinkMenuProps } } & ContentMenuProps & CommonMenuProps
+> = ({ tags, syntax, text, lineNodes: nodes, contentPosition, state, setTextAndState }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
   const tagEntries = Object.entries(tags || {});
   const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'taggedLink');
   const tagNameOrUndefined = getTagNameAtPosition(nodes, contentPosition);
 
+  const defaultLinkProps = { label: TaggedLinkMenuConstants.defaultLabel, suggestions: [], initialSuggestionIndex: 0 };
   let handleOnButtonClick = undefined;
   if (tags && tagEntries.length > 0) {
     const [tagName, linkProps] = tagNameOrUndefined ? [tagNameOrUndefined, tags[tagNameOrUndefined]] : tagEntries[0];
-    const defaultLinkProps = { suggestions: [], initialSuggestionIndex: 0 };
     const props: MenuHandler<TaggedLinkMenuProps> = { syntax, ...defaultLinkProps, ...linkProps };
     const menuItem = { type: 'taggedLink', tag: tagName } as const;
     handleOnButtonClick = () =>
@@ -417,24 +412,29 @@ const TaggedLinkMenu: React.FC<TaggedLinkMenuPropsMap & ContentMenuProps & Commo
         <TaggedLinkIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        {tagEntries.map(([tagName, { suggestions = [], initialSuggestionIndex = 0 }]) => {
-          const props: MenuHandler<TaggedLinkMenuProps> = { syntax, suggestions, initialSuggestionIndex };
-          const menuItem = { type: 'taggedLink', tag: tagName } as const;
-          return (
-            <DropdownMenuItem
-              key={tagName}
-              active={tagNameOrUndefined === tagName}
-              onClick={() =>
-                setTextAndState(
-                  ...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch)
-                )
-              }
-              data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
-            >
-              {TaggedLinkMenuConstants.items.label(tagName)}
-            </DropdownMenuItem>
-          );
-        })}
+        {tagEntries.map(
+          ([
+            tagName,
+            { label = TaggedLinkMenuConstants.defaultLabel, suggestions = [], initialSuggestionIndex = 0 },
+          ]) => {
+            const props: MenuHandler<TaggedLinkMenuProps> = { syntax, label, suggestions, initialSuggestionIndex };
+            const menuItem = { type: 'taggedLink', tag: tagName } as const;
+            return (
+              <DropdownMenuItem
+                key={tagName}
+                active={tagNameOrUndefined === tagName}
+                onClick={() =>
+                  setTextAndState(
+                    ...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch)
+                  )
+                }
+                data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
+              >
+                {TaggedLinkMenuConstants.items.label(tagName)}
+              </DropdownMenuItem>
+            );
+          }
+        )}
       </DropdownMenuList>
     </DropdownMenu>
   );

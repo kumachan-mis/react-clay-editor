@@ -10,12 +10,10 @@ interface TestCase extends BaseTestCase {
 }
 
 interface Common {
-  disables?: {
-    bracketLink?: boolean;
-    hashtag?: boolean;
-    code?: boolean;
-    formula?: boolean;
-  };
+  bracketLinkDisabled?: boolean;
+  hashtagDisabled?: boolean;
+  codeDisabled?: boolean;
+  formulaDisabled?: boolean;
   taggedLinks?: {
     tagName: string;
     linkNamePattern?: string;
@@ -38,13 +36,13 @@ describe('function parseText (markdown syntax)', () => {
 
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
-    const disables = { bracketLink: false, hashtag: false, code: false, formula: false, ...common?.disables };
-    const taggedLinkRegexes = (common?.taggedLinks || []).map((link) =>
+    const { taggedLinks, ...disables } = common || {};
+    const taggedLinkRegexes = (taggedLinks || []).map((link) =>
       link.linkNamePattern
         ? parserConstants.common.taggedLink(link.tagName, new RegExp(link.linkNamePattern))
         : parserConstants.common.taggedLink(link.tagName)
     );
-    const actualNodes = parseText(testCase.inputLines.join('\n'), { syntax, disables, taggedLinkRegexes });
+    const actualNodes = parseText(testCase.inputLines.join('\n'), { syntax, ...disables, taggedLinkRegexes });
     expect(actualNodes).toMatchObject(testCase.expectedNodes);
   };
 }

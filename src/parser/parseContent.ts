@@ -16,24 +16,24 @@ import {
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, normal } = parserConstants.common;
-  const taggedLink = options.taggedLinkRegexes.find((regex) => regex.test(text));
+  const taggedLink = options.taggedLinkRegexes?.find((regex) => regex.test(text));
 
   if (!options.syntax || options.syntax === 'bracket') {
     // bracket syntax
     const { decoration } = parserConstants.bracketSyntax;
-    if (!options.disables.code && inlineCode.test(text)) {
+    if (!options.codeDisabled && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
-    } else if (!options.disables.formula && displayFormula.test(text)) {
+    } else if (!options.formulaDisabled && displayFormula.test(text)) {
       return parseDisplayFormula(text, context, options);
-    } else if (!options.disables.formula && inlineFormula.test(text)) {
+    } else if (!options.formulaDisabled && inlineFormula.test(text)) {
       return parseInlineFormula(text, context, options);
     } else if (!context.nested && decoration.test(text)) {
       return parseDecoration(text, context, options);
     } else if (taggedLink) {
       return parseTaggedLink(text, context, options, taggedLink);
-    } else if (!options.disables.bracketLink && bracketLink.test(text)) {
+    } else if (!options.bracketLinkDisabled && bracketLink.test(text)) {
       return parseBracketLink(text, context, options);
-    } else if (!options.disables.hashtag && hashtag.test(text)) {
+    } else if (!options.hashtagDisabled && hashtag.test(text)) {
       return parseHashtag(text, context, options);
     } else if (normal.test(text)) {
       return parseNormal(text, context);
@@ -42,11 +42,11 @@ export function parseContent(text: string, context: ParsingContext, options: Par
   } else {
     // markdown syntax
     const { bold, italic } = parserConstants.markdownSyntax;
-    if (!options.disables.code && inlineCode.test(text)) {
+    if (!options.codeDisabled && inlineCode.test(text)) {
       return parseInlineCode(text, context, options);
-    } else if (!options.disables.formula && displayFormula.test(text)) {
+    } else if (!options.formulaDisabled && displayFormula.test(text)) {
       return parseDisplayFormula(text, context, options);
-    } else if (!options.disables.formula && inlineFormula.test(text)) {
+    } else if (!options.formulaDisabled && inlineFormula.test(text)) {
       return parseInlineFormula(text, context, options);
     } else if (!context.nested && bold.test(text)) {
       return parseBold(text, context, options);
@@ -54,9 +54,9 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseItalic(text, context, options);
     } else if (taggedLink) {
       return parseTaggedLink(text, context, options, taggedLink);
-    } else if (!options.disables.bracketLink && bracketLink.test(text)) {
+    } else if (!options.bracketLinkDisabled && bracketLink.test(text)) {
       return parseBracketLink(text, context, options);
-    } else if (!options.disables.hashtag && hashtag.test(text)) {
+    } else if (!options.hashtagDisabled && hashtag.test(text)) {
       return parseHashtag(text, context, options);
     } else if (normal.test(text)) {
       return parseNormal(text, context);

@@ -26,9 +26,9 @@ export function parseText(text: string, options: ParsingOptions): (BlockNode | L
     const { itemization } = parserConstants.bracketSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
-      if (!options.disables.code && blockCodeMeta.test(line)) {
+      if (!options.codeDisabled && blockCodeMeta.test(line)) {
         nodes.push(parseBlockCode(lines, context));
-      } else if (!options.disables.formula && blockFormulaMeta.test(line)) {
+      } else if (!options.formulaDisabled && blockFormulaMeta.test(line)) {
         nodes.push(parseBlockFormula(lines, context));
       } else if (quotation.test(line)) {
         nodes.push(parseQuotation(line, context, options));
@@ -43,9 +43,9 @@ export function parseText(text: string, options: ParsingOptions): (BlockNode | L
     const { heading, itemization } = parserConstants.markdownSyntax;
     while (context.lineIndex < lines.length) {
       const line = lines[context.lineIndex];
-      if (!options.disables.code && blockCodeMeta.test(line)) {
+      if (!options.codeDisabled && blockCodeMeta.test(line)) {
         nodes.push(parseBlockCode(lines, context));
-      } else if (!options.disables.formula && blockFormulaMeta.test(line)) {
+      } else if (!options.formulaDisabled && blockFormulaMeta.test(line)) {
         nodes.push(parseBlockFormula(lines, context));
       } else if (heading.test(line)) {
         nodes.push(parseHeading(line, context, options));

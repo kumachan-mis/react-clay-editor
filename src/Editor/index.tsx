@@ -70,7 +70,7 @@ export const Editor: React.FC<Props> = (props) => {
           section={props.textProps}
           bracket={props.bracketLinkProps}
           hashtag={props.hashtagProps}
-          taggedLink={{ tags: props.taggedLinkPropsMap }}
+          taggedLink={props.taggedLinkPropsMap}
           code={props.codeProps}
           formula={props.formulaProps}
           containerProps={{ className: EditorConstants.syntaxMenu.className }}
@@ -89,6 +89,18 @@ export const Editor: React.FC<Props> = (props) => {
           data-selectid={EditorConstants.body.selectId}
           data-testid={createTestId(EditorConstants.body.testId)}
         >
+          <TextLines
+            nodes={nodes}
+            cursorCoordinate={state.cursorCoordinate}
+            textSelection={state.textSelection}
+            textVisual={props.textProps}
+            bracketLinkVisual={props.bracketLinkProps}
+            hashtagVisual={props.hashtagProps}
+            codeVisual={props.codeProps}
+            formulaVisual={props.formulaProps}
+            taggedLinkVisualMap={props.taggedLinkPropsMap}
+          />
+          <Selection textSelection={state.textSelection} />
           <Cursor
             coordinate={state.cursorCoordinate}
             textAreaValue={state.textAreaValue}
@@ -97,16 +109,6 @@ export const Editor: React.FC<Props> = (props) => {
             suggestionIndex={state.suggestionIndex}
             mouseHold={state.selectionMouse}
             {...cursorEventHandlers}
-          />
-          <Selection textSelection={state.textSelection} />
-          <TextLines
-            nodes={nodes}
-            cursorCoordinate={state.cursorCoordinate}
-            bracketLinkProps={props.bracketLinkProps}
-            hashtagProps={props.hashtagProps}
-            codeProps={props.codeProps}
-            formulaProps={props.formulaProps}
-            taggedLinkPropsMap={props.taggedLinkPropsMap}
           />
         </div>
       </div>

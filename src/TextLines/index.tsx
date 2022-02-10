@@ -39,7 +39,14 @@ import { TextLinesConstants } from './constants';
 import { Props, NodeProps } from './types';
 import { cursorOnNode, useLinkForceActive } from './utils';
 
-export const TextLines: React.FC<Props> = ({ nodes, cursorCoordinate, className, style, ...syntaxProps }) => {
+export const TextLines: React.FC<Props> = ({
+  nodes,
+  cursorCoordinate,
+  textSelection,
+  className,
+  style,
+  ...syntaxProps
+}) => {
   const linkForceActive = useLinkForceActive();
 
   return (
@@ -48,7 +55,8 @@ export const TextLines: React.FC<Props> = ({ nodes, cursorCoordinate, className,
         <Node
           key={index}
           node={node}
-          cursorLineIndex={cursorCoordinate?.lineIndex}
+          cursorCoordinate={cursorCoordinate}
+          textSelection={textSelection}
           linkForceActive={linkForceActive}
           {...syntaxProps}
         />
@@ -115,15 +123,20 @@ const BlockCode: React.FC<NodeProps<BlockCodeNode>> = ({ node, ...rest }) => {
   );
 };
 
-const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMetaNode>> = ({ node, codeProps }) => {
+const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMetaNode>> = ({
+  node,
+  textVisual,
+  codeVisual,
+}) => {
   const { lineIndex, indentDepth } = node;
   const code = node.type === 'blockCodeMeta' ? node.codeMeta : node.codeLine;
   const lineLength = indentDepth + code.length;
-  const codeElementProps = codeProps?.codeProps?.(code);
+  const lineProps = textVisual?.lineProps?.(lineIndex);
+  const codeElementProps = codeVisual?.codeProps?.(code);
   const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} className={className}>
         <code {...codeElementProps} className={className}>
@@ -138,12 +151,18 @@ const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMeta
   );
 };
 
-const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineIndex, formulaProps, ...rest }) => {
+const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({
+  node,
+  cursorCoordinate,
+  textSelection,
+  formulaVisual,
+  ...rest
+}) => {
   const { facingMeta, children, trailingMeta } = node;
   const [first, last] = node.range;
   const formula = children.map((child) => child.formulaLine).join('\n');
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const spanElementProps = formulaProps?.spanProps?.(formula);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
+  const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
   return !cursorOn && !/^\s*$/.test(formula) ? (
@@ -155,12 +174,31 @@ const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineI
     </LineGroup>
   ) : (
     <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
-      <Node node={facingMeta} cursorLineIndex={cursorLineIndex} formulaProps={formulaProps} {...rest} />
+      <Node
+        node={facingMeta}
+        cursorCoordinate={cursorCoordinate}
+        textSelection={textSelection}
+        formulaVisual={formulaVisual}
+        {...rest}
+      />
       {children.map((child, index) => (
-        <Node key={index} node={child} cursorLineIndex={cursorLineIndex} formulaProps={formulaProps} {...rest} />
+        <Node
+          key={index}
+          node={child}
+          cursorCoordinate={cursorCoordinate}
+          textSelection={textSelection}
+          formulaVisual={formulaVisual}
+          {...rest}
+        />
       ))}
       {trailingMeta && (
-        <Node node={trailingMeta} cursorLineIndex={cursorLineIndex} formulaProps={formulaProps} {...rest} />
+        <Node
+          node={trailingMeta}
+          cursorCoordinate={cursorCoordinate}
+          textSelection={textSelection}
+          formulaVisual={formulaVisual}
+          {...rest}
+        />
       )}
     </LineGroup>
   );
@@ -168,16 +206,18 @@ const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineI
 
 const BlockFormulaLineAndMeta: React.FC<NodeProps<BlockFormulaLineNode | BlockFormulaMetaNode>> = ({
   node,
-  formulaProps,
+  textVisual,
+  formulaVisual,
 }) => {
   const { lineIndex, indentDepth } = node;
   const formula = node.type === 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
   const lineLength = indentDepth + formula.length;
-  const spanElementProps = formulaProps?.spanProps?.(formula);
+  const lineProps = textVisual?.lineProps?.(lineIndex);
+  const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <LineContent
         lineIndex={lineIndex}
@@ -196,13 +236,20 @@ const BlockFormulaLineAndMeta: React.FC<NodeProps<BlockFormulaLineNode | BlockFo
   );
 };
 
-const Quotation: React.FC<NodeProps<QuotationNode>> = ({ node, cursorLineIndex, ...rest }) => {
+const Quotation: React.FC<NodeProps<QuotationNode>> = ({
+  node,
+  cursorCoordinate,
+  textSelection,
+  textVisual,
+  ...rest
+}) => {
   const { lineIndex, indentDepth, meta, contentLength, children } = node;
   const lineLength = indentDepth + meta.length + contentLength;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
+  const lineProps = textVisual?.lineProps?.(lineIndex);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <LineContent
         lineIndex={lineIndex}
@@ -216,51 +263,86 @@ const Quotation: React.FC<NodeProps<QuotationNode>> = ({ node, cursorLineIndex, 
           </Char>
         ))}
         {children.map((child, index) => (
-          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} {...rest} />
+          <Node
+            key={index}
+            node={child}
+            cursorCoordinate={cursorCoordinate}
+            textSelection={textSelection}
+            textVisual={textVisual}
+            {...rest}
+          />
         ))}
       </LineContent>
     </Line>
   );
 };
 
-const Itemization: React.FC<NodeProps<ItemizationNode>> = ({ node, cursorLineIndex, ...rest }) => {
+const Itemization: React.FC<NodeProps<ItemizationNode>> = ({
+  node,
+  cursorCoordinate,
+  textSelection,
+  textVisual,
+  ...rest
+}) => {
   const { lineIndex, indentDepth, bullet, contentLength, children } = node;
   const lineLength = indentDepth + bullet.length + contentLength;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
+  const lineProps = textVisual?.lineProps?.(lineIndex);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <ItemBullet lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} />
       <LineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength} itemized>
         <ItemBulletContent lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} cursorOn={cursorOn} />
         {children.map((child, index) => (
-          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} {...rest} />
+          <Node
+            key={index}
+            node={child}
+            cursorCoordinate={cursorCoordinate}
+            textSelection={textSelection}
+            textVisual={textVisual}
+            {...rest}
+          />
         ))}
       </LineContent>
     </Line>
   );
 };
 
-const NormalLine: React.FC<NodeProps<NormalLineNode>> = ({ node, cursorLineIndex, ...rest }) => {
+const NormalLine: React.FC<NodeProps<NormalLineNode>> = ({
+  node,
+  cursorCoordinate,
+  textSelection,
+  textVisual,
+  ...rest
+}) => {
   const { lineIndex, contentLength, children } = node;
+  const lineProps = textVisual?.lineProps?.(lineIndex);
 
   return (
-    <Line lineIndex={lineIndex}>
+    <Line lineIndex={lineIndex} {...lineProps}>
       <LineContent lineIndex={lineIndex} lineLength={contentLength}>
         {children.map((child, index) => (
-          <Node key={index} node={child} cursorLineIndex={cursorLineIndex} {...rest} />
+          <Node
+            key={index}
+            node={child}
+            cursorCoordinate={cursorCoordinate}
+            textSelection={textSelection}
+            textVisual={textVisual}
+            {...rest}
+          />
         ))}
       </LineContent>
     </Line>
   );
 };
 
-const InlineCode: React.FC<NodeProps<InlineCodeNode>> = ({ node, cursorLineIndex, codeProps }) => {
+const InlineCode: React.FC<NodeProps<InlineCodeNode>> = ({ node, cursorCoordinate, textSelection, codeVisual }) => {
   const { lineIndex, facingMeta, code, trailingMeta } = node;
   const [first, last] = node.range;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const codeElementProps = codeProps?.codeProps?.(code);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
+  const codeElementProps = codeVisual?.codeProps?.(code);
   const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
   return (
@@ -292,12 +374,17 @@ const InlineCode: React.FC<NodeProps<InlineCodeNode>> = ({ node, cursorLineIndex
   );
 };
 
-const ContentFormula: React.FC<NodeProps<ContentFormulaNode>> = ({ node, cursorLineIndex, formulaProps }) => {
+const ContentFormula: React.FC<NodeProps<ContentFormulaNode>> = ({
+  node,
+  cursorCoordinate,
+  textSelection,
+  formulaVisual,
+}) => {
   const { lineIndex, facingMeta, formula, trailingMeta } = node;
   const displayMode = node.type === 'displayFormula';
   const [first, last] = node.range;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const spanElementProps = formulaProps?.spanProps?.(formula);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
+  const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
   return (
@@ -321,10 +408,10 @@ const ContentFormula: React.FC<NodeProps<ContentFormulaNode>> = ({ node, cursorL
   );
 };
 
-const Decoration: React.FC<NodeProps<DecorationNode>> = ({ node, cursorLineIndex, ...rest }) => {
+const Decoration: React.FC<NodeProps<DecorationNode>> = ({ node, cursorCoordinate, textSelection, ...rest }) => {
   const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
   const [first, last] = node.range;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
 
   return (
     <span className={TextLinesConstants.decoration.className(decoration)}>
@@ -334,7 +421,7 @@ const Decoration: React.FC<NodeProps<DecorationNode>> = ({ node, cursorLineIndex
         </Char>
       ))}
       {children.map((child, index) => (
-        <Node key={index} node={child} cursorLineIndex={cursorLineIndex} {...rest} />
+        <Node key={index} node={child} cursorCoordinate={cursorCoordinate} textSelection={textSelection} {...rest} />
       ))}
       {[...trailingMeta].map((char, index) => (
         <Char
@@ -351,16 +438,17 @@ const Decoration: React.FC<NodeProps<DecorationNode>> = ({ node, cursorLineIndex
 
 const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
   node,
-  cursorLineIndex,
+  cursorCoordinate,
+  textSelection,
   linkForceActive,
-  taggedLinkPropsMap,
+  taggedLinkVisualMap,
 }) => {
   const { lineIndex, linkName, trailingMeta } = node;
   const [facingMeta, tag] = splitTag(node.facingMeta);
   const [first, last] = node.range;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const taggedLinkProps = taggedLinkPropsMap?.[getTagName(node.facingMeta)];
-  const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
+  const taggedLinkVisual = taggedLinkVisualMap?.[getTagName(node.facingMeta)];
+  const anchorElementProps = taggedLinkVisual?.anchorProps?.(linkName);
 
   return (
     <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
@@ -375,7 +463,7 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
           lineIndex={lineIndex}
           charIndex={first + facingMeta.length + index}
         >
-          {cursorOn || !taggedLinkProps?.tagHidden ? char : ''}
+          {cursorOn || !taggedLinkVisual?.tagHidden ? char : ''}
         </Char>
       ))}
       {[...linkName].map((char, index) => (
@@ -402,14 +490,15 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
 
 const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
   node,
-  cursorLineIndex,
+  cursorCoordinate,
+  textSelection,
   linkForceActive,
-  bracketLinkProps,
+  bracketLinkVisual,
 }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const anchorElementProps = bracketLinkProps?.anchorProps?.(linkName);
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
+  const anchorElementProps = bracketLinkVisual?.anchorProps?.(linkName);
 
   return (
     <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
@@ -440,11 +529,17 @@ const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
   );
 };
 
-const Hashtag: React.FC<NodeProps<HashtagNode>> = ({ node, cursorLineIndex, linkForceActive, hashtagProps }) => {
+const Hashtag: React.FC<NodeProps<HashtagNode>> = ({
+  node,
+  cursorCoordinate,
+  textSelection,
+  linkForceActive,
+  hashtagVisual,
+}) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
-  const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const anchorElementProps = hashtagProps?.anchorProps?.(getHashtagName(linkName));
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
+  const anchorElementProps = hashtagVisual?.anchorProps?.(getHashtagName(linkName));
 
   return (
     <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>

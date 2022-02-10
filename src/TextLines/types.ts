@@ -1,26 +1,38 @@
 import { CursorCoordinate } from '../Cursor/types';
-import { BracketLinkProps, HashtagProps, TaggedLinkPropsMap, CodeProps, FormulaProps } from '../common/types';
+import { TextSelection } from '../Selection/types';
+import {
+  TextVisual,
+  BracketLinkVisual,
+  HashtagVisual,
+  TaggedLinkVisual,
+  CodeVisual,
+  FormulaVisual,
+} from '../common/types';
 import { Node } from '../parser/types';
 
 export interface Props {
   nodes: Node[];
   cursorCoordinate?: CursorCoordinate;
-  bracketLinkProps?: BracketLinkProps;
-  hashtagProps?: HashtagProps;
-  taggedLinkPropsMap?: TaggedLinkPropsMap;
-  codeProps?: CodeProps;
-  formulaProps?: FormulaProps;
+  textSelection?: TextSelection;
+  textVisual?: TextVisual;
+  bracketLinkVisual?: BracketLinkVisual;
+  hashtagVisual?: HashtagVisual;
+  taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
+  codeVisual?: CodeVisual;
+  formulaVisual?: FormulaVisual;
   className?: string;
   style?: React.CSSProperties;
 }
 
 export interface NodeProps<_Node extends Node = Node> {
   node: _Node;
-  bracketLinkProps?: BracketLinkProps;
-  hashtagProps?: HashtagProps;
-  taggedLinkPropsMap?: TaggedLinkPropsMap;
-  codeProps?: CodeProps;
-  formulaProps?: FormulaProps;
-  cursorLineIndex: number | undefined;
+  cursorCoordinate?: CursorCoordinate;
+  textSelection?: TextSelection;
+  textVisual?: TextVisual;
+  bracketLinkVisual?: BracketLinkVisual;
+  hashtagVisual?: HashtagVisual;
+  taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
+  codeVisual?: CodeVisual;
+  formulaVisual?: FormulaVisual;
   linkForceActive: boolean;
 }

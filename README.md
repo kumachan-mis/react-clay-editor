@@ -219,6 +219,7 @@ general settings of text
 
 ```ts
 interface TextProps {
+  lineProps?: (lineIndex: number) => React.ComponentProps<'div'>;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   normalLabel?: string
@@ -227,6 +228,8 @@ interface TextProps {
 }
 ```
 
+- anchorProps: given `lineIndex`, this function returns props of `<div>` tag  
+  default: `undefined`
 - suggestions: input suggestions of normal texts  
   default: `[]`
 - initialSuggestionIndex: index of focusd suggestion when showing the suggestion list  
@@ -253,7 +256,7 @@ interface BracketLinkProps {
 
 **Attributes**
 
-- anchorProps: given `linkName`, this function returns props of `<a>` tag and overridden style on hover  
+- anchorProps: given `linkName`, this function returns props of `<a>` tag  
   default: `undefined`
 - suggestions: input suggestions of bracket links  
   default: `[]`
@@ -353,7 +356,7 @@ interface FormulaProps {
 
 **Attributes**
 
-- spanProps: given `formula`, this function returns props of `<formula>` tag  
+- spanProps: given `formula`, this function returns props of `<span>` tag  
   default: `undefined`
 - inlineLabel: label name of inline formula in Syntax Menu. This is also used as the default formula value
   default: `inline formula`
