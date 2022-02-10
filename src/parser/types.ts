@@ -7,8 +7,11 @@ export interface ParsingContext {
 
 export interface ParsingOptions {
   syntax?: 'bracket' | 'markdown';
-  disables: { [key in 'bracketLink' | 'hashtag' | 'code' | 'formula']: boolean | undefined };
-  taggedLinkRegexes: RegExp[];
+  bracketLinkDisabled?: boolean;
+  hashtagDisabled?: boolean;
+  codeDisabled?: boolean;
+  formulaDisabled?: boolean;
+  taggedLinkRegexes?: RegExp[];
 }
 
 export interface Decoration {

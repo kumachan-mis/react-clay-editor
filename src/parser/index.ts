@@ -18,12 +18,10 @@ export function useParser(
   const nodes = React.useMemo(() => {
     const options: ParsingOptions = {
       syntax,
-      disables: {
-        bracketLink: bracketLinkProps?.disabled,
-        hashtag: hashtagProps?.disabled,
-        code: codeProps?.disabled,
-        formula: formulaProps?.disabled,
-      },
+      bracketLinkDisabled: bracketLinkProps?.disabled,
+      hashtagDisabled: hashtagProps?.disabled,
+      codeDisabled: codeProps?.disabled,
+      formulaDisabled: formulaProps?.disabled,
       taggedLinkRegexes: Object.entries(taggedLinkPropsMap || {}).map(([tagName, linkProps]) =>
         parserConstants.common.taggedLink(tagName, linkProps.linkNameRegex)
       ),
