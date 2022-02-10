@@ -105,7 +105,9 @@ export function handleOnLinkItemClick(
 
   if (!state.cursorCoordinate || !contentPosition || menuSwitch === 'disabled') return [text, state];
 
-  if (contentPosition.type === 'empty') return showSuggestion(insertContentAtCursor(text, nodes, state, config));
+  if (contentPosition.type === 'empty') {
+    return showSuggestion(insertContentAtCursor(text, nodes, state, config, offContent));
+  }
 
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return [text, state];
