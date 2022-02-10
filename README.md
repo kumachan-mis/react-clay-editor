@@ -356,7 +356,7 @@ interface FormulaProps {
 
 **Attributes**
 
-- spanProps: given `formula`, this function returns props of `<formula>` tag  
+- spanProps: given `formula`, this function returns props of `<span>` tag  
   default: `undefined`
 - inlineLabel: label name of inline formula in Syntax Menu. This is also used as the default formula value
   default: `inline formula`
