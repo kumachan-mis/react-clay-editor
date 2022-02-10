@@ -40,12 +40,7 @@ export function handleOnMouseDown(
 
   const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  const newState = resetSuggestion({
-    ...state,
-    cursorCoordinate,
-    textSelection: undefined,
-    selectionMouse: 'fired',
-  });
+  const newState = resetSuggestion({ ...state, cursorCoordinate, textSelection: undefined, selectionMouse: 'fired' });
   return [text, newState];
 }
 

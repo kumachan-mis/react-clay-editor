@@ -165,40 +165,44 @@ const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({
   const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
-  return !cursorOn && !/^\s*$/.test(formula) ? (
+  return (
     <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
-      <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-      <LineGroupContent indentDepth={facingMeta.indentDepth} {...spanElementProps} className={className}>
-        <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
-      </LineGroupContent>
-    </LineGroup>
-  ) : (
-    <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
-      <Node
-        node={facingMeta}
-        cursorCoordinate={cursorCoordinate}
-        textSelection={textSelection}
-        formulaVisual={formulaVisual}
-        {...rest}
-      />
-      {children.map((child, index) => (
-        <Node
-          key={index}
-          node={child}
-          cursorCoordinate={cursorCoordinate}
-          textSelection={textSelection}
-          formulaVisual={formulaVisual}
-          {...rest}
-        />
-      ))}
-      {trailingMeta && (
-        <Node
-          node={trailingMeta}
-          cursorCoordinate={cursorCoordinate}
-          textSelection={textSelection}
-          formulaVisual={formulaVisual}
-          {...rest}
-        />
+      {!cursorOn && !/^\s*$/.test(formula) ? (
+        <>
+          <LineGroupIndent indentDepth={facingMeta.indentDepth} />
+          <LineGroupContent indentDepth={facingMeta.indentDepth} {...spanElementProps} className={className}>
+            <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
+          </LineGroupContent>
+        </>
+      ) : (
+        <>
+          <Node
+            node={facingMeta}
+            cursorCoordinate={cursorCoordinate}
+            textSelection={textSelection}
+            formulaVisual={formulaVisual}
+            {...rest}
+          />
+          {children.map((child, index) => (
+            <Node
+              key={index}
+              node={child}
+              cursorCoordinate={cursorCoordinate}
+              textSelection={textSelection}
+              formulaVisual={formulaVisual}
+              {...rest}
+            />
+          ))}
+          {trailingMeta && (
+            <Node
+              node={trailingMeta}
+              cursorCoordinate={cursorCoordinate}
+              textSelection={textSelection}
+              formulaVisual={formulaVisual}
+              {...rest}
+            />
+          )}
+        </>
       )}
     </LineGroup>
   );
