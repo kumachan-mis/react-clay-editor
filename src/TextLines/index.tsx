@@ -115,11 +115,11 @@ const BlockCode: React.FC<NodeProps<BlockCodeNode>> = ({ node, ...rest }) => {
   );
 };
 
-const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMetaNode>> = ({ node, codeProps }) => {
+const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMetaNode>> = ({ node, codeVisual }) => {
   const { lineIndex, indentDepth } = node;
   const code = node.type === 'blockCodeMeta' ? node.codeMeta : node.codeLine;
   const lineLength = indentDepth + code.length;
-  const codeElementProps = codeProps?.codeProps?.(code);
+  const codeElementProps = codeVisual?.codeProps?.(code);
   const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
   return (
@@ -138,12 +138,12 @@ const BlockCodeLineAndMeta: React.FC<NodeProps<BlockCodeLineNode | BlockCodeMeta
   );
 };
 
-const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineIndex, formulaProps, ...rest }) => {
+const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineIndex, formulaVisual, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
   const [first, last] = node.range;
   const formula = children.map((child) => child.formulaLine).join('\n');
   const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const spanElementProps = formulaProps?.spanProps?.(formula);
+  const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
   return !cursorOn && !/^\s*$/.test(formula) ? (
@@ -155,12 +155,12 @@ const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineI
     </LineGroup>
   ) : (
     <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
-      <Node node={facingMeta} cursorLineIndex={cursorLineIndex} formulaProps={formulaProps} {...rest} />
+      <Node node={facingMeta} cursorLineIndex={cursorLineIndex} formulaVisual={formulaVisual} {...rest} />
       {children.map((child, index) => (
-        <Node key={index} node={child} cursorLineIndex={cursorLineIndex} formulaProps={formulaProps} {...rest} />
+        <Node key={index} node={child} cursorLineIndex={cursorLineIndex} formulaVisual={formulaVisual} {...rest} />
       ))}
       {trailingMeta && (
-        <Node node={trailingMeta} cursorLineIndex={cursorLineIndex} formulaProps={formulaProps} {...rest} />
+        <Node node={trailingMeta} cursorLineIndex={cursorLineIndex} formulaVisual={formulaVisual} {...rest} />
       )}
     </LineGroup>
   );
@@ -168,12 +168,12 @@ const BlockFormula: React.FC<NodeProps<BlockFormulaNode>> = ({ node, cursorLineI
 
 const BlockFormulaLineAndMeta: React.FC<NodeProps<BlockFormulaLineNode | BlockFormulaMetaNode>> = ({
   node,
-  formulaProps,
+  formulaVisual,
 }) => {
   const { lineIndex, indentDepth } = node;
   const formula = node.type === 'blockFormulaMeta' ? node.formulaMeta : node.formulaLine;
   const lineLength = indentDepth + formula.length;
-  const spanElementProps = formulaProps?.spanProps?.(formula);
+  const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
   return (
@@ -256,11 +256,11 @@ const NormalLine: React.FC<NodeProps<NormalLineNode>> = ({ node, cursorLineIndex
   );
 };
 
-const InlineCode: React.FC<NodeProps<InlineCodeNode>> = ({ node, cursorLineIndex, codeProps }) => {
+const InlineCode: React.FC<NodeProps<InlineCodeNode>> = ({ node, cursorLineIndex, codeVisual }) => {
   const { lineIndex, facingMeta, code, trailingMeta } = node;
   const [first, last] = node.range;
   const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const codeElementProps = codeProps?.codeProps?.(code);
+  const codeElementProps = codeVisual?.codeProps?.(code);
   const className = mergeClassNames(TextLinesConstants.code.className, codeElementProps?.className);
 
   return (
@@ -292,12 +292,12 @@ const InlineCode: React.FC<NodeProps<InlineCodeNode>> = ({ node, cursorLineIndex
   );
 };
 
-const ContentFormula: React.FC<NodeProps<ContentFormulaNode>> = ({ node, cursorLineIndex, formulaProps }) => {
+const ContentFormula: React.FC<NodeProps<ContentFormulaNode>> = ({ node, cursorLineIndex, formulaVisual }) => {
   const { lineIndex, facingMeta, formula, trailingMeta } = node;
   const displayMode = node.type === 'displayFormula';
   const [first, last] = node.range;
   const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const spanElementProps = formulaProps?.spanProps?.(formula);
+  const spanElementProps = formulaVisual?.spanProps?.(formula);
   const className = mergeClassNames(TextLinesConstants.formula.className, spanElementProps?.className);
 
   return (
@@ -353,14 +353,14 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
   node,
   cursorLineIndex,
   linkForceActive,
-  taggedLinkPropsMap,
+  taggedLinkVisualMap,
 }) => {
   const { lineIndex, linkName, trailingMeta } = node;
   const [facingMeta, tag] = splitTag(node.facingMeta);
   const [first, last] = node.range;
   const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const taggedLinkProps = taggedLinkPropsMap?.[getTagName(node.facingMeta)];
-  const anchorElementProps = taggedLinkProps?.anchorProps?.(linkName);
+  const taggedLinkVisual = taggedLinkVisualMap?.[getTagName(node.facingMeta)];
+  const anchorElementProps = taggedLinkVisual?.anchorProps?.(linkName);
 
   return (
     <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
@@ -375,7 +375,7 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
           lineIndex={lineIndex}
           charIndex={first + facingMeta.length + index}
         >
-          {cursorOn || !taggedLinkProps?.tagHidden ? char : ''}
+          {cursorOn || !taggedLinkVisual?.tagHidden ? char : ''}
         </Char>
       ))}
       {[...linkName].map((char, index) => (
@@ -404,12 +404,12 @@ const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
   node,
   cursorLineIndex,
   linkForceActive,
-  bracketLinkProps,
+  bracketLinkVisual,
 }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
   const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const anchorElementProps = bracketLinkProps?.anchorProps?.(linkName);
+  const anchorElementProps = bracketLinkVisual?.anchorProps?.(linkName);
 
   return (
     <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
@@ -440,11 +440,11 @@ const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
   );
 };
 
-const Hashtag: React.FC<NodeProps<HashtagNode>> = ({ node, cursorLineIndex, linkForceActive, hashtagProps }) => {
+const Hashtag: React.FC<NodeProps<HashtagNode>> = ({ node, cursorLineIndex, linkForceActive, hashtagVisual }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
   const cursorOn = cursorOnNode(cursorLineIndex, node);
-  const anchorElementProps = hashtagProps?.anchorProps?.(getHashtagName(linkName));
+  const anchorElementProps = hashtagVisual?.anchorProps?.(getHashtagName(linkName));
 
   return (
     <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>

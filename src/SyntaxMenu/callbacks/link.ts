@@ -57,10 +57,10 @@ export function handleOnLinkItemClick(
 ): [string, State] {
   const offContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll(' ', '_') + ' ' : content);
   const onContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll('_', ' ') : content);
-  const [config, suggestionStart] = getLinkMeta(menuItem);
+  const [config, suggestionStart] = getLinkMeta(props, menuItem);
 
   function handleItemOffWithoutSelection(): [string, State] {
-    return showSuggestion(insertContentAtCursor(text, nodes, state, config));
+    return showSuggestion(insertContentAtCursor(text, nodes, state, config, offContent));
   }
 
   function handleItemOnWithoutSelection(
@@ -126,15 +126,16 @@ export function handleOnLinkItemClick(
 }
 
 function getLinkMeta(
+  props: MenuHandler<BracketMenuProps | TaggedLinkMenuProps | HashtagMenuProps>,
   menuItem: { type: 'bracketLink' } | { type: 'taggedLink'; tag: string } | { type: 'hashtag' }
 ): [ContentConfig, number] {
   switch (menuItem.type) {
     case 'bracketLink':
-      return [{ facingMeta: '[', content: 'bracket link', trailingMeta: ']', nestedSearch: true }, 0];
+      return [{ facingMeta: '[', content: props.label, trailingMeta: ']', nestedSearch: true }, 0];
     case 'taggedLink':
-      return [{ facingMeta: `[${menuItem.tag}: `, content: 'tagged link', trailingMeta: ']', nestedSearch: true }, 1];
+      return [{ facingMeta: `[${menuItem.tag}: `, content: props.label, trailingMeta: ']', nestedSearch: true }, 1];
     case 'hashtag':
-      return [{ facingMeta: '#', content: 'hashtag_link ', trailingMeta: '', nestedSearch: true }, 0];
+      return [{ facingMeta: '#', content: props.label, trailingMeta: '', nestedSearch: true }, 0];
   }
 }
 

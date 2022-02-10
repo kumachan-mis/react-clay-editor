@@ -1,4 +1,19 @@
 import { State } from '../Editor/types';
+import {
+  TextLabels,
+  ItemizationLabels,
+  BracketLabels,
+  HashtagLabels,
+  TaggedLinkLabels,
+  CodeLabels,
+  FormulaLabels,
+  QuotationLabels,
+  BracketLinkParsing,
+  HashtagParsing,
+  CodeParsing,
+  FormulaParsing,
+  Suggestion,
+} from '../common/types';
 import { BlockNode, LineNode } from '../parser/types';
 
 export interface SyntaxMenuProps {
@@ -11,62 +26,28 @@ export interface SyntaxMenuProps {
   itemization?: ItemizationMenuProps;
   bracket?: BracketMenuProps;
   hashtag?: HashtagMenuProps;
-  taggedLink?: TaggedLinkMenuPropsMap;
+  taggedLink?: { [tagName: string]: TaggedLinkMenuProps };
   code?: CodeMenuProps;
   formula?: FormulaMenuProps;
   quotation?: QuotationMenuProps;
   containerProps?: Omit<React.ComponentProps<'div'>, 'ref'>;
 }
 
-export interface SectionMenuProps {
-  normalLabel?: string;
-  largerLabel?: string;
-  largestLabel?: string;
-}
+export type SectionMenuProps = TextLabels;
 
-export interface ItemizationMenuProps {
-  indentLabel?: string;
-  outdentLabel?: string;
-}
+export type ItemizationMenuProps = ItemizationLabels;
 
-export interface BracketMenuProps {
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
-}
+export type BracketMenuProps = BracketLabels & BracketLinkParsing & Suggestion;
 
-export interface HashtagMenuProps {
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
-}
+export type HashtagMenuProps = HashtagLabels & HashtagParsing & Suggestion;
 
-export interface TaggedLinkMenuProps {
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-}
+export type TaggedLinkMenuProps = TaggedLinkLabels & Suggestion;
 
-export interface TaggedLinkMenuPropsMap {
-  tags?: { [tagName: string]: TaggedLinkMenuProps };
-}
+export type CodeMenuProps = CodeLabels & CodeParsing;
 
-export interface CodeMenuProps {
-  inlineLabel?: string;
-  blockLabel?: string;
-  disabled?: boolean;
-}
+export type FormulaMenuProps = FormulaLabels & FormulaParsing;
 
-export interface FormulaMenuProps {
-  inlineLabel?: string;
-  displayLabel?: string;
-  blockLabel?: string;
-  disabled?: boolean;
-}
-
-export interface QuotationMenuProps {
-  indentLabel?: string;
-  outdentLabel?: string;
-}
+export type QuotationMenuProps = QuotationLabels;
 
 export interface ContentMenuProps {
   lineNodes: LineNode[];

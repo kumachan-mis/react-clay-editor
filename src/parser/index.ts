@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BracketLinkProps, HashtagProps, TaggedLinkPropsMap, CodeProps, FormulaProps } from '../common/types';
+import { BracketLinkParsing, HashtagParsing, TaggedLinkParsing, CodeParsing, FormulaParsing } from '../common/types';
 
 import { parserConstants } from './constants';
 import { parseText } from './parseText';
@@ -9,32 +9,32 @@ import { BlockNode, LineNode, ParsingOptions } from './types';
 export function useParser(
   text: string,
   syntax?: 'bracket' | 'markdown',
-  bracketLinkProps?: BracketLinkProps,
-  hashtagProps?: HashtagProps,
-  taggedLinkPropsMap?: TaggedLinkPropsMap,
-  codeProps?: CodeProps,
-  formulaProps?: FormulaProps
+  bracketLinkParsing?: BracketLinkParsing,
+  hashtagParsing?: HashtagParsing,
+  taggedLinkParsingMap?: { [tagName: string]: TaggedLinkParsing },
+  codeParsing?: CodeParsing,
+  formulaParsing?: FormulaParsing
 ): (BlockNode | LineNode)[] {
   const nodes = React.useMemo(() => {
     const options: ParsingOptions = {
       syntax,
-      bracketLinkDisabled: bracketLinkProps?.disabled,
-      hashtagDisabled: hashtagProps?.disabled,
-      codeDisabled: codeProps?.disabled,
-      formulaDisabled: formulaProps?.disabled,
-      taggedLinkRegexes: Object.entries(taggedLinkPropsMap || {}).map(([tagName, linkProps]) =>
-        parserConstants.common.taggedLink(tagName, linkProps.linkNameRegex)
+      bracketLinkDisabled: bracketLinkParsing?.disabled,
+      hashtagDisabled: hashtagParsing?.disabled,
+      codeDisabled: codeParsing?.disabled,
+      formulaDisabled: formulaParsing?.disabled,
+      taggedLinkRegexes: Object.entries(taggedLinkParsingMap || {}).map(([tagName, linkParsing]) =>
+        parserConstants.common.taggedLink(tagName, linkParsing.linkNameRegex)
       ),
     };
     return parseText(text, options);
   }, [
     text,
     syntax,
-    bracketLinkProps?.disabled,
-    hashtagProps?.disabled,
-    codeProps?.disabled,
-    formulaProps?.disabled,
-    taggedLinkPropsMap,
+    bracketLinkParsing?.disabled,
+    hashtagParsing?.disabled,
+    codeParsing?.disabled,
+    formulaParsing?.disabled,
+    taggedLinkParsingMap,
   ]);
 
   return nodes;

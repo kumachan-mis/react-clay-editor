@@ -1,45 +1,112 @@
-export interface TextProps {
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
+import React from 'react';
+
+/**
+ * Visual Props
+ */
+
+export interface TextVisual {
+  colors?: TextColor[];
+}
+
+export interface BracketLinkVisual {
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
+}
+
+export interface HashtagVisual {
+  anchorProps?: (hashtagName: string) => React.ComponentProps<'a'>;
+}
+
+export interface TaggedLinkVisual {
+  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
+  tagHidden?: boolean;
+}
+
+export interface CodeVisual {
+  codeProps?: (code: string) => React.ComponentProps<'code'>;
+}
+
+export interface FormulaVisual {
+  spanProps?: (formula: string) => React.ComponentProps<'span'>;
+}
+
+/**
+ * Label Props
+ */
+
+export interface TextLabels {
   normalLabel?: string;
   largerLabel?: string;
   largestLabel?: string;
 }
 
-export interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
+export interface ItemizationLabels {
+  indentLabel?: string;
+  outdentLabel?: string;
 }
 
-export interface HashtagProps {
-  anchorProps?: (hashtagName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  disabled?: boolean;
+export interface BracketLabels {
+  label?: string;
 }
 
-export interface TaggedLinkProps {
-  linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
-  suggestions?: string[];
-  initialSuggestionIndex?: number;
-  tagHidden?: boolean;
+export interface HashtagLabels {
+  label?: string;
 }
-export type TaggedLinkPropsMap = { [tagName: string]: TaggedLinkProps };
 
-export interface CodeProps {
-  codeProps?: (code: string) => React.ComponentProps<'code'>;
+export interface TaggedLinkLabels {
+  label?: string;
+}
+
+export interface CodeLabels {
   inlineLabel?: string;
   blockLabel?: string;
-  disabled?: boolean;
 }
 
-export interface FormulaProps {
-  spanProps?: (formula: string) => React.ComponentProps<'span'>;
+export interface FormulaLabels {
   inlineLabel?: string;
   displayLabel?: string;
   blockLabel?: string;
+}
+
+export interface QuotationLabels {
+  indentLabel?: string;
+  outdentLabel?: string;
+}
+
+/**
+ * Parsing Props
+ */
+
+export interface BracketLinkParsing {
   disabled?: boolean;
+}
+
+export interface HashtagParsing {
+  disabled?: boolean;
+}
+
+export interface TaggedLinkParsing {
+  linkNameRegex?: RegExp;
+}
+
+export interface CodeParsing {
+  disabled?: boolean;
+}
+
+export interface FormulaParsing {
+  disabled?: boolean;
+}
+
+/**
+ * Misc
+ */
+
+export interface TextColor {
+  backgroundColor?: string;
+  color?: string;
+  lineRange: [number, number];
+}
+
+export interface Suggestion {
+  suggestions?: string[];
+  initialSuggestionIndex?: number;
 }
