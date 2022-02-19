@@ -448,10 +448,13 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
   const [first, last] = node.range;
   const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
   const taggedLinkVisual = taggedLinkVisualMap?.[getTagName(node.facingMeta)];
-  const anchorElementProps = taggedLinkVisual?.anchorProps?.(linkName);
 
   return (
-    <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
+    <EmbededLink
+      cursorOn={cursorOn}
+      forceActive={linkForceActive}
+      anchorProps={(active) => taggedLinkVisual?.anchorProps?.(linkName, active)}
+    >
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {cursorOn ? char : ''}
@@ -498,10 +501,13 @@ const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
   const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
-  const anchorElementProps = bracketLinkVisual?.anchorProps?.(linkName);
 
   return (
-    <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
+    <EmbededLink
+      cursorOn={cursorOn}
+      forceActive={linkForceActive}
+      anchorProps={(active) => bracketLinkVisual?.anchorProps?.(linkName, active)}
+    >
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {cursorOn ? char : ''}
@@ -539,10 +545,13 @@ const Hashtag: React.FC<NodeProps<HashtagNode>> = ({
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
   const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
-  const anchorElementProps = hashtagVisual?.anchorProps?.(getHashtagName(linkName));
 
   return (
-    <EmbededLink cursorOn={cursorOn} forceActive={linkForceActive} {...anchorElementProps}>
+    <EmbededLink
+      cursorOn={cursorOn}
+      forceActive={linkForceActive}
+      anchorProps={(active) => hashtagVisual?.anchorProps?.(getHashtagName(linkName), active)}
+    >
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {char}

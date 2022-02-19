@@ -202,24 +202,15 @@ export const ItemBulletContent: React.FC<ItemBulletContentProps> = ({ lineIndex,
   );
 };
 
-export const EmbededLink: React.FC<EmbededLinkProps> = ({
-  cursorOn,
-  forceActive,
-  children,
-  className,
-  onMouseDown,
-  onMouseEnter,
-  onMouseLeave,
-  onClick,
-  ...rest
-}) => {
+export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceActive, children, anchorProps }) => {
   const constants = ComponentConstants.embededLink;
   const [state, setState] = React.useState({ active: false, hover: false });
   const active = (forceActive && state.hover) || state.active;
+  const { className, onMouseDown, onMouseEnter, onMouseLeave, onClick, ...rest } = anchorProps(active) || {};
 
-  const classNames = active
-    ? [constants.hover.className, constants.className, className]
-    : [constants.className, className];
+  const classNames = [constants.className];
+  if (active) classNames.push(constants.active.className);
+  if (className) classNames.push(className);
 
   const handleOnMouseDown = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {

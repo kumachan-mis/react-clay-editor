@@ -219,7 +219,7 @@ general settings of text
 
 ```ts
 interface TextProps {
-  lineProps?: (lineIndex: number) => React.ComponentProps<'div'>;
+  lineProps?: (lineIndex: number) => React.ComponentProps<'div'> | undefined;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   normalLabel?: string
@@ -247,7 +247,7 @@ settings of bracket links
 
 ```ts
 interface BracketLinkProps {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
+  anchorProps?: (linkName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -271,7 +271,7 @@ settings of hash tags
 
 ```ts
 interface HashtagProps {
-  anchorProps?: (hashtagName: string) => React.ComponentProps<'a'>;
+  anchorProps?: (hashtagName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
@@ -287,7 +287,7 @@ settings of tagged links
 ```ts
 interface TaggedLinkProps {
   linkNameRegex?: RegExp;
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
+  anchorProps?: (linkName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   tagHidden?: boolean;
@@ -322,7 +322,7 @@ settings of code strings
 
 ```ts
 interface CodeProps {
-  codeProps?: (code: string) => React.ComponentProps<'code'>;
+  codeProps?: (code: string) => React.ComponentProps<'code'> | undefined;
   inlineLabel?: string;
   blockLabel?: string;
   disabled?: boolean;
@@ -346,7 +346,7 @@ settings of math formulas
 
 ```ts
 interface FormulaProps {
-  spanProps?: (formula: string) => React.ComponentProps<'span'>;
+  spanProps?: (formula: string) => React.ComponentProps<'span'> | undefined;
   inlineLabel?: string;
   displayLabel?: string;
   blockLabel?: string;

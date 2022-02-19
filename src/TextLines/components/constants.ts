@@ -60,6 +60,6 @@ export const ComponentConstants = {
     className: styles.embededLink,
     selectId: 'embeded-link',
     testId: 'embeded-link',
-    hover: { className: 'hover' },
+    active: { className: styles.active },
   },
 };
