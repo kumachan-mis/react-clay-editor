@@ -54,4 +54,5 @@ export type ItemBulletContentProps = {
 export type EmbededLinkProps = {
   cursorOn: boolean;
   forceActive: boolean;
-} & React.ComponentProps<'a'>;
+  anchorProps: (active: boolean) => React.ComponentProps<'a'> | undefined;
+};

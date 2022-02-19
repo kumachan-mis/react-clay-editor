@@ -205,15 +205,15 @@ export const App: React.FC = () => {
           taggedLinkPropsMap={{
             github: {
               linkNameRegex: /@[^[\]]+\/[^[\]]+/,
-              anchorProps: (linkName) => ({
-                className: styles.github,
+              anchorProps: (linkName, active) => ({
+                className: active ? `${styles.github} ${styles.active}` : styles.github,
                 href: `https://github.com/${linkName.substring(1)}`,
               }),
               suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
             },
             npm: {
-              anchorProps: (linkName) => ({
-                className: styles.npm,
+              anchorProps: (linkName, active) => ({
+                className: active ? `${styles.npm} ${styles.active}` : styles.npm,
                 href: `https://www.npmjs.com/package/${linkName}`,
               }),
               suggestions: ['react-realtime-markup-editor'],
