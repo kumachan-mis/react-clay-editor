@@ -4,6 +4,7 @@ import { mergeClassNames, createTestId } from '../../common/utils';
 
 import { ComponentConstants } from './constants';
 import {
+  HeaderProps,
   LineGroupProps,
   LineGroupIndentProps,
   LineGroupContentProps,
@@ -17,6 +18,18 @@ import {
   EmbededLinkProps,
 } from './types';
 
+export const Header: React.FC<HeaderProps> = ({ size = 'largest', children }) => {
+  const constants = ComponentConstants.header;
+  return (
+    <div
+      className={constants.className(size)}
+      data-selectid={constants.selectId}
+      data-testid={createTestId(constants.testId)}
+    >
+      {children}
+    </div>
+  );
+};
 export const LineGroup: React.FC<LineGroupProps> = ({
   firstLineIndex,
   lastLineIndex,

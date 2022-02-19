@@ -209,7 +209,7 @@ Multiple spaces will provide nested quotations.
 | `codeProps`          | `CodeProps`                              | optional          | see [CodeProps](#CodeProps)               | settings of code strings<br>details: [CodeProps](#CodeProps)                                                        |
 | `formulaProps`       | `FormulaProps`                           | optional          | see [FormulaProps](#FormulaProps)         | settings of math formulas<br>details: [FormulaProps](#FormulaProps)                                                 |
 | `readonly`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, make `text` uneditable                                                                                   |
-| `hideSyntaxMenu`     | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, Syntax Menu is hidden                                                                                    |
+| `hideMenu`           | `boolean`                                | optional          | `undefined` (falsy)                       | if `true`, Syntax Menu is hidden                                                                                    |
 | `className`          | `string`                                 | optional          | `undefined`                               | className of `Editor`                                                                                               |
 | `style`              | `CSSProperties`                          | optional          | `undefined`                               | style of `Editor`                                                                                                   |
 
@@ -219,6 +219,8 @@ general settings of text
 
 ```ts
 interface TextProps {
+  header?: string;
+  headerSize?: 'normal' | 'larger' | 'largest';
   lineProps?: (lineIndex: number) => React.ComponentProps<'div'> | undefined;
   suggestions?: string[];
   initialSuggestionIndex?: number;
@@ -228,6 +230,10 @@ interface TextProps {
 }
 ```
 
+- header: header text of the editor. This text is uneditable by user  
+  default: `undefined` (header is not rendered)
+- headerSize: font size of `header`  
+  default: `largest`
 - anchorProps: given `lineIndex`, this function returns props of `<div>` tag  
   default: `undefined`
 - suggestions: input suggestions of normal texts  
@@ -256,7 +262,7 @@ interface BracketLinkProps {
 
 **Attributes**
 
-- anchorProps: given `linkName`, this function returns props of `<a>` tag  
+- anchorProps: given `linkName` and `active`, this function returns props of `<a>` tag  
   default: `undefined`
 - suggestions: input suggestions of bracket links  
   default: `[]`

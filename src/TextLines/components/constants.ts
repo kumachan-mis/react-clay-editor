@@ -3,6 +3,12 @@ import { mergeClassNames } from '../../common/utils';
 import styles from './style.css';
 
 export const ComponentConstants = {
+  header: {
+    className: (size: 'normal' | 'larger' | 'largest'): string => mergeClassNames(styles.header, styles[size]),
+    selectId: 'header',
+    selectIdRegex: /header/,
+    testId: 'header',
+  },
   lineGroup: {
     className: styles.lineGroup,
     selectId: (first: number, last: number): string => `line-group-L${first}-${last}`,

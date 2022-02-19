@@ -1,3 +1,21 @@
+.header {
+  cursor: initial;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.header.normal {
+  font-size: 16px;
+}
+
+.header.larger {
+  font-size: 20px;
+}
+
+.header.largest {
+  font-size: 24px;
+}
+
 .char {
   display: inline;
 }

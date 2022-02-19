@@ -17,7 +17,7 @@ export const TextLinesConstants = {
   decoration: {
     className: (decoration: Decoration): string => {
       const classNames: string[] = [];
-      classNames.push(styles[decoration.fontlevel]);
+      classNames.push(styles[decoration.size]);
       if (decoration.bold) classNames.push(styles.bold);
       if (decoration.italic) classNames.push(styles.italic);
       if (decoration.underline) classNames.push(styles.underline);

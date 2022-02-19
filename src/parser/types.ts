@@ -15,7 +15,7 @@ export interface ParsingOptions {
 }
 
 export interface Decoration {
-  fontlevel: 'normal' | 'larger' | 'largest';
+  size: 'normal' | 'larger' | 'largest';
   bold: boolean;
   italic: boolean;
   underline: boolean;

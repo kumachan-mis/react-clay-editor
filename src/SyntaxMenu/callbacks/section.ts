@@ -36,7 +36,7 @@ export function sectionMenuSwitch(
   if ((!syntax || syntax === 'bracket') && !/^\[\*+ $/.test(decorationNode.facingMeta)) return 'disabled';
   else if (syntax === 'markdown' && !/^#+ $/.test(decorationNode.facingMeta)) return 'disabled';
 
-  return decorationNode.decoration.fontlevel;
+  return decorationNode.decoration.size;
 }
 
 export function handleOnSectionButtonClick(

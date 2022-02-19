@@ -177,7 +177,7 @@ function getHeadingStyle(decoration: string): Decoration {
       break;
   }
 
-  return { bold: true, italic: false, underline: false, fontlevel };
+  return { bold: true, italic: false, underline: false, size: fontlevel };
 }
 
 export function parseBracketItemization(

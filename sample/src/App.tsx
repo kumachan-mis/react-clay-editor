@@ -4,10 +4,11 @@ import { Editor } from '../../src';
 
 import styles from './style.css';
 
+const header = 'React Realtime Markup Editor';
+
 // prettier-ignore
 const defaultBracketText =
-`[*** React Realtime Markup Editor]
-A text document editor which is syntactically formattable in real time
+`A text document editor which is syntactically formattable in real time
 [/ bracket-based syntax]
 
 [** Itemizations]
@@ -92,8 +93,7 @@ and so on
 
 // prettier-ignore
 const defaultMarkdownText =
-`# React Realtime Markup Editor
-A text document editor which is syntactically formattable in real time
+`A text document editor which is syntactically formattable in real time
 _markdown-like syntax_
 
 ## Itemizations
@@ -189,7 +189,10 @@ export const App: React.FC = () => {
           text={text}
           onChangeText={setText}
           syntax={syntax}
-          textProps={{ suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'] }}
+          textProps={{
+            header,
+            suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'],
+          }}
           bracketLinkProps={{
             anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,
