@@ -271,7 +271,7 @@ settings of hash tags
 
 ```ts
 interface HashtagProps {
-  anchorProps?: (hashtagName: string, active: boolean) => React.ComponentProps<'a'>;
+  anchorProps?: (hashtagName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
   suggestions?: string[];
   initialSuggestionIndex?: number;
   disabled?: boolean;
