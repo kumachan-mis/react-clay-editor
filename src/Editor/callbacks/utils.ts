@@ -202,11 +202,14 @@ export function positionToCursorCoordinate(
   const findElement = (selectIdRegex: RegExp): Element | undefined =>
     elements.find((e) => selectIdRegex.test(e.getAttribute('data-selectid') || '') && element.contains(e));
 
+  const headerElement = findElement(ComponentConstants.header.selectIdRegex);
   const charElement = findElement(ComponentConstants.char.selectIdRegex);
   const charGroupElement = findElement(ComponentConstants.charGroup.selectIdRegex);
   const lineElement = findElement(ComponentConstants.line.selectIdRegex);
   const lineGroupElement = findElement(ComponentConstants.lineGroup.selectIdRegex);
   const marginBottomElement = findElement(EditorConstants.body.selectIdRegex);
+
+  if (headerElement) return undefined;
 
   if (charElement) {
     const selectId = charElement.getAttribute('data-selectid') as string;

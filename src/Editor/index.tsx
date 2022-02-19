@@ -57,7 +57,7 @@ export const Editor: React.FC<Props> = (props) => {
       data-selectid={EditorConstants.root.selectId}
       {...rootHandlers}
     >
-      {!props.hideSyntaxMenu && (
+      {!props.hideMenu && (
         <SyntaxMenu
           text={props.text}
           nodes={nodes}
@@ -78,7 +78,7 @@ export const Editor: React.FC<Props> = (props) => {
       )}
       <div
         className={EditorConstants.editor.className}
-        style={EditorConstants.editor.style(props.hideSyntaxMenu)}
+        style={EditorConstants.editor.style(props.hideMenu)}
         ref={editorRef}
         data-selectid={EditorConstants.editor.selectId}
         data-testid={createTestId(EditorConstants.editor.testId)}

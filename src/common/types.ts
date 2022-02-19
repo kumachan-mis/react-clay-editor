@@ -5,6 +5,8 @@ import React from 'react';
  */
 
 export interface TextVisual {
+  header?: string;
+  headerSize?: 'normal' | 'larger' | 'largest';
   lineProps?: (lineIndex: number) => React.ComponentProps<'div'> | undefined;
 }
 

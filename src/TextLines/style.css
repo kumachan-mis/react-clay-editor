@@ -1,4 +1,6 @@
 .textlines {
+  cursor: text;
+  font-family: sans-serif;
   white-space: pre-wrap;
   word-wrap: break-word;
 }

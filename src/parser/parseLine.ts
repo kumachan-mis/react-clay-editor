@@ -166,18 +166,18 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
 }
 
 function getHeadingStyle(decoration: string): Decoration {
-  let fontlevel: 'normal' | 'largest' | 'larger' = 'normal';
+  let size: 'normal' | 'largest' | 'larger' = 'normal';
 
   switch (decoration) {
     case '#':
-      fontlevel = 'largest';
+      size = 'largest';
       break;
     case '##':
-      fontlevel = 'larger';
+      size = 'larger';
       break;
   }
 
-  return { bold: true, italic: false, underline: false, fontlevel };
+  return { bold: true, italic: false, underline: false, size };
 }
 
 export function parseBracketItemization(

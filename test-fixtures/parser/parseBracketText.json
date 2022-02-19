@@ -27,7 +27,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "largest",
+                "size": "largest",
                 "bold": true,
                 "italic": false,
                 "underline": false
@@ -46,7 +46,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "largest",
+                "size": "largest",
                 "bold": true,
                 "italic": false,
                 "underline": false
@@ -65,7 +65,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "larger",
+                "size": "larger",
                 "bold": true,
                 "italic": false,
                 "underline": false
@@ -84,7 +84,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": false,
                 "underline": false
@@ -103,7 +103,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": false,
                 "italic": true,
                 "underline": false
@@ -122,7 +122,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": false,
                 "italic": false,
                 "underline": true
@@ -142,7 +142,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": true,
                 "underline": false
@@ -157,7 +157,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": true,
                 "underline": false
@@ -172,7 +172,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": true,
                 "underline": false
@@ -192,7 +192,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": false,
                 "underline": true
@@ -207,7 +207,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": false,
                 "underline": true
@@ -222,7 +222,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": false,
                 "underline": true
@@ -242,7 +242,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": false,
                 "italic": true,
                 "underline": true
@@ -257,7 +257,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": false,
                 "italic": true,
                 "underline": true
@@ -277,7 +277,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": true,
                 "underline": true
@@ -392,7 +392,7 @@
                 }
               ],
               "decoration": {
-                "fontlevel": "normal",
+                "size": "normal",
                 "bold": true,
                 "italic": false,
                 "underline": false

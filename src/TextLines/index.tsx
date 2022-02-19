@@ -23,6 +23,7 @@ import {
 import { getHashtagName, splitTag, getTagName } from '../parser/utils';
 
 import {
+  Header,
   LineGroup,
   LineGroupIndent,
   LineGroupContent,
@@ -45,12 +46,15 @@ export const TextLines: React.FC<Props> = ({
   textSelection,
   className,
   style,
-  ...syntaxProps
+  ...visuals
 }) => {
   const linkForceActive = useLinkForceActive();
 
   return (
     <div className={mergeClassNames(TextLinesConstants.className, className)} style={style}>
+      {visuals.textVisual?.header && (
+        <Header size={visuals.textVisual?.headerSize}>{visuals.textVisual?.header}</Header>
+      )}
       {nodes.map((node, index) => (
         <Node
           key={index}
@@ -58,7 +62,7 @@ export const TextLines: React.FC<Props> = ({
           cursorCoordinate={cursorCoordinate}
           textSelection={textSelection}
           linkForceActive={linkForceActive}
-          {...syntaxProps}
+          {...visuals}
         />
       ))}
     </div>

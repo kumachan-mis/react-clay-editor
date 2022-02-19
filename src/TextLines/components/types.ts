@@ -1,3 +1,7 @@
+export interface HeaderProps {
+  size?: 'normal' | 'larger' | 'largest';
+}
+
 export type LineGroupProps = {
   firstLineIndex: number;
   lastLineIndex: number;

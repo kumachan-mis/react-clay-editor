@@ -155,17 +155,17 @@ function parseDecoration(text: string, context: ParsingContext, options: Parsing
 }
 
 function stringToDecoration(decostring: string): Decoration {
-  const decoration: Decoration = { bold: false, italic: false, underline: false, fontlevel: 'normal' };
+  const decoration: Decoration = { bold: false, italic: false, underline: false, size: 'normal' };
 
   for (let i = 0; i < decostring.length; i++) {
     switch (decostring[i]) {
       case '*':
         if (!decoration.bold) {
           decoration.bold = true;
-        } else if (decoration.fontlevel === 'normal') {
-          decoration.fontlevel = 'larger';
-        } else if (decoration.fontlevel === 'larger') {
-          decoration.fontlevel = 'largest';
+        } else if (decoration.size === 'normal') {
+          decoration.size = 'larger';
+        } else if (decoration.size === 'larger') {
+          decoration.size = 'largest';
         }
         break;
       case '/':
