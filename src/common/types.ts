@@ -5,28 +5,28 @@ import React from 'react';
  */
 
 export interface TextVisual {
-  lineProps?: (lineIndex: number) => React.ComponentProps<'div'>;
+  lineProps?: (lineIndex: number) => React.ComponentProps<'div'> | undefined;
 }
 
 export interface BracketLinkVisual {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
+  anchorProps?: (linkName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
 }
 
 export interface HashtagVisual {
-  anchorProps?: (hashtagName: string) => React.ComponentProps<'a'>;
+  anchorProps?: (hashtagName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
 }
 
 export interface TaggedLinkVisual {
-  anchorProps?: (linkName: string) => React.ComponentProps<'a'>;
+  anchorProps?: (linkName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
   tagHidden?: boolean;
 }
 
 export interface CodeVisual {
-  codeProps?: (code: string) => React.ComponentProps<'code'>;
+  codeProps?: (code: string) => React.ComponentProps<'code'> | undefined;
 }
 
 export interface FormulaVisual {
-  spanProps?: (formula: string) => React.ComponentProps<'span'>;
+  spanProps?: (formula: string) => React.ComponentProps<'span'> | undefined;
 }
 
 /**

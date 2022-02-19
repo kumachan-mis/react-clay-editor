@@ -6,17 +6,16 @@ import { parserConstants } from './constants';
 import { parseText } from './parseText';
 import { BlockNode, LineNode, ParsingOptions } from './types';
 
-export function useParser(
-  text: string,
+export function useParsingOptions(
   syntax?: 'bracket' | 'markdown',
   bracketLinkParsing?: BracketLinkParsing,
   hashtagParsing?: HashtagParsing,
   taggedLinkParsingMap?: { [tagName: string]: TaggedLinkParsing },
   codeParsing?: CodeParsing,
   formulaParsing?: FormulaParsing
-): (BlockNode | LineNode)[] {
-  const nodes = React.useMemo(() => {
-    const options: ParsingOptions = {
+): ParsingOptions {
+  const options = React.useMemo(
+    (): ParsingOptions => ({
       syntax,
       bracketLinkDisabled: bracketLinkParsing?.disabled,
       hashtagDisabled: hashtagParsing?.disabled,
@@ -25,18 +24,29 @@ export function useParser(
       taggedLinkRegexes: Object.entries(taggedLinkParsingMap || {}).map(([tagName, linkParsing]) =>
         parserConstants.common.taggedLink(tagName, linkParsing.linkNameRegex)
       ),
-    };
-    return parseText(text, options);
-  }, [
-    text,
-    syntax,
-    bracketLinkParsing?.disabled,
-    hashtagParsing?.disabled,
-    codeParsing?.disabled,
-    formulaParsing?.disabled,
-    taggedLinkParsingMap,
-  ]);
+    }),
+    [
+      syntax,
+      bracketLinkParsing?.disabled,
+      hashtagParsing?.disabled,
+      codeParsing?.disabled,
+      formulaParsing?.disabled,
+      taggedLinkParsingMap,
+    ]
+  );
+  return options;
+}
 
+export function useParser(text: string, options: ParsingOptions): (BlockNode | LineNode)[] {
+  const nodes = React.useMemo(() => parseText(text, options), [text, options]);
+  return nodes;
+}
+
+export function useOptionalParser(
+  text: string | undefined,
+  options: ParsingOptions
+): (BlockNode | LineNode)[] | undefined {
+  const nodes = React.useMemo(() => (text !== undefined ? parseText(text, options) : undefined), [text, options]);
   return nodes;
 }
 

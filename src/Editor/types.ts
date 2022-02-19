@@ -24,6 +24,7 @@ import {
 export interface Props {
   text: string;
   onChangeText: (text: string) => void;
+  header?: string;
   syntax?: 'bracket' | 'markdown';
   textProps?: TextProps;
   bracketLinkProps?: BracketLinkProps;

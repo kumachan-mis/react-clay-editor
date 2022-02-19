@@ -12,6 +12,7 @@ import { Node } from '../parser/types';
 
 export interface Props {
   nodes: Node[];
+  headerNodes?: Node[];
   cursorCoordinate?: CursorCoordinate;
   textSelection?: TextSelection;
   textVisual?: TextVisual;

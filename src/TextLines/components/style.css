@@ -54,7 +54,7 @@
   cursor: text;
 }
 
-.embededLink:global(.hover) {
+.embededLink.active {
   color: #425a9d;
   cursor: pointer;
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 
 import { TextLines } from '../TextLines';
-import { useParser } from '../parser';
+import { useOptionalParser, useParser, useParsingOptions } from '../parser';
 
 import { Props } from './types';
 
 export const Viewer: React.FC<Props> = (props) => {
-  const nodes = useParser(
-    props.text,
+  const parsingOptions = useParsingOptions(
     props.syntax,
     props.bracketLinkProps,
     props.hashtagProps,
@@ -15,10 +14,13 @@ export const Viewer: React.FC<Props> = (props) => {
     props.codeProps,
     props.formulaProps
   );
+  const nodes = useParser(props.text, parsingOptions);
+  const headerNodes = useOptionalParser(props.header, parsingOptions);
 
   return (
     <TextLines
       nodes={nodes}
+      headerNodes={headerNodes}
       textVisual={props.textProps}
       bracketLinkVisual={props.bracketLinkProps}
       hashtagVisual={props.hashtagProps}

@@ -14,6 +14,7 @@ import {
 
 export interface Props {
   text: string;
+  header?: string;
   syntax?: 'bracket' | 'markdown';
   textProps?: TextProps;
   bracketLinkProps?: BracketLinkProps;
