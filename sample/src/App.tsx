@@ -206,20 +206,22 @@ export const App: React.FC = () => {
             suggestions: ['react-realtime-markup-editor'],
           }}
           taggedLinkPropsMap={{
-            github: {
-              linkNameRegex: /@[^[\]]+\/[^[\]]+/,
-              anchorProps: (linkName, active) => ({
-                className: active ? `${styles.github} ${styles.active}` : styles.github,
-                href: `https://github.com/${linkName.substring(1)}`,
-              }),
-              suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
-            },
             npm: {
+              label: 'package',
               anchorProps: (linkName, active) => ({
                 className: active ? `${styles.npm} ${styles.active}` : styles.npm,
                 href: `https://www.npmjs.com/package/${linkName}`,
               }),
               suggestions: ['react-realtime-markup-editor'],
+            },
+            github: {
+              linkNameRegex: /@[^[\]]+\/[^[\]]+/,
+              label: '@user/repository',
+              anchorProps: (linkName, active) => ({
+                className: active ? `${styles.github} ${styles.active}` : styles.github,
+                href: `https://github.com/${linkName.substring(1)}`,
+              }),
+              suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
             },
           }}
           className={styles.sample}

@@ -388,7 +388,11 @@ const TaggedLinkMenu: React.FC<
   const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'taggedLink');
   const tagNameOrUndefined = getTagNameAtPosition(nodes, contentPosition);
 
-  const defaultLinkProps = { label: TaggedLinkMenuConstants.defaultLabel, suggestions: [], initialSuggestionIndex: 0 };
+  const defaultLinkProps = {
+    label: TaggedLinkMenuConstants.items.defaultLabel,
+    suggestions: [],
+    initialSuggestionIndex: 0,
+  };
   let handleOnButtonClick = undefined;
   if (tags && tagEntries.length > 0) {
     const [tagName, linkProps] = tagNameOrUndefined ? [tagNameOrUndefined, tags[tagNameOrUndefined]] : tagEntries[0];
@@ -415,7 +419,7 @@ const TaggedLinkMenu: React.FC<
         {tagEntries.map(
           ([
             tagName,
-            { label = TaggedLinkMenuConstants.defaultLabel, suggestions = [], initialSuggestionIndex = 0 },
+            { label = TaggedLinkMenuConstants.items.defaultLabel, suggestions = [], initialSuggestionIndex = 0 },
           ]) => {
             const props: MenuHandler<TaggedLinkMenuProps> = { syntax, label, suggestions, initialSuggestionIndex };
             const menuItem = { type: 'taggedLink', tag: tagName } as const;
@@ -430,7 +434,7 @@ const TaggedLinkMenu: React.FC<
                 }
                 data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
               >
-                {TaggedLinkMenuConstants.items.label(tagName)}
+                {TaggedLinkMenuConstants.items.taggedLabel(tagName, label)}
               </DropdownMenuItem>
             );
           }

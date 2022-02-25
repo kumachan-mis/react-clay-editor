@@ -54,9 +54,9 @@ export const HashtagMenuConstants = {
 
 export const TaggedLinkMenuConstants = {
   testId: 'tagged-link-menu',
-  defaultLabel: 'tagged link',
   items: {
-    label: (tagName: string) => `"${tagName}" tagged link`,
+    defaultLabel: 'tagged link',
+    taggedLabel: (tagName: string, label: string) => `${tagName}: ${label}`,
     testId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
   },
 };
