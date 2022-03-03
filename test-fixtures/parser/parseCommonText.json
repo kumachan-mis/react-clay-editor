@@ -353,6 +353,24 @@
       ]
     },
     {
+      "name": "url text",
+      "inputLines": ["https://example.com"],
+      "expectedNodes": [
+        {
+          "type": "normalLine",
+          "lineIndex": 0,
+          "children": [
+            {
+              "type": "url",
+              "lineIndex": 0,
+              "range": [0, 18],
+              "url": "https://example.com"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "normal text",
       "inputLines": ["hello world"],
       "expectedNodes": [
@@ -377,7 +395,8 @@
         "left $f(x)$ right",
         "left [@: tagged link] right",
         "left [bracket link] right",
-        "left #hashtag_link right"
+        "left #hashtag_link right",
+        "left https://test.com right"
       ],
       "expectedNodes": [
         {
@@ -498,6 +517,30 @@
               "type": "normal",
               "lineIndex": 4,
               "range": [18, 23],
+              "text": " right"
+            }
+          ]
+        },
+        {
+          "type": "normalLine",
+          "lineIndex": 5,
+          "children": [
+            {
+              "type": "normal",
+              "lineIndex": 5,
+              "range": [0, 4],
+              "text": "left "
+            },
+            {
+              "type": "url",
+              "lineIndex": 5,
+              "range": [5, 20],
+              "url": "https://test.com"
+            },
+            {
+              "type": "normal",
+              "lineIndex": 5,
+              "range": [21, 26],
               "text": " right"
             }
           ]
