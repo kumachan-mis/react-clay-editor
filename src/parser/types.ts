@@ -100,11 +100,13 @@ export interface NormalLineNode {
   children: ContentNode[];
 }
 
-export type ContentNode = InlineCodeNode | ContentFormulaNode | DecorationNode | LinkNode | NormalNode;
+export type ContentNode = InlineCodeNode | ContentFormulaNode | DecorationNode | StyledLinkNode | TextLikeNode;
 
 export type ContentFormulaNode = DisplayFormulaNode | InlineFormulaNode;
 
-export type LinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode;
+export type StyledLinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode;
+
+export type TextLikeNode = UrlNode | NormalNode;
 
 export interface InlineCodeNode {
   type: 'inlineCode';
@@ -168,6 +170,13 @@ export interface HashtagNode {
   facingMeta: string;
   linkName: string;
   trailingMeta: string;
+}
+
+export interface UrlNode {
+  type: 'url';
+  lineIndex: number;
+  range: [number, number];
+  url: string;
 }
 
 export interface NormalNode {
