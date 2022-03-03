@@ -100,11 +100,13 @@ export interface NormalLineNode {
   children: ContentNode[];
 }
 
-export type ContentNode = InlineCodeNode | ContentFormulaNode | DecorationNode | LinkNode | NormalNode;
+export type ContentNode = InlineCodeNode | ContentFormulaNode | DecorationNode | StyledLinkNode | TextLikeNode;
 
 export type ContentFormulaNode = DisplayFormulaNode | InlineFormulaNode;
 
-export type LinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode | UrlNode;
+export type StyledLinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode;
+
+export type TextLikeNode = UrlNode | NormalNode;
 
 export interface InlineCodeNode {
   type: 'inlineCode';

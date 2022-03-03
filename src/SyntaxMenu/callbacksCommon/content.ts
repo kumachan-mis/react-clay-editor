@@ -3,8 +3,8 @@ import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
 import { TextSelection } from '../../Selection/types';
 import { copySelection, selectionToRange } from '../../Selection/utils';
-import { ContentNode, LineNode, NormalNode, PureLineNode } from '../../parser/types';
-import { isPureLineNode } from '../../parser/utils';
+import { LineNode, PureLineNode, ContentNode, TextLikeNode } from '../../parser/types';
+import { isPureLineNode, isTextLikeNode } from '../../parser/utils';
 import { ContentPosition } from '../types';
 
 import { ContentConfig, ContentMetaConfig } from './types';
@@ -42,7 +42,7 @@ export function substituteContentAtCursor(
   const lineNode = nodes[contentPosition.lineIndex];
   if (!state.cursorCoordinate || !isPureLineNode(lineNode)) return [text, state];
   const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition, !!config.nestedSearch);
-  if (!contentNode || contentNode.type === 'normal') return [text, state];
+  if (!contentNode || isTextLikeNode(contentNode)) return [text, state];
 
   const line = text.split('\n')[contentPosition.lineIndex];
   const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
@@ -74,7 +74,7 @@ export function substituteContentAtCursor(
 
 export function newCharIndexAfterSubstitution(
   charIndex: number,
-  contentNode: Exclude<ContentNode, NormalNode>,
+  contentNode: Exclude<ContentNode, TextLikeNode>,
   config: ContentMetaConfig
 ): number {
   const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
@@ -152,7 +152,7 @@ export function splitContentByTextSelection(
   const lineNode = nodes[contentPosition.lineIndex];
   if (!state.textSelection || !isPureLineNode(lineNode)) return [text, state];
   const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition, !!config.nestedSearch);
-  if (!contentNode || contentNode.type === 'normal') return [text, state];
+  if (!contentNode || isTextLikeNode(contentNode)) return [text, state];
 
   const line = text.split('\n')[contentPosition.lineIndex];
   const { cursorCoordinate, textSelection } = state;
