@@ -16,7 +16,7 @@ import {
 } from './types';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, url } = parserConstants.common;
+  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, url, normal } = parserConstants.common;
   const taggedLink = options.taggedLinkRegexes?.find((regex) => regex.test(text));
 
   if (!options.syntax || options.syntax === 'bracket') {
@@ -38,9 +38,10 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseHashtag(text, context, options);
     } else if (url.test(text)) {
       return parseUrl(text, context, options);
-    } else {
+    } else if (normal.test(text)) {
       return parseNormal(text, context);
     }
+    return [];
   } else {
     // markdown syntax
     const { bold, italic } = parserConstants.markdownSyntax;
@@ -62,9 +63,10 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseHashtag(text, context, options);
     } else if (url.test(text)) {
       return parseUrl(text, context, options);
-    } else {
+    } else if (normal.test(text)) {
       return parseNormal(text, context);
     }
+    return [];
   }
 }
 
