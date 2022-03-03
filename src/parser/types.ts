@@ -104,7 +104,7 @@ export type ContentNode = InlineCodeNode | ContentFormulaNode | DecorationNode |
 
 export type ContentFormulaNode = DisplayFormulaNode | InlineFormulaNode;
 
-export type LinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode;
+export type LinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode | UrlNode;
 
 export interface InlineCodeNode {
   type: 'inlineCode';
@@ -168,6 +168,13 @@ export interface HashtagNode {
   facingMeta: string;
   linkName: string;
   trailingMeta: string;
+}
+
+export interface UrlNode {
+  type: 'url';
+  lineIndex: number;
+  range: [number, number];
+  url: string;
 }
 
 export interface NormalNode {

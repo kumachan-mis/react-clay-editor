@@ -19,6 +19,7 @@ import {
   NormalNode,
   QuotationNode,
   TaggedLinkNode,
+  UrlNode,
 } from '../parser/types';
 import { getHashtagName, splitTag, getTagName } from '../parser/utils';
 
@@ -106,6 +107,8 @@ const Node: React.FC<NodeProps> = ({ node, ...rest }) => {
       return <BracketLink node={node} {...rest} />;
     case 'hashtag':
       return <Hashtag node={node} {...rest} />;
+    case 'url':
+      return <Url node={node} {...rest} />;
 
     case 'normal':
       return <Normal node={node} {...rest} />;
@@ -557,6 +560,26 @@ const Hashtag: React.FC<NodeProps<HashtagNode>> = ({
       anchorProps={(active) => hashtagVisual?.anchorProps?.(getHashtagName(linkName), active)}
     >
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
+        <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+          {char}
+        </Char>
+      ))}
+    </EmbededLink>
+  );
+};
+
+const Url: React.FC<NodeProps<UrlNode>> = ({ node, cursorCoordinate, textSelection, linkForceActive }) => {
+  const { lineIndex, url } = node;
+  const [first] = node.range;
+  const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
+
+  return (
+    <EmbededLink
+      cursorOn={cursorOn}
+      forceActive={linkForceActive}
+      anchorProps={() => ({ href: url, target: '_blank', rel: 'noopener noreferrer' })}
+    >
+      {[...url].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {char}
         </Char>

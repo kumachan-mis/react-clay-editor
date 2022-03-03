@@ -48,6 +48,9 @@ You can combine these text decorations
 and so on
 
 [** Links]
+ url
+  https://www.npmjs.com/package/react-realtime-markup-editor
+  https://github.com/kumachan-mis/react-realtime-markup-editor
  bracket-link
   [react-realtime-markup-editor]
  hashtag-link
@@ -129,6 +132,9 @@ _markdown-like syntax_
 combination of text decorations is not supported yet
 
 ## Links
+- url
+ - https://www.npmjs.com/package/react-realtime-markup-editor
+ - https://github.com/kumachan-mis/react-realtime-markup-editor
 - bracket-link
  - [react-realtime-markup-editor]
 - hashtag-link

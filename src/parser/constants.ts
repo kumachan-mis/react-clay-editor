@@ -27,7 +27,7 @@ export const parserConstants = {
     },
     bracketLink: /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/,
     hashtag: /^(?<left>.*?)#(?<linkName>[^\s!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]+)(?<right>.*)$/,
-    normal: /^(?<text>.+)$/,
+    url: /^(?<left>.*?)(?<url>https?:\/\/[\w/:%#$&?()~.=+-]+)(?<right>.*)$/,
   },
   wordRegex: /[^\s!"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~]+/,
 };

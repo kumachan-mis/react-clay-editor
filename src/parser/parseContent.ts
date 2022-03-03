@@ -8,6 +8,7 @@ import {
   TaggedLinkNode,
   BracketLinkNode,
   HashtagNode,
+  UrlNode,
   NormalNode,
   ParsingContext,
   ParsingOptions,
@@ -15,7 +16,7 @@ import {
 } from './types';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, normal } = parserConstants.common;
+  const { inlineCode, displayFormula, inlineFormula, bracketLink, hashtag, url } = parserConstants.common;
   const taggedLink = options.taggedLinkRegexes?.find((regex) => regex.test(text));
 
   if (!options.syntax || options.syntax === 'bracket') {
@@ -35,10 +36,11 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseBracketLink(text, context, options);
     } else if (!options.hashtagDisabled && hashtag.test(text)) {
       return parseHashtag(text, context, options);
-    } else if (normal.test(text)) {
+    } else if (url.test(text)) {
+      return parseUrl(text, context, options);
+    } else {
       return parseNormal(text, context);
     }
-    return [];
   } else {
     // markdown syntax
     const { bold, italic } = parserConstants.markdownSyntax;
@@ -58,10 +60,11 @@ export function parseContent(text: string, context: ParsingContext, options: Par
       return parseBracketLink(text, context, options);
     } else if (!options.hashtagDisabled && hashtag.test(text)) {
       return parseHashtag(text, context, options);
-    } else if (normal.test(text)) {
+    } else if (url.test(text)) {
+      return parseUrl(text, context, options);
+    } else {
       return parseNormal(text, context);
     }
-    return [];
   }
 }
 
@@ -278,6 +281,26 @@ function parseHashtag(text: string, context: ParsingContext, options: ParsingOpt
     linkName,
     trailingMeta: '',
   };
+
+  return [
+    ...parseContent(left, context, options),
+    node,
+    ...parseContent(right, { ...context, charIndex: last + 1 }, options),
+  ];
+}
+
+function parseUrl(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
+  const regex = parserConstants.common.url;
+  const { left, url, right } = text.match(regex)?.groups as Record<string, string>;
+  const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
+
+  const node: UrlNode = {
+    type: 'url',
+    lineIndex: context.lineIndex,
+    range: [first, last],
+    url,
+  };
+
   return [
     ...parseContent(left, context, options),
     node,
