@@ -1,4 +1,4 @@
-import { ParseError, renderToString } from 'katex';
+import katex, { ParseError } from 'katex';
 import React from 'react';
 
 import { createTestId } from '../common/utils';
@@ -9,7 +9,7 @@ import { Props } from './types';
 export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options, children, ...props }) => {
   const innerHtml = React.useMemo(() => {
     try {
-      return renderToString(children as string, options);
+      return katex.renderToString(children as string, options);
     } catch (error: unknown) {
       return error instanceof ParseError ? error.message : '';
     }
