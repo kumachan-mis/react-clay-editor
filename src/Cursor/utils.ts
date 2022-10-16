@@ -12,10 +12,12 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const listSelector = `ul[data-selectid="${CursorConstants.suggestion.container.selectId}"]`;
-  const listItemSelector = `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`;
-  const list = editorElement.querySelector(listSelector) as HTMLUListElement | null;
-  const listItem = editorElement.querySelector(listItemSelector) as HTMLLIElement | null;
+  const list = editorElement.querySelector(
+    `ul[data-selectid="${CursorConstants.suggestion.container.selectId}"]`
+  ) as HTMLUListElement | null;
+  const listItem = editorElement.querySelector(
+    `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`
+  ) as HTMLLIElement | null;
   if (props.suggestions.length > 0 && list && listItem) {
     if (listItem.offsetTop < list.scrollTop) {
       list.scrollTop = listItem.offsetTop;

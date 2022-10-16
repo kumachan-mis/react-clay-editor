@@ -40,12 +40,12 @@ export interface HiddenTextAreaProps {
   position: Position;
   cursorSize: number;
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-  onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onTextCompositionStart: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
-  onTextCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
-  onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onTextCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onTextPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onCompositionStart: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
+  onCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
+  onCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  onCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  onPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
 }
 
 export interface SuggestionListProps {

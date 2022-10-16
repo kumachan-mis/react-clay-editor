@@ -123,10 +123,7 @@ export function useMouseEventHandlers(
     () => rootRef.current?.querySelector('textarea')?.focus({ preventScroll: true }),
     [rootRef]
   );
-  const handleOnRootMouseDown = React.useCallback(
-    (event: React.MouseEvent) => event.nativeEvent.stopImmediatePropagation(),
-    []
-  );
+  const handleOnRootMouseDown = React.useCallback((event: React.MouseEvent) => event.stopPropagation(), []);
 
   const handleOnBodyMouseDown = React.useCallback(
     (event: React.MouseEvent) => createMouseEventHandler(handleOnMouseDown)(event),

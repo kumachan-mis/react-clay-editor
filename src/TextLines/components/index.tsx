@@ -18,7 +18,7 @@ import {
   EmbededLinkProps,
 } from './types';
 
-export const Header: React.FC<HeaderProps> = ({ size = 'largest', children }) => {
+export const Header: React.FC<React.PropsWithChildren<HeaderProps>> = ({ size = 'largest', children }) => {
   const constants = ComponentConstants.header;
   return (
     <div
@@ -215,7 +215,12 @@ export const ItemBulletContent: React.FC<ItemBulletContentProps> = ({ lineIndex,
   );
 };
 
-export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceActive, children, anchorProps }) => {
+export const EmbededLink: React.FC<React.PropsWithChildren<EmbededLinkProps>> = ({
+  cursorOn,
+  forceActive,
+  children,
+  anchorProps,
+}) => {
   const constants = ComponentConstants.embededLink;
   const [state, setState] = React.useState({ active: false, hover: false });
   const active = (forceActive && state.hover) || state.active;

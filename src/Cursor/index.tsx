@@ -44,12 +44,12 @@ export const Cursor: React.FC<Props> = (props) => {
         position={state.position}
         cursorSize={state.cursorSize}
         onKeyDown={props.onKeyDown}
-        onTextChange={props.onTextChange}
-        onTextCompositionStart={props.onTextCompositionStart}
-        onTextCompositionEnd={props.onTextCompositionEnd}
-        onTextCut={props.onTextCut}
-        onTextCopy={props.onTextCopy}
-        onTextPaste={props.onTextPaste}
+        onChange={props.onTextChange}
+        onCompositionStart={props.onTextCompositionStart}
+        onCompositionEnd={props.onTextCompositionEnd}
+        onCut={props.onTextCut}
+        onCopy={props.onTextCopy}
+        onPaste={props.onTextPaste}
       />
       <SuggestionList
         suggestionType={props.suggestionType}
@@ -81,7 +81,7 @@ const CursorBar: React.FC<CursorBarProps> = (props) => {
 
 const HiddenTextArea: React.FC<HiddenTextAreaProps> = (props) => {
   const constants = CursorConstants.textArea;
-  const { textAreaValue, position, cursorSize } = props;
+  const { textAreaValue, position, cursorSize, ...handlers } = props;
   return (
     <textarea
       className={constants.className}
@@ -89,14 +89,8 @@ const HiddenTextArea: React.FC<HiddenTextAreaProps> = (props) => {
       wrap={constants.wrap}
       spellCheck={constants.spellCheck}
       autoCapitalize={constants.autoCapitalize}
-      onKeyDown={(event) => props.onKeyDown(event)}
-      onChange={(event) => props.onTextChange(event)}
-      onCompositionStart={(event) => props.onTextCompositionStart(event)}
-      onCompositionEnd={(event) => props.onTextCompositionEnd(event)}
-      onCut={(event) => props.onTextCut(event)}
-      onCopy={(event) => props.onTextCopy(event)}
-      onPaste={(event) => props.onTextPaste(event)}
       style={constants.style(position, cursorSize, textAreaValue.length)}
+      {...handlers}
     />
   );
 };
