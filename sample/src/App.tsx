@@ -202,12 +202,16 @@ export const App: React.FC = () => {
           bracketLinkProps={{
             anchorProps: (linkName) => ({
               href: `https://www.npmjs.com/package/${linkName}`,
+              target: '_blank',
+              rel: 'noopener noreferrer',
             }),
             suggestions: ['react-realtime-markup-editor'],
           }}
           hashtagProps={{
             anchorProps: (hashtagName) => ({
               href: `https://www.npmjs.com/package/${hashtagName}`,
+              target: '_blank',
+              rel: 'noopener noreferrer',
             }),
             suggestions: ['react-realtime-markup-editor'],
           }}
@@ -217,6 +221,8 @@ export const App: React.FC = () => {
               anchorProps: (linkName, active) => ({
                 className: active ? `${styles.npm} ${styles.active}` : styles.npm,
                 href: `https://www.npmjs.com/package/${linkName}`,
+                target: '_blank',
+                rel: 'noopener noreferrer',
               }),
               suggestions: ['react-realtime-markup-editor'],
             },
@@ -226,6 +232,8 @@ export const App: React.FC = () => {
               anchorProps: (linkName, active) => ({
                 className: active ? `${styles.github} ${styles.active}` : styles.github,
                 href: `https://github.com/${linkName.substring(1)}`,
+                target: '_blank',
+                rel: 'noopener noreferrer',
               }),
               suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
             },
