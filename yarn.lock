@@ -2416,7 +2416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.27.1":
+"@playwright/test@npm:1.27.1":
   version: 1.27.1
   resolution: "@playwright/test@npm:1.27.1"
   dependencies:
@@ -2536,7 +2536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/cli@npm:^6.2.1":
+"@svgr/cli@npm:6.2.1":
   version: 6.2.1
   resolution: "@svgr/cli@npm:6.2.1"
   dependencies:
@@ -9745,8 +9745,8 @@ fsevents@^1.0.0:
     "@babel/preset-env": 7.16.11
     "@babel/preset-react": 7.16.7
     "@babel/preset-typescript": 7.16.7
-    "@playwright/test": ^1.27.1
-    "@svgr/cli": ^6.2.1
+    "@playwright/test": 1.27.1
+    "@svgr/cli": 6.2.1
     "@types/jest": 27.4.1
     "@types/katex": 0.11.1
     "@types/node": 17.0.21
