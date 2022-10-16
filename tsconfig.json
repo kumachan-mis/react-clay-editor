@@ -7,7 +7,8 @@
     "target": "ESNext",
     "strict": true,
     "alwaysStrict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
-  "include": ["src/**/*", "@types/**/*", "sample/**/*", "tests/**/*"]
+  "include": ["src/**/*", "@types/**/*", "sample/**/*", "tests/**/*", "unittests/**/*"]
 }

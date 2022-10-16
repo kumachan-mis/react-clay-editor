@@ -1,6 +1,7 @@
 import { CursorCoordinate } from '../../src/Cursor/types';
 import { moveCursor } from '../../src/Cursor/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
+import fixtutres from '../../unittest-fixtures/Cursor/moveCursor.json';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -14,7 +15,7 @@ interface Common {
 }
 
 describe('function moveCursor in Cursor', () => {
-  runFixtureTests<TestCase, Common>('Cursor', 'moveCursor', (testCase, common) => {
+  runFixtureTests<TestCase, Common>(fixtutres, (testCase, common) => {
     const actualCursorCoordinate = moveCursor(
       common.inputLines.join('\n'),
       testCase.inputCursorCoordinate,

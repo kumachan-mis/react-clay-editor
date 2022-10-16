@@ -1,4 +1,5 @@
 {
+  "common": {},
   "testCases": [
     {
       "name": "line zero",

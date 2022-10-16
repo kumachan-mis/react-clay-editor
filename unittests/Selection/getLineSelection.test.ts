@@ -1,6 +1,7 @@
 import { CursorCoordinate } from '../../src/Cursor/types';
-import { getSelectionText, getWordSelection } from '../../src/Selection/utils';
+import { getLineSelection, getSelectionText } from '../../src/Selection/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
+import fixtutres from '../../unittest-fixtures/Selection/getLineSelection.json';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -12,10 +13,10 @@ interface Common {
   inputLines: string[];
 }
 
-describe('function getWordSelection in Selection', () => {
-  runFixtureTests<TestCase, Common>('Selection', 'getWordSelection', (testCase, common) => {
+describe('function getLineSelection in Selection', () => {
+  runFixtureTests<TestCase, Common>(fixtutres, (testCase, common) => {
     const text = common.inputLines.join('\n');
-    const actualSelection = getWordSelection(text, testCase.inputCursorCoordinate);
+    const actualSelection = getLineSelection(text, testCase.inputCursorCoordinate);
     const actualText = getSelectionText(text, actualSelection);
     const expectedText = testCase.expectedSelectionLines.join('\n');
     if (!expectedText) expect(actualSelection).toBeUndefined();

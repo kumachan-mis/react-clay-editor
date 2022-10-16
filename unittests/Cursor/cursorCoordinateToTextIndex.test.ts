@@ -1,6 +1,7 @@
 import { CursorCoordinate } from '../../src/Cursor/types';
 import { cursorCoordinateToTextIndex } from '../../src/Cursor/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
+import fixtutres from '../../unittest-fixtures/Cursor/cursorCoordinateToTextIndex.json';
 
 interface TestCase extends BaseTestCase {
   name: string;
@@ -10,7 +11,7 @@ interface TestCase extends BaseTestCase {
 }
 
 describe('function cursorCoordinateToTextIndex in Cursor', () => {
-  runFixtureTests<TestCase>('Cursor', 'cursorCoordinateToTextIndex', (testCase) => {
+  runFixtureTests<TestCase>(fixtutres, (testCase) => {
     const actualIndex = cursorCoordinateToTextIndex(testCase.inputLines.join('\n'), testCase.inputCursorCoordinate);
     expect(actualIndex).toEqual(testCase.expectedIndex);
   });

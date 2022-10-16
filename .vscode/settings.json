@@ -17,18 +17,13 @@
   "javascript.suggestionActions.enabled": false,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
-  "jest.jestCommandLine": "yarn test",
-  "jest.autoRun": {
-    "watch": false,
-    "onStartup": ["all-tests"]
-  },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": true,
-  "githubPullRequests.defaultMergeMethod": "squash",
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
-  }
+  },
+  "githubPullRequests.defaultMergeMethod": "squash"
 }
