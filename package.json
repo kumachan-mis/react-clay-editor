@@ -44,8 +44,8 @@
     "prettierify": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
     "start-sample": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
     "start-target": "yarn clean-target && cross-env ENVIRONMENT=test webpack serve",
-    "test-functions": "jest",
-    "test-app": "playwright test",
+    "unittest": "jest",
+    "e2etest": "playwright test",
     "typecheck": "yarn tsc --noEmit"
   },
   "devDependencies": {

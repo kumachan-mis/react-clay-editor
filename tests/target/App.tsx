@@ -46,8 +46,10 @@ export const App: React.FC = () => {
   const [bracketText, setBracketText] = React.useState('');
   const [markdownText, setMarkdownText] = React.useState('');
 
-  return (
-    <>
+  if (window.location.pathname === '/') {
+    return <div>Playwright Test</div>;
+  } else if (window.location.pathname === '/bracket') {
+    return (
       <Editor
         text={bracketText}
         onChangeText={setBracketText}
@@ -58,6 +60,9 @@ export const App: React.FC = () => {
         taggedLinkPropsMap={taggedLinkPropsMap}
         className={styles.sample}
       />
+    );
+  } else if (window.location.pathname === '/markdown') {
+    return (
       <Editor
         text={markdownText}
         onChangeText={setMarkdownText}
@@ -68,6 +73,8 @@ export const App: React.FC = () => {
         taggedLinkPropsMap={taggedLinkPropsMap}
         className={styles.sample}
       />
-    </>
-  );
+    );
+  }
+
+  return <div>404 Not Found</div>;
 };
