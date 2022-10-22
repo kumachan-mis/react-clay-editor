@@ -7,13 +7,11 @@ export const ComponentConstants = {
     className: (size: 'normal' | 'larger' | 'largest'): string => mergeClassNames(styles.header, styles[size]),
     selectId: 'header',
     selectIdRegex: /header/,
-    testId: 'header',
   },
   lineGroup: {
     className: styles.lineGroup,
     selectId: (first: number, last: number): string => `line-group-L${first}-${last}`,
     selectIdRegex: RegExp('line-group-L(?<first>\\d+)-(?<last>\\d+)'),
-    testId: (first: number, last: number): string => `line-group-L${first}-${last}`,
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
@@ -30,7 +28,6 @@ export const ComponentConstants = {
     className: mergeClassNames(styles.line, styles.normal),
     selectId: (lineIndex: number): string => `line-L${lineIndex}`,
     selectIdRegex: RegExp('line-L(?<lineIndex>\\d+)'),
-    testId: (lineIndex: number): string => `line-L${lineIndex}`,
     indent: {
       className: styles.indent,
       style: (indentDepth: number): React.CSSProperties => ({ width: `${1.5 * indentDepth}em` }),
@@ -47,13 +44,11 @@ export const ComponentConstants = {
     className: styles.charGroup,
     selectId: (lineIndex: number, first: number, last: number): string => `char-group-L${lineIndex}C${first}-${last}`,
     selectIdRegex: RegExp('char-group-L(?<lineIndex>\\d+)C(?<first>\\d+)-(?<last>\\d+)'),
-    testId: (lineIndex: number, first: number, last: number): string => `char-group-L${lineIndex}C${first}-${last}`,
   },
   char: {
     className: styles.char,
     selectId: (lineIndex: number, charIndex: number): string => `char-L${lineIndex}C${charIndex}`,
     selectIdRegex: RegExp('char-L(?<lineIndex>\\d+)C(?<charIndex>\\d+)'),
-    testId: (lineIndex: number, charIndex: number): string => `char-L${lineIndex}C${charIndex}`,
   },
   itemization: {
     className: styles.itemBulletContent,
@@ -65,7 +60,6 @@ export const ComponentConstants = {
   embededLink: {
     className: styles.embededLink,
     selectId: 'embeded-link',
-    testId: 'embeded-link',
     active: { className: styles.active },
   },
 };

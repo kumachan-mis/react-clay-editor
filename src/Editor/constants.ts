@@ -8,7 +8,6 @@ export const EditorConstants = {
   editor: {
     className: styles.editor,
     selectId: 'editor',
-    testId: 'editor',
     style: (hideSyntaxMenu?: boolean): React.CSSProperties =>
       hideSyntaxMenu ? { height: '100%' } : { height: 'calc(100% - 36px)' },
   },
@@ -16,7 +15,6 @@ export const EditorConstants = {
     className: styles.body,
     selectId: 'editor-body',
     selectIdRegex: /editor-body/,
-    testId: 'editor-body',
   },
   syntaxMenu: {
     className: styles.syntaxMenu,

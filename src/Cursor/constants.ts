@@ -37,7 +37,7 @@ export const CursorConstants = {
     },
     header: {
       className: styles.suggestionHeader,
-      testId: 'suggestion-header',
+      selectId: 'suggestion-header',
       name: (suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none'): string => {
         switch (suggestionType) {
           case 'text':
@@ -56,12 +56,10 @@ export const CursorConstants = {
     container: {
       className: styles.suggestionContainer,
       selectId: 'suggestion-container',
-      testId: 'suggestion-container',
     },
     item: {
       className: styles.suggestionItem,
       selectId: (index: number): string => `suggestion-item-${index}`,
-      testId: (index: number): string => `suggestion-item-${index}`,
     },
   },
 };

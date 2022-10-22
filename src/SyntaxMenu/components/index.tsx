@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { createTestId, mergeClassNames } from '../../common/utils';
+import { mergeClassNames } from '../../common/utils';
 import { ArrowIcon } from '../icons';
 
 import { ComponentConstants } from './constants';
@@ -85,7 +85,7 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
       <button
         className={mergeClassNames(buttonClassName, constants.button.className)}
         disabled={disabled || buttonDisabled}
-        data-testid={createTestId(constants.button.testId)}
+        data-selectid={constants.button.selectId}
         {...buttonRest}
       >
         {children}
@@ -97,7 +97,7 @@ export const DropdownMenuAnchor: React.FC<DropdownMenuAnchorProps> = ({
         onClick={handleOnArrowClick}
         aria-haspopup="true"
         aria-expanded={open}
-        data-testid={createTestId(constants.arrow.testId)}
+        data-selectid={constants.arrow.selectId}
       >
         <ArrowIcon />
       </button>
@@ -120,7 +120,7 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({
   return !open ? (
     <></>
   ) : (
-    <div className={constants.className} data-testid={createTestId(constants.testId)}>
+    <div className={constants.className} data-selectid={constants.selectId}>
       <ul
         className={mergeClassNames(className, constants.container.className)}
         role="menu"

@@ -1,108 +1,108 @@
 export const SectionMenuConstants = {
-  testId: 'section-menu',
+  selectId: 'section-menu',
   items: {
     normal: {
       defaultLabel: 'normal',
-      testId: 'normal-section-menu-item',
+      selectId: 'normal-section-menu-item',
     },
     larger: {
       defaultLabel: 'larger',
-      testId: 'larger-section-menu-item',
+      selectId: 'larger-section-menu-item',
     },
     largest: {
       defaultLabel: 'largest',
-      testId: 'largest-section-menu-item',
+      selectId: 'largest-section-menu-item',
     },
   },
 };
 
 export const ItemizationMenuConstants = {
-  testId: 'itemization-menu',
+  selectId: 'itemization-menu',
   items: {
     indent: {
       defaultLabel: 'indent',
-      testId: 'indent-itemization-menu-item',
+      selectId: 'indent-itemization-menu-item',
     },
     outdent: {
       defaultLabel: 'outdent',
-      testId: 'outdent-itemization-menu-item',
+      selectId: 'outdent-itemization-menu-item',
     },
   },
 };
 
 export const BoldMenuConstants = {
-  testId: 'bold-menu',
+  selectId: 'bold-menu',
 };
 
 export const ItalicMenuConstants = {
-  testId: 'italic-menu',
+  selectId: 'italic-menu',
 };
 
 export const UnderlineMenuConstants = {
-  testId: 'underline-menu',
+  selectId: 'underline-menu',
 };
 
 export const BracketMenuConstants = {
-  testId: 'bracket-menu',
+  selectId: 'bracket-menu',
   defaultLabel: 'bracket link',
 };
 
 export const HashtagMenuConstants = {
-  testId: 'hashtag-menu',
+  selectId: 'hashtag-menu',
   defaultLabel: 'hashtag link',
 };
 
 export const TaggedLinkMenuConstants = {
-  testId: 'tagged-link-menu',
+  selectId: 'tagged-link-menu',
   items: {
     defaultLabel: 'tagged link',
     taggedLabel: (tagName: string, label: string) => `${tagName}: ${label}`,
-    testId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
+    selectId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
   },
 };
 
 export const CodeMenuConstants = {
-  testId: 'code-menu',
+  selectId: 'code-menu',
   items: {
     inline: {
       defaultLabel: 'inline code',
-      testId: 'inline-code-menu-item',
+      selectId: 'inline-code-menu-item',
     },
     block: {
       defaultLabel: 'block code',
-      testId: 'block-code-menu-item',
+      selectId: 'block-code-menu-item',
     },
   },
 };
 
 export const FormulaMenuConstants = {
-  testId: 'formula-menu',
+  selectId: 'formula-menu',
   items: {
     inline: {
       defaultLabel: 'inline formula',
-      testId: 'inline-formula-menu-item',
+      selectId: 'inline-formula-menu-item',
     },
     display: {
       defaultLabel: 'display formula',
-      testId: 'display-formula-menu-item',
+      selectId: 'display-formula-menu-item',
     },
     block: {
       defaultLabel: 'block formula',
-      testId: 'block-formula-menu-item',
+      selectId: 'block-formula-menu-item',
     },
   },
 };
 
 export const QuotationMenuConstants = {
-  testId: 'quotation-menu',
+  selectId: 'quotation-menu',
   items: {
     indent: {
       defaultLabel: 'indent',
-      testId: 'indent-quotation-menu-item',
+      selectId: 'indent-quotation-menu-item',
     },
     outdent: {
       defaultLabel: 'outdent',
-      testId: 'outdent-quotation-menu-item',
+      selectId: 'outdent-quotation-menu-item',
     },
   },
 };

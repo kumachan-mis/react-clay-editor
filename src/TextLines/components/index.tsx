@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mergeClassNames, createTestId } from '../../common/utils';
+import { mergeClassNames } from '../../common/utils';
 
 import { ComponentConstants } from './constants';
 import {
@@ -21,11 +21,7 @@ import {
 export const Header: React.FC<React.PropsWithChildren<HeaderProps>> = ({ size = 'largest', children }) => {
   const constants = ComponentConstants.header;
   return (
-    <div
-      className={constants.className(size)}
-      data-selectid={constants.selectId}
-      data-testid={createTestId(constants.testId)}
-    >
+    <div className={constants.className(size)} data-selectid={constants.selectId}>
       {children}
     </div>
   );
@@ -43,7 +39,6 @@ export const LineGroup: React.FC<LineGroupProps> = ({
       className={mergeClassNames(constants.className, className)}
       {...rest}
       data-selectid={constants.selectId(firstLineIndex, lastLineIndex)}
-      data-testid={createTestId(constants.testId(firstLineIndex, lastLineIndex))}
     >
       {children}
     </div>
@@ -100,7 +95,6 @@ export const Line: React.FC<LineProps> = ({ lineIndex, children, className, ...r
       className={mergeClassNames(constants.className, className)}
       {...rest}
       data-selectid={constants.selectId(lineIndex)}
-      data-testid={createTestId(constants.testId(lineIndex))}
     >
       {children}
     </div>
@@ -168,7 +162,6 @@ export const CharGroup: React.FC<CharGroupProps> = ({
       className={mergeClassNames(constants.className, className)}
       {...rest}
       data-selectid={constants.selectId(lineIndex, firstCharIndex, lastCharIndex)}
-      data-testid={createTestId(constants.testId(lineIndex, firstCharIndex, lastCharIndex))}
     >
       {children}
     </span>
@@ -182,7 +175,6 @@ export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, children, clas
       className={mergeClassNames(constants.className, className)}
       {...rest}
       data-selectid={constants.selectId(lineIndex, charIndex)}
-      data-testid={createTestId(constants.testId(lineIndex, charIndex))}
     >
       {children}
     </span>
@@ -269,7 +261,7 @@ export const EmbededLink: React.FC<React.PropsWithChildren<EmbededLinkProps>> = 
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
       onClick={handleOnClick}
-      data-testid={createTestId(constants.testId)}
+      data-selectid={constants.selectId}
       data-active={active}
       {...rest}
     >

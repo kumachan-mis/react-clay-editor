@@ -13,16 +13,16 @@ export const ComponentConstants = {
     className: styles.dropdownAnchor,
     button: {
       className: mergeClassNames(styles.iconButton, styles.dropdownButton),
-      testId: 'dropdown-anchor-button',
+      selectId: 'dropdown-anchor-button',
     },
     arrow: {
       className: mergeClassNames(styles.iconButton, styles.dropdownArrow),
-      testId: 'dropdown-anchor-arrow',
+      selectId: 'dropdown-anchor-arrow',
     },
   },
   dropdownMenuList: {
     className: mergeClassNames(styles.dropdownMenu, styles.absolute),
-    testId: 'dropdown-menu-list',
+    selectId: 'dropdown-menu-list',
     container: {
       className: styles.dropdownMenuContainer,
     },

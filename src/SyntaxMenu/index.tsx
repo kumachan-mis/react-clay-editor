@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { createTestId } from '../common/utils';
-
 import {
   blockCodeMenuSwitch,
   handleOnBlockCodeItemClick,
@@ -163,7 +161,7 @@ const SectionMenu: React.FC<SectionMenuProps & LineMenuProps & CommonMenuProps> 
         buttonProps={{
           onClick: () => setTextAndState(...handleOnSectionButtonClick(text, nodes, state, props, menuSwitch)),
         }}
-        data-testid={createTestId(SectionMenuConstants.testId)}
+        data-selectid={SectionMenuConstants.selectId}
       >
         <SectionIcon />
       </DropdownMenuAnchor>
@@ -171,21 +169,21 @@ const SectionMenu: React.FC<SectionMenuProps & LineMenuProps & CommonMenuProps> 
         <DropdownMenuItem
           active={menuSwitch === 'normal'}
           onClick={() => setTextAndState(...handleOnSectionItemClick(text, nodes, state, props, 'normal', menuSwitch))}
-          data-testid={createTestId(SectionMenuConstants.items.normal.testId)}
+          data-selectid={SectionMenuConstants.items.normal.selectId}
         >
           {normalLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
           active={menuSwitch === 'larger'}
           onClick={() => setTextAndState(...handleOnSectionItemClick(text, nodes, state, props, 'larger', menuSwitch))}
-          data-testid={createTestId(SectionMenuConstants.items.larger.testId)}
+          data-selectid={SectionMenuConstants.items.larger.selectId}
         >
           {largerLabel}
         </DropdownMenuItem>
         <DropdownMenuItem
           active={menuSwitch === 'largest'}
           onClick={() => setTextAndState(...handleOnSectionItemClick(text, nodes, state, props, 'largest', menuSwitch))}
-          data-testid={createTestId(SectionMenuConstants.items.largest.testId)}
+          data-selectid={SectionMenuConstants.items.largest.selectId}
         >
           {largestLabel}
         </DropdownMenuItem>
@@ -218,7 +216,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMen
         buttonProps={{
           onClick: () => setTextAndState(...handleOnItemizationButtonClick(text, nodes, state, props, menuSwitch)),
         }}
-        data-testid={createTestId(ItemizationMenuConstants.testId)}
+        data-selectid={ItemizationMenuConstants.selectId}
       >
         <ItemizationIcon />
       </DropdownMenuAnchor>
@@ -227,7 +225,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMen
           onClick={() =>
             setTextAndState(...handleOnItemizationItemClick(text, nodes, state, props, 'indent', menuSwitch))
           }
-          data-testid={createTestId(ItemizationMenuConstants.items.indent.testId)}
+          data-selectid={ItemizationMenuConstants.items.indent.selectId}
         >
           {indentLabel}
         </DropdownMenuItem>
@@ -236,7 +234,7 @@ const ItemizationMenu: React.FC<ItemizationMenuProps & LineMenuProps & CommonMen
           onClick={() =>
             setTextAndState(...handleOnItemizationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
           }
-          data-testid={createTestId(ItemizationMenuConstants.items.outdent.testId)}
+          data-selectid={ItemizationMenuConstants.items.outdent.selectId}
         >
           {outdentLabel}
         </DropdownMenuItem>
@@ -263,7 +261,7 @@ const BoldMenu: React.FC<ContentMenuProps & CommonMenuProps> = ({
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'bold', menuSwitch))
       }
-      data-testid={createTestId(BoldMenuConstants.testId)}
+      data-selectid={BoldMenuConstants.selectId}
     >
       <BoldIcon />
     </IconButtonMenu>
@@ -288,7 +286,7 @@ const ItalicMenu: React.FC<ContentMenuProps & CommonMenuProps> = ({
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'italic', menuSwitch))
       }
-      data-testid={createTestId(ItalicMenuConstants.testId)}
+      data-selectid={ItalicMenuConstants.selectId}
     >
       <ItalicIcon />
     </IconButtonMenu>
@@ -313,7 +311,7 @@ const UnderlineMenu: React.FC<ContentMenuProps & CommonMenuProps> = ({
       onClick={() =>
         setTextAndState(...handleOnDecorationClick(text, nodes, contentPosition, state, props, 'underline', menuSwitch))
       }
-      data-testid={createTestId(UnderlineMenuConstants.testId)}
+      data-selectid={UnderlineMenuConstants.selectId}
     >
       <UnderlineIcon />
     </IconButtonMenu>
@@ -343,7 +341,7 @@ const BracketMenu: React.FC<BracketMenuProps & CommonMenuProps & ContentMenuProp
       onClick={() =>
         setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch))
       }
-      data-testid={createTestId(BracketMenuConstants.testId)}
+      data-selectid={BracketMenuConstants.selectId}
     >
       <BracketIcon />
     </IconButtonMenu>
@@ -373,7 +371,7 @@ const HashtagMenu: React.FC<HashtagMenuProps & ContentMenuProps & CommonMenuProp
       onClick={() =>
         setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch))
       }
-      data-testid={createTestId(HashtagMenuConstants.testId)}
+      data-selectid={HashtagMenuConstants.selectId}
     >
       <HashtagIcon />
     </IconButtonMenu>
@@ -411,7 +409,7 @@ const TaggedLinkMenu: React.FC<
         active={menuSwitch === 'on'}
         disabled={tagEntries.length === 0 || menuSwitch === 'disabled'}
         buttonProps={{ onClick: handleOnButtonClick }}
-        data-testid={createTestId(TaggedLinkMenuConstants.testId)}
+        data-selectid={TaggedLinkMenuConstants.selectId}
       >
         <TaggedLinkIcon />
       </DropdownMenuAnchor>
@@ -432,7 +430,7 @@ const TaggedLinkMenu: React.FC<
                     ...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch)
                   )
                 }
-                data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
+                data-selectid={TaggedLinkMenuConstants.items.selectId(tagName)}
               >
                 {TaggedLinkMenuConstants.items.taggedLabel(tagName, label)}
               </DropdownMenuItem>
@@ -486,7 +484,7 @@ const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & Com
               )
             ),
         }}
-        data-testid={createTestId(CodeMenuConstants.testId)}
+        data-selectid={CodeMenuConstants.selectId}
       >
         <CodeIcon />
       </DropdownMenuAnchor>
@@ -497,7 +495,7 @@ const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & Com
           onClick={() =>
             setTextAndState(...handleOnInlineCodeItemClick(text, lineNodes, contentPosition, state, inlineMenuSwitch))
           }
-          data-testid={createTestId(CodeMenuConstants.items.inline.testId)}
+          data-selectid={CodeMenuConstants.items.inline.selectId}
         >
           {inlineLabel}
         </DropdownMenuItem>
@@ -507,7 +505,7 @@ const CodeMenu: React.FC<CodeMenuProps & ContentMenuProps & BlockMenuProps & Com
           onClick={() =>
             setTextAndState(...handleOnBlockCodeItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
           }
-          data-testid={createTestId(CodeMenuConstants.items.block.testId)}
+          data-selectid={CodeMenuConstants.items.block.selectId}
         >
           {blockLabel}
         </DropdownMenuItem>
@@ -559,7 +557,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
               )
             ),
         }}
-        data-testid={createTestId(FormulaMenuConstants.testId)}
+        data-selectid={FormulaMenuConstants.selectId}
       >
         <FormulaIcon />
       </DropdownMenuAnchor>
@@ -572,7 +570,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
               ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'inline', contentMenuSwitch)
             )
           }
-          data-testid={createTestId(FormulaMenuConstants.items.inline.testId)}
+          data-selectid={FormulaMenuConstants.items.inline.selectId}
         >
           {inlineLabel}
         </DropdownMenuItem>
@@ -584,7 +582,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
               ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'display', contentMenuSwitch)
             )
           }
-          data-testid={createTestId(FormulaMenuConstants.items.display.testId)}
+          data-selectid={FormulaMenuConstants.items.display.selectId}
         >
           {displayLabel}
         </DropdownMenuItem>
@@ -594,7 +592,7 @@ const FormulaMenu: React.FC<FormulaMenuProps & ContentMenuProps & BlockMenuProps
           onClick={() =>
             setTextAndState(...handleOnBlockFormulaItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
           }
-          data-testid={createTestId(FormulaMenuConstants.items.block.testId)}
+          data-selectid={FormulaMenuConstants.items.block.selectId}
         >
           {blockLabel}
         </DropdownMenuItem>
@@ -627,7 +625,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuPro
         buttonProps={{
           onClick: () => setTextAndState(...handleOnQuotationButtonClick(text, nodes, state, props, menuSwitch)),
         }}
-        data-testid={createTestId(QuotationMenuConstants.testId)}
+        data-selectid={QuotationMenuConstants.selectId}
       >
         <QuotationIcon />
       </DropdownMenuAnchor>
@@ -636,7 +634,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuPro
           onClick={() =>
             setTextAndState(...handleOnQuotationItemClick(text, nodes, state, props, 'indent', menuSwitch))
           }
-          data-testid={createTestId(QuotationMenuConstants.items.indent.testId)}
+          data-selectid={QuotationMenuConstants.items.indent.selectId}
         >
           {indentLabel}
         </DropdownMenuItem>
@@ -645,7 +643,7 @@ const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuPro
           onClick={() =>
             setTextAndState(...handleOnQuotationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
           }
-          data-testid={createTestId(QuotationMenuConstants.items.outdent.testId)}
+          data-selectid={QuotationMenuConstants.items.outdent.selectId}
         >
           {outdentLabel}
         </DropdownMenuItem>
