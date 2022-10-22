@@ -34,6 +34,7 @@
     "clean-cjs": "rm -Rf dist/lib",
     "clean-esm": "rm -Rf dist/esm",
     "clean-sample": "rm -Rf sample/dist",
+    "clean-target": "rm -Rf tests/dist",
     "deploy": "yarn build-sample && gh-pages -d sample/dist",
     "format": "sort-package-json && yarn prettierify",
     "gen-icons": "svgr --typescript --out-dir icons/dist -- icons",
@@ -41,8 +42,10 @@
     "lint-fix": "yarn lint --fix",
     "prepack": "yarn build",
     "prettierify": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
-    "start": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
-    "test": "cross-env ENVIRONMENT=test jest",
+    "start-sample": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
+    "start-target": "yarn clean-target && cross-env ENVIRONMENT=test webpack serve",
+    "test-functions": "jest",
+    "test-app": "playwright test",
     "typecheck": "yarn tsc --noEmit"
   },
   "devDependencies": {
@@ -50,6 +53,7 @@
     "@babel/preset-env": "7.19.4",
     "@babel/preset-react": "7.18.6",
     "@babel/preset-typescript": "7.18.6",
+    "@playwright/test": "1.27.1",
     "@svgr/cli": "6.5.0",
     "@types/jest": "29.1.2",
     "@types/katex": "0.14.0",
