@@ -26,7 +26,6 @@
     "LICENSE"
   ],
   "scripts": {
-    "gen-icons": "svgr --typescript --out-dir icons/dist -- icons",
     "build": "yarn clean && yarn build-cjs && yarn build-esm",
     "build-cjs": "yarn clean-cjs && tsc --build tsconfig.cjs.json && cpx \"src/**/*.css\" dist/lib",
     "build-esm": "yarn clean-esm && tsc --build tsconfig.esm.json && cpx \"src/**/*.css\" dist/esm",
@@ -37,6 +36,7 @@
     "clean-sample": "rm -Rf sample/dist",
     "deploy": "yarn build-sample && gh-pages -d sample/dist",
     "format": "sort-package-json && yarn prettierify",
+    "gen-icons": "svgr --typescript --out-dir icons/dist -- icons",
     "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
     "lint-fix": "yarn lint --fix",
     "prepack": "yarn build",
