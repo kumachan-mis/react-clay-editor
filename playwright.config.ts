@@ -1,5 +1,45 @@
 import { devices, PlaywrightTestConfig } from '@playwright/test';
 
+const userAgents = {
+  'Windows Chrome': [
+    // Windows Chrome
+    'Mozilla/5.0',
+    '(Windows NT 10.0; Win64; x64)',
+    'AppleWebKit/537.36',
+    '(KHTML, like Gecko)',
+    'Chrome/107.0.5304.18',
+    'Safari/537.36',
+  ].join(' '),
+  'Windows Firefox': [
+    // Windows Firefox
+    'Mozilla/5.0',
+    '(Windows NT 10.0; Win64; x64; rv:105.0.1)',
+    'Gecko/20100101',
+    'Firefox/105.0.1',
+  ].join(' '),
+  'MacOS Chrome': [
+    // MacOS Chrome
+    'Mozilla/5.0',
+    '(Macintosh; Intel Mac OS X 10_15_7)',
+    'AppleWebKit/537.36',
+    '(KHTML, like Gecko)',
+    'Chrome/107.0.5304.18',
+    'Safari/537.36',
+  ].join(' '),
+  'MacOS Firefox': [
+    // MacOS Firefox
+    'Mozilla/5.0',
+    '(Macintosh; Intel Mac OS X 10_15_7)',
+    'Gecko/20100101',
+    'Firefox/105.0.1',
+  ].join(' '),
+} as const;
+
+const baseURLs = {
+  bracket: 'http://localhost:8082/bracket/',
+  markdown: 'http://localhost:8082/markdown/',
+} as const;
+
 const config: PlaywrightTestConfig = {
   testDir: 'tests',
   projects: [
@@ -7,120 +47,64 @@ const config: PlaywrightTestConfig = {
       name: 'windows-chrome-bracket',
       use: {
         ...devices['Desktop Chrome'],
-        userAgent: [
-          // windows-chrome
-          'Mozilla/5.0',
-          '(Windows NT 10.0; Win64; x64)',
-          'AppleWebKit/537.36',
-          '(KHTML, like Gecko)',
-          'Chrome/107.0.5304.18',
-          'Safari/537.36',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/bracket/',
+        userAgent: userAgents['Windows Chrome'],
+        baseURL: baseURLs['bracket'],
       },
     },
     {
       name: 'windows-chrome-markdown',
       use: {
         ...devices['Desktop Chrome'],
-        userAgent: [
-          // windows-chrome
-          'Mozilla/5.0',
-          '(Windows NT 10.0; Win64; x64)',
-          'AppleWebKit/537.36',
-          '(KHTML, like Gecko)',
-          'Chrome/107.0.5304.18',
-          'Safari/537.36',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/markdown/',
+        userAgent: userAgents['Windows Chrome'],
+        baseURL: baseURLs['markdown'],
       },
     },
     {
       name: 'windows-firefox-bracket',
       use: {
         ...devices['Desktop Firefox'],
-        userAgent: [
-          // windows-firefox
-          'Mozilla/5.0',
-          '(Windows NT 10.0; Win64; x64; rv:105.0.1)',
-          'Gecko/20100101',
-          'Firefox/105.0.1',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/bracket/',
+        userAgent: userAgents['Windows Firefox'],
+        baseURL: baseURLs['bracket'],
       },
     },
     {
       name: 'windows-firefox-markdown',
       use: {
         ...devices['Desktop Firefox'],
-        userAgent: [
-          // windows-firefox
-          'Mozilla/5.0',
-          '(Windows NT 10.0; Win64; x64; rv:105.0.1)',
-          'Gecko/20100101',
-          'Firefox/105.0.1',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/markdown/',
+        userAgent: userAgents['Windows Firefox'],
+        baseURL: baseURLs['markdown'],
       },
     },
     {
       name: 'macos-chrome-bracket',
       use: {
         ...devices['Desktop Chrome'],
-        userAgent: [
-          // macos-chrome
-          'Mozilla/5.0',
-          '(Macintosh; Intel Mac OS X 10_15_7)',
-          'AppleWebKit/537.36',
-          '(KHTML, like Gecko)',
-          'Chrome/107.0.5304.18',
-          'Safari/537.36',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/bracket/',
+        userAgent: userAgents['MacOS Chrome'],
+        baseURL: baseURLs['bracket'],
       },
     },
     {
       name: 'macos-chrome-markdown',
       use: {
         ...devices['Desktop Chrome'],
-        userAgent: [
-          // macos-chrome
-          'Mozilla/5.0',
-          '(Macintosh; Intel Mac OS X 10_15_7)',
-          'AppleWebKit/537.36',
-          '(KHTML, like Gecko)',
-          'Chrome/107.0.5304.18',
-          'Safari/537.36',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/markdown/',
+        userAgent: userAgents['MacOS Chrome'],
+        baseURL: baseURLs['markdown'],
       },
     },
     {
       name: 'macos-firefox-bracket',
       use: {
         ...devices['Desktop Firefox'],
-        userAgent: [
-          // macos-firefox
-          'Mozilla/5.0',
-          '(Macintosh; Intel Mac OS X 10_15_7)',
-          'Gecko/20100101',
-          'Firefox/105.0.1',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/bracket/',
+        userAgent: userAgents['MacOS Firefox'],
+        baseURL: baseURLs['bracket'],
       },
     },
     {
       name: 'macos-firefox-markdown',
       use: {
         ...devices['Desktop Firefox'],
-        userAgent: [
-          // macos-firefox
-          'Mozilla/5.0',
-          '(Macintosh; Intel Mac OS X 10_15_7)',
-          'Gecko/20100101',
-          'Firefox/105.0.1',
-        ].join(' '),
-        baseURL: 'http://localhost:8082/markdown/',
+        userAgent: userAgents['MacOS Firefox'],
+        baseURL: baseURLs['markdown'],
       },
     },
   ],
@@ -129,4 +113,5 @@ const config: PlaywrightTestConfig = {
     port: 8082,
   },
 };
+
 export default config;
