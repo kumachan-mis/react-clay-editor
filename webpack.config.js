@@ -20,6 +20,7 @@ module.exports = {
   output: {
     path: envVars.OUTPUT_PATH,
     filename: '[name].bundle.[chunkhash].js',
+    publicPath: '/',
     clean: true,
   },
   module: {

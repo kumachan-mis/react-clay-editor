@@ -48,7 +48,7 @@ export const App: React.FC = () => {
 
   if (window.location.pathname === '/') {
     return <div>Playwright Test</div>;
-  } else if (window.location.pathname === '/bracket') {
+  } else if (['/bracket', '/bracket/'].includes(window.location.pathname)) {
     return (
       <div className={styles.container}>
         <Editor
@@ -63,7 +63,7 @@ export const App: React.FC = () => {
         />
       </div>
     );
-  } else if (window.location.pathname === '/markdown') {
+  } else if (['/markdown', '/markdown/'].includes(window.location.pathname)) {
     return (
       <div className={styles.container}>
         <Editor
