@@ -30,6 +30,7 @@
     "build-cjs": "yarn clean-cjs && tsc --build tsconfig.cjs.json && cpx \"src/**/*.css\" dist/lib",
     "build-esm": "yarn clean-esm && tsc --build tsconfig.esm.json && cpx \"src/**/*.css\" dist/esm",
     "build-sample": "yarn clean-sample && cross-env ENVIRONMENT=production webpack",
+    "build-target": "yarn clean-target && cross-env ENVIRONMENT=test webpack",
     "clean": "rm -Rf dist",
     "clean-cjs": "rm -Rf dist/lib",
     "clean-esm": "rm -Rf dist/esm",
@@ -44,7 +45,7 @@
     "prettierify": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
     "start-sample": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
     "start-target": "yarn clean-target && cross-env ENVIRONMENT=test webpack serve",
-    "test": "playwright test",
+    "test": "yarn build-target && playwright test",
     "typecheck": "yarn tsc --noEmit",
     "unittest": "jest"
   },

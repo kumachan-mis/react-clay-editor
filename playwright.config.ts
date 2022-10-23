@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
     baseURL: 'http://localhost:8082',
   },
   webServer: {
-    command: 'yarn start-target',
+    command: 'cross-env ENVIRONMENT=test webpack serve',
     port: 8082,
   },
 };
