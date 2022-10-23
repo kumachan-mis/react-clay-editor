@@ -1,6 +1,19 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
-test('test', async ({ page }) => {
-  await page.goto('.');
-  await expect(page.locator(':text("Playwright Test")')).toHaveCount(1);
+import { keyboardCommonTests } from './keyboardCommon.testcase';
+
+test.describe('branket syntax', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/bracket');
+  });
+
+  keyboardCommonTests();
+});
+
+test.describe('markdown syntax', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/markdown');
+  });
+
+  keyboardCommonTests();
 });

@@ -50,29 +50,33 @@ export const App: React.FC = () => {
     return <div>Playwright Test</div>;
   } else if (window.location.pathname === '/bracket') {
     return (
-      <Editor
-        text={bracketText}
-        onChangeText={setBracketText}
-        syntax="bracket"
-        textProps={textProps}
-        bracketLinkProps={bracketLinkProps}
-        hashtagProps={bracketLinkProps}
-        taggedLinkPropsMap={taggedLinkPropsMap}
-        className={styles.sample}
-      />
+      <div className={styles.container}>
+        <Editor
+          text={bracketText}
+          onChangeText={setBracketText}
+          syntax="bracket"
+          textProps={textProps}
+          bracketLinkProps={bracketLinkProps}
+          hashtagProps={bracketLinkProps}
+          taggedLinkPropsMap={taggedLinkPropsMap}
+          className={styles.target}
+        />
+      </div>
     );
   } else if (window.location.pathname === '/markdown') {
     return (
-      <Editor
-        text={markdownText}
-        onChangeText={setMarkdownText}
-        syntax="markdown"
-        textProps={textProps}
-        bracketLinkProps={bracketLinkProps}
-        hashtagProps={bracketLinkProps}
-        taggedLinkPropsMap={taggedLinkPropsMap}
-        className={styles.sample}
-      />
+      <div className={styles.container}>
+        <Editor
+          text={markdownText}
+          onChangeText={setMarkdownText}
+          syntax="markdown"
+          textProps={textProps}
+          bracketLinkProps={bracketLinkProps}
+          hashtagProps={bracketLinkProps}
+          taggedLinkPropsMap={taggedLinkPropsMap}
+          className={styles.target}
+        />
+      </div>
     );
   }
 

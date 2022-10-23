@@ -4,7 +4,6 @@ const config: PlaywrightTestConfig = {
   testDir: 'tests',
   use: {
     baseURL: 'http://localhost:8082',
-    headless: false,
   },
   webServer: {
     command: 'yarn start-target',

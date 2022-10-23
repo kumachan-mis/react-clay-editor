@@ -44,9 +44,9 @@
     "prettierify": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
     "start-sample": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
     "start-target": "yarn clean-target && cross-env ENVIRONMENT=test webpack serve",
-    "unittest": "jest",
-    "e2etest": "playwright test",
-    "typecheck": "yarn tsc --noEmit"
+    "test": "playwright test",
+    "typecheck": "yarn tsc --noEmit",
+    "unittest": "jest"
   },
   "devDependencies": {
     "@babel/core": "7.19.3",
