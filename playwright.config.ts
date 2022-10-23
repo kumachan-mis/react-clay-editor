@@ -42,9 +42,6 @@ const baseURLs = {
 
 const config: PlaywrightTestConfig = {
   testDir: 'tests',
-  use: {
-    headless: false,
-  },
   projects: [
     {
       name: 'windows-chrome-bracket',
