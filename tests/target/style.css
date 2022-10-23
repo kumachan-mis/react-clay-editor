@@ -1,7 +1,15 @@
-.sample {
-  width: calc(50% - 22px);
-  height: calc(100% - 22px);
-  margin: 5px;
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.target {
+  width: 70%;
+  height: 70%;
+  margin: auto;
   border: solid 1px;
   padding: 5px;
   display: inline-block;

@@ -1,5 +1,6 @@
 ### Project specific settings ###
-webpack.config.js
+webpack.*config.js
+playwright.config.ts
 jest.config.js
 
 

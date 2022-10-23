@@ -8,7 +8,7 @@ const envVars = createEnvVars();
 const isProduction = envVars.NODE_ENV === 'production';
 
 module.exports = {
-  entry: path.resolve('sample', 'src', 'index.tsx'),
+  entry: envVars.ENTRY,
   target: 'web',
   mode: isProduction ? 'production' : 'development',
   resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
@@ -18,8 +18,9 @@ module.exports = {
     katex: 'katex',
   },
   output: {
-    path: path.resolve('sample', 'dist'),
+    path: envVars.OUTPUT_PATH,
     filename: '[name].bundle.[chunkhash].js',
+    publicPath: '/',
     clean: true,
   },
   module: {
@@ -46,7 +47,7 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin(envVars),
     new HtmlWebpackPlugin({
-      template: path.resolve('sample', 'src', 'index.ejs'),
+      template: envVars.TEMPLATE_PATH,
       templateParameters: {
         mode: isProduction ? 'production' : 'development',
         reactVersion: packageJson.devDependencies.react,
@@ -57,19 +58,41 @@ module.exports = {
   devtool: isProduction ? 'source-map' : 'eval-source-map',
   devServer: {
     historyApiFallback: true,
-    port: 8081,
-    open: true,
+    port: envVars.DEVSERVER_PORT,
+    open: envVars.DEVSERVER_OPEN,
   },
 };
 
 function createEnvVars() {
   switch (process.env.ENVIRONMENT) {
     case 'development':
-      return { NODE_ENV: 'development', ENVIRONMENT: process.env.ENVIRONMENT };
+      return {
+        ENVIRONMENT: process.env.ENVIRONMENT,
+        NODE_ENV: 'development',
+        ENTRY: path.resolve('sample', 'src', 'index.tsx'),
+        TEMPLATE_PATH: path.resolve('sample', 'src', 'index.ejs'),
+        OUTPUT_PATH: path.resolve('sample', 'dist'),
+        DEVSERVER_PORT: 8081,
+        DEVSERVER_OPEN: true,
+      };
     case 'test':
-      return { NODE_ENV: 'development', ENVIRONMENT: process.env.ENVIRONMENT };
+      return {
+        ENVIRONMENT: process.env.ENVIRONMENT,
+        NODE_ENV: 'development',
+        ENTRY: path.resolve('tests', 'target', 'index.tsx'),
+        TEMPLATE_PATH: path.resolve('tests', 'target', 'index.ejs'),
+        OUTPUT_PATH: path.resolve('tests', 'dist'),
+        DEVSERVER_PORT: 8082,
+        DEVSERVER_OPEN: false,
+      };
     case 'production':
-      return { NODE_ENV: 'production', ENVIRONMENT: process.env.ENVIRONMENT };
+      return {
+        ENVIRONMENT: process.env.ENVIRONMENT,
+        NODE_ENV: 'production',
+        ENTRY: path.resolve('sample', 'src', 'index.tsx'),
+        TEMPLATE_PATH: path.resolve('sample', 'src', 'index.ejs'),
+        OUTPUT_PATH: path.resolve('sample', 'dist'),
+      };
     default:
       throw Error(`unknown environment: ${process.env.ENVIRONMENT}`);
   }
