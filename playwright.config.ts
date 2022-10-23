@@ -53,24 +53,6 @@ const config: PlaywrightTestConfig = {
       testMatch: /.*(common|windows|bracket)\.test\.ts/,
     },
     {
-      name: 'windows-chrome-markdown',
-      use: {
-        ...devices['Desktop Chrome'],
-        userAgent: userAgents['Windows Chrome'],
-        baseURL: baseURLs['markdown'],
-      },
-      testMatch: /.*(common|windows|markdown)\.test\.ts/,
-    },
-    {
-      name: 'windows-firefox-bracket',
-      use: {
-        ...devices['Desktop Firefox'],
-        userAgent: userAgents['Windows Firefox'],
-        baseURL: baseURLs['bracket'],
-      },
-      testMatch: /.*(common|windows|bracket)\.test\.ts/,
-    },
-    {
       name: 'windows-firefox-markdown',
       use: {
         ...devices['Desktop Firefox'],
@@ -78,15 +60,6 @@ const config: PlaywrightTestConfig = {
         baseURL: baseURLs['markdown'],
       },
       testMatch: /.*(common|windows|markdown)\.test\.ts/,
-    },
-    {
-      name: 'macos-chrome-bracket',
-      use: {
-        ...devices['Desktop Chrome'],
-        userAgent: userAgents['MacOS Chrome'],
-        baseURL: baseURLs['bracket'],
-      },
-      testMatch: /.*(common|macos|bracket)\.test\.ts/,
     },
     {
       name: 'macos-chrome-markdown',
@@ -105,15 +78,6 @@ const config: PlaywrightTestConfig = {
         baseURL: baseURLs['bracket'],
       },
       testMatch: /.*(common|macos|bracket)\.test\.ts/,
-    },
-    {
-      name: 'macos-firefox-markdown',
-      use: {
-        ...devices['Desktop Firefox'],
-        userAgent: userAgents['MacOS Firefox'],
-        baseURL: baseURLs['markdown'],
-      },
-      testMatch: /.*(common|macos|markdown)\.test\.ts/,
     },
   ],
   webServer: {
