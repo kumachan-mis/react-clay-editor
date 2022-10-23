@@ -50,6 +50,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['Windows Chrome'],
         baseURL: baseURLs['bracket'],
       },
+      testMatch: /.*(common|windows|bracket)\.test\.ts/,
     },
     {
       name: 'windows-chrome-markdown',
@@ -58,6 +59,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['Windows Chrome'],
         baseURL: baseURLs['markdown'],
       },
+      testMatch: /.*(common|windows|markdown)\.test\.ts/,
     },
     {
       name: 'windows-firefox-bracket',
@@ -66,6 +68,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['Windows Firefox'],
         baseURL: baseURLs['bracket'],
       },
+      testMatch: /.*(common|windows|bracket)\.test\.ts/,
     },
     {
       name: 'windows-firefox-markdown',
@@ -74,6 +77,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['Windows Firefox'],
         baseURL: baseURLs['markdown'],
       },
+      testMatch: /.*(common|windows|markdown)\.test\.ts/,
     },
     {
       name: 'macos-chrome-bracket',
@@ -82,6 +86,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['MacOS Chrome'],
         baseURL: baseURLs['bracket'],
       },
+      testMatch: /.*(common|macos|bracket)\.test\.ts/,
     },
     {
       name: 'macos-chrome-markdown',
@@ -90,6 +95,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['MacOS Chrome'],
         baseURL: baseURLs['markdown'],
       },
+      testMatch: /.*(common|macos|markdown)\.test\.ts/,
     },
     {
       name: 'macos-firefox-bracket',
@@ -98,6 +104,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['MacOS Firefox'],
         baseURL: baseURLs['bracket'],
       },
+      testMatch: /.*(common|macos|bracket)\.test\.ts/,
     },
     {
       name: 'macos-firefox-markdown',
@@ -106,6 +113,7 @@ const config: PlaywrightTestConfig = {
         userAgent: userAgents['MacOS Firefox'],
         baseURL: baseURLs['markdown'],
       },
+      testMatch: /.*(common|macos|markdown)\.test\.ts/,
     },
   ],
   webServer: {
