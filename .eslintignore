@@ -1,6 +1,7 @@
 ### Project specific settings ###
 webpack.config.js
 jest.config.js
+jest.setup.ts
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,react
