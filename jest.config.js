@@ -1,8 +1,12 @@
+const path = require('path');
+
 module.exports = {
-  roots: ["<rootDir>/unittests/"],
-  moduleFileExtensions: ['ts', 'js'],
+  testEnvironment: 'jsdom',
+  roots: ["<rootDir>/tests/", "<rootDir>/unittests/"],
+  moduleFileExtensions: ['ts', 'js', 'tsx', 'jsx'],
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/unittests/style.mock.ts',
+    '\\.(css|less)$': '<rootDir>/jest.styleMock.ts',
   },
+  setupFilesAfterEnv: [path.resolve(__dirname, 'jest.setup.ts')],
   verbose: true,
 };
