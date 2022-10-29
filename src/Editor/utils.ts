@@ -34,7 +34,6 @@ export function getBody(element: HTMLElement): HTMLElement | null {
 export function useEditor(): [
   State,
   React.Dispatch<React.SetStateAction<State>>,
-  React.MutableRefObject<HTMLDivElement | null>,
   React.MutableRefObject<HTMLDivElement | null>
 ] {
   const [state, setState] = React.useState<State>({
@@ -50,95 +49,105 @@ export function useEditor(): [
     suggestionIndex: -1,
     suggestionStart: 0,
   });
+  const ref = React.useRef<HTMLDivElement | null>(null);
 
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const editorRef = React.useRef<HTMLDivElement | null>(null);
-
-  return [state, setState, rootRef, editorRef];
+  return [state, setState, ref];
 }
 
 export function useMouseEventHandlers(
   props: Props,
   state: State,
   setState: React.Dispatch<React.SetStateAction<State>>,
-  rootRef: React.MutableRefObject<HTMLDivElement | null>,
-  editorRef: React.MutableRefObject<HTMLDivElement | null>
-): [
-  {
-    onMouseDown: (event: MouseEvent) => void;
-    onMouseMove: (event: MouseEvent) => void;
-    onMouseUp: (event: MouseEvent) => void;
-  },
-  {
-    onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
-    onMouseMove?: React.MouseEventHandler<HTMLDivElement>;
-    onMouseUp?: React.MouseEventHandler<HTMLDivElement>;
-    onClick?: React.MouseEventHandler<HTMLDivElement>;
-  },
-  {
-    onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
-    onMouseMove?: React.MouseEventHandler<HTMLDivElement>;
-    onMouseUp?: React.MouseEventHandler<HTMLDivElement>;
-    onClick?: React.MouseEventHandler<HTMLDivElement>;
-  }
-] {
+  ref: React.MutableRefObject<HTMLDivElement | null>
+): {
+  onMouseDown: React.MouseEventHandler<HTMLDivElement>;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
+} {
   const createMouseEventHandler = React.useCallback(
     <Event extends MouseEvent | React.MouseEvent>(
       handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
     ): ((event: Event) => void) => {
       return (event) => {
         if (props.readonly || event.button !== 0) return;
-        const [newText, newState] = handler(props.text, state, event, editorRef.current);
+        const [newText, newState] = handler(props.text, state, event, ref.current);
         if (newState !== state) setState(newState);
         if (newText !== props.text) props.onChangeText(newText);
       };
     },
-    [props, state, editorRef, setState]
+    [props, state, ref, setState]
   );
 
-  const handleOnDocMouseDown = React.useCallback(() => {
-    if (props.readonly) return;
-    setState({
-      ...state,
-      cursorCoordinate: undefined,
-      textAreaValue: '',
-      isComposing: false,
-      textSelection: undefined,
-      selectionMouse: 'deactive',
-      suggestionType: 'none',
-      suggestions: [],
-      suggestionIndex: -1,
-    });
-  }, [props.readonly, state, setState]);
+  const handleOnDocMouseDown = React.useCallback(
+    (event: MouseEvent) => {
+      if (!ref.current || ref.current.contains(event.target as Node)) return;
+      setState({
+        ...state,
+        cursorCoordinate: undefined,
+        textAreaValue: '',
+        isComposing: false,
+        textSelection: undefined,
+        selectionMouse: 'deactive',
+        suggestionType: 'none',
+        suggestions: [],
+        suggestionIndex: -1,
+      });
+    },
+    [ref, state, setState]
+  );
   const handleOnDocMouseMove = React.useCallback(
-    (event: MouseEvent) => createMouseEventHandler(handleOnMouseMove)(event),
+    (event: MouseEvent) => {
+      createMouseEventHandler(handleOnMouseMove)(event);
+    },
     [createMouseEventHandler]
   );
   const handleOnDocMouseUp = React.useCallback(
-    (event: MouseEvent) => createMouseEventHandler(handleOnMouseUp)(event),
+    (event: MouseEvent) => {
+      createMouseEventHandler(handleOnMouseUp)(event);
+    },
     [createMouseEventHandler]
   );
 
-  const handleOnRootMouseUp = React.useCallback(
-    () => rootRef.current?.querySelector('textarea')?.focus({ preventScroll: true }),
-    [rootRef]
-  );
-  const handleOnRootMouseDown = React.useCallback((event: React.MouseEvent) => event.stopPropagation(), []);
+  React.useEffect(() => {
+    document.addEventListener('mousedown', handleOnDocMouseDown);
+    return () => {
+      document.removeEventListener('mousedown', handleOnDocMouseDown);
+    };
+  }, [handleOnDocMouseDown]);
+
+  React.useEffect(() => {
+    document.addEventListener('mousemove', handleOnDocMouseMove);
+    return () => {
+      document.removeEventListener('mousemove', handleOnDocMouseMove);
+    };
+  }, [handleOnDocMouseMove]);
+
+  React.useEffect(() => {
+    document.addEventListener('mouseup', handleOnDocMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleOnDocMouseUp);
+    };
+  }, [handleOnDocMouseUp]);
+
+  const handleOnDocBodyMouseUp = React.useCallback(() => {
+    ref.current?.querySelector('textarea')?.focus({ preventScroll: true });
+    document.removeEventListener('mouseup', handleOnDocBodyMouseUp);
+  }, [ref]);
 
   const handleOnBodyMouseDown = React.useCallback(
-    (event: React.MouseEvent) => createMouseEventHandler(handleOnMouseDown)(event),
-    [createMouseEventHandler]
+    (event: React.MouseEvent) => {
+      createMouseEventHandler(handleOnMouseDown)(event);
+      document.addEventListener('mouseup', handleOnDocBodyMouseUp);
+    },
+    [createMouseEventHandler, handleOnDocBodyMouseUp]
   );
   const handleOnBodyClick = React.useCallback(
-    (event: React.MouseEvent) => createMouseEventHandler(handleOnClick)(event),
+    (event: React.MouseEvent) => {
+      createMouseEventHandler(handleOnClick)(event);
+    },
     [createMouseEventHandler]
   );
 
-  return [
-    { onMouseDown: handleOnDocMouseDown, onMouseMove: handleOnDocMouseMove, onMouseUp: handleOnDocMouseUp },
-    { onMouseDown: handleOnRootMouseDown, onMouseUp: handleOnRootMouseUp },
-    { onMouseDown: handleOnBodyMouseDown, onClick: handleOnBodyClick },
-  ];
+  return { onMouseDown: handleOnBodyMouseDown, onClick: handleOnBodyClick };
 }
 
 export function useCursorEventHandlers(
@@ -193,7 +202,7 @@ export function useCursorEventHandlers(
   };
 }
 
-export function useScrollbyHoldingMouse(
+export function useScroll(
   text: string,
   selectionMouse: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down',
   readonly: boolean | undefined,
