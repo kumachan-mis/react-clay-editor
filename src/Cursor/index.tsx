@@ -1,10 +1,14 @@
 import React from 'react';
 
 import { getEditor } from '../Editor/utils';
-import { createTestId } from '../common/utils';
+import { CursorBar } from '../components/atoms/Cursor/CursorBar';
+import { HiddenTextArea } from '../components/atoms/Cursor/HiddenTextArea';
+import { SuggestionListBody } from '../components/atoms/Cursor/SuggesionListBody';
+import { SuggestionListContainer } from '../components/atoms/Cursor/SuggesionListContainer';
+import { SuggestionListHeader } from '../components/atoms/Cursor/SuggesionListHeader';
+import { SuggestionListItem } from '../components/atoms/Cursor/SuggesionListItem';
 
-import { CursorConstants } from './constants';
-import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
+import { Props, State, SuggestionListProps } from './types';
 import { cursorPropsToState, handleOnEditorScrollOrResize } from './utils';
 
 export const Cursor: React.FC<Props> = (props) => {
@@ -40,9 +44,9 @@ export const Cursor: React.FC<Props> = (props) => {
     <span ref={rootRef}>
       <CursorBar position={state.position} cursorSize={state.cursorSize} />
       <HiddenTextArea
-        textAreaValue={props.textAreaValue}
         position={state.position}
         cursorSize={state.cursorSize}
+        value={props.textAreaValue}
         onKeyDown={props.onKeyDown}
         onChange={props.onTextChange}
         onCompositionStart={props.onTextCompositionStart}
@@ -63,67 +67,30 @@ export const Cursor: React.FC<Props> = (props) => {
   );
 };
 
-const CursorBar: React.FC<CursorBarProps> = (props) => {
-  const { position, cursorSize } = props;
-  return (
-    <div className={CursorConstants.cursorBar.className} style={CursorConstants.cursorBar.style(position, cursorSize)}>
-      <svg width={CursorConstants.svg.width} height={cursorSize}>
-        <rect
-          x={CursorConstants.rect.x}
-          y={CursorConstants.rect.y}
-          width={CursorConstants.rect.width}
-          height={CursorConstants.rect.height}
-        />
-      </svg>
-    </div>
-  );
-};
-
-const HiddenTextArea: React.FC<HiddenTextAreaProps> = (props) => {
-  const constants = CursorConstants.textArea;
-  const { textAreaValue, position, cursorSize, ...handlers } = props;
-  return (
-    <textarea
-      className={constants.className}
-      value={textAreaValue}
-      wrap={constants.wrap}
-      spellCheck={constants.spellCheck}
-      autoCapitalize={constants.autoCapitalize}
-      style={constants.style(position, cursorSize, textAreaValue.length)}
-      {...handlers}
-    />
-  );
-};
-
-const SuggestionList: React.FC<SuggestionListProps> = (props) => {
-  const constants = CursorConstants.suggestion;
-  const { suggestions, suggestionIndex, position, cursorSize } = props;
-
-  if (suggestions.length === 0) return <></>;
-
-  return (
-    <div className={constants.list.className} style={constants.list.style(position, cursorSize)}>
-      <div className={constants.header.className} data-testid={createTestId(constants.header.testId)}>
-        {constants.header.name(props.suggestionType)}
-      </div>
-      <ul
-        className={constants.container.className}
-        data-selectid={constants.container.selectId}
-        data-testid={createTestId(constants.container.testId)}
-      >
+const SuggestionList: React.FC<SuggestionListProps> = ({
+  suggestionType,
+  suggestions,
+  suggestionIndex,
+  position,
+  cursorSize,
+  onSuggectionMouseDown,
+}) =>
+  suggestions.length === 0 ? (
+    <></>
+  ) : (
+    <SuggestionListContainer position={position} cursorSize={cursorSize}>
+      <SuggestionListHeader suggestionType={suggestionType} />
+      <SuggestionListBody>
         {suggestions.map((suggestion, index) => (
-          <li
+          <SuggestionListItem
             key={index}
-            className={constants.item.className}
+            index={index}
             aria-selected={suggestionIndex === index}
-            onMouseDown={(event) => props.onSuggectionMouseDown(event)}
-            data-selectid={constants.item.selectId(index)}
-            data-testid={createTestId(constants.item.testId(index))}
+            onMouseDown={onSuggectionMouseDown}
           >
             {suggestion}
-          </li>
+          </SuggestionListItem>
         ))}
-      </ul>
-    </div>
+      </SuggestionListBody>
+    </SuggestionListContainer>
   );
-};

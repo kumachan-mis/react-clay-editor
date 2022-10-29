@@ -1,7 +1,8 @@
 import { getEditor, getBody } from '../Editor/utils';
 import { getTextCharElementAt } from '../TextLines/utils';
+import { SuggestionListBodyConstants } from '../components/atoms/Cursor/SuggesionListBody';
+import { SuggestionListItemConstants } from '../components/atoms/Cursor/SuggesionListItem';
 
-import { CursorConstants } from './constants';
 import { Props, State, CursorCoordinate } from './types';
 
 export function cursorPropsToState(props: Props, state: State, element: HTMLElement): State {
@@ -13,10 +14,10 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   }
 
   const list = editorElement.querySelector(
-    `ul[data-selectid="${CursorConstants.suggestion.container.selectId}"]`
+    `ul[data-selectid="${SuggestionListBodyConstants.selectId}"]`
   ) as HTMLUListElement | null;
   const listItem = editorElement.querySelector(
-    `li[data-selectid="${CursorConstants.suggestion.item.selectId(props.suggestionIndex)}"]`
+    `li[data-selectid="${SuggestionListItemConstants.selectId(props.suggestionIndex)}"]`
   ) as HTMLLIElement | null;
   if (props.suggestions.length > 0 && list && listItem) {
     if (listItem.offsetTop < list.scrollTop) {
@@ -32,7 +33,7 @@ export function cursorPropsToState(props: Props, state: State, element: HTMLElem
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
-  const [cursorSize, margin] = [charRect.height, CursorConstants.cursorBar.margin];
+  const [cursorSize, margin] = [charRect.height, 4];
   if (props.mouseHold !== 'active-in') {
     if (charRect.top - editorRect.top - margin < 0) {
       editorElement.scrollTop += charRect.top - editorRect.top;

@@ -70,7 +70,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceActive,
 const StyledEmbededLink = styled.a<{ active: boolean }>(
   (props) => `
   text-decoration-line: none;
-  color: #5e8af7;
+  color: ${props.active ? '#425a9d' : '#5e8af7'};
   cursor: text;
   cursor: ${props.active ? 'pointer' : 'text'};
 `

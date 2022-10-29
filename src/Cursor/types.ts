@@ -20,39 +20,16 @@ export interface Props {
   onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
 }
 
-export interface Position {
-  top: number;
-  left: number;
-}
-
 export interface State {
-  position: Position;
+  position: { top: number; left: number };
   cursorSize: number;
-}
-
-export interface CursorBarProps {
-  position: Position;
-  cursorSize: number;
-}
-
-export interface HiddenTextAreaProps {
-  textAreaValue: string;
-  position: Position;
-  cursorSize: number;
-  onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onCompositionStart: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
-  onCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
-  onCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
 }
 
 export interface SuggestionListProps {
   suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
-  position: Position;
+  position: { top: number; left: number };
   cursorSize: number;
   onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
 }
