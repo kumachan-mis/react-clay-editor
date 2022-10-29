@@ -83,7 +83,7 @@ function createEnvVars() {
         TEMPLATE_PATH: path.resolve('tests', 'target', 'index.ejs'),
         OUTPUT_PATH: path.resolve('tests', 'dist'),
         DEVSERVER_PORT: 8082,
-        DEVSERVER_OPEN: true,
+        DEVSERVER_OPEN: false,
       };
     case 'production':
       return {
