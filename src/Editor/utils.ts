@@ -59,10 +59,16 @@ export function useMouseEventHandlers(
   state: State,
   setState: React.Dispatch<React.SetStateAction<State>>,
   ref: React.MutableRefObject<HTMLDivElement | null>
-): {
-  onMouseDown: React.MouseEventHandler<HTMLDivElement>;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
-} {
+): [
+  {
+    onMouseDown: React.MouseEventHandler<HTMLDivElement>;
+    onMouseUp: React.MouseEventHandler<HTMLDivElement>;
+  },
+  {
+    onMouseDown: React.MouseEventHandler<HTMLDivElement>;
+    onClick: React.MouseEventHandler<HTMLDivElement>;
+  }
+] {
   const createMouseEventHandler = React.useCallback(
     <Event extends MouseEvent | React.MouseEvent>(
       handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
@@ -128,26 +134,28 @@ export function useMouseEventHandlers(
     };
   }, [handleOnDocMouseUp]);
 
-  const handleOnDocBodyMouseUp = React.useCallback(() => {
-    ref.current?.querySelector('textarea')?.focus({ preventScroll: true });
-    document.removeEventListener('mouseup', handleOnDocBodyMouseUp);
-  }, [ref]);
+  const handleOnRootMouseUp = React.useCallback(
+    () => ref.current?.querySelector('textarea')?.focus({ preventScroll: true }),
+    [ref]
+  );
+  const handleOnRootMouseDown = React.useCallback(
+    () => document.addEventListener('mouseup', handleOnRootMouseUp),
+    [handleOnRootMouseUp]
+  );
 
   const handleOnBodyMouseDown = React.useCallback(
-    (event: React.MouseEvent) => {
-      createMouseEventHandler(handleOnMouseDown)(event);
-      document.addEventListener('mouseup', handleOnDocBodyMouseUp);
-    },
-    [createMouseEventHandler, handleOnDocBodyMouseUp]
+    (event: React.MouseEvent) => createMouseEventHandler(handleOnMouseDown)(event),
+    [createMouseEventHandler]
   );
   const handleOnBodyClick = React.useCallback(
-    (event: React.MouseEvent) => {
-      createMouseEventHandler(handleOnClick)(event);
-    },
+    (event: React.MouseEvent) => createMouseEventHandler(handleOnClick)(event),
     [createMouseEventHandler]
   );
 
-  return { onMouseDown: handleOnBodyMouseDown, onClick: handleOnBodyClick };
+  return [
+    { onMouseUp: handleOnRootMouseUp, onMouseDown: handleOnRootMouseDown },
+    { onMouseDown: handleOnBodyMouseDown, onClick: handleOnBodyClick },
+  ];
 }
 
 export function useCursorEventHandlers(

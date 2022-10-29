@@ -12,8 +12,8 @@ import { Props } from './types';
 import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScroll } from './utils';
 
 export const Editor: React.FC<Props> = (props) => {
-  const [state, setState, editorRef] = useEditor();
-  const mouseEventHandlers = useMouseEventHandlers(props, state, setState, editorRef);
+  const [state, setState, ref] = useEditor();
+  const [rootMouseEventHandlers, bodyMouseEventHandlers] = useMouseEventHandlers(props, state, setState, ref);
   const cursorEventHandlers = useCursorEventHandlers(props, state, setState);
 
   useScroll(props.text, state.selectionMouse, props.readonly, setState);
@@ -32,6 +32,8 @@ export const Editor: React.FC<Props> = (props) => {
     <div
       className={mergeClassNames(EditorConstants.root.className, props.className)}
       style={props.style}
+      ref={ref}
+      {...rootMouseEventHandlers}
       data-selectid={EditorConstants.root.selectId}
     >
       {!props.hideMenu && (
@@ -56,13 +58,12 @@ export const Editor: React.FC<Props> = (props) => {
       <div
         className={EditorConstants.editor.className}
         style={EditorConstants.editor.style(props.hideMenu)}
-        ref={editorRef}
         data-selectid={EditorConstants.editor.selectId}
         data-testid={createTestId(EditorConstants.editor.testId)}
       >
         <div
           className={EditorConstants.body.className}
-          {...mouseEventHandlers}
+          {...bodyMouseEventHandlers}
           data-selectid={EditorConstants.body.selectId}
           data-testid={createTestId(EditorConstants.body.testId)}
         >
