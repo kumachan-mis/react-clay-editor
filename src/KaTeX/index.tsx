@@ -1,8 +1,6 @@
 import katex, { ParseError } from 'katex';
 import React from 'react';
 
-import { createTestId } from '../common/utils';
-
 import { KaTeXConstants } from './constants';
 import { Props } from './types';
 
@@ -14,11 +12,5 @@ export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options,
       return error instanceof ParseError ? error.message : '';
     }
   }, [children, options]);
-  return (
-    <span
-      {...props}
-      dangerouslySetInnerHTML={{ __html: innerHtml }}
-      data-testid={createTestId(KaTeXConstants.testId)}
-    />
-  );
+  return <span {...props} dangerouslySetInnerHTML={{ __html: innerHtml }} data-selectid={KaTeXConstants.selectId} />;
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { getEditor } from '../Editor/utils';
-import { createTestId } from '../common/utils';
 
 import { CursorConstants } from './constants';
 import { Props, State, CursorBarProps, HiddenTextAreaProps, SuggestionListProps } from './types';
@@ -103,14 +102,10 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
 
   return (
     <div className={constants.list.className} style={constants.list.style(position, cursorSize)}>
-      <div className={constants.header.className} data-testid={createTestId(constants.header.testId)}>
+      <div className={constants.header.className} data-selectid={constants.header.selectId}>
         {constants.header.name(props.suggestionType)}
       </div>
-      <ul
-        className={constants.container.className}
-        data-selectid={constants.container.selectId}
-        data-testid={createTestId(constants.container.testId)}
-      >
+      <ul className={constants.container.className} data-selectid={constants.container.selectId}>
         {suggestions.map((suggestion, index) => (
           <li
             key={index}
@@ -118,7 +113,6 @@ const SuggestionList: React.FC<SuggestionListProps> = (props) => {
             aria-selected={suggestionIndex === index}
             onMouseDown={(event) => props.onSuggectionMouseDown(event)}
             data-selectid={constants.item.selectId(index)}
-            data-testid={createTestId(constants.item.testId(index))}
           >
             {suggestion}
           </li>

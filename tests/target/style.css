@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.target {
+  width: 70%;
+  height: 70%;
+  border: solid 1px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.github {
+  color: #595f6e;
+  border-bottom: solid 1px;
+}
+.github.active {
+  color: #08090b;
+  font-weight: 500;
+}
+
+.npm {
+  color: #f75e8a;
+  border-bottom: solid 1px;
+}
+.npm.active {
+  color: #e14978;
+  font-weight: 500;
+}

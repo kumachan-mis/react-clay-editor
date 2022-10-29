@@ -1,12 +1,11 @@
 name: run-test
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 jobs:
-  test:
+  unittest:
     if: ${{ !startsWith(github.event.pull_request.title, '[WIP]') }}
     runs-on: ubuntu-latest
     strategy:
@@ -20,4 +19,18 @@ jobs:
       - run: yarn install
       - run: yarn typecheck
       - run: yarn lint
+      - run: yarn unittest
+  test:
+    if: ${{ !startsWith(github.event.pull_request.title, '[WIP]') }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.18.0]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install
+      - run: yarn playwright install chromium firefox
       - run: yarn test

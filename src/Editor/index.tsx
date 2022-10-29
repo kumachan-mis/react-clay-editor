@@ -4,7 +4,7 @@ import { Cursor } from '../Cursor';
 import { Selection } from '../Selection';
 import { SyntaxMenu } from '../SyntaxMenu';
 import { TextLines } from '../TextLines';
-import { mergeClassNames, createTestId } from '../common/utils';
+import { mergeClassNames } from '../common/utils';
 import { useParser } from '../parser';
 
 import { EditorConstants } from './constants';
@@ -59,13 +59,11 @@ export const Editor: React.FC<Props> = (props) => {
         className={EditorConstants.editor.className}
         style={EditorConstants.editor.style(props.hideMenu)}
         data-selectid={EditorConstants.editor.selectId}
-        data-testid={createTestId(EditorConstants.editor.testId)}
       >
         <div
           className={EditorConstants.body.className}
           {...bodyMouseEventHandlers}
           data-selectid={EditorConstants.body.selectId}
-          data-testid={createTestId(EditorConstants.body.testId)}
         >
           <Selection textSelection={state.textSelection} />
           <Cursor
