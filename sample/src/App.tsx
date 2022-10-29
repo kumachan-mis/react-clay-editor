@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Editor } from '../../src';
+import { BracketLinkProps, HashtagProps, TaggedLinkProps, TextProps } from '../../src/Editor/types';
 
 import styles from './style.css';
 
@@ -178,69 +179,79 @@ combination of text decorations is not supported yet
 > Genius is one percent inspiration and ninety-nine percent perspiration
 > by Thomas Edison`;
 
+const textProps: TextProps = {
+  header,
+  suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'],
+};
+
+const bracketLinkProps: BracketLinkProps = {
+  anchorProps: (linkName) => ({
+    href: `https://www.npmjs.com/package/${linkName}`,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  }),
+  suggestions: ['react-realtime-markup-editor'],
+};
+
+const hashtagProps: HashtagProps = {
+  anchorProps: (hashtagName) => ({
+    href: `https://www.npmjs.com/package/${hashtagName}`,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  }),
+  suggestions: ['react-realtime-markup-editor'],
+};
+
+const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
+  npm: {
+    label: 'package',
+    anchorProps: (linkName, active) => ({
+      className: active ? `${styles.npm} ${styles.active}` : styles.npm,
+      href: `https://www.npmjs.com/package/${linkName}`,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    }),
+    suggestions: ['react-realtime-markup-editor'],
+  },
+  github: {
+    linkNameRegex: /@[^[\]]+\/[^[\]]+/,
+    label: '@user/repository',
+    anchorProps: (linkName, active) => ({
+      className: active ? `${styles.github} ${styles.active}` : styles.github,
+      href: `https://github.com/${linkName.substring(1)}`,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    }),
+    suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
+  },
+};
+
 export const App: React.FC = () => {
   const [bracketText, setBracketText] = React.useState(defaultBracketText);
   const [markdownText, setMarkdownText] = React.useState(defaultMarkdownText);
 
   return (
     <>
-      {(
-        [
-          [bracketText, setBracketText, 'bracket'],
-          [markdownText, setMarkdownText, 'markdown'],
-        ] as [string, React.Dispatch<React.SetStateAction<string>>, 'bracket' | 'markdown'][]
-      ).map(([text, setText, syntax]) => (
-        <Editor
-          key={syntax}
-          text={text}
-          onChangeText={setText}
-          syntax={syntax}
-          textProps={{
-            header,
-            suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'],
-          }}
-          bracketLinkProps={{
-            anchorProps: (linkName) => ({
-              href: `https://www.npmjs.com/package/${linkName}`,
-              target: '_blank',
-              rel: 'noopener noreferrer',
-            }),
-            suggestions: ['react-realtime-markup-editor'],
-          }}
-          hashtagProps={{
-            anchorProps: (hashtagName) => ({
-              href: `https://www.npmjs.com/package/${hashtagName}`,
-              target: '_blank',
-              rel: 'noopener noreferrer',
-            }),
-            suggestions: ['react-realtime-markup-editor'],
-          }}
-          taggedLinkPropsMap={{
-            npm: {
-              label: 'package',
-              anchorProps: (linkName, active) => ({
-                className: active ? `${styles.npm} ${styles.active}` : styles.npm,
-                href: `https://www.npmjs.com/package/${linkName}`,
-                target: '_blank',
-                rel: 'noopener noreferrer',
-              }),
-              suggestions: ['react-realtime-markup-editor'],
-            },
-            github: {
-              linkNameRegex: /@[^[\]]+\/[^[\]]+/,
-              label: '@user/repository',
-              anchorProps: (linkName, active) => ({
-                className: active ? `${styles.github} ${styles.active}` : styles.github,
-                href: `https://github.com/${linkName.substring(1)}`,
-                target: '_blank',
-                rel: 'noopener noreferrer',
-              }),
-              suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
-            },
-          }}
-          className={styles.sample}
-        />
-      ))}
+      <Editor
+        text={bracketText}
+        onChangeText={setBracketText}
+        syntax="bracket"
+        textProps={textProps}
+        bracketLinkProps={bracketLinkProps}
+        hashtagProps={hashtagProps}
+        taggedLinkPropsMap={taggedLinkPropsMap}
+        className={styles.sample}
+      />
+      <Editor
+        text={markdownText}
+        onChangeText={setMarkdownText}
+        syntax="markdown"
+        textProps={textProps}
+        bracketLinkProps={bracketLinkProps}
+        hashtagProps={hashtagProps}
+        taggedLinkPropsMap={taggedLinkPropsMap}
+        className={styles.sample}
+      />
     </>
   );
 };

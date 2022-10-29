@@ -1,6 +1,6 @@
 .sample {
-  width: calc(48vw - 30px);
-  height: calc(96vh - 30px);
+  width: calc(50% - 32px);
+  height: calc(100% - 32px);
   margin: 10px;
   border: solid 1px;
   padding: 5px;
