@@ -62,7 +62,7 @@ export class SpyOnGetBoundingClientRect {
   }
 
   charGroup(lineIndex: number, firstCharIndex: number, lastCharIndex: number): jest.SpyInstance<DOMRect, []> {
-    const element = this.screen.getByTestId(`char-group-L${lineIndex}C${firstCharIndex}-${lastCharIndex}`);
+    const element = this.screen.getByTestId(`chargroup-L${lineIndex}C${firstCharIndex}-${lastCharIndex}`);
     const [width, height] = [this.config.size * (lastCharIndex - firstCharIndex + 1), this.config.size];
     const [x, y] = [
       this.config.size * firstCharIndex,
@@ -79,7 +79,7 @@ export class SpyOnGetBoundingClientRect {
   }
 
   lineGroup(firstLineIndex: number, lastLineIndex: number): jest.SpyInstance<DOMRect, []> {
-    const element = this.screen.getByTestId(`line-group-L${firstLineIndex}-${lastLineIndex}`);
+    const element = this.screen.getByTestId(`linegroup-L${firstLineIndex}-${lastLineIndex}`);
     const [width, height] = [
       this.config.size * this.config.chars,
       (this.config.size + 2 * this.config.margin) * (lastLineIndex - firstLineIndex + 1),

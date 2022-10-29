@@ -5,14 +5,13 @@ import { getRoot } from '../Editor/utils';
 import { TextSelection } from '../Selection/types';
 import { selectionToRange } from '../Selection/utils';
 import { isMacOS } from '../common/utils';
+import { CharConstants } from '../components/atoms/TextLines/Char';
 import { Node } from '../parser/types';
-
-import { ComponentConstants } from './components/constants';
 
 export function getTextCharElementAt(lineIndex: number, charIndex: number, element: HTMLElement): HTMLElement | null {
   let rootElement = getRoot(element);
   if (!rootElement) rootElement = element;
-  return rootElement.querySelector(`span[data-selectid="${ComponentConstants.char.selectId(lineIndex, charIndex)}"]`);
+  return rootElement.querySelector(`span[data-selectid="${CharConstants.selectId(lineIndex, charIndex)}"]`);
 }
 
 export function useLinkForceActive(): boolean {

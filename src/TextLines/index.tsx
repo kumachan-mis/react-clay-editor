@@ -2,6 +2,18 @@ import React from 'react';
 
 import { KaTeX } from '../KaTeX';
 import { mergeClassNames } from '../common/utils';
+import { Char } from '../components/atoms/TextLines/Char';
+import { CharGroup } from '../components/atoms/TextLines/CharGroup';
+import { EmbededLink } from '../components/atoms/TextLines/EmbededLink';
+import { Header } from '../components/atoms/TextLines/Header';
+import { ItemBullet } from '../components/atoms/TextLines/ItemBullet';
+import { ItemBulletContent } from '../components/atoms/TextLines/ItemBulletContent';
+import { Line } from '../components/atoms/TextLines/Line';
+import { LineContent } from '../components/atoms/TextLines/LineContent';
+import { LineGroup } from '../components/atoms/TextLines/LineGroup';
+import { LineGroupContent } from '../components/atoms/TextLines/LineGroupContent';
+import { LineGroupIndent } from '../components/atoms/TextLines/LineGroupIndent';
+import { LineIndent } from '../components/atoms/TextLines/LineIndent';
 import {
   BlockCodeLineNode,
   BlockCodeMetaNode,
@@ -23,20 +35,6 @@ import {
 } from '../parser/types';
 import { getHashtagName, splitTag, getTagName } from '../parser/utils';
 
-import {
-  Header,
-  LineGroup,
-  LineGroupIndent,
-  LineGroupContent,
-  Line,
-  LineIndent,
-  LineContent,
-  CharGroup,
-  Char,
-  ItemBullet,
-  ItemBulletContent,
-  EmbededLink,
-} from './components';
 import { TextLinesConstants } from './constants';
 import { Props, NodeProps } from './types';
 import { cursorOnNode, useLinkForceActive } from './utils';
