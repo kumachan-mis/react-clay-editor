@@ -1,4 +1,4 @@
-import test from '@playwright/test';
+import test, { expect } from '@playwright/test';
 
 import { linesToBe } from './testUtils';
 
@@ -16,5 +16,5 @@ test('selectAll (Command+A)', async ({ page }) => {
 
   await page.keyboard.type('.');
 
-  await linesToBe(page, ['.']);
+  expect(await page.locator('[data-selectid=editor-body]').inputValue()).toBe('.');
 });
