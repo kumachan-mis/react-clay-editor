@@ -9,7 +9,12 @@ test.beforeEach(async ({ page }) => {
 
 test('selectAll (Command+A)', async ({ page }) => {
   await page.keyboard.insertText(['1234567890', 'abcdefghijklm', 'nopqrstuvwxyz'].join('\n'));
-  await page.keyboard.press('Meta+KeyA');
+
+  await page.keyboard.down('Meta');
+  await page.keyboard.press('KeyA');
+  await page.keyboard.up('Meta');
+
   await page.keyboard.type('.');
+
   await linesToBe(page, ['.']);
 });
