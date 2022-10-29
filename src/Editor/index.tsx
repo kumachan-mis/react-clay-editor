@@ -9,35 +9,14 @@ import { useParser } from '../parser';
 
 import { EditorConstants } from './constants';
 import { Props } from './types';
-import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScrollbyHoldingMouse } from './utils';
+import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScroll } from './utils';
 
 export const Editor: React.FC<Props> = (props) => {
-  const [state, setState, rootRef, editorRef] = useEditor();
-  const [docHandlers, rootHandlers, editorHandlers] = useMouseEventHandlers(props, state, setState, rootRef, editorRef);
+  const [state, setState, ref] = useEditor();
+  const [rootMouseEventHandlers, bodyMouseEventHandlers] = useMouseEventHandlers(props, state, setState, ref);
   const cursorEventHandlers = useCursorEventHandlers(props, state, setState);
 
-  useScrollbyHoldingMouse(props.text, state.selectionMouse, props.readonly, setState);
-
-  React.useEffect(() => {
-    document.addEventListener('mousedown', docHandlers.onMouseDown);
-    return () => {
-      document.removeEventListener('mousedown', docHandlers.onMouseDown);
-    };
-  }, [docHandlers.onMouseDown]);
-
-  React.useEffect(() => {
-    document.addEventListener('mousemove', docHandlers.onMouseMove);
-    return () => {
-      document.removeEventListener('mousemove', docHandlers.onMouseMove);
-    };
-  }, [docHandlers.onMouseMove]);
-
-  React.useEffect(() => {
-    document.addEventListener('mouseup', docHandlers.onMouseUp);
-    return () => {
-      document.removeEventListener('mouseup', docHandlers.onMouseUp);
-    };
-  }, [docHandlers.onMouseUp]);
+  useScroll(props.text, state.selectionMouse, props.readonly, setState);
 
   const nodes = useParser(
     props.text,
@@ -53,9 +32,9 @@ export const Editor: React.FC<Props> = (props) => {
     <div
       className={mergeClassNames(EditorConstants.root.className, props.className)}
       style={props.style}
-      ref={rootRef}
+      ref={ref}
+      {...rootMouseEventHandlers}
       data-selectid={EditorConstants.root.selectId}
-      {...rootHandlers}
     >
       {!props.hideMenu && (
         <SyntaxMenu
@@ -79,13 +58,12 @@ export const Editor: React.FC<Props> = (props) => {
       <div
         className={EditorConstants.editor.className}
         style={EditorConstants.editor.style(props.hideMenu)}
-        ref={editorRef}
         data-selectid={EditorConstants.editor.selectId}
         data-testid={createTestId(EditorConstants.editor.testId)}
       >
         <div
           className={EditorConstants.body.className}
-          {...editorHandlers}
+          {...bodyMouseEventHandlers}
           data-selectid={EditorConstants.body.selectId}
           data-testid={createTestId(EditorConstants.body.testId)}
         >

@@ -14,3 +14,23 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@<%= katexVersion %>/dist/katex<%= mode == 'production' ? '.min' : '' %>.js" crossorigin="anonymous"></script>
   </body>
 </html>
+
+<style>
+  @media screen {
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #app {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  }
+</style>
+  
