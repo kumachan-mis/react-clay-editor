@@ -1,13 +1,13 @@
-import { CursorCoordinate } from '../../Cursor/types';
-import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../../Cursor/utils';
-import { TextSelection } from '../../Selection/types';
-import { selectionToRange } from '../../Selection/utils';
 import { getTextCharElementAt } from '../../TextLines/utils';
 import { CharConstants } from '../../components/atoms/Char';
 import { CharGroupConstants } from '../../components/atoms/CharGroup';
 import { HeaderConstants } from '../../components/atoms/Header';
 import { LineConstants } from '../../components/atoms/Line';
 import { LineGroupConstants } from '../../components/atoms/LineGroup';
+import { CursorCoordinate } from '../../components/molecules/Cursor/types';
+import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '../../components/molecules/Cursor/utils';
+import { TextSelection } from '../../components/molecules/Selection/types';
+import { selectionToRange } from '../../components/molecules/Selection/utils';
 import { EditorConstants } from '../constants';
 import { Props, State, EditAction } from '../types';
 

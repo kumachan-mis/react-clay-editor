@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { CursorCoordinate } from '../Cursor/types';
-import { TextSelection } from '../Selection/types';
+import { CursorCoordinate } from '../components/molecules/Cursor/types';
+import { TextSelection } from '../components/molecules/Selection/types';
 import { BlockNode, ContentNode, LineNode } from '../parser/types';
 import { isBlockNode, isPureLineNode } from '../parser/utils';
 

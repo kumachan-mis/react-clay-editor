@@ -1,12 +1,18 @@
-import katex, { ParseError } from 'katex';
+import katex, { KatexOptions, ParseError } from 'katex';
 import React from 'react';
 
-import { createTestId } from '../common/utils';
+import { createTestId } from '../../../common/utils';
 
-import { KaTeXConstants } from './constants';
-import { Props } from './types';
+export type KaTeXProps = {
+  options?: KatexOptions;
+} & React.ComponentProps<'span'>;
 
-export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options, children, ...props }) => {
+export const KaTeXConstants = {
+  selectId: 'katex',
+  testId: 'katex',
+};
+
+export const KaTeX: React.FC<KaTeXProps> = ({ options, children, ...rest }) => {
   const innerHtml = React.useMemo(() => {
     try {
       return katex.renderToString(children as string, options);
@@ -16,8 +22,9 @@ export const KaTeX: React.FC<Props & React.ComponentProps<'span'>> = ({ options,
   }, [children, options]);
   return (
     <span
-      {...props}
       dangerouslySetInnerHTML={{ __html: innerHtml }}
+      {...rest}
+      data-selectid={KaTeXConstants.selectId}
       data-testid={createTestId(KaTeXConstants.testId)}
     />
   );

@@ -1,6 +1,6 @@
 import { State } from '../../Editor/types';
-import { TextSelection } from '../../Selection/types';
-import { copySelection } from '../../Selection/utils';
+import { TextSelection } from '../../components/molecules/Selection/types';
+import { copySelection } from '../../components/molecules/Selection/utils';
 import { DecorationNode, LineNode } from '../../parser/types';
 import {
   insertContentAtCursor,

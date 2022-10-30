@@ -1,4 +1,4 @@
-import { getWordSelection } from '../src/Selection/utils';
+import { getWordSelection } from '../src/components/molecules/Selection/utils';
 
 import { TestCase, testCases } from './getWordSelection.testcase';
 

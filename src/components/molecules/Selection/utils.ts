@@ -1,62 +1,8 @@
+import { parserConstants } from '../../../parser/constants';
 import { CursorCoordinate } from '../Cursor/types';
 import { cursorCoordinateToTextIndex } from '../Cursor/utils';
-import { getBody } from '../Editor/utils';
-import { getTextCharElementAt } from '../TextLines/utils';
-import { parserConstants } from '../parser/constants';
 
-import { Props, State, TextSelection, TextRange } from './types';
-
-export function selectionPropsToState(props: Props, element: HTMLElement): State {
-  const bodyRect = getBody(element)?.getBoundingClientRect();
-  if (!props.textSelection || !bodyRect) {
-    return { topRectProps: undefined, centerRectProps: undefined, bottomRectProps: undefined };
-  }
-
-  const { start, end } = selectionToRange(props.textSelection);
-  const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
-  const endElement = getTextCharElementAt(end.lineIndex, end.charIndex, element);
-  const startRect = startElement?.getBoundingClientRect();
-  const endRect = endElement?.getBoundingClientRect();
-
-  if (!startRect || !endRect) {
-    return { topRectProps: undefined, centerRectProps: undefined, bottomRectProps: undefined };
-  }
-
-  const startRectCenter = startRect.bottom - (startRect.bottom - startRect.top) / 2;
-  const endRectCenter = endRect.bottom - (endRect.bottom - endRect.top) / 2;
-  if (
-    (startRect.top <= endRectCenter && endRectCenter <= startRect.bottom) ||
-    (endRect.top <= startRectCenter && startRectCenter <= endRect.bottom)
-  ) {
-    const centerRectProps = {
-      top: Math.min(startRect.top, endRect.top) - bodyRect.top,
-      left: startRect.left - bodyRect.left,
-      width: endRect.left - startRect.left,
-      height: Math.max(startRect.bottom, endRect.bottom) - Math.min(startRect.top, endRect.top),
-    };
-    return { topRectProps: undefined, centerRectProps, bottomRectProps: undefined };
-  }
-
-  const topRectProps = {
-    top: startRect.top - bodyRect.top,
-    left: startRect.left - bodyRect.left,
-    width: bodyRect.right - startRect.left,
-    height: startRect.height,
-  };
-  const centerRectProps = {
-    top: startRect.bottom - bodyRect.top,
-    left: 0,
-    width: bodyRect.width,
-    height: endRect.top - startRect.bottom,
-  };
-  const bottomRectProps = {
-    top: endRect.top - bodyRect.top,
-    left: 0,
-    width: endRect.left - bodyRect.left,
-    height: endRect.height,
-  };
-  return { topRectProps, centerRectProps, bottomRectProps };
-}
+import { TextSelection, TextRange } from './types';
 
 export function getWordSelection(
   text: string,

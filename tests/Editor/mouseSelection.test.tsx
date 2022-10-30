@@ -3,9 +3,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
 import * as utils from '../../src/Editor/callbacks/utils';
-import * as selection from '../../src/Selection';
-import { TextSelection } from '../../src/Selection/types';
-import { getSelectionText } from '../../src/Selection/utils';
+import * as selection from '../../src/components/molecules/Selection';
+import { TextSelection } from '../../src/components/molecules/Selection/types';
+import { getSelectionText } from '../../src/components/molecules/Selection/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
 

@@ -1,5 +1,5 @@
-import { moveCursor, cursorCoordinateToTextIndex } from '../../Cursor/utils';
-import { getSelectionText } from '../../Selection/utils';
+import { moveCursor, cursorCoordinateToTextIndex } from '../../components/molecules/Cursor/utils';
+import { getSelectionText } from '../../components/molecules/Selection/utils';
 import { parserConstants } from '../../parser/constants';
 import { State, ShortcutCommand } from '../types';
 

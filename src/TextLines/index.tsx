@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { KaTeX } from '../KaTeX';
 import { mergeClassNames } from '../common/utils';
 import { Char } from '../components/atoms/Char';
 import { CharGroup } from '../components/atoms/CharGroup';
@@ -14,6 +13,7 @@ import { LineGroup } from '../components/atoms/LineGroup';
 import { LineGroupContent } from '../components/atoms/LineGroupContent';
 import { LineGroupIndent } from '../components/atoms/LineGroupIndent';
 import { LineIndent } from '../components/atoms/LineIndent';
+import { KaTeX } from '../components/molecules/KaTeX';
 import {
   BlockCodeLineNode,
   BlockCodeMetaNode,

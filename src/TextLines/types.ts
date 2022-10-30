@@ -1,5 +1,3 @@
-import { CursorCoordinate } from '../Cursor/types';
-import { TextSelection } from '../Selection/types';
 import {
   TextVisual,
   BracketLinkVisual,
@@ -8,6 +6,8 @@ import {
   CodeVisual,
   FormulaVisual,
 } from '../common/types';
+import { CursorCoordinate } from '../components/molecules/Cursor/types';
+import { TextSelection } from '../components/molecules/Selection/types';
 import { Node } from '../parser/types';
 
 export interface Props {

@@ -34,7 +34,7 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
   children,
   ...rest
 }) => {
-  const arrowRef = React.useRef<HTMLButtonElement | null>(null);
+  const arrowRef = React.useRef<HTMLButtonElement>(null);
 
   const handleOnArrowClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => (open ? onClose() : onOpen(event.currentTarget)),

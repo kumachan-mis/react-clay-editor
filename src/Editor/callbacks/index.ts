@@ -1,6 +1,6 @@
-import { coordinatesAreEqual } from '../../Cursor/utils';
-import { getWordSelection, getLineSelection, getSelectionText } from '../../Selection/utils';
 import { isMacOS } from '../../common/utils';
+import { coordinatesAreEqual } from '../../components/molecules/Cursor/utils';
+import { getWordSelection, getLineSelection, getSelectionText } from '../../components/molecules/Selection/utils';
 import { parserConstants } from '../../parser/constants';
 import { Props, State } from '../types';
 

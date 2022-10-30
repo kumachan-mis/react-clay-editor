@@ -1,5 +1,5 @@
-import { coordinatesAreEqual } from '../../Cursor/utils';
-import { TextSelection } from '../../Selection/types';
+import { coordinatesAreEqual } from '../../components/molecules/Cursor/utils';
+import { TextSelection } from '../../components/molecules/Selection/types';
 import { ContentPosition, ContentPositionEndPoint } from '../types';
 
 export function undefinedIfZeroSelection(textSelection: TextSelection | undefined): TextSelection | undefined {

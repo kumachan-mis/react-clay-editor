@@ -1,5 +1,5 @@
+import { SelectionRectProps } from '../../atoms/SelectionRect';
 import { CursorCoordinate } from '../Cursor/types';
-import { SelectionRectProps } from '../components/atoms/SelectionRect';
 
 export interface TextSelection {
   fixed: CursorCoordinate;

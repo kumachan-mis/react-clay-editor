@@ -1,4 +1,4 @@
-import { TextSelection } from '../src/Selection/types';
+import { TextSelection } from '../src/components/molecules/Selection/types';
 
 export interface TestCase {
   name: string;
