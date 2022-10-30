@@ -29,7 +29,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["React Realtime Markup Editor"],
       "expectedLinesAfterMenu": ["## larger"],
@@ -56,7 +56,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "normal-section-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -84,7 +84,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "larger-section-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -112,7 +112,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "largest-section-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -140,7 +140,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["## WYSIWYG Editor"],
@@ -167,7 +167,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "normal-section-menu-item"
       },
       "inputTyping": ["."],
@@ -202,7 +202,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "larger-section-menu-item"
       },
       "inputTyping": ["."],
@@ -230,7 +230,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["## `WYSIWYG` Editor"],
@@ -264,7 +264,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "largest-section-menu-item"
       },
       "inputTyping": ["."],
@@ -292,7 +292,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["WYSIWYG Editor"],
@@ -319,7 +319,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "normal-section-menu-item"
       },
       "inputTyping": ["."],
@@ -347,7 +347,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$f(x)$"],
@@ -381,7 +381,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "largest-section-menu-item"
       },
       "inputTyping": ["g"],
@@ -416,7 +416,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["WYSIWYG Editor"],
@@ -443,7 +443,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "normal-section-menu-item"
       },
       "inputTyping": ["."],
@@ -471,7 +471,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> ## Markup Editor"],
@@ -498,7 +498,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["- ## Markup Editor"],
@@ -525,7 +525,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["```", "### block code", "```"],
@@ -559,7 +559,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["```", "### block code", "```"],
@@ -593,7 +593,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [
@@ -631,7 +631,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["Editor", ""],
@@ -658,7 +658,7 @@
       ],
       "inputMenu": {
         "name": "section-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": ["## larger"],

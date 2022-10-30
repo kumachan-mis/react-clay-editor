@@ -36,7 +36,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["f(x{arrowright}g(y{arrowright}"],
       "expectedLinesAfterMenu": ["$inline formula$"],
@@ -63,7 +63,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["f(x{arrowright}g(y{arrowright}"],
@@ -91,7 +91,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -119,7 +119,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -147,7 +147,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -175,7 +175,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["f(x)"],
@@ -202,7 +202,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["g(y{arrowright}"],
       "expectedLinesAfterMenu": ["normal te$inline formula$xt"],
@@ -229,7 +229,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["h(t{arrowright}"],
@@ -257,7 +257,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["g(y{arrowright}"],
@@ -285,7 +285,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["h(t{arrowright}"],
@@ -313,7 +313,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["g(y{arrowright}"],
@@ -341,7 +341,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["f(x{arrowright}"],
       "expectedLinesAfterMenu": ["normal text$inline formula$$$g(y)$$"],
@@ -368,7 +368,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -396,7 +396,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -431,7 +431,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["formula string"],
@@ -465,7 +465,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -500,7 +500,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["formula string"],
@@ -534,7 +534,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -569,7 +569,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$\\sum_${i = 0}^${n-1} a_ib_i$"],
@@ -603,7 +603,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -638,7 +638,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$left formula$mi$d normal$ text$right formula$"],
@@ -672,7 +672,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -707,7 +707,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "display-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -742,7 +742,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -777,7 +777,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -805,7 +805,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["\\int f(x{arrowright}g(x{arrowright} dx"],
@@ -833,7 +833,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [""],
@@ -860,7 +860,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -888,7 +888,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["f(x)g(y)", "\\lim_{z \\to 0} h(z)"],
@@ -915,7 +915,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["  f(x)g(y)", "  $$", "  r(x)\\theta(y)", "  $$"],
@@ -942,7 +942,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -970,7 +970,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -998,7 +998,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1026,7 +1026,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1054,7 +1054,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1082,7 +1082,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1117,7 +1117,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1152,7 +1152,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [" x = \\cos \\theta;", " y = \\sin \\theta"],
@@ -1186,7 +1186,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1221,7 +1221,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1256,7 +1256,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1291,7 +1291,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [" $$", " x = \\cos \\theta", " $$", " y = \\sin \\theta"],
@@ -1325,7 +1325,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1360,7 +1360,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1395,7 +1395,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-formula-menu-item"
       },
       "inputTyping": ["."],
@@ -1430,7 +1430,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "f(x)g(x)", "$$", "normal text", "normal text"],
@@ -1464,7 +1464,7 @@
       ],
       "inputMenu": {
         "name": "formula-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "x = \\cos \\theta", "$$", "$$", "y = \\sin \\theta"],

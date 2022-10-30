@@ -52,7 +52,7 @@ export const Editor: React.FC<Props> = (props) => {
           taggedLink={props.taggedLinkPropsMap}
           code={props.codeProps}
           formula={props.formulaProps}
-          containerProps={{ className: EditorConstants.syntaxMenu.className }}
+          listProps={{ className: EditorConstants.syntaxMenu.className }}
         />
       )}
       <div

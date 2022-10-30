@@ -22,7 +22,7 @@ interface TestCase extends BaseTestCase {
   }[];
   inputMenu: {
     name: string;
-    menuButton: 'icon-button' | 'dropdown-anchor-button' | 'dropdown-anchor-arrow';
+    menuButton: 'icon-button' | 'dropdown-main-button' | 'dropdown-arrow-button';
     menuItemName?: string;
   };
   inputTyping: string[];
@@ -101,10 +101,10 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
       case 'icon-button':
         userEvent.click(menu);
         break;
-      case 'dropdown-anchor-button':
+      case 'dropdown-main-button':
         userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuButton));
         break;
-      case 'dropdown-anchor-arrow': {
+      case 'dropdown-arrow-button': {
         userEvent.click(within(menu).getByTestId(testCase.inputMenu.menuButton));
         if (testCase.inputMenu.menuItemName) {
           const menuList = screen.getByTestId('dropdown-menu-list');

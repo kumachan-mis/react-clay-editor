@@ -36,7 +36,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["React Realtime Markup Editor"],
       "expectedLinesAfterMenu": ["`inline code`"],
@@ -63,7 +63,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -91,7 +91,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["const x = 1;"],
       "expectedLinesAfterMenu": ["normal te`inline code`xt"],
@@ -118,7 +118,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": [" const y = 2;"],
@@ -146,7 +146,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["const z = 3; "],
       "expectedLinesAfterMenu": ["normal text`inline code``const a = 0;`"],
@@ -173,7 +173,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -201,7 +201,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -236,7 +236,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["import 'react'"],
@@ -270,7 +270,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -305,7 +305,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["import 'react'"],
@@ -339,7 +339,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -374,7 +374,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["`im`port 'r`eact'`"],
@@ -408,7 +408,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -443,7 +443,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["`left code`mid n`ormal te`xt`right code`"],
@@ -477,7 +477,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -512,7 +512,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["`left code`mid norma`l text``right code`"],
@@ -546,7 +546,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -581,7 +581,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "inline-code-menu-item"
       },
       "inputTyping": ["."],
@@ -609,7 +609,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -637,7 +637,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [""],
@@ -664,7 +664,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -692,7 +692,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["const a = 1;", "const b = 2;"],
@@ -719,7 +719,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["  const a = 1;", "  ```", "  const b = 2;", "  ```"],
@@ -746,7 +746,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -774,7 +774,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["  ```", "  const a = 1;", "  ```", "  const b = 2;"],
@@ -801,7 +801,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -829,7 +829,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -857,7 +857,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -885,7 +885,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -920,7 +920,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["const a = 1;", "const b = 2;"],
@@ -954,7 +954,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -989,7 +989,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -1024,7 +1024,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -1059,7 +1059,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -1094,7 +1094,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [" ```", " const a = 1;", " ```", " const b = 2;"],
@@ -1128,7 +1128,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -1163,7 +1163,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -1198,7 +1198,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "block-code-menu-item"
       },
       "inputTyping": ["."],
@@ -1233,7 +1233,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["```", "const a = 1;", "```", "normal text", "normal text"],
@@ -1267,7 +1267,7 @@
       ],
       "inputMenu": {
         "name": "code-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["```", "const a = 1;", "```", "```", "const b = 2;"],

@@ -14,6 +14,7 @@ import {
   FormulaParsing,
   Suggestion,
 } from '../common/types';
+import { MenuListProps } from '../components/atoms/MenuList';
 import { BlockNode, LineNode } from '../parser/types';
 
 export interface SyntaxMenuProps {
@@ -30,7 +31,7 @@ export interface SyntaxMenuProps {
   code?: CodeMenuProps;
   formula?: FormulaMenuProps;
   quotation?: QuotationMenuProps;
-  containerProps?: Omit<React.ComponentProps<'div'>, 'ref'>;
+  listProps?: MenuListProps;
 }
 
 export type SectionMenuProps = TextLabels;
