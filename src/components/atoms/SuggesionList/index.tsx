@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-export type SuggestionListContainerProps = {
+export type SuggestionListProps = {
   position: { top: number; left: number };
   cursorSize: number;
 } & React.ComponentProps<'div'>;
 
-export const SuggestionListContainer: React.FC<SuggestionListContainerProps> = ({ position, cursorSize, ...rest }) => (
-  <StyledSuggestionListContainer position={position} cursorSize={cursorSize} {...rest} />
+export const SuggestionList: React.FC<SuggestionListProps> = ({ position, cursorSize, ...rest }) => (
+  <StyledSuggestionList position={position} cursorSize={cursorSize} {...rest} />
 );
 
-const StyledSuggestionListContainer = styled.div<{
+const StyledSuggestionList = styled.div<{
   position: { top: number; left: number };
   cursorSize: number;
 }>(

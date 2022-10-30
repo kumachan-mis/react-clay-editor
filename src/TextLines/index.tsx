@@ -2,18 +2,18 @@ import React from 'react';
 
 import { KaTeX } from '../KaTeX';
 import { mergeClassNames } from '../common/utils';
-import { Char } from '../components/atoms/TextLines/Char';
-import { CharGroup } from '../components/atoms/TextLines/CharGroup';
-import { EmbededLink } from '../components/atoms/TextLines/EmbededLink';
-import { Header } from '../components/atoms/TextLines/Header';
-import { ItemBullet } from '../components/atoms/TextLines/ItemBullet';
-import { ItemBulletContent } from '../components/atoms/TextLines/ItemBulletContent';
-import { Line } from '../components/atoms/TextLines/Line';
-import { LineContent } from '../components/atoms/TextLines/LineContent';
-import { LineGroup } from '../components/atoms/TextLines/LineGroup';
-import { LineGroupContent } from '../components/atoms/TextLines/LineGroupContent';
-import { LineGroupIndent } from '../components/atoms/TextLines/LineGroupIndent';
-import { LineIndent } from '../components/atoms/TextLines/LineIndent';
+import { Char } from '../components/atoms/Char';
+import { CharGroup } from '../components/atoms/CharGroup';
+import { EmbededLink } from '../components/atoms/EmbededLink';
+import { Header } from '../components/atoms/Header';
+import { ItemBullet } from '../components/atoms/ItemBullet';
+import { ItemBulletContent } from '../components/atoms/ItemBulletContent';
+import { Line } from '../components/atoms/Line';
+import { LineContent } from '../components/atoms/LineContent';
+import { LineGroup } from '../components/atoms/LineGroup';
+import { LineGroupContent } from '../components/atoms/LineGroupContent';
+import { LineGroupIndent } from '../components/atoms/LineGroupIndent';
+import { LineIndent } from '../components/atoms/LineIndent';
 import {
   BlockCodeLineNode,
   BlockCodeMetaNode,

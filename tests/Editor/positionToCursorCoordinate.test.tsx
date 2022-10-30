@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { positionToCursorCoordinate } from '../../src/Editor/callbacks/utils';
-import { CharConstants } from '../../src/components/atoms/TextLines/Char';
-import { CharGroupConstants } from '../../src/components/atoms/TextLines/CharGroup';
-import { LineConstants } from '../../src/components/atoms/TextLines/Line';
-import { LineGroupConstants } from '../../src/components/atoms/TextLines/LineGroup';
+import { CharConstants } from '../../src/components/atoms/Char';
+import { CharGroupConstants } from '../../src/components/atoms/CharGroup';
+import { LineConstants } from '../../src/components/atoms/Line';
+import { LineGroupConstants } from '../../src/components/atoms/LineGroup';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import {
   MockEditor,

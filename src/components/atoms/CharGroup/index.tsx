@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
+import { createTestId } from '../../../common/utils';
 
 export type CharGroupProps = {
   lineIndex: number;

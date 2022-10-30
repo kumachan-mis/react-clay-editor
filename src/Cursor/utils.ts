@@ -1,7 +1,7 @@
 import { getEditor, getBody } from '../Editor/utils';
 import { getTextCharElementAt } from '../TextLines/utils';
-import { SuggestionListBodyConstants } from '../components/atoms/Cursor/SuggesionListBody';
-import { SuggestionListItemConstants } from '../components/atoms/Cursor/SuggesionListItem';
+import { SuggestionListBodyConstants } from '../components/atoms/SuggesionListBody';
+import { SuggestionListItemConstants } from '../components/atoms/SuggesionListItem';
 
 import { Props, State, CursorCoordinate } from './types';
 

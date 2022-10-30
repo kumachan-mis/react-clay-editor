@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-export type HiddenTextAreaProps = {
+export type CursorTextAreaProps = {
   position: { top: number; left: number };
   cursorSize: number;
 } & React.ComponentProps<'textarea'>;
 
-export const HiddenTextArea: React.FC<HiddenTextAreaProps> = ({ position, cursorSize, ...rest }) => (
-  <StyledHiddenTextArea
+export const CursorTextArea: React.FC<CursorTextAreaProps> = ({ position, cursorSize, ...rest }) => (
+  <StyledCursorTextArea
     position={position}
     cursorSize={cursorSize}
     wrap="off"
@@ -17,7 +17,7 @@ export const HiddenTextArea: React.FC<HiddenTextAreaProps> = ({ position, cursor
   />
 );
 
-const StyledHiddenTextArea = styled.textarea<{
+const StyledCursorTextArea = styled.textarea<{
   position: { top: number; left: number };
   cursorSize: number;
 }>(

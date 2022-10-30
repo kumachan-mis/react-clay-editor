@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { getEditor } from '../Editor/utils';
-import { CursorBar } from '../components/atoms/Cursor/CursorBar';
-import { HiddenTextArea } from '../components/atoms/Cursor/HiddenTextArea';
-import { SuggestionListBody } from '../components/atoms/Cursor/SuggesionListBody';
-import { SuggestionListContainer } from '../components/atoms/Cursor/SuggesionListContainer';
-import { SuggestionListHeader } from '../components/atoms/Cursor/SuggesionListHeader';
-import { SuggestionListItem } from '../components/atoms/Cursor/SuggesionListItem';
+import { CursorBar } from '../components/atoms/CursorBar';
+import { CursorTextArea } from '../components/atoms/CursorTextArea';
+import { SuggestionList } from '../components/atoms/SuggesionList';
+import { SuggestionListBody } from '../components/atoms/SuggesionListBody';
+import { SuggestionListHeader } from '../components/atoms/SuggesionListHeader';
+import { SuggestionListItem } from '../components/atoms/SuggesionListItem';
 
-import { Props, State, SuggestionListProps } from './types';
+import { Props, State } from './types';
 import { cursorPropsToState, handleOnEditorScrollOrResize } from './utils';
 
 export const Cursor: React.FC<Props> = (props) => {
@@ -43,7 +43,7 @@ export const Cursor: React.FC<Props> = (props) => {
   return (
     <span ref={rootRef}>
       <CursorBar position={state.position} cursorSize={state.cursorSize} />
-      <HiddenTextArea
+      <CursorTextArea
         position={state.position}
         cursorSize={state.cursorSize}
         value={props.textAreaValue}
@@ -55,42 +55,23 @@ export const Cursor: React.FC<Props> = (props) => {
         onCopy={props.onTextCopy}
         onPaste={props.onTextPaste}
       />
-      <SuggestionList
-        suggestionType={props.suggestionType}
-        suggestions={props.suggestions}
-        suggestionIndex={props.suggestionIndex}
-        position={state.position}
-        cursorSize={state.cursorSize}
-        onSuggectionMouseDown={props.onSuggectionMouseDown}
-      />
+      {props.suggestions.length > 0 && (
+        <SuggestionList position={state.position} cursorSize={state.cursorSize}>
+          <SuggestionListHeader suggestionType={props.suggestionType} />
+          <SuggestionListBody>
+            {props.suggestions.map((suggestion, index) => (
+              <SuggestionListItem
+                key={index}
+                index={index}
+                aria-selected={props.suggestionIndex === index}
+                onMouseDown={props.onSuggectionMouseDown}
+              >
+                {suggestion}
+              </SuggestionListItem>
+            ))}
+          </SuggestionListBody>
+        </SuggestionList>
+      )}
     </span>
   );
 };
-
-const SuggestionList: React.FC<SuggestionListProps> = ({
-  suggestionType,
-  suggestions,
-  suggestionIndex,
-  position,
-  cursorSize,
-  onSuggectionMouseDown,
-}) =>
-  suggestions.length === 0 ? (
-    <></>
-  ) : (
-    <SuggestionListContainer position={position} cursorSize={cursorSize}>
-      <SuggestionListHeader suggestionType={suggestionType} />
-      <SuggestionListBody>
-        {suggestions.map((suggestion, index) => (
-          <SuggestionListItem
-            key={index}
-            index={index}
-            aria-selected={suggestionIndex === index}
-            onMouseDown={onSuggectionMouseDown}
-          >
-            {suggestion}
-          </SuggestionListItem>
-        ))}
-      </SuggestionListBody>
-    </SuggestionListContainer>
-  );

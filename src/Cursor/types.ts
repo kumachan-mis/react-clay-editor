@@ -24,12 +24,3 @@ export interface State {
   position: { top: number; left: number };
   cursorSize: number;
 }
-
-export interface SuggestionListProps {
-  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
-  suggestions: string[];
-  suggestionIndex: number;
-  position: { top: number; left: number };
-  cursorSize: number;
-  onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
-}

@@ -3,11 +3,11 @@ import { moveCursor, cursorCoordinateToTextIndex, coordinatesAreEqual } from '..
 import { TextSelection } from '../../Selection/types';
 import { selectionToRange } from '../../Selection/utils';
 import { getTextCharElementAt } from '../../TextLines/utils';
-import { CharConstants } from '../../components/atoms/TextLines/Char';
-import { CharGroupConstants } from '../../components/atoms/TextLines/CharGroup';
-import { HeaderConstants } from '../../components/atoms/TextLines/Header';
-import { LineConstants } from '../../components/atoms/TextLines/Line';
-import { LineGroupConstants } from '../../components/atoms/TextLines/LineGroup';
+import { CharConstants } from '../../components/atoms/Char';
+import { CharGroupConstants } from '../../components/atoms/CharGroup';
+import { HeaderConstants } from '../../components/atoms/Header';
+import { LineConstants } from '../../components/atoms/Line';
+import { LineGroupConstants } from '../../components/atoms/LineGroup';
 import { EditorConstants } from '../constants';
 import { Props, State, EditAction } from '../types';
 
