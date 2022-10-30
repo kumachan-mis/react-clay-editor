@@ -53,11 +53,11 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceClickab
 
   return (
     <StyledEmbededLink
-      clickable={clickable}
       onMouseDown={handleOnMouseDown}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
       onClick={handleOnClick}
+      data-clickable={clickable}
       data-selectid={EmbededLinkConstants.selectId}
       data-testid={createTestId(EmbededLinkConstants.testId)}
       {...rest}
@@ -67,11 +67,12 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceClickab
   );
 };
 
-const StyledEmbededLink = styled.a<{ clickable: boolean }>(
-  (props) => `
+const StyledEmbededLink = styled.a`
   text-decoration-line: none;
-  color: ${props.clickable ? '#425a9d' : '#5e8af7'};
+  color: #5e8af7;
   cursor: text;
-  cursor: ${props.clickable ? 'pointer' : 'text'};
-`
-);
+  &[data-clickable='true'] {
+    color: #425a9d;
+    cursor: pointer;
+  }
+`;
