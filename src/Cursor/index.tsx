@@ -9,7 +9,7 @@ import { SuggestionListHeader } from '../components/atoms/SuggesionListHeader';
 import { SuggestionListItem } from '../components/atoms/SuggesionListItem';
 
 import { Props, State } from './types';
-import { cursorPropsToState, handleOnEditorScrollOrResize } from './utils';
+import { cursorPropsToState, handleOnEditorScrollOrResize, scrollSelectedSuggestionIntoView } from './utils';
 
 export const Cursor: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({ position: { top: 0, left: 0 }, cursorSize: 0 });
@@ -39,6 +39,11 @@ export const Cursor: React.FC<Props> = (props) => {
     // state should not be in dependencies because of infinite recursion
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
+
+  React.useEffect(() => {
+    if (!rootRef.current) return;
+    scrollSelectedSuggestionIntoView(props.suggestionIndex, rootRef.current);
+  }, [props.suggestionIndex]);
 
   return (
     <span ref={rootRef}>
