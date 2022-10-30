@@ -37,7 +37,7 @@ import { getHashtagName, splitTag, getTagName } from '../parser/utils';
 
 import { TextLinesConstants } from './constants';
 import { Props, NodeProps } from './types';
-import { cursorOnNode, useLinkForceActive } from './utils';
+import { cursorOnNode, useLinkForceClickable } from './utils';
 
 export const TextLines: React.FC<Props> = ({
   nodes,
@@ -47,7 +47,7 @@ export const TextLines: React.FC<Props> = ({
   style,
   ...visuals
 }) => {
-  const linkForceActive = useLinkForceActive();
+  const linkForceClickable = useLinkForceClickable();
 
   return (
     <div className={mergeClassNames(TextLinesConstants.className, className)} style={style}>
@@ -60,7 +60,7 @@ export const TextLines: React.FC<Props> = ({
           node={node}
           cursorCoordinate={cursorCoordinate}
           textSelection={textSelection}
-          linkForceActive={linkForceActive}
+          linkForceClickable={linkForceClickable}
           {...visuals}
         />
       ))}
@@ -445,7 +445,7 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
   node,
   cursorCoordinate,
   textSelection,
-  linkForceActive,
+  linkForceClickable,
   taggedLinkVisualMap,
 }) => {
   const { lineIndex, linkName, trailingMeta } = node;
@@ -457,7 +457,7 @@ const TaggedLink: React.FC<NodeProps<TaggedLinkNode>> = ({
   return (
     <EmbededLink
       cursorOn={cursorOn}
-      forceActive={linkForceActive}
+      forceClickable={linkForceClickable}
       anchorProps={(active) => taggedLinkVisual?.anchorProps?.(linkName, active)}
     >
       {[...facingMeta].map((char, index) => (
@@ -500,7 +500,7 @@ const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
   node,
   cursorCoordinate,
   textSelection,
-  linkForceActive,
+  linkForceClickable,
   bracketLinkVisual,
 }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
@@ -510,7 +510,7 @@ const BracketLink: React.FC<NodeProps<BracketLinkNode>> = ({
   return (
     <EmbededLink
       cursorOn={cursorOn}
-      forceActive={linkForceActive}
+      forceClickable={linkForceClickable}
       anchorProps={(active) => bracketLinkVisual?.anchorProps?.(linkName, active)}
     >
       {[...facingMeta].map((char, index) => (
@@ -544,7 +544,7 @@ const Hashtag: React.FC<NodeProps<HashtagNode>> = ({
   node,
   cursorCoordinate,
   textSelection,
-  linkForceActive,
+  linkForceClickable,
   hashtagVisual,
 }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
@@ -554,7 +554,7 @@ const Hashtag: React.FC<NodeProps<HashtagNode>> = ({
   return (
     <EmbededLink
       cursorOn={cursorOn}
-      forceActive={linkForceActive}
+      forceClickable={linkForceClickable}
       anchorProps={(active) => hashtagVisual?.anchorProps?.(getHashtagName(linkName), active)}
     >
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
@@ -566,7 +566,7 @@ const Hashtag: React.FC<NodeProps<HashtagNode>> = ({
   );
 };
 
-const Url: React.FC<NodeProps<UrlNode>> = ({ node, cursorCoordinate, textSelection, linkForceActive }) => {
+const Url: React.FC<NodeProps<UrlNode>> = ({ node, cursorCoordinate, textSelection, linkForceClickable }) => {
   const { lineIndex, url } = node;
   const [first] = node.range;
   const cursorOn = cursorOnNode(node, cursorCoordinate, textSelection);
@@ -574,7 +574,7 @@ const Url: React.FC<NodeProps<UrlNode>> = ({ node, cursorCoordinate, textSelecti
   return (
     <EmbededLink
       cursorOn={cursorOn}
-      forceActive={linkForceActive}
+      forceClickable={linkForceClickable}
       anchorProps={() => ({ href: url, target: '_blank', rel: 'noopener noreferrer' })}
     >
       {[...url].map((char, index) => (

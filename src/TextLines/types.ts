@@ -34,5 +34,5 @@ export interface NodeProps<_Node extends Node = Node> {
   taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
   codeVisual?: CodeVisual;
   formulaVisual?: FormulaVisual;
-  linkForceActive: boolean;
+  linkForceClickable: boolean;
 }

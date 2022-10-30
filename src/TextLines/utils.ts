@@ -14,17 +14,17 @@ export function getTextCharElementAt(lineIndex: number, charIndex: number, eleme
   return rootElement.querySelector(`span[data-selectid="${CharConstants.selectId(lineIndex, charIndex)}"]`);
 }
 
-export function useLinkForceActive(): boolean {
-  const [linkForceActive, setLinkForceActive] = React.useState(false);
+export function useLinkForceClickable(): boolean {
+  const [linkForceClickable, setLinkForceClickable] = React.useState(false);
 
   const handleOnKeyDown = React.useCallback((event: KeyboardEvent) => {
-    setLinkForceActive(
+    setLinkForceClickable(
       (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
         !event.altKey &&
         !event.shiftKey
     );
   }, []);
-  const handleOnKeyUp = React.useCallback(() => setLinkForceActive(false), []);
+  const handleOnKeyUp = React.useCallback(() => setLinkForceClickable(false), []);
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleOnKeyDown);
@@ -36,7 +36,7 @@ export function useLinkForceActive(): boolean {
     };
   }, [handleOnKeyDown, handleOnKeyUp]);
 
-  return linkForceActive;
+  return linkForceClickable;
 }
 
 export function cursorOnNode(

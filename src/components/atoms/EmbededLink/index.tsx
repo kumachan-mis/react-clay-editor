@@ -5,8 +5,8 @@ import { createTestId } from '../../../common/utils';
 
 export type EmbededLinkProps = React.PropsWithChildren<{
   cursorOn: boolean;
-  forceActive: boolean;
-  anchorProps: (active: boolean) => React.ComponentProps<'a'> | undefined;
+  forceClickable: boolean;
+  anchorProps: (clickable: boolean) => React.ComponentProps<'a'> | undefined;
 }>;
 
 export const EmbededLinkConstants = {
@@ -14,10 +14,10 @@ export const EmbededLinkConstants = {
   testId: 'embeded-link',
 };
 
-export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceActive, children, anchorProps }) => {
-  const [state, setState] = React.useState({ active: false, hover: false });
-  const active = (forceActive && state.hover) || state.active;
-  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...rest } = anchorProps?.(active) || {};
+export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceClickable, children, anchorProps }) => {
+  const [state, setState] = React.useState({ clickable: false, hover: false });
+  const clickable = (forceClickable && state.hover) || state.clickable;
+  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...rest } = anchorProps?.(clickable) || {};
 
   const handleOnMouseDown = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -30,7 +30,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceActive,
   const handleOnMouseEnter = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
       onMouseEnter?.(event);
-      setState({ active: !cursorOn, hover: true });
+      setState({ clickable: !cursorOn, hover: true });
     },
     [cursorOn, onMouseEnter]
   );
@@ -38,22 +38,22 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceActive,
   const handleOnMouseLeave = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
       onMouseLeave?.(event);
-      setState({ active: false, hover: false });
+      setState({ clickable: false, hover: false });
     },
     [onMouseLeave]
   );
 
   const handleOnClick = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      if (active) onClick?.(event);
+      if (clickable) onClick?.(event);
       else event.preventDefault();
     },
-    [active, onClick]
+    [clickable, onClick]
   );
 
   return (
     <StyledEmbededLink
-      active={active}
+      clickable={clickable}
       onMouseDown={handleOnMouseDown}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
@@ -67,11 +67,11 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceActive,
   );
 };
 
-const StyledEmbededLink = styled.a<{ active: boolean }>(
+const StyledEmbededLink = styled.a<{ clickable: boolean }>(
   (props) => `
   text-decoration-line: none;
-  color: ${props.active ? '#425a9d' : '#5e8af7'};
+  color: ${props.clickable ? '#425a9d' : '#5e8af7'};
   cursor: text;
-  cursor: ${props.active ? 'pointer' : 'text'};
+  cursor: ${props.clickable ? 'pointer' : 'text'};
 `
 );
