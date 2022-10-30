@@ -9,7 +9,7 @@ import { Props, State, TextSelection, TextRange } from './types';
 export function selectionPropsToState(props: Props, element: HTMLElement): State {
   const bodyRect = getBody(element)?.getBoundingClientRect();
   if (!props.textSelection || !bodyRect) {
-    return { topDivPosition: undefined, centerDivPosition: undefined, bottomDivPosition: undefined };
+    return { topRectProps: undefined, centerRectProps: undefined, bottomRectProps: undefined };
   }
 
   const { start, end } = selectionToRange(props.textSelection);
@@ -17,8 +17,9 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
   const endElement = getTextCharElementAt(end.lineIndex, end.charIndex, element);
   const startRect = startElement?.getBoundingClientRect();
   const endRect = endElement?.getBoundingClientRect();
+
   if (!startRect || !endRect) {
-    return { topDivPosition: undefined, centerDivPosition: undefined, bottomDivPosition: undefined };
+    return { topRectProps: undefined, centerRectProps: undefined, bottomRectProps: undefined };
   }
 
   const startRectCenter = startRect.bottom - (startRect.bottom - startRect.top) / 2;
@@ -27,36 +28,34 @@ export function selectionPropsToState(props: Props, element: HTMLElement): State
     (startRect.top <= endRectCenter && endRectCenter <= startRect.bottom) ||
     (endRect.top <= startRectCenter && startRectCenter <= endRect.bottom)
   ) {
-    const topDivPosition = undefined;
-    const centerDivPosition = {
+    const centerRectProps = {
       top: Math.min(startRect.top, endRect.top) - bodyRect.top,
       left: startRect.left - bodyRect.left,
       width: endRect.left - startRect.left,
       height: Math.max(startRect.bottom, endRect.bottom) - Math.min(startRect.top, endRect.top),
     };
-    const bottomDivPosition = undefined;
-    return { topDivPosition, centerDivPosition, bottomDivPosition };
-  } else {
-    const topDivPosition = {
-      top: startRect.top - bodyRect.top,
-      left: startRect.left - bodyRect.left,
-      width: bodyRect.right - startRect.left,
-      height: startRect.height,
-    };
-    const centerDivPosition = {
-      top: startRect.bottom - bodyRect.top,
-      left: 0,
-      width: bodyRect.width,
-      height: endRect.top - startRect.bottom,
-    };
-    const bottomDivPosition = {
-      top: endRect.top - bodyRect.top,
-      left: 0,
-      width: endRect.left - bodyRect.left,
-      height: endRect.height,
-    };
-    return { topDivPosition, centerDivPosition, bottomDivPosition };
+    return { topRectProps: undefined, centerRectProps, bottomRectProps: undefined };
   }
+
+  const topRectProps = {
+    top: startRect.top - bodyRect.top,
+    left: startRect.left - bodyRect.left,
+    width: bodyRect.right - startRect.left,
+    height: startRect.height,
+  };
+  const centerRectProps = {
+    top: startRect.bottom - bodyRect.top,
+    left: 0,
+    width: bodyRect.width,
+    height: endRect.top - startRect.bottom,
+  };
+  const bottomRectProps = {
+    top: endRect.top - bodyRect.top,
+    left: 0,
+    width: endRect.left - bodyRect.left,
+    height: endRect.height,
+  };
+  return { topRectProps, centerRectProps, bottomRectProps };
 }
 
 export function getWordSelection(

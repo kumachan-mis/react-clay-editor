@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { createTestId, mergeClassNames } from '../../common/utils';
-import { ArrowIcon } from '../icons';
+import { ArrowIcon } from '../../icons/ArrowIcon';
 
 import { ComponentConstants } from './constants';
 import {

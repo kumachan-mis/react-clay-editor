@@ -1,4 +1,5 @@
 import { CursorCoordinate } from '../Cursor/types';
+import { SelectionRectProps } from '../components/atoms/SelectionRect';
 
 export interface TextSelection {
   fixed: CursorCoordinate;
@@ -14,15 +15,8 @@ export interface Props {
   textSelection: TextSelection | undefined;
 }
 
-export interface Position {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-}
-
 export interface State {
-  topDivPosition: Position | undefined;
-  centerDivPosition: Position | undefined;
-  bottomDivPosition: Position | undefined;
+  topRectProps: SelectionRectProps | undefined;
+  centerRectProps: SelectionRectProps | undefined;
+  bottomRectProps: SelectionRectProps | undefined;
 }

@@ -5,7 +5,7 @@ import { getRoot } from '../Editor/utils';
 import { TextSelection } from '../Selection/types';
 import { selectionToRange } from '../Selection/utils';
 import { isMacOS } from '../common/utils';
-import { CharConstants } from '../components/atoms/TextLines/Char';
+import { CharConstants } from '../components/atoms/Char';
 import { Node } from '../parser/types';
 
 export function getTextCharElementAt(lineIndex: number, charIndex: number, element: HTMLElement): HTMLElement | null {

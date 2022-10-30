@@ -1,6 +1,17 @@
 import * as React from 'react';
 
 import { createTestId } from '../common/utils';
+import { BoldIcon } from '../icons/BoldIcon';
+import { BracketIcon } from '../icons/BracketIcon';
+import { CodeIcon } from '../icons/CodeIcon';
+import { FormulaIcon } from '../icons/FormulaIcon';
+import { HashtagIcon } from '../icons/HashtagIcon';
+import { ItalicIcon } from '../icons/ItalicIcon';
+import { ItemizationIcon } from '../icons/Itemization';
+import { QuotationIcon } from '../icons/Quotation';
+import { SectionIcon } from '../icons/Section';
+import { TaggedlinkIcon } from '../icons/TaggedlinkIcon';
+import { UnderlineIcon } from '../icons/UnderlineIcon';
 
 import {
   blockCodeMenuSwitch,
@@ -48,19 +59,6 @@ import {
   FormulaMenuConstants,
   QuotationMenuConstants,
 } from './constants';
-import {
-  SectionIcon,
-  ItemizationIcon,
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-  BracketIcon,
-  HashtagIcon,
-  TaggedLinkIcon,
-  CodeIcon,
-  FormulaIcon,
-  QuotationIcon,
-} from './icons';
 import {
   SyntaxMenuProps,
   SectionMenuProps,
@@ -413,7 +411,7 @@ const TaggedLinkMenu: React.FC<
         buttonProps={{ onClick: handleOnButtonClick }}
         data-testid={createTestId(TaggedLinkMenuConstants.testId)}
       >
-        <TaggedLinkIcon />
+        <TaggedlinkIcon />
       </DropdownMenuAnchor>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         {tagEntries.map(

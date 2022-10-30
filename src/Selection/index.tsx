@@ -1,16 +1,15 @@
 import React from 'react';
 
-import { createTestId } from '../common/utils';
+import { SelectionRect } from '../components/atoms/SelectionRect';
 
-import { SelectionConstants } from './constants';
 import { Props, State } from './types';
 import { selectionPropsToState } from './utils';
 
 export const Selection: React.FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({
-    topDivPosition: undefined,
-    centerDivPosition: undefined,
-    bottomDivPosition: undefined,
+    topRectProps: undefined,
+    centerRectProps: undefined,
+    bottomRectProps: undefined,
   });
   const rootRef = React.useRef<HTMLSpanElement | null>(null);
 
@@ -37,27 +36,9 @@ export const Selection: React.FC<Props> = (props) => {
 
   return (
     <span ref={rootRef}>
-      {state.topDivPosition && (
-        <div
-          className={SelectionConstants.div.className}
-          style={SelectionConstants.div.style(state.topDivPosition)}
-          data-testid={createTestId(SelectionConstants.div.testId)}
-        />
-      )}
-      {state.centerDivPosition && (
-        <div
-          className={SelectionConstants.div.className}
-          style={SelectionConstants.div.style(state.centerDivPosition)}
-          data-testid={createTestId(SelectionConstants.div.testId)}
-        />
-      )}
-      {state.bottomDivPosition && (
-        <div
-          className={SelectionConstants.div.className}
-          style={SelectionConstants.div.style(state.bottomDivPosition)}
-          data-testid={createTestId(SelectionConstants.div.testId)}
-        />
-      )}
+      {state.topRectProps && <SelectionRect {...state.topRectProps} />}
+      {state.centerRectProps && <SelectionRect {...state.centerRectProps} />}
+      {state.bottomRectProps && <SelectionRect {...state.bottomRectProps} />}
     </span>
   );
 };
