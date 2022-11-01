@@ -7,19 +7,17 @@ export type LineContentProps = {
   lineIndex: number;
   lineLength: number;
   indentDepth?: number;
-  itemized?: boolean;
-} & React.ComponentProps<'span'>;
+} & React.ComponentProps<'div'>;
 
 export const LineContent: React.FC<LineContentProps> = ({
   lineIndex,
   lineLength,
   indentDepth = 0,
-  itemized = false,
   children,
   ...rest
 }) => {
   return (
-    <StyledLineContent indentDepth={indentDepth} itemized={itemized} {...rest}>
+    <StyledLineContent indentDepth={indentDepth} {...rest}>
       {children}
       <Char lineIndex={lineIndex} charIndex={lineLength}>
         {' '}
@@ -28,12 +26,10 @@ export const LineContent: React.FC<LineContentProps> = ({
   );
 };
 
-const StyledLineContent = styled.span<{
+const StyledLineContent = styled.div<{
   indentDepth: number;
-  itemized: boolean;
 }>(
   (props) => `
-  display: block;
-  margin-left: ${1.5 * (props.itemized ? props.indentDepth + 1 : props.indentDepth)}em;
+  margin-left: ${1.5 * props.indentDepth}em;
 `
 );

@@ -26,7 +26,6 @@ export const Viewer: React.FC<Props> = (props) => {
       formulaVisual={props.formulaProps}
       taggedLinkVisualMap={props.taggedLinkPropsMap}
       className={props.className}
-      style={props.style}
     />
   );
 };

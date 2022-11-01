@@ -11,15 +11,15 @@ export interface TextVisual {
 }
 
 export interface BracketLinkVisual {
-  anchorProps?: (linkName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
+  anchorProps?: (linkName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
 }
 
 export interface HashtagVisual {
-  anchorProps?: (hashtagName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
+  anchorProps?: (hashtagName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
 }
 
 export interface TaggedLinkVisual {
-  anchorProps?: (linkName: string, active: boolean) => React.ComponentProps<'a'> | undefined;
+  anchorProps?: (linkName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
   tagHidden?: boolean;
 }
 
@@ -28,7 +28,7 @@ export interface CodeVisual {
 }
 
 export interface FormulaVisual {
-  spanProps?: (formula: string) => React.ComponentProps<'span'> | undefined;
+  codeProps?: (formula: string) => React.ComponentProps<'code'> | undefined;
 }
 
 /**

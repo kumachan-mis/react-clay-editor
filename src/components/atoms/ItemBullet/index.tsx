@@ -15,7 +15,9 @@ export const ItemBullet: React.FC<ItemBulletProps> = ({ lineIndex, indentDepth }
   </StyledItemBullet>
 );
 
-const StyledItemBullet = styled(Char)<{
+const StyledItemBullet = styled(Char, {
+  shouldForwardProp: (name) => name !== 'indentDepth',
+})<{
   indentDepth: number;
 }>(
   (props) => `

@@ -22,6 +22,5 @@ export const Line: React.FC<LineProps> = ({ lineIndex, ...rest }) => (
 );
 
 const StyledLine = styled.div`
-  display: block;
   position: relative;
 `;

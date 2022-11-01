@@ -23,6 +23,5 @@ export const LineGroup: React.FC<LineGroupProps> = ({ firstLineIndex, lastLineIn
 );
 
 const StyledLineGroup = styled.div`
-  display: block;
   position: relative;
 `;

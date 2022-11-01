@@ -3,17 +3,16 @@ import React from 'react';
 
 export type LineGroupContentProps = {
   indentDepth: number;
-} & React.ComponentProps<'span'>;
+} & React.ComponentProps<'div'>;
 
 export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth, ...rest }) => (
   <StyledLineGroupContent indentDepth={indentDepth} {...rest} />
 );
 
-const StyledLineGroupContent = styled.span<{
+const StyledLineGroupContent = styled.div<{
   indentDepth: number;
 }>(
   (props) => `
-  display: block;
   margin-left: ${1.5 * props.indentDepth}em;
 `
 );

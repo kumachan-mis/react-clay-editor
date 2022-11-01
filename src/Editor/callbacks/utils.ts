@@ -1,5 +1,5 @@
-import { getTextCharElementAt } from '../../TextLines/utils';
 import { CharConstants } from '../../components/atoms/Char';
+import { getCharAt } from '../../components/atoms/Char/utils';
 import { CharGroupConstants } from '../../components/atoms/CharGroup';
 import { HeaderConstants } from '../../components/atoms/Header';
 import { LineConstants } from '../../components/atoms/Line';
@@ -250,7 +250,7 @@ export function positionToCursorCoordinate(
 
     let [charIndex, minDistance] = [lines[lineIndex].length, Number.MAX_VALUE];
     for (let index = 0; index <= currentLine.length; index++) {
-      const charElement = getTextCharElementAt(lineIndex, index, element);
+      const charElement = getCharAt(lineIndex, index, element);
       const charRect = charElement?.getBoundingClientRect();
       if (!charRect) continue;
 

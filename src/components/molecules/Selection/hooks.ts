@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { getBody } from '../../../Editor/utils';
-import { getTextCharElementAt } from '../../../TextLines/utils';
+import { getCharAt } from '../../atoms/Char/utils';
 
 import { Props, State } from './types';
 import { selectionToRange } from './utils';
@@ -45,8 +45,8 @@ function propsToState(props: Props, element: HTMLElement): State {
   }
 
   const { start, end } = selectionToRange(props.textSelection);
-  const startElement = getTextCharElementAt(start.lineIndex, start.charIndex, element);
-  const endElement = getTextCharElementAt(end.lineIndex, end.charIndex, element);
+  const startElement = getCharAt(start.lineIndex, start.charIndex, element);
+  const endElement = getCharAt(end.lineIndex, end.charIndex, element);
   const startRect = startElement?.getBoundingClientRect();
   const endRect = endElement?.getBoundingClientRect();
 

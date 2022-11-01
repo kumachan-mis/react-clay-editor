@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import React from 'react';
 
 import { createTestId } from '../../../common/utils';
@@ -15,13 +14,9 @@ export const CharConstants = {
 };
 
 export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, ...rest }) => (
-  <StyledChar
+  <span
     {...rest}
     data-selectid={CharConstants.selectId(lineIndex, charIndex)}
     data-testid={createTestId(CharConstants.testId(lineIndex, charIndex))}
   />
 );
-
-const StyledChar = styled.span`
-  display: inline;
-`;

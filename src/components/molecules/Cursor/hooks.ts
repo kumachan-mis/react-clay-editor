@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { getEditor, getBody } from '../../../Editor/utils';
-import { getTextCharElementAt } from '../../../TextLines/utils';
+import { getCharAt } from '../../atoms/Char/utils';
 import { SuggestionListBodyConstants } from '../../atoms/SuggesionListBody';
 import { SuggestionListItemConstants } from '../../atoms/SuggesionListItem';
 
@@ -56,7 +56,7 @@ function propsToState(props: Props, state: State, element: HTMLElement): State {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const charElement = getTextCharElementAt(props.coordinate.lineIndex, props.coordinate.charIndex, element);
+  const charElement = getCharAt(props.coordinate.lineIndex, props.coordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
@@ -80,7 +80,7 @@ function propsToStateOnScrollOrResize(props: Props, state: State, element: HTMLE
   if (!props.coordinate || !bodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const { coordinate } = props;
-  const charElement = getTextCharElementAt(coordinate.lineIndex, coordinate.charIndex, element);
+  const charElement = getCharAt(coordinate.lineIndex, coordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 

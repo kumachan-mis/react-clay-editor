@@ -22,7 +22,6 @@ export interface Props {
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
   className?: string;
-  style?: React.CSSProperties;
 }
 
 export type TextProps = TextVisual;

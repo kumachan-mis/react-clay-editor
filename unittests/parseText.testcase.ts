@@ -1,5 +1,5 @@
 import { parserConstants } from '../src/parser/constants';
-import { Node, ParsingOptions } from '../src/parser/types';
+import { SyntaxNode, ParsingOptions } from '../src/parser/types';
 
 type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] : RecursivePartial<T[P]>;
@@ -9,7 +9,7 @@ export interface TestCase {
   name: string;
   text: string;
   parsingOptions?: ParsingOptions;
-  expected: RecursivePartial<Node>[];
+  expected: RecursivePartial<SyntaxNode>[];
 }
 
 export const commonTestCases: TestCase[] = [
