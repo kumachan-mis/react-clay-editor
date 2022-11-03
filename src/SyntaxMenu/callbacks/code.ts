@@ -6,7 +6,7 @@ import {
   createContentByTextSelection,
   insertContentAtCursor,
   splitContentByTextSelection,
-  substituteContentAtCursor,
+  replaceContentAtCursor,
 } from '../callbacksCommon/content';
 import { ContentConfig, ContentMetaConfig } from '../callbacksCommon/types';
 import { isEndPoint } from '../callbacksCommon/utils';
@@ -84,7 +84,7 @@ export function handleOnInlineCodeItemClick(
     if (menuSwitch === 'off') {
       return insertContentAtCursor(text, nodes, state, offConfig);
     } else {
-      return substituteContentAtCursor(text, nodes, contentPosition, state, onConfig);
+      return replaceContentAtCursor(text, nodes, contentPosition, state, onConfig);
     }
   } else {
     if (menuSwitch === 'off') {

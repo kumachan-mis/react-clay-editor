@@ -31,7 +31,7 @@ export function insertContentAtCursor(
   return [newText, { ...newState, textSelection: { fixed, free } }];
 }
 
-export function substituteContentAtCursor(
+export function replaceContentAtCursor(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition,
@@ -59,7 +59,7 @@ export function substituteContentAtCursor(
   const { cursorCoordinate, textSelection } = state;
   const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
 
-  const newCharIndex = (charIndex: number) => newCharIndexAfterSubstitution(charIndex, contentNode, config);
+  const newCharIndex = (charIndex: number) => newCharIndexAfterReplacement(charIndex, contentNode, config);
   newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
   if (newTextSelection) {
     newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
@@ -72,7 +72,7 @@ export function substituteContentAtCursor(
   ];
 }
 
-export function newCharIndexAfterSubstitution(
+export function newCharIndexAfterReplacement(
   charIndex: number,
   contentNode: Exclude<ContentNode, TextLikeNode>,
   config: ContentMetaConfig
@@ -161,11 +161,11 @@ export function splitContentByTextSelection(
 
   if (selectionEnd.charIndex <= start + contentNode.facingMeta.length) {
     const dummyState = { ...state, cursorCoordinate: selectionEnd };
-    return substituteContentAtCursor(text, nodes, contentPosition, dummyState, config);
+    return replaceContentAtCursor(text, nodes, contentPosition, dummyState, config);
   }
   if (end - contentNode.trailingMeta.length <= selectionStart.charIndex) {
     const dummyState = { ...state, cursorCoordinate: selectionStart };
-    return substituteContentAtCursor(text, nodes, contentPosition, dummyState, config);
+    return replaceContentAtCursor(text, nodes, contentPosition, dummyState, config);
   }
 
   let insertedText = '';

@@ -63,10 +63,10 @@ export interface State {
   suggestionStart: number;
 }
 
-export type EditAction = SubstituteAction | InsertAction | DeleteAction;
+export type EditAction = ReplaceAction | InsertAction | DeleteAction;
 
-export interface SubstituteAction {
-  actionType: 'substitute';
+export interface ReplaceAction {
+  actionType: 'replace';
   coordinate: CursorCoordinate;
   deletedText: string;
   insertedText: string;

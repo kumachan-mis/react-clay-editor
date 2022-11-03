@@ -5,7 +5,7 @@ import {
   createContentByTextSelection,
   insertContentAtCursor,
   splitContentByTextSelection,
-  substituteContentAtCursor,
+  replaceContentAtCursor,
 } from '../callbacksCommon/content';
 import { isEndPoint } from '../callbacksCommon/utils';
 import { ContentPosition, ContentPositionEmpty } from '../types';
@@ -121,7 +121,7 @@ function handleOnBracketDecorationItemClick(
     if (contentNode.type === 'decoration') {
       const newMeta = contentNode.facingMeta.substring(1, contentNode.facingMeta.length - 1) + meta;
       const config = { facingMeta: `[${newMeta} `, trailingMeta: ']' };
-      return substituteContentAtCursor(text, nodes, contentPosition, state, config);
+      return replaceContentAtCursor(text, nodes, contentPosition, state, config);
     }
 
     return [text, state];
@@ -144,7 +144,7 @@ function handleOnBracketDecorationItemClick(
       config.facingMeta = contentNode.facingMeta.replaceAll(meta, '');
       config.trailingMeta = contentNode.trailingMeta;
     }
-    return substituteContentAtCursor(text, nodes, contentPosition, state, config);
+    return replaceContentAtCursor(text, nodes, contentPosition, state, config);
   }
 
   function handleItemOffWithSelection(
@@ -237,7 +237,7 @@ function handleOnMarkdownDecorationItemClick(
   ): [string, State] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
-    return substituteContentAtCursor(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
+    return replaceContentAtCursor(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
   }
 
   function handleItemOffWithSelection(

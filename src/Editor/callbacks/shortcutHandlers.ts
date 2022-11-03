@@ -112,7 +112,7 @@ export function handleOnUndo(
 
   const action = editActionHistory[historyHead];
   switch (action.actionType) {
-    case 'substitute': {
+    case 'replace': {
       const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
       const endIndex = startIndex + action.insertedText.length;
       const newText = text.substring(0, startIndex) + action.deletedText + text.substring(endIndex);
@@ -160,7 +160,7 @@ export function handleOnRedo(
 
   const action = editActionHistory[historyHead + 1];
   switch (action.actionType) {
-    case 'substitute': {
+    case 'replace': {
       const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
       const endIndex = startIndex + action.deletedText.length;
       const newText = text.substring(0, startIndex) + action.insertedText + text.substring(endIndex);

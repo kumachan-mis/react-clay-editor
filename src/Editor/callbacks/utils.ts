@@ -47,7 +47,7 @@ export function insertText(
   const deletedText = text.substring(startIndex, endIndex);
   const newText = text.substring(0, startIndex) + insertedText + text.substring(endIndex);
   const cursorCoordinate = moveCursor(newText, start, cursourMoveAmount);
-  let action: EditAction = { actionType: 'substitute', coordinate: start, deletedText, insertedText };
+  let action: EditAction = { actionType: 'replace', coordinate: start, deletedText, insertedText };
   if (!insertedText) action = { actionType: 'delete', coordinate: start, text: deletedText };
   const newState = addEditAction(state, action);
   return [newText, resetTextSelection({ ...newState, cursorCoordinate })];

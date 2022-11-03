@@ -6,7 +6,7 @@ import {
   createContentByTextSelection,
   insertContentAtCursor,
   splitContentByTextSelection,
-  substituteContentAtCursor,
+  replaceContentAtCursor,
 } from '../callbacksCommon/content';
 import { ContentConfig, ContentMetaConfig } from '../callbacksCommon/types';
 import { isEndPoint } from '../callbacksCommon/utils';
@@ -94,7 +94,7 @@ export function handleOnContentFormulaItemClick(
       return insertContentAtCursor(text, nodes, state, config);
     } else {
       const config = menuItem === menuSwitch ? normalConfig : menuItem === 'display' ? displayConfig : inlineConfig;
-      return substituteContentAtCursor(text, nodes, contentPosition, state, config);
+      return replaceContentAtCursor(text, nodes, contentPosition, state, config);
     }
   } else {
     if (menuSwitch === 'off') {

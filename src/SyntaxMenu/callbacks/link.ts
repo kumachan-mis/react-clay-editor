@@ -3,7 +3,7 @@ import { ContentNode, LineNode, PureLineNode } from '../../parser/types';
 import { isPureLineNode, getTagName } from '../../parser/utils';
 import {
   insertContentAtCursor,
-  substituteContentAtCursor,
+  replaceContentAtCursor,
   createContentByTextSelection,
 } from '../callbacksCommon/content';
 import { ContentConfig } from '../callbacksCommon/types';
@@ -70,10 +70,10 @@ export function handleOnLinkItemClick(
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
-      return substituteContentAtCursor(text, nodes, contentPosition, state, config, onContent);
+      return replaceContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }
     const normalConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
-    return hideSuggestion(substituteContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
+    return hideSuggestion(replaceContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
   }
 
   function handleItemOffWithSelection(): [string, State] {
@@ -87,10 +87,10 @@ export function handleOnLinkItemClick(
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
-      return substituteContentAtCursor(text, nodes, contentPosition, state, config, onContent);
+      return replaceContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }
     const normalConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
-    return hideSuggestion(substituteContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
+    return hideSuggestion(replaceContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
   }
 
   function showSuggestion([newText, newState]: [string, State]): [string, State] {

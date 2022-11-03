@@ -6,8 +6,8 @@ import {
   insertContentAtCursor,
   createContentByTextSelection,
   newCharIndexAfterCreation,
-  substituteContentAtCursor,
-  newCharIndexAfterSubstitution,
+  replaceContentAtCursor,
+  newCharIndexAfterReplacement,
 } from '../callbacksCommon/content';
 import { undefinedIfZeroSelection } from '../callbacksCommon/utils';
 import { ContentPosition, SectionMenuProps } from '../types';
@@ -96,9 +96,9 @@ export function handleOnSectionItemClick(
   if (decorationNode.type === 'decoration') {
     const config = menuSwitch === menuItem ? { facingMeta: '', trailingMeta: '' } : { facingMeta, trailingMeta };
     const position: ContentPosition = { type: 'inner', lineIndex: cursorCoordinate.lineIndex, contentIndexes: [0] };
-    const [newText, newState] = substituteContentAtCursor(text, nodes, position, dummyState, config);
+    const [newText, newState] = replaceContentAtCursor(text, nodes, position, dummyState, config);
     const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
-    const newCharIndex = (charIndex: number) => newCharIndexAfterSubstitution(charIndex, decorationNode, config);
+    const newCharIndex = (charIndex: number) => newCharIndexAfterReplacement(charIndex, decorationNode, config);
     newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     if (newTextSelection) {
       newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
