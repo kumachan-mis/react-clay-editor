@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text } from '../Text';
+import { Text } from '../components/organisms/Text';
 import { useParser } from '../parser';
 
 import { Props } from './types';

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { useEmbededLinkForceClickable } from '../components/atoms/EmbededLink/hooks';
-import { CursorCoordinate } from '../components/molecules/Cursor/types';
-import { TextSelection } from '../components/molecules/Selection/types';
-import { selectionToRange } from '../components/molecules/Selection/utils';
-import { TextNode } from '../parser/types';
+import { TextNode } from '../../../parser/types';
+import { useEmbededLinkForceClickable } from '../../atoms/EmbededLink/hooks';
+import { CursorCoordinate } from '../../molecules/Cursor/types';
+import { TextSelection } from '../../molecules/Selection/types';
+import { selectionToRange } from '../../molecules/Selection/utils';
 
 export type UseTextNodeComponent = {
   editMode: (node: TextNode) => boolean;

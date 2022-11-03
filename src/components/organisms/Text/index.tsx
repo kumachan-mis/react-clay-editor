@@ -8,11 +8,11 @@ import {
   HashtagVisual,
   TaggedLinkVisual,
   TextVisual,
-} from '../common/types';
-import { Header } from '../components/atoms/Header';
-import { CursorCoordinate } from '../components/molecules/Cursor/types';
-import { TextSelection } from '../components/molecules/Selection/types';
-import { TextNode } from '../parser/types';
+} from '../../../common/types';
+import { TextNode } from '../../../parser/types';
+import { Header } from '../../atoms/Header';
+import { CursorCoordinate } from '../../molecules/Cursor/types';
+import { TextSelection } from '../../molecules/Selection/types';
 
 import { TextNodeComponent } from './TextNodeComponent';
 import { useTextNodeComponent } from './TextNodeComponent.hooks';

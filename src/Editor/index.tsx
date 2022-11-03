@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { SyntaxMenu } from '../SyntaxMenu';
-import { Text } from '../Text';
 import { mergeClassNames, createTestId } from '../common/utils';
 import { Cursor } from '../components/molecules/Cursor';
 import { Selection } from '../components/molecules/Selection';
+import { Text } from '../components/organisms/Text';
 import { useParser } from '../parser';
 
 import { EditorConstants } from './constants';

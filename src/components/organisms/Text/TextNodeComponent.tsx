@@ -7,21 +7,21 @@ import {
   HashtagVisual,
   TaggedLinkVisual,
   TextVisual,
-} from '../common/types';
-import { BlockCode } from '../components/molecules/BlockCode';
-import { BlockFormula } from '../components/molecules/BlockFormula';
-import { BracketLink } from '../components/molecules/BracketLink';
-import { ContentFormula } from '../components/molecules/ContentFormula';
-import { Decoration } from '../components/molecules/Decoration';
-import { Hashtag } from '../components/molecules/Hashtag';
-import { InlineCode } from '../components/molecules/InlineCode';
-import { Itemization } from '../components/molecules/Itemization';
-import { Normal } from '../components/molecules/Normal';
-import { NormalLine } from '../components/molecules/NormalLine';
-import { Quotation } from '../components/molecules/Quotation';
-import { TaggedLink } from '../components/molecules/TaggedLink';
-import { Url } from '../components/molecules/Url';
-import { TextNode } from '../parser/types';
+} from '../../../common/types';
+import { TextNode } from '../../../parser/types';
+import { BlockCode } from '../../molecules/BlockCode';
+import { BlockFormula } from '../../molecules/BlockFormula';
+import { BracketLink } from '../../molecules/BracketLink';
+import { ContentFormula } from '../../molecules/ContentFormula';
+import { Decoration } from '../../molecules/Decoration';
+import { Hashtag } from '../../molecules/Hashtag';
+import { InlineCode } from '../../molecules/InlineCode';
+import { Itemization } from '../../molecules/Itemization';
+import { Normal } from '../../molecules/Normal';
+import { NormalLine } from '../../molecules/NormalLine';
+import { Quotation } from '../../molecules/Quotation';
+import { TaggedLink } from '../../molecules/TaggedLink';
+import { Url } from '../../molecules/Url';
 
 export type TextNodeComponentProps = {
   node: TextNode;
