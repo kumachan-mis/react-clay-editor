@@ -2,8 +2,8 @@ import React from 'react';
 
 import { SyntaxMenu } from '../SyntaxMenu';
 import { mergeClassNames, createTestId } from '../common/utils';
-import { Cursor } from '../components/molecules/Cursor';
-import { Selection } from '../components/molecules/Selection';
+import { Cursor } from '../components/molecules/cursor/Cursor';
+import { Selection } from '../components/molecules/selection/Selection';
 import { Text } from '../components/organisms/Text';
 import { useParser } from '../parser';
 

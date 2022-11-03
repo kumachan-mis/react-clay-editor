@@ -1,8 +1,8 @@
 import { insertText } from '../../Editor/callbacks/utils';
 import { State } from '../../Editor/types';
-import { CursorCoordinate } from '../../components/molecules/Cursor/types';
-import { TextSelection } from '../../components/molecules/Selection/types';
-import { copySelection } from '../../components/molecules/Selection/utils';
+import { CursorCoordinate } from '../../components/molecules/cursor/Cursor/types';
+import { TextSelection } from '../../components/molecules/selection/Selection/types';
+import { copySelection } from '../../components/molecules/selection/Selection/utils';
 import { BlockNode, LineNode } from '../../parser/types';
 import { isBlockNode } from '../../parser/utils';
 import { MenuHandler } from '../callbacks/types';

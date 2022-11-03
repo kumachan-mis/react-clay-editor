@@ -18,8 +18,8 @@ import {
   FormulaParsing,
   Suggestion,
 } from '../common/types';
-import { CursorCoordinate } from '../components/molecules/Cursor/types';
-import { TextSelection } from '../components/molecules/Selection/types';
+import { CursorCoordinate } from '../components/molecules/cursor/Cursor/types';
+import { TextSelection } from '../components/molecules/selection/Selection/types';
 
 export interface Props {
   text: string;

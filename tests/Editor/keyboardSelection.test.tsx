@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import * as utils from '../../src/Editor/callbacks/utils';
-import * as selection from '../../src/components/molecules/Selection';
-import { TextSelection } from '../../src/components/molecules/Selection/types';
-import { getSelectionText } from '../../src/components/molecules/Selection/utils';
+import * as selection from '../../src/components/molecules/selection/Selection';
+import { TextSelection } from '../../src/components/molecules/selection/Selection/types';
+import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor } from '../mocks';

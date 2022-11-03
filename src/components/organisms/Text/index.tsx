@@ -10,9 +10,9 @@ import {
   TextVisual,
 } from '../../../common/types';
 import { TextNode } from '../../../parser/types';
-import { Header } from '../../atoms/Header';
-import { CursorCoordinate } from '../../molecules/Cursor/types';
-import { TextSelection } from '../../molecules/Selection/types';
+import { Header } from '../../atoms/header/Header';
+import { CursorCoordinate } from '../../molecules/cursor/Cursor/types';
+import { TextSelection } from '../../molecules/selection/Selection/types';
 
 import { TextNodeComponent } from './TextNodeComponent';
 import { useTextNodeComponent } from './TextNodeComponent.hooks';

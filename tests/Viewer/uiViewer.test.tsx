@@ -2,7 +2,7 @@ import { render, screen, Screen } from '@testing-library/react';
 import React from 'react';
 
 import { Viewer, ViewerProps } from '../../src';
-import { useEmbededLinkForceClickable } from '../../src/components/atoms/EmbededLink/hooks';
+import { useEmbededLinkForceClickable } from '../../src/components/atoms/text/EmbededLink/hooks';
 import * as hooks from '../../src/components/organisms/Text/TextNodeComponent.hooks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 

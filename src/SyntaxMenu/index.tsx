@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import { createTestId } from '../common/utils';
-import { DropdownMenu } from '../components/atoms/DropdownMenu';
-import { useDropdownMenu } from '../components/atoms/DropdownMenu/hooks';
-import { DropdownMenuButton } from '../components/atoms/DropdownMenuButton';
-import { DropdownMenuList } from '../components/atoms/DropdownMenuList';
-import { DropdownMenuListItem } from '../components/atoms/DropdownMenuListItem';
-import { IconButtonMenu } from '../components/atoms/IconButtonMenu';
-import { MenuList } from '../components/atoms/MenuList';
+import { DropdownMenu } from '../components/atoms/menu/DropdownMenu';
+import { useDropdownMenu } from '../components/atoms/menu/DropdownMenu/hooks';
+import { DropdownMenuButton } from '../components/atoms/menu/DropdownMenuButton';
+import { DropdownMenuList } from '../components/atoms/menu/DropdownMenuList';
+import { DropdownMenuListItem } from '../components/atoms/menu/DropdownMenuListItem';
+import { IconButtonMenu } from '../components/atoms/menu/IconButtonMenu';
+import { MenuList } from '../components/atoms/menu/MenuList';
 import { BoldIcon } from '../icons/BoldIcon';
 import { BracketIcon } from '../icons/BracketIcon';
 import { CodeIcon } from '../icons/CodeIcon';

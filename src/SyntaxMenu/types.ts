@@ -14,7 +14,7 @@ import {
   FormulaParsing,
   Suggestion,
 } from '../common/types';
-import { MenuListProps } from '../components/atoms/MenuList';
+import { MenuListProps } from '../components/atoms/menu/MenuList';
 import { BlockNode, LineNode } from '../parser/types';
 
 export interface SyntaxMenuProps {
