@@ -4,19 +4,19 @@ import { useEmbededLinkForceClickable } from '../components/atoms/EmbededLink/ho
 import { CursorCoordinate } from '../components/molecules/Cursor/types';
 import { TextSelection } from '../components/molecules/Selection/types';
 import { selectionToRange } from '../components/molecules/Selection/utils';
-import { SyntaxNode } from '../parser/types';
+import { TextNode } from '../parser/types';
 
-export type UseSyntaxNodeComponent = {
-  editMode: (node: SyntaxNode) => boolean;
+export type UseTextNodeComponent = {
+  editMode: (node: TextNode) => boolean;
   linkForceClickable: boolean;
 };
 
-export function useSyntaxNodeComponent(
+export function useTextNodeComponent(
   cursorCoordinate?: CursorCoordinate,
   textSelection?: TextSelection
-): UseSyntaxNodeComponent {
+): UseTextNodeComponent {
   const editMode = React.useCallback(
-    (node: SyntaxNode) => cursorOnSyntaxNode(node, cursorCoordinate) || selectionOnSyntaxNode(node, textSelection),
+    (node: TextNode) => cursorOnTextNode(node, cursorCoordinate) || selectionOnTextNode(node, textSelection),
     [cursorCoordinate, textSelection]
   );
 
@@ -25,7 +25,7 @@ export function useSyntaxNodeComponent(
   return { editMode, linkForceClickable };
 }
 
-function cursorOnSyntaxNode(node: SyntaxNode, cursorCoordinate?: CursorCoordinate): boolean {
+function cursorOnTextNode(node: TextNode, cursorCoordinate?: CursorCoordinate): boolean {
   if (!cursorCoordinate) return false;
   if (node.type === 'blockCode' || node.type === 'blockFormula') {
     const [first, last] = node.range;
@@ -34,7 +34,7 @@ function cursorOnSyntaxNode(node: SyntaxNode, cursorCoordinate?: CursorCoordinat
   return cursorCoordinate.lineIndex === node.lineIndex;
 }
 
-function selectionOnSyntaxNode(node: SyntaxNode, textSelection?: TextSelection): boolean {
+function selectionOnTextNode(node: TextNode, textSelection?: TextSelection): boolean {
   if (!textSelection) return false;
   const { start, end } = selectionToRange(textSelection);
 

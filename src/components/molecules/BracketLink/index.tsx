@@ -3,9 +3,9 @@ import React from 'react';
 import { BracketLinkNode } from '../../../parser/types';
 import { Char } from '../../atoms/Char';
 import { EmbededLink } from '../../atoms/EmbededLink';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type BracketLinkProps = SyntaxNodeComponentProps<BracketLinkNode>;
+export type BracketLinkProps = TextNodeComponentProps<BracketLinkNode>;
 
 export const BracketLink: React.FC<BracketLinkProps> = ({ node, editMode, linkForceClickable, bracketLinkVisual }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;

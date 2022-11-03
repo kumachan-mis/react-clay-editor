@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextLines } from '../TextLines';
+import { Text } from '../Text';
 import { useParser } from '../parser';
 
 import { Props } from './types';
@@ -17,7 +17,7 @@ export const Viewer: React.FC<Props> = (props) => {
   );
 
   return (
-    <TextLines
+    <Text
       nodes={nodes}
       textVisual={props.textProps}
       bracketLinkVisual={props.bracketLinkProps}

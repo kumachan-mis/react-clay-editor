@@ -2,9 +2,9 @@ import React from 'react';
 
 import { NormalNode } from '../../../parser/types';
 import { Char } from '../../atoms/Char';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type NormalProps = SyntaxNodeComponentProps<NormalNode>;
+export type NormalProps = TextNodeComponentProps<NormalNode>;
 
 export const Normal: React.FC<NormalProps> = ({ node }) => {
   const { lineIndex, text } = node;

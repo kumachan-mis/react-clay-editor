@@ -5,9 +5,9 @@ import { KaTeX } from '../../atoms/KaTeX';
 import { LineGroup } from '../../atoms/LineGroup';
 import { LineGroupContent } from '../../atoms/LineGroupContent';
 import { LineGroupIndent } from '../../atoms/LineGroupIndent';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type BlockFormulaKaTeXProps = SyntaxNodeComponentProps<BlockFormulaNode>;
+export type BlockFormulaKaTeXProps = TextNodeComponentProps<BlockFormulaNode>;
 
 export const BlockFormulaKaTeX: React.FC<BlockFormulaKaTeXProps> = ({ node }) => {
   const { facingMeta, children, trailingMeta } = node;

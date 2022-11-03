@@ -3,9 +3,9 @@ import React from 'react';
 import { UrlNode } from '../../../parser/types';
 import { Char } from '../../atoms/Char';
 import { EmbededLink } from '../../atoms/EmbededLink';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type UrlProps = SyntaxNodeComponentProps<UrlNode>;
+export type UrlProps = TextNodeComponentProps<UrlNode>;
 
 export const Url: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }) => {
   const { lineIndex, url } = node;

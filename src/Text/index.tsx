@@ -12,13 +12,13 @@ import {
 import { Header } from '../components/atoms/Header';
 import { CursorCoordinate } from '../components/molecules/Cursor/types';
 import { TextSelection } from '../components/molecules/Selection/types';
-import { SyntaxNode } from '../parser/types';
+import { TextNode } from '../parser/types';
 
-import { SyntaxNodeComponent } from './SyntaxNodeComponent';
-import { useSyntaxNodeComponent } from './SyntaxNodeComponent.hooks';
+import { TextNodeComponent } from './TextNodeComponent';
+import { useTextNodeComponent } from './TextNodeComponent.hooks';
 
 export interface TextLinesProps {
-  nodes: SyntaxNode[];
+  nodes: TextNode[];
   cursorCoordinate?: CursorCoordinate;
   textSelection?: TextSelection;
   textVisual?: TextVisual;
@@ -30,22 +30,16 @@ export interface TextLinesProps {
   className?: string;
 }
 
-export const TextLines: React.FC<TextLinesProps> = ({
-  nodes,
-  cursorCoordinate,
-  textSelection,
-  className,
-  ...visuals
-}) => {
-  const { editMode, linkForceClickable } = useSyntaxNodeComponent(cursorCoordinate, textSelection);
+export const Text: React.FC<TextLinesProps> = ({ nodes, cursorCoordinate, textSelection, className, ...visuals }) => {
+  const { editMode, linkForceClickable } = useTextNodeComponent(cursorCoordinate, textSelection);
 
   return (
-    <StyledTextLines className={className}>
+    <StyledText className={className}>
       {visuals.textVisual?.header && (
         <Header size={visuals.textVisual?.headerSize}>{visuals.textVisual?.header}</Header>
       )}
       {nodes.map((node, index) => (
-        <SyntaxNodeComponent
+        <TextNodeComponent
           key={index}
           node={node}
           editMode={editMode}
@@ -53,11 +47,11 @@ export const TextLines: React.FC<TextLinesProps> = ({
           {...visuals}
         />
       ))}
-    </StyledTextLines>
+    </StyledText>
   );
 };
 
-const StyledTextLines = styled.div`
+const StyledText = styled.div`
   white-space: pre-wrap;
   word-wrap: break-word;
 `;

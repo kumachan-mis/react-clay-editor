@@ -6,11 +6,11 @@ import {
   TaggedLinkVisual,
   TextVisual,
 } from '../../../common/types';
-import { SyntaxNode } from '../../../parser/types';
+import { TextNode } from '../../../parser/types';
 
-export interface SyntaxNodeComponentProps<TSyntaxNode extends SyntaxNode = SyntaxNode> {
-  node: TSyntaxNode;
-  editMode: (node: SyntaxNode) => boolean;
+export interface TextNodeComponentProps<TTextNode extends TextNode = TextNode> {
+  node: TTextNode;
+  editMode: (node: TextNode) => boolean;
   linkForceClickable: boolean;
   textVisual?: TextVisual;
   bracketLinkVisual?: BracketLinkVisual;

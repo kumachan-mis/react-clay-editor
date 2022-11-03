@@ -5,11 +5,11 @@ import { Char } from '../../atoms/Char';
 import { Line } from '../../atoms/Line';
 import { LineIndent } from '../../atoms/LineIndent';
 import { Monospace } from '../../atoms/Monospace';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
 import { BlockCodeContent } from './BlockCodeContent';
 
-export type BlockCodeLineProps = SyntaxNodeComponentProps<BlockCodeLineNode>;
+export type BlockCodeLineProps = TextNodeComponentProps<BlockCodeLineNode>;
 
 export const BlockCodeLine: React.FC<BlockCodeLineProps> = ({ node, textVisual, codeVisual }) => {
   const { codeLine, lineIndex, indentDepth } = node;

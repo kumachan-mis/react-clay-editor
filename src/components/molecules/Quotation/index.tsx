@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { QuotationNode, SyntaxNode } from '../../../parser/types';
+import { QuotationNode, TextNode } from '../../../parser/types';
 import { Char } from '../../atoms/Char';
 import { Line } from '../../atoms/Line';
 import { LineContent } from '../../atoms/LineContent';
 import { LineIndent } from '../../atoms/LineIndent';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
 export type QuotationProps = {
-  ChildComponent: React.FC<SyntaxNodeComponentProps<SyntaxNode>>;
-} & SyntaxNodeComponentProps<QuotationNode>;
+  ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+} & TextNodeComponentProps<QuotationNode>;
 
 export const Quotation: React.FC<QuotationProps> = ({ node, editMode, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, indentDepth, meta, contentLength, children } = node;

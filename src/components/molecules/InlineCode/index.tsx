@@ -3,9 +3,9 @@ import React from 'react';
 import { InlineCodeNode } from '../../../parser/types';
 import { Char } from '../../atoms/Char';
 import { Monospace } from '../../atoms/Monospace';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type InlineCodeProps = SyntaxNodeComponentProps<InlineCodeNode>;
+export type InlineCodeProps = TextNodeComponentProps<InlineCodeNode>;
 
 export const InlineCode: React.FC<InlineCodeProps> = ({ node, editMode, codeVisual }) => {
   const { lineIndex, facingMeta, code, trailingMeta } = node;

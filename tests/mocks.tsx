@@ -10,12 +10,12 @@ export const MockEditor: React.FC<MockEditorProps> = ({ initText = '', ...props 
   return (
     <>
       <Editor text={text} onChangeText={setText} {...props} />
-      <MockTextLines text={text} />
+      <MockText text={text} />
     </>
   );
 };
 
-export const MockTextLines: React.FC<{ text: string }> = ({ text }) => (
+export const MockText: React.FC<{ text: string }> = ({ text }) => (
   <div>
     {text.split('\n').map((line, i) => (
       <div key={i} data-testid={`mock-line-${i}`}>

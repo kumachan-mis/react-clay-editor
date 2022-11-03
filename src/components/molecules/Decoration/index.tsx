@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { DecorationNode, Decoration as DecorationStyle, SyntaxNode } from '../../../parser/types';
+import { DecorationNode, Decoration as DecorationStyle, TextNode } from '../../../parser/types';
 import { Char } from '../../atoms/Char';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
 export type DecorationProps = {
-  ChildComponent: React.FC<SyntaxNodeComponentProps<SyntaxNode>>;
-} & SyntaxNodeComponentProps<DecorationNode>;
+  ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+} & TextNodeComponentProps<DecorationNode>;
 
 export const Decoration: React.FC<DecorationProps> = ({ node, editMode, ChildComponent, ...rest }) => {
   const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;

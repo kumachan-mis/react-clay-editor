@@ -4,9 +4,9 @@ import { TaggedLinkNode } from '../../../parser/types';
 import { getTagName, splitTag } from '../../../parser/utils';
 import { Char } from '../../atoms/Char';
 import { EmbededLink } from '../../atoms/EmbededLink';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type TaggedLinkProps = SyntaxNodeComponentProps<TaggedLinkNode>;
+export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
 
 export const TaggedLink: React.FC<TaggedLinkProps> = ({ node, editMode, linkForceClickable, taggedLinkVisualMap }) => {
   const { lineIndex, linkName, trailingMeta } = node;

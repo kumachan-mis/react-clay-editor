@@ -21,7 +21,7 @@ export interface Decoration {
   underline: boolean;
 }
 
-export type SyntaxNode = BlockNode | LineNode | ContentNode;
+export type TextNode = BlockNode | LineNode | ContentNode;
 
 export type BlockNode = BlockCodeNode | BlockFormulaNode;
 

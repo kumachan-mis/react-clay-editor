@@ -2,12 +2,12 @@ import React from 'react';
 
 import { BlockCodeNode } from '../../../parser/types';
 import { LineGroup } from '../../atoms/LineGroup';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
 import { BlockCodeLine } from './BlockCodeLine';
 import { BlockCodeMeta } from './BlockCodeMeta';
 
-export type BlockCodeProps = SyntaxNodeComponentProps<BlockCodeNode>;
+export type BlockCodeProps = TextNodeComponentProps<BlockCodeNode>;
 
 export const BlockCode: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;

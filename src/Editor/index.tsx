@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SyntaxMenu } from '../SyntaxMenu';
-import { TextLines } from '../TextLines';
+import { Text } from '../Text';
 import { mergeClassNames, createTestId } from '../common/utils';
 import { Cursor } from '../components/molecules/Cursor';
 import { Selection } from '../components/molecules/Selection';
@@ -77,7 +77,7 @@ export const Editor: React.FC<Props> = (props) => {
             mouseHold={state.selectionMouse}
             {...cursorEventHandlers}
           />
-          <TextLines
+          <Text
             nodes={nodes}
             cursorCoordinate={state.cursorCoordinate}
             textSelection={state.textSelection}

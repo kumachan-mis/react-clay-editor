@@ -5,7 +5,6 @@ import React from 'react';
 
 import { EditorProps } from '../../src';
 import * as utils from '../../src/Editor/callbacks/utils';
-import * as textLines from '../../src/TextLines';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 
@@ -19,7 +18,6 @@ interface TestCase extends BaseTestCase {
   expectedLines: string[];
 }
 
-const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
 const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
 
 beforeAll(() => {
@@ -27,13 +25,11 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-  SpiedTextLines.mockRestore();
   spiedPositionToCursorCoordinate.mockRestore();
 });
 
 describe('compositionEvents in Editor', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 

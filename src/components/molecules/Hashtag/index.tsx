@@ -4,9 +4,9 @@ import { HashtagNode } from '../../../parser/types';
 import { getHashtagName } from '../../../parser/utils';
 import { Char } from '../../atoms/Char';
 import { EmbededLink } from '../../atoms/EmbededLink';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type HashtagProps = SyntaxNodeComponentProps<HashtagNode>;
+export type HashtagProps = TextNodeComponentProps<HashtagNode>;
 
 export const Hashtag: React.FC<HashtagProps> = ({ node, editMode, linkForceClickable, hashtagVisual }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;

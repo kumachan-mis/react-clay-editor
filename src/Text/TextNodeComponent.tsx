@@ -21,11 +21,11 @@ import { NormalLine } from '../components/molecules/NormalLine';
 import { Quotation } from '../components/molecules/Quotation';
 import { TaggedLink } from '../components/molecules/TaggedLink';
 import { Url } from '../components/molecules/Url';
-import { SyntaxNode } from '../parser/types';
+import { TextNode } from '../parser/types';
 
-export type SyntaxNodeComponentProps = {
-  node: SyntaxNode;
-  editMode: (node: SyntaxNode) => boolean;
+export type TextNodeComponentProps = {
+  node: TextNode;
+  editMode: (node: TextNode) => boolean;
   linkForceClickable: boolean;
   textVisual?: TextVisual;
   bracketLinkVisual?: BracketLinkVisual;
@@ -35,18 +35,18 @@ export type SyntaxNodeComponentProps = {
   formulaVisual?: FormulaVisual;
 };
 
-export const SyntaxNodeComponent: React.FC<SyntaxNodeComponentProps> = ({ node, ...rest }) => {
+export const TextNodeComponent: React.FC<TextNodeComponentProps> = ({ node, ...rest }) => {
   switch (node.type) {
     case 'blockCode':
       return <BlockCode node={node} {...rest} />;
     case 'blockFormula':
       return <BlockFormula node={node} {...rest} />;
     case 'quotation':
-      return <Quotation node={node} ChildComponent={SyntaxNodeComponent} {...rest} />;
+      return <Quotation node={node} ChildComponent={TextNodeComponent} {...rest} />;
     case 'itemization':
-      return <Itemization node={node} ChildComponent={SyntaxNodeComponent} {...rest} />;
+      return <Itemization node={node} ChildComponent={TextNodeComponent} {...rest} />;
     case 'normalLine':
-      return <NormalLine node={node} ChildComponent={SyntaxNodeComponent} {...rest} />;
+      return <NormalLine node={node} ChildComponent={TextNodeComponent} {...rest} />;
     case 'inlineCode':
       return <InlineCode node={node} {...rest} />;
     case 'displayFormula':
@@ -54,7 +54,7 @@ export const SyntaxNodeComponent: React.FC<SyntaxNodeComponentProps> = ({ node, 
     case 'inlineFormula':
       return <ContentFormula node={node} {...rest} />;
     case 'decoration':
-      return <Decoration node={node} ChildComponent={SyntaxNodeComponent} {...rest} />;
+      return <Decoration node={node} ChildComponent={TextNodeComponent} {...rest} />;
     case 'taggedLink':
       return <TaggedLink node={node} {...rest} />;
     case 'bracketLink':

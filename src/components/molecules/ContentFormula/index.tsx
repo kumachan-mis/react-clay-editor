@@ -5,9 +5,9 @@ import { Char } from '../../atoms/Char';
 import { CharGroup } from '../../atoms/CharGroup';
 import { KaTeX } from '../../atoms/KaTeX';
 import { Monospace } from '../../atoms/Monospace';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type ContentFormulaProps = SyntaxNodeComponentProps<ContentFormulaNode>;
+export type ContentFormulaProps = TextNodeComponentProps<ContentFormulaNode>;
 
 export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, editMode, formulaVisual }) => {
   const { lineIndex, facingMeta, formula, trailingMeta } = node;

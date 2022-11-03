@@ -6,9 +6,9 @@ import { Line } from '../../atoms/Line';
 import { LineContent } from '../../atoms/LineContent';
 import { LineIndent } from '../../atoms/LineIndent';
 import { Monospace } from '../../atoms/Monospace';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
-export type BlockFormulaLineProps = SyntaxNodeComponentProps<BlockFormulaLineNode>;
+export type BlockFormulaLineProps = TextNodeComponentProps<BlockFormulaLineNode>;
 
 export const BlockFormulaLine: React.FC<BlockFormulaLineProps> = ({ node, textVisual, formulaVisual }) => {
   const { formulaLine, lineIndex, indentDepth } = node;

@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { ItemizationNode, SyntaxNode } from '../../../parser/types';
+import { ItemizationNode, TextNode } from '../../../parser/types';
 import { ItemBullet } from '../../atoms/ItemBullet';
 import { ItemBulletContent } from '../../atoms/ItemBulletContent';
 import { Line } from '../../atoms/Line';
 import { LineContent } from '../../atoms/LineContent';
 import { LineIndent } from '../../atoms/LineIndent';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
 export type ItemizationProps = {
-  ChildComponent: React.FC<SyntaxNodeComponentProps<SyntaxNode>>;
-} & SyntaxNodeComponentProps<ItemizationNode>;
+  ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+} & TextNodeComponentProps<ItemizationNode>;
 
 export const Itemization: React.FC<ItemizationProps> = ({ node, editMode, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, indentDepth, bullet, contentLength, children } = node;

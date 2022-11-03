@@ -2,13 +2,13 @@ import React from 'react';
 
 import { BlockFormulaNode } from '../../../parser/types';
 import { LineGroup } from '../../atoms/LineGroup';
-import { SyntaxNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../_common/types';
 
 import { BlockFormulaKaTeX } from './BlockFormulaKaTeX';
 import { BlockFormulaLine } from './BlockFormulaLine';
 import { BlockFormulaMeta } from './BlockFormulaMeta';
 
-export type BlockFormulaProps = SyntaxNodeComponentProps<BlockFormulaNode>;
+export type BlockFormulaProps = TextNodeComponentProps<BlockFormulaNode>;
 
 export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, editMode, formulaVisual, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
