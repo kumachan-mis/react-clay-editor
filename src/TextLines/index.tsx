@@ -9,13 +9,13 @@ import {
   TaggedLinkVisual,
   TextVisual,
 } from '../common/types';
-import { useEmbededLinkForceClickable } from '../components/atoms/EmbededLink/hooks';
 import { Header } from '../components/atoms/Header';
 import { CursorCoordinate } from '../components/molecules/Cursor/types';
 import { TextSelection } from '../components/molecules/Selection/types';
 import { SyntaxNode } from '../parser/types';
 
 import { SyntaxNodeComponent } from './SyntaxNodeComponent';
+import { useSyntaxNodeComponent } from './SyntaxNodeComponent.hooks';
 
 export interface TextLinesProps {
   nodes: SyntaxNode[];
@@ -37,7 +37,7 @@ export const TextLines: React.FC<TextLinesProps> = ({
   className,
   ...visuals
 }) => {
-  const linkForceClickable = useEmbededLinkForceClickable();
+  const { editMode, linkForceClickable } = useSyntaxNodeComponent(cursorCoordinate, textSelection);
 
   return (
     <StyledTextLines className={className}>
@@ -48,8 +48,7 @@ export const TextLines: React.FC<TextLinesProps> = ({
         <SyntaxNodeComponent
           key={index}
           node={node}
-          cursorCoordinate={cursorCoordinate}
-          textSelection={textSelection}
+          editMode={editMode}
           linkForceClickable={linkForceClickable}
           {...visuals}
         />

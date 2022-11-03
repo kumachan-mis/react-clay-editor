@@ -4,7 +4,7 @@ import React from 'react';
 import { createTestId } from '../../../common/utils';
 
 export type EmbededLinkProps = React.PropsWithChildren<{
-  cursorOn: boolean;
+  editMode: boolean;
   forceClickable: boolean;
   anchorProps: (clickable: boolean) => React.ComponentProps<'a'> | undefined;
 }>;
@@ -14,25 +14,25 @@ export const EmbededLinkConstants = {
   testId: 'embeded-link',
 };
 
-export const EmbededLink: React.FC<EmbededLinkProps> = ({ cursorOn, forceClickable, children, anchorProps }) => {
+export const EmbededLink: React.FC<EmbededLinkProps> = ({ editMode, forceClickable, children, anchorProps }) => {
   const [state, setState] = React.useState({ clickable: false, hover: false });
   const clickable = (forceClickable && state.hover) || state.clickable;
   const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...rest } = anchorProps?.(clickable) || {};
 
   const handleOnMouseDown = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      if (cursorOn) event.preventDefault();
+      if (editMode) event.preventDefault();
       onMouseDown?.(event);
     },
-    [cursorOn, onMouseDown]
+    [editMode, onMouseDown]
   );
 
   const handleOnMouseEnter = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
       onMouseEnter?.(event);
-      setState({ clickable: !cursorOn, hover: true });
+      setState({ clickable: !editMode, hover: true });
     },
-    [cursorOn, onMouseEnter]
+    [editMode, onMouseEnter]
   );
 
   const handleOnMouseLeave = React.useCallback(

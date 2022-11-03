@@ -5,24 +5,17 @@ import { getHashtagName } from '../../../parser/utils';
 import { Char } from '../../atoms/Char';
 import { EmbededLink } from '../../atoms/EmbededLink';
 import { SyntaxNodeComponentProps } from '../_common/types';
-import { cursorOnSyntaxNode } from '../_common/utils';
 
 export type HashtagProps = SyntaxNodeComponentProps<HashtagNode>;
 
-export const Hashtag: React.FC<HashtagProps> = ({
-  node,
-  cursorCoordinate,
-  textSelection,
-  linkForceClickable,
-  hashtagVisual,
-}) => {
+export const Hashtag: React.FC<HashtagProps> = ({ node, editMode, linkForceClickable, hashtagVisual }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
-  const cursorOn = cursorOnSyntaxNode(node, cursorCoordinate, textSelection);
+  const editModeValue = editMode(node);
 
   return (
     <EmbededLink
-      cursorOn={cursorOn}
+      editMode={editModeValue}
       forceClickable={linkForceClickable}
       anchorProps={(active) => hashtagVisual?.anchorProps?.(getHashtagName(linkName), active)}
     >

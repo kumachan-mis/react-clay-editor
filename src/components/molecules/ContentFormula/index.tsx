@@ -6,20 +6,14 @@ import { CharGroup } from '../../atoms/CharGroup';
 import { KaTeX } from '../../atoms/KaTeX';
 import { Monospace } from '../../atoms/Monospace';
 import { SyntaxNodeComponentProps } from '../_common/types';
-import { cursorOnSyntaxNode } from '../_common/utils';
 
 export type ContentFormulaProps = SyntaxNodeComponentProps<ContentFormulaNode>;
 
-export const ContentFormula: React.FC<ContentFormulaProps> = ({
-  node,
-  cursorCoordinate,
-  textSelection,
-  formulaVisual,
-}) => {
+export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, editMode, formulaVisual }) => {
   const { lineIndex, facingMeta, formula, trailingMeta } = node;
   const displayMode = node.type === 'displayFormula';
   const [first, last] = node.range;
-  const cursorOn = cursorOnSyntaxNode(node, cursorCoordinate, textSelection);
+  const editModeValue = editMode(node);
   const spanElementProps = formulaVisual?.codeProps?.(formula);
 
   return (
@@ -29,7 +23,7 @@ export const ContentFormula: React.FC<ContentFormulaProps> = ({
       lastCharIndex={last - trailingMeta.length}
       {...spanElementProps}
     >
-      {!cursorOn ? (
+      {!editModeValue ? (
         <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
       ) : (
         <Monospace>

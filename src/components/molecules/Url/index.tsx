@@ -4,18 +4,17 @@ import { UrlNode } from '../../../parser/types';
 import { Char } from '../../atoms/Char';
 import { EmbededLink } from '../../atoms/EmbededLink';
 import { SyntaxNodeComponentProps } from '../_common/types';
-import { cursorOnSyntaxNode } from '../_common/utils';
 
 export type UrlProps = SyntaxNodeComponentProps<UrlNode>;
 
-export const Url: React.FC<UrlProps> = ({ node, cursorCoordinate, textSelection, linkForceClickable }) => {
+export const Url: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }) => {
   const { lineIndex, url } = node;
   const [first] = node.range;
-  const cursorOn = cursorOnSyntaxNode(node, cursorCoordinate, textSelection);
+  const editModeValue = editMode(node);
 
   return (
     <EmbededLink
-      cursorOn={cursorOn}
+      editMode={editModeValue}
       forceClickable={linkForceClickable}
       anchorProps={() => ({ href: url, target: '_blank', rel: 'noopener noreferrer' })}
     >

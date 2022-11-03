@@ -7,24 +7,16 @@ import { Line } from '../../atoms/Line';
 import { LineContent } from '../../atoms/LineContent';
 import { LineIndent } from '../../atoms/LineIndent';
 import { SyntaxNodeComponentProps } from '../_common/types';
-import { cursorOnSyntaxNode } from '../_common/utils';
 
 export type QuotationProps = {
   ChildComponent: React.FC<SyntaxNodeComponentProps<SyntaxNode>>;
 } & SyntaxNodeComponentProps<QuotationNode>;
 
-export const Quotation: React.FC<QuotationProps> = ({
-  node,
-  cursorCoordinate,
-  textSelection,
-  textVisual,
-  ChildComponent,
-  ...rest
-}) => {
+export const Quotation: React.FC<QuotationProps> = ({ node, editMode, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, indentDepth, meta, contentLength, children } = node;
   const lineLength = indentDepth + meta.length + contentLength;
   const lineProps = textVisual?.lineProps?.(lineIndex);
-  const cursorOn = cursorOnSyntaxNode(node, cursorCoordinate, textSelection);
+  const editModeValue = editMode(node);
 
   return (
     <Line lineIndex={lineIndex} {...lineProps}>
@@ -32,18 +24,11 @@ export const Quotation: React.FC<QuotationProps> = ({
       <QuotationLineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
         {[...meta].map((char, index) => (
           <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
-            {cursorOn ? char : ''}
+            {editModeValue ? char : ''}
           </Char>
         ))}
         {children.map((child, index) => (
-          <ChildComponent
-            key={index}
-            node={child}
-            cursorCoordinate={cursorCoordinate}
-            textSelection={textSelection}
-            textVisual={textVisual}
-            {...rest}
-          />
+          <ChildComponent key={index} node={child} editMode={editMode} textVisual={textVisual} {...rest} />
         ))}
       </QuotationLineContent>
     </Line>

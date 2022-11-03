@@ -12,7 +12,6 @@ import { BlockCode } from '../components/molecules/BlockCode';
 import { BlockFormula } from '../components/molecules/BlockFormula';
 import { BracketLink } from '../components/molecules/BracketLink';
 import { ContentFormula } from '../components/molecules/ContentFormula';
-import { CursorCoordinate } from '../components/molecules/Cursor/types';
 import { Decoration } from '../components/molecules/Decoration';
 import { Hashtag } from '../components/molecules/Hashtag';
 import { InlineCode } from '../components/molecules/InlineCode';
@@ -20,22 +19,20 @@ import { Itemization } from '../components/molecules/Itemization';
 import { Normal } from '../components/molecules/Normal';
 import { NormalLine } from '../components/molecules/NormalLine';
 import { Quotation } from '../components/molecules/Quotation';
-import { TextSelection } from '../components/molecules/Selection/types';
 import { TaggedLink } from '../components/molecules/TaggedLink';
 import { Url } from '../components/molecules/Url';
 import { SyntaxNode } from '../parser/types';
 
 export type SyntaxNodeComponentProps = {
   node: SyntaxNode;
-  cursorCoordinate?: CursorCoordinate;
-  textSelection?: TextSelection;
+  editMode: (node: SyntaxNode) => boolean;
+  linkForceClickable: boolean;
   textVisual?: TextVisual;
   bracketLinkVisual?: BracketLinkVisual;
   hashtagVisual?: HashtagVisual;
   taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
   codeVisual?: CodeVisual;
   formulaVisual?: FormulaVisual;
-  linkForceClickable: boolean;
 };
 
 export const SyntaxNodeComponent: React.FC<SyntaxNodeComponentProps> = ({ node, ...rest }) => {

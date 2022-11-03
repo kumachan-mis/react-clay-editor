@@ -9,14 +9,7 @@ export type NormalLineProps = {
   ChildComponent: React.FC<SyntaxNodeComponentProps<SyntaxNode>>;
 } & SyntaxNodeComponentProps<NormalLineNode>;
 
-export const NormalLine: React.FC<NormalLineProps> = ({
-  node,
-  cursorCoordinate,
-  textSelection,
-  textVisual,
-  ChildComponent,
-  ...rest
-}) => {
+export const NormalLine: React.FC<NormalLineProps> = ({ node, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, contentLength, children } = node;
   const lineProps = textVisual?.lineProps?.(lineIndex);
 
@@ -24,14 +17,7 @@ export const NormalLine: React.FC<NormalLineProps> = ({
     <Line lineIndex={lineIndex} {...lineProps}>
       <LineContent lineIndex={lineIndex} lineLength={contentLength}>
         {children.map((child, index) => (
-          <ChildComponent
-            key={index}
-            node={child}
-            cursorCoordinate={cursorCoordinate}
-            textSelection={textSelection}
-            textVisual={textVisual}
-            {...rest}
-          />
+          <ChildComponent key={index} node={child} textVisual={textVisual} {...rest} />
         ))}
       </LineContent>
     </Line>
