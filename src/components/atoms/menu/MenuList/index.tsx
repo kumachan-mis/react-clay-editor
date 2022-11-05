@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-export type MenuListProps = React.ComponentProps<'div'>;
+export type MenuListProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const MenuList: React.FC<MenuListProps> = ({ ...rest }) => <StyledMenuList role="menubar" {...rest} />;
 

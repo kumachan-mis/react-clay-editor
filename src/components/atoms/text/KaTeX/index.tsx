@@ -5,7 +5,7 @@ import { createTestId } from '../../../../common/utils';
 
 export type KaTeXProps = {
   options?: KatexOptions;
-} & React.ComponentProps<'span'>;
+} & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const KaTeXConstants = {
   selectId: 'katex',

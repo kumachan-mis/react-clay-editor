@@ -3,7 +3,7 @@ import React from 'react';
 
 import { createTestId } from '../../../../common/utils';
 
-export type TextFieldBodyProps = React.ComponentProps<'div'>;
+export type TextFieldBodyProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const TextFieldBodyConstants = {
   selectId: 'text-field-body',

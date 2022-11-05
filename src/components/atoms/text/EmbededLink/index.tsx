@@ -6,7 +6,7 @@ import { createTestId } from '../../../../common/utils';
 export type EmbededLinkProps = React.PropsWithChildren<{
   editMode: boolean;
   forceClickable: boolean;
-  anchorProps: (clickable: boolean) => React.ComponentProps<'a'> | undefined;
+  anchorProps: (clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
 }>;
 
 export const EmbededLinkConstants = {

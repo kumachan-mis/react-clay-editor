@@ -5,7 +5,7 @@ import { createTestId } from '../../../../common/utils';
 
 export type LineProps = {
   lineIndex: number;
-} & React.ComponentProps<'div'>;
+} & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const LineConstants = {
   selectId: (lineIndex: number): string => `line-L${lineIndex}`,

@@ -3,7 +3,7 @@ import React from 'react';
 
 export type SuggestionListItemProps = {
   index: number;
-} & React.ComponentProps<'li'>;
+} & React.PropsWithoutRef<React.ComponentProps<'li'>>;
 
 export const SuggestionListItemConstants = {
   selectId: (index: number): string => `suggestion-item-${index}`,

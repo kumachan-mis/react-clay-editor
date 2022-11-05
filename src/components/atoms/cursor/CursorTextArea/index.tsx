@@ -4,7 +4,7 @@ import React from 'react';
 export type CursorTextAreaProps = {
   position: { top: number; left: number };
   cursorSize: number;
-} & React.ComponentProps<'textarea'>;
+} & React.PropsWithoutRef<React.ComponentProps<'textarea'>>;
 
 export const CursorTextArea: React.FC<CursorTextAreaProps> = ({ position, cursorSize, ...rest }) => (
   <StyledCursorTextArea

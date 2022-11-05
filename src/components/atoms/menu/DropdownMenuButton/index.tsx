@@ -10,8 +10,8 @@ export type DropdownMenuButtonProps = {
   onClose: () => void;
   pressed?: boolean;
   disabled?: boolean;
-  buttonProps?: React.ComponentProps<'button'>;
-} & React.ComponentProps<'div'>;
+  buttonProps?: React.PropsWithoutRef<React.ComponentProps<'button'>>;
+} & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const DropdownMenuButtonConstants = {
   main: {

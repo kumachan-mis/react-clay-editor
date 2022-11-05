@@ -4,7 +4,7 @@ import React from 'react';
 export type SuggestionListProps = {
   position: { top: number; left: number };
   cursorSize: number;
-} & React.ComponentProps<'div'>;
+} & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const SuggestionList: React.FC<SuggestionListProps> = ({ position, cursorSize, ...rest }) => (
   <StyledSuggestionList position={position} cursorSize={cursorSize} {...rest} />

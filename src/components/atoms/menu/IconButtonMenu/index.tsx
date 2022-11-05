@@ -3,7 +3,7 @@ import React from 'react';
 
 export type IconButtonMenuProps = {
   pressed?: boolean;
-} & React.ComponentProps<'button'>;
+} & React.PropsWithoutRef<React.ComponentProps<'button'>>;
 
 export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ pressed, ...rest }) => (
   <StyledIconButtonMenu role="menuitem" aria-pressed={pressed} {...rest} />

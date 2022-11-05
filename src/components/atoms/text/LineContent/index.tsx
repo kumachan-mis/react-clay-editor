@@ -7,7 +7,7 @@ export type LineContentProps = {
   lineIndex: number;
   lineLength: number;
   indentDepth?: number;
-} & React.ComponentProps<'div'>;
+} & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const LineContent: React.FC<LineContentProps> = ({
   lineIndex,

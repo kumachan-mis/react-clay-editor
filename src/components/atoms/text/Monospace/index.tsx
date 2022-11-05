@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-export type MonospaceProps = React.ComponentProps<'code'>;
+export type MonospaceProps = React.PropsWithoutRef<React.ComponentProps<'code'>>;
 
 export const Monospace: React.FC<MonospaceProps> = ({ ...rest }) => <StyledMonospace {...rest} />;
 

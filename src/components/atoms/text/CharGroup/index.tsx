@@ -7,7 +7,7 @@ export type CharGroupProps = {
   lineIndex: number;
   firstCharIndex: number;
   lastCharIndex: number;
-} & React.ComponentProps<'span'>;
+} & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const CharGroupConstants = {
   selectId: (lineIndex: number, first: number, last: number): string => `chargroup-L${lineIndex}C${first}-${last}`,

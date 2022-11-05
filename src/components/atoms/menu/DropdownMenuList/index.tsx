@@ -6,7 +6,7 @@ import { createTestId } from '../../../../common/utils';
 export type DropdownMenuListProps = {
   open: boolean;
   anchorEl: HTMLElement | null;
-} & React.ComponentProps<'ul'>;
+} & React.PropsWithoutRef<React.ComponentProps<'ul'>>;
 
 export const DropdownMenuListConstants = {
   selectId: 'dropdown-menu-list',

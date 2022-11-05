@@ -6,7 +6,7 @@ import { Char } from '../Char';
 export type LineIndentProps = {
   lineIndex: number;
   indentDepth: number;
-} & React.ComponentProps<'span'>;
+} & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, ...rest }) => (
   <StyledLineIndent indentDepth={indentDepth} {...rest}>

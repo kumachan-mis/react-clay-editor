@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-export type SuggestionListBodyProps = React.ComponentProps<'ul'>;
+export type SuggestionListBodyProps = React.PropsWithoutRef<React.ComponentProps<'ul'>>;
 
 export const SuggestionListBodyConstants = {
   selectId: 'suggestion-body',

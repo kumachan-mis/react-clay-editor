@@ -3,7 +3,7 @@ import React from 'react';
 
 import { createTestId } from '../../../../common/utils';
 
-export type EditorRootProps = Omit<React.ComponentProps<'div'>, 'ref'>;
+export type EditorRootProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const EditorRootConstants = {
   selectId: 'editor-root',

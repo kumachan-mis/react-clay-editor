@@ -7,28 +7,31 @@ import React from 'react';
 export type TextVisual = {
   header?: string;
   headerSize?: 'normal' | 'larger' | 'largest';
-  lineProps?: (lineIndex: number) => React.ComponentProps<'div'> | undefined;
+  lineProps?: (lineIndex: number) => React.PropsWithoutRef<React.ComponentProps<'div'>> | undefined;
 };
 
 export type BracketLinkVisual = {
-  anchorProps?: (linkName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
+  anchorProps?: (linkName: string, clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
 };
 
 export type HashtagVisual = {
-  anchorProps?: (hashtagName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
+  anchorProps?: (
+    hashtagName: string,
+    clickable: boolean
+  ) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
 };
 
 export type TaggedLinkVisual = {
-  anchorProps?: (linkName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
+  anchorProps?: (linkName: string, clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
   tagHidden?: boolean;
 };
 
 export type CodeVisual = {
-  codeProps?: (code: string) => React.ComponentProps<'code'> | undefined;
+  codeProps?: (code: string) => React.PropsWithoutRef<React.ComponentProps<'code'>> | undefined;
 };
 
 export type FormulaVisual = {
-  codeProps?: (formula: string) => React.ComponentProps<'code'> | undefined;
+  codeProps?: (formula: string) => React.PropsWithoutRef<React.ComponentProps<'code'>> | undefined;
 };
 
 /**

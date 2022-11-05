@@ -3,7 +3,7 @@ import React from 'react';
 
 export type LineGroupIndentProps = {
   indentDepth: number;
-} & React.ComponentProps<'span'>;
+} & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, children, ...rest }) => (
   <StyledLineGroupIndent indentDepth={indentDepth} {...rest}>

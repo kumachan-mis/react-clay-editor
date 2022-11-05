@@ -5,7 +5,7 @@ import { createTestId } from '../../../../common/utils';
 export type CharProps = {
   lineIndex: number;
   charIndex: number;
-} & React.ComponentProps<'span'>;
+} & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const CharConstants = {
   selectId: (lineIndex: number, charIndex: number): string => `char-L${lineIndex}C${charIndex}`,

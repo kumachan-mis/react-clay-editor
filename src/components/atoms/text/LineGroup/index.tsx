@@ -6,7 +6,7 @@ import { createTestId } from '../../../../common/utils';
 export type LineGroupProps = {
   firstLineIndex: number;
   lastLineIndex: number;
-} & React.ComponentProps<'div'>;
+} & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const LineGroupConstants = {
   selectId: (first: number, last: number): string => `linegroup-L${first}-${last}`,
