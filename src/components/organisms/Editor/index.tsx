@@ -1,15 +1,16 @@
 import React from 'react';
 
-import { mergeClassNames, createTestId } from '../../../common/utils';
 import { useParser } from '../../../parser';
+import { EditorRoot } from '../../atoms/editor/EditorRoot';
+import { TextFieldBody } from '../../atoms/editor/TextFieldBody';
+import { TextFieldRoot } from '../../atoms/editor/TextFieldRoot';
 import { Cursor } from '../../molecules/cursor/Cursor';
 import { Selection } from '../../molecules/selection/Selection';
 import { Text } from '../../molecules/text/Text';
 import { SyntaxMenu } from '../SyntaxMenu';
 
-import { EditorConstants } from './constants';
+import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScroll } from './hooks';
 import { Props } from './types';
-import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScroll } from './utils';
 
 export const Editor: React.FC<Props> = (props) => {
   const [state, setState, ref] = useEditor();
@@ -29,13 +30,7 @@ export const Editor: React.FC<Props> = (props) => {
   );
 
   return (
-    <div
-      className={mergeClassNames(EditorConstants.root.className, props.className)}
-      style={props.style}
-      ref={ref}
-      {...rootMouseEventHandlers}
-      data-selectid={EditorConstants.root.selectId}
-    >
+    <EditorRoot {...rootMouseEventHandlers} className={props.className} ref={ref}>
       {!props.hideMenu && (
         <SyntaxMenu
           text={props.text}
@@ -52,21 +47,10 @@ export const Editor: React.FC<Props> = (props) => {
           taggedLink={props.taggedLinkPropsMap}
           code={props.codeProps}
           formula={props.formulaProps}
-          listProps={{ className: EditorConstants.syntaxMenu.className }}
         />
       )}
-      <div
-        className={EditorConstants.editor.className}
-        style={EditorConstants.editor.style(props.hideMenu)}
-        data-selectid={EditorConstants.editor.selectId}
-        data-testid={createTestId(EditorConstants.editor.testId)}
-      >
-        <div
-          className={EditorConstants.body.className}
-          {...bodyMouseEventHandlers}
-          data-selectid={EditorConstants.body.selectId}
-          data-testid={createTestId(EditorConstants.body.testId)}
-        >
+      <TextFieldRoot hideMenu={props.hideMenu}>
+        <TextFieldBody {...bodyMouseEventHandlers}>
           <Selection textSelection={state.textSelection} />
           <Cursor
             coordinate={state.cursorCoordinate}
@@ -88,8 +72,8 @@ export const Editor: React.FC<Props> = (props) => {
             formulaVisual={props.formulaProps}
             taggedLinkVisualMap={props.taggedLinkPropsMap}
           />
-        </div>
-      </div>
-    </div>
+        </TextFieldBody>
+      </TextFieldRoot>
+    </EditorRoot>
   );
 };

@@ -5,7 +5,7 @@ import React from 'react';
 import * as selection from '../../src/components/molecules/selection/Selection';
 import { TextSelection } from '../../src/components/molecules/selection/Selection/types';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
-import * as utils from '../../src/components/organisms/Editor/callbacks/utils';
+import * as cursor from '../../src/components/organisms/Editor/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
 
@@ -26,7 +26,7 @@ interface Common {
   textLines: string[];
 }
 
-const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+const spiedPositionToCursorCoordinate = jest.spyOn(cursor, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   spiedPositionToCursorCoordinate.mockImplementation((text, pos) => ({ lineIndex: pos[1], charIndex: pos[0] }));
@@ -52,7 +52,7 @@ describe('mouseSelection in Editor', () => {
       spyOnGetBoundingClientRect.char(event.coordinate.lineIndex, event.coordinate.charIndex)
     );
 
-    const body = screen.getByTestId('editor-body');
+    const body = screen.getByTestId('text-field-body');
     for (const event of testCase.inputEvents) {
       const { lineIndex, charIndex } = event.coordinate;
       fireEvent[event.type](body, { clientX: charIndex, clientY: lineIndex, ...event.init });

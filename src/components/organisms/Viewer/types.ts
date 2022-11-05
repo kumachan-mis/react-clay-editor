@@ -33,5 +33,4 @@ export type ViewerProps = {
   taggedLinkPropsMap?: { [tagName: string]: ViewerTaggedLinkProps };
   codeProps?: ViewerCodeProps;
   formulaProps?: ViewerFormulaProps;
-  className?: string;
 };

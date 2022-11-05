@@ -7,11 +7,11 @@ import { TextNodeComponent } from './TextNodeComponent';
 import { useTextNodeComponent } from './TextNodeComponent.hooks';
 import { TextProps } from './types';
 
-export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, textSelection, className, ...visuals }) => {
+export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, textSelection, ...visuals }) => {
   const { editMode, linkForceClickable } = useTextNodeComponent(cursorCoordinate, textSelection);
 
   return (
-    <StyledText className={className}>
+    <StyledText>
       {visuals.textVisual?.header && (
         <Header size={visuals.textVisual?.headerSize}>{visuals.textVisual?.header}</Header>
       )}

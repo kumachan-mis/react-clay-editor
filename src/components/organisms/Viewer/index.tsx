@@ -14,7 +14,6 @@ export const Viewer: React.FC<ViewerProps> = ({
   taggedLinkPropsMap,
   codeProps,
   formulaProps,
-  className,
 }) => {
   const nodes = useParser(text, syntax, bracketLinkProps, hashtagProps, taggedLinkPropsMap, codeProps, formulaProps);
 
@@ -27,7 +26,6 @@ export const Viewer: React.FC<ViewerProps> = ({
       codeVisual={codeProps}
       formulaVisual={formulaProps}
       taggedLinkVisualMap={taggedLinkPropsMap}
-      className={className}
     />
   );
 };

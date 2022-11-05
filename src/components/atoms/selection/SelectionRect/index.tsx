@@ -10,7 +10,7 @@ export type SelectionRectProps = {
   height: number;
 };
 
-export const selectionRectConstants = {
+export const SelectionRectConstants = {
   selectId: 'selection',
   testId: 'selection',
 };
@@ -21,8 +21,8 @@ export const SelectionRect: React.FC<SelectionRectProps> = ({ top, left, width, 
     left={left}
     width={width}
     height={height}
-    data-selectid={selectionRectConstants.selectId}
-    data-testid={createTestId(selectionRectConstants.testId)}
+    data-selectid={SelectionRectConstants.selectId}
+    data-testid={createTestId(SelectionRectConstants.testId)}
   />
 );
 

@@ -8,7 +8,7 @@ import {
 } from '../../../../common/types';
 import { TextNode } from '../../../../parser/types';
 
-export interface TextNodeComponentProps<TTextNode extends TextNode = TextNode> {
+export type TextNodeComponentProps<TTextNode extends TextNode = TextNode> = {
   node: TTextNode;
   editMode: (node: TextNode) => boolean;
   linkForceClickable: boolean;
@@ -18,4 +18,4 @@ export interface TextNodeComponentProps<TTextNode extends TextNode = TextNode> {
   taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
   codeVisual?: CodeVisual;
   formulaVisual?: FormulaVisual;
-}
+};

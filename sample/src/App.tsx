@@ -1,3 +1,4 @@
+import { css } from '@emotion/css';
 import React from 'react';
 
 import { Editor } from '../../src';
@@ -7,8 +8,6 @@ import {
   TaggedLinkProps,
   TextProps,
 } from '../../src/components/organisms/Editor/types';
-
-import styles from './style.css';
 
 const header = 'React Realtime Markup Editor';
 
@@ -184,6 +183,17 @@ combination of text decorations is not supported yet
 > Genius is one percent inspiration and ninety-nine percent perspiration
 > by Thomas Edison`;
 
+const className = css`
+  && {
+    width: calc(50% - 32px);
+    height: calc(100% - 32px);
+    margin: 10px;
+    border: solid 1px;
+    padding: 5px;
+    display: inline-block;
+  }
+`;
+
 const textProps: TextProps = {
   header,
   suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'],
@@ -210,8 +220,18 @@ const hashtagProps: HashtagProps = {
 const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
   npm: {
     label: 'package',
-    anchorProps: (linkName, active) => ({
-      className: active ? `${styles.npm} ${styles.active}` : styles.npm,
+    anchorProps: (linkName) => ({
+      className: css`
+        && {
+          color: #f75e8a;
+          border-bottom: solid 1px;
+
+          &[data-clickable='true'] {
+            color: #e14978;
+            font-weight: 500;
+          }
+        }
+      `,
       href: `https://www.npmjs.com/package/${linkName}`,
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -221,8 +241,18 @@ const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
   github: {
     linkNameRegex: /@[^[\]]+\/[^[\]]+/,
     label: '@user/repository',
-    anchorProps: (linkName, active) => ({
-      className: active ? `${styles.github} ${styles.active}` : styles.github,
+    anchorProps: (linkName) => ({
+      className: css`
+        && {
+          color: #595f6e;
+          border-bottom: solid 1px;
+
+          &[data-clickable='true'] {
+            color: #08090b;
+            font-weight: 500;
+          }
+        }
+      `,
       href: `https://github.com/${linkName.substring(1)}`,
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -245,7 +275,7 @@ export const App: React.FC = () => {
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
         taggedLinkPropsMap={taggedLinkPropsMap}
-        className={styles.sample}
+        className={className}
       />
       <Editor
         text={markdownText}
@@ -255,7 +285,7 @@ export const App: React.FC = () => {
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
         taggedLinkPropsMap={taggedLinkPropsMap}
-        className={styles.sample}
+        className={className}
       />
     </>
   );

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as utils from '../../src/components/organisms/Editor/callbacks/utils';
+import * as cursor from '../../src/components/organisms/Editor/common/cursor';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
@@ -35,7 +35,7 @@ interface Common {
 }
 
 const originalUserAgent = window.navigator.userAgent;
-const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+const spiedPositionToCursorCoordinate = jest.spyOn(cursor, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   Object.defineProperty(window.navigator, 'userAgent', { value: osUserAgents.windows, configurable: true });
@@ -90,7 +90,7 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
     const text = testCase.textLines.join('\n');
     render(<MockEditor syntax={syntax} initText={text} {...common?.options} />);
 
-    const body = screen.getByTestId('editor-body');
+    const body = screen.getByTestId('text-field-body');
     for (const event of testCase.inputMouse) {
       const { lineIndex, charIndex } = event.coordinate;
       fireEvent[event.type](body, { clientX: charIndex, clientY: lineIndex, ...event.init });

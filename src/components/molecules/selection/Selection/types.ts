@@ -1,22 +1,22 @@
 import { SelectionRectProps } from '../../../atoms/selection/SelectionRect';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 
-export interface TextSelection {
+export type TextSelection = {
   fixed: CursorCoordinate;
   free: CursorCoordinate;
-}
+};
 
-export interface TextRange {
+export type TextRange = {
   start: CursorCoordinate;
   end: CursorCoordinate;
-}
+};
 
-export interface Props {
+export type Props = {
   textSelection: TextSelection | undefined;
-}
+};
 
-export interface State {
+export type State = {
   topRectProps: SelectionRectProps | undefined;
   centerRectProps: SelectionRectProps | undefined;
   bottomRectProps: SelectionRectProps | undefined;
-}
+};

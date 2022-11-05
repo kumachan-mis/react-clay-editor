@@ -1,5 +1,6 @@
 import { isMacOS } from '../../../../common/utils';
-import { ShortcutCommand } from '../types';
+
+import { ShortcutCommand } from './types';
 
 export function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>): ShortcutCommand | undefined {
   if (forwardDeleteTriggered(event)) return 'forwardDelete';
@@ -12,14 +13,6 @@ export function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>)
   if (moveRightTriggered(event)) return 'moveRight';
   if (moveLineTopTriggered(event)) return 'moveLineTop';
   if (moveLineBottomTriggered(event)) return 'moveLineBottom';
-
-  // any shortcut commands with a-z are not defined for the following functions
-  // - backwardDelete
-  // - moveWordTop
-  // - moveWordBottom
-  // - moveTextTop
-  // - moveTextBottom
-
   return undefined;
 }
 

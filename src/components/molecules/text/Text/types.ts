@@ -20,5 +20,4 @@ export type TextProps = {
   taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
   codeVisual?: CodeVisual;
   formulaVisual?: FormulaVisual;
-  className?: string;
 };

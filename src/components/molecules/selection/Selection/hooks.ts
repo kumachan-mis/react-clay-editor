@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { getTextFieldBody } from '../../../atoms/editor/TextFieldBody/utils';
 import { getCharAt } from '../../../atoms/text/Char/utils';
-import { getBody } from '../../../organisms/Editor/utils';
 
 import { Props, State } from './types';
 import { selectionToRange } from './utils';
@@ -39,8 +39,8 @@ export function useSelection(props: Props): { state: State; ref: React.RefObject
 }
 
 function propsToState(props: Props, element: HTMLElement): State {
-  const bodyRect = getBody(element)?.getBoundingClientRect();
-  if (!props.textSelection || !bodyRect) {
+  const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
+  if (!props.textSelection || !textFieldBodyRect) {
     return { topRectProps: undefined, centerRectProps: undefined, bottomRectProps: undefined };
   }
 
@@ -61,8 +61,8 @@ function propsToState(props: Props, element: HTMLElement): State {
     (endRect.top <= startRectCenter && startRectCenter <= endRect.bottom)
   ) {
     const centerRectProps = {
-      top: Math.min(startRect.top, endRect.top) - bodyRect.top,
-      left: startRect.left - bodyRect.left,
+      top: Math.min(startRect.top, endRect.top) - textFieldBodyRect.top,
+      left: startRect.left - textFieldBodyRect.left,
       width: endRect.left - startRect.left,
       height: Math.max(startRect.bottom, endRect.bottom) - Math.min(startRect.top, endRect.top),
     };
@@ -70,21 +70,21 @@ function propsToState(props: Props, element: HTMLElement): State {
   }
 
   const topRectProps = {
-    top: startRect.top - bodyRect.top,
-    left: startRect.left - bodyRect.left,
-    width: bodyRect.right - startRect.left,
+    top: startRect.top - textFieldBodyRect.top,
+    left: startRect.left - textFieldBodyRect.left,
+    width: textFieldBodyRect.right - startRect.left,
     height: startRect.height,
   };
   const centerRectProps = {
-    top: startRect.bottom - bodyRect.top,
+    top: startRect.bottom - textFieldBodyRect.top,
     left: 0,
-    width: bodyRect.width,
+    width: textFieldBodyRect.width,
     height: endRect.top - startRect.bottom,
   };
   const bottomRectProps = {
-    top: endRect.top - bodyRect.top,
+    top: endRect.top - textFieldBodyRect.top,
     left: 0,
-    width: endRect.left - bodyRect.left,
+    width: endRect.left - textFieldBodyRect.left,
     height: endRect.height,
   };
   return { topRectProps, centerRectProps, bottomRectProps };

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as utils from '../../src/components/organisms/Editor/callbacks/utils';
+import * as cursor from '../../src/components/organisms/Editor/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 
@@ -18,7 +18,7 @@ interface TestCase extends BaseTestCase {
   expectedLines: string[];
 }
 
-const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+const spiedPositionToCursorCoordinate = jest.spyOn(cursor, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
@@ -36,7 +36,7 @@ describe('compositionEvents in Editor', () => {
   runFixtureTests<TestCase>('Editor', 'composition', (testCase) => {
     render(<MockEditor {...testCase?.options} />);
 
-    userEvent.click(screen.getByTestId('editor-body'));
+    userEvent.click(screen.getByTestId('text-field-body'));
 
     const textarea = screen.getByRole('textbox');
     for (const event of testCase.inputEvents) {

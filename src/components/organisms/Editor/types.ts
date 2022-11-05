@@ -21,7 +21,7 @@ import {
 import { CursorCoordinate } from '../../molecules/cursor/Cursor/types';
 import { TextSelection } from '../../molecules/selection/Selection/types';
 
-export interface Props {
+export type Props = {
   text: string;
   onChangeText: (text: string) => void;
   syntax?: 'bracket' | 'markdown';
@@ -34,8 +34,7 @@ export interface Props {
   readonly?: boolean;
   hideMenu?: boolean;
   className?: string;
-  style?: React.CSSProperties;
-}
+};
 
 export type TextProps = TextVisual & TextLabels & Suggestion;
 
@@ -49,7 +48,7 @@ export type CodeProps = CodeVisual & CodeLabels & CodeParsing;
 
 export type FormulaProps = FormulaVisual & FormulaLabels & FormulaParsing;
 
-export interface State {
+export type State = {
   cursorCoordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   isComposing: boolean;
@@ -61,42 +60,25 @@ export interface State {
   suggestions: string[];
   suggestionIndex: number;
   suggestionStart: number;
-}
+};
 
 export type EditAction = ReplaceAction | InsertAction | DeleteAction;
 
-export interface ReplaceAction {
+export type ReplaceAction = {
   actionType: 'replace';
   coordinate: CursorCoordinate;
   deletedText: string;
   insertedText: string;
-}
+};
 
-export interface InsertAction {
+export type InsertAction = {
   actionType: 'insert';
   coordinate: CursorCoordinate;
   text: string;
-}
+};
 
-export interface DeleteAction {
+export type DeleteAction = {
   actionType: 'delete';
   coordinate: CursorCoordinate;
   text: string;
-}
-
-export type ShortcutCommand =
-  | 'forwardDelete'
-  | 'backwardDelete'
-  | 'selectAll'
-  | 'undo'
-  | 'redo'
-  | 'moveUp'
-  | 'moveDown'
-  | 'moveLeft'
-  | 'moveRight'
-  | 'moveWordTop'
-  | 'moveWordBottom'
-  | 'moveLineTop'
-  | 'moveLineBottom'
-  | 'moveTextTop'
-  | 'moveTextBottom';
+};

@@ -5,7 +5,7 @@ import { CharConstants } from '../../src/components/atoms/text/Char';
 import { CharGroupConstants } from '../../src/components/atoms/text/CharGroup';
 import { LineConstants } from '../../src/components/atoms/text/Line';
 import { LineGroupConstants } from '../../src/components/atoms/text/LineGroup';
-import { positionToCursorCoordinate } from '../../src/components/organisms/Editor/callbacks/utils';
+import { positionToCursorCoordinate } from '../../src/components/organisms/Editor/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import {
   MockEditor,
@@ -37,7 +37,7 @@ describe('function positionToCursorCoordinate in Editor', () => {
     const charGroupElements = screen.getAllByTestId(/^chargroup-L\d+C\d+-\d+$/);
     const lineElements = screen.getAllByTestId(/^line-L\d+$/);
     const lineGroupElements = screen.getAllByTestId(/^linegroup-L\d+-\d+$/);
-    const body = screen.getByTestId('editor-body');
+    const body = screen.getByTestId('text-field-body');
 
     const originalElementsFromPoint = document.elementFromPoint;
 
@@ -56,6 +56,7 @@ describe('function positionToCursorCoordinate in Editor', () => {
       const charIndex = Number.parseInt(groups['charIndex'], 10);
       return spyOnGetBoundingClientRect.char(lineIndex, charIndex);
     });
+
     const spiedCharGroupGetBoundingClientRects = charGroupElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(CharGroupConstants.selectIdRegex)?.groups as Record<string, string>;
@@ -64,12 +65,14 @@ describe('function positionToCursorCoordinate in Editor', () => {
       const lastCharIndex = Number.parseInt(groups['last'], 10);
       return spyOnGetBoundingClientRect.charGroup(lineIndex, firstCharIndex, lastCharIndex);
     });
+
     const spiedLineGetBoundingClientRects = lineElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(LineConstants.selectIdRegex)?.groups as Record<string, string>;
       const lineIndex = Number.parseInt(groups['lineIndex'], 10);
       return spyOnGetBoundingClientRect.line(lineIndex);
     });
+
     const spiedLineGroupGetBoundingClientRects = lineGroupElements.map((element) => {
       const testId = element.getAttribute('data-testid') as string;
       const groups = testId.match(LineGroupConstants.selectIdRegex)?.groups as Record<string, string>;
@@ -77,10 +80,11 @@ describe('function positionToCursorCoordinate in Editor', () => {
       const lastLineIndex = Number.parseInt(groups['last'], 10);
       return spyOnGetBoundingClientRect.lineGroup(firstLineIndex, lastLineIndex);
     });
+
     const spiedEditorBodyGetBoundingClientRect = spyOnGetBoundingClientRect.editorBody();
 
-    const editor = screen.getByTestId('editor');
-    expect(positionToCursorCoordinate(text, testCase.inputPosition, editor)).toEqual(testCase.expectedCoordinate);
+    const textField = screen.getByTestId('text-field-root');
+    expect(positionToCursorCoordinate(text, testCase.inputPosition, textField)).toEqual(testCase.expectedCoordinate);
 
     for (const spiedGetBoundingClientRects of [
       ...spiedCharGetBoundingClientRects,

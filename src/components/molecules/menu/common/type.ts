@@ -2,23 +2,23 @@ import { BlockNode, LineNode } from '../../../../parser/types';
 import { State } from '../../../organisms/Editor/types';
 import { BlockPosition, ContentPosition } from '../hooks/types';
 
-export interface ContentMenuProps {
+export type ContentMenuProps = {
   lineNodes: LineNode[];
   contentPosition: ContentPosition | undefined;
-}
+};
 
-export interface LineMenuProps {
+export type LineMenuProps = {
   lineNodes: LineNode[];
-}
+};
 
-export interface BlockMenuProps {
+export type BlockMenuProps = {
   nodes: (LineNode | BlockNode)[];
   blockPosition: BlockPosition | undefined;
-}
+};
 
-export interface CommonMenuProps {
+export type CommonMenuProps = {
   text: string;
   state: State;
   setTextAndState: (text: string, state: State) => void;
   syntax?: 'bracket' | 'markdown';
-}
+};

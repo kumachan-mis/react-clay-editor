@@ -1,5 +1,3 @@
-import { Suggestion } from '@testing-library/dom';
-
 import {
   BracketLabels,
   BracketLinkParsing,
@@ -11,6 +9,7 @@ import {
   HashtagParsing,
   ItemizationLabels,
   QuotationLabels,
+  Suggestion,
   TaggedLinkLabels,
   TextLabels,
 } from '../../../common/types';
@@ -18,7 +17,7 @@ import { BlockNode, LineNode } from '../../../parser/types';
 import { MenuListProps } from '../../atoms/menu/MenuList';
 import { State } from '../Editor/types';
 
-export interface SyntaxMenuProps {
+export type SyntaxMenuProps = {
   text: string;
   nodes: (LineNode | BlockNode)[];
   state: State;
@@ -33,7 +32,7 @@ export interface SyntaxMenuProps {
   formula?: FormulaMenuProps;
   quotation?: QuotationMenuProps;
   listProps?: MenuListProps;
-}
+};
 
 export type SectionMenuProps = TextLabels;
 

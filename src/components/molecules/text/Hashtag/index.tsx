@@ -17,7 +17,7 @@ export const Hashtag: React.FC<HashtagProps> = ({ node, editMode, linkForceClick
     <EmbededLink
       editMode={editModeValue}
       forceClickable={linkForceClickable}
-      anchorProps={(active) => hashtagVisual?.anchorProps?.(getHashtagName(linkName), active)}
+      anchorProps={(clickable) => hashtagVisual?.anchorProps?.(getHashtagName(linkName), clickable)}
     >
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>

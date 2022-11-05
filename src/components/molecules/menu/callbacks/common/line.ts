@@ -1,6 +1,6 @@
 import { LineNode } from '../../../../../parser/types';
 import { isPureLineNode } from '../../../../../parser/utils';
-import { insertText } from '../../../../organisms/Editor/callbacks/utils';
+import { insertText } from '../../../../organisms/Editor/common/text';
 import { State } from '../../../../organisms/Editor/types';
 import { CursorCoordinate } from '../../../cursor/Cursor/types';
 import { TextSelection } from '../../../selection/Selection/types';

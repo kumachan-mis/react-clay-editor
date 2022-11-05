@@ -1,9 +1,9 @@
-export interface CursorCoordinate {
+export type CursorCoordinate = {
   lineIndex: number;
   charIndex: number;
-}
+};
 
-export interface Props {
+export type Props = {
   coordinate: CursorCoordinate | undefined;
   textAreaValue: string;
   suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
@@ -18,9 +18,9 @@ export interface Props {
   onTextCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
   onTextPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
   onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
-}
+};
 
-export interface State {
+export type State = {
   position: { top: number; left: number };
   cursorSize: number;
-}
+};

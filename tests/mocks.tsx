@@ -89,7 +89,7 @@ export class SpyOnGetBoundingClientRect {
   }
 
   editorBody(): jest.SpyInstance<DOMRect, []> {
-    const element = this.screen.getByTestId('editor-body');
+    const element = this.screen.getByTestId('text-field-body');
     const [width, height] = [
       this.config.size * this.config.chars,
       (this.config.size + 2 * this.config.margin) * this.config.lines,

@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { getTextFieldBody } from '../../../atoms/editor/TextFieldBody/utils';
+import { getTextFieldRoot } from '../../../atoms/editor/TextFieldRoot/utils';
 import { SuggestionListBodyConstants } from '../../../atoms/suggestion/SuggesionListBody';
 import { SuggestionListItemConstants } from '../../../atoms/suggestion/SuggesionListItem';
 import { getCharAt } from '../../../atoms/text/Char/utils';
-import { getEditor, getBody } from '../../../organisms/Editor/utils';
 
 import { Props, State } from './types';
 
@@ -32,10 +33,10 @@ export function useCursor(props: Props): { state: State; ref: React.RefObject<HT
   }, [handleOnScrollOrResize]);
 
   React.useEffect(() => {
-    const editorElement = ref.current && getEditor(ref.current);
-    editorElement?.addEventListener('scroll', handleOnScrollOrResize);
+    const textFieldRootElement = ref.current && getTextFieldRoot(ref.current);
+    textFieldRootElement?.addEventListener('scroll', handleOnScrollOrResize);
     return () => {
-      editorElement?.removeEventListener('scroll', handleOnScrollOrResize);
+      textFieldRootElement?.removeEventListener('scroll', handleOnScrollOrResize);
     };
   }, [handleOnScrollOrResize]);
 
@@ -48,11 +49,11 @@ export function useCursor(props: Props): { state: State; ref: React.RefObject<HT
 }
 
 function propsToState(props: Props, state: State, element: HTMLElement): State {
-  const editorElement = getEditor(element);
+  const textFieldRootElement = getTextFieldRoot(element);
 
-  const editorRect = editorElement?.getBoundingClientRect();
-  const bodyRect = getBody(element)?.getBoundingClientRect();
-  if (!props.coordinate || !bodyRect || !editorElement || !editorRect) {
+  const textFieldRootRect = textFieldRootElement?.getBoundingClientRect();
+  const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
+  if (!props.coordinate || !textFieldBodyRect || !textFieldRootElement || !textFieldRootRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
@@ -60,15 +61,15 @@ function propsToState(props: Props, state: State, element: HTMLElement): State {
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
+  const position = { top: charRect.top - textFieldBodyRect.top, left: charRect.left - textFieldBodyRect.left };
   const [cursorSize, margin] = [charRect.height, 4];
   if (props.mouseHold === 'active-in') return { ...state, position, cursorSize };
 
-  if (charRect.top - editorRect.top - margin < 0) {
-    editorElement.scrollTop += charRect.top - editorRect.top;
+  if (charRect.top - textFieldRootRect.top - margin < 0) {
+    textFieldRootElement.scrollTop += charRect.top - textFieldRootRect.top;
     return propsToStateOnScrollOrResize(props, state, element);
-  } else if (charRect.top + cursorSize - editorRect.top > editorRect.height - margin) {
-    editorElement.scrollTop += charRect.top + cursorSize - editorRect.top - editorRect.height;
+  } else if (charRect.top + cursorSize - textFieldRootRect.top > textFieldRootRect.height - margin) {
+    textFieldRootElement.scrollTop += charRect.top + cursorSize - textFieldRootRect.top - textFieldRootRect.height;
     return propsToStateOnScrollOrResize(props, state, element);
   }
 
@@ -76,28 +77,28 @@ function propsToState(props: Props, state: State, element: HTMLElement): State {
 }
 
 function propsToStateOnScrollOrResize(props: Props, state: State, element: HTMLElement): State {
-  const bodyRect = getBody(element)?.getBoundingClientRect();
-  if (!props.coordinate || !bodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+  const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
+  if (!props.coordinate || !textFieldBodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const { coordinate } = props;
   const charElement = getCharAt(coordinate.lineIndex, coordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const position = { top: charRect.top - bodyRect.top, left: charRect.left - bodyRect.left };
+  const position = { top: charRect.top - textFieldBodyRect.top, left: charRect.left - textFieldBodyRect.left };
   const cursorSize = charRect.height;
   return { ...state, position, cursorSize };
 }
 
 function scrollSelectedSuggestionIntoView(suggestionIndex: number, element: HTMLElement): void {
-  const editorElement = getEditor(element);
+  const textFieldRootElement = getTextFieldRoot(element);
 
   const listSelector = `ul[data-selectid="${SuggestionListBodyConstants.selectId}"]`;
-  const list = editorElement?.querySelector<HTMLUListElement>(listSelector);
+  const list = textFieldRootElement?.querySelector<HTMLUListElement>(listSelector);
   if (!list) return;
 
   const listItemSelector = `li[data-selectid="${SuggestionListItemConstants.selectId(suggestionIndex)}"]`;
-  const listItem = editorElement?.querySelector<HTMLLIElement>(listItemSelector);
+  const listItem = textFieldRootElement?.querySelector<HTMLLIElement>(listItemSelector);
   if (!listItem) return;
 
   if (listItem.offsetTop < list.scrollTop) {

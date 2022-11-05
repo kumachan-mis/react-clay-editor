@@ -1,12 +1,6 @@
 import React from 'react';
 
 import {
-  handleOnMouseDown,
-  handleOnMouseMove,
-  handleOnMouseUp,
-  handleOnClick,
-  handleOnMouseScrollUp,
-  handleOnMouseScrollDown,
   handleOnKeyDown,
   handleOnTextChange,
   handleOnTextCut,
@@ -15,21 +9,16 @@ import {
   handleOnTextCompositionStart,
   handleOnTextCompositionEnd,
   handleOnSuggectionMouseDown,
-} from './callbacks';
-import { EditorConstants } from './constants';
+} from './callbacks/keyboard';
+import {
+  handleOnMouseDown,
+  handleOnMouseMove,
+  handleOnMouseUp,
+  handleOnClick,
+  handleOnMouseScrollUp,
+  handleOnMouseScrollDown,
+} from './callbacks/mouse';
 import { Props, State } from './types';
-
-export function getRoot(element: HTMLElement): HTMLElement | null {
-  return element.closest(`div[data-selectid="${EditorConstants.root.selectId}"]`);
-}
-
-export function getEditor(element: HTMLElement): HTMLElement | null {
-  return element.closest(`div[data-selectid="${EditorConstants.editor.selectId}"]`);
-}
-
-export function getBody(element: HTMLElement): HTMLElement | null {
-  return element.closest(`div[data-selectid="${EditorConstants.body.selectId}"]`);
-}
 
 export function useEditor(): [
   State,

@@ -1,0 +1,16 @@
+export type ShortcutCommand =
+  | 'forwardDelete'
+  | 'backwardDelete'
+  | 'selectAll'
+  | 'undo'
+  | 'redo'
+  | 'moveUp'
+  | 'moveDown'
+  | 'moveLeft'
+  | 'moveRight'
+  | 'moveWordTop'
+  | 'moveWordBottom'
+  | 'moveLineTop'
+  | 'moveLineBottom'
+  | 'moveTextTop'
+  | 'moveTextBottom';

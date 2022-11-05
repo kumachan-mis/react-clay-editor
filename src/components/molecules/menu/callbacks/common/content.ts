@@ -1,6 +1,6 @@
 import { LineNode, PureLineNode, ContentNode, TextLikeNode } from '../../../../../parser/types';
 import { isPureLineNode, isTextLikeNode } from '../../../../../parser/utils';
-import { insertText } from '../../../../organisms/Editor/callbacks/utils';
+import { insertText } from '../../../../organisms/Editor/common/text';
 import { State } from '../../../../organisms/Editor/types';
 import { copyCoordinate } from '../../../cursor/Cursor/utils';
 import { TextSelection } from '../../../selection/Selection/types';

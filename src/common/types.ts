@@ -4,105 +4,105 @@ import React from 'react';
  * Visual Props
  */
 
-export interface TextVisual {
+export type TextVisual = {
   header?: string;
   headerSize?: 'normal' | 'larger' | 'largest';
   lineProps?: (lineIndex: number) => React.ComponentProps<'div'> | undefined;
-}
+};
 
-export interface BracketLinkVisual {
+export type BracketLinkVisual = {
   anchorProps?: (linkName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
-}
+};
 
-export interface HashtagVisual {
+export type HashtagVisual = {
   anchorProps?: (hashtagName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
-}
+};
 
-export interface TaggedLinkVisual {
+export type TaggedLinkVisual = {
   anchorProps?: (linkName: string, clickable: boolean) => React.ComponentProps<'a'> | undefined;
   tagHidden?: boolean;
-}
+};
 
-export interface CodeVisual {
+export type CodeVisual = {
   codeProps?: (code: string) => React.ComponentProps<'code'> | undefined;
-}
+};
 
-export interface FormulaVisual {
+export type FormulaVisual = {
   codeProps?: (formula: string) => React.ComponentProps<'code'> | undefined;
-}
+};
 
 /**
  * Label Props
  */
 
-export interface TextLabels {
+export type TextLabels = {
   normalLabel?: string;
   largerLabel?: string;
   largestLabel?: string;
-}
+};
 
-export interface ItemizationLabels {
+export type ItemizationLabels = {
   indentLabel?: string;
   outdentLabel?: string;
-}
+};
 
-export interface BracketLabels {
+export type BracketLabels = {
   label?: string;
-}
+};
 
-export interface HashtagLabels {
+export type HashtagLabels = {
   label?: string;
-}
+};
 
-export interface TaggedLinkLabels {
+export type TaggedLinkLabels = {
   label?: string;
-}
+};
 
-export interface CodeLabels {
+export type CodeLabels = {
   inlineLabel?: string;
   blockLabel?: string;
-}
+};
 
-export interface FormulaLabels {
+export type FormulaLabels = {
   inlineLabel?: string;
   displayLabel?: string;
   blockLabel?: string;
-}
+};
 
-export interface QuotationLabels {
+export type QuotationLabels = {
   indentLabel?: string;
   outdentLabel?: string;
-}
+};
 
 /**
  * Parsing Props
  */
 
-export interface BracketLinkParsing {
+export type BracketLinkParsing = {
   disabled?: boolean;
-}
+};
 
-export interface HashtagParsing {
+export type HashtagParsing = {
   disabled?: boolean;
-}
+};
 
-export interface TaggedLinkParsing {
+export type TaggedLinkParsing = {
   linkNameRegex?: RegExp;
-}
+};
 
-export interface CodeParsing {
+export type CodeParsing = {
   disabled?: boolean;
-}
+};
 
-export interface FormulaParsing {
+export type FormulaParsing = {
   disabled?: boolean;
-}
+};
 
 /**
  * Misc
  */
 
-export interface Suggestion {
+export type Suggestion = {
   suggestions?: string[];
   initialSuggestionIndex?: number;
-}
+};
