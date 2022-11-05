@@ -6,7 +6,7 @@ import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type BlockFormulaMetaProps = TextNodeComponentProps<BlockFormulaMetaNode>;
 

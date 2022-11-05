@@ -4,7 +4,7 @@ import { TaggedLinkNode } from '../../../../parser/types';
 import { getTagName, splitTag } from '../../../../parser/utils';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
 

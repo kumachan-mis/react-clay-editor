@@ -3,7 +3,7 @@ import React from 'react';
 import { NormalLineNode, TextNode } from '../../../../parser/types';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type NormalLineProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;

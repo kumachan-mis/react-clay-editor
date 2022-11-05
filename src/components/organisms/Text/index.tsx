@@ -1,36 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import {
-  BracketLinkVisual,
-  CodeVisual,
-  FormulaVisual,
-  HashtagVisual,
-  TaggedLinkVisual,
-  TextVisual,
-} from '../../../common/types';
-import { TextNode } from '../../../parser/types';
 import { Header } from '../../atoms/header/Header';
-import { CursorCoordinate } from '../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../molecules/selection/Selection/types';
 
 import { TextNodeComponent } from './TextNodeComponent';
 import { useTextNodeComponent } from './TextNodeComponent.hooks';
+import { TextProps } from './types';
 
-export interface TextLinesProps {
-  nodes: TextNode[];
-  cursorCoordinate?: CursorCoordinate;
-  textSelection?: TextSelection;
-  textVisual?: TextVisual;
-  bracketLinkVisual?: BracketLinkVisual;
-  hashtagVisual?: HashtagVisual;
-  taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
-  codeVisual?: CodeVisual;
-  formulaVisual?: FormulaVisual;
-  className?: string;
-}
-
-export const Text: React.FC<TextLinesProps> = ({ nodes, cursorCoordinate, textSelection, className, ...visuals }) => {
+export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, textSelection, className, ...visuals }) => {
   const { editMode, linkForceClickable } = useTextNodeComponent(cursorCoordinate, textSelection);
 
   return (

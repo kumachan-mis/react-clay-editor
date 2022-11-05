@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NormalNode } from '../../../../parser/types';
 import { Char } from '../../../atoms/text/Char';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type NormalProps = TextNodeComponentProps<NormalNode>;
 

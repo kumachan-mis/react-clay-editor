@@ -5,7 +5,7 @@ import { Char } from '../../../atoms/text/Char';
 import { CharGroup } from '../../../atoms/text/CharGroup';
 import { KaTeX } from '../../../atoms/text/KaTeX';
 import { Monospace } from '../../../atoms/text/Monospace';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type ContentFormulaProps = TextNodeComponentProps<ContentFormulaNode>;
 

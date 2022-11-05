@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BlockFormulaNode } from '../../../../parser/types';
 import { LineGroup } from '../../../atoms/text/LineGroup';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 import { BlockFormulaKaTeX } from './BlockFormulaKaTeX';
 import { BlockFormulaLine } from './BlockFormulaLine';

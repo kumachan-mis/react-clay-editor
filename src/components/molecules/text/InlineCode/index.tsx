@@ -3,7 +3,7 @@ import React from 'react';
 import { InlineCodeNode } from '../../../../parser/types';
 import { Char } from '../../../atoms/text/Char';
 import { Monospace } from '../../../atoms/text/Monospace';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type InlineCodeProps = TextNodeComponentProps<InlineCodeNode>;
 

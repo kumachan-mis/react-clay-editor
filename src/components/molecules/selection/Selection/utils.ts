@@ -1,6 +1,6 @@
 import { parserConstants } from '../../../../parser/constants';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
-import { cursorCoordinateToTextIndex } from '../../cursor/Cursor/utils';
+import { coordinatesAreEqual, cursorCoordinateToTextIndex } from '../../cursor/Cursor/utils';
 
 import { TextSelection, TextRange } from './types';
 
@@ -58,4 +58,9 @@ export function selectionToRange(textSelection: TextSelection): TextRange {
 export function copySelection(textSelection: TextSelection | undefined): TextSelection | undefined {
   if (!textSelection) return undefined;
   return { fixed: { ...textSelection.fixed }, free: { ...textSelection.free } };
+}
+
+export function undefinedIfZeroSelection(textSelection: TextSelection | undefined): TextSelection | undefined {
+  if (!textSelection) return undefined;
+  return !coordinatesAreEqual(textSelection.fixed, textSelection.free) ? textSelection : undefined;
 }

@@ -5,7 +5,7 @@ import { KaTeX } from '../../../atoms/text/KaTeX';
 import { LineGroup } from '../../../atoms/text/LineGroup';
 import { LineGroupContent } from '../../../atoms/text/LineGroupContent';
 import { LineGroupIndent } from '../../../atoms/text/LineGroupIndent';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type BlockFormulaKaTeXProps = TextNodeComponentProps<BlockFormulaNode>;
 

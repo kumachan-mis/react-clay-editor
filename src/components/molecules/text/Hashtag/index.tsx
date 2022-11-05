@@ -4,7 +4,7 @@ import { HashtagNode } from '../../../../parser/types';
 import { getHashtagName } from '../../../../parser/utils';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type HashtagProps = TextNodeComponentProps<HashtagNode>;
 

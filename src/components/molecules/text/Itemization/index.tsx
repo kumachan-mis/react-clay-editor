@@ -6,7 +6,7 @@ import { ItemBulletContent } from '../../../atoms/text/ItemBulletContent';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
 import { LineIndent } from '../../../atoms/text/LineIndent';
-import { TextNodeComponentProps } from '../_common/types';
+import { TextNodeComponentProps } from '../common/types';
 
 export type ItemizationProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
