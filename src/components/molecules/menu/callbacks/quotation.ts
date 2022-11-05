@@ -1,5 +1,5 @@
-import { State } from '../../../../Editor/types';
 import { LineNode } from '../../../../parser/types';
+import { State } from '../../../organisms/Editor/types';
 import { QuotationMenuSwitch } from '../switches/quotation';
 
 import { handleOnLineMenuClick } from './common/line';

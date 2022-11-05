@@ -2,10 +2,10 @@ import { EventType } from '@testing-library/dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import * as utils from '../../src/Editor/callbacks/utils';
 import * as selection from '../../src/components/molecules/selection/Selection';
 import { TextSelection } from '../../src/components/molecules/selection/Selection/types';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
+import * as utils from '../../src/components/organisms/Editor/callbacks/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
 

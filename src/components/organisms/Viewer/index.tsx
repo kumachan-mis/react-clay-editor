@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useParser } from '../../../parser';
-import { Text } from '../Text';
+import { Text } from '../../molecules/text/Text';
 
 import { ViewerProps } from './types';
 

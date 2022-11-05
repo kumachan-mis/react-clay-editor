@@ -1,7 +1,7 @@
-import { insertText } from '../../../../../Editor/callbacks/utils';
-import { State } from '../../../../../Editor/types';
 import { LineNode, PureLineNode, ContentNode, TextLikeNode } from '../../../../../parser/types';
 import { isPureLineNode, isTextLikeNode } from '../../../../../parser/utils';
+import { insertText } from '../../../../organisms/Editor/callbacks/utils';
+import { State } from '../../../../organisms/Editor/types';
 import { copyCoordinate } from '../../../cursor/Cursor/utils';
 import { TextSelection } from '../../../selection/Selection/types';
 import { copySelection, selectionToRange, undefinedIfZeroSelection } from '../../../selection/Selection/utils';

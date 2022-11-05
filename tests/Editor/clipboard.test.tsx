@@ -2,7 +2,7 @@ import { EventType } from '@testing-library/dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import * as utils from '../../src/Editor/callbacks/utils';
+import * as utils from '../../src/components/organisms/Editor/callbacks/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 

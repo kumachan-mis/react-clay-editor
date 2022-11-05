@@ -1,6 +1,6 @@
-import { State } from '../../../../../Editor/types';
 import { BlockNode, LineNode } from '../../../../../parser/types';
 import { isBlockNode } from '../../../../../parser/utils';
+import { State } from '../../../../organisms/Editor/types';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/types';
 

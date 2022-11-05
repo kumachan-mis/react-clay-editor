@@ -1,5 +1,5 @@
-import { State } from '../../../../Editor/types';
 import { BlockNode, LineNode } from '../../../../parser/types';
+import { State } from '../../../organisms/Editor/types';
 import { BlockPosition, ContentPosition } from '../hooks/types';
 
 export interface ContentMenuProps {

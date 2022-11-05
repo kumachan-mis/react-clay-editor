@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { Header } from '../../atoms/header/Header';
+import { Header } from '../../../atoms/header/Header';
 
 import { TextNodeComponent } from './TextNodeComponent';
 import { useTextNodeComponent } from './TextNodeComponent.hooks';

@@ -1,6 +1,5 @@
 import { Suggestion } from '@testing-library/dom';
 
-import { State } from '../../../Editor/types';
 import {
   BracketLabels,
   BracketLinkParsing,
@@ -17,6 +16,7 @@ import {
 } from '../../../common/types';
 import { BlockNode, LineNode } from '../../../parser/types';
 import { MenuListProps } from '../../atoms/menu/MenuList';
+import { State } from '../Editor/types';
 
 export interface SyntaxMenuProps {
   text: string;

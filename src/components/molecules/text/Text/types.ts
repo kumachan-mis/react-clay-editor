@@ -5,10 +5,10 @@ import {
   HashtagVisual,
   TaggedLinkVisual,
   TextVisual,
-} from '../../../common/types';
-import { TextNode } from '../../../parser/types';
-import { CursorCoordinate } from '../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../molecules/selection/Selection/types';
+} from '../../../../common/types';
+import { TextNode } from '../../../../parser/types';
+import { CursorCoordinate } from '../../cursor/Cursor/types';
+import { TextSelection } from '../../selection/Selection/types';
 
 export type TextProps = {
   nodes: TextNode[];

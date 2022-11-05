@@ -1,5 +1,5 @@
-import { State } from '../../../../Editor/types';
 import { DecorationNode, LineNode } from '../../../../parser/types';
+import { State } from '../../../organisms/Editor/types';
 
 export type SectionMenuItemType = 'normal' | 'larger' | 'largest';
 

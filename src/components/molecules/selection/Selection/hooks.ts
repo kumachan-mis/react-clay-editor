@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { getBody } from '../../../../Editor/utils';
 import { getCharAt } from '../../../atoms/text/Char/utils';
+import { getBody } from '../../../organisms/Editor/utils';
 
 import { Props, State } from './types';
 import { selectionToRange } from './utils';

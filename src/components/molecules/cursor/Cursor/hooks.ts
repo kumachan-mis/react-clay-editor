@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { getEditor, getBody } from '../../../../Editor/utils';
 import { SuggestionListBodyConstants } from '../../../atoms/suggestion/SuggesionListBody';
 import { SuggestionListItemConstants } from '../../../atoms/suggestion/SuggesionListItem';
 import { getCharAt } from '../../../atoms/text/Char/utils';
+import { getEditor, getBody } from '../../../organisms/Editor/utils';
 
 import { Props, State } from './types';
 

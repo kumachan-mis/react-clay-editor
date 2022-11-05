@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { mergeClassNames, createTestId } from '../common/utils';
-import { Cursor } from '../components/molecules/cursor/Cursor';
-import { Selection } from '../components/molecules/selection/Selection';
-import { SyntaxMenu } from '../components/organisms/SyntaxMenu';
-import { Text } from '../components/organisms/Text';
-import { useParser } from '../parser';
+import { mergeClassNames, createTestId } from '../../../common/utils';
+import { useParser } from '../../../parser';
+import { Cursor } from '../../molecules/cursor/Cursor';
+import { Selection } from '../../molecules/selection/Selection';
+import { Text } from '../../molecules/text/Text';
+import { SyntaxMenu } from '../SyntaxMenu';
 
 import { EditorConstants } from './constants';
 import { Props } from './types';

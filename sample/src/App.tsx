@@ -1,7 +1,12 @@
 import React from 'react';
 
 import { Editor } from '../../src';
-import { BracketLinkProps, HashtagProps, TaggedLinkProps, TextProps } from '../../src/Editor/types';
+import {
+  BracketLinkProps,
+  HashtagProps,
+  TaggedLinkProps,
+  TextProps,
+} from '../../src/components/organisms/Editor/types';
 
 import styles from './style.css';
 

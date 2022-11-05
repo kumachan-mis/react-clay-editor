@@ -1,7 +1,7 @@
-import { insertText } from '../../../../../Editor/callbacks/utils';
-import { State } from '../../../../../Editor/types';
 import { BlockNode, LineNode } from '../../../../../parser/types';
 import { isBlockNode } from '../../../../../parser/utils';
+import { insertText } from '../../../../organisms/Editor/callbacks/utils';
+import { State } from '../../../../organisms/Editor/types';
 import { CursorCoordinate } from '../../../cursor/Cursor/types';
 import { TextSelection } from '../../../selection/Selection/types';
 import { copySelection } from '../../../selection/Selection/utils';

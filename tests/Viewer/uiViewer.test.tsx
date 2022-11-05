@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Viewer, ViewerProps } from '../../src';
 import { useEmbededLinkForceClickable } from '../../src/components/atoms/text/EmbededLink/hooks';
-import * as hooks from '../../src/components/organisms/Text/TextNodeComponent.hooks';
+import * as hooks from '../../src/components/molecules/text/Text/TextNodeComponent.hooks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {

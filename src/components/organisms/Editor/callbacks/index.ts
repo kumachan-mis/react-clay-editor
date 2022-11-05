@@ -1,11 +1,7 @@
-import { isMacOS } from '../../common/utils';
-import { coordinatesAreEqual } from '../../components/molecules/cursor/Cursor/utils';
-import {
-  getWordSelection,
-  getLineSelection,
-  getSelectionText,
-} from '../../components/molecules/selection/Selection/utils';
-import { parserConstants } from '../../parser/constants';
+import { isMacOS } from '../../../../common/utils';
+import { parserConstants } from '../../../../parser/constants';
+import { coordinatesAreEqual } from '../../../molecules/cursor/Cursor/utils';
+import { getWordSelection, getLineSelection, getSelectionText } from '../../../molecules/selection/Selection/utils';
 import { Props, State } from '../types';
 
 import { shortcutCommand } from './shortcutCommands';

@@ -1,4 +1,4 @@
-import { isMacOS } from '../../common/utils';
+import { isMacOS } from '../../../../common/utils';
 import { ShortcutCommand } from '../types';
 
 export function shortcutCommand(event: React.KeyboardEvent<HTMLTextAreaElement>): ShortcutCommand | undefined {

@@ -17,9 +17,9 @@ import {
   CodeParsing,
   FormulaParsing,
   Suggestion,
-} from '../common/types';
-import { CursorCoordinate } from '../components/molecules/cursor/Cursor/types';
-import { TextSelection } from '../components/molecules/selection/Selection/types';
+} from '../../../common/types';
+import { CursorCoordinate } from '../../molecules/cursor/Cursor/types';
+import { TextSelection } from '../../molecules/selection/Selection/types';
 
 export interface Props {
   text: string;

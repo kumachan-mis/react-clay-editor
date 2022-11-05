@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { positionToCursorCoordinate } from '../../src/Editor/callbacks/utils';
 import { CharConstants } from '../../src/components/atoms/text/Char';
 import { CharGroupConstants } from '../../src/components/atoms/text/CharGroup';
 import { LineConstants } from '../../src/components/atoms/text/Line';
 import { LineGroupConstants } from '../../src/components/atoms/text/LineGroup';
+import { positionToCursorCoordinate } from '../../src/components/organisms/Editor/callbacks/utils';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import {
   MockEditor,

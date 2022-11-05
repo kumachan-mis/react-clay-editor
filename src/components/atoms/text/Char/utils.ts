@@ -1,4 +1,4 @@
-import { getRoot } from '../../../../Editor/utils';
+import { getRoot } from '../../../organisms/Editor/utils';
 
 import { CharConstants } from './index';
 

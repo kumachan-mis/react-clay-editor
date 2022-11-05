@@ -1,7 +1,7 @@
-import { State } from '../../../../Editor/types';
 import { BracketLabels, HashtagLabels, Suggestion, TaggedLinkLabels } from '../../../../common/types';
 import { LineNode, PureLineNode } from '../../../../parser/types';
 import { isPureLineNode, getTagName } from '../../../../parser/utils';
+import { State } from '../../../organisms/Editor/types';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/types';
 import { LinkMenuItem, LinkMenuSwitch } from '../switches/link';
