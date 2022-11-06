@@ -20,11 +20,13 @@ import {
 } from './callbacks/mouse';
 import { Props, State } from './types';
 
-export function useEditor(): [
-  State,
-  React.Dispatch<React.SetStateAction<State>>,
-  React.MutableRefObject<HTMLDivElement | null>
-] {
+export function useEditorState(
+  props: Props,
+  ref: React.MutableRefObject<HTMLDivElement | null>
+): {
+  state: State;
+  setState: React.Dispatch<React.SetStateAction<State>>;
+} {
   const [state, setState] = React.useState<State>({
     cursorCoordinate: undefined,
     textAreaValue: '',
@@ -38,27 +40,8 @@ export function useEditor(): [
     suggestionIndex: -1,
     suggestionStart: 0,
   });
-  const ref = React.useRef<HTMLDivElement | null>(null);
 
-  return [state, setState, ref];
-}
-
-export function useMouseEventHandlers(
-  props: Props,
-  state: State,
-  setState: React.Dispatch<React.SetStateAction<State>>,
-  ref: React.MutableRefObject<HTMLDivElement | null>
-): [
-  {
-    onMouseDown: React.MouseEventHandler<HTMLDivElement>;
-    onMouseUp: React.MouseEventHandler<HTMLDivElement>;
-  },
-  {
-    onMouseDown: React.MouseEventHandler<HTMLDivElement>;
-    onClick: React.MouseEventHandler<HTMLDivElement>;
-  }
-] {
-  const createMouseEventHandler = React.useCallback(
+  const createEventHandler = React.useCallback(
     <Event extends MouseEvent | React.MouseEvent>(
       handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
     ): ((event: Event) => void) => {
@@ -72,7 +55,7 @@ export function useMouseEventHandlers(
     [props, state, ref, setState]
   );
 
-  const handleOnDocMouseDown = React.useCallback(() => {
+  const handleOnDocumentMouseDown = React.useCallback(() => {
     setState({
       ...state,
       cursorCoordinate: undefined,
@@ -85,68 +68,101 @@ export function useMouseEventHandlers(
       suggestionIndex: -1,
     });
   }, [state, setState]);
-  const handleOnDocMouseMove = React.useCallback(
+
+  const handleOnDocumentMouseMove = React.useCallback(
     (event: MouseEvent) => {
-      createMouseEventHandler(handleOnMouseMove)(event);
+      createEventHandler(handleOnMouseMove)(event);
     },
-    [createMouseEventHandler]
-  );
-  const handleOnDocMouseUp = React.useCallback(
-    (event: MouseEvent) => {
-      createMouseEventHandler(handleOnMouseUp)(event);
-    },
-    [createMouseEventHandler]
+    [createEventHandler]
   );
 
-  React.useEffect(() => {
-    document.addEventListener('mousedown', handleOnDocMouseDown);
-    return () => {
-      document.removeEventListener('mousedown', handleOnDocMouseDown);
-    };
-  }, [handleOnDocMouseDown]);
+  const handleOnDocumentMouseUp = React.useCallback(
+    (event: MouseEvent) => {
+      createEventHandler(handleOnMouseUp)(event);
+    },
+    [createEventHandler]
+  );
 
   React.useEffect(() => {
-    document.addEventListener('mousemove', handleOnDocMouseMove);
+    document.addEventListener('mousedown', handleOnDocumentMouseDown);
     return () => {
-      document.removeEventListener('mousemove', handleOnDocMouseMove);
+      document.removeEventListener('mousedown', handleOnDocumentMouseDown);
     };
-  }, [handleOnDocMouseMove]);
+  }, [handleOnDocumentMouseDown]);
 
   React.useEffect(() => {
-    document.addEventListener('mouseup', handleOnDocMouseUp);
+    document.addEventListener('mousemove', handleOnDocumentMouseMove);
     return () => {
-      document.removeEventListener('mouseup', handleOnDocMouseUp);
+      document.removeEventListener('mousemove', handleOnDocumentMouseMove);
     };
-  }, [handleOnDocMouseUp]);
+  }, [handleOnDocumentMouseMove]);
 
-  const handleOnRootMouseUp = React.useCallback(() => {
+  React.useEffect(() => {
+    document.addEventListener('mouseup', handleOnDocumentMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleOnDocumentMouseUp);
+    };
+  }, [handleOnDocumentMouseUp]);
+
+  return { state, setState };
+}
+
+export function useEditorRootEventHandlers(ref: React.MutableRefObject<HTMLDivElement | null>): {
+  onMouseDown: React.MouseEventHandler<HTMLDivElement>;
+} {
+  const handleOnDocumentMouseUpTemporary = React.useCallback(() => {
     ref.current?.querySelector('textarea')?.focus({ preventScroll: true });
   }, [ref]);
-  const handleOnRootMouseDown = React.useCallback(
+
+  const handleOnTextFieldRootMouseDown = React.useCallback(
     (event: React.MouseEvent) => {
+      document.addEventListener('mouseup', handleOnDocumentMouseUpTemporary);
       event.nativeEvent.stopPropagation();
-      document.addEventListener('mouseup', handleOnRootMouseUp);
     },
-    [handleOnRootMouseUp]
+    [handleOnDocumentMouseUpTemporary]
   );
 
-  const handleOnBodyMouseDown = React.useCallback(
-    (event: React.MouseEvent) => {
-      createMouseEventHandler(handleOnMouseDown)(event);
+  return { onMouseDown: handleOnTextFieldRootMouseDown };
+}
+
+export function useTextFieldBodyEventHandlers(
+  props: Props,
+  state: State,
+  setState: React.Dispatch<React.SetStateAction<State>>,
+  ref: React.MutableRefObject<HTMLDivElement | null>
+): {
+  onMouseDown: React.MouseEventHandler<HTMLDivElement>;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
+} {
+  const createEventHandler = React.useCallback(
+    <Event extends MouseEvent | React.MouseEvent>(
+      handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
+    ): ((event: Event) => void) => {
+      return (event) => {
+        if (event.button !== 0) return;
+        const [newText, newState] = handler(props.text, state, event, ref.current);
+        if (newState !== state) setState(newState);
+        if (newText !== props.text) props.onChangeText(newText);
+      };
     },
-    [createMouseEventHandler]
-  );
-  const handleOnBodyClick = React.useCallback(
-    (event: React.MouseEvent) => {
-      createMouseEventHandler(handleOnClick)(event);
-    },
-    [createMouseEventHandler]
+    [props, state, ref, setState]
   );
 
-  return [
-    { onMouseUp: handleOnRootMouseUp, onMouseDown: handleOnRootMouseDown },
-    { onMouseDown: handleOnBodyMouseDown, onClick: handleOnBodyClick },
-  ];
+  const handleOnTextFieldBodyMouseDown = React.useCallback(
+    (event: React.MouseEvent) => {
+      createEventHandler(handleOnMouseDown)(event);
+    },
+    [createEventHandler]
+  );
+
+  const handleOnTextFieldBodyClick = React.useCallback(
+    (event: React.MouseEvent) => {
+      createEventHandler(handleOnClick)(event);
+    },
+    [createEventHandler]
+  );
+
+  return { onMouseDown: handleOnTextFieldBodyMouseDown, onClick: handleOnTextFieldBodyClick };
 }
 
 export function useCursorEventHandlers(
@@ -163,7 +179,7 @@ export function useCursorEventHandlers(
   onTextCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
   onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
 } {
-  const createCursorEventHandler = React.useCallback(
+  const createEventHandler = React.useCallback(
     <Event>(handler: (text: string, state: State, event: Event) => [string, State]): ((event: Event) => void) => {
       return (event) => {
         const [newText, newState] = handler(props.text, state, event);
@@ -174,7 +190,7 @@ export function useCursorEventHandlers(
     [props, state, setState]
   );
 
-  const createCursorEventHandlerWithProps = React.useCallback(
+  const createEventHandlerWithProps = React.useCallback(
     <Event>(
       handler: (text: string, props: Props, state: State, event: Event) => [string, State]
     ): ((event: Event) => void) => {
@@ -188,14 +204,14 @@ export function useCursorEventHandlers(
   );
 
   return {
-    onKeyDown: createCursorEventHandlerWithProps(handleOnKeyDown),
-    onTextChange: createCursorEventHandlerWithProps(handleOnTextChange),
-    onTextCompositionStart: createCursorEventHandler(handleOnTextCompositionStart),
-    onTextCompositionEnd: createCursorEventHandlerWithProps(handleOnTextCompositionEnd),
-    onTextCut: createCursorEventHandler(handleOnTextCut),
-    onTextCopy: createCursorEventHandler(handleOnTextCopy),
-    onTextPaste: createCursorEventHandler(handleOnTextPaste),
-    onSuggectionMouseDown: createCursorEventHandler(handleOnSuggectionMouseDown),
+    onKeyDown: createEventHandlerWithProps(handleOnKeyDown),
+    onTextChange: createEventHandlerWithProps(handleOnTextChange),
+    onTextCompositionStart: createEventHandler(handleOnTextCompositionStart),
+    onTextCompositionEnd: createEventHandlerWithProps(handleOnTextCompositionEnd),
+    onTextCut: createEventHandler(handleOnTextCut),
+    onTextCopy: createEventHandler(handleOnTextCopy),
+    onTextPaste: createEventHandler(handleOnTextPaste),
+    onSuggectionMouseDown: createEventHandler(handleOnSuggectionMouseDown),
   };
 }
 

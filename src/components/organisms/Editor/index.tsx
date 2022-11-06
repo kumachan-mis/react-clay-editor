@@ -10,12 +10,20 @@ import { Selection } from '../../molecules/selection/Selection';
 import { Text } from '../../molecules/text/Text';
 import { SyntaxMenu } from '../SyntaxMenu';
 
-import { useCursorEventHandlers, useEditor, useMouseEventHandlers, useScroll } from './hooks';
+import {
+  useCursorEventHandlers,
+  useEditorState,
+  useScroll,
+  useTextFieldBodyEventHandlers,
+  useEditorRootEventHandlers,
+} from './hooks';
 import { Props } from './types';
 
 export const Editor: React.FC<Props> = (props) => {
-  const [state, setState, ref] = useEditor();
-  const [rootMouseEventHandlers, bodyMouseEventHandlers] = useMouseEventHandlers(props, state, setState, ref);
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { state, setState } = useEditorState(props, ref);
+  const editorRootEventHandlers = useEditorRootEventHandlers(ref);
+  const textFieldBodyEventHandlers = useTextFieldBodyEventHandlers(props, state, setState, ref);
   const cursorEventHandlers = useCursorEventHandlers(props, state, setState);
 
   useScroll(props.text, state.selectionMouse, setState);
@@ -31,7 +39,7 @@ export const Editor: React.FC<Props> = (props) => {
   );
 
   return (
-    <EditorRoot {...rootMouseEventHandlers} className={props.className} ref={ref}>
+    <EditorRoot className={props.className} ref={ref} {...editorRootEventHandlers}>
       {!props.hideMenu && (
         <SyntaxMenu
           text={props.text}
@@ -51,7 +59,7 @@ export const Editor: React.FC<Props> = (props) => {
         />
       )}
       <TextFieldRoot hideMenu={props.hideMenu}>
-        <TextFieldBody {...bodyMouseEventHandlers}>
+        <TextFieldBody {...textFieldBodyEventHandlers}>
           {props.textProps?.header && <Header size={props.textProps?.headerSize}>{props.textProps.header}</Header>}
           <Selection textSelection={state.textSelection} />
           <Cursor

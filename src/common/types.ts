@@ -7,31 +7,28 @@ import React from 'react';
 export type TextVisual = {
   header?: string;
   headerSize?: 'normal' | 'larger' | 'largest';
-  lineProps?: (lineIndex: number) => React.PropsWithoutRef<React.ComponentProps<'div'>> | undefined;
+  lineProps?: (lineIndex: number) => React.PropsWithoutRef<React.ComponentProps<'div'>>;
 };
 
 export type BracketLinkVisual = {
-  anchorProps?: (linkName: string, clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
+  anchorProps?: (linkName: string, clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>>;
 };
 
 export type HashtagVisual = {
-  anchorProps?: (
-    hashtagName: string,
-    clickable: boolean
-  ) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
+  anchorProps?: (hashtagName: string, clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>>;
 };
 
 export type TaggedLinkVisual = {
-  anchorProps?: (linkName: string, clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
+  anchorProps?: (linkName: string, clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>>;
   tagHidden?: boolean;
 };
 
 export type CodeVisual = {
-  codeProps?: (code: string) => React.PropsWithoutRef<React.ComponentProps<'code'>> | undefined;
+  codeProps?: (code: string) => React.PropsWithoutRef<React.ComponentProps<'code'>>;
 };
 
 export type FormulaVisual = {
-  codeProps?: (formula: string) => React.PropsWithoutRef<React.ComponentProps<'code'>> | undefined;
+  codeProps?: (formula: string) => React.PropsWithoutRef<React.ComponentProps<'code'>>;
 };
 
 /**
