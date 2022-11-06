@@ -1,7 +1,4 @@
-import styled from '@emotion/styled';
 import React from 'react';
-
-import { Header } from '../../../atoms/header/Header';
 
 import { TextNodeComponent } from './TextNodeComponent';
 import { useTextNodeComponent } from './TextNodeComponent.hooks';
@@ -11,10 +8,7 @@ export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, textSelecti
   const { editMode, linkForceClickable } = useTextNodeComponent(cursorCoordinate, textSelection);
 
   return (
-    <StyledText>
-      {visuals.textVisual?.header && (
-        <Header size={visuals.textVisual?.headerSize}>{visuals.textVisual?.header}</Header>
-      )}
+    <>
       {nodes.map((node, index) => (
         <TextNodeComponent
           key={index}
@@ -24,11 +18,6 @@ export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, textSelecti
           {...visuals}
         />
       ))}
-    </StyledText>
+    </>
   );
 };
-
-const StyledText = styled.div`
-  white-space: pre-wrap;
-  word-wrap: break-word;
-`;

@@ -25,4 +25,6 @@ const StyledTextFieldBody = styled.div`
   min-height: 100%;
   font-family: sans-serif;
   cursor: text;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 `;

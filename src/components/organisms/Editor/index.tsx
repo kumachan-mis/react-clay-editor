@@ -4,6 +4,7 @@ import { useParser } from '../../../parser';
 import { EditorRoot } from '../../atoms/editor/EditorRoot';
 import { TextFieldBody } from '../../atoms/editor/TextFieldBody';
 import { TextFieldRoot } from '../../atoms/editor/TextFieldRoot';
+import { Header } from '../../atoms/header/Header';
 import { Cursor } from '../../molecules/cursor/Cursor';
 import { Selection } from '../../molecules/selection/Selection';
 import { Text } from '../../molecules/text/Text';
@@ -51,6 +52,7 @@ export const Editor: React.FC<Props> = (props) => {
       )}
       <TextFieldRoot hideMenu={props.hideMenu}>
         <TextFieldBody {...bodyMouseEventHandlers}>
+          {props.textProps?.header && <Header size={props.textProps?.headerSize}>{props.textProps.header}</Header>}
           <Selection textSelection={state.textSelection} />
           <Cursor
             coordinate={state.cursorCoordinate}
