@@ -31,7 +31,6 @@ export type Props = {
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
-  readonly?: boolean;
   hideMenu?: boolean;
   className?: string;
 };

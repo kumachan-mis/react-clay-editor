@@ -17,7 +17,7 @@ export const Editor: React.FC<Props> = (props) => {
   const [rootMouseEventHandlers, bodyMouseEventHandlers] = useMouseEventHandlers(props, state, setState, ref);
   const cursorEventHandlers = useCursorEventHandlers(props, state, setState);
 
-  useScroll(props.text, state.selectionMouse, props.readonly, setState);
+  useScroll(props.text, state.selectionMouse, setState);
 
   const nodes = useParser(
     props.text,

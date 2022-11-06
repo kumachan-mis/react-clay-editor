@@ -63,7 +63,7 @@ export function useMouseEventHandlers(
       handler: (text: string, state: State, event: Event, root: HTMLElement | null) => [string, State]
     ): ((event: Event) => void) => {
       return (event) => {
-        if (props.readonly || event.button !== 0) return;
+        if (event.button !== 0) return;
         const [newText, newState] = handler(props.text, state, event, ref.current);
         if (newState !== state) setState(newState);
         if (newText !== props.text) props.onChangeText(newText);
@@ -72,23 +72,19 @@ export function useMouseEventHandlers(
     [props, state, ref, setState]
   );
 
-  const handleOnDocMouseDown = React.useCallback(
-    (event: MouseEvent) => {
-      if (!ref.current || ref.current.contains(event.target as Node)) return;
-      setState({
-        ...state,
-        cursorCoordinate: undefined,
-        textAreaValue: '',
-        isComposing: false,
-        textSelection: undefined,
-        selectionMouse: 'deactive',
-        suggestionType: 'none',
-        suggestions: [],
-        suggestionIndex: -1,
-      });
-    },
-    [ref, state, setState]
-  );
+  const handleOnDocMouseDown = React.useCallback(() => {
+    setState({
+      ...state,
+      cursorCoordinate: undefined,
+      textAreaValue: '',
+      isComposing: false,
+      textSelection: undefined,
+      selectionMouse: 'deactive',
+      suggestionType: 'none',
+      suggestions: [],
+      suggestionIndex: -1,
+    });
+  }, [state, setState]);
   const handleOnDocMouseMove = React.useCallback(
     (event: MouseEvent) => {
       createMouseEventHandler(handleOnMouseMove)(event);
@@ -123,21 +119,27 @@ export function useMouseEventHandlers(
     };
   }, [handleOnDocMouseUp]);
 
-  const handleOnRootMouseUp = React.useCallback(
-    () => ref.current?.querySelector('textarea')?.focus({ preventScroll: true }),
-    [ref]
-  );
+  const handleOnRootMouseUp = React.useCallback(() => {
+    ref.current?.querySelector('textarea')?.focus({ preventScroll: true });
+  }, [ref]);
   const handleOnRootMouseDown = React.useCallback(
-    () => document.addEventListener('mouseup', handleOnRootMouseUp),
+    (event: React.MouseEvent) => {
+      event.nativeEvent.stopPropagation();
+      document.addEventListener('mouseup', handleOnRootMouseUp);
+    },
     [handleOnRootMouseUp]
   );
 
   const handleOnBodyMouseDown = React.useCallback(
-    (event: React.MouseEvent) => createMouseEventHandler(handleOnMouseDown)(event),
+    (event: React.MouseEvent) => {
+      createMouseEventHandler(handleOnMouseDown)(event);
+    },
     [createMouseEventHandler]
   );
   const handleOnBodyClick = React.useCallback(
-    (event: React.MouseEvent) => createMouseEventHandler(handleOnClick)(event),
+    (event: React.MouseEvent) => {
+      createMouseEventHandler(handleOnClick)(event);
+    },
     [createMouseEventHandler]
   );
 
@@ -164,7 +166,6 @@ export function useCursorEventHandlers(
   const createCursorEventHandler = React.useCallback(
     <Event>(handler: (text: string, state: State, event: Event) => [string, State]): ((event: Event) => void) => {
       return (event) => {
-        if (props.readonly) return;
         const [newText, newState] = handler(props.text, state, event);
         if (newState !== state) setState(newState);
         if (newText !== props.text) props.onChangeText(newText);
@@ -178,7 +179,6 @@ export function useCursorEventHandlers(
       handler: (text: string, props: Props, state: State, event: Event) => [string, State]
     ): ((event: Event) => void) => {
       return (event) => {
-        if (props.readonly) return;
         const [newText, newState] = handler(props.text, props, state, event);
         if (newState !== state) setState(newState);
         if (newText !== props.text) props.onChangeText(newText);
@@ -202,7 +202,6 @@ export function useCursorEventHandlers(
 export function useScroll(
   text: string,
   selectionMouse: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down',
-  readonly: boolean | undefined,
   setState: React.Dispatch<React.SetStateAction<State>>
 ): void {
   const timeIdRef = React.useRef<number>(0);
@@ -210,13 +209,13 @@ export function useScroll(
   React.useEffect(() => {
     switch (selectionMouse) {
       case 'active-up':
-        if (readonly || timeIdRef.current) break;
+        if (timeIdRef.current) break;
         timeIdRef.current = window.setInterval(() => {
           setState((state) => handleOnMouseScrollUp(text, state));
         });
         break;
       case 'active-down':
-        if (readonly || timeIdRef.current) break;
+        if (timeIdRef.current) break;
         timeIdRef.current = window.setInterval(() => {
           setState((state) => handleOnMouseScrollDown(text, state));
         });

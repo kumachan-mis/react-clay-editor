@@ -140,11 +140,11 @@ function cursorCoordinateLineGroup(
   const groups = selectId.match(LineGroupConstants.selectIdRegex)?.groups as Record<string, string>;
   const firstLineIndex = Number.parseInt(groups['first'], 10);
   const lastLineIndex = Number.parseInt(groups['last'], 10);
-  const [x] = position;
+  const [, y] = position;
 
   const lineGroupRect = lineGroupElement.getBoundingClientRect();
 
-  if (x <= lineGroupRect.left + lineGroupRect.width / 2) {
+  if (y <= lineGroupRect.top + lineGroupRect.height / 2) {
     return { lineIndex: firstLineIndex, charIndex: 0 };
   } else {
     return { lineIndex: lastLineIndex, charIndex: lines[lastLineIndex].length };
