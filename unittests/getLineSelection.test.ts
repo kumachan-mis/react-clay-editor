@@ -1,4 +1,4 @@
-import { getLineSelection } from '../src/Selection/utils';
+import { getLineSelection } from '../src/components/molecules/selection/Selection/utils';
 
 import { TestCase, testCases } from './getLineSelection.testcase';
 

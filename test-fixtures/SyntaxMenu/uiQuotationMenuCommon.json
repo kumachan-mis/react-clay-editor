@@ -28,7 +28,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["React Realtime Markup Editor"],
       "expectedLinesAfterMenu": ["> "],
@@ -55,7 +55,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-quotation-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -83,7 +83,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-quotation-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -111,7 +111,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> This will be a quotation text"],
@@ -138,7 +138,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -173,7 +173,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -201,7 +201,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This will be a normal line"],
@@ -235,7 +235,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -263,7 +263,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -291,7 +291,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This will be also a normal line"],
@@ -318,7 +318,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -346,7 +346,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -374,7 +374,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "\\int_a^b f(x) dx", "$$"],
@@ -408,7 +408,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> This is normal text", "> This is a quotation text"],
@@ -442,7 +442,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is a quotation text", "This is also a quotation text"],
@@ -476,7 +476,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -511,7 +511,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-quotation-menu-item"
       },
       "inputTyping": ["."],
@@ -546,7 +546,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is normal text", " ```", " code string", " ```"],
@@ -580,7 +580,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is normal text", " ```", " code string", " ```"],
@@ -607,7 +607,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": ["> This is normal text"],
@@ -641,7 +641,7 @@
       ],
       "inputMenu": {
         "name": "quotation-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
       "expectedLinesAfterMenu": ["This is normal text", "This is also normal text"],

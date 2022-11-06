@@ -2,7 +2,8 @@ import { render, screen, Screen } from '@testing-library/react';
 import React from 'react';
 
 import { Viewer, ViewerProps } from '../../src';
-import * as utils from '../../src/TextLines/utils';
+import { useEmbededLinkForceClickable } from '../../src/components/atoms/text/EmbededLink/hooks';
+import * as hooks from '../../src/components/molecules/text/Text/TextNodeComponent.hooks';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
@@ -30,17 +31,21 @@ describe('UI of Viewer (markdown syntax)', () => {
 
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => void {
   return (testCase) => {
-    const spiedCursorOnNode = jest.spyOn(utils, 'cursorOnNode');
+    const spiedUseTextNodeComponent = jest.spyOn(hooks, 'useTextNodeComponent');
     const text = testCase.inputLines.join('\n');
-    const { rerender } = render(<Viewer text={text} syntax={syntax} {...testCase?.options} />);
 
+    const { unmount } = render(<Viewer text={text} syntax={syntax} {...testCase?.options} />);
     expectTestIdCountsToBe(screen, testCase.expectedTestIdCounts);
     expectTextLinesToBe(screen, testCase.expectedViewLines);
+    unmount();
 
-    spiedCursorOnNode.mockImplementation(() => true);
-    rerender(<Viewer text={text} syntax={syntax} {...testCase?.options} />);
+    spiedUseTextNodeComponent.mockImplementation(() => {
+      const linkForceClickable = useEmbededLinkForceClickable();
+      return { editMode: () => true, linkForceClickable };
+    });
+    render(<Viewer text={text} syntax={syntax} {...testCase?.options} />);
     expectTextLinesToBe(screen, testCase.expectedEditLines || testCase.inputLines);
-    spiedCursorOnNode.mockRestore();
+    spiedUseTextNodeComponent.mockRestore();
   };
 }
 

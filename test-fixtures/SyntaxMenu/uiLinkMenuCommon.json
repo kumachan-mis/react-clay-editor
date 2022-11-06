@@ -101,7 +101,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["{enter}"],
       "expectedLinesAfterMenu": ["[tag: tagged link]"],
@@ -128,7 +128,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "@-tagged-link-menu-item"
       },
       "inputTyping": ["{enter}"],
@@ -264,7 +264,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is normal text"],
@@ -291,7 +291,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "tag-tagged-link-menu-item"
       },
       "inputTyping": ["."],
@@ -319,7 +319,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "@-tagged-link-menu-item"
       },
       "inputTyping": ["."],
@@ -347,7 +347,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[nothing happend]"],
@@ -428,7 +428,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["hello world"],
       "expectedLinesAfterMenu": ["no[tag: tagged link]rmal text"],
@@ -455,7 +455,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "tag-tagged-link-menu-item"
       },
       "inputTyping": ["hello world"],
@@ -510,7 +510,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "\\sum_{i=0}^{n-1}a_nb_n", "$$"],
@@ -680,7 +680,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "tag-tagged-link-menu-item"
       },
       "inputTyping": ["."],
@@ -715,7 +715,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[nothing happend]"],
@@ -817,7 +817,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["{enter}"],
       "expectedLinesAfterMenu": ["no[tag: rmal] text"],
@@ -851,7 +851,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$f(x)g(x)$"],
@@ -953,7 +953,7 @@
       ],
       "inputMenu": {
         "name": "tagged-link-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["[@: nothing_happened] `code string`"],

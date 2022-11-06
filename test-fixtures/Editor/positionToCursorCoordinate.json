@@ -75,7 +75,7 @@
     },
     {
       "name": "beginning of line-group",
-      "inputPosition": [20, 48],
+      "inputPosition": [20, 42],
       "expectedCoordinate": {
         "lineIndex": 3,
         "charIndex": 0
@@ -83,7 +83,7 @@
     },
     {
       "name": "end of line-group",
-      "inputPosition": [130, 48],
+      "inputPosition": [20, 54],
       "expectedCoordinate": {
         "lineIndex": 4,
         "charIndex": 11

@@ -1,4 +1,4 @@
-import { getSelectionText } from '../src/Selection/utils';
+import { getSelectionText } from '../src/components/molecules/selection/Selection/utils';
 
 import { TestCase, testCases } from './getSelectionText.testcase';
 

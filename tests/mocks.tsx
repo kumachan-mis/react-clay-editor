@@ -10,12 +10,12 @@ export const MockEditor: React.FC<MockEditorProps> = ({ initText = '', ...props 
   return (
     <>
       <Editor text={text} onChangeText={setText} {...props} />
-      <MockTextLines text={text} />
+      <MockText text={text} />
     </>
   );
 };
 
-export const MockTextLines: React.FC<{ text: string }> = ({ text }) => (
+export const MockText: React.FC<{ text: string }> = ({ text }) => (
   <div>
     {text.split('\n').map((line, i) => (
       <div key={i} data-testid={`mock-line-${i}`}>
@@ -62,7 +62,7 @@ export class SpyOnGetBoundingClientRect {
   }
 
   charGroup(lineIndex: number, firstCharIndex: number, lastCharIndex: number): jest.SpyInstance<DOMRect, []> {
-    const element = this.screen.getByTestId(`char-group-L${lineIndex}C${firstCharIndex}-${lastCharIndex}`);
+    const element = this.screen.getByTestId(`chargroup-L${lineIndex}C${firstCharIndex}-${lastCharIndex}`);
     const [width, height] = [this.config.size * (lastCharIndex - firstCharIndex + 1), this.config.size];
     const [x, y] = [
       this.config.size * firstCharIndex,
@@ -79,7 +79,7 @@ export class SpyOnGetBoundingClientRect {
   }
 
   lineGroup(firstLineIndex: number, lastLineIndex: number): jest.SpyInstance<DOMRect, []> {
-    const element = this.screen.getByTestId(`line-group-L${firstLineIndex}-${lastLineIndex}`);
+    const element = this.screen.getByTestId(`linegroup-L${firstLineIndex}-${lastLineIndex}`);
     const [width, height] = [
       this.config.size * this.config.chars,
       (this.config.size + 2 * this.config.margin) * (lastLineIndex - firstLineIndex + 1),
@@ -89,7 +89,7 @@ export class SpyOnGetBoundingClientRect {
   }
 
   editorBody(): jest.SpyInstance<DOMRect, []> {
-    const element = this.screen.getByTestId('editor-body');
+    const element = this.screen.getByTestId('text-field-body');
     const [width, height] = [
       this.config.size * this.config.chars,
       (this.config.size + 2 * this.config.margin) * this.config.lines,

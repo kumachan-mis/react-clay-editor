@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import * as utils from '../../src/Editor/callbacks/utils';
-import * as selection from '../../src/Selection';
-import { TextSelection } from '../../src/Selection/types';
-import { getSelectionText } from '../../src/Selection/utils';
+import * as selection from '../../src/components/molecules/selection/Selection';
+import { TextSelection } from '../../src/components/molecules/selection/Selection/types';
+import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
+import * as cursor from '../../src/components/organisms/Editor/common/cursor';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor } from '../mocks';
@@ -36,14 +36,14 @@ describe('keyboardSelection in Editor', () => {
   });
 
   runFixtureTests<TestCase, Common>('Editor', 'keyboardSelection', (testCase, common) => {
-    const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+    const spiedPositionToCursorCoordinate = jest.spyOn(cursor, 'positionToCursorCoordinate');
     const SpiedTextLines = jest.spyOn(selection, 'Selection');
 
     const text = common.textLines.join('\n');
     const { rerender } = render(<MockEditor initText={text} />);
 
     spiedPositionToCursorCoordinate.mockImplementation(() => common.initCoordinate);
-    userEvent.click(screen.getByTestId('editor-body'));
+    userEvent.click(screen.getByTestId('text-field-body'));
     userEvent.keyboard(testCase.inputTyping.join(''));
 
     const expectedSelectionText = testCase.expectedSelectionLines.join('\n');

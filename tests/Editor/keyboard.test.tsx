@@ -3,8 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as utils from '../../src/Editor/callbacks/utils';
-import * as textLines from '../../src/TextLines';
+import * as cursor from '../../src/components/organisms/Editor/common/cursor';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
@@ -20,21 +19,18 @@ interface Common {
   typingAlias?: Record<string, string[] | undefined>;
 }
 
-const SpiedTextLines = jest.spyOn(textLines, 'TextLines');
-const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+const spiedPositionToCursorCoordinate = jest.spyOn(cursor, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
 });
 
 afterAll(() => {
-  SpiedTextLines.mockRestore();
   spiedPositionToCursorCoordinate.mockRestore();
 });
 
 describe('keyboardEvents (bracket) in Editor', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
@@ -46,7 +42,6 @@ describe('keyboardEvents (bracket) in Editor', () => {
 
 describe('keyboardEvents (markdown) in Editor', () => {
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
@@ -68,7 +63,6 @@ describe('keyboardShortcuts (windows) in Editor', () => {
   });
 
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
@@ -90,7 +84,6 @@ describe('keyboardShortcuts (macos) in Editor', () => {
   });
 
   afterEach(() => {
-    SpiedTextLines.mockClear();
     spiedPositionToCursorCoordinate.mockClear();
   });
 
@@ -103,7 +96,7 @@ describe('keyboardShortcuts (macos) in Editor', () => {
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
     render(<MockEditor syntax={syntax} {...common?.options} />);
-    userEvent.click(screen.getByTestId('editor-body'));
+    userEvent.click(screen.getByTestId('text-field-body'));
     userEvent.keyboard(resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
     expectTextLinesToBe(screen, testCase.expectedLines);
   };

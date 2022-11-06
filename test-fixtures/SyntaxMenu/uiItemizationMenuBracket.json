@@ -28,7 +28,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["React Realtime Markup Editor"],
       "expectedLinesAfterMenu": [" "],
@@ -55,7 +55,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -83,7 +83,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["React Realtime Markup Editor"],
@@ -111,7 +111,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": [" This will be an item"],
@@ -138,7 +138,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -173,7 +173,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -201,7 +201,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This will be a normal line"],
@@ -235,7 +235,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -263,7 +263,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -291,7 +291,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This will be also a normal line"],
@@ -318,7 +318,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -346,7 +346,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -374,7 +374,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> This is a quotation"],
@@ -401,7 +401,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "\\int_a^b f(x) dx", "$$"],
@@ -428,7 +428,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["> This is a quotation"],
@@ -455,7 +455,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["$$", "\\int_a^b f(x) dx", "$$"],
@@ -489,7 +489,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["\tThis is an item", " This is normal text"],
@@ -523,7 +523,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is an item", "This is also an item"],
@@ -557,7 +557,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -592,7 +592,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "outdent-itemization-menu-item"
       },
       "inputTyping": ["."],
@@ -627,7 +627,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-button"
+        "menuButton": "dropdown-main-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is normal text", " ```", " code string", " ```"],
@@ -661,7 +661,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow"
+        "menuButton": "dropdown-arrow-button"
       },
       "inputTyping": ["."],
       "expectedLinesAfterMenu": ["This is normal text", " ```", " code string", " ```"],
@@ -688,7 +688,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],
@@ -723,7 +723,7 @@
       ],
       "inputMenu": {
         "name": "itemization-menu",
-        "menuButton": "dropdown-anchor-arrow",
+        "menuButton": "dropdown-arrow-button",
         "menuItemName": "indent-itemization-menu-item"
       },
       "inputTyping": ["{ctrl}z{/ctrl}."],

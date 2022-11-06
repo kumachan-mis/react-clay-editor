@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as utils from '../../src/Editor/callbacks/utils';
+import * as cursor from '../../src/components/organisms/Editor/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 
@@ -20,7 +20,7 @@ interface Common {
   options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
 }
 
-const spiedPositionToCursorCoordinate = jest.spyOn(utils, 'positionToCursorCoordinate');
+const spiedPositionToCursorCoordinate = jest.spyOn(cursor, 'positionToCursorCoordinate');
 
 beforeAll(() => {
   spiedPositionToCursorCoordinate.mockImplementation(() => ({ lineIndex: 0, charIndex: 0 }));
@@ -37,7 +37,7 @@ describe('UI of Suggestion List', () => {
 
   runFixtureTests<TestCase, Common | undefined>('Cursor', 'uiSuggestionList', (testCase, common) => {
     render(<MockEditor {...common?.options} />);
-    userEvent.click(screen.getByTestId('editor-body'));
+    userEvent.click(screen.getByTestId('text-field-body'));
     userEvent.keyboard(testCase.inputTypingBefore.join(''));
 
     expect(screen.getByTestId('suggestion-header').textContent).toBe(testCase.expectedHeader);
