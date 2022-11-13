@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useParser } from '../../../parser';
 import { EditorRoot } from '../../atoms/editor/EditorRoot';
 import { TextFieldBody } from '../../atoms/editor/TextFieldBody';
 import { TextFieldRoot } from '../../atoms/editor/TextFieldRoot';
@@ -11,6 +10,7 @@ import { Text } from '../../molecules/text/Text';
 import { SyntaxMenu } from '../SyntaxMenu';
 
 import {
+  useParser,
   useCursorEventHandlers,
   useEditorState,
   useScroll,

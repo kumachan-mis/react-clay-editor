@@ -1,12 +1,16 @@
 import React from 'react';
 
-import { BracketLinkParsing, CodeParsing, FormulaParsing, HashtagParsing, TaggedLinkParsing } from '../../common/types';
-import { BlockNode } from '../block/types';
-import { ParsingOptions } from '../common/types';
-import { LineNode } from '../line/types';
-import { createTaggedLinkRegex } from '../taggedLink/parseTaggedLink';
-
-import { parseText } from './parseText';
+import {
+  BracketLinkParsing,
+  HashtagParsing,
+  TaggedLinkParsing,
+  CodeParsing,
+  FormulaParsing,
+} from '../../../common/types';
+import { ParsingOptions, parseText } from '../../../parser';
+import { BlockNode } from '../../../parser/block/types';
+import { LineNode } from '../../../parser/line/types';
+import { createTaggedLinkRegex } from '../../../parser/taggedLink/parseTaggedLink';
 
 export function useParser(
   text: string,

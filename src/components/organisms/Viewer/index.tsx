@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { useParser } from '../../../parser';
 import { Text } from '../../molecules/text/Text';
 
+import { useParser } from './hooks';
 import { ViewerProps } from './types';
 
 export const Viewer: React.FC<ViewerProps> = ({
