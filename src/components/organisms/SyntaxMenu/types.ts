@@ -13,7 +13,8 @@ import {
   TaggedLinkLabels,
   TextLabels,
 } from '../../../common/types';
-import { BlockNode, LineNode } from '../../../parser/types';
+import { BlockNode } from '../../../parser/block/types';
+import { LineNode } from '../../../parser/line/types';
 import { MenuListProps } from '../../atoms/menu/MenuList';
 import { State } from '../Editor/types';
 

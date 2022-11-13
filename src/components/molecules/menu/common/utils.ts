@@ -1,4 +1,5 @@
-import { ContentNode, PureLineNode } from '../../../../parser/types';
+import { ContentNode } from '../../../../parser/content/types';
+import { PureLineNode } from '../../../../parser/line/types';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 import { TextSelection } from '../../selection/Selection/types';
 import { ContentPosition, ContentPositionEndPoint } from '../hooks/types';

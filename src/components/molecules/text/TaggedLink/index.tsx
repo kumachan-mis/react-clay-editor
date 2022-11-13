@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { TaggedLinkNode } from '../../../../parser/types';
-import { getTagName, splitTag } from '../../../../parser/utils';
+import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
+import { getTagName, splitTag } from '../../../../parser/taggedLink/utils';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
@@ -10,10 +10,10 @@ export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
 
 export const TaggedLink: React.FC<TaggedLinkProps> = ({ node, editMode, linkForceClickable, taggedLinkVisualMap }) => {
   const { lineIndex, linkName, trailingMeta } = node;
-  const [facingMeta, tag] = splitTag(node.facingMeta);
+  const [facingMeta, tag] = splitTag(node);
   const [first, last] = node.range;
   const editModeValue = editMode(node);
-  const taggedLinkVisual = taggedLinkVisualMap?.[getTagName(node.facingMeta)];
+  const taggedLinkVisual = taggedLinkVisualMap?.[getTagName(node)];
 
   return (
     <EmbededLink

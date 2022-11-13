@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { BlockNode, LineNode } from '../../../parser/types';
+import { BlockNode } from '../../../parser/block/types';
+import { LineNode } from '../../../parser/line/types';
 
 export function useLineNodes(nodes: (LineNode | BlockNode)[]): LineNode[] {
   const lineNodes = React.useMemo(() => {

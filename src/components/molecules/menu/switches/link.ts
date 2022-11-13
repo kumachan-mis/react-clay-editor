@@ -1,5 +1,5 @@
-import { LineNode } from '../../../../parser/types';
-import { isPureLineNode } from '../../../../parser/utils';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition } from '../hooks/types';
 

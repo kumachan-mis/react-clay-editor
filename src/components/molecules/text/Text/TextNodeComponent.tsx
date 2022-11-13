@@ -8,7 +8,7 @@ import {
   TaggedLinkVisual,
   TextVisual,
 } from '../../../../common/types';
-import { TextNode } from '../../../../parser/types';
+import { TextNode } from '../../../../parser';
 import { BlockCode } from '../BlockCode';
 import { BlockFormula } from '../BlockFormula';
 import { BracketLink } from '../BracketLink';

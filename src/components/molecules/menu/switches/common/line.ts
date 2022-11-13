@@ -1,4 +1,4 @@
-import { LineNode } from '../../../../../parser/types';
+import { LineNode } from '../../../../../parser/line/types';
 import { State } from '../../../../organisms/Editor/types';
 import { getLineRange } from '../../common/utils';
 

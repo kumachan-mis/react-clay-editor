@@ -1,6 +1,7 @@
 import { CodeLabels } from '../../../../common/types';
-import { BlockNode, LineNode } from '../../../../parser/types';
-import { isPureLineNode } from '../../../../parser/utils';
+import { BlockNode } from '../../../../parser/block/types';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
 import { State } from '../../../organisms/Editor/types';
 import { BlockPosition, ContentPosition } from '../hooks/types';
 import { CodeMenuSwitch } from '../switches/code';

@@ -1,4 +1,4 @@
-import { parserConstants } from '../../../../parser/constants';
+import { wordRegex } from '../../../../common/constants';
 import { moveCursor, cursorCoordinateToTextIndex } from '../../../molecules/cursor/Cursor/utils';
 import { getSelectionText } from '../../../molecules/selection/Selection/utils';
 import { resetTextSelection, updateSelectionAfterCursorMove } from '../common/selection';
@@ -313,14 +313,14 @@ export function handleOnMoveWordTop(
   const { cursorCoordinate, textSelection } = state;
 
   const newCursorCoordinate = (() => {
-    const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
+    const groupWordRegex = new RegExp(wordRegex, 'g');
     const lines = text.split('\n');
     const currentLine = lines[cursorCoordinate.lineIndex];
     let charIndex: number | undefined = undefined;
     let match: RegExpExecArray | null = null;
-    while ((match = wordRegex.exec(currentLine))) {
+    while ((match = groupWordRegex.exec(currentLine))) {
       if (!match) break;
-      const candidateIndex = wordRegex.lastIndex - match[0].length;
+      const candidateIndex = groupWordRegex.lastIndex - match[0].length;
       if (candidateIndex >= cursorCoordinate.charIndex) break;
       charIndex = candidateIndex;
     }
@@ -348,13 +348,13 @@ export function handleOnMoveWordBottom(
   const { cursorCoordinate, textSelection } = state;
 
   const newCursorCoordinate = (() => {
-    const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
+    const groupWordRegex = new RegExp(wordRegex, 'g');
     const lines = text.split('\n');
     const currentLine = lines[cursorCoordinate.lineIndex];
     let match: RegExpExecArray | null = null;
-    while ((match = wordRegex.exec(currentLine))) {
+    while ((match = groupWordRegex.exec(currentLine))) {
       if (!match) break;
-      const candidateIndex = wordRegex.lastIndex;
+      const candidateIndex = groupWordRegex.lastIndex;
       if (candidateIndex > cursorCoordinate.charIndex) {
         return { lineIndex: cursorCoordinate.lineIndex, charIndex: candidateIndex };
       }

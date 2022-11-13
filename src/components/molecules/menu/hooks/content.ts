@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { ContentNode, LineNode } from '../../../../parser/types';
-import { isPureLineNode } from '../../../../parser/utils';
+import { ContentNode } from '../../../../parser/content/types';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 import { TextSelection } from '../../selection/Selection/types';
 

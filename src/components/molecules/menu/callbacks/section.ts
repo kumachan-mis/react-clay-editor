@@ -1,5 +1,5 @@
 import { TextLabels } from '../../../../common/types';
-import { LineNode } from '../../../../parser/types';
+import { LineNode } from '../../../../parser/line/types';
 import { State } from '../../../organisms/Editor/types';
 import { TextSelection } from '../../selection/Selection/types';
 import { copySelection, undefinedIfZeroSelection } from '../../selection/Selection/utils';

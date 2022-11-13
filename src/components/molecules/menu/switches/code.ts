@@ -1,5 +1,6 @@
-import { BlockNode, LineNode } from '../../../../parser/types';
-import { isPureLineNode } from '../../../../parser/utils';
+import { BlockNode } from '../../../../parser/block/types';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
 import { State } from '../../../organisms/Editor/types';
 import { isEndPoint } from '../common/utils';
 import { BlockPosition, ContentPosition } from '../hooks/types';

@@ -1,5 +1,7 @@
 import { isMacOS } from '../../../../common/utils';
-import { parserConstants } from '../../../../parser/constants';
+import { bracketItemizationRegex } from '../../../../parser/itemization/parseBracketItemization';
+import { markdownItemizationRegex } from '../../../../parser/itemization/parseMarkdownItemization';
+import { quotationRegex } from '../../../../parser/quotation/parseQuotation';
 import { getSelectionText } from '../../../molecules/selection/Selection/utils';
 import { showSuggestion, showIMEBasedSuggestion, insertSuggestion, resetSuggestion } from '../common/suggestion';
 import { insertText } from '../common/text';
@@ -46,16 +48,16 @@ export function handleOnKeyDown(
       const lines = newText.split('\n');
       const newPrevLine = lines[newState.cursorCoordinate.lineIndex - 1];
 
-      const groups = newPrevLine.match(parserConstants.common.quotation)?.groups;
+      const groups = newPrevLine.match(quotationRegex)?.groups;
       if (groups) return insertText(newText, newState, groups.indent + groups.meta);
 
       if (!props.syntax || props.syntax === 'bracket') {
         // bracket syntax
-        const groups = newPrevLine.match(parserConstants.bracketSyntax.itemization)?.groups;
+        const groups = newPrevLine.match(bracketItemizationRegex)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       } else {
         // markdown syntax
-        const groups = newPrevLine.match(parserConstants.markdownSyntax.itemization)?.groups;
+        const groups = newPrevLine.match(markdownItemizationRegex)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }
 

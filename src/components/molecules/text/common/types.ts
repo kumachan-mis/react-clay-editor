@@ -6,7 +6,7 @@ import {
   TaggedLinkVisual,
   TextVisual,
 } from '../../../../common/types';
-import { TextNode } from '../../../../parser/types';
+import { TextNode } from '../../../../parser';
 
 export type TextNodeComponentProps<TTextNode extends TextNode = TextNode> = {
   node: TTextNode;

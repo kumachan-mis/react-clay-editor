@@ -1,5 +1,5 @@
-import { LineNode } from '../../../../../parser/types';
-import { isPureLineNode } from '../../../../../parser/utils';
+import { LineNode } from '../../../../../parser/line/types';
+import { isPureLineNode } from '../../../../../parser/line/utils';
 import { insertText } from '../../../../organisms/Editor/common/text';
 import { State } from '../../../../organisms/Editor/types';
 import { CursorCoordinate } from '../../../cursor/Cursor/types';

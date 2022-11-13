@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextNode } from '../../../../parser/types';
+import { TextNode } from '../../../../parser';
 import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/hooks';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 import { TextSelection } from '../../selection/Selection/types';

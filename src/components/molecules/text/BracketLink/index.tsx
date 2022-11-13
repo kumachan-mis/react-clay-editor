@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BracketLinkNode } from '../../../../parser/types';
+import { BracketLinkNode } from '../../../../parser/bracketLink/types';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';

@@ -1,5 +1,5 @@
 import { ItemizationLabels } from '../../../../common/types';
-import { LineNode } from '../../../../parser/types';
+import { LineNode } from '../../../../parser/line/types';
 import { State } from '../../../organisms/Editor/types';
 import { ItemizationMenuSwitch } from '../switches/itemization';
 

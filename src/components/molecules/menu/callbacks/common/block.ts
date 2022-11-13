@@ -1,5 +1,6 @@
-import { BlockNode, LineNode } from '../../../../../parser/types';
-import { isBlockNode } from '../../../../../parser/utils';
+import { BlockNode } from '../../../../../parser/block/types';
+import { isBlockNode } from '../../../../../parser/block/utils';
+import { LineNode } from '../../../../../parser/line/types';
 import { insertText } from '../../../../organisms/Editor/common/text';
 import { State } from '../../../../organisms/Editor/types';
 import { CursorCoordinate } from '../../../cursor/Cursor/types';

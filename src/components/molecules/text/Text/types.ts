@@ -6,7 +6,7 @@ import {
   TaggedLinkVisual,
   TextVisual,
 } from '../../../../common/types';
-import { TextNode } from '../../../../parser/types';
+import { TextNode } from '../../../../parser';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 import { TextSelection } from '../../selection/Selection/types';
 

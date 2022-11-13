@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BlockFormulaMetaNode } from '../../../../parser/types';
+import { BlockFormulaMetaNode } from '../../../../parser/blockFormula/types';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';

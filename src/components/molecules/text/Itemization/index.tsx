@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ItemizationNode, TextNode } from '../../../../parser/types';
+import { TextNode } from '../../../../parser';
+import { ItemizationNode } from '../../../../parser/itemization/types';
 import { ItemBullet } from '../../../atoms/text/ItemBullet';
 import { ItemBulletContent } from '../../../atoms/text/ItemBulletContent';
 import { Line } from '../../../atoms/text/Line';

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { BlockNode, LineNode } from '../../../../parser/types';
-import { isBlockNode } from '../../../../parser/utils';
+import { BlockNode } from '../../../../parser/block/types';
+import { isBlockNode } from '../../../../parser/block/utils';
+import { LineNode } from '../../../../parser/line/types';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 import { TextSelection } from '../../selection/Selection/types';
 import { getLineRange } from '../common/utils';

@@ -1,5 +1,6 @@
-import { LineNode } from '../../../../parser/types';
-import { getTagName, isPureLineNode } from '../../../../parser/utils';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
+import { getTagName } from '../../../../parser/taggedLink/utils';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition } from '../hooks/types';
 
@@ -12,5 +13,5 @@ export function getTagNameAtPosition(
   if (!isPureLineNode(lineNode)) return undefined;
   const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
   if (!contentNode || contentNode.type !== 'taggedLink') return undefined;
-  return getTagName(contentNode.facingMeta);
+  return getTagName(contentNode);
 }

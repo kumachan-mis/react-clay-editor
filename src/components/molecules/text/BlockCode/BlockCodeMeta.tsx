@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BlockCodeMetaNode } from '../../../../parser/types';
+import { BlockCodeMetaNode } from '../../../../parser/blockCode/types';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';

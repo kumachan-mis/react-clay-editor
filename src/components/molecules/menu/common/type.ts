@@ -1,4 +1,5 @@
-import { BlockNode, LineNode } from '../../../../parser/types';
+import { BlockNode } from '../../../../parser/block/types';
+import { LineNode } from '../../../../parser/line/types';
 import { State } from '../../../organisms/Editor/types';
 import { BlockPosition, ContentPosition } from '../hooks/types';
 

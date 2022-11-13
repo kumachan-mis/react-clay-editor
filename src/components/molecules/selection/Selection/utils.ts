@@ -1,4 +1,4 @@
-import { parserConstants } from '../../../../parser/constants';
+import { wordRegex } from '../../../../common/constants';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 import { coordinatesAreEqual, cursorCoordinateToTextIndex } from '../../cursor/Cursor/utils';
 
@@ -10,14 +10,14 @@ export function getWordSelection(
 ): TextSelection | undefined {
   if (!cursorCoordinate) return undefined;
 
-  const wordRegex = new RegExp(parserConstants.wordRegex, 'g');
+  const groupWordRegex = new RegExp(wordRegex, 'g');
   const lines = text.split('\n');
   const currentLine = lines[cursorCoordinate.lineIndex];
   let match: RegExpExecArray | null = null;
-  while ((match = wordRegex.exec(currentLine))) {
+  while ((match = groupWordRegex.exec(currentLine))) {
     if (!match) break;
-    const from = wordRegex.lastIndex - match[0].length;
-    const to = wordRegex.lastIndex;
+    const from = groupWordRegex.lastIndex - match[0].length;
+    const to = groupWordRegex.lastIndex;
     if (to < cursorCoordinate.charIndex) continue;
     if (from > cursorCoordinate.charIndex) break;
     if (from === to) return undefined;

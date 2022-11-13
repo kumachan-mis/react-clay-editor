@@ -1,6 +1,8 @@
 import { BracketLabels, HashtagLabels, Suggestion, TaggedLinkLabels } from '../../../../common/types';
-import { LineNode, PureLineNode } from '../../../../parser/types';
-import { isPureLineNode, getTagName } from '../../../../parser/utils';
+import { LineNode, PureLineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
+import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
+import { getTagName } from '../../../../parser/taggedLink/utils';
 import { State } from '../../../organisms/Editor/types';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/types';
@@ -41,7 +43,7 @@ export function handleOnLinkItemClick(
   ): [string, State] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
-    if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
+    if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode as TaggedLinkNode)) {
       return replaceContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }
     const normalConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
@@ -58,7 +60,7 @@ export function handleOnLinkItemClick(
   ): [string, State] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
-    if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode.facingMeta)) {
+    if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode as TaggedLinkNode)) {
       return replaceContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }
     const normalConfig = { facingMeta: '', trailingMeta: '', nestedSearch: config.nestedSearch };
