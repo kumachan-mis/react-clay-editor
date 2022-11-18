@@ -12,10 +12,10 @@ import { QuotationMenu } from '../../molecules/menu/QuotationMenu';
 import { SectionMenu } from '../../molecules/menu/SectionMenu';
 import { TaggedLinkMenu } from '../../molecules/menu/TaggedLinkMenu';
 import { UnderlineMenu } from '../../molecules/menu/UnderlineMenu';
-import { useBlockPosition } from '../../molecules/menu/hooks/block';
-import { useContentPosition } from '../../molecules/menu/hooks/content';
 
-import { useLineNodes } from './hooks';
+import { useBlockPosition } from './hooks/blockPosition';
+import { useContentPosition } from './hooks/contentPosition';
+import { useLineNodes } from './hooks/lineNodes';
 import { SyntaxMenuProps } from './types';
 
 export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({

@@ -3,7 +3,7 @@ import { LineNode, PureLineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
 import { getTagName } from '../../../../parser/taggedLink/utils';
-import { State } from '../../../organisms/Editor/types';
+import { State } from '../../Editor/types';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/types';
 import { LinkMenuItem, LinkMenuSwitch } from '../switches/link';

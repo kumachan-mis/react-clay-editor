@@ -1,6 +1,6 @@
 import { LineNode, PureLineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { State } from '../../../organisms/Editor/types';
+import { State } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/types';
 import { DecorationMenuItemType, DecorationMenuSwitch, DecorationMenuSwitchItem } from '../switches/decoration';

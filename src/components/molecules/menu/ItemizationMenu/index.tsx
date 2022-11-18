@@ -12,9 +12,9 @@ import {
   handleOnItemizationButtonClick,
   handleOnItemizationItemClick,
   ItemizationMenuHandlerProps,
-} from '../callbacks/itemization';
-import { CommonMenuProps, LineMenuProps } from '../common/type';
-import { itemizationMenuSwitch } from '../switches/itemization';
+} from '../../../organisms/SyntaxMenu/callbacks/itemization';
+import { CommonMenuProps, LineMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { itemizationMenuSwitch } from '../../../organisms/SyntaxMenu/switches/itemization';
 
 export type ItemizationMenuProps = ItemizationLabels & LineMenuProps & CommonMenuProps;
 

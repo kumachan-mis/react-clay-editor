@@ -12,9 +12,9 @@ import {
   handleOnQuotationButtonClick,
   handleOnQuotationItemClick,
   QuotationMenuHandlerProps,
-} from '../callbacks/quotation';
-import { CommonMenuProps, LineMenuProps } from '../common/type';
-import { quotationMenuSwitch } from '../switches/quotation';
+} from '../../../organisms/SyntaxMenu/callbacks/quotation';
+import { CommonMenuProps, LineMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { quotationMenuSwitch } from '../../../organisms/SyntaxMenu/switches/quotation';
 
 export type QuotationMenuProps = QuotationLabels & LineMenuProps & CommonMenuProps;
 

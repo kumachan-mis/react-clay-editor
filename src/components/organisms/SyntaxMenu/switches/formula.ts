@@ -1,15 +1,20 @@
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { State } from '../../../organisms/Editor/types';
+import { State } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
 import { BlockPosition, ContentPosition } from '../hooks/types';
 
 import { blockMenuSwitch } from './common/block';
 
-export type CodeMenuSwitch = 'on' | 'off' | 'disabled';
+export type ContentFormulaMenuSwitch = 'inline' | 'display' | 'off' | 'disabled';
 
-export function inlineCodeMenuSwitch(nodes: LineNode[], contentPosition: ContentPosition | undefined): CodeMenuSwitch {
+export type BlockFormulaMenuSwitch = 'on' | 'off' | 'disabled';
+
+export function contentFormulaMenuSwitch(
+  nodes: LineNode[],
+  contentPosition: ContentPosition | undefined
+): ContentFormulaMenuSwitch {
   if (!contentPosition) return 'disabled';
 
   const lineNode = nodes[contentPosition.lineIndex];
@@ -18,8 +23,10 @@ export function inlineCodeMenuSwitch(nodes: LineNode[], contentPosition: Content
 
   const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
   switch (contentNode.type) {
-    case 'inlineCode':
-      return 'on';
+    case 'inlineFormula':
+      return 'inline';
+    case 'displayFormula':
+      return 'display';
     case 'normal':
       return 'off';
     default:
@@ -27,10 +34,10 @@ export function inlineCodeMenuSwitch(nodes: LineNode[], contentPosition: Content
   }
 }
 
-export function blockCodeMenuSwitch(
+export function blockFormulaMenuSwitch(
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
   state: State
-): CodeMenuSwitch {
-  return blockMenuSwitch(nodes, blockPosition, state, 'blockCode');
+): BlockFormulaMenuSwitch {
+  return blockMenuSwitch(nodes, blockPosition, state, 'blockFormula');
 }

@@ -13,9 +13,9 @@ import {
   handleOnBlockFormulaItemClick,
   handleOnContentFormulaItemClick,
   handleOnFormulaButtonClick,
-} from '../callbacks/formula';
-import { BlockMenuProps, CommonMenuProps, ContentMenuProps } from '../common/type';
-import { blockFormulaMenuSwitch, contentFormulaMenuSwitch } from '../switches/formula';
+} from '../../../organisms/SyntaxMenu/callbacks/formula';
+import { BlockMenuProps, CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { blockFormulaMenuSwitch, contentFormulaMenuSwitch } from '../../../organisms/SyntaxMenu/switches/formula';
 
 export type FormulaMenuProps = FormulaLabels & FormulaParsing & ContentMenuProps & BlockMenuProps & CommonMenuProps;
 

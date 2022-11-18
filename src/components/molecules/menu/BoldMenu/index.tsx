@@ -3,9 +3,12 @@ import React from 'react';
 import { createTestId } from '../../../../common/utils';
 import { BoldIcon } from '../../../../icons/BoldIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
-import { DecorationMenuHandlerProps, handleOnDecorationClick } from '../callbacks/decoration';
-import { CommonMenuProps, ContentMenuProps } from '../common/type';
-import { decorationMenuSwitch } from '../switches/decoration';
+import {
+  DecorationMenuHandlerProps,
+  handleOnDecorationClick,
+} from '../../../organisms/SyntaxMenu/callbacks/decoration';
+import { CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { decorationMenuSwitch } from '../../../organisms/SyntaxMenu/switches/decoration';
 
 export type BoldMenuProps = ContentMenuProps & CommonMenuProps;
 

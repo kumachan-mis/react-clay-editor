@@ -4,9 +4,9 @@ import { HashtagLabels, HashtagParsing, Suggestion } from '../../../../common/ty
 import { createTestId } from '../../../../common/utils';
 import { HashtagIcon } from '../../../../icons/HashtagIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
-import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
-import { CommonMenuProps, ContentMenuProps } from '../common/type';
-import { LinkMenuItem, linkMenuSwitch } from '../switches/link';
+import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../../../organisms/SyntaxMenu/callbacks/link';
+import { CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { LinkMenuItem, linkMenuSwitch } from '../../../organisms/SyntaxMenu/switches/link';
 
 export type HashtagMenuProps = HashtagLabels & HashtagParsing & Suggestion & ContentMenuProps & CommonMenuProps;
 

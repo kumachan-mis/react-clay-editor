@@ -13,9 +13,9 @@ import {
   handleOnBlockCodeItemClick,
   handleOnCodeButtonClick,
   handleOnInlineCodeItemClick,
-} from '../callbacks/code';
-import { BlockMenuProps, CommonMenuProps, ContentMenuProps } from '../common/type';
-import { blockCodeMenuSwitch, inlineCodeMenuSwitch } from '../switches/code';
+} from '../../../organisms/SyntaxMenu/callbacks/code';
+import { BlockMenuProps, CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { blockCodeMenuSwitch, inlineCodeMenuSwitch } from '../../../organisms/SyntaxMenu/switches/code';
 
 export type CodeMenuProps = CodeLabels & CodeParsing & ContentMenuProps & BlockMenuProps & CommonMenuProps;
 

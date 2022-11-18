@@ -8,9 +8,13 @@ import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
-import { handleOnSectionButtonClick, handleOnSectionItemClick, SectionMenuHandlerProps } from '../callbacks/section';
-import { CommonMenuProps, LineMenuProps } from '../common/type';
-import { sectionMenuSwitch } from '../switches/section';
+import {
+  handleOnSectionButtonClick,
+  handleOnSectionItemClick,
+  SectionMenuHandlerProps,
+} from '../../../organisms/SyntaxMenu/callbacks/section';
+import { CommonMenuProps, LineMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { sectionMenuSwitch } from '../../../organisms/SyntaxMenu/switches/section';
 
 export type SectionMenuProps = TextLabels & LineMenuProps & CommonMenuProps;
 

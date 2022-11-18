@@ -1,5 +1,5 @@
 import { LineNode } from '../../../../parser/line/types';
-import { State } from '../../../organisms/Editor/types';
+import { State } from '../../Editor/types';
 
 import { lineMenuSwitch } from './common/line';
 

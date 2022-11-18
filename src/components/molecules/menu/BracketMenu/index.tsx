@@ -4,9 +4,9 @@ import { BracketLabels, BracketLinkParsing, Suggestion } from '../../../../commo
 import { createTestId } from '../../../../common/utils';
 import { BracketIcon } from '../../../../icons/BracketIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
-import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
-import { CommonMenuProps, ContentMenuProps } from '../common/type';
-import { LinkMenuItem, linkMenuSwitch } from '../switches/link';
+import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../../../organisms/SyntaxMenu/callbacks/link';
+import { CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { LinkMenuItem, linkMenuSwitch } from '../../../organisms/SyntaxMenu/switches/link';
 
 export type BracketMenuProps = BracketLabels & BracketLinkParsing & Suggestion & CommonMenuProps & ContentMenuProps;
 

@@ -8,9 +8,9 @@ import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
-import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
-import { CommonMenuProps, ContentMenuProps } from '../common/type';
-import { linkMenuSwitch, LinkMenuItem } from '../switches/link';
+import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../../../organisms/SyntaxMenu/callbacks/link';
+import { CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
+import { linkMenuSwitch, LinkMenuItem } from '../../../organisms/SyntaxMenu/switches/link';
 
 import { getTagNameAtPosition } from './utils';
 

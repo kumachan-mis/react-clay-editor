@@ -3,8 +3,8 @@ import React from 'react';
 import { BlockNode } from '../../../../parser/block/types';
 import { isBlockNode } from '../../../../parser/block/utils';
 import { LineNode } from '../../../../parser/line/types';
-import { CursorCoordinate } from '../../cursor/Cursor/types';
-import { TextSelection } from '../../selection/Selection/types';
+import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
+import { TextSelection } from '../../../molecules/selection/Selection/types';
 import { getLineRange } from '../common/utils';
 
 import { BlockPosition } from './types';

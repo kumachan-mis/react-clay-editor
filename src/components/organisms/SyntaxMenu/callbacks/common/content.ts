@@ -2,11 +2,15 @@ import { ContentNode, TextLikeNode } from '../../../../../parser/content/types';
 import { isTextLikeNode } from '../../../../../parser/content/utils';
 import { LineNode, PureLineNode } from '../../../../../parser/line/types';
 import { isPureLineNode } from '../../../../../parser/line/utils';
-import { insertText } from '../../../../organisms/Editor/common/text';
-import { State } from '../../../../organisms/Editor/types';
-import { copyCoordinate } from '../../../cursor/Cursor/utils';
-import { TextSelection } from '../../../selection/Selection/types';
-import { copySelection, selectionToRange, undefinedIfZeroSelection } from '../../../selection/Selection/utils';
+import { copyCoordinate } from '../../../../molecules/cursor/Cursor/utils';
+import { TextSelection } from '../../../../molecules/selection/Selection/types';
+import {
+  copySelection,
+  selectionToRange,
+  undefinedIfZeroSelection,
+} from '../../../../molecules/selection/Selection/utils';
+import { insertText } from '../../../Editor/common/text';
+import { State } from '../../../Editor/types';
 import { isEndPoint } from '../../common/utils';
 import { ContentPosition } from '../../hooks/types';
 

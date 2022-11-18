@@ -1,8 +1,8 @@
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { getTagName } from '../../../../parser/taggedLink/utils';
-import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
-import { ContentPosition } from '../hooks/types';
+import { getNestedContentNodeIfNonEndPoint } from '../../../organisms/SyntaxMenu/common/utils';
+import { ContentPosition } from '../../../organisms/SyntaxMenu/hooks/types';
 
 export function getTagNameAtPosition(
   nodes: LineNode[],
