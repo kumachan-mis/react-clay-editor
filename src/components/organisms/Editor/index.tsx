@@ -45,10 +45,8 @@ export const Editor: React.FC<Props> = (props) => {
           text={props.text}
           nodes={nodes}
           state={state}
-          setTextAndState={(newText, newState) => {
-            if (newState !== state) setState(newState);
-            if (newText !== props.text) props.onChangeText(newText);
-          }}
+          onChangeText={props.onChangeText}
+          setState={setState}
           syntax={props.syntax}
           sectionProps={props.textProps}
           bracketProps={props.bracketLinkProps}

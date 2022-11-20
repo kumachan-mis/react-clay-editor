@@ -18,20 +18,43 @@ const defaultHandlerProps: ItemizationMenuHandlerProps = {
 export function useItemizationMenu(
   lineNodes: LineNode[],
   itemizationProps: ItemizationProps | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): ItemizationMenuProps {
   const menuSwitch = itemizationMenuSwitch(syntax, lineNodes, state);
   const handlerProps: ItemizationMenuHandlerProps = { ...defaultHandlerProps, ...itemizationProps, syntax };
   const { indentLabel, outdentLabel } = handlerProps;
 
-  const onButtonClick = () =>
-    setTextAndState(...handleOnItemizationButtonClick(text, lineNodes, state, handlerProps, menuSwitch));
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnItemizationButtonClick(text, lineNodes, state, handlerProps, menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onIndentItemClick = () =>
-    setTextAndState(...handleOnItemizationItemClick(text, lineNodes, state, handlerProps, 'indent', menuSwitch));
+  const onIndentItemClick = () => {
+    const [newText, newState] = handleOnItemizationItemClick(
+      text,
+      lineNodes,
+      state,
+      handlerProps,
+      'indent',
+      menuSwitch
+    );
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onOutdentItemClick = () =>
-    setTextAndState(...handleOnItemizationItemClick(text, lineNodes, state, handlerProps, 'outdent', menuSwitch));
+  const onOutdentItemClick = () => {
+    const [newText, newState] = handleOnItemizationItemClick(
+      text,
+      lineNodes,
+      state,
+      handlerProps,
+      'outdent',
+      menuSwitch
+    );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return { menuSwitch, indentLabel, outdentLabel, onButtonClick, onIndentItemClick, onOutdentItemClick };
 }

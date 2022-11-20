@@ -18,20 +18,29 @@ const defaultHandlerProps: QuotationMenuHandlerProps = {
 export function useQuotationMenu(
   lineNodes: LineNode[],
   quotationProps: QuotationProps | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): QuotationMenuProps {
   const menuSwitch = quotationMenuSwitch(syntax, lineNodes, state);
   const handlerProps: QuotationMenuHandlerProps = { ...defaultHandlerProps, ...quotationProps, syntax };
   const { indentLabel, outdentLabel } = handlerProps;
 
-  const onButtonClick = () =>
-    setTextAndState(...handleOnQuotationButtonClick(text, lineNodes, state, handlerProps, menuSwitch));
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnQuotationButtonClick(text, lineNodes, state, handlerProps, menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onIndentItemClick = () =>
-    setTextAndState(...handleOnQuotationItemClick(text, lineNodes, state, handlerProps, 'indent', menuSwitch));
+  const onIndentItemClick = () => {
+    const [newText, newState] = handleOnQuotationItemClick(text, lineNodes, state, handlerProps, 'indent', menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onOutdentItemClick = () =>
-    setTextAndState(...handleOnQuotationItemClick(text, lineNodes, state, handlerProps, 'outdent', menuSwitch));
+  const onOutdentItemClick = () => {
+    const [newText, newState] = handleOnQuotationItemClick(text, lineNodes, state, handlerProps, 'outdent', menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return { menuSwitch, indentLabel, outdentLabel, onButtonClick, onIndentItemClick, onOutdentItemClick };
 }

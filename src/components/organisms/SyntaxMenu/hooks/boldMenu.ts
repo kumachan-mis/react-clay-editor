@@ -9,15 +9,24 @@ import { CommonMenuProps } from './types';
 export function useBoldMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): BoldMenuProps {
   const menuSwitch = decorationMenuSwitch(syntax, lineNodes, contentPosition);
   const handlerProps: DecorationMenuHandlerProps = { syntax };
 
-  const onButtonClick = () =>
-    setTextAndState(
-      ...handleOnDecorationClick(text, lineNodes, contentPosition, state, handlerProps, 'bold', menuSwitch)
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnDecorationClick(
+      text,
+      lineNodes,
+      contentPosition,
+      state,
+      handlerProps,
+      'bold',
+      menuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return { menuSwitch: menuSwitch.bold, onButtonClick };
 }

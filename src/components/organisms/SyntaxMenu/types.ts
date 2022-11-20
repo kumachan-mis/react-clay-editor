@@ -22,7 +22,8 @@ export type SyntaxMenuProps = {
   text: string;
   nodes: (LineNode | BlockNode)[];
   state: State;
-  setTextAndState: (text: string, state: State) => void;
+  onChangeText: (text: string) => void;
+  setState: (state: State) => void;
   syntax?: 'bracket' | 'markdown';
   sectionProps?: SectionProps;
   itemizationProps?: ItemizationProps;

@@ -25,33 +25,47 @@ export function useCodeMenu(
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   codeProps: CodeProps | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): CodeMenuProps {
   const inlineMenuSwitch = codeProps?.disabled ? 'disabled' : inlineCodeMenuSwitch(lineNodes, contentPosition);
   const blockMenuSwitch = codeProps?.disabled ? 'disabled' : blockCodeMenuSwitch(nodes, blockPosition, state);
   const handlerProps: CodeMenuHandlerProps = { syntax, ...defaultHandlerProps, ...codeProps };
   const { inlineLabel, blockLabel } = handlerProps;
 
-  const onButtonClick = () =>
-    setTextAndState(
-      ...handleOnCodeButtonClick(
-        text,
-        lineNodes,
-        nodes,
-        contentPosition,
-        blockPosition,
-        state,
-        handlerProps,
-        inlineMenuSwitch,
-        blockMenuSwitch
-      )
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnCodeButtonClick(
+      text,
+      lineNodes,
+      nodes,
+      contentPosition,
+      blockPosition,
+      state,
+      handlerProps,
+      inlineMenuSwitch,
+      blockMenuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onInlineItemClick = () =>
-    setTextAndState(...handleOnInlineCodeItemClick(text, lineNodes, contentPosition, state, inlineMenuSwitch));
+  const onInlineItemClick = () => {
+    const [newText, newState] = handleOnInlineCodeItemClick(text, lineNodes, contentPosition, state, inlineMenuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onBlockItemClick = () =>
-    setTextAndState(...handleOnBlockCodeItemClick(text, nodes, blockPosition, state, handlerProps, blockMenuSwitch));
+  const onBlockItemClick = () => {
+    const [newText, newState] = handleOnBlockCodeItemClick(
+      text,
+      nodes,
+      blockPosition,
+      state,
+      handlerProps,
+      blockMenuSwitch
+    );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return {
     inlineMenuSwitch,

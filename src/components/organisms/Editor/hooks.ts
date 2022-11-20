@@ -60,8 +60,8 @@ export function useEditorState(
       return (event) => {
         if (event.button !== 0) return;
         const [newText, newState] = handler(props.text, state, event, ref.current);
-        if (newState !== state) setState(newState);
-        if (newText !== props.text) props.onChangeText(newText);
+        setState(newState);
+        props.onChangeText(newText);
       };
     },
     [props, state, ref, setState]
@@ -153,8 +153,8 @@ export function useTextFieldBodyEventHandlers(
       return (event) => {
         if (event.button !== 0) return;
         const [newText, newState] = handler(props.text, state, event, ref.current);
-        if (newState !== state) setState(newState);
-        if (newText !== props.text) props.onChangeText(newText);
+        setState(newState);
+        props.onChangeText(newText);
       };
     },
     [props, state, ref, setState]
@@ -195,8 +195,8 @@ export function useCursorEventHandlers(
     <Event>(handler: (text: string, state: State, event: Event) => [string, State]): ((event: Event) => void) => {
       return (event) => {
         const [newText, newState] = handler(props.text, state, event);
-        if (newState !== state) setState(newState);
-        if (newText !== props.text) props.onChangeText(newText);
+        setState(newState);
+        props.onChangeText(newText);
       };
     },
     [props, state, setState]
@@ -208,8 +208,8 @@ export function useCursorEventHandlers(
     ): ((event: Event) => void) => {
       return (event) => {
         const [newText, newState] = handler(props.text, props, state, event);
-        if (newState !== state) setState(newState);
-        if (newText !== props.text) props.onChangeText(newText);
+        setState(newState);
+        props.onChangeText(newText);
       };
     },
     [props, state, setState]

@@ -20,7 +20,7 @@ export function useTaggedLinkMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   taggedLinkPropsMap: { [tagName: string]: TaggedLinkProps } | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): TaggedLinkMenuProps {
   const tagEntries = Object.entries(taggedLinkPropsMap || {});
 
@@ -33,10 +33,19 @@ export function useTaggedLinkMenu(
     const handlerProps: LinkMenuHandlerProps = { ...defaultLinkProps, ...taggedLinkProps, syntax };
     const menuItem: LinkMenuItem = { type: 'taggedLink', tag: tagName };
     const { label } = handlerProps;
-    const onItemClick = () =>
-      setTextAndState(
-        ...handleOnLinkItemClick(text, lineNodes, contentPosition, state, handlerProps, menuItem, menuSwitch)
+    const onItemClick = () => {
+      const [newText, newState] = handleOnLinkItemClick(
+        text,
+        lineNodes,
+        contentPosition,
+        state,
+        handlerProps,
+        menuItem,
+        menuSwitch
       );
+      onChangeText(newText);
+      setState(newState);
+    };
     taggedItemMap[tagName] = { label, onItemClick };
   }
 

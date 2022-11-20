@@ -14,10 +14,19 @@ export function useItalicMenu(
   const menuSwitch = decorationMenuSwitch(syntax, lineNodes, contentPosition);
   const handlerProps: DecorationMenuHandlerProps = { syntax };
 
-  const onButtonClick = () =>
-    setTextAndState(
-      ...handleOnDecorationClick(text, lineNodes, contentPosition, state, handlerProps, 'italic', menuSwitch)
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnDecorationClick(
+      text,
+      lineNodes,
+      contentPosition,
+      state,
+      handlerProps,
+      'italic',
+      menuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return { menuSwitch: menuSwitch.italic, onButtonClick };
 }

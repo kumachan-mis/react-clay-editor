@@ -26,40 +26,67 @@ export function useFormulaMenu(
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   formulaProps: FormulaProps | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): FormulaMenuProps {
   const contentMenuSwitch = formulaProps?.disabled ? 'disabled' : contentFormulaMenuSwitch(lineNodes, contentPosition);
   const blockMenuSwitch = formulaProps?.disabled ? 'disabled' : blockFormulaMenuSwitch(nodes, blockPosition, state);
   const handlerProps: FormulaMenuHandlerProps = { ...defaultHandlerProps, ...formulaProps, syntax };
   const { inlineLabel, displayLabel, blockLabel } = handlerProps;
 
-  const onButtonClick = () =>
-    setTextAndState(
-      ...handleOnFormulaButtonClick(
-        text,
-        lineNodes,
-        nodes,
-        contentPosition,
-        blockPosition,
-        state,
-        handlerProps,
-        contentMenuSwitch,
-        blockMenuSwitch
-      )
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnFormulaButtonClick(
+      text,
+      lineNodes,
+      nodes,
+      contentPosition,
+      blockPosition,
+      state,
+      handlerProps,
+      contentMenuSwitch,
+      blockMenuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onInlineItemClick = () =>
-    setTextAndState(
-      ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'inline', contentMenuSwitch)
+  const onInlineItemClick = () => {
+    const [newText, newState] = handleOnContentFormulaItemClick(
+      text,
+      lineNodes,
+      contentPosition,
+      state,
+      'inline',
+      contentMenuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onDisplayItemClick = () =>
-    setTextAndState(
-      ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'display', contentMenuSwitch)
+  const onDisplayItemClick = () => {
+    const [newText, newState] = handleOnContentFormulaItemClick(
+      text,
+      lineNodes,
+      contentPosition,
+      state,
+      'display',
+      contentMenuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onBlockItemClick = () =>
-    setTextAndState(...handleOnBlockFormulaItemClick(text, nodes, blockPosition, state, handlerProps, blockMenuSwitch));
+  const onBlockItemClick = () => {
+    const [newText, newState] = handleOnBlockFormulaItemClick(
+      text,
+      nodes,
+      blockPosition,
+      state,
+      handlerProps,
+      blockMenuSwitch
+    );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return {
     contentMenuSwitch,

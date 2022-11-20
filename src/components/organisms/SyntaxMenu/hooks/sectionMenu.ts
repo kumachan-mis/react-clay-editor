@@ -15,23 +15,35 @@ const defaultHandlerProps: SectionMenuHandlerProps = {
 export function useSectionMenu(
   lineNodes: LineNode[],
   sectionProps: SectionProps | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): SectionMenuProps {
   const menuSwitch = sectionMenuSwitch(syntax, lineNodes, state);
   const handlerProps: SectionMenuHandlerProps = { ...defaultHandlerProps, ...sectionProps, syntax };
   const { normalLabel, largerLabel, largestLabel } = handlerProps;
 
-  const onButtonClick = () =>
-    setTextAndState(...handleOnSectionButtonClick(text, lineNodes, state, handlerProps, menuSwitch));
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnSectionButtonClick(text, lineNodes, state, handlerProps, menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onNormalItemClick = () =>
-    setTextAndState(...handleOnSectionItemClick(text, lineNodes, state, handlerProps, 'normal', menuSwitch));
+  const onNormalItemClick = () => {
+    const [newText, newState] = handleOnSectionItemClick(text, lineNodes, state, handlerProps, 'normal', menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onLargerItemClick = () =>
-    setTextAndState(...handleOnSectionItemClick(text, lineNodes, state, handlerProps, 'larger', menuSwitch));
+  const onLargerItemClick = () => {
+    const [newText, newState] = handleOnSectionItemClick(text, lineNodes, state, handlerProps, 'larger', menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
-  const onLargestItemClick = () =>
-    setTextAndState(...handleOnSectionItemClick(text, lineNodes, state, handlerProps, 'largest', menuSwitch));
+  const onLargestItemClick = () => {
+    const [newText, newState] = handleOnSectionItemClick(text, lineNodes, state, handlerProps, 'largest', menuSwitch);
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return {
     menuSwitch,

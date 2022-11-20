@@ -17,16 +17,25 @@ export function useBracketMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   bracketProps: BracketProps | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): BracketMenuProps {
   const menuSwitch = bracketProps?.disabled ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'bracketLink');
   const handlerProps: LinkMenuHandlerProps = { ...defaultHandlerProps, ...bracketProps, syntax };
   const menuItem: LinkMenuItem = { type: 'bracketLink' };
 
-  const onButtonClick = () =>
-    setTextAndState(
-      ...handleOnLinkItemClick(text, lineNodes, contentPosition, state, handlerProps, menuItem, menuSwitch)
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnLinkItemClick(
+      text,
+      lineNodes,
+      contentPosition,
+      state,
+      handlerProps,
+      menuItem,
+      menuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return { menuSwitch, onButtonClick };
 }

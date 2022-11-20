@@ -9,15 +9,24 @@ import { CommonMenuProps } from './types';
 export function useUnderlineMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): ItalicMenuProps {
   const menuSwitch = decorationMenuSwitch(syntax, lineNodes, contentPosition);
   const handlerProps: DecorationMenuHandlerProps = { syntax };
 
-  const onButtonClick = () =>
-    setTextAndState(
-      ...handleOnDecorationClick(text, lineNodes, contentPosition, state, handlerProps, 'underline', menuSwitch)
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnDecorationClick(
+      text,
+      lineNodes,
+      contentPosition,
+      state,
+      handlerProps,
+      'underline',
+      menuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return { menuSwitch: menuSwitch.underline, onButtonClick };
 }

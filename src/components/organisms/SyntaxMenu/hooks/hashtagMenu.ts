@@ -17,16 +17,25 @@ export function useHashtagMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   hashtagProps: HashtagProps | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): HashtagMenuProps {
   const menuSwitch = hashtagProps?.disabled ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'hashtag');
   const handlerProps: LinkMenuHandlerProps = { ...defaultHandlerProps, ...hashtagProps, syntax };
   const menuItem: LinkMenuItem = { type: 'hashtag' };
 
-  const onButtonClick = () =>
-    setTextAndState(
-      ...handleOnLinkItemClick(text, lineNodes, contentPosition, state, handlerProps, menuItem, menuSwitch)
+  const onButtonClick = () => {
+    const [newText, newState] = handleOnLinkItemClick(
+      text,
+      lineNodes,
+      contentPosition,
+      state,
+      handlerProps,
+      menuItem,
+      menuSwitch
     );
+    onChangeText(newText);
+    setState(newState);
+  };
 
   return { menuSwitch, onButtonClick };
 }

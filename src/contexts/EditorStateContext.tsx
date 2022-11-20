@@ -5,8 +5,8 @@ import { CursorSelection } from '../types/cursorSelection';
 import { EditAction } from '../types/editAction';
 
 export type EditorStateValue = {
-  cursorCoordinate: CursorCoordinate | null;
-  cursorSelection: CursorSelection | null;
+  cursorCoordinate: CursorCoordinate | undefined;
+  cursorSelection: CursorSelection | undefined;
   cursorScroll: 'none' | 'fired' | 'pause' | 'up' | 'down';
   textAreaValue: string;
   textComposing: boolean;
@@ -19,8 +19,8 @@ export type EditorStateValue = {
 };
 
 export const defaultEditorStateValue: EditorStateValue = {
-  cursorCoordinate: null,
-  cursorSelection: null,
+  cursorCoordinate: undefined,
+  cursorSelection: undefined,
   cursorScroll: 'none',
   textAreaValue: '',
   textComposing: false,
