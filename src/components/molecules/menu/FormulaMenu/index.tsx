@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { FormulaLabels, FormulaParsing } from '../../../../common/types';
 import { createTestId } from '../../../../common/utils';
 import { FormulaIcon } from '../../../../icons/FormulaIcon';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
@@ -8,16 +7,18 @@ import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
-import {
-  FormulaMenuHandlerProps,
-  handleOnBlockFormulaItemClick,
-  handleOnContentFormulaItemClick,
-  handleOnFormulaButtonClick,
-} from '../../../organisms/SyntaxMenu/callbacks/formula';
-import { BlockMenuProps, CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
-import { blockFormulaMenuSwitch, contentFormulaMenuSwitch } from '../../../organisms/SyntaxMenu/switches/formula';
 
-export type FormulaMenuProps = FormulaLabels & FormulaParsing & ContentMenuProps & BlockMenuProps & CommonMenuProps;
+export type FormulaMenuProps = {
+  contentMenuSwitch: 'inline' | 'display' | 'off' | 'disabled';
+  blockMenuSwitch: 'on' | 'off' | 'disabled';
+  inlineLabel: string;
+  displayLabel: string;
+  blockLabel: string;
+  onButtonClick: () => void;
+  onInlineItemClick: () => void;
+  onDisplayItemClick: () => void;
+  onBlockItemClick: () => void;
+};
 
 export const FormulaMenuConstants = {
   testId: 'formula-menu',
@@ -38,23 +39,17 @@ export const FormulaMenuConstants = {
 };
 
 export const FormulaMenu: React.FC<FormulaMenuProps> = ({
-  syntax,
-  text,
-  lineNodes,
-  nodes,
-  contentPosition,
-  blockPosition,
-  state,
-  setTextAndState,
-  disabled,
-  inlineLabel = FormulaMenuConstants.items.inline.defaultLabel,
-  displayLabel = FormulaMenuConstants.items.display.defaultLabel,
-  blockLabel = FormulaMenuConstants.items.block.defaultLabel,
+  contentMenuSwitch,
+  blockMenuSwitch,
+  inlineLabel,
+  displayLabel,
+  blockLabel,
+  onButtonClick,
+  onInlineItemClick,
+  onDisplayItemClick,
+  onBlockItemClick,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const props: FormulaMenuHandlerProps = { syntax, inlineLabel, displayLabel, blockLabel };
-  const contentMenuSwitch = contentFormulaMenuSwitch(lineNodes, contentPosition);
-  const blockMenuSwitch = blockFormulaMenuSwitch(nodes, blockPosition, state);
 
   return (
     <DropdownMenu>
@@ -63,23 +58,8 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
         onOpen={onOpen}
         onClose={onClose}
         pressed={contentMenuSwitch === 'inline' || contentMenuSwitch === 'display' || blockMenuSwitch === 'on'}
-        disabled={disabled || (contentMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled')}
-        buttonProps={{
-          onClick: () =>
-            setTextAndState(
-              ...handleOnFormulaButtonClick(
-                text,
-                lineNodes,
-                nodes,
-                contentPosition,
-                blockPosition,
-                state,
-                props,
-                contentMenuSwitch,
-                blockMenuSwitch
-              )
-            ),
-        }}
+        disabled={contentMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled'}
+        buttonProps={{ onClick: onButtonClick }}
         data-testid={createTestId(FormulaMenuConstants.testId)}
       >
         <FormulaIcon />
@@ -88,11 +68,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
         <DropdownMenuListItem
           selected={contentMenuSwitch === 'inline'}
           disabled={contentMenuSwitch === 'disabled'}
-          onClick={() =>
-            setTextAndState(
-              ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'inline', contentMenuSwitch)
-            )
-          }
+          onClick={onInlineItemClick}
           data-testid={createTestId(FormulaMenuConstants.items.inline.testId)}
         >
           {inlineLabel}
@@ -100,11 +76,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
         <DropdownMenuListItem
           selected={contentMenuSwitch === 'display'}
           disabled={contentMenuSwitch === 'disabled'}
-          onClick={() =>
-            setTextAndState(
-              ...handleOnContentFormulaItemClick(text, lineNodes, contentPosition, state, 'display', contentMenuSwitch)
-            )
-          }
+          onClick={onDisplayItemClick}
           data-testid={createTestId(FormulaMenuConstants.items.display.testId)}
         >
           {displayLabel}
@@ -112,9 +84,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
         <DropdownMenuListItem
           selected={blockMenuSwitch === 'on'}
           disabled={blockMenuSwitch === 'disabled'}
-          onClick={() =>
-            setTextAndState(...handleOnBlockFormulaItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
-          }
+          onClick={onBlockItemClick}
           data-testid={createTestId(FormulaMenuConstants.items.block.testId)}
         >
           {blockLabel}

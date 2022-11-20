@@ -5,7 +5,7 @@ import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
 import { getTagName } from '../../../../parser/taggedLink/utils';
 import { State } from '../../Editor/types';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
-import { ContentPosition, ContentPositionEmpty } from '../hooks/types';
+import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { LinkMenuItem, LinkMenuSwitch } from '../switches/link';
 
 import {

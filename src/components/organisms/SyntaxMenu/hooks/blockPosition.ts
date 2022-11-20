@@ -7,7 +7,9 @@ import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
 import { TextSelection } from '../../../molecules/selection/Selection/types';
 import { getLineRange } from '../common/utils';
 
-import { BlockPosition } from './types';
+export type BlockPosition = {
+  blockIndex: number;
+};
 
 export function useBlockPosition(
   nodes: (LineNode | BlockNode)[],

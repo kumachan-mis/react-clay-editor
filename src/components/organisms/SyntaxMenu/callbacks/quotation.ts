@@ -1,3 +1,4 @@
+import { QuotationLabels } from '../../../../common/types';
 import { LineNode } from '../../../../parser/line/types';
 import { State } from '../../Editor/types';
 import { QuotationMenuSwitch } from '../switches/quotation';
@@ -6,9 +7,7 @@ import { handleOnLineMenuClick } from './common/line';
 
 export type QuotationMenuHandlerProps = {
   syntax?: 'bracket' | 'markdown';
-  indentLabel: string;
-  outdentLabel: string;
-};
+} & Required<QuotationLabels>;
 
 export function handleOnQuotationButtonClick(
   text: string,

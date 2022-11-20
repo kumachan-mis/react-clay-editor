@@ -3,7 +3,8 @@ import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { State } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
-import { BlockPosition, ContentPosition } from '../hooks/types';
+import { BlockPosition } from '../hooks/blockPosition';
+import { ContentPosition } from '../hooks/contentPosition';
 
 import { blockMenuSwitch } from './common/block';
 

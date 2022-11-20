@@ -50,12 +50,12 @@ export const Editor: React.FC<Props> = (props) => {
             if (newText !== props.text) props.onChangeText(newText);
           }}
           syntax={props.syntax}
-          section={props.textProps}
-          bracket={props.bracketLinkProps}
-          hashtag={props.hashtagProps}
-          taggedLink={props.taggedLinkPropsMap}
-          code={props.codeProps}
-          formula={props.formulaProps}
+          sectionProps={props.textProps}
+          bracketProps={props.bracketLinkProps}
+          hashtagProps={props.hashtagProps}
+          taggedLinkPropsMap={props.taggedLinkPropsMap}
+          codeProps={props.codeProps}
+          formulaProps={props.formulaProps}
         />
       )}
       <TextFieldRoot hideMenu={props.hideMenu}>

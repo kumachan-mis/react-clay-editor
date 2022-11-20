@@ -1,46 +1,26 @@
 import React from 'react';
 
-import { BracketLabels, BracketLinkParsing, Suggestion } from '../../../../common/types';
 import { createTestId } from '../../../../common/utils';
 import { BracketIcon } from '../../../../icons/BracketIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
-import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../../../organisms/SyntaxMenu/callbacks/link';
-import { CommonMenuProps, ContentMenuProps } from '../../../organisms/SyntaxMenu/common/type';
-import { LinkMenuItem, linkMenuSwitch } from '../../../organisms/SyntaxMenu/switches/link';
 
-export type BracketMenuProps = BracketLabels & BracketLinkParsing & Suggestion & CommonMenuProps & ContentMenuProps;
+export type BracketMenuProps = {
+  menuSwitch: 'on' | 'off' | 'disabled';
+  onButtonClick: () => void;
+};
 
 export const BracketMenuConstants = {
   testId: 'bracket-menu',
   defaultLabel: 'bracket link',
 };
 
-export const BracketMenu: React.FC<BracketMenuProps> = ({
-  syntax,
-  text,
-  lineNodes: nodes,
-  contentPosition,
-  state,
-  setTextAndState,
-  disabled,
-  suggestions = [],
-  initialSuggestionIndex = 0,
-  label = BracketMenuConstants.defaultLabel,
-}) => {
-  const props: LinkMenuHandlerProps = { syntax, label, suggestions, initialSuggestionIndex };
-  const menuItem: LinkMenuItem = { type: 'bracketLink' };
-  const menuSwitch = linkMenuSwitch(nodes, contentPosition, 'bracketLink');
-
-  return (
-    <IconButtonMenu
-      pressed={menuSwitch === 'on'}
-      disabled={disabled || menuSwitch === 'disabled'}
-      onClick={() =>
-        setTextAndState(...handleOnLinkItemClick(text, nodes, contentPosition, state, props, menuItem, menuSwitch))
-      }
-      data-testid={createTestId(BracketMenuConstants.testId)}
-    >
-      <BracketIcon />
-    </IconButtonMenu>
-  );
-};
+export const BracketMenu: React.FC<BracketMenuProps> = ({ menuSwitch, onButtonClick }) => (
+  <IconButtonMenu
+    pressed={menuSwitch === 'on'}
+    disabled={menuSwitch === 'disabled'}
+    onClick={onButtonClick}
+    data-testid={createTestId(BracketMenuConstants.testId)}
+  >
+    <BracketIcon />
+  </IconButtonMenu>
+);

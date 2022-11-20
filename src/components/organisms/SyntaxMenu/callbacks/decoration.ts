@@ -2,7 +2,7 @@ import { LineNode, PureLineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { State } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
-import { ContentPosition, ContentPositionEmpty } from '../hooks/types';
+import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { DecorationMenuItemType, DecorationMenuSwitch, DecorationMenuSwitchItem } from '../switches/decoration';
 
 import {
@@ -31,12 +31,11 @@ export function handleOnDecorationClick(
   if (!props.syntax || props.syntax === 'bracket') {
     // bracket syntax
     return handleOnBracketDecorationItemClick(text, nodes, contentPosition, state, menuItem, menuSwitchItem);
-  } else if (menuItem !== 'underline') {
+  } else {
     // markdown syntax
+    if (menuItem === 'underline') return [text, state];
     return handleOnMarkdownDecorationItemClick(text, nodes, contentPosition, state, menuItem, menuSwitchItem);
   }
-
-  return [text, state];
 }
 
 function handleOnBracketDecorationItemClick(

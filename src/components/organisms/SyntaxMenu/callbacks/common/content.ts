@@ -12,7 +12,7 @@ import {
 import { insertText } from '../../../Editor/common/text';
 import { State } from '../../../Editor/types';
 import { isEndPoint } from '../../common/utils';
-import { ContentPosition } from '../../hooks/types';
+import { ContentPosition } from '../../hooks/contentPosition';
 
 export type ContentMenuConfig = {
   facingMeta: string;

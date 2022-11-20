@@ -7,7 +7,7 @@ import { copySelection } from '../../../../molecules/selection/Selection/utils';
 import { insertText } from '../../../Editor/common/text';
 import { State } from '../../../Editor/types';
 import { getLineRange } from '../../common/utils';
-import { BlockPosition } from '../../hooks/types';
+import { BlockPosition } from '../../hooks/blockPosition';
 import { BlockMenuSwitch } from '../../switches/common/block';
 
 export type BlockMenuConfig = {

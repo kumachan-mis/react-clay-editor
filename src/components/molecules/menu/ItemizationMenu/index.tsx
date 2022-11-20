@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ItemizationLabels } from '../../../../common/types';
 import { createTestId } from '../../../../common/utils';
 import { ItemizationIcon } from '../../../../icons/Itemization';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
@@ -8,15 +7,15 @@ import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
-import {
-  handleOnItemizationButtonClick,
-  handleOnItemizationItemClick,
-  ItemizationMenuHandlerProps,
-} from '../../../organisms/SyntaxMenu/callbacks/itemization';
-import { CommonMenuProps, LineMenuProps } from '../../../organisms/SyntaxMenu/common/type';
-import { itemizationMenuSwitch } from '../../../organisms/SyntaxMenu/switches/itemization';
 
-export type ItemizationMenuProps = ItemizationLabels & LineMenuProps & CommonMenuProps;
+export type ItemizationMenuProps = {
+  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled';
+  indentLabel: string;
+  outdentLabel: string;
+  onButtonClick: () => void;
+  onIndentItemClick: () => void;
+  onOutdentItemClick: () => void;
+};
 
 export const ItemizationMenuConstants = {
   testId: 'itemization-menu',
@@ -33,17 +32,14 @@ export const ItemizationMenuConstants = {
 };
 
 export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
-  syntax,
-  text,
-  lineNodes: nodes,
-  state,
-  setTextAndState,
-  indentLabel = ItemizationMenuConstants.items.indent.defaultLabel,
-  outdentLabel = ItemizationMenuConstants.items.outdent.defaultLabel,
+  menuSwitch,
+  indentLabel,
+  outdentLabel,
+  onButtonClick,
+  onIndentItemClick,
+  onOutdentItemClick,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const menuSwitch = itemizationMenuSwitch(syntax, nodes, state);
-  const props: ItemizationMenuHandlerProps = { syntax, indentLabel, outdentLabel };
 
   return (
     <DropdownMenu>
@@ -53,27 +49,21 @@ export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
         onClose={onClose}
         pressed={menuSwitch === 'allon'}
         disabled={menuSwitch === 'disabled'}
-        buttonProps={{
-          onClick: () => setTextAndState(...handleOnItemizationButtonClick(text, nodes, state, props, menuSwitch)),
-        }}
+        buttonProps={{ onClick: onButtonClick }}
         data-testid={createTestId(ItemizationMenuConstants.testId)}
       >
         <ItemizationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuListItem
-          onClick={() =>
-            setTextAndState(...handleOnItemizationItemClick(text, nodes, state, props, 'indent', menuSwitch))
-          }
+          onClick={onIndentItemClick}
           data-testid={createTestId(ItemizationMenuConstants.items.indent.testId)}
         >
           {indentLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
           disabled={menuSwitch === 'alloff'}
-          onClick={() =>
-            setTextAndState(...handleOnItemizationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
-          }
+          onClick={onOutdentItemClick}
           data-testid={createTestId(ItemizationMenuConstants.items.outdent.testId)}
         >
           {outdentLabel}

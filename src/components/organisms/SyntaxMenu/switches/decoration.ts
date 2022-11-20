@@ -1,7 +1,7 @@
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { isEndPoint } from '../common/utils';
-import { ContentPosition } from '../hooks/types';
+import { ContentPosition } from '../hooks/contentPosition';
 
 export type DecorationMenuItemType = 'bold' | 'italic' | 'underline';
 

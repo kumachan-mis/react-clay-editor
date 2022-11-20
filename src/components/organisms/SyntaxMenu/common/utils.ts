@@ -2,7 +2,7 @@ import { ContentNode } from '../../../../parser/content/types';
 import { PureLineNode } from '../../../../parser/line/types';
 import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
 import { TextSelection } from '../../../molecules/selection/Selection/types';
-import { ContentPosition, ContentPositionEndPoint } from '../hooks/types';
+import { ContentPosition, ContentPositionEndPoint } from '../hooks/contentPosition';
 
 export function isEndPoint(contentPosition: ContentPosition): contentPosition is ContentPositionEndPoint {
   return ['empty', 'between', 'leftend', 'rightend'].includes(contentPosition.type);

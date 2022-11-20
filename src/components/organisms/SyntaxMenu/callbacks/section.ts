@@ -3,7 +3,7 @@ import { LineNode } from '../../../../parser/line/types';
 import { TextSelection } from '../../../molecules/selection/Selection/types';
 import { copySelection, undefinedIfZeroSelection } from '../../../molecules/selection/Selection/utils';
 import { State } from '../../Editor/types';
-import { ContentPosition } from '../hooks/types';
+import { ContentPosition } from '../hooks/contentPosition';
 import { SectionMenuItemType, SectionMenuSwitch } from '../switches/section';
 
 import {

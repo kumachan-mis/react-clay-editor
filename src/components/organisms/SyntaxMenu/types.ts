@@ -24,29 +24,29 @@ export type SyntaxMenuProps = {
   state: State;
   setTextAndState: (text: string, state: State) => void;
   syntax?: 'bracket' | 'markdown';
-  section?: SectionMenuProps;
-  itemization?: ItemizationMenuProps;
-  bracket?: BracketMenuProps;
-  hashtag?: HashtagMenuProps;
-  taggedLink?: { [tagName: string]: TaggedLinkMenuProps };
-  code?: CodeMenuProps;
-  formula?: FormulaMenuProps;
-  quotation?: QuotationMenuProps;
+  sectionProps?: SectionProps;
+  itemizationProps?: ItemizationProps;
+  bracketProps?: BracketProps;
+  hashtagProps?: HashtagProps;
+  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
+  codeProps?: CodeProps;
+  formulaProps?: FormulaProps;
+  quotationProps?: QuotationProps;
   listProps?: MenuListProps;
 };
 
-export type SectionMenuProps = TextLabels;
+export type SectionProps = TextLabels;
 
-export type ItemizationMenuProps = ItemizationLabels;
+export type ItemizationProps = ItemizationLabels;
 
-export type BracketMenuProps = BracketLabels & BracketLinkParsing & Suggestion;
+export type BracketProps = BracketLabels & BracketLinkParsing & Suggestion;
 
-export type HashtagMenuProps = HashtagLabels & HashtagParsing & Suggestion;
+export type HashtagProps = HashtagLabels & HashtagParsing & Suggestion;
 
-export type TaggedLinkMenuProps = TaggedLinkLabels & Suggestion;
+export type TaggedLinkProps = TaggedLinkLabels & Suggestion;
 
-export type CodeMenuProps = CodeLabels & CodeParsing;
+export type CodeProps = CodeLabels & CodeParsing;
 
-export type FormulaMenuProps = FormulaLabels & FormulaParsing;
+export type FormulaProps = FormulaLabels & FormulaParsing;
 
-export type QuotationMenuProps = QuotationLabels;
+export type QuotationProps = QuotationLabels;
