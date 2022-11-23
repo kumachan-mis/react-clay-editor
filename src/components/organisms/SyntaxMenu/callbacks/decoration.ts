@@ -1,6 +1,6 @@
 import { LineNode, PureLineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { State } from '../../Editor/types';
+import { EditorState } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { DecorationMenuItemType, DecorationMenuSwitch, DecorationMenuSwitchItem } from '../switches/decoration';
@@ -20,11 +20,11 @@ export function handleOnDecorationClick(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  state: State,
+  state: EditorState,
   props: DecorationMenuHandlerProps,
   menuItem: DecorationMenuItemType,
   menuSwitch: DecorationMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   const menuSwitchItem = menuSwitch[menuItem];
   if (!contentPosition || menuSwitchItem === 'disabled') return [text, state];
 
@@ -42,16 +42,16 @@ function handleOnBracketDecorationItemClick(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition,
-  state: State,
+  state: EditorState,
   menuItem: DecorationMenuItemType,
   menuSwitch: Exclude<DecorationMenuSwitchItem, 'disabled'>
-): [string, State] {
+): [string, EditorState] {
   const meta = { bold: '*', italic: '/', underline: '_' }[menuItem];
 
   function handleItemOffWithoutSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (isEndPoint(contentPosition) || contentNode.type === 'normal') {
       const config = { facingMeta: `[${meta} `, content: menuItem, trailingMeta: ']' };
@@ -70,7 +70,7 @@ function handleOnBracketDecorationItemClick(
   function handleItemOnWithoutSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
 
@@ -90,7 +90,7 @@ function handleOnBracketDecorationItemClick(
   function handleItemOffWithSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type === 'normal') {
       const config = { facingMeta: `[${meta} `, trailingMeta: ']' };
@@ -109,7 +109,7 @@ function handleOnBracketDecorationItemClick(
   function handleItemOnWithSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
 
@@ -136,7 +136,7 @@ function handleOnBracketDecorationItemClick(
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return [text, state];
 
-  if (!state.textSelection) {
+  if (!state.cursorSelection) {
     if (menuSwitch === 'off') {
       return handleItemOffWithoutSelection(lineNode, contentPosition);
     } else {
@@ -155,16 +155,16 @@ function handleOnMarkdownDecorationItemClick(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition,
-  state: State,
+  state: EditorState,
   menuItem: 'bold' | 'italic',
   menuSwitch: 'on' | 'off'
-): [string, State] {
+): [string, EditorState] {
   const meta = { bold: '*', italic: '_' }[menuItem];
 
   function handleItemOffWithoutSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (!isEndPoint(contentPosition) && contentNode.type !== 'normal') return [text, state];
     const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
@@ -174,7 +174,7 @@ function handleOnMarkdownDecorationItemClick(
   function handleItemOnWithoutSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
     return replaceContentAtCursor(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
@@ -183,7 +183,7 @@ function handleOnMarkdownDecorationItemClick(
   function handleItemOffWithSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'normal') return [text, state];
     const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
@@ -193,7 +193,7 @@ function handleOnMarkdownDecorationItemClick(
   function handleItemOnWithSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
     return splitContentByTextSelection(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
@@ -209,7 +209,7 @@ function handleOnMarkdownDecorationItemClick(
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return [text, state];
 
-  if (!state.textSelection) {
+  if (!state.cursorSelection) {
     if (menuSwitch === 'off') {
       return handleItemOffWithoutSelection(lineNode, contentPosition);
     } else {

@@ -8,12 +8,12 @@ import {
 } from '../../../../common/types';
 import { TextNode } from '../../../../parser';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
-import { TextSelection } from '../../selection/Selection/types';
+import { CursorSelection } from '../../selection/Selection/types';
 
 export type TextProps = {
   nodes: TextNode[];
   cursorCoordinate?: CursorCoordinate;
-  textSelection?: TextSelection;
+  cursorSelection?: CursorSelection;
   textVisual?: TextVisual;
   bracketLinkVisual?: BracketLinkVisual;
   hashtagVisual?: HashtagVisual;

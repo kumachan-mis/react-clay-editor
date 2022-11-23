@@ -1,7 +1,7 @@
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { State } from '../../Editor/types';
+import { EditorState } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
@@ -38,7 +38,7 @@ export function contentFormulaMenuSwitch(
 export function blockFormulaMenuSwitch(
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
-  state: State
+  state: EditorState
 ): BlockFormulaMenuSwitch {
   return blockMenuSwitch(nodes, blockPosition, state, 'blockFormula');
 }

@@ -1,7 +1,7 @@
 import { ContentNode } from '../../../../parser/content/types';
 import { PureLineNode } from '../../../../parser/line/types';
 import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../../molecules/selection/Selection/types';
 import { ContentPosition, ContentPositionEndPoint } from '../hooks/contentPosition';
 
 export function isEndPoint(contentPosition: ContentPosition): contentPosition is ContentPositionEndPoint {
@@ -23,10 +23,11 @@ export function getNestedContentNodeIfNonEndPoint(
 
 export function getLineRange(
   cursorCoordinate: CursorCoordinate,
-  textSelection: TextSelection | undefined
+  cursorSelection: CursorSelection | undefined
 ): [number, number] {
   let [firstLineIndex, lastLineIndex] = [cursorCoordinate.lineIndex, cursorCoordinate.lineIndex];
-  if (textSelection) [firstLineIndex, lastLineIndex] = [textSelection.fixed.lineIndex, textSelection.free.lineIndex];
+  if (cursorSelection)
+    [firstLineIndex, lastLineIndex] = [cursorSelection.fixed.lineIndex, cursorSelection.free.lineIndex];
   if (firstLineIndex > lastLineIndex) [firstLineIndex, lastLineIndex] = [lastLineIndex, firstLineIndex];
   return [firstLineIndex, lastLineIndex];
 }

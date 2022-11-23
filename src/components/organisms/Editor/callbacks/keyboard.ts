@@ -21,16 +21,16 @@ import {
   handleOnMoveTextBottom,
 } from '../shortcuts/callbacks';
 import { shortcutCommand } from '../shortcuts/triggers';
-import { Props, State } from '../types';
+import { EditorProps, EditorState } from '../types';
 
 export function handleOnKeyDown(
   text: string,
-  props: Props,
-  state: State,
+  props: EditorProps,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   const command = shortcutCommand(event);
-  if (!state.cursorCoordinate || state.isComposing || (event.key.length === 1 && !command)) return [text, state];
+  if (!state.cursorCoordinate || state.textComposing || (event.key.length === 1 && !command)) return [text, state];
 
   event.preventDefault();
 
@@ -130,16 +130,16 @@ export function handleOnKeyDown(
 
 export function handleOnTextChange(
   text: string,
-  props: Props,
-  state: State,
+  props: EditorProps,
+  state: EditorState,
   event: React.ChangeEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
   const textAreaValue = event.target.value;
-  if (state.isComposing) return [text, resetSuggestion({ ...state, textAreaValue })];
+  if (state.textComposing) return [text, resetSuggestion({ ...state, textAreaValue })];
 
-  const selectionText = getSelectionText(text, state.textSelection);
+  const selectionText = getSelectionText(text, state.cursorSelection);
 
   const [newText, newState] = (() => {
     switch (textAreaValue) {
@@ -158,54 +158,54 @@ export function handleOnTextChange(
 
 export function handleOnTextCompositionStart(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.CompositionEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || state.isComposing) return [text, state];
-  return [text, resetSuggestion({ ...state, isComposing: true })];
+): [string, EditorState] {
+  if (!state.cursorCoordinate || state.textComposing) return [text, state];
+  return [text, resetSuggestion({ ...state, textComposing: true })];
 }
 
 export function handleOnTextCompositionEnd(
   text: string,
-  props: Props,
-  state: State,
+  props: EditorProps,
+  state: EditorState,
   event: React.CompositionEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || !state.isComposing) return [text, state];
+): [string, EditorState] {
+  if (!state.cursorCoordinate || !state.textComposing) return [text, state];
   const [newText, newState] = insertText(text, state, event.data);
-  return showIMEBasedSuggestion(newText, props, { ...newState, textAreaValue: '', isComposing: false }, event.data);
+  return showIMEBasedSuggestion(newText, props, { ...newState, textAreaValue: '', textComposing: false }, event.data);
 }
 
 export function handleOnTextCut(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.ClipboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || !state.textSelection) return [text, state];
+): [string, EditorState] {
+  if (!state.cursorCoordinate || !state.cursorSelection) return [text, state];
   event.preventDefault();
-  const selectedText = getSelectionText(text, state.textSelection);
+  const selectedText = getSelectionText(text, state.cursorSelection);
   event.clipboardData.setData('text/plain', selectedText);
   return insertText(text, state, '');
 }
 
 export function handleOnTextCopy(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.ClipboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  if (!state.cursorCoordinate || !state.textSelection) return [text, state];
+): [string, EditorState] {
+  if (!state.cursorCoordinate || !state.cursorSelection) return [text, state];
   event.preventDefault();
-  const selectedText = getSelectionText(text, state.textSelection);
+  const selectedText = getSelectionText(text, state.cursorSelection);
   event.clipboardData.setData('text/plain', selectedText);
   return [text, state];
 }
 
 export function handleOnTextPaste(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.ClipboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
   event.preventDefault();
   const textToPaste = event.clipboardData.getData('text');
@@ -214,9 +214,9 @@ export function handleOnTextPaste(
 
 export function handleOnSuggectionMouseDown(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.MouseEvent<HTMLLIElement>
-): [string, State] {
+): [string, EditorState] {
   event.preventDefault();
   event.stopPropagation();
 

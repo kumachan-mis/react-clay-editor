@@ -9,7 +9,7 @@ import { CommonMenuProps } from './types';
 export function useItalicMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  { text, state, setTextAndState, syntax }: CommonMenuProps
+  { text, state, onChangeText, setState, syntax }: CommonMenuProps
 ): ItalicMenuProps {
   const menuSwitch = decorationMenuSwitch(syntax, lineNodes, contentPosition);
   const handlerProps: DecorationMenuHandlerProps = { syntax };

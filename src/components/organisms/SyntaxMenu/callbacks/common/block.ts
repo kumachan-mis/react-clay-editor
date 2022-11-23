@@ -2,10 +2,10 @@ import { BlockNode } from '../../../../../parser/block/types';
 import { isBlockNode } from '../../../../../parser/block/utils';
 import { LineNode } from '../../../../../parser/line/types';
 import { CursorCoordinate } from '../../../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../../../molecules/selection/Selection/types';
 import { copySelection } from '../../../../molecules/selection/Selection/utils';
 import { insertText } from '../../../Editor/common/text';
-import { State } from '../../../Editor/types';
+import { EditorState } from '../../../Editor/types';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
 import { BlockMenuSwitch } from '../../switches/common/block';
@@ -19,10 +19,10 @@ export function handleOnBlockMenuClick(
   text: string,
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
-  state: State,
+  state: EditorState,
   menuSwitch: BlockMenuSwitch,
   config: BlockMenuConfig
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate || menuSwitch === 'disabled') return [text, state];
 
   if (menuSwitch === 'off') return handleBlockMenuOff(text, state, config);
@@ -32,8 +32,8 @@ export function handleOnBlockMenuClick(
   const blockNode = nodes[blockPosition.blockIndex];
   if (!isBlockNode(blockNode)) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
-  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
   if (allInRange(blockNode, [firstLineIndex, lastLineIndex])) {
     return handleBlockMenuAllInRange(text, state, blockNode);
   }
@@ -54,35 +54,35 @@ export function handleOnBlockMenuClick(
   return [text, state];
 }
 
-function handleBlockMenuOff(text: string, state: State, config: BlockMenuConfig): [string, State] {
+function handleBlockMenuOff(text: string, state: EditorState, config: BlockMenuConfig): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
   const lines = text.split('\n');
-  const { cursorCoordinate, textSelection } = state;
-  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
   if (firstLineIndex === lastLineIndex && !lines[firstLineIndex]) {
     const insertedText = [config.meta, config.label, config.meta].join('\n');
     const [newText, newState] = insertText(text, state, insertedText, insertedText.length - config.meta.length - 1);
-    if (!newState.cursorCoordinate) return [newText, { ...newState, textSelection: undefined }];
+    if (!newState.cursorCoordinate) return [newText, { ...newState, cursorSelection: undefined }];
 
     const fixed = {
       ...newState.cursorCoordinate,
       charIndex: newState.cursorCoordinate.charIndex - config.label.length,
     };
     const free = newState.cursorCoordinate;
-    return [newText, { ...newState, textSelection: { fixed, free } }];
+    return [newText, { ...newState, cursorSelection: { fixed, free } }];
   }
 
   const contentTextLines = lines.slice(firstLineIndex, lastLineIndex + 1);
   const insertedText = [config.meta, ...contentTextLines, config.meta].join('\n');
-  const blockSelection: TextSelection = {
+  const blockSelection: CursorSelection = {
     fixed: { lineIndex: firstLineIndex, charIndex: 0 },
     free: { lineIndex: lastLineIndex, charIndex: lines[lastLineIndex].length },
   };
-  const [newText, newState] = insertText(text, { ...state, textSelection: blockSelection }, insertedText);
+  const [newText, newState] = insertText(text, { ...state, cursorSelection: blockSelection }, insertedText);
 
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
   const newLineIndex = (lineIndex: number): number => {
     if (lineIndex < firstLineIndex) return lineIndex;
     if (lineIndex <= lastLineIndex) return lineIndex + 1;
@@ -93,22 +93,22 @@ function handleBlockMenuOff(text: string, state: State, config: BlockMenuConfig)
     newTextSelection.fixed.lineIndex = newLineIndex(newTextSelection.fixed.lineIndex);
     newTextSelection.free.lineIndex = newLineIndex(newTextSelection.free.lineIndex);
   }
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
 }
 
-function handleBlockMenuAllInRange(text: string, state: State, blockNode: BlockNode): [string, State] {
+function handleBlockMenuAllInRange(text: string, state: EditorState, blockNode: BlockNode): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
   const lines = text.split('\n');
 
   const [start, end] = [blockNode.range[0] + 1, blockNode.range[1]];
   const insertedText = lines.slice(start, blockNode.trailingMeta ? end : end + 1).join('\n');
-  const blockSelection: TextSelection = {
+  const blockSelection: CursorSelection = {
     fixed: { lineIndex: blockNode.range[0], charIndex: 0 },
     free: { lineIndex: blockNode.range[1], charIndex: lines[blockNode.range[1]].length },
   };
-  const [newText, newState] = insertText(text, { ...state, textSelection: blockSelection }, insertedText);
+  const [newText, newState] = insertText(text, { ...state, cursorSelection: blockSelection }, insertedText);
 
   const getNewCursorCoordinate = (cursorCoordinate: CursorCoordinate): CursorCoordinate => {
     if (cursorCoordinate.lineIndex < blockNode.range[0]) {
@@ -124,38 +124,43 @@ function handleBlockMenuAllInRange(text: string, state: State, blockNode: BlockN
     }
   };
   const newCursorCoordinate = getNewCursorCoordinate(cursorCoordinate);
-  const newTextSelection = copySelection(textSelection);
+  const newTextSelection = copySelection(cursorSelection);
   if (newTextSelection) {
     newTextSelection.fixed = getNewCursorCoordinate(newTextSelection.fixed);
     newTextSelection.free = getNewCursorCoordinate(newTextSelection.free);
   }
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
 }
 
-function handleBlockMenuMiddleRange(text: string, state: State, topMeta: string, bottomMeta: string): [string, State] {
+function handleBlockMenuMiddleRange(
+  text: string,
+  state: EditorState,
+  topMeta: string,
+  bottomMeta: string
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
   const lines = text.split('\n');
-  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
+  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
   let [newText, newState] = [text, state];
 
   const topCoordinate: CursorCoordinate = { lineIndex: firstLineIndex, charIndex: 0 };
   [newText, newState] = insertText(
     newText,
-    { ...newState, cursorCoordinate: topCoordinate, textSelection: undefined },
+    { ...newState, cursorCoordinate: topCoordinate, cursorSelection: undefined },
     topMeta
   );
 
   const bottomCoordinate: CursorCoordinate = { lineIndex: lastLineIndex + 1, charIndex: lines[lastLineIndex].length };
   [newText, newState] = insertText(
     newText,
-    { ...newState, cursorCoordinate: bottomCoordinate, textSelection: undefined },
+    { ...newState, cursorCoordinate: bottomCoordinate, cursorSelection: undefined },
     bottomMeta
   );
 
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
   const newLineIndex = (lineIndex: number): number => {
     if (lineIndex < firstLineIndex) return lineIndex;
     if (lineIndex <= lastLineIndex) return lineIndex + 1;
@@ -167,22 +172,27 @@ function handleBlockMenuMiddleRange(text: string, state: State, topMeta: string,
     newTextSelection.free.lineIndex = newLineIndex(newTextSelection.free.lineIndex);
   }
 
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
 }
 
-function handleBlockMenuUpperRange(text: string, state: State, blockNode: BlockNode, topMeta: string): [string, State] {
+function handleBlockMenuUpperRange(
+  text: string,
+  state: EditorState,
+  blockNode: BlockNode,
+  topMeta: string
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
   const lines = text.split('\n');
-  const [firstLineIndex] = getLineRange(cursorCoordinate, textSelection);
+  const [firstLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
   let [newText, newState] = [text, state];
 
   const topCoordinate: CursorCoordinate = { lineIndex: firstLineIndex, charIndex: 0 };
   [newText, newState] = insertText(
     newText,
-    { ...newState, cursorCoordinate: topCoordinate, textSelection: undefined },
+    { ...newState, cursorCoordinate: topCoordinate, cursorSelection: undefined },
     topMeta
   );
   let getNewCursorCoordinate = (cursorCoordinate: CursorCoordinate): CursorCoordinate => {
@@ -192,11 +202,11 @@ function handleBlockMenuUpperRange(text: string, state: State, blockNode: BlockN
 
   if (blockNode.trailingMeta) {
     const bottom = blockNode.range[1];
-    const bottomSelection: TextSelection = {
+    const bottomSelection: CursorSelection = {
       fixed: { lineIndex: bottom, charIndex: lines[bottom - 1].length },
       free: { lineIndex: bottom + 1, charIndex: lines[bottom].length },
     };
-    [newText, newState] = insertText(newText, { ...newState, textSelection: bottomSelection }, '');
+    [newText, newState] = insertText(newText, { ...newState, cursorSelection: bottomSelection }, '');
     getNewCursorCoordinate = (cursorCoordinate: CursorCoordinate): CursorCoordinate => {
       if (cursorCoordinate.lineIndex < firstLineIndex) {
         return cursorCoordinate;
@@ -211,42 +221,42 @@ function handleBlockMenuUpperRange(text: string, state: State, blockNode: BlockN
   }
 
   const newCursorCoordinate = getNewCursorCoordinate(cursorCoordinate);
-  const newTextSelection = copySelection(textSelection);
+  const newTextSelection = copySelection(cursorSelection);
   if (newTextSelection) {
     newTextSelection.fixed = getNewCursorCoordinate(newTextSelection.fixed);
     newTextSelection.free = getNewCursorCoordinate(newTextSelection.free);
   }
 
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
 }
 
 function handleBlockMenuLowerRange(
   text: string,
-  state: State,
+  state: EditorState,
   blockNode: BlockNode,
   bottomMeta: string
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
   const lines = text.split('\n');
-  const [, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
+  const [, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
   let [newText, newState] = [text, state];
 
   const bottomCoordinate: CursorCoordinate = { lineIndex: lastLineIndex, charIndex: lines[lastLineIndex].length };
   [newText, newState] = insertText(
     newText,
-    { ...newState, cursorCoordinate: bottomCoordinate, textSelection: undefined },
+    { ...newState, cursorCoordinate: bottomCoordinate, cursorSelection: undefined },
     bottomMeta
   );
 
   const top = blockNode.range[0];
-  const topSelection: TextSelection = {
+  const topSelection: CursorSelection = {
     fixed: { lineIndex: top, charIndex: 0 },
     free: { lineIndex: top + 1, charIndex: 0 },
   };
-  [newText, newState] = insertText(newText, { ...newState, textSelection: topSelection }, '');
+  [newText, newState] = insertText(newText, { ...newState, cursorSelection: topSelection }, '');
 
   const getNewCursorCoordinate = (cursorCoordinate: CursorCoordinate): CursorCoordinate => {
     if (cursorCoordinate.lineIndex < top) {
@@ -261,13 +271,13 @@ function handleBlockMenuLowerRange(
   };
 
   const newCursorCoordinate = getNewCursorCoordinate(cursorCoordinate);
-  const newTextSelection = copySelection(textSelection);
+  const newTextSelection = copySelection(cursorSelection);
   if (newTextSelection) {
     newTextSelection.fixed = getNewCursorCoordinate(newTextSelection.fixed);
     newTextSelection.free = getNewCursorCoordinate(newTextSelection.free);
   }
 
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
 }
 
 function allInRange(blockNode: BlockNode, [firstLineIndex, lastLineIndex]: [number, number]): boolean {

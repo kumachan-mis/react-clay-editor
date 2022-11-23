@@ -4,102 +4,106 @@ import { positionToCursorCoordinate } from '../common/cursor';
 import { updateSelectionAfterCursorMove } from '../common/selection';
 import { resetSuggestion } from '../common/suggestion';
 import { handleOnMoveUp, handleOnMoveDown } from '../shortcuts/callbacks';
-import { State } from '../types';
+import { EditorState } from '../types';
 
 export function handleOnMouseDown(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.MouseEvent,
   element: HTMLElement | null
-): [string, State] {
-  if (!element) return [text, state];
+): EditorState {
+  if (!element) return state;
 
   const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, position, element);
-  const newState = resetSuggestion({ ...state, cursorCoordinate, textSelection: undefined, selectionMouse: 'fired' });
-  return [text, newState];
+  const newState = resetSuggestion({ ...state, cursorCoordinate, cursorSelection: undefined, cursorScroll: 'fired' });
+  return newState;
 }
 
 export function handleOnMouseMove(
   text: string,
-  state: State,
+  state: EditorState,
   event: MouseEvent,
   element: HTMLElement | null
-): [string, State] {
-  if (!state.cursorCoordinate || state.selectionMouse === 'deactive' || !element) return [text, state];
+): EditorState {
+  if (!state.cursorCoordinate || state.cursorScroll === 'none' || !element) return state;
 
   const elementRect = element.getBoundingClientRect();
-  let selectionMouse: 'active-in' | 'active-up' | 'active-down' = 'active-in';
-  if (event.clientY < elementRect.top) selectionMouse = 'active-up';
-  else if (event.clientY > elementRect.bottom) selectionMouse = 'active-down';
 
-  if (state.selectionMouse === 'fired') return [text, { ...state, selectionMouse }];
+  let cursorScroll: 'pause' | 'up' | 'down' = 'pause';
+  if (event.clientY < elementRect.top) {
+    cursorScroll = 'up';
+  } else if (event.clientY > elementRect.bottom) {
+    cursorScroll = 'down';
+  }
 
-  const { cursorCoordinate, textSelection } = state;
+  if (state.cursorScroll === 'fired') return { ...state, cursorScroll };
+
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
   const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
   if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
-    return [text, { ...state, selectionMouse }];
+    return { ...state, cursorScroll };
   }
-  const newTextSelection = updateSelectionAfterCursorMove(textSelection, cursorCoordinate, newCursorCoordinate);
-  return [text, { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse }];
+  const newTextSelection = updateSelectionAfterCursorMove(cursorSelection, cursorCoordinate, newCursorCoordinate);
+  return { ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection, cursorScroll };
 }
 
 export function handleOnMouseUp(
   text: string,
-  state: State,
+  state: EditorState,
   event: MouseEvent,
   element: HTMLElement | null
-): [string, State] {
-  if (!state.cursorCoordinate || state.selectionMouse === 'deactive' || !element) return [text, state];
+): EditorState {
+  if (!state.cursorCoordinate || state.cursorScroll === 'none' || !element) return state;
 
-  const selectionMouse = 'deactive';
-  if (!['active-in', 'active-up', 'active-down'].includes(state.selectionMouse)) {
-    return [text, { ...state, selectionMouse }];
+  const cursorScroll = 'none';
+  if (!['pause', 'up', 'down'].includes(state.cursorScroll)) {
+    return { ...state, cursorScroll: cursorScroll };
   }
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
   const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
   if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
-    return [text, { ...state, selectionMouse }];
+    return { ...state, cursorScroll: cursorScroll };
   }
-  const newTextSelection = updateSelectionAfterCursorMove(textSelection, cursorCoordinate, newCursorCoordinate);
-  return [text, { ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection, selectionMouse }];
+  const newTextSelection = updateSelectionAfterCursorMove(cursorSelection, cursorCoordinate, newCursorCoordinate);
+  return { ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection, cursorScroll };
 }
 
 export function handleOnClick(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.MouseEvent,
   element: HTMLElement | null
-): [string, State] {
-  if (!element) return [text, state];
+): EditorState {
+  if (!element) return state;
 
   const position: [number, number] = [event.clientX, event.clientY];
   const cursorCoordinate = positionToCursorCoordinate(text, position, element);
   switch (event.detail) {
     case 2: {
       // double click
-      const textSelection = getWordSelection(text, cursorCoordinate);
-      return [text, { ...state, textSelection }];
+      const cursorSelection = getWordSelection(text, cursorCoordinate);
+      return { ...state, cursorSelection: cursorSelection };
     }
     case 3: {
       // triple click
-      const textSelection = getLineSelection(text, cursorCoordinate);
-      return [text, { ...state, textSelection }];
+      const cursorSelection = getLineSelection(text, cursorCoordinate);
+      return { ...state, cursorSelection: cursorSelection };
     }
     default:
-      return [text, state];
+      return state;
   }
 }
 
-export function handleOnMouseScrollUp(text: string, state: State): State {
+export function handleOnMouseScrollUp(text: string, state: EditorState): EditorState {
   const [, newState] = handleOnMoveUp(text, state, undefined, true);
   return newState;
 }
 
-export function handleOnMouseScrollDown(text: string, state: State): State {
+export function handleOnMouseScrollDown(text: string, state: EditorState): EditorState {
   const [, newState] = handleOnMoveDown(text, state, undefined, true);
   return newState;
 }

@@ -19,9 +19,9 @@ import {
   Suggestion,
 } from '../../../common/types';
 import { CursorCoordinate } from '../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../molecules/selection/Selection/types';
 
-export type Props = {
+export type EditorProps = {
   text: string;
   onChangeText: (text: string) => void;
   syntax?: 'bracket' | 'markdown';
@@ -31,7 +31,7 @@ export type Props = {
   taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
   codeProps?: CodeProps;
   formulaProps?: FormulaProps;
-  hideMenu?: boolean;
+  hideSyntaxMenu?: boolean;
   className?: string;
 };
 
@@ -47,37 +47,34 @@ export type CodeProps = CodeVisual & CodeLabels & CodeParsing;
 
 export type FormulaProps = FormulaVisual & FormulaLabels & FormulaParsing;
 
-export type State = {
+export type EditorState = {
   cursorCoordinate: CursorCoordinate | undefined;
+  cursorSelection: CursorSelection | undefined;
+  cursorScroll: 'none' | 'fired' | 'pause' | 'up' | 'down';
   textAreaValue: string;
-  isComposing: boolean;
-  textSelection: TextSelection | undefined;
-  selectionMouse: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down';
-  historyHead: number;
+  textComposing: boolean;
+  editActionHistoryHead: number;
   editActionHistory: EditAction[];
-  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
+  suggestionType: 'none' | 'text' | 'bracketLink' | 'hashtag' | 'taggedLink';
   suggestions: string[];
   suggestionIndex: number;
   suggestionStart: number;
 };
 
-export type EditAction = ReplaceAction | InsertAction | DeleteAction;
-
-export type ReplaceAction = {
-  actionType: 'replace';
-  coordinate: CursorCoordinate;
-  deletedText: string;
-  insertedText: string;
-};
-
-export type InsertAction = {
-  actionType: 'insert';
-  coordinate: CursorCoordinate;
-  text: string;
-};
-
-export type DeleteAction = {
-  actionType: 'delete';
-  coordinate: CursorCoordinate;
-  text: string;
-};
+export type EditAction =
+  | {
+      actionType: 'replace';
+      coordinate: CursorCoordinate;
+      deletedText: string;
+      insertedText: string;
+    }
+  | {
+      actionType: 'insert';
+      coordinate: CursorCoordinate;
+      text: string;
+    }
+  | {
+      actionType: 'delete';
+      coordinate: CursorCoordinate;
+      text: string;
+    };

@@ -2,7 +2,7 @@ import { CodeLabels } from '../../../../common/types';
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { State } from '../../Editor/types';
+import { EditorState } from '../../Editor/types';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
 import { CodeMenuSwitch } from '../switches/code';
@@ -27,11 +27,11 @@ export function handleOnCodeButtonClick(
   nodes: (LineNode | BlockNode)[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
-  state: State,
+  state: EditorState,
   props: CodeMenuHandlerProps,
   inlineMenuSwitch: CodeMenuSwitch,
   blockMenuSwitch: CodeMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   switch (inlineMenuSwitch) {
     case 'on':
     case 'off':
@@ -45,9 +45,9 @@ export function handleOnInlineCodeItemClick(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  state: State,
+  state: EditorState,
   menuSwitch: CodeMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate || !contentPosition || menuSwitch === 'disabled') return [text, state];
 
   const offConfig: ContentMenuConfig = { facingMeta: '`', content: 'inline code', trailingMeta: '`' };
@@ -58,7 +58,7 @@ export function handleOnInlineCodeItemClick(
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return [text, state];
 
-  if (!state.textSelection) {
+  if (!state.cursorSelection) {
     if (menuSwitch === 'off') {
       return insertContentAtCursor(text, nodes, state, offConfig);
     } else {
@@ -77,10 +77,10 @@ export function handleOnBlockCodeItemClick(
   text: string,
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
-  state: State,
+  state: EditorState,
   props: CodeMenuHandlerProps,
   menuSwitch: CodeMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   return handleOnBlockMenuClick(text, nodes, blockPosition, state, menuSwitch, {
     label: props.blockLabel,
     meta: '```',

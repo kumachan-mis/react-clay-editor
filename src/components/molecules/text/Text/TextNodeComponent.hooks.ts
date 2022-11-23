@@ -3,7 +3,7 @@ import React from 'react';
 import { TextNode } from '../../../../parser';
 import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/hooks';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
-import { TextSelection } from '../../selection/Selection/types';
+import { CursorSelection } from '../../selection/Selection/types';
 import { selectionToRange } from '../../selection/Selection/utils';
 
 export type UseTextNodeComponent = {
@@ -13,11 +13,11 @@ export type UseTextNodeComponent = {
 
 export function useTextNodeComponent(
   cursorCoordinate?: CursorCoordinate,
-  textSelection?: TextSelection
+  cursorSelection?: CursorSelection
 ): UseTextNodeComponent {
   const editMode = React.useCallback(
-    (node: TextNode) => cursorOnTextNode(node, cursorCoordinate) || selectionOnTextNode(node, textSelection),
-    [cursorCoordinate, textSelection]
+    (node: TextNode) => cursorOnTextNode(node, cursorCoordinate) || selectionOnTextNode(node, cursorSelection),
+    [cursorCoordinate, cursorSelection]
   );
 
   const linkForceClickable = useEmbededLinkForceClickable();
@@ -34,9 +34,9 @@ function cursorOnTextNode(node: TextNode, cursorCoordinate?: CursorCoordinate): 
   return cursorCoordinate.lineIndex === node.lineIndex;
 }
 
-function selectionOnTextNode(node: TextNode, textSelection?: TextSelection): boolean {
-  if (!textSelection) return false;
-  const { start, end } = selectionToRange(textSelection);
+function selectionOnTextNode(node: TextNode, cursorSelection?: CursorSelection): boolean {
+  if (!cursorSelection) return false;
+  const { start, end } = selectionToRange(cursorSelection);
 
   if (node.type === 'blockCode' || node.type === 'blockFormula') {
     const [first, last] = node.range;

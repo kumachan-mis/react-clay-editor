@@ -16,14 +16,14 @@ import {
 import { BlockNode } from '../../../parser/block/types';
 import { LineNode } from '../../../parser/line/types';
 import { MenuListProps } from '../../atoms/menu/MenuList';
-import { State } from '../Editor/types';
+import { EditorState } from '../Editor/types';
 
 export type SyntaxMenuProps = {
   text: string;
   nodes: (LineNode | BlockNode)[];
-  state: State;
+  state: EditorState;
   onChangeText: (text: string) => void;
-  setState: (state: State) => void;
+  setState: (state: EditorState) => void;
   syntax?: 'bracket' | 'markdown';
   sectionProps?: SectionProps;
   itemizationProps?: ItemizationProps;

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import * as selection from '../../src/components/molecules/selection/Selection';
-import { TextSelection } from '../../src/components/molecules/selection/Selection/types';
+import { CursorSelection } from '../../src/components/molecules/selection/Selection/types';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
 import * as cursor from '../../src/components/organisms/Editor/common/cursor';
 import { osUserAgents } from '../constants';
@@ -53,8 +53,8 @@ describe('keyboardSelection in Editor', () => {
       expect(screen.queryAllByTestId('selection')).toEqual([]);
     }
 
-    const MockSelection: React.FC<{ textSelection: TextSelection | undefined }> = ({ textSelection }) => (
-      <div data-testid="mock-selected-text">{getSelectionText(text, textSelection)}</div>
+    const MockSelection: React.FC<{ cursorSelection: CursorSelection | undefined }> = ({ cursorSelection }) => (
+      <div data-testid="mock-selected-text">{getSelectionText(text, cursorSelection)}</div>
     );
 
     SpiedTextLines.mockImplementation(MockSelection);

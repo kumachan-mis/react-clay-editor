@@ -17,16 +17,16 @@ import {
   useTextFieldBodyEventHandlers,
   useEditorRootEventHandlers,
 } from './hooks';
-import { Props } from './types';
+import { EditorProps } from './types';
 
-export const Editor: React.FC<Props> = (props) => {
+export const Editor: React.FC<EditorProps> = (props) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const { state, setState } = useEditorState(props, ref);
   const editorRootEventHandlers = useEditorRootEventHandlers(ref);
-  const textFieldBodyEventHandlers = useTextFieldBodyEventHandlers(props, state, setState, ref);
+  const textFieldBodyEventHandlers = useTextFieldBodyEventHandlers(props, setState, ref);
   const cursorEventHandlers = useCursorEventHandlers(props, state, setState);
 
-  useScroll(props.text, state.selectionMouse, setState);
+  useScroll(props.text, state.cursorScroll, setState);
 
   const nodes = useParser(
     props.text,
@@ -40,7 +40,7 @@ export const Editor: React.FC<Props> = (props) => {
 
   return (
     <EditorRoot className={props.className} ref={ref} {...editorRootEventHandlers}>
-      {!props.hideMenu && (
+      {!props.hideSyntaxMenu && (
         <SyntaxMenu
           text={props.text}
           nodes={nodes}
@@ -56,23 +56,23 @@ export const Editor: React.FC<Props> = (props) => {
           formulaProps={props.formulaProps}
         />
       )}
-      <TextFieldRoot hideMenu={props.hideMenu}>
+      <TextFieldRoot hideSyntaxMenu={props.hideSyntaxMenu}>
         <TextFieldBody {...textFieldBodyEventHandlers}>
           {props.textProps?.header && <Header size={props.textProps?.headerSize}>{props.textProps.header}</Header>}
-          <Selection textSelection={state.textSelection} />
+          <Selection cursorSelection={state.cursorSelection} />
           <Cursor
-            coordinate={state.cursorCoordinate}
+            cursorCoordinate={state.cursorCoordinate}
             textAreaValue={state.textAreaValue}
             suggestionType={state.suggestionType}
             suggestions={state.suggestions}
             suggestionIndex={state.suggestionIndex}
-            mouseHold={state.selectionMouse}
+            cursorScroll={state.cursorScroll}
             {...cursorEventHandlers}
           />
           <Text
             nodes={nodes}
             cursorCoordinate={state.cursorCoordinate}
-            textSelection={state.textSelection}
+            cursorSelection={state.cursorSelection}
             textVisual={props.textProps}
             bracketLinkVisual={props.bracketLinkProps}
             hashtagVisual={props.hashtagProps}

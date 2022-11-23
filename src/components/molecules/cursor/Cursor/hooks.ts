@@ -6,10 +6,10 @@ import { SuggestionListBodyConstants } from '../../../atoms/suggestion/Suggesion
 import { SuggestionListItemConstants } from '../../../atoms/suggestion/SuggesionListItem';
 import { getCharAt } from '../../../atoms/text/Char/utils';
 
-import { Props, State } from './types';
+import { CursorProps, CursorState } from './types';
 
-export function useCursor(props: Props): { state: State; ref: React.RefObject<HTMLSpanElement> } {
-  const [state, setState] = React.useState<State>({ position: { top: 0, left: 0 }, cursorSize: 0 });
+export function useCursor(props: CursorProps): { state: CursorState; ref: React.RefObject<HTMLSpanElement> } {
+  const [state, setState] = React.useState<CursorState>({ position: { top: 0, left: 0 }, cursorSize: 0 });
   const ref = React.useRef<HTMLSpanElement>(null);
 
   const handleOnScrollOrResize = React.useCallback((): void => {
@@ -48,22 +48,22 @@ export function useCursor(props: Props): { state: State; ref: React.RefObject<HT
   return { state, ref };
 }
 
-function propsToState(props: Props, state: State, element: HTMLElement): State {
+function propsToState(props: CursorProps, state: CursorState, element: HTMLElement): CursorState {
   const textFieldRootElement = getTextFieldRoot(element);
 
   const textFieldRootRect = textFieldRootElement?.getBoundingClientRect();
   const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
-  if (!props.coordinate || !textFieldBodyRect || !textFieldRootElement || !textFieldRootRect) {
+  if (!props.cursorCoordinate || !textFieldBodyRect || !textFieldRootElement || !textFieldRootRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const charElement = getCharAt(props.coordinate.lineIndex, props.coordinate.charIndex, element);
+  const charElement = getCharAt(props.cursorCoordinate.lineIndex, props.cursorCoordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const position = { top: charRect.top - textFieldBodyRect.top, left: charRect.left - textFieldBodyRect.left };
   const [cursorSize, margin] = [charRect.height, 4];
-  if (props.mouseHold === 'active-in') return { ...state, position, cursorSize };
+  if (props.cursorScroll === 'pause') return { ...state, position, cursorSize };
 
   if (charRect.top - textFieldRootRect.top - margin < 0) {
     textFieldRootElement.scrollTop += charRect.top - textFieldRootRect.top;
@@ -76,11 +76,11 @@ function propsToState(props: Props, state: State, element: HTMLElement): State {
   return { ...state, position, cursorSize };
 }
 
-function propsToStateOnScrollOrResize(props: Props, state: State, element: HTMLElement): State {
+function propsToStateOnScrollOrResize(props: CursorProps, state: CursorState, element: HTMLElement): CursorState {
   const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
-  if (!props.coordinate || !textFieldBodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
+  if (!props.cursorCoordinate || !textFieldBodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const { coordinate } = props;
+  const { cursorCoordinate: coordinate } = props;
   const charElement = getCharAt(coordinate.lineIndex, coordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };

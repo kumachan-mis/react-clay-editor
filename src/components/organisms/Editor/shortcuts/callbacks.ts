@@ -4,16 +4,16 @@ import { getSelectionText } from '../../../molecules/selection/Selection/utils';
 import { resetTextSelection, updateSelectionAfterCursorMove } from '../common/selection';
 import { resetSuggestion } from '../common/suggestion';
 import { insertText } from '../common/text';
-import { State } from '../types';
+import { EditorState } from '../types';
 
 import { ShortcutCommand } from './types';
 
 export function handleOnShortcut(
   command: ShortcutCommand | undefined,
   text: string,
-  state: State,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   switch (command) {
     case 'forwardDelete':
       return handleOnForwardDelete(text, state, event);
@@ -49,27 +49,27 @@ export function handleOnShortcut(
 
 export function handleOnForwardDelete(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
-  if (state.textSelection) return insertText(text, state, '');
+  if (state.cursorSelection) return insertText(text, state, '');
 
   const current = state.cursorCoordinate;
   const forward = moveCursor(text, current, 1);
-  const [newText, newState] = insertText(text, { ...state, textSelection: { fixed: current, free: forward } }, '');
+  const [newText, newState] = insertText(text, { ...state, cursorSelection: { fixed: current, free: forward } }, '');
   return [newText, resetSuggestion(newState)];
 }
 
 export function handleOnBackwardDelete(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
-  if (state.textSelection) return insertText(text, state, '');
+  if (state.cursorSelection) return insertText(text, state, '');
 
   const current = state.cursorCoordinate;
   const backward = moveCursor(text, current, -1);
@@ -79,11 +79,19 @@ export function handleOnBackwardDelete(
     case '[]':
     case '{}':
     case '()': {
-      const [newText, newState] = insertText(text, { ...state, textSelection: { fixed: backward, free: forward } }, '');
+      const [newText, newState] = insertText(
+        text,
+        { ...state, cursorSelection: { fixed: backward, free: forward } },
+        ''
+      );
       return [newText, resetSuggestion(newState)];
     }
     default: {
-      const [newText, newState] = insertText(text, { ...state, textSelection: { fixed: backward, free: current } }, '');
+      const [newText, newState] = insertText(
+        text,
+        { ...state, cursorSelection: { fixed: backward, free: current } },
+        ''
+      );
       return [newText, resetSuggestion(newState)];
     }
   }
@@ -91,29 +99,29 @@ export function handleOnBackwardDelete(
 
 export function handleOnSelectAll(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
   const lines = text.split('\n');
-  const textSelection = {
+  const cursorSelection = {
     fixed: { lineIndex: 0, charIndex: 0 },
     free: { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length },
   };
-  return [text, resetSuggestion({ ...state, textSelection })];
+  return [text, resetSuggestion({ ...state, cursorSelection: cursorSelection })];
 }
 
 export function handleOnUndo(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  const { editActionHistory, historyHead } = state;
-  if (historyHead === -1 || state.textAreaValue !== '') return [text, state];
+): [string, EditorState] {
+  const { editActionHistory, editActionHistoryHead } = state;
+  if (editActionHistoryHead === -1 || state.textAreaValue !== '') return [text, state];
 
-  const action = editActionHistory[historyHead];
+  const action = editActionHistory[editActionHistoryHead];
   switch (action.actionType) {
     case 'replace': {
       const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
@@ -122,7 +130,7 @@ export function handleOnUndo(
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: moveCursor(newText, action.coordinate, action.deletedText.length),
-        historyHead: historyHead - 1,
+        editActionHistoryHead: editActionHistoryHead - 1,
       });
       return [newText, newState];
     }
@@ -133,7 +141,7 @@ export function handleOnUndo(
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: action.coordinate,
-        historyHead: historyHead - 1,
+        editActionHistoryHead: editActionHistoryHead - 1,
       });
       return [newText, newState];
     }
@@ -143,7 +151,7 @@ export function handleOnUndo(
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: moveCursor(newText, action.coordinate, action.text.length),
-        historyHead: historyHead - 1,
+        editActionHistoryHead: editActionHistoryHead - 1,
       });
       return [newText, newState];
     }
@@ -152,16 +160,16 @@ export function handleOnUndo(
 
 export function handleOnRedo(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
-  const { editActionHistory, historyHead } = state;
-  if (historyHead === editActionHistory.length - 1 || state.textAreaValue !== '') {
+): [string, EditorState] {
+  const { editActionHistory, editActionHistoryHead } = state;
+  if (editActionHistoryHead === editActionHistory.length - 1 || state.textAreaValue !== '') {
     return [text, state];
   }
 
-  const action = editActionHistory[historyHead + 1];
+  const action = editActionHistory[editActionHistoryHead + 1];
   switch (action.actionType) {
     case 'replace': {
       const startIndex = cursorCoordinateToTextIndex(text, action.coordinate);
@@ -170,7 +178,7 @@ export function handleOnRedo(
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: moveCursor(newText, action.coordinate, action.insertedText.length),
-        historyHead: historyHead + 1,
+        editActionHistoryHead: editActionHistoryHead + 1,
       });
       return [newText, newState];
     }
@@ -180,7 +188,7 @@ export function handleOnRedo(
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: moveCursor(newText, action.coordinate, action.text.length),
-        historyHead: historyHead + 1,
+        editActionHistoryHead: editActionHistoryHead + 1,
       });
       return [newText, newState];
     }
@@ -191,7 +199,7 @@ export function handleOnRedo(
       const newState = resetTextSelectionAndSuggestion({
         ...state,
         cursorCoordinate: action.coordinate,
-        historyHead: historyHead + 1,
+        editActionHistoryHead: editActionHistoryHead + 1,
       });
       return [newText, newState];
     }
@@ -200,13 +208,13 @@ export function handleOnRedo(
 
 export function handleOnMoveUp(
   text: string,
-  state: State,
+  state: EditorState,
   event?: React.KeyboardEvent<HTMLTextAreaElement>,
   mouseScroll?: boolean
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = (() => {
     if (cursorCoordinate.lineIndex === 0) return { lineIndex: 0, charIndex: 0 };
@@ -220,23 +228,26 @@ export function handleOnMoveUp(
 
   const disabled = !event?.shiftKey && !mouseScroll;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveDown(
   text: string,
-  state: State,
+  state: EditorState,
   event?: React.KeyboardEvent<HTMLTextAreaElement>,
   mouseScroll?: boolean
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = (() => {
     const lines = text.split('\n');
@@ -252,65 +263,74 @@ export function handleOnMoveDown(
 
   const disabled = !event?.shiftKey && !mouseScroll;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveLeft(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = moveCursor(text, cursorCoordinate, -1);
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveRight(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = moveCursor(text, cursorCoordinate, 1);
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveWordTop(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = (() => {
     const groupWordRegex = new RegExp(wordRegex, 'g');
@@ -329,23 +349,26 @@ export function handleOnMoveWordTop(
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveWordBottom(
   text: string,
-  state: State,
+  state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = (() => {
     const groupWordRegex = new RegExp(wordRegex, 'g');
@@ -364,43 +387,49 @@ export function handleOnMoveWordBottom(
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveLineTop(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 };
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveLineBottom(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const lines = text.split('\n');
   const newCursorCoordinate = {
@@ -410,57 +439,66 @@ export function handleOnMoveLineBottom(
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveTextTop(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const newCursorCoordinate = { lineIndex: 0, charIndex: 0 };
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
 export function handleOnMoveTextBottom(
   text: string,
-  state: State,
+  state: EditorState,
   event: React.KeyboardEvent<HTMLTextAreaElement>
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
 
   const lines = text.split('\n');
   const newCursorCoordinate = { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
 
   const disabled = !event?.shiftKey;
   const newTextSelection = updateSelectionAfterCursorMove(
-    textSelection,
+    cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
     disabled
   );
-  return [text, resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, textSelection: newTextSelection })];
+  return [
+    text,
+    resetSuggestion({ ...state, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }),
+  ];
 }
 
-function resetTextSelectionAndSuggestion(state: State): State {
+function resetTextSelectionAndSuggestion(state: EditorState): EditorState {
   return resetSuggestion(resetTextSelection(state));
 }

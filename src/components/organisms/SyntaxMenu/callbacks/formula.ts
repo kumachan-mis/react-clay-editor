@@ -2,7 +2,7 @@ import { FormulaLabels } from '../../../../common/types';
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { State } from '../../Editor/types';
+import { EditorState } from '../../Editor/types';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
 import { BlockFormulaMenuSwitch, ContentFormulaMenuSwitch } from '../switches/formula';
@@ -27,11 +27,11 @@ export function handleOnFormulaButtonClick(
   nodes: (LineNode | BlockNode)[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
-  state: State,
+  state: EditorState,
   props: FormulaMenuHandlerProps,
   contentMenuSwitch: ContentFormulaMenuSwitch,
   blockMenuSwitch: BlockFormulaMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   switch (contentMenuSwitch) {
     case 'inline':
     case 'off':
@@ -47,10 +47,10 @@ export function handleOnContentFormulaItemClick(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  state: State,
+  state: EditorState,
   menuItem: 'inline' | 'display',
   menuSwitch: ContentFormulaMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate || !contentPosition || menuSwitch === 'disabled') return [text, state];
 
   const inlineConfig: ContentMenuConfig = { facingMeta: '$', content: 'inline formula', trailingMeta: '$' };
@@ -64,7 +64,7 @@ export function handleOnContentFormulaItemClick(
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return [text, state];
 
-  if (!state.textSelection) {
+  if (!state.cursorSelection) {
     if (menuSwitch === 'off') {
       const config = menuItem === 'display' ? displayConfig : inlineConfig;
       return insertContentAtCursor(text, nodes, state, config);
@@ -87,9 +87,9 @@ export function handleOnBlockFormulaItemClick(
   text: string,
   nodes: (LineNode | BlockNode)[],
   blockPosition: BlockPosition | undefined,
-  state: State,
+  state: EditorState,
   props: FormulaMenuHandlerProps,
   menuSwitch: BlockFormulaMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   return handleOnBlockMenuClick(text, nodes, blockPosition, state, menuSwitch, { label: props.blockLabel, meta: '$$' });
 }

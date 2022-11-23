@@ -3,13 +3,13 @@ export type CursorCoordinate = {
   charIndex: number;
 };
 
-export type Props = {
-  coordinate: CursorCoordinate | undefined;
+export type CursorProps = {
+  cursorCoordinate: CursorCoordinate | undefined;
+  cursorScroll: 'none' | 'fired' | 'pause' | 'up' | 'down';
   textAreaValue: string;
   suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
   suggestions: string[];
   suggestionIndex: number;
-  mouseHold: 'deactive' | 'fired' | 'active-in' | 'active-up' | 'active-down';
   onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onTextCompositionStart: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
@@ -20,7 +20,7 @@ export type Props = {
   onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
 };
 
-export type State = {
+export type CursorState = {
   position: { top: number; left: number };
   cursorSize: number;
 };

@@ -43,8 +43,8 @@ export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
   ...common
 }) => {
   const lineNodes = useLineNodes(nodes);
-  const contentPosition = useContentPosition(lineNodes, common.state.cursorCoordinate, common.state.textSelection);
-  const blockPosition = useBlockPosition(nodes, common.state.cursorCoordinate, common.state.textSelection);
+  const contentPosition = useContentPosition(lineNodes, common.state.cursorCoordinate, common.state.cursorSelection);
+  const blockPosition = useBlockPosition(nodes, common.state.cursorCoordinate, common.state.cursorSelection);
 
   const sectionMenuProps = useSectionMenu(lineNodes, sectionProps, common);
   const itemizationMenuProps = useItemizationMenu(lineNodes, itemizationProps, common);

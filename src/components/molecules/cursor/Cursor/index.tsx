@@ -8,9 +8,9 @@ import { SuggestionListHeader } from '../../../atoms/suggestion/SuggesionListHea
 import { SuggestionListItem } from '../../../atoms/suggestion/SuggesionListItem';
 
 import { useCursor } from './hooks';
-import { Props } from './types';
+import { CursorProps } from './types';
 
-export const Cursor: React.FC<Props> = (props) => {
+export const Cursor: React.FC<CursorProps> = (props) => {
   const { state, ref } = useCursor(props);
 
   return (

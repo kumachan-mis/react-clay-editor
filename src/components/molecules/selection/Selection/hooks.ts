@@ -3,11 +3,11 @@ import React from 'react';
 import { getTextFieldBody } from '../../../atoms/editor/TextFieldBody/utils';
 import { getCharAt } from '../../../atoms/text/Char/utils';
 
-import { Props, State } from './types';
+import { SelectionProps, SelectionState } from './types';
 import { selectionToRange } from './utils';
 
-export function useSelection(props: Props): { state: State; ref: React.RefObject<HTMLSpanElement> } {
-  const [state, setState] = React.useState<State>({
+export function useSelection(props: SelectionProps): { state: SelectionState; ref: React.RefObject<HTMLSpanElement> } {
+  const [state, setState] = React.useState<SelectionState>({
     topRectProps: undefined,
     centerRectProps: undefined,
     bottomRectProps: undefined,
@@ -38,13 +38,13 @@ export function useSelection(props: Props): { state: State; ref: React.RefObject
   return { state, ref };
 }
 
-function propsToState(props: Props, element: HTMLElement): State {
+function propsToState(props: SelectionProps, element: HTMLElement): SelectionState {
   const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
-  if (!props.textSelection || !textFieldBodyRect) {
+  if (!props.cursorSelection || !textFieldBodyRect) {
     return { topRectProps: undefined, centerRectProps: undefined, bottomRectProps: undefined };
   }
 
-  const { start, end } = selectionToRange(props.textSelection);
+  const { start, end } = selectionToRange(props.cursorSelection);
   const startElement = getCharAt(start.lineIndex, start.charIndex, element);
   const endElement = getCharAt(end.lineIndex, end.charIndex, element);
   const startRect = startElement?.getBoundingClientRect();

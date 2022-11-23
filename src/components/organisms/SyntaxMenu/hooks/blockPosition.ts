@@ -4,7 +4,7 @@ import { BlockNode } from '../../../../parser/block/types';
 import { isBlockNode } from '../../../../parser/block/utils';
 import { LineNode } from '../../../../parser/line/types';
 import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../../molecules/selection/Selection/types';
 import { getLineRange } from '../common/utils';
 
 export type BlockPosition = {
@@ -14,17 +14,17 @@ export type BlockPosition = {
 export function useBlockPosition(
   nodes: (LineNode | BlockNode)[],
   cursorCoordinate: CursorCoordinate | undefined,
-  textSelection: TextSelection | undefined
+  cursorSelection: CursorSelection | undefined
 ): BlockPosition | undefined {
   const blockPosition = React.useMemo(() => {
     if (!cursorCoordinate) return undefined;
-    const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
+    const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
     const blockPosition = searchBlockPosition(firstLineIndex, nodes);
     if (!blockPosition) return undefined;
     const blockNode = nodes[blockPosition.blockIndex];
     if (!isBlockNode(blockNode) || lastLineIndex > blockNode.range[1]) return undefined;
     return blockPosition;
-  }, [nodes, cursorCoordinate, textSelection]);
+  }, [nodes, cursorCoordinate, cursorSelection]);
   return blockPosition;
 }
 

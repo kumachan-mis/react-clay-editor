@@ -1,8 +1,8 @@
 import { TextLabels } from '../../../../common/types';
 import { LineNode } from '../../../../parser/line/types';
-import { TextSelection } from '../../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../../molecules/selection/Selection/types';
 import { copySelection, undefinedIfZeroSelection } from '../../../molecules/selection/Selection/utils';
-import { State } from '../../Editor/types';
+import { EditorState } from '../../Editor/types';
 import { ContentPosition } from '../hooks/contentPosition';
 import { SectionMenuItemType, SectionMenuSwitch } from '../switches/section';
 
@@ -27,10 +27,10 @@ type SectionMeta = {
 export function handleOnSectionButtonClick(
   text: string,
   nodes: LineNode[],
-  state: State,
+  state: EditorState,
   props: SectionMenuHandlerProps,
   menuSwitch: SectionMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   if (menuSwitch === 'disabled') return [text, state];
 
   let menuItem: SectionMenuItemType = 'larger';
@@ -41,12 +41,12 @@ export function handleOnSectionButtonClick(
 export function handleOnSectionItemClick(
   text: string,
   nodes: LineNode[],
-  state: State,
+  state: EditorState,
   props: SectionMenuHandlerProps,
   menuItem: SectionMenuItemType,
   menuSwitch: SectionMenuSwitch
-): [string, State] {
-  const { cursorCoordinate, textSelection } = state;
+): [string, EditorState] {
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
   const lineNode = nodes[cursorCoordinate.lineIndex];
   if (lineNode.type !== 'normalLine') return [text, state];
@@ -55,16 +55,16 @@ export function handleOnSectionItemClick(
   const line = text.split('\n')[cursorCoordinate.lineIndex];
   if (!line) return insertContentAtCursor(text, nodes, state, { facingMeta, content: sectionName, trailingMeta });
 
-  const lineSelection: TextSelection = {
+  const lineSelection: CursorSelection = {
     fixed: { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 },
     free: { lineIndex: cursorCoordinate.lineIndex, charIndex: line.length },
   };
-  const dummyState = { ...state, textSelection: lineSelection };
+  const dummyState = { ...state, cursorSelection: lineSelection };
 
   if (menuSwitch === 'off') {
     const config = { facingMeta, trailingMeta };
     const [newText, newState] = createContentByTextSelection(text, nodes, dummyState, config);
-    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
     const newCharIndex = (charIndex: number) => newCharIndexAfterCreation(charIndex, lineSelection, config);
     newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     if (newTextSelection) {
@@ -73,7 +73,11 @@ export function handleOnSectionItemClick(
     }
     return [
       newText,
-      { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+      {
+        ...newState,
+        cursorCoordinate: newCursorCoordinate,
+        cursorSelection: undefinedIfZeroSelection(newTextSelection),
+      },
     ];
   }
 
@@ -82,7 +86,7 @@ export function handleOnSectionItemClick(
     const config = menuSwitch === menuItem ? { facingMeta: '', trailingMeta: '' } : { facingMeta, trailingMeta };
     const position: ContentPosition = { type: 'inner', lineIndex: cursorCoordinate.lineIndex, contentIndexes: [0] };
     const [newText, newState] = replaceContentAtCursor(text, nodes, position, dummyState, config);
-    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
     const newCharIndex = (charIndex: number) => newCharIndexAfterReplacement(charIndex, decorationNode, config);
     newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     if (newTextSelection) {
@@ -91,7 +95,11 @@ export function handleOnSectionItemClick(
     }
     return [
       newText,
-      { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+      {
+        ...newState,
+        cursorCoordinate: newCursorCoordinate,
+        cursorSelection: undefinedIfZeroSelection(newTextSelection),
+      },
     ];
   }
 

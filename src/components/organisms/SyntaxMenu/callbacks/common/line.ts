@@ -1,10 +1,10 @@
 import { LineNode } from '../../../../../parser/line/types';
 import { isPureLineNode } from '../../../../../parser/line/utils';
 import { CursorCoordinate } from '../../../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../../../molecules/selection/Selection/types';
 import { copySelection, undefinedIfZeroSelection } from '../../../../molecules/selection/Selection/utils';
 import { insertText } from '../../../Editor/common/text';
-import { State } from '../../../Editor/types';
+import { EditorState } from '../../../Editor/types';
 import { getLineRange } from '../../common/utils';
 
 export type LineMenuConfig = {
@@ -14,11 +14,11 @@ export type LineMenuConfig = {
 export function handleOnLineMenuClick(
   text: string,
   nodes: LineNode[],
-  state: State,
+  state: EditorState,
   menuItem: 'button' | 'indent' | 'outdent',
   menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled',
   config: LineMenuConfig
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate || menuSwitch === 'disabled' || (menuItem === 'outdent' && menuSwitch === 'alloff')) {
     return [text, state];
   }
@@ -37,12 +37,17 @@ export function handleOnLineMenuClick(
   }
 }
 
-function handleLineMenuOn(text: string, nodes: LineNode[], state: State, config: LineMenuConfig): [string, State] {
+function handleLineMenuOn(
+  text: string,
+  nodes: LineNode[],
+  state: EditorState,
+  config: LineMenuConfig
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
-  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
+  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
 
@@ -56,11 +61,11 @@ function handleLineMenuOn(text: string, nodes: LineNode[], state: State, config:
     };
 
     const cursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
-    const textSelection: TextSelection = {
+    const cursorSelection: CursorSelection = {
       fixed: { lineIndex, charIndex: 0 },
       free: { lineIndex, charIndex: lineNode.indentDepth + config.meta.length },
     };
-    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, textSelection }, '');
+    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection: cursorSelection }, '');
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     }
@@ -74,21 +79,21 @@ function handleLineMenuOn(text: string, nodes: LineNode[], state: State, config:
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
 }
 
 function handleLineMenuOffOrBoth(
   text: string,
   nodes: LineNode[],
-  state: State,
+  state: EditorState,
   config: LineMenuConfig
-): [string, State] {
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
-  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
+  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
 
@@ -96,7 +101,11 @@ function handleLineMenuOffOrBoth(
     if (nodes[lineIndex].type !== 'normalLine') continue;
 
     const cursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
-    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, textSelection: undefined }, config.meta);
+    [newText, newState] = insertText(
+      newText,
+      { ...newState, cursorCoordinate, cursorSelection: undefined },
+      config.meta
+    );
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex += config.meta.length;
     }
@@ -110,16 +119,21 @@ function handleLineMenuOffOrBoth(
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
 }
 
-function handleLineMenuIndent(text: string, nodes: LineNode[], state: State, config: LineMenuConfig): [string, State] {
+function handleLineMenuIndent(
+  text: string,
+  nodes: LineNode[],
+  state: EditorState,
+  config: LineMenuConfig
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
-  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
+  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
 
@@ -128,7 +142,7 @@ function handleLineMenuIndent(text: string, nodes: LineNode[], state: State, con
     if (!isPureLineNode(lineNode)) continue;
     const heading = lineNode.type === 'normalLine' ? config.meta : ' ';
     const cursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
-    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, textSelection: undefined }, heading);
+    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection: undefined }, heading);
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex += heading.length;
     }
@@ -142,16 +156,21 @@ function handleLineMenuIndent(text: string, nodes: LineNode[], state: State, con
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
 }
 
-function handleLineMenuOutdent(text: string, nodes: LineNode[], state: State, config: LineMenuConfig): [string, State] {
+function handleLineMenuOutdent(
+  text: string,
+  nodes: LineNode[],
+  state: EditorState,
+  config: LineMenuConfig
+): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, textSelection } = state;
-  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, textSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
+  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
   for (let lineIndex = firstLineIndex; lineIndex <= lastLineIndex; lineIndex++) {
@@ -164,11 +183,11 @@ function handleLineMenuOutdent(text: string, nodes: LineNode[], state: State, co
       return newCharIndex >= 0 ? newCharIndex : 0;
     };
     const cursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
-    const textSelection: TextSelection = {
+    const cursorSelection: CursorSelection = {
       fixed: { lineIndex, charIndex: 0 },
       free: { lineIndex, charIndex: deletionLength },
     };
-    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, textSelection }, '');
+    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection: cursorSelection }, '');
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     }
@@ -182,6 +201,6 @@ function handleLineMenuOutdent(text: string, nodes: LineNode[], state: State, co
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
 }

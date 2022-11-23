@@ -3,14 +3,14 @@ import { isTextLikeNode } from '../../../../../parser/content/utils';
 import { LineNode, PureLineNode } from '../../../../../parser/line/types';
 import { isPureLineNode } from '../../../../../parser/line/utils';
 import { copyCoordinate } from '../../../../molecules/cursor/Cursor/utils';
-import { TextSelection } from '../../../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../../../molecules/selection/Selection/types';
 import {
   copySelection,
   selectionToRange,
   undefinedIfZeroSelection,
 } from '../../../../molecules/selection/Selection/utils';
 import { insertText } from '../../../Editor/common/text';
-import { State } from '../../../Editor/types';
+import { EditorState } from '../../../Editor/types';
 import { isEndPoint } from '../../common/utils';
 import { ContentPosition } from '../../hooks/contentPosition';
 
@@ -30,31 +30,31 @@ export type ContentMenuMetaConfig = {
 export function insertContentAtCursor(
   text: string,
   nodes: LineNode[],
-  state: State,
+  state: EditorState,
   config: ContentMenuConfig,
   getContent: (rawContent: string) => string = (rawContent) => rawContent
-): [string, State] {
+): [string, EditorState] {
   const { cursorCoordinate } = state;
   if (!cursorCoordinate || !isPureLineNode(nodes[cursorCoordinate.lineIndex])) return [text, state];
 
   const contentText = getContent(config.content);
   const insertedText = config.facingMeta + contentText + config.trailingMeta;
   const [newText, newState] = insertText(text, state, insertedText, config.facingMeta.length + contentText.length);
-  if (!newState.cursorCoordinate) return [newText, { ...newState, textSelection: undefined }];
+  if (!newState.cursorCoordinate) return [newText, { ...newState, cursorSelection: undefined }];
 
   const fixed = { ...newState.cursorCoordinate, charIndex: newState.cursorCoordinate.charIndex - contentText.length };
   const free = newState.cursorCoordinate;
-  return [newText, { ...newState, textSelection: { fixed, free } }];
+  return [newText, { ...newState, cursorSelection: { fixed, free } }];
 }
 
 export function replaceContentAtCursor(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition,
-  state: State,
+  state: EditorState,
   config: ContentMenuMetaConfig,
   getContent: (rawContent: string) => string = (rawContent) => rawContent
-): [string, State] {
+): [string, EditorState] {
   const lineNode = nodes[contentPosition.lineIndex];
   if (!state.cursorCoordinate || !isPureLineNode(lineNode)) return [text, state];
   const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition, !!config.nestedSearch);
@@ -62,7 +62,7 @@ export function replaceContentAtCursor(
 
   const line = text.split('\n')[contentPosition.lineIndex];
   const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
-  const contentSelection: TextSelection = {
+  const contentSelection: CursorSelection = {
     fixed: { lineIndex: contentPosition.lineIndex, charIndex: start },
     free: { lineIndex: contentPosition.lineIndex, charIndex: end },
   };
@@ -70,10 +70,10 @@ export function replaceContentAtCursor(
   const rawContentText = line.slice(start + contentNode.facingMeta.length, end - contentNode.trailingMeta.length);
   const contentText = getContent(rawContentText);
   const insertedText = config.facingMeta + contentText + config.trailingMeta;
-  const [newText, newState] = insertText(text, { ...state, textSelection: contentSelection }, insertedText);
+  const [newText, newState] = insertText(text, { ...state, cursorSelection: contentSelection }, insertedText);
 
-  const { cursorCoordinate, textSelection } = state;
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(textSelection)];
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   const newCharIndex = (charIndex: number) => newCharIndexAfterReplacement(charIndex, contentNode, config);
   newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
@@ -84,7 +84,7 @@ export function replaceContentAtCursor(
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
 }
 
@@ -111,26 +111,26 @@ export function newCharIndexAfterReplacement(
 export function createContentByTextSelection(
   text: string,
   nodes: LineNode[],
-  state: State,
+  state: EditorState,
   config: ContentMenuMetaConfig,
   getContent: (rawContent: string) => string = (rawContent) => rawContent
-): [string, State] {
-  const { cursorCoordinate, textSelection } = state;
-  if (!textSelection || textSelection.fixed.lineIndex !== textSelection.free.lineIndex) return [text, state];
-  const lineIndex = textSelection.fixed.lineIndex;
+): [string, EditorState] {
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  if (!cursorSelection || cursorSelection.fixed.lineIndex !== cursorSelection.free.lineIndex) return [text, state];
+  const lineIndex = cursorSelection.fixed.lineIndex;
   if (!isPureLineNode(nodes[lineIndex])) return [text, state];
 
   const line = text.split('\n')[lineIndex];
-  const { start: selectionStart, end: selectionEnd } = selectionToRange(textSelection);
+  const { start: selectionStart, end: selectionEnd } = selectionToRange(cursorSelection);
 
   const rawContentText = line.slice(selectionStart.charIndex, selectionEnd.charIndex);
   const contentText = getContent(rawContentText);
   const insertedText = config.facingMeta + contentText + config.trailingMeta;
   const [newText, newState] = insertText(text, state, insertedText);
 
-  const [newCursorCoordinate, newTextSelection] = [copyCoordinate(cursorCoordinate), copySelection(textSelection)];
+  const [newCursorCoordinate, newTextSelection] = [copyCoordinate(cursorCoordinate), copySelection(cursorSelection)];
 
-  const newCharIndex = (charIndex: number) => newCharIndexAfterCreation(charIndex, textSelection, config);
+  const newCharIndex = (charIndex: number) => newCharIndexAfterCreation(charIndex, cursorSelection, config);
   if (newCursorCoordinate) newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
   if (newTextSelection) {
     newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
@@ -139,16 +139,16 @@ export function createContentByTextSelection(
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
 }
 
 export function newCharIndexAfterCreation(
   charIndex: number,
-  textSelection: TextSelection,
+  cursorSelection: CursorSelection,
   config: ContentMenuMetaConfig
 ): number {
-  const { start: selectionStart, end: selectionEnd } = selectionToRange(textSelection);
+  const { start: selectionStart, end: selectionEnd } = selectionToRange(cursorSelection);
   if (charIndex <= selectionStart.charIndex) {
     return selectionStart.charIndex + config.facingMeta.length;
   } else if (charIndex <= selectionEnd.charIndex) {
@@ -161,18 +161,18 @@ export function splitContentByTextSelection(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition,
-  state: State,
+  state: EditorState,
   config: ContentMenuMetaConfig,
   getContent: (rawContent: string) => string = (rawContent) => rawContent
-): [string, State] {
+): [string, EditorState] {
   const lineNode = nodes[contentPosition.lineIndex];
-  if (!state.textSelection || !isPureLineNode(lineNode)) return [text, state];
+  if (!state.cursorSelection || !isPureLineNode(lineNode)) return [text, state];
   const contentNode = getContentNodeIfNonEndPoint(lineNode, contentPosition, !!config.nestedSearch);
   if (!contentNode || isTextLikeNode(contentNode)) return [text, state];
 
   const line = text.split('\n')[contentPosition.lineIndex];
-  const { cursorCoordinate, textSelection } = state;
-  const { start: selectionStart, end: selectionEnd } = selectionToRange(textSelection);
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { start: selectionStart, end: selectionEnd } = selectionToRange(cursorSelection);
   const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
 
   if (selectionEnd.charIndex <= start + contentNode.facingMeta.length) {
@@ -197,8 +197,8 @@ export function splitContentByTextSelection(
       return amount;
     };
     if (cursorCoordinate) coordinateMoveAmount += charIndexMoveAmount(cursorCoordinate.charIndex);
-    fixedMoveAmount += charIndexMoveAmount(textSelection.fixed.charIndex);
-    freeMoveAmount += charIndexMoveAmount(textSelection.free.charIndex);
+    fixedMoveAmount += charIndexMoveAmount(cursorSelection.fixed.charIndex);
+    freeMoveAmount += charIndexMoveAmount(cursorSelection.free.charIndex);
   }
 
   {
@@ -221,8 +221,8 @@ export function splitContentByTextSelection(
       return amount;
     };
     if (cursorCoordinate) coordinateMoveAmount += charIndexMoveAmount(cursorCoordinate.charIndex);
-    fixedMoveAmount += charIndexMoveAmount(textSelection.fixed.charIndex);
-    freeMoveAmount += charIndexMoveAmount(textSelection.free.charIndex);
+    fixedMoveAmount += charIndexMoveAmount(cursorSelection.fixed.charIndex);
+    freeMoveAmount += charIndexMoveAmount(cursorSelection.free.charIndex);
   }
 
   if (selectionEnd.charIndex < end - contentNode.trailingMeta.length) {
@@ -235,17 +235,17 @@ export function splitContentByTextSelection(
       return amount;
     };
     if (cursorCoordinate) coordinateMoveAmount += charIndexMoveAmount(cursorCoordinate.charIndex);
-    fixedMoveAmount += charIndexMoveAmount(textSelection.fixed.charIndex);
-    freeMoveAmount += charIndexMoveAmount(textSelection.free.charIndex);
+    fixedMoveAmount += charIndexMoveAmount(cursorSelection.fixed.charIndex);
+    freeMoveAmount += charIndexMoveAmount(cursorSelection.free.charIndex);
   }
 
-  const contentSelection: TextSelection = {
+  const contentSelection: CursorSelection = {
     fixed: { lineIndex: contentPosition.lineIndex, charIndex: start },
     free: { lineIndex: contentPosition.lineIndex, charIndex: end },
   };
-  const [newText, newState] = insertText(text, { ...state, textSelection: contentSelection }, insertedText);
+  const [newText, newState] = insertText(text, { ...state, cursorSelection: contentSelection }, insertedText);
 
-  const [newCursorCoordinate, newTextSelection] = [copyCoordinate(cursorCoordinate), copySelection(textSelection)];
+  const [newCursorCoordinate, newTextSelection] = [copyCoordinate(cursorCoordinate), copySelection(cursorSelection)];
   if (newCursorCoordinate) newCursorCoordinate.charIndex += coordinateMoveAmount;
   if (newTextSelection) {
     newTextSelection.fixed.charIndex += fixedMoveAmount;
@@ -254,7 +254,7 @@ export function splitContentByTextSelection(
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, textSelection: undefinedIfZeroSelection(newTextSelection) },
+    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
   ];
 }
 

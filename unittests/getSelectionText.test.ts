@@ -4,7 +4,7 @@ import { TestCase, testCases } from './getSelectionText.testcase';
 
 describe('function getSelectionText', () => {
   test.each<[string, TestCase]>(testCases.map((testCase) => [testCase.name, testCase]))('%s', (_, testCase) => {
-    const actual = getSelectionText(testCase.text, testCase.textSelection);
+    const actual = getSelectionText(testCase.text, testCase.cursorSelection);
     expect(actual).toEqual(testCase.expected);
   });
 });

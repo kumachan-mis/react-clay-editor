@@ -2,12 +2,12 @@ import { wordRegex } from '../../../../common/constants';
 import { CursorCoordinate } from '../../cursor/Cursor/types';
 import { coordinatesAreEqual, cursorCoordinateToTextIndex } from '../../cursor/Cursor/utils';
 
-import { TextSelection, TextRange } from './types';
+import { CursorSelection, CursorSelectionRange } from './types';
 
 export function getWordSelection(
   text: string,
   cursorCoordinate: CursorCoordinate | undefined
-): TextSelection | undefined {
+): CursorSelection | undefined {
   if (!cursorCoordinate) return undefined;
 
   const groupWordRegex = new RegExp(wordRegex, 'g');
@@ -30,7 +30,7 @@ export function getWordSelection(
 export function getLineSelection(
   text: string,
   cursorCoordinate: CursorCoordinate | undefined
-): TextSelection | undefined {
+): CursorSelection | undefined {
   if (!cursorCoordinate) return undefined;
 
   const lines = text.split('\n');
@@ -39,28 +39,28 @@ export function getLineSelection(
   return { fixed: { ...cursorCoordinate, charIndex: 0 }, free: { ...cursorCoordinate, charIndex: currentLine.length } };
 }
 
-export function getSelectionText(text: string, textSelection: TextSelection | undefined): string {
-  if (!textSelection) return '';
-  const { start, end } = selectionToRange(textSelection);
+export function getSelectionText(text: string, cursorSelection: CursorSelection | undefined): string {
+  if (!cursorSelection) return '';
+  const { start, end } = selectionToRange(cursorSelection);
   const startIndex = cursorCoordinateToTextIndex(text, start);
   const endIndex = cursorCoordinateToTextIndex(text, end);
   return text.substring(startIndex, endIndex);
 }
 
-export function selectionToRange(textSelection: TextSelection): TextRange {
-  const { fixed, free } = textSelection;
+export function selectionToRange(cursorSelection: CursorSelection): CursorSelectionRange {
+  const { fixed, free } = cursorSelection;
   if (fixed.lineIndex < free.lineIndex) return { start: fixed, end: free };
   else if (fixed.lineIndex > free.lineIndex) return { start: free, end: fixed };
   else if (fixed.charIndex <= free.charIndex) return { start: fixed, end: free };
   else return { start: free, end: fixed };
 }
 
-export function copySelection(textSelection: TextSelection | undefined): TextSelection | undefined {
-  if (!textSelection) return undefined;
-  return { fixed: { ...textSelection.fixed }, free: { ...textSelection.free } };
+export function copySelection(cursorSelection: CursorSelection | undefined): CursorSelection | undefined {
+  if (!cursorSelection) return undefined;
+  return { fixed: { ...cursorSelection.fixed }, free: { ...cursorSelection.free } };
 }
 
-export function undefinedIfZeroSelection(textSelection: TextSelection | undefined): TextSelection | undefined {
-  if (!textSelection) return undefined;
-  return !coordinatesAreEqual(textSelection.fixed, textSelection.free) ? textSelection : undefined;
+export function undefinedIfZeroSelection(cursorSelection: CursorSelection | undefined): CursorSelection | undefined {
+  if (!cursorSelection) return undefined;
+  return !coordinatesAreEqual(cursorSelection.fixed, cursorSelection.free) ? cursorSelection : undefined;
 }

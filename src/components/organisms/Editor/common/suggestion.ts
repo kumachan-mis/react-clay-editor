@@ -1,4 +1,4 @@
-import { Props, State } from '../types';
+import { EditorProps, EditorState } from '../types';
 
 import { insertText } from './text';
 
@@ -43,7 +43,7 @@ const suggestionConstants = {
   },
 };
 
-export function showSuggestion(text: string, props: Props, state: State): [string, State] {
+export function showSuggestion(text: string, props: EditorProps, state: EditorState): [string, EditorState] {
   const configs: SuggestionConfig[] = [];
 
   if (!props.syntax || props.syntax === 'bracket') {
@@ -69,7 +69,7 @@ export function showSuggestion(text: string, props: Props, state: State): [strin
   return [text, resetSuggestion(state)];
 }
 
-function showConfiguredSuggestion(text: string, state: State, config: SuggestionConfig): State | undefined {
+function showConfiguredSuggestion(text: string, state: EditorState, config: SuggestionConfig): EditorState | undefined {
   if (!state.cursorCoordinate) return undefined;
 
   const { lineIndex, charIndex } = state.cursorCoordinate;
@@ -92,10 +92,10 @@ function showConfiguredSuggestion(text: string, state: State, config: Suggestion
 
 export function showIMEBasedSuggestion(
   text: string,
-  props: Props,
-  state: State,
+  props: EditorProps,
+  state: EditorState,
   specifiedText: string
-): [string, State] {
+): [string, EditorState] {
   const allSuggestions = props.textProps?.suggestions;
   if (!allSuggestions || allSuggestions.length === 0) return [text, resetSuggestion(state)];
 
@@ -108,8 +108,13 @@ export function showIMEBasedSuggestion(
   return [text, { ...state, suggestionType: 'text', suggestions, suggestionIndex, suggestionStart }];
 }
 
-export function insertSuggestion(text: string, state: State, suggestion: string, start: number): [string, State] {
-  const [newText, newState] = ((): [string, State] => {
+export function insertSuggestion(
+  text: string,
+  state: EditorState,
+  suggestion: string,
+  start: number
+): [string, EditorState] {
+  const [newText, newState] = ((): [string, EditorState] => {
     switch (state.suggestionType) {
       case 'bracketLink':
         return insertText(text, state, suggestion.substring(start));
@@ -126,6 +131,6 @@ export function insertSuggestion(text: string, state: State, suggestion: string,
   return [newText, resetSuggestion(newState)];
 }
 
-export function resetSuggestion(state: State): State {
+export function resetSuggestion(state: EditorState): EditorState {
   return { ...state, suggestionType: 'none', suggestions: [], suggestionIndex: -1, suggestionStart: 0 };
 }

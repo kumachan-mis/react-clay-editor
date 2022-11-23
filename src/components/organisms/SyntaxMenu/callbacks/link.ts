@@ -3,7 +3,7 @@ import { LineNode, PureLineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
 import { getTagName } from '../../../../parser/taggedLink/utils';
-import { State } from '../../Editor/types';
+import { EditorState } from '../../Editor/types';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { LinkMenuItem, LinkMenuSwitch } from '../switches/link';
@@ -24,23 +24,23 @@ export function handleOnLinkItemClick(
   text: string,
   nodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  state: State,
+  state: EditorState,
   props: LinkMenuHandlerProps,
   menuItem: LinkMenuItem,
   menuSwitch: LinkMenuSwitch
-): [string, State] {
+): [string, EditorState] {
   const offContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll(' ', '_') + ' ' : content);
   const onContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll('_', ' ') : content);
   const [config, suggestionStart] = getLinkMeta(props, menuItem);
 
-  function handleItemOffWithoutSelection(): [string, State] {
+  function handleItemOffWithoutSelection(): [string, EditorState] {
     return showSuggestion(insertContentAtCursor(text, nodes, state, config, offContent));
   }
 
   function handleItemOnWithoutSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode as TaggedLinkNode)) {
@@ -50,14 +50,14 @@ export function handleOnLinkItemClick(
     return hideSuggestion(replaceContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
   }
 
-  function handleItemOffWithSelection(): [string, State] {
+  function handleItemOffWithSelection(): [string, EditorState] {
     return createContentByTextSelection(text, nodes, state, config, offContent);
   }
 
   function handleItemOnWithSelection(
     lineNode: PureLineNode,
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
-  ): [string, State] {
+  ): [string, EditorState] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode as TaggedLinkNode)) {
@@ -67,13 +67,13 @@ export function handleOnLinkItemClick(
     return hideSuggestion(replaceContentAtCursor(text, nodes, contentPosition, state, normalConfig, onContent));
   }
 
-  function showSuggestion([newText, newState]: [string, State]): [string, State] {
+  function showSuggestion([newText, newState]: [string, EditorState]): [string, EditorState] {
     if ((newText === text && newState === state) || props.suggestions.length === 0) return [newText, newState];
     const { suggestions, initialSuggestionIndex: suggestionIndex } = props;
     return [newText, { ...newState, suggestionType: menuItem.type, suggestions, suggestionIndex, suggestionStart }];
   }
 
-  function hideSuggestion([newText, newState]: [string, State]): [string, State] {
+  function hideSuggestion([newText, newState]: [string, EditorState]): [string, EditorState] {
     return [newText, { ...newState, suggestionType: 'none', suggestions: [], suggestionIndex: -1, suggestionStart: 0 }];
   }
 
@@ -86,7 +86,7 @@ export function handleOnLinkItemClick(
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return [text, state];
 
-  if (!state.textSelection) {
+  if (!state.cursorSelection) {
     if (menuSwitch === 'off') {
       return handleItemOffWithoutSelection();
     } else {

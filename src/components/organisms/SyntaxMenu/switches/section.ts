@@ -1,6 +1,6 @@
 import { DecorationNode } from '../../../../parser/decoration/types';
 import { LineNode } from '../../../../parser/line/types';
-import { State } from '../../Editor/types';
+import { EditorState } from '../../Editor/types';
 
 export type SectionMenuItemType = 'normal' | 'larger' | 'largest';
 
@@ -9,12 +9,12 @@ export type SectionMenuSwitch = 'off' | 'normal' | 'larger' | 'largest' | 'disab
 export function sectionMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
-  state: State
+  state: EditorState
 ): SectionMenuSwitch {
   if (!state.cursorCoordinate) return 'disabled';
 
-  const { cursorCoordinate, textSelection } = state;
-  if (textSelection && textSelection.free.lineIndex !== textSelection.fixed.lineIndex) return 'disabled';
+  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  if (cursorSelection && cursorSelection.free.lineIndex !== cursorSelection.fixed.lineIndex) return 'disabled';
 
   const lineNode = nodes[cursorCoordinate.lineIndex];
   if (lineNode.type !== 'normalLine') return 'disabled';

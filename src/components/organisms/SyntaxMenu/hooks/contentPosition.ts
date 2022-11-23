@@ -4,7 +4,7 @@ import { ContentNode } from '../../../../parser/content/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
-import { TextSelection } from '../../../molecules/selection/Selection/types';
+import { CursorSelection } from '../../../molecules/selection/Selection/types';
 
 export type ContentPosition =
   | ContentPositionEmpty
@@ -59,32 +59,32 @@ export type ContentPositionNested = {
 export function useContentPosition(
   lineNodes: LineNode[],
   cursorCoordinate: CursorCoordinate | undefined,
-  textSelection: TextSelection | undefined
+  cursorSelection: CursorSelection | undefined
 ): ContentPosition | undefined {
   const contentPosition = React.useMemo(() => {
     if (!cursorCoordinate) return undefined;
-    if (textSelection) return getContentPositionFromTextSelection(lineNodes, textSelection);
+    if (cursorSelection) return getContentPositionFromTextSelection(lineNodes, cursorSelection);
     return getContentPositionFromCursorCoordinate(lineNodes, cursorCoordinate);
-  }, [lineNodes, cursorCoordinate, textSelection]);
+  }, [lineNodes, cursorCoordinate, cursorSelection]);
   return contentPosition;
 }
 
 function getContentPositionFromTextSelection(
   lineNodes: LineNode[],
-  textSelection: TextSelection
+  cursorSelection: CursorSelection
 ): ContentPosition | undefined {
-  const { fixed, free } = textSelection;
+  const { fixed, free } = cursorSelection;
   if (fixed.lineIndex !== free.lineIndex) return undefined;
   const lineNode = lineNodes[fixed.lineIndex];
   if (!isPureLineNode(lineNode)) return undefined;
-  return recursiveGetContentPositionFromTextSelection(lineNode.children, textSelection);
+  return recursiveGetContentPositionFromTextSelection(lineNode.children, cursorSelection);
 }
 
 function recursiveGetContentPositionFromTextSelection(
   contentNodes: ContentNode[],
-  textSelection: TextSelection
+  cursorSelection: CursorSelection
 ): ContentPosition | undefined {
-  const { fixed, free } = textSelection;
+  const { fixed, free } = cursorSelection;
   const fixedContentPosition = searchContentPosition(fixed, contentNodes);
   if (!fixedContentPosition || fixedContentPosition.type === 'empty') return undefined;
   if (free.charIndex === fixed.charIndex) return fixedContentPosition;
@@ -100,7 +100,7 @@ function recursiveGetContentPositionFromTextSelection(
     return { type: 'inner', lineIndex: fixed.lineIndex, contentIndexes: [contentIndex] };
   }
 
-  const childPosition = recursiveGetContentPositionFromTextSelection(contentNode.children, textSelection);
+  const childPosition = recursiveGetContentPositionFromTextSelection(contentNode.children, cursorSelection);
   if (!childPosition || childPosition.type === 'nested' || childPosition.type === 'empty') {
     return { type: 'inner', lineIndex: fixed.lineIndex, contentIndexes: [contentIndex] };
   }
