@@ -8,7 +8,7 @@ import { SectionMenuItemType, SectionMenuSwitch } from '../switches/section';
 
 import {
   insertContentAtCursor,
-  createContentByTextSelection,
+  createContentByCursorSelection,
   newCharIndexAfterCreation,
   replaceContentAtCursor,
   newCharIndexAfterReplacement,
@@ -46,7 +46,7 @@ export function handleOnSectionItemClick(
   menuItem: SectionMenuItemType,
   menuSwitch: SectionMenuSwitch
 ): [string, EditorState] {
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
   const lineNode = nodes[cursorCoordinate.lineIndex];
   if (lineNode.type !== 'normalLine') return [text, state];
@@ -63,20 +63,20 @@ export function handleOnSectionItemClick(
 
   if (menuSwitch === 'off') {
     const config = { facingMeta, trailingMeta };
-    const [newText, newState] = createContentByTextSelection(text, nodes, dummyState, config);
-    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+    const [newText, newState] = createContentByCursorSelection(text, nodes, dummyState, config);
+    const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
     const newCharIndex = (charIndex: number) => newCharIndexAfterCreation(charIndex, lineSelection, config);
     newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
-    if (newTextSelection) {
-      newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
-      newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
+    if (newCursorSelection) {
+      newCursorSelection.fixed.charIndex = newCharIndex(newCursorSelection.fixed.charIndex);
+      newCursorSelection.free.charIndex = newCharIndex(newCursorSelection.free.charIndex);
     }
     return [
       newText,
       {
         ...newState,
         cursorCoordinate: newCursorCoordinate,
-        cursorSelection: undefinedIfZeroSelection(newTextSelection),
+        cursorSelection: undefinedIfZeroSelection(newCursorSelection),
       },
     ];
   }
@@ -86,19 +86,19 @@ export function handleOnSectionItemClick(
     const config = menuSwitch === menuItem ? { facingMeta: '', trailingMeta: '' } : { facingMeta, trailingMeta };
     const position: ContentPosition = { type: 'inner', lineIndex: cursorCoordinate.lineIndex, contentIndexes: [0] };
     const [newText, newState] = replaceContentAtCursor(text, nodes, position, dummyState, config);
-    const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+    const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
     const newCharIndex = (charIndex: number) => newCharIndexAfterReplacement(charIndex, decorationNode, config);
     newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
-    if (newTextSelection) {
-      newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
-      newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
+    if (newCursorSelection) {
+      newCursorSelection.fixed.charIndex = newCharIndex(newCursorSelection.fixed.charIndex);
+      newCursorSelection.free.charIndex = newCharIndex(newCursorSelection.free.charIndex);
     }
     return [
       newText,
       {
         ...newState,
         cursorCoordinate: newCursorCoordinate,
-        cursorSelection: undefinedIfZeroSelection(newTextSelection),
+        cursorSelection: undefinedIfZeroSelection(newCursorSelection),
       },
     ];
   }

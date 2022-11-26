@@ -1,4 +1,5 @@
-import { EditorProps, EditorState } from '../types';
+import { EditorProps } from '../../../../contexts/EditorPropsContext';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 
 import { insertText } from './text';
 

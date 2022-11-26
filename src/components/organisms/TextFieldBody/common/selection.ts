@@ -15,6 +15,6 @@ export function updateSelectionAfterCursorMove(
   return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
 }
 
-export function resetTextSelection(state: EditorState): EditorState {
+export function resetCursorSelection(state: EditorState): EditorState {
   return { ...state, cursorSelection: undefined, cursorScroll: 'none' };
 }

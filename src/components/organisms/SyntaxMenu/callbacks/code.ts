@@ -1,17 +1,17 @@
-import { CodeLabels } from '../../../../common/types';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { EditorState } from '../../Editor/types';
+import { CodeLabels } from '../../../../types/label/code';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
 import { CodeMenuSwitch } from '../switches/code';
 
 import { handleOnBlockMenuClick } from './common/block';
 import {
-  createContentByTextSelection,
+  createContentByCursorSelection,
   insertContentAtCursor,
-  splitContentByTextSelection,
+  splitContentByCursorSelection,
   replaceContentAtCursor,
   ContentMenuConfig,
   ContentMenuMetaConfig,
@@ -66,9 +66,9 @@ export function handleOnInlineCodeItemClick(
     }
   } else {
     if (menuSwitch === 'off') {
-      return createContentByTextSelection(text, nodes, state, offConfig);
+      return createContentByCursorSelection(text, nodes, state, offConfig);
     } else {
-      return splitContentByTextSelection(text, nodes, contentPosition, state, onConfig);
+      return splitContentByCursorSelection(text, nodes, contentPosition, state, onConfig);
     }
   }
 }

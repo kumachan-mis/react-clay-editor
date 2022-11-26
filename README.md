@@ -29,7 +29,7 @@ import 'katex/dist/katex.min.css';
 
 const App: React.FC = () => {
   const [text, setText] = React.useState('');
-  return <Editor text={text} onChangeText={setText} />;
+  return <Editor text={text} setText={setText} />;
 };
 ```
 
@@ -186,7 +186,7 @@ Combinations of `*` and `_` are NOT available yet...
   $$
   ```
 
-### Quatations
+### Quotations
 
 - style
   > quotation

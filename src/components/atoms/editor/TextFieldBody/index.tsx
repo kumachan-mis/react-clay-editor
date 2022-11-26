@@ -11,20 +11,25 @@ export const TextFieldBodyConstants = {
   testId: 'text-field-body',
 };
 
-export const TextFieldBody: React.FC<TextFieldBodyProps> = ({ ...rest }) => (
-  <StyledTextFieldBody
+const ForwardRefTextFieldBody: React.ForwardRefRenderFunction<HTMLDivElement, TextFieldBodyProps> = (
+  { ...rest },
+  ref
+) => (
+  <StyledForwardRefTextFieldBody
     {...rest}
+    ref={ref}
     data-selectid={TextFieldBodyConstants.selectId}
     data-testid={createTestId(TextFieldBodyConstants.testId)}
   />
 );
 
-const StyledTextFieldBody = styled.div`
+const StyledForwardRefTextFieldBody = styled.div`
   width: 100%;
   height: auto;
   min-height: 100%;
-  font-family: sans-serif;
   cursor: text;
   white-space: pre-wrap;
   word-wrap: break-word;
 `;
+
+export const TextFieldBody = React.forwardRef(ForwardRefTextFieldBody);

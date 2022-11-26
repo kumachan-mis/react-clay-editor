@@ -1,8 +1,9 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
+import { EditAction } from '../../../../types/cursor/editAction';
 import { cursorCoordinateToTextIndex, moveCursor } from '../../../molecules/cursor/Cursor/utils';
 import { selectionToRange } from '../../../molecules/selection/Selection/utils';
-import { EditAction, EditorState } from '../types';
 
-import { resetTextSelection } from './selection';
+import { resetCursorSelection } from './selection';
 
 export function insertText(
   text: string,
@@ -19,7 +20,7 @@ export function insertText(
     const cursorCoordinate = moveCursor(newText, state.cursorCoordinate, cursourMoveAmount);
     const action: EditAction = { actionType: 'insert', coordinate: state.cursorCoordinate, text: insertedText };
     const newState = addEditAction(state, action);
-    return [newText, resetTextSelection({ ...newState, cursorCoordinate })];
+    return [newText, resetCursorSelection({ ...newState, cursorCoordinate })];
   }
 
   const { start, end } = selectionToRange(state.cursorSelection);
@@ -31,7 +32,7 @@ export function insertText(
   let action: EditAction = { actionType: 'replace', coordinate: start, deletedText, insertedText };
   if (!insertedText) action = { actionType: 'delete', coordinate: start, text: deletedText };
   const newState = addEditAction(state, action);
-  return [newText, resetTextSelection({ ...newState, cursorCoordinate })];
+  return [newText, resetCursorSelection({ ...newState, cursorCoordinate })];
 }
 
 function addEditAction(state: EditorState, action: EditAction, historyMaxLength = 50): EditorState {

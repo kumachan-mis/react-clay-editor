@@ -4,7 +4,7 @@ import { isPureLineNode } from '../../../../../parser/line/utils';
 import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection, undefinedIfZeroSelection } from '../../../../molecules/selection/Selection/utils';
-import { insertText } from '../../../Editor/common/text';
+import { insertText } from '../../../TextFieldBody/common/text';
 import { getLineRange } from '../../common/utils';
 
 export type LineMenuConfig = {
@@ -45,9 +45,9 @@ function handleLineMenuOn(
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+  const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
 
@@ -65,21 +65,25 @@ function handleLineMenuOn(
       fixed: { lineIndex, charIndex: 0 },
       free: { lineIndex, charIndex: lineNode.indentDepth + config.meta.length },
     };
-    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection: cursorSelection }, '');
+    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection }, '');
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     }
-    if (newTextSelection && newTextSelection.fixed.lineIndex === lineIndex) {
-      newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
+    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+      newCursorSelection.fixed.charIndex = newCharIndex(newCursorSelection.fixed.charIndex);
     }
-    if (newTextSelection && newTextSelection.free.lineIndex === lineIndex) {
-      newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
+    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+      newCursorSelection.free.charIndex = newCharIndex(newCursorSelection.free.charIndex);
     }
   }
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
+    {
+      ...newState,
+      cursorCoordinate: newCursorCoordinate,
+      cursorSelection: undefinedIfZeroSelection(newCursorSelection),
+    },
   ];
 }
 
@@ -91,9 +95,9 @@ function handleLineMenuOffOrBoth(
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+  const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
 
@@ -109,17 +113,21 @@ function handleLineMenuOffOrBoth(
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex += config.meta.length;
     }
-    if (newTextSelection && newTextSelection.fixed.lineIndex === lineIndex) {
-      newTextSelection.fixed.charIndex += config.meta.length;
+    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+      newCursorSelection.fixed.charIndex += config.meta.length;
     }
-    if (newTextSelection && newTextSelection.free.lineIndex === lineIndex) {
-      newTextSelection.free.charIndex += config.meta.length;
+    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+      newCursorSelection.free.charIndex += config.meta.length;
     }
   }
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
+    {
+      ...newState,
+      cursorCoordinate: newCursorCoordinate,
+      cursorSelection: undefinedIfZeroSelection(newCursorSelection),
+    },
   ];
 }
 
@@ -131,9 +139,9 @@ function handleLineMenuIndent(
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+  const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
 
@@ -146,17 +154,21 @@ function handleLineMenuIndent(
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex += heading.length;
     }
-    if (newTextSelection && newTextSelection.fixed.lineIndex === lineIndex) {
-      newTextSelection.fixed.charIndex += heading.length;
+    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+      newCursorSelection.fixed.charIndex += heading.length;
     }
-    if (newTextSelection && newTextSelection.free.lineIndex === lineIndex) {
-      newTextSelection.free.charIndex += heading.length;
+    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+      newCursorSelection.free.charIndex += heading.length;
     }
   }
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
+    {
+      ...newState,
+      cursorCoordinate: newCursorCoordinate,
+      cursorSelection: undefinedIfZeroSelection(newCursorSelection),
+    },
   ];
 }
 
@@ -168,9 +180,9 @@ function handleLineMenuOutdent(
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+  const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
 
   let [newText, newState] = [text, state];
   for (let lineIndex = firstLineIndex; lineIndex <= lastLineIndex; lineIndex++) {
@@ -187,20 +199,24 @@ function handleLineMenuOutdent(
       fixed: { lineIndex, charIndex: 0 },
       free: { lineIndex, charIndex: deletionLength },
     };
-    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection: cursorSelection }, '');
+    [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection }, '');
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     }
-    if (newTextSelection && newTextSelection.fixed.lineIndex === lineIndex) {
-      newTextSelection.fixed.charIndex = newCharIndex(newTextSelection.fixed.charIndex);
+    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+      newCursorSelection.fixed.charIndex = newCharIndex(newCursorSelection.fixed.charIndex);
     }
-    if (newTextSelection && newTextSelection.free.lineIndex === lineIndex) {
-      newTextSelection.free.charIndex = newCharIndex(newTextSelection.free.charIndex);
+    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+      newCursorSelection.free.charIndex = newCharIndex(newCursorSelection.free.charIndex);
     }
   }
 
   return [
     newText,
-    { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: undefinedIfZeroSelection(newTextSelection) },
+    {
+      ...newState,
+      cursorCoordinate: newCursorCoordinate,
+      cursorSelection: undefinedIfZeroSelection(newCursorSelection),
+    },
   ];
 }

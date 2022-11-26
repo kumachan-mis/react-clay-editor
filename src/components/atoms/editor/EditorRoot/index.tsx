@@ -23,6 +23,7 @@ const ForwardRefEditorRoot: React.ForwardRefRenderFunction<HTMLDivElement, Edito
 const StyledForwardRefEditorRoot = styled.div`
   width: 400px;
   height: 400px;
+  font-family: sans-serif;
 
   & .katex-display {
     display: inline-block;

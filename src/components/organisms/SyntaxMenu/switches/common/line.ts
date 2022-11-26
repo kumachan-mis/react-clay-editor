@@ -1,5 +1,5 @@
+import { EditorState } from '../../../../../contexts/EditorStateContext';
 import { LineNode } from '../../../../../parser/line/types';
-import { EditorState } from '../../../Editor/types';
 import { getLineRange } from '../../common/utils';
 
 export type LineMenuItemType = 'itemization' | 'quotation';
@@ -14,7 +14,7 @@ export function lineMenuSwitch(
 ): LineMenuSwitch {
   if (!state.cursorCoordinate) return 'disabled';
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
   const rangeNodes = nodes.slice(firstLineIndex, lastLineIndex + 1);
   if (rangeNodes.some((node) => !['normalLine', menuItemType].includes(node.type))) return 'disabled';

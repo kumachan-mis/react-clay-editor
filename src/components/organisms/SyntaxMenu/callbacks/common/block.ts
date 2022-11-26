@@ -5,7 +5,7 @@ import { LineNode } from '../../../../../parser/line/types';
 import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection } from '../../../../molecules/selection/Selection/utils';
-import { insertText } from '../../../Editor/common/text';
+import { insertText } from '../../../TextFieldBody/common/text';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
 import { BlockMenuSwitch } from '../../switches/common/block';
@@ -32,7 +32,7 @@ export function handleOnBlockMenuClick(
   const blockNode = nodes[blockPosition.blockIndex];
   if (!isBlockNode(blockNode)) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
   if (allInRange(blockNode, [firstLineIndex, lastLineIndex])) {
     return handleBlockMenuAllInRange(text, state, blockNode);
@@ -58,7 +58,7 @@ function handleBlockMenuOff(text: string, state: EditorState, config: BlockMenuC
   if (!state.cursorCoordinate) return [text, state];
 
   const lines = text.split('\n');
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
   if (firstLineIndex === lastLineIndex && !lines[firstLineIndex]) {
@@ -82,24 +82,24 @@ function handleBlockMenuOff(text: string, state: EditorState, config: BlockMenuC
   };
   const [newText, newState] = insertText(text, { ...state, cursorSelection: blockSelection }, insertedText);
 
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+  const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
   const newLineIndex = (lineIndex: number): number => {
     if (lineIndex < firstLineIndex) return lineIndex;
     if (lineIndex <= lastLineIndex) return lineIndex + 1;
     return lineIndex + 1;
   };
   newCursorCoordinate.lineIndex = newLineIndex(newCursorCoordinate.lineIndex);
-  if (newTextSelection) {
-    newTextSelection.fixed.lineIndex = newLineIndex(newTextSelection.fixed.lineIndex);
-    newTextSelection.free.lineIndex = newLineIndex(newTextSelection.free.lineIndex);
+  if (newCursorSelection) {
+    newCursorSelection.fixed.lineIndex = newLineIndex(newCursorSelection.fixed.lineIndex);
+    newCursorSelection.free.lineIndex = newLineIndex(newCursorSelection.free.lineIndex);
   }
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newCursorSelection }];
 }
 
 function handleBlockMenuAllInRange(text: string, state: EditorState, blockNode: BlockNode): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const lines = text.split('\n');
 
   const [start, end] = [blockNode.range[0] + 1, blockNode.range[1]];
@@ -124,12 +124,12 @@ function handleBlockMenuAllInRange(text: string, state: EditorState, blockNode: 
     }
   };
   const newCursorCoordinate = getNewCursorCoordinate(cursorCoordinate);
-  const newTextSelection = copySelection(cursorSelection);
-  if (newTextSelection) {
-    newTextSelection.fixed = getNewCursorCoordinate(newTextSelection.fixed);
-    newTextSelection.free = getNewCursorCoordinate(newTextSelection.free);
+  const newCursorSelection = copySelection(cursorSelection);
+  if (newCursorSelection) {
+    newCursorSelection.fixed = getNewCursorCoordinate(newCursorSelection.fixed);
+    newCursorSelection.free = getNewCursorCoordinate(newCursorSelection.free);
   }
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newCursorSelection }];
 }
 
 function handleBlockMenuMiddleRange(
@@ -140,7 +140,7 @@ function handleBlockMenuMiddleRange(
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const lines = text.split('\n');
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
@@ -160,19 +160,19 @@ function handleBlockMenuMiddleRange(
     bottomMeta
   );
 
-  const [newCursorCoordinate, newTextSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
+  const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
   const newLineIndex = (lineIndex: number): number => {
     if (lineIndex < firstLineIndex) return lineIndex;
     if (lineIndex <= lastLineIndex) return lineIndex + 1;
     else return lineIndex + 2;
   };
   newCursorCoordinate.lineIndex = newLineIndex(newCursorCoordinate.lineIndex);
-  if (newTextSelection) {
-    newTextSelection.fixed.lineIndex = newLineIndex(newTextSelection.fixed.lineIndex);
-    newTextSelection.free.lineIndex = newLineIndex(newTextSelection.free.lineIndex);
+  if (newCursorSelection) {
+    newCursorSelection.fixed.lineIndex = newLineIndex(newCursorSelection.fixed.lineIndex);
+    newCursorSelection.free.lineIndex = newLineIndex(newCursorSelection.free.lineIndex);
   }
 
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newCursorSelection }];
 }
 
 function handleBlockMenuUpperRange(
@@ -183,7 +183,7 @@ function handleBlockMenuUpperRange(
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const lines = text.split('\n');
   const [firstLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
@@ -221,13 +221,13 @@ function handleBlockMenuUpperRange(
   }
 
   const newCursorCoordinate = getNewCursorCoordinate(cursorCoordinate);
-  const newTextSelection = copySelection(cursorSelection);
-  if (newTextSelection) {
-    newTextSelection.fixed = getNewCursorCoordinate(newTextSelection.fixed);
-    newTextSelection.free = getNewCursorCoordinate(newTextSelection.free);
+  const newCursorSelection = copySelection(cursorSelection);
+  if (newCursorSelection) {
+    newCursorSelection.fixed = getNewCursorCoordinate(newCursorSelection.fixed);
+    newCursorSelection.free = getNewCursorCoordinate(newCursorSelection.free);
   }
 
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newCursorSelection }];
 }
 
 function handleBlockMenuLowerRange(
@@ -238,7 +238,7 @@ function handleBlockMenuLowerRange(
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const lines = text.split('\n');
   const [, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
@@ -271,13 +271,13 @@ function handleBlockMenuLowerRange(
   };
 
   const newCursorCoordinate = getNewCursorCoordinate(cursorCoordinate);
-  const newTextSelection = copySelection(cursorSelection);
-  if (newTextSelection) {
-    newTextSelection.fixed = getNewCursorCoordinate(newTextSelection.fixed);
-    newTextSelection.free = getNewCursorCoordinate(newTextSelection.free);
+  const newCursorSelection = copySelection(cursorSelection);
+  if (newCursorSelection) {
+    newCursorSelection.fixed = getNewCursorCoordinate(newCursorSelection.fixed);
+    newCursorSelection.free = getNewCursorCoordinate(newCursorSelection.free);
   }
 
-  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newTextSelection }];
+  return [newText, { ...newState, cursorCoordinate: newCursorCoordinate, cursorSelection: newCursorSelection }];
 }
 
 function allInRange(blockNode: BlockNode, [firstLineIndex, lastLineIndex]: [number, number]): boolean {

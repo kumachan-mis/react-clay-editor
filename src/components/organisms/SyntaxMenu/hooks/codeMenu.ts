@@ -1,3 +1,4 @@
+import { CodeProps } from '../../../../contexts/EditorPropsContext';
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { CodeMenuConstants, CodeMenuProps } from '../../../molecules/menu/CodeMenu';
@@ -8,7 +9,6 @@ import {
   handleOnInlineCodeItemClick,
 } from '../callbacks/code';
 import { blockCodeMenuSwitch, inlineCodeMenuSwitch } from '../switches/code';
-import { CodeProps } from '../types';
 
 import { BlockPosition } from './blockPosition';
 import { ContentPosition } from './contentPosition';
@@ -25,7 +25,7 @@ export function useCodeMenu(
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   codeProps: CodeProps | undefined,
-  { text, state, onChangeText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps
 ): CodeMenuProps {
   const inlineMenuSwitch = codeProps?.disabled ? 'disabled' : inlineCodeMenuSwitch(lineNodes, contentPosition);
   const blockMenuSwitch = codeProps?.disabled ? 'disabled' : blockCodeMenuSwitch(nodes, blockPosition, state);
@@ -44,13 +44,13 @@ export function useCodeMenu(
       inlineMenuSwitch,
       blockMenuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
   const onInlineItemClick = () => {
     const [newText, newState] = handleOnInlineCodeItemClick(text, lineNodes, contentPosition, state, inlineMenuSwitch);
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
@@ -63,7 +63,7 @@ export function useCodeMenu(
       handlerProps,
       blockMenuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 

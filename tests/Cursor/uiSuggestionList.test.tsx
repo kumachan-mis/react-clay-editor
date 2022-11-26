@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EditorProps } from '../../src';
-import * as cursor from '../../src/components/organisms/Editor/common/cursor';
+import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 
@@ -17,7 +17,7 @@ interface TestCase extends BaseTestCase {
 }
 
 interface Common {
-  options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
+  options?: Omit<EditorProps, 'text' | 'setText' | 'syntax'>;
 }
 
 const spiedPositionToCursorCoordinate = jest.spyOn(cursor, 'positionToCursorCoordinate');

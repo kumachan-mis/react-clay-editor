@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
+import { useEditorTextNodesValueContext } from '../../../contexts/EditorTextNodesContext';
 import { MenuList } from '../../atoms/menu/MenuList';
 import { BoldMenu } from '../../molecules/menu/BoldMenu';
 import { BracketMenu } from '../../molecules/menu/BracketMenu';
@@ -17,6 +19,7 @@ import { useBlockPosition } from './hooks/blockPosition';
 import { useBoldMenu } from './hooks/boldMenu';
 import { useBracketMenu } from './hooks/bracketMenu';
 import { useCodeMenu } from './hooks/codeMenu';
+import { useCommonMenu } from './hooks/commonMenu';
 import { useContentPosition } from './hooks/contentPosition';
 import { useFormulaMenu } from './hooks/formulaMenu';
 import { useHashtagMenu } from './hooks/hashtagMenu';
@@ -27,39 +30,30 @@ import { useQuotationMenu } from './hooks/quotationMenu';
 import { useSectionMenu } from './hooks/sectionMenu';
 import { useTaggedLinkMenu } from './hooks/taggedLink';
 import { useUnderlineMenu } from './hooks/underlineMenu';
-import { SyntaxMenuProps } from './types';
 
-export const SyntaxMenu: React.FC<SyntaxMenuProps> = ({
-  nodes,
-  sectionProps,
-  itemizationProps,
-  bracketProps,
-  hashtagProps,
-  taggedLinkPropsMap,
-  codeProps,
-  formulaProps,
-  quotationProps,
-  listProps,
-  ...common
-}) => {
+export const SyntaxMenu: React.FC = () => {
+  const props = useEditorPropsValueContext();
+  const nodes = useEditorTextNodesValueContext();
+
+  const common = useCommonMenu(props.syntax);
   const lineNodes = useLineNodes(nodes);
   const contentPosition = useContentPosition(lineNodes, common.state.cursorCoordinate, common.state.cursorSelection);
   const blockPosition = useBlockPosition(nodes, common.state.cursorCoordinate, common.state.cursorSelection);
 
-  const sectionMenuProps = useSectionMenu(lineNodes, sectionProps, common);
-  const itemizationMenuProps = useItemizationMenu(lineNodes, itemizationProps, common);
+  const sectionMenuProps = useSectionMenu(lineNodes, props.textProps, common);
+  const itemizationMenuProps = useItemizationMenu(lineNodes, props.itemizationProps, common);
   const boldMenuProps = useBoldMenu(lineNodes, contentPosition, common);
   const italicMenuProps = useItalicMenu(lineNodes, contentPosition, common);
   const underlineMenuProps = useUnderlineMenu(lineNodes, contentPosition, common);
-  const bracketMenuProps = useBracketMenu(lineNodes, contentPosition, bracketProps, common);
-  const hashtagMenuProps = useHashtagMenu(lineNodes, contentPosition, hashtagProps, common);
-  const taggedLinkMenuProps = useTaggedLinkMenu(lineNodes, contentPosition, taggedLinkPropsMap, common);
-  const codeMenuProps = useCodeMenu(lineNodes, nodes, contentPosition, blockPosition, codeProps, common);
-  const formulaMenuProps = useFormulaMenu(lineNodes, nodes, contentPosition, blockPosition, formulaProps, common);
-  const quotationMenuProps = useQuotationMenu(lineNodes, quotationProps, common);
+  const bracketMenuProps = useBracketMenu(lineNodes, contentPosition, props.bracketLinkProps, common);
+  const hashtagMenuProps = useHashtagMenu(lineNodes, contentPosition, props.hashtagProps, common);
+  const taggedLinkMenuProps = useTaggedLinkMenu(lineNodes, contentPosition, props.taggedLinkPropsMap, common);
+  const codeMenuProps = useCodeMenu(lineNodes, nodes, contentPosition, blockPosition, props.codeProps, common);
+  const formulaMenuProps = useFormulaMenu(lineNodes, nodes, contentPosition, blockPosition, props.formulaProps, common);
+  const quotationMenuProps = useQuotationMenu(lineNodes, props.quotationProps, common);
 
   return (
-    <MenuList {...listProps}>
+    <MenuList>
       <SectionMenu {...sectionMenuProps} />
       <ItemizationMenu {...itemizationMenuProps} />
       <BoldMenu {...boldMenuProps} />

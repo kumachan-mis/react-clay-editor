@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 import { createTestId } from '../../../../common/utils';
 
-export type TextFieldRootProps = PropsWithChildren<{ hideSyntaxMenu?: boolean }>;
+export type TextFieldRootProps = React.PropsWithChildren;
 
 export const TextFieldRootConstants = {
   selectId: 'text-field-root',
@@ -11,9 +11,8 @@ export const TextFieldRootConstants = {
   testId: 'text-field-root',
 };
 
-export const TextFieldRoot: React.FC<TextFieldRootProps> = ({ hideSyntaxMenu, children }) => (
+export const TextFieldRoot: React.FC<TextFieldRootProps> = ({ children }) => (
   <StyledTextFieldRoot
-    hideSyntaxMenu={hideSyntaxMenu}
     data-selectid={TextFieldRootConstants.selectId}
     data-testid={createTestId(TextFieldRootConstants.testId)}
   >
@@ -21,12 +20,11 @@ export const TextFieldRoot: React.FC<TextFieldRootProps> = ({ hideSyntaxMenu, ch
   </StyledTextFieldRoot>
 );
 
-const StyledTextFieldRoot = styled.div<{ hideSyntaxMenu?: boolean }>(
-  (props) => `
+const StyledTextFieldRoot = styled.div`
   width: 100%;
-  height: ${props.hideSyntaxMenu ? '100%' : 'calc(100% - 36px)'};
+  height: calc(100% - 36px);
+  flex-grow: 1;
   overflow-y: scroll;
   position: relative;
   user-select: none;
-`
-);
+`;

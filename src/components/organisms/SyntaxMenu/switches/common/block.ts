@@ -1,7 +1,7 @@
+import { EditorState } from '../../../../../contexts/EditorStateContext';
 import { BlockNode } from '../../../../../parser/block/types';
 import { isBlockNode } from '../../../../../parser/block/utils';
 import { LineNode } from '../../../../../parser/line/types';
-import { EditorState } from '../../../Editor/types';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
 
@@ -22,7 +22,7 @@ export function blockMenuSwitch(
     return 'on';
   }
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
   if (nodes.every((node) => !isBlockNode(node) || node.range[1] < firstLineIndex || lastLineIndex < node.range[0])) {

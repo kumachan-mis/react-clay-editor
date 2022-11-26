@@ -4,7 +4,7 @@ import React from 'react';
 
 import * as selection from '../../src/components/molecules/selection/Selection';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
-import * as cursor from '../../src/components/organisms/Editor/common/cursor';
+import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
 import { CursorSelection } from '../../src/types/selection/cursorSelection';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';

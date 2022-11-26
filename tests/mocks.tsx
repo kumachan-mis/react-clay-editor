@@ -3,13 +3,13 @@ import React from 'react';
 
 import { Editor, EditorProps } from '../src';
 
-export type MockEditorProps = Omit<EditorProps, 'text' | 'onChangeText'> & { initText?: string };
+export type MockEditorProps = Omit<EditorProps, 'text' | 'setText'> & { initText?: string };
 
 export const MockEditor: React.FC<MockEditorProps> = ({ initText = '', ...props }) => {
   const [text, setText] = React.useState(initText);
   return (
     <>
-      <Editor text={text} onChangeText={setText} {...props} />
+      <Editor text={text} setText={setText} {...props} />
       <MockText text={text} />
     </>
   );

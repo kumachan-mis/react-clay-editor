@@ -1,6 +1,6 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { DecorationNode } from '../../../../parser/decoration/types';
 import { LineNode } from '../../../../parser/line/types';
-import { EditorState } from '../../Editor/types';
 
 export type SectionMenuItemType = 'normal' | 'larger' | 'largest';
 
@@ -13,7 +13,7 @@ export function sectionMenuSwitch(
 ): SectionMenuSwitch {
   if (!state.cursorCoordinate) return 'disabled';
 
-  const { cursorCoordinate, cursorSelection: cursorSelection } = state;
+  const { cursorCoordinate, cursorSelection } = state;
   if (cursorSelection && cursorSelection.free.lineIndex !== cursorSelection.fixed.lineIndex) return 'disabled';
 
   const lineNode = nodes[cursorCoordinate.lineIndex];

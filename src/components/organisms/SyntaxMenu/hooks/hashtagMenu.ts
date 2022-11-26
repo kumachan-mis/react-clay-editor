@@ -1,8 +1,8 @@
+import { HashtagProps } from '../../../../contexts/EditorPropsContext';
 import { LineNode } from '../../../../parser/line/types';
 import { HashtagMenuConstants, HashtagMenuProps } from '../../../molecules/menu/HashtagMenu';
 import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
 import { LinkMenuItem, linkMenuSwitch } from '../switches/link';
-import { HashtagProps } from '../types';
 
 import { ContentPosition } from './contentPosition';
 import { CommonMenuProps } from './types';
@@ -17,7 +17,7 @@ export function useHashtagMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   hashtagProps: HashtagProps | undefined,
-  { text, state, onChangeText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps
 ): HashtagMenuProps {
   const menuSwitch = hashtagProps?.disabled ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'hashtag');
   const handlerProps: LinkMenuHandlerProps = { ...defaultHandlerProps, ...hashtagProps, syntax };
@@ -33,7 +33,7 @@ export function useHashtagMenu(
       menuItem,
       menuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 

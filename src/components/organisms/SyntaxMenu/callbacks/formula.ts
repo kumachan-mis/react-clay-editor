@@ -1,17 +1,17 @@
-import { FormulaLabels } from '../../../../common/types';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { EditorState } from '../../Editor/types';
+import { FormulaLabels } from '../../../../types/label/formula';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
 import { BlockFormulaMenuSwitch, ContentFormulaMenuSwitch } from '../switches/formula';
 
 import { handleOnBlockMenuClick } from './common/block';
 import {
-  createContentByTextSelection,
+  createContentByCursorSelection,
   insertContentAtCursor,
-  splitContentByTextSelection,
+  splitContentByCursorSelection,
   replaceContentAtCursor,
   ContentMenuConfig,
   ContentMenuMetaConfig,
@@ -75,10 +75,10 @@ export function handleOnContentFormulaItemClick(
   } else {
     if (menuSwitch === 'off') {
       const config = menuItem === 'display' ? displayConfig : inlineConfig;
-      return createContentByTextSelection(text, nodes, state, config);
+      return createContentByCursorSelection(text, nodes, state, config);
     } else {
       const config = menuItem === menuSwitch ? normalConfig : menuItem === 'display' ? displayConfig : inlineConfig;
-      return splitContentByTextSelection(text, nodes, contentPosition, state, config);
+      return splitContentByCursorSelection(text, nodes, contentPosition, state, config);
     }
   }
 }

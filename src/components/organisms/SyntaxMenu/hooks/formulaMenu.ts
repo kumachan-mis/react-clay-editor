@@ -1,3 +1,4 @@
+import { FormulaProps } from '../../../../contexts/EditorPropsContext';
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { FormulaMenuConstants, FormulaMenuProps } from '../../../molecules/menu/FormulaMenu';
@@ -8,7 +9,6 @@ import {
   handleOnFormulaButtonClick,
 } from '../callbacks/formula';
 import { blockFormulaMenuSwitch, contentFormulaMenuSwitch } from '../switches/formula';
-import { FormulaProps } from '../types';
 
 import { BlockPosition } from './blockPosition';
 import { ContentPosition } from './contentPosition';
@@ -26,7 +26,7 @@ export function useFormulaMenu(
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   formulaProps: FormulaProps | undefined,
-  { text, state, onChangeText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps
 ): FormulaMenuProps {
   const contentMenuSwitch = formulaProps?.disabled ? 'disabled' : contentFormulaMenuSwitch(lineNodes, contentPosition);
   const blockMenuSwitch = formulaProps?.disabled ? 'disabled' : blockFormulaMenuSwitch(nodes, blockPosition, state);
@@ -45,7 +45,7 @@ export function useFormulaMenu(
       contentMenuSwitch,
       blockMenuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
@@ -58,7 +58,7 @@ export function useFormulaMenu(
       'inline',
       contentMenuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
@@ -71,7 +71,7 @@ export function useFormulaMenu(
       'display',
       contentMenuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
@@ -84,7 +84,7 @@ export function useFormulaMenu(
       handlerProps,
       blockMenuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 

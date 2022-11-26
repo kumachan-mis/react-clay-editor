@@ -2,7 +2,7 @@ import { EventType } from '@testing-library/dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import * as cursor from '../../src/components/organisms/Editor/common/cursor';
+import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 

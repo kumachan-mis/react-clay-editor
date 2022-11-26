@@ -1,3 +1,4 @@
+import { TaggedLinkProps } from '../../../../contexts/EditorPropsContext';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { getTagName } from '../../../../parser/taggedLink/utils';
@@ -5,7 +6,6 @@ import { TaggedLinkMenuConstants, TaggedLinkMenuProps } from '../../../molecules
 import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { LinkMenuItem, linkMenuSwitch } from '../switches/link';
-import { TaggedLinkProps } from '../types';
 
 import { ContentPosition } from './contentPosition';
 import { CommonMenuProps } from './types';
@@ -20,7 +20,7 @@ export function useTaggedLinkMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   taggedLinkPropsMap: { [tagName: string]: TaggedLinkProps } | undefined,
-  { text, state, onChangeText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps
 ): TaggedLinkMenuProps {
   const tagEntries = Object.entries(taggedLinkPropsMap || {});
 
@@ -43,7 +43,7 @@ export function useTaggedLinkMenu(
         menuItem,
         menuSwitch
       );
-      onChangeText(newText);
+      setText(newText);
       setState(newState);
     };
     taggedItemMap[tagName] = { label, onItemClick };

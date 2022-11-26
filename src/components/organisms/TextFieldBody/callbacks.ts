@@ -1,10 +1,14 @@
-import { isMacOS } from '../../../../common/utils';
-import { bracketItemizationRegex } from '../../../../parser/itemization/parseBracketItemization';
-import { markdownItemizationRegex } from '../../../../parser/itemization/parseMarkdownItemization';
-import { quotationRegex } from '../../../../parser/quotation/parseQuotation';
-import { getSelectionText } from '../../../molecules/selection/Selection/utils';
-import { showSuggestion, showIMEBasedSuggestion, insertSuggestion, resetSuggestion } from '../common/suggestion';
-import { insertText } from '../common/text';
+import { isMacOS } from '../../../common/utils';
+import { EditorProps } from '../../../contexts/EditorPropsContext';
+import { EditorState } from '../../../contexts/EditorStateContext';
+import { bracketItemizationRegex } from '../../../parser/itemization/parseBracketItemization';
+import { markdownItemizationRegex } from '../../../parser/itemization/parseMarkdownItemization';
+import { quotationRegex } from '../../../parser/quotation/parseQuotation';
+import { getLineSelection, getSelectionText, getWordSelection } from '../../molecules/selection/Selection/utils';
+
+import { positionToCursorCoordinate } from './common/cursor';
+import { showSuggestion, showIMEBasedSuggestion, insertSuggestion, resetSuggestion } from './common/suggestion';
+import { insertText } from './common/text';
 import {
   handleOnShortcut,
   handleOnForwardDelete,
@@ -19,9 +23,48 @@ import {
   handleOnMoveLineBottom,
   handleOnMoveTextTop,
   handleOnMoveTextBottom,
-} from '../shortcuts/callbacks';
-import { shortcutCommand } from '../shortcuts/triggers';
-import { EditorProps, EditorState } from '../types';
+} from './shortcuts/callbacks';
+import { shortcutCommand } from './shortcuts/triggers';
+
+export function handleOnMouseDown(
+  text: string,
+  state: EditorState,
+  event: React.MouseEvent,
+  element: HTMLElement | null
+): EditorState {
+  if (!element) return state;
+
+  const position: [number, number] = [event.clientX, event.clientY];
+  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
+  const newState = resetSuggestion({ ...state, cursorCoordinate, cursorSelection: undefined, cursorScroll: 'fired' });
+  return newState;
+}
+
+export function handleOnClick(
+  text: string,
+  state: EditorState,
+  event: React.MouseEvent,
+  element: HTMLElement | null
+): EditorState {
+  if (!element) return state;
+
+  const position: [number, number] = [event.clientX, event.clientY];
+  const cursorCoordinate = positionToCursorCoordinate(text, position, element);
+  switch (event.detail) {
+    case 2: {
+      // double click
+      const cursorSelection = getWordSelection(text, cursorCoordinate);
+      return { ...state, cursorSelection };
+    }
+    case 3: {
+      // triple click
+      const cursorSelection = getLineSelection(text, cursorCoordinate);
+      return { ...state, cursorSelection };
+    }
+    default:
+      return state;
+  }
+}
 
 export function handleOnKeyDown(
   text: string,
@@ -212,7 +255,7 @@ export function handleOnTextPaste(
   return insertText(text, state, textToPaste);
 }
 
-export function handleOnSuggectionMouseDown(
+export function handleOnSuggestionMouseDown(
   text: string,
   state: EditorState,
   event: React.MouseEvent<HTMLLIElement>

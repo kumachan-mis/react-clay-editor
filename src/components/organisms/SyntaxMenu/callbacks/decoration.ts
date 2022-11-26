@@ -1,14 +1,14 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { LineNode, PureLineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { EditorState } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { DecorationMenuItemType, DecorationMenuSwitch, DecorationMenuSwitchItem } from '../switches/decoration';
 
 import {
-  createContentByTextSelection,
+  createContentByCursorSelection,
   insertContentAtCursor,
-  splitContentByTextSelection,
+  splitContentByCursorSelection,
   replaceContentAtCursor,
 } from './common/content';
 
@@ -94,13 +94,13 @@ function handleOnBracketDecorationItemClick(
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type === 'normal') {
       const config = { facingMeta: `[${meta} `, trailingMeta: ']' };
-      return createContentByTextSelection(text, nodes, state, config);
+      return createContentByCursorSelection(text, nodes, state, config);
     }
 
     if (contentNode.type === 'decoration') {
       const newMeta = contentNode.facingMeta.substring(1, contentNode.facingMeta.length - 1) + meta;
       const config = { facingMeta: `[${newMeta} `, trailingMeta: ']' };
-      return splitContentByTextSelection(text, nodes, contentPosition, state, config);
+      return splitContentByCursorSelection(text, nodes, contentPosition, state, config);
     }
 
     return [text, state];
@@ -123,7 +123,7 @@ function handleOnBracketDecorationItemClick(
       config.facingMeta = contentNode.facingMeta.replaceAll(meta, '');
       config.trailingMeta = contentNode.trailingMeta;
     }
-    return splitContentByTextSelection(text, nodes, contentPosition, state, config);
+    return splitContentByCursorSelection(text, nodes, contentPosition, state, config);
   }
 
   if (!state.cursorCoordinate) return [text, state];
@@ -187,7 +187,7 @@ function handleOnMarkdownDecorationItemClick(
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'normal') return [text, state];
     const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
-    return createContentByTextSelection(text, nodes, state, config);
+    return createContentByCursorSelection(text, nodes, state, config);
   }
 
   function handleItemOnWithSelection(
@@ -196,7 +196,7 @@ function handleOnMarkdownDecorationItemClick(
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
-    return splitContentByTextSelection(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
+    return splitContentByCursorSelection(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
   }
 
   if (!state.cursorCoordinate) return [text, state];

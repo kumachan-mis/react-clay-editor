@@ -1,6 +1,6 @@
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { TextFieldBodyConstants } from '../../../atoms/editor/TextFieldBody';
-import { HeaderConstants } from '../../../atoms/header/Header';
+import { TextFieldHeaderConstants } from '../../../atoms/editor/TextFieldHeader';
 import { CharConstants } from '../../../atoms/text/Char';
 import { getCharAt } from '../../../atoms/text/Char/utils';
 import { CharGroupConstants } from '../../../atoms/text/CharGroup';
@@ -17,7 +17,7 @@ export function positionToCursorCoordinate(
 
   let cursorCoordinate: CursorCoordinate | undefined = undefined;
 
-  const headerElement = findElement(elements, HeaderConstants.selectIdRegex, element);
+  const headerElement = findElement(elements, TextFieldHeaderConstants.selectIdRegex, element);
   if (headerElement) return undefined;
 
   cursorCoordinate = cursorCoordinateChar(lines, position, elements, element);

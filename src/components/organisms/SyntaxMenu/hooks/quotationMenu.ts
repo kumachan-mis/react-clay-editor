@@ -1,3 +1,4 @@
+import { QuotationProps } from '../../../../contexts/EditorPropsContext';
 import { LineNode } from '../../../../parser/line/types';
 import { QuotationMenuConstants, QuotationMenuProps } from '../../../molecules/menu/QuotationMenu';
 import {
@@ -6,7 +7,6 @@ import {
   QuotationMenuHandlerProps,
 } from '../callbacks/quotation';
 import { quotationMenuSwitch } from '../switches/quotation';
-import { QuotationProps } from '../types';
 
 import { CommonMenuProps } from './types';
 
@@ -18,7 +18,7 @@ const defaultHandlerProps: QuotationMenuHandlerProps = {
 export function useQuotationMenu(
   lineNodes: LineNode[],
   quotationProps: QuotationProps | undefined,
-  { text, state, onChangeText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps
 ): QuotationMenuProps {
   const menuSwitch = quotationMenuSwitch(syntax, lineNodes, state);
   const handlerProps: QuotationMenuHandlerProps = { ...defaultHandlerProps, ...quotationProps, syntax };
@@ -26,19 +26,19 @@ export function useQuotationMenu(
 
   const onButtonClick = () => {
     const [newText, newState] = handleOnQuotationButtonClick(text, lineNodes, state, handlerProps, menuSwitch);
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
   const onIndentItemClick = () => {
     const [newText, newState] = handleOnQuotationItemClick(text, lineNodes, state, handlerProps, 'indent', menuSwitch);
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
   const onOutdentItemClick = () => {
     const [newText, newState] = handleOnQuotationItemClick(text, lineNodes, state, handlerProps, 'outdent', menuSwitch);
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 

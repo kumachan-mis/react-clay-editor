@@ -1,7 +1,7 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { BlockNode } from '../../../../parser/block/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { EditorState } from '../../Editor/types';
 import { isEndPoint } from '../common/utils';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';

@@ -1,5 +1,5 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { LineNode } from '../../../../parser/line/types';
-import { EditorState } from '../../Editor/types';
 
 import { lineMenuSwitch } from './common/line';
 

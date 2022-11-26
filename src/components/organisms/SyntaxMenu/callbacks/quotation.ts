@@ -1,6 +1,6 @@
-import { QuotationLabels } from '../../../../common/types';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { LineNode } from '../../../../parser/line/types';
-import { EditorState } from '../../Editor/types';
+import { QuotationLabels } from '../../../../types/label/quotation';
 import { QuotationMenuSwitch } from '../switches/quotation';
 
 import { handleOnLineMenuClick } from './common/line';

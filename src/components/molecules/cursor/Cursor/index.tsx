@@ -24,7 +24,7 @@ export type CursorProps = {
   onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
   onTextCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
   onTextPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onSuggectionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
+  onSuggestionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
 };
 
 export const Cursor: React.FC<CursorProps> = (props) => {
@@ -54,7 +54,7 @@ export const Cursor: React.FC<CursorProps> = (props) => {
                 key={index}
                 index={index}
                 aria-selected={props.suggestionIndex === index}
-                onMouseDown={props.onSuggectionMouseDown}
+                onMouseDown={props.onSuggestionMouseDown}
               >
                 {suggestion}
               </SuggestionListItem>

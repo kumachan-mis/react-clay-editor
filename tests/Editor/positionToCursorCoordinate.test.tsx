@@ -5,7 +5,7 @@ import { CharConstants } from '../../src/components/atoms/text/Char';
 import { CharGroupConstants } from '../../src/components/atoms/text/CharGroup';
 import { LineConstants } from '../../src/components/atoms/text/Line';
 import { LineGroupConstants } from '../../src/components/atoms/text/LineGroup';
-import { positionToCursorCoordinate } from '../../src/components/organisms/Editor/common/cursor';
+import { positionToCursorCoordinate } from '../../src/components/organisms/TextFieldBody/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import {
   MockEditor,

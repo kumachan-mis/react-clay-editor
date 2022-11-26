@@ -1,9 +1,9 @@
-import { EditorState } from '../../Editor/types';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 
 export type CommonMenuProps = {
   text: string;
   state: EditorState;
-  onChangeText: (text: string) => void;
+  setText: (text: string) => void;
   setState: (state: EditorState) => void;
   syntax?: 'bracket' | 'markdown';
 };

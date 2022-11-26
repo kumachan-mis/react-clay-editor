@@ -1,9 +1,12 @@
-import { BracketLabels, HashtagLabels, Suggestion, TaggedLinkLabels } from '../../../../common/types';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { LineNode, PureLineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
 import { getTagName } from '../../../../parser/taggedLink/utils';
-import { EditorState } from '../../Editor/types';
+import { BracketLinkLabels } from '../../../../types/label/bracketLink';
+import { HashtagLabels } from '../../../../types/label/hashtag';
+import { TaggedLinkLabels } from '../../../../types/label/taggedLink';
+import { Suggestion } from '../../../../types/suggestion/suggestion';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { LinkMenuItem, LinkMenuSwitch } from '../switches/link';
@@ -11,13 +14,13 @@ import { LinkMenuItem, LinkMenuSwitch } from '../switches/link';
 import {
   insertContentAtCursor,
   replaceContentAtCursor,
-  createContentByTextSelection,
+  createContentByCursorSelection,
   ContentMenuConfig,
 } from './common/content';
 
 export type LinkMenuHandlerProps = {
   syntax?: 'bracket' | 'markdown';
-} & Required<BracketLabels & TaggedLinkLabels & HashtagLabels> &
+} & Required<BracketLinkLabels & TaggedLinkLabels & HashtagLabels> &
   Required<Suggestion>;
 
 export function handleOnLinkItemClick(
@@ -51,7 +54,7 @@ export function handleOnLinkItemClick(
   }
 
   function handleItemOffWithSelection(): [string, EditorState] {
-    return createContentByTextSelection(text, nodes, state, config, offContent);
+    return createContentByCursorSelection(text, nodes, state, config, offContent);
   }
 
   function handleItemOnWithSelection(

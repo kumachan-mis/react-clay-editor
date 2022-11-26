@@ -1,3 +1,4 @@
+import { ItemizationProps } from '../../../../contexts/EditorPropsContext';
 import { LineNode } from '../../../../parser/line/types';
 import { ItemizationMenuConstants, ItemizationMenuProps } from '../../../molecules/menu/ItemizationMenu';
 import {
@@ -6,7 +7,6 @@ import {
   ItemizationMenuHandlerProps,
 } from '../callbacks/itemization';
 import { itemizationMenuSwitch } from '../switches/itemization';
-import { ItemizationProps } from '../types';
 
 import { CommonMenuProps } from './types';
 
@@ -18,7 +18,7 @@ const defaultHandlerProps: ItemizationMenuHandlerProps = {
 export function useItemizationMenu(
   lineNodes: LineNode[],
   itemizationProps: ItemizationProps | undefined,
-  { text, state, onChangeText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps
 ): ItemizationMenuProps {
   const menuSwitch = itemizationMenuSwitch(syntax, lineNodes, state);
   const handlerProps: ItemizationMenuHandlerProps = { ...defaultHandlerProps, ...itemizationProps, syntax };
@@ -26,7 +26,7 @@ export function useItemizationMenu(
 
   const onButtonClick = () => {
     const [newText, newState] = handleOnItemizationButtonClick(text, lineNodes, state, handlerProps, menuSwitch);
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
@@ -39,7 +39,7 @@ export function useItemizationMenu(
       'indent',
       menuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
@@ -52,7 +52,7 @@ export function useItemizationMenu(
       'outdent',
       menuSwitch
     );
-    onChangeText(newText);
+    setText(newText);
     setState(newState);
   };
 
