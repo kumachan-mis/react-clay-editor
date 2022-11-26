@@ -1,14 +1,12 @@
-import {
-  BracketLinkVisual,
-  CodeVisual,
-  FormulaVisual,
-  HashtagVisual,
-  TaggedLinkVisual,
-  TextVisual,
-} from '../../../../common/types';
 import { TextNode } from '../../../../parser';
-import { CursorCoordinate } from '../../cursor/Cursor/types';
-import { CursorSelection } from '../../selection/Selection/types';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
+import { BracketLinkVisual } from '../../../../types/visual/bracketLink';
+import { CodeVisual } from '../../../../types/visual/code';
+import { FormulaVisual } from '../../../../types/visual/formula';
+import { HashtagVisual } from '../../../../types/visual/hashtag';
+import { TaggedLinkVisual } from '../../../../types/visual/taggedLink';
+import { TextVisual } from '../../../../types/visual/text';
 
 export type TextProps = {
   nodes: TextNode[];

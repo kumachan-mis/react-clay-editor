@@ -1,10 +1,10 @@
+import { EditorState } from '../../../../../contexts/EditorStateContext';
 import { LineNode } from '../../../../../parser/line/types';
 import { isPureLineNode } from '../../../../../parser/line/utils';
-import { CursorCoordinate } from '../../../../molecules/cursor/Cursor/types';
-import { CursorSelection } from '../../../../molecules/selection/Selection/types';
+import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection, undefinedIfZeroSelection } from '../../../../molecules/selection/Selection/utils';
 import { insertText } from '../../../Editor/common/text';
-import { EditorState } from '../../../Editor/types';
 import { getLineRange } from '../../common/utils';
 
 export type LineMenuConfig = {

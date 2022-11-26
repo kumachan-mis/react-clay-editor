@@ -3,8 +3,8 @@ import React from 'react';
 import { ContentNode } from '../../../../parser/content/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
-import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
-import { CursorSelection } from '../../../molecules/selection/Selection/types';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 
 export type ContentPosition =
   | ContentPositionEmpty

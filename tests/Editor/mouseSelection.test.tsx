@@ -3,9 +3,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
 import * as selection from '../../src/components/molecules/selection/Selection';
-import { CursorSelection } from '../../src/components/molecules/selection/Selection/types';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
 import * as cursor from '../../src/components/organisms/Editor/common/cursor';
+import { CursorSelection } from '../../src/types/selection/cursorSelection';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
 

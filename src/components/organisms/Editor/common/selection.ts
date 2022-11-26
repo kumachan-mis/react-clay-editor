@@ -1,7 +1,7 @@
-import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
+import { EditorState } from '../../../../contexts/EditorStateContext';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { coordinatesAreEqual } from '../../../molecules/cursor/Cursor/utils';
-import { CursorSelection } from '../../../molecules/selection/Selection/types';
-import { EditorState } from '../types';
 
 export function updateSelectionAfterCursorMove(
   cursorSelection: CursorSelection | undefined,

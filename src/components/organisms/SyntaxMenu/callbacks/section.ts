@@ -1,8 +1,8 @@
-import { TextLabels } from '../../../../common/types';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 import { LineNode } from '../../../../parser/line/types';
-import { CursorSelection } from '../../../molecules/selection/Selection/types';
+import { TextLabels } from '../../../../types/label/text';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { copySelection, undefinedIfZeroSelection } from '../../../molecules/selection/Selection/utils';
-import { EditorState } from '../../Editor/types';
 import { ContentPosition } from '../hooks/contentPosition';
 import { SectionMenuItemType, SectionMenuSwitch } from '../switches/section';
 

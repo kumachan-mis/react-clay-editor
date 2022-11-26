@@ -1,3 +1,4 @@
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { TextFieldBodyConstants } from '../../../atoms/editor/TextFieldBody';
 import { HeaderConstants } from '../../../atoms/header/Header';
 import { CharConstants } from '../../../atoms/text/Char';
@@ -5,7 +6,6 @@ import { getCharAt } from '../../../atoms/text/Char/utils';
 import { CharGroupConstants } from '../../../atoms/text/CharGroup';
 import { LineConstants } from '../../../atoms/text/Line';
 import { LineGroupConstants } from '../../../atoms/text/LineGroup';
-import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
 
 export function positionToCursorCoordinate(
   text: string,

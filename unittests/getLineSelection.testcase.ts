@@ -1,5 +1,5 @@
-import { CursorCoordinate } from '../src/components/molecules/cursor/Cursor/types';
-import { CursorSelection } from '../src/components/molecules/selection/Selection/types';
+import { CursorCoordinate } from '../src/types/cursor/cursorCoordinate';
+import { CursorSelection } from '../src/types/selection/cursorSelection';
 
 export interface TestCase {
   name: string;

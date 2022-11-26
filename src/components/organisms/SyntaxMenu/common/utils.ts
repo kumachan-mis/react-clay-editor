@@ -1,7 +1,7 @@
 import { ContentNode } from '../../../../parser/content/types';
 import { PureLineNode } from '../../../../parser/line/types';
-import { CursorCoordinate } from '../../../molecules/cursor/Cursor/types';
-import { CursorSelection } from '../../../molecules/selection/Selection/types';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { ContentPosition, ContentPositionEndPoint } from '../hooks/contentPosition';
 
 export function isEndPoint(contentPosition: ContentPosition): contentPosition is ContentPositionEndPoint {

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { TextNode } from '../../../../parser';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/hooks';
-import { CursorCoordinate } from '../../cursor/Cursor/types';
-import { CursorSelection } from '../../selection/Selection/types';
 import { selectionToRange } from '../../selection/Selection/utils';
 
 export type UseTextNodeComponent = {

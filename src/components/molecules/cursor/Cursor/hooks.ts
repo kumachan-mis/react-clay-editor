@@ -6,7 +6,12 @@ import { SuggestionListBodyConstants } from '../../../atoms/suggestion/Suggesion
 import { SuggestionListItemConstants } from '../../../atoms/suggestion/SuggesionListItem';
 import { getCharAt } from '../../../atoms/text/Char/utils';
 
-import { CursorProps, CursorState } from './types';
+import { CursorProps } from './index';
+
+export type CursorState = {
+  position: { top: number; left: number };
+  cursorSize: number;
+};
 
 export function useCursor(props: CursorProps): { state: CursorState; ref: React.RefObject<HTMLSpanElement> } {
   const [state, setState] = React.useState<CursorState>({ position: { top: 0, left: 0 }, cursorSize: 0 });

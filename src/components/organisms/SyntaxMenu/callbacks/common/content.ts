@@ -1,16 +1,16 @@
+import { EditorState } from '../../../../../contexts/EditorStateContext';
 import { ContentNode, TextLikeNode } from '../../../../../parser/content/types';
 import { isTextLikeNode } from '../../../../../parser/content/utils';
 import { LineNode, PureLineNode } from '../../../../../parser/line/types';
 import { isPureLineNode } from '../../../../../parser/line/utils';
+import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copyCoordinate } from '../../../../molecules/cursor/Cursor/utils';
-import { CursorSelection } from '../../../../molecules/selection/Selection/types';
 import {
   copySelection,
   selectionToRange,
   undefinedIfZeroSelection,
 } from '../../../../molecules/selection/Selection/utils';
 import { insertText } from '../../../Editor/common/text';
-import { EditorState } from '../../../Editor/types';
 import { isEndPoint } from '../../common/utils';
 import { ContentPosition } from '../../hooks/contentPosition';
 

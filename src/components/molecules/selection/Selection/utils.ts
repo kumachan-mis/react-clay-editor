@@ -1,8 +1,8 @@
 import { wordRegex } from '../../../../common/constants';
-import { CursorCoordinate } from '../../cursor/Cursor/types';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
+import { CursorSelectionRange } from '../../../../types/selection/cursorSelectionRange';
 import { coordinatesAreEqual, cursorCoordinateToTextIndex } from '../../cursor/Cursor/utils';
-
-import { CursorSelection, CursorSelectionRange } from './types';
 
 export function getWordSelection(
   text: string,

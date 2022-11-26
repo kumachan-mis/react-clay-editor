@@ -1,11 +1,11 @@
+import { EditorState } from '../../../../../contexts/EditorStateContext';
 import { BlockNode } from '../../../../../parser/block/types';
 import { isBlockNode } from '../../../../../parser/block/utils';
 import { LineNode } from '../../../../../parser/line/types';
-import { CursorCoordinate } from '../../../../molecules/cursor/Cursor/types';
-import { CursorSelection } from '../../../../molecules/selection/Selection/types';
+import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection } from '../../../../molecules/selection/Selection/utils';
 import { insertText } from '../../../Editor/common/text';
-import { EditorState } from '../../../Editor/types';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
 import { BlockMenuSwitch } from '../../switches/common/block';

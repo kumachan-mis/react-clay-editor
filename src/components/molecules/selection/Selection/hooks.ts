@@ -1,10 +1,18 @@
 import React from 'react';
 
 import { getTextFieldBody } from '../../../atoms/editor/TextFieldBody/utils';
+import { SelectionRectProps } from '../../../atoms/selection/SelectionRect';
 import { getCharAt } from '../../../atoms/text/Char/utils';
 
-import { SelectionProps, SelectionState } from './types';
 import { selectionToRange } from './utils';
+
+import { SelectionProps } from '.';
+
+export type SelectionState = {
+  topRectProps: SelectionRectProps | undefined;
+  centerRectProps: SelectionRectProps | undefined;
+  bottomRectProps: SelectionRectProps | undefined;
+};
 
 export function useSelection(props: SelectionProps): { state: SelectionState; ref: React.RefObject<HTMLSpanElement> } {
   const [state, setState] = React.useState<SelectionState>({
