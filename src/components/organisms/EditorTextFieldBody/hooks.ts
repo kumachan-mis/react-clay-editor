@@ -2,8 +2,8 @@ import React from 'react';
 
 import { EditorProps, useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
 import { EditorState, useEditorStateContext, useEditorStateValueContext } from '../../../contexts/EditorStateContext';
-import { useEditorTextContext } from '../../../contexts/EditorTextContext';
-import { useEditorTextNodesValueContext } from '../../../contexts/EditorTextNodesContext';
+import { useTextContext } from '../../../contexts/TextContext';
+import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
 import { CursorProps } from '../../molecules/cursor/Cursor';
 import { SelectionProps } from '../../molecules/selection/Selection';
 import { TextProps } from '../../molecules/text/Text/types';
@@ -25,7 +25,7 @@ export function useSelection(): SelectionProps {
 }
 
 export function useCursor(): CursorProps {
-  const [text, setText] = useEditorTextContext();
+  const [text, setText] = useTextContext();
   const [state, setState] = useEditorStateContext();
   const props = useEditorPropsValueContext();
 
@@ -74,7 +74,7 @@ export function useCursor(): CursorProps {
 }
 
 export function useText(): TextProps {
-  const nodes = useEditorTextNodesValueContext();
+  const nodes = useTextNodesValueContext();
   const { cursorCoordinate, cursorSelection } = useEditorStateValueContext();
   const props = useEditorPropsValueContext();
 

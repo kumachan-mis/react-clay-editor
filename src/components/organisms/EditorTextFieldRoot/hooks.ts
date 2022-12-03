@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useSetEditorStateContext } from '../../../contexts/EditorStateContext';
-import { useEditorTextValueContext } from '../../../contexts/EditorTextContext';
+import { useTextValueContext } from '../../../contexts/TextContext';
 
 import { handleOnMouseDown, handleOnClick } from './callback';
 
@@ -10,7 +10,7 @@ export function useTextField(): {
   onMouseDown: React.MouseEventHandler<HTMLDivElement>;
   onClick: React.MouseEventHandler<HTMLDivElement>;
 } {
-  const text = useEditorTextValueContext();
+  const text = useTextValueContext();
   const setState = useSetEditorStateContext();
   const ref = React.useRef<HTMLDivElement>(null);
 

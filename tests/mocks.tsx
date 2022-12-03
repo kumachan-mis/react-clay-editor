@@ -3,6 +3,7 @@ import React from 'react';
 
 import { EditorRoot } from '../src/components/organisms/EditorRoot';
 import { EditorSyntaxMenu } from '../src/components/organisms/EditorSyntaxMenu';
+import { EditorTextFieldBody } from '../src/components/organisms/EditorTextFieldBody';
 import { EditorTextFieldRoot } from '../src/components/organisms/EditorTextFieldRoot';
 import { EditorProps } from '../src/contexts/EditorPropsContext';
 
@@ -14,6 +15,7 @@ export const MockEditor: React.FC<MockEditorProps> = ({ initText = '', ...props 
     <EditorRoot text={text} setText={setText} {...props}>
       <EditorSyntaxMenu />
       <EditorTextFieldRoot>
+        <EditorTextFieldBody />
         <MockText text={text} />
       </EditorTextFieldRoot>
     </EditorRoot>

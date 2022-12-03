@@ -5,7 +5,7 @@ import {
   useEditorStateContext,
   useSetEditorStateContext,
 } from '../../../contexts/EditorStateContext';
-import { useEditorTextValueContext } from '../../../contexts/EditorTextContext';
+import { useTextValueContext } from '../../../contexts/TextContext';
 
 import { handleOnMouseMove, handleOnMouseScrollDown, handleOnMouseScrollUp, handleOnMouseUp } from './callbacks';
 
@@ -32,7 +32,7 @@ export function useEditorRoot(): {
 }
 
 export function useDocument(ref: React.RefObject<HTMLDivElement>): void {
-  const text = useEditorTextValueContext();
+  const text = useTextValueContext();
   const setState = useSetEditorStateContext();
 
   const onMouseDown = React.useCallback(() => {
@@ -82,7 +82,7 @@ export function useDocument(ref: React.RefObject<HTMLDivElement>): void {
 }
 
 export function useScroll(): void {
-  const text = useEditorTextValueContext();
+  const text = useTextValueContext();
   const [{ cursorScroll }, setState] = useEditorStateContext();
 
   const timeIdRef = React.useRef<number>(0);

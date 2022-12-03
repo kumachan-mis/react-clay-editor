@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
-import { useEditorTextNodesValueContext } from '../../../contexts/EditorTextNodesContext';
+import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
 import { MenuList } from '../../atoms/menu/MenuList';
 import { BoldMenu } from '../../molecules/menu/BoldMenu';
 import { BracketMenu } from '../../molecules/menu/BracketMenu';
@@ -33,7 +33,7 @@ import { useUnderlineMenu } from './hooks/underlineMenu';
 
 export const EditorSyntaxMenu: React.FC = () => {
   const props = useEditorPropsValueContext();
-  const nodes = useEditorTextNodesValueContext();
+  const nodes = useTextNodesValueContext();
 
   const common = useCommonMenu(props.syntax);
   const lineNodes = useLineNodes(nodes);

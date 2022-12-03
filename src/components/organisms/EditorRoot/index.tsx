@@ -2,8 +2,8 @@ import React from 'react';
 
 import { EditorProps, EditorPropsContextProvider } from '../../../contexts/EditorPropsContext';
 import { EditorStateContextProvider } from '../../../contexts/EditorStateContext';
-import { EditorTextContextProvider } from '../../../contexts/EditorTextContext';
-import { EditorTextNodesContextProvider } from '../../../contexts/EditorTextNodesContext';
+import { TextContextProvider } from '../../../contexts/TextContext';
+import { TextNodesContextProvider } from '../../../contexts/TextNodesContext';
 import { Root } from '../../atoms/root/Root';
 
 import { useDocument, useEditorRoot, useScroll } from './hooks';
@@ -13,15 +13,15 @@ export type EditorRootProps = React.PropsWithChildren<
 >;
 
 export const EditorRoot: React.FC<EditorRootProps> = ({ text, setText, children, ...props }) => (
-  <EditorTextContextProvider text={text} setText={setText}>
+  <TextContextProvider text={text} setText={setText}>
     <EditorPropsContextProvider props={props}>
-      <EditorTextNodesContextProvider text={text} props={props}>
+      <TextNodesContextProvider text={text} props={props}>
         <EditorStateContextProvider>
           <EditorRootInner className={props.className}>{children}</EditorRootInner>
         </EditorStateContextProvider>
-      </EditorTextNodesContextProvider>
+      </TextNodesContextProvider>
     </EditorPropsContextProvider>
-  </EditorTextContextProvider>
+  </TextContextProvider>
 );
 
 const EditorRootInner: React.FC<React.PropsWithChildren<{ className?: string }>> = ({ className, children }) => {

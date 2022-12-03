@@ -1,0 +1,49 @@
+import React from 'react';
+
+import { parseText, ParsingOptions } from '../parser';
+import { BlockNode } from '../parser/block/types';
+import { LineNode } from '../parser/line/types';
+import { createTaggedLinkRegex } from '../parser/taggedLink/parseTaggedLink';
+import { BracketLinkParsing } from '../types/parsing/bracketLink';
+import { CodeParsing } from '../types/parsing/code';
+import { FormulaParsing } from '../types/parsing/formula';
+import { HashtagParsing } from '../types/parsing/hashtag';
+import { TaggedLinkParsing } from '../types/parsing/taggedLink';
+
+export type ParserProps = {
+  syntax?: 'bracket' | 'markdown';
+  bracketLinkProps?: BracketLinkParsing;
+  hashtagProps?: HashtagParsing;
+  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkParsing };
+  codeProps?: CodeParsing;
+  formulaProps?: FormulaParsing;
+};
+
+export const defaultTextNodes: (LineNode | BlockNode)[] = [];
+
+const TextNodesValueContext = React.createContext(defaultTextNodes);
+
+export function useTextNodesValueContext(): (LineNode | BlockNode)[] {
+  return React.useContext(TextNodesValueContext);
+}
+
+export const TextNodesContextProvider: React.FC<React.PropsWithChildren<{ text: string; props: ParserProps }>> = ({
+  text,
+  props,
+  children,
+}) => {
+  const options: ParsingOptions = {
+    syntax: props.syntax,
+    bracketLinkDisabled: props.bracketLinkProps?.disabled,
+    hashtagDisabled: props.hashtagProps?.disabled,
+    codeDisabled: props.codeProps?.disabled,
+    formulaDisabled: props.formulaProps?.disabled,
+    taggedLinkRegexes: Object.entries(props.taggedLinkPropsMap || {}).map(([tagName, taggedLinkProps]) =>
+      createTaggedLinkRegex(tagName, taggedLinkProps.linkNameRegex)
+    ),
+  };
+
+  const nodes = parseText(text, options);
+
+  return <TextNodesValueContext.Provider value={nodes}>{children}</TextNodesValueContext.Provider>;
+};
