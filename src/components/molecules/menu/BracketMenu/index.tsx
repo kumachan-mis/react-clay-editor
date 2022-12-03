@@ -9,7 +9,6 @@ export type BracketMenuProps = {
 };
 
 export const BracketMenuConstants = {
-  testId: 'bracket-menu',
   defaultLabel: 'bracket link',
 };
 

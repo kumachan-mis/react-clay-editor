@@ -9,7 +9,6 @@ export type TextFieldHeaderProps = {
 export const TextFieldHeaderConstants = {
   selectId: 'text-field-header',
   selectIdRegex: /text-field-header/,
-  testId: 'text-field-header',
 };
 
 export const TextFieldHeader: React.FC<TextFieldHeaderProps> = ({ size = 'largest', header }) => (

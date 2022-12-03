@@ -7,7 +7,6 @@ export type KaTeXProps = {
 
 export const KaTeXConstants = {
   selectId: 'katex',
-  testId: 'katex',
 };
 
 export const KaTeX: React.FC<KaTeXProps> = ({ options, children, ...rest }) => {

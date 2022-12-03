@@ -14,11 +14,9 @@ export type TaggedLinkMenuProps = {
 };
 
 export const TaggedLinkMenuConstants = {
-  testId: 'tagged-link-menu',
   items: {
     defaultLabel: 'tagged link',
     taggedLabel: (tagName: string, label: string) => `${tagName}: ${label}`,
-    testId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
   },
 };
 

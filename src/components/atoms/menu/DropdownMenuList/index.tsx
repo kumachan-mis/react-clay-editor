@@ -8,7 +8,6 @@ export type DropdownMenuListProps = {
 
 export const DropdownMenuListConstants = {
   selectId: 'dropdown-menu-list',
-  testId: 'dropdown-menu-list',
 };
 
 export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, anchorEl, ...rest }) => {

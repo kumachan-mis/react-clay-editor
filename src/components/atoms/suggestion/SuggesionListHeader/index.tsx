@@ -7,7 +7,7 @@ export type SuggestionListHeaderProps = {
 
 export const SuggestionListHeaderConstants = {
   selectId: 'suggestion-header',
-  testId: 'suggestion-header',
+
   name: (suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none'): string => {
     switch (suggestionType) {
       case 'text':

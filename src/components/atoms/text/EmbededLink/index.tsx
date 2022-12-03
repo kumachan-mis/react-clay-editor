@@ -9,7 +9,6 @@ export type EmbededLinkProps = React.PropsWithChildren<{
 
 export const EmbededLinkConstants = {
   selectId: 'embeded-link',
-  testId: 'embeded-link',
 };
 
 export const EmbededLink: React.FC<EmbededLinkProps> = ({ editMode, forceClickable, children, anchorProps }) => {

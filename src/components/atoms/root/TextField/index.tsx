@@ -6,7 +6,6 @@ export type TextFieldProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
 export const TextFieldConstants = {
   selectId: 'text-field',
   selectIdRegex: /text-field/,
-  testId: 'text-field',
 };
 
 const ForwardRefTextField: React.ForwardRefRenderFunction<HTMLDivElement, TextFieldProps> = ({ ...rest }, ref) => (

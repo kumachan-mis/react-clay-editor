@@ -8,7 +8,6 @@ export type CharProps = {
 export const CharConstants = {
   selectId: (lineIndex: number, charIndex: number): string => `char-L${lineIndex}C${charIndex}`,
   selectIdRegex: RegExp('char-L(?<lineIndex>\\d+)C(?<charIndex>\\d+)'),
-  testId: (lineIndex: number, charIndex: number): string => `char-L${lineIndex}C${charIndex}`,
 };
 
 export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, ...rest }) => (

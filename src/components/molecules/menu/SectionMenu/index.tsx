@@ -19,19 +19,15 @@ export type SectionMenuProps = {
 };
 
 export const SectionMenuConstants = {
-  testId: 'section-menu',
   items: {
     normal: {
       defaultLabel: 'normal',
-      testId: 'normal-section-menu-item',
     },
     larger: {
       defaultLabel: 'larger',
-      testId: 'larger-section-menu-item',
     },
     largest: {
       defaultLabel: 'largest',
-      testId: 'largest-section-menu-item',
     },
   },
 };

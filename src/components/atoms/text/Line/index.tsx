@@ -8,7 +8,6 @@ export type LineProps = {
 export const LineConstants = {
   selectId: (lineIndex: number): string => `line-L${lineIndex}`,
   selectIdRegex: RegExp('line-L(?<lineIndex>\\d+)'),
-  testId: (lineIndex: number): string => `line-L${lineIndex}`,
 };
 
 export const Line: React.FC<LineProps> = ({ lineIndex, ...rest }) => (

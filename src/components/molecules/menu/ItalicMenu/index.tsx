@@ -8,9 +8,7 @@ export type ItalicMenuProps = {
   onButtonClick: () => void;
 };
 
-export const ItalicMenuConstants = {
-  testId: 'italic-menu',
-};
+export const ItalicMenuConstants = {};
 
 export const ItalicMenu: React.FC<ItalicMenuProps> = ({ menuSwitch, onButtonClick }) => (
   <IconButtonMenu pressed={menuSwitch === 'on'} disabled={menuSwitch === 'disabled'} onClick={onButtonClick}>

@@ -9,7 +9,6 @@ export type HashtagMenuProps = {
 };
 
 export const HashtagMenuConstants = {
-  testId: 'hashtag-menu',
   defaultLabel: 'hashtag link',
 };
 

@@ -6,7 +6,6 @@ export type TextFieldRootProps = React.PropsWithChildren;
 export const TextFieldRootConstants = {
   selectId: 'text-field-root',
   selectIdRegex: /text-field-root/,
-  testId: 'text-field-root',
 };
 
 export const TextFieldRoot: React.FC<TextFieldRootProps> = ({ children }) => (

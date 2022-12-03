@@ -7,7 +7,6 @@ export type SuggestionListItemProps = {
 
 export const SuggestionListItemConstants = {
   selectId: (index: number): string => `suggestion-item-${index}`,
-  testId: (index: number): string => `suggestion-item-${index}`,
 };
 
 export const SuggestionListItem: React.FC<SuggestionListItemProps> = ({ index, ...rest }) => (

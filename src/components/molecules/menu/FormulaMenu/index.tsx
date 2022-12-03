@@ -20,19 +20,15 @@ export type FormulaMenuProps = {
 };
 
 export const FormulaMenuConstants = {
-  testId: 'formula-menu',
   items: {
     inline: {
       defaultLabel: 'inline formula',
-      testId: 'inline-formula-menu-item',
     },
     display: {
       defaultLabel: 'display formula',
-      testId: 'display-formula-menu-item',
     },
     block: {
       defaultLabel: 'block formula',
-      testId: 'block-formula-menu-item',
     },
   },
 };

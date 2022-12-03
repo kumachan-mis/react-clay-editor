@@ -17,15 +17,12 @@ export type ItemizationMenuProps = {
 };
 
 export const ItemizationMenuConstants = {
-  testId: 'itemization-menu',
   items: {
     indent: {
       defaultLabel: 'indent',
-      testId: 'indent-itemization-menu-item',
     },
     outdent: {
       defaultLabel: 'outdent',
-      testId: 'outdent-itemization-menu-item',
     },
   },
 };

@@ -17,15 +17,12 @@ export type QuotationMenuProps = {
 };
 
 export const QuotationMenuConstants = {
-  testId: 'quotation-menu',
   items: {
     indent: {
       defaultLabel: 'indent',
-      testId: 'indent-quotation-menu-item',
     },
     outdent: {
       defaultLabel: 'outdent',
-      testId: 'outdent-quotation-menu-item',
     },
   },
 };

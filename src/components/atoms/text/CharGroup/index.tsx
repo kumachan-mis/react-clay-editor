@@ -10,7 +10,6 @@ export type CharGroupProps = {
 export const CharGroupConstants = {
   selectId: (lineIndex: number, first: number, last: number): string => `chargroup-L${lineIndex}C${first}-${last}`,
   selectIdRegex: RegExp('chargroup-L(?<lineIndex>\\d+)C(?<first>\\d+)-(?<last>\\d+)'),
-  testId: (lineIndex: number, first: number, last: number): string => `chargroup-L${lineIndex}C${first}-${last}`,
 };
 
 export const CharGroup: React.FC<CharGroupProps> = ({ lineIndex, firstCharIndex, lastCharIndex, ...rest }) => (

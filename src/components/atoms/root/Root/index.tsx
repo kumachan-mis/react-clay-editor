@@ -6,7 +6,6 @@ export type RootProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
 export const RootConstants = {
   selectId: 'root',
   selectIdRegex: /root/,
-  testId: 'root',
 };
 
 const ForwardRefRoot: React.ForwardRefRenderFunction<HTMLDivElement, RootProps> = ({ children, ...rest }, ref) => (

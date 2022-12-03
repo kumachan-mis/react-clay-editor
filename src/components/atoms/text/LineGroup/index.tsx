@@ -9,7 +9,6 @@ export type LineGroupProps = {
 export const LineGroupConstants = {
   selectId: (first: number, last: number): string => `linegroup-L${first}-${last}`,
   selectIdRegex: RegExp('linegroup-L(?<first>\\d+)-(?<last>\\d+)'),
-  testId: (first: number, last: number): string => `linegroup-L${first}-${last}`,
 };
 
 export const LineGroup: React.FC<LineGroupProps> = ({ firstLineIndex, lastLineIndex, ...rest }) => (

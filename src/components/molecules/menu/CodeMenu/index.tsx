@@ -18,15 +18,12 @@ export type CodeMenuProps = {
 };
 
 export const CodeMenuConstants = {
-  testId: 'code-menu',
   items: {
     inline: {
       defaultLabel: 'inline code',
-      testId: 'inline-code-menu-item',
     },
     block: {
       defaultLabel: 'block code',
-      testId: 'block-code-menu-item',
     },
   },
 };
