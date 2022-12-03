@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type SelectionRectProps = {
   top: number;
   left: number;
@@ -12,7 +10,6 @@ export type SelectionRectProps = {
 
 export const SelectionRectConstants = {
   selectId: 'selection',
-  testId: 'selection',
 };
 
 export const SelectionRect: React.FC<SelectionRectProps> = ({ top, left, width, height }) => (
@@ -22,7 +19,6 @@ export const SelectionRect: React.FC<SelectionRectProps> = ({ top, left, width, 
     width={width}
     height={height}
     data-selectid={SelectionRectConstants.selectId}
-    data-testid={createTestId(SelectionRectConstants.testId)}
   />
 );
 

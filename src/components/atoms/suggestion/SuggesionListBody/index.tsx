@@ -5,15 +5,10 @@ export type SuggestionListBodyProps = React.PropsWithoutRef<React.ComponentProps
 
 export const SuggestionListBodyConstants = {
   selectId: 'suggestion-body',
-  testId: 'suggestion-body',
 };
 
 export const SuggestionListBody: React.FC<SuggestionListBodyProps> = ({ ...rest }) => (
-  <StyledSuggestionListBody
-    {...rest}
-    data-selectid={SuggestionListBodyConstants.selectId}
-    data-testid={SuggestionListBodyConstants.testId}
-  />
+  <StyledSuggestionListBody {...rest} data-selectid={SuggestionListBodyConstants.selectId} />
 );
 
 const StyledSuggestionListBody = styled.ul`

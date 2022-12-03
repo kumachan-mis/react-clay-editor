@@ -1,23 +1,15 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type RootProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const RootConstants = {
   selectId: 'root',
   selectIdRegex: /root/,
-  testId: 'root',
 };
 
 const ForwardRefRoot: React.ForwardRefRenderFunction<HTMLDivElement, RootProps> = ({ children, ...rest }, ref) => (
-  <StyledForwardRefRoot
-    {...rest}
-    ref={ref}
-    data-selectid={RootConstants.selectId}
-    data-testid={createTestId(RootConstants.testId)}
-  >
+  <StyledForwardRefRoot {...rest} ref={ref} data-selectid={RootConstants.selectId}>
     <StyledFlexRoot>{children}</StyledFlexRoot>
   </StyledForwardRefRoot>
 );

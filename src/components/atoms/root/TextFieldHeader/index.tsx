@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type TextFieldHeaderProps = {
   header: string;
   size?: 'normal' | 'larger' | 'largest';
@@ -11,15 +9,10 @@ export type TextFieldHeaderProps = {
 export const TextFieldHeaderConstants = {
   selectId: 'text-field-header',
   selectIdRegex: /text-field-header/,
-  testId: 'text-field-header',
 };
 
 export const TextFieldHeader: React.FC<TextFieldHeaderProps> = ({ size = 'largest', header }) => (
-  <StyledTextFieldHeader
-    size={size}
-    data-selectid={TextFieldHeaderConstants.selectId}
-    data-testid={createTestId(TextFieldHeaderConstants.testId)}
-  >
+  <StyledTextFieldHeader size={size} data-selectid={TextFieldHeaderConstants.selectId}>
     {header}
   </StyledTextFieldHeader>
 );

@@ -1,15 +1,12 @@
 import katex, { KatexOptions, ParseError } from 'katex';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type KaTeXProps = {
   options?: KatexOptions;
 } & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const KaTeXConstants = {
   selectId: 'katex',
-  testId: 'katex',
 };
 
 export const KaTeX: React.FC<KaTeXProps> = ({ options, children, ...rest }) => {
@@ -20,12 +17,5 @@ export const KaTeX: React.FC<KaTeXProps> = ({ options, children, ...rest }) => {
       return error instanceof ParseError ? error.message : '';
     }
   }, [children, options]);
-  return (
-    <span
-      dangerouslySetInnerHTML={{ __html: innerHtml }}
-      {...rest}
-      data-selectid={KaTeXConstants.selectId}
-      data-testid={createTestId(KaTeXConstants.testId)}
-    />
-  );
+  return <span dangerouslySetInnerHTML={{ __html: innerHtml }} {...rest} data-selectid={KaTeXConstants.selectId} />;
 };

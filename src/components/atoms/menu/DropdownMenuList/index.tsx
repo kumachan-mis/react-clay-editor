@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type DropdownMenuListProps = {
   open: boolean;
   anchorEl: HTMLElement | null;
@@ -10,7 +8,6 @@ export type DropdownMenuListProps = {
 
 export const DropdownMenuListConstants = {
   selectId: 'dropdown-menu-list',
-  testId: 'dropdown-menu-list',
 };
 
 export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, anchorEl, ...rest }) => {
@@ -19,10 +16,7 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, anchor
   return !open ? (
     <></>
   ) : (
-    <StyledDropdownMenuList
-      data-selectid={DropdownMenuListConstants.selectId}
-      data-testid={createTestId(DropdownMenuListConstants.testId)}
-    >
+    <StyledDropdownMenuList data-selectid={DropdownMenuListConstants.selectId}>
       <StyledDropdownMenuListInner left={anchorRect?.left || 0} top={anchorRect?.bottom || 0} role="menu" {...rest} />
     </StyledDropdownMenuList>
   );

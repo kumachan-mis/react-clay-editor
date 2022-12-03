@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type EmbededLinkProps = React.PropsWithChildren<{
   editMode: boolean;
   forceClickable: boolean;
@@ -11,7 +9,6 @@ export type EmbededLinkProps = React.PropsWithChildren<{
 
 export const EmbededLinkConstants = {
   selectId: 'embeded-link',
-  testId: 'embeded-link',
 };
 
 export const EmbededLink: React.FC<EmbededLinkProps> = ({ editMode, forceClickable, children, anchorProps }) => {
@@ -59,7 +56,6 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ editMode, forceClickab
       onClick={handleOnClick}
       data-clickable={clickable}
       data-selectid={EmbededLinkConstants.selectId}
-      data-testid={createTestId(EmbededLinkConstants.testId)}
       {...rest}
     >
       {children}

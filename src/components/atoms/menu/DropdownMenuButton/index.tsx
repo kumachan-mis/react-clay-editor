@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
 import { ArrowIcon } from '../../../../icons/ArrowIcon';
 
 export type DropdownMenuButtonProps = {
@@ -15,12 +14,10 @@ export type DropdownMenuButtonProps = {
 
 export const DropdownMenuButtonConstants = {
   main: {
-    selectid: 'dropdown-main-button',
-    testId: 'dropdown-main-button',
+    selectId: 'dropdown-main-button',
   },
   arrow: {
-    selectid: 'dropdown-arrow-button',
-    testId: 'dropdown-arrow-button',
+    selectId: 'dropdown-arrow-button',
   },
 };
 
@@ -63,8 +60,7 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
       <StyledDropdownMainButton
         disabled={disabled || mainDisabled}
         {...mainRest}
-        data-selectid={DropdownMenuButtonConstants.main.selectid}
-        data-testid={createTestId(DropdownMenuButtonConstants.main.testId)}
+        data-selectid={DropdownMenuButtonConstants.main.selectId}
       >
         {children}
       </StyledDropdownMainButton>
@@ -74,8 +70,7 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
         onClick={handleOnArrowClick}
         aria-haspopup="true"
         aria-expanded={open}
-        data-selectid={DropdownMenuButtonConstants.arrow.selectid}
-        data-testid={createTestId(DropdownMenuButtonConstants.arrow.testId)}
+        data-selectid={DropdownMenuButtonConstants.arrow.selectId}
       >
         <ArrowIcon />
       </StyledDropdownArrowButton>

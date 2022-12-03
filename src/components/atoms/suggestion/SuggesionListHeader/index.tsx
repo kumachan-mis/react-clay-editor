@@ -7,7 +7,7 @@ export type SuggestionListHeaderProps = {
 
 export const SuggestionListHeaderConstants = {
   selectId: 'suggestion-header',
-  testId: 'suggestion-header',
+
   name: (suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none'): string => {
     switch (suggestionType) {
       case 'text':
@@ -25,10 +25,7 @@ export const SuggestionListHeaderConstants = {
 };
 
 export const SuggestionListHeader: React.FC<SuggestionListHeaderProps> = ({ suggestionType }) => (
-  <StyledSuggestionListHeader
-    data-selectid={SuggestionListHeaderConstants.selectId}
-    data-testid={SuggestionListHeaderConstants.testId}
-  >
+  <StyledSuggestionListHeader data-selectid={SuggestionListHeaderConstants.selectId}>
     {SuggestionListHeaderConstants.name(suggestionType)}
   </StyledSuggestionListHeader>
 );
