@@ -19,7 +19,8 @@ module.exports = {
   },
   output: {
     path: envVars.OUTPUT_PATH,
-    filename: '[name].bundle.[chunkhash].js',
+    // workaround for https://github.com/jantimon/html-webpack-plugin/issues/1638
+    filename: isProduction ? '[name].bundle.[chunkhash].js' : '[name].bundle.js',
     publicPath: '/',
     clean: true,
   },

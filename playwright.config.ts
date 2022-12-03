@@ -39,7 +39,7 @@ const config: PlaywrightTestConfig = {
     {
       name: 'windows-markdown',
       use: {
-        ...devices['Desktop Firefox'],
+        ...devices['Desktop Chrome'],
         userAgent: userAgents['Windows Chrome'],
         baseURL: baseURLs['markdown'],
       },
@@ -57,7 +57,7 @@ const config: PlaywrightTestConfig = {
     {
       name: 'macos-bracket',
       use: {
-        ...devices['Desktop Firefox'],
+        ...devices['Desktop Chrome'],
         userAgent: userAgents['MacOS Chrome'],
         baseURL: baseURLs['bracket'],
       },
