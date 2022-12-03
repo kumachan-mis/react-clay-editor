@@ -22,7 +22,6 @@ export const TextFieldRoot: React.FC<TextFieldRootProps> = ({ children }) => (
 
 const StyledTextFieldRoot = styled.div`
   width: 100%;
-  height: calc(100% - 36px);
   flex-grow: 1;
   overflow-y: scroll;
   position: relative;

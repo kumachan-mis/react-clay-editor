@@ -184,8 +184,9 @@ combination of text decorations is not supported yet
 
 const className = css`
   && {
-    width: calc(50% - 32px);
-    height: calc(100% - 32px);
+    width: calc(50% - 20px);
+    height: calc(100% - 20px);
+    box-sizing: border-box;
     margin: 10px;
     border: solid 1px;
     padding: 5px;

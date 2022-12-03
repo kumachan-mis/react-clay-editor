@@ -11,14 +11,23 @@ export const RootConstants = {
   testId: 'root',
 };
 
-const ForwardRefRoot: React.ForwardRefRenderFunction<HTMLDivElement, RootProps> = ({ ...rest }, ref) => (
+const ForwardRefRoot: React.ForwardRefRenderFunction<HTMLDivElement, RootProps> = ({ children, ...rest }, ref) => (
   <StyledForwardRefRoot
     {...rest}
     ref={ref}
     data-selectid={RootConstants.selectId}
     data-testid={createTestId(RootConstants.testId)}
-  />
+  >
+    <StyledFlexRoot>{children}</StyledFlexRoot>
+  </StyledForwardRefRoot>
 );
+
+const StyledFlexRoot = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 const StyledForwardRefRoot = styled.div`
   width: 400px;
