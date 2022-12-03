@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { QuotationLabels } from '../../../../common/types';
 import { createTestId } from '../../../../common/utils';
 import { QuotationIcon } from '../../../../icons/Quotation';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
@@ -8,15 +7,15 @@ import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
-import {
-  handleOnQuotationButtonClick,
-  handleOnQuotationItemClick,
-  QuotationMenuHandlerProps,
-} from '../callbacks/quotation';
-import { CommonMenuProps, LineMenuProps } from '../common/type';
-import { quotationMenuSwitch } from '../switches/quotation';
 
-export type QuotationMenuProps = QuotationLabels & LineMenuProps & CommonMenuProps;
+export type QuotationMenuProps = {
+  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled';
+  indentLabel: string;
+  outdentLabel: string;
+  onButtonClick: () => void;
+  onIndentItemClick: () => void;
+  onOutdentItemClick: () => void;
+};
 
 export const QuotationMenuConstants = {
   testId: 'quotation-menu',
@@ -32,18 +31,15 @@ export const QuotationMenuConstants = {
   },
 };
 
-export const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & CommonMenuProps> = ({
-  syntax,
-  text,
-  lineNodes: nodes,
-  state,
-  setTextAndState,
-  indentLabel = QuotationMenuConstants.items.indent.defaultLabel,
-  outdentLabel = QuotationMenuConstants.items.outdent.defaultLabel,
+export const QuotationMenu: React.FC<QuotationMenuProps> = ({
+  menuSwitch,
+  indentLabel,
+  outdentLabel,
+  onButtonClick,
+  onIndentItemClick,
+  onOutdentItemClick,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const menuSwitch = quotationMenuSwitch(syntax, nodes, state);
-  const props: QuotationMenuHandlerProps = { syntax, indentLabel, outdentLabel };
 
   return (
     <DropdownMenu>
@@ -53,27 +49,21 @@ export const QuotationMenu: React.FC<QuotationMenuProps & LineMenuProps & Common
         onClose={onClose}
         pressed={menuSwitch === 'allon'}
         disabled={menuSwitch === 'disabled'}
-        buttonProps={{
-          onClick: () => setTextAndState(...handleOnQuotationButtonClick(text, nodes, state, props, menuSwitch)),
-        }}
+        buttonProps={{ onClick: onButtonClick }}
         data-testid={createTestId(QuotationMenuConstants.testId)}
       >
         <QuotationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuListItem
-          onClick={() =>
-            setTextAndState(...handleOnQuotationItemClick(text, nodes, state, props, 'indent', menuSwitch))
-          }
+          onClick={onIndentItemClick}
           data-testid={createTestId(QuotationMenuConstants.items.indent.testId)}
         >
           {indentLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
           disabled={menuSwitch === 'alloff'}
-          onClick={() =>
-            setTextAndState(...handleOnQuotationItemClick(text, nodes, state, props, 'outdent', menuSwitch))
-          }
+          onClick={onOutdentItemClick}
           data-testid={createTestId(QuotationMenuConstants.items.outdent.testId)}
         >
           {outdentLabel}

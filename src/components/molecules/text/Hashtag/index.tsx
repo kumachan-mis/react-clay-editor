@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { HashtagNode } from '../../../../parser/types';
-import { getHashtagName } from '../../../../parser/utils';
+import { HashtagNode } from '../../../../parser/hashtag/types';
+import { getHashtagName } from '../../../../parser/hashtag/utils';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
@@ -17,7 +17,7 @@ export const Hashtag: React.FC<HashtagProps> = ({ node, editMode, linkForceClick
     <EmbededLink
       editMode={editModeValue}
       forceClickable={linkForceClickable}
-      anchorProps={(clickable) => hashtagVisual?.anchorProps?.(getHashtagName(linkName), clickable)}
+      anchorProps={(clickable) => hashtagVisual?.anchorProps?.(getHashtagName(node), clickable)}
     >
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>

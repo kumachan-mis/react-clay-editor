@@ -1,4 +1,4 @@
-import { CursorCoordinate } from '../src/components/molecules/cursor/Cursor/types';
+import { CursorCoordinate } from '../src/types/cursor/cursorCoordinate';
 
 export interface TestCase {
   name: string;

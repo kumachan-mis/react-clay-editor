@@ -1,17 +1,24 @@
 import { Screen } from '@testing-library/dom';
 import React from 'react';
 
-import { Editor, EditorProps } from '../src';
+import { EditorRoot } from '../src/components/organisms/EditorRoot';
+import { EditorSyntaxMenu } from '../src/components/organisms/EditorSyntaxMenu';
+import { EditorTextFieldBody } from '../src/components/organisms/EditorTextFieldBody';
+import { EditorTextFieldRoot } from '../src/components/organisms/EditorTextFieldRoot';
+import { EditorProps } from '../src/contexts/EditorPropsContext';
 
-export type MockEditorProps = Omit<EditorProps, 'text' | 'onChangeText'> & { initText?: string };
+export type MockEditorProps = Omit<EditorProps, 'text' | 'setText'> & { initText?: string };
 
 export const MockEditor: React.FC<MockEditorProps> = ({ initText = '', ...props }) => {
   const [text, setText] = React.useState(initText);
   return (
-    <>
-      <Editor text={text} onChangeText={setText} {...props} />
-      <MockText text={text} />
-    </>
+    <EditorRoot text={text} setText={setText} {...props}>
+      <EditorSyntaxMenu />
+      <EditorTextFieldRoot>
+        <EditorTextFieldBody />
+        <MockText text={text} />
+      </EditorTextFieldRoot>
+    </EditorRoot>
   );
 };
 
@@ -88,8 +95,8 @@ export class SpyOnGetBoundingClientRect {
     return this.getSpyInstance(element, width, height, x, y);
   }
 
-  editorBody(): jest.SpyInstance<DOMRect, []> {
-    const element = this.screen.getByTestId('text-field-body');
+  textField(): jest.SpyInstance<DOMRect, []> {
+    const element = this.screen.getByTestId('text-field');
     const [width, height] = [
       this.config.size * this.config.chars,
       (this.config.size + 2 * this.config.margin) * this.config.lines,

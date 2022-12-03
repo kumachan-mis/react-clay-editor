@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UrlNode } from '../../../../parser/types';
+import { UrlNode } from '../../../../parser/url/types';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';

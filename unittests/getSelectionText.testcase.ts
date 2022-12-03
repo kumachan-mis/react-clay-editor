@@ -1,9 +1,9 @@
-import { TextSelection } from '../src/components/molecules/selection/Selection/types';
+import { CursorSelection } from '../src/types/selection/cursorSelection';
 
 export interface TestCase {
   name: string;
   text: string;
-  textSelection: TextSelection | undefined;
+  cursorSelection: CursorSelection | undefined;
   expected: string;
 }
 
@@ -14,7 +14,7 @@ export const testCases: TestCase[] = [
       'Alice was beginning to get very tired of sitting by her sister on the bank',
       'and, of having nothing to do.',
     ].join('\n'),
-    textSelection: {
+    cursorSelection: {
       fixed: {
         lineIndex: 0,
         charIndex: 66,
@@ -32,7 +32,7 @@ export const testCases: TestCase[] = [
       'Alice was beginning to get very tired of sitting by her sister on the bank',
       'and, of having nothing to do.',
     ].join('\n'),
-    textSelection: {
+    cursorSelection: {
       fixed: {
         lineIndex: 1,
         charIndex: 6,
@@ -50,7 +50,7 @@ export const testCases: TestCase[] = [
       'Alice was beginning to get very tired of sitting by her sister on the bank',
       'and, of having nothing to do.',
     ].join('\n'),
-    textSelection: {
+    cursorSelection: {
       fixed: {
         lineIndex: 0,
         charIndex: 29,
@@ -68,7 +68,7 @@ export const testCases: TestCase[] = [
       'Alice was beginning to get very tired of sitting by her sister on the bank',
       'and, of having nothing to do.',
     ].join('\n'),
-    textSelection: {
+    cursorSelection: {
       fixed: {
         lineIndex: 0,
         charIndex: 43,

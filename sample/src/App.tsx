@@ -1,13 +1,12 @@
 import { css } from '@emotion/css';
 import React from 'react';
 
-import { Editor } from '../../src';
-import {
-  BracketLinkProps,
-  HashtagProps,
-  TaggedLinkProps,
-  TextProps,
-} from '../../src/components/organisms/Editor/types';
+import { EditorRoot } from '../../src/components/organisms/EditorRoot';
+import { EditorSyntaxMenu } from '../../src/components/organisms/EditorSyntaxMenu';
+import { EditorTextFieldBody } from '../../src/components/organisms/EditorTextFieldBody';
+import { EditorTextFieldHeader } from '../../src/components/organisms/EditorTextFieldHeader';
+import { EditorTextFieldRoot } from '../../src/components/organisms/EditorTextFieldRoot';
+import { BracketLinkProps, HashtagProps, TaggedLinkProps, TextProps } from '../../src/contexts/EditorPropsContext';
 
 const header = 'React Realtime Markup Editor';
 
@@ -72,7 +71,7 @@ and so on
   import { Editor } from 'react-realtime-markup-editor';
   const App: React.FC = () => {
     const [text, setText] = React.useState('');
-    return <Editor text={text} onChangeText={setText} />;
+    return <Editor text={text} setText={setText} />;
   };
   // note: code block is not a bulleted item
   \`\`\`
@@ -95,7 +94,7 @@ and so on
   \\right)
   $$
 
-[** Quatations]
+[** Quotations]
 > Genius is one percent inspiration and ninety-nine percent perspiration
 > by Thomas Edison`;
 
@@ -156,7 +155,7 @@ combination of text decorations is not supported yet
   import { Editor } from 'react-realtime-markup-editor';
   const App: React.FC = () => {
     const [text, setText] = React.useState('');
-    return <Editor text={text} onChangeText={setText} />;
+    return <Editor text={text} setText={setText} />;
   };
   // note: code block is not a bulleted item
   \`\`\`
@@ -179,14 +178,15 @@ combination of text decorations is not supported yet
   \\right)
   $$
 
-## Quatations
+## Quotations
 > Genius is one percent inspiration and ninety-nine percent perspiration
 > by Thomas Edison`;
 
 const className = css`
   && {
-    width: calc(50% - 32px);
-    height: calc(100% - 32px);
+    width: calc(50% - 20px);
+    height: calc(100% - 20px);
+    box-sizing: border-box;
     margin: 10px;
     border: solid 1px;
     padding: 5px;
@@ -195,7 +195,6 @@ const className = css`
 `;
 
 const textProps: TextProps = {
-  header,
   suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'],
 };
 
@@ -267,26 +266,38 @@ export const App: React.FC = () => {
 
   return (
     <>
-      <Editor
+      <EditorRoot
         text={bracketText}
-        onChangeText={setBracketText}
+        setText={setBracketText}
         syntax="bracket"
         textProps={textProps}
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
         taggedLinkPropsMap={taggedLinkPropsMap}
         className={className}
-      />
-      <Editor
+      >
+        <EditorSyntaxMenu />
+        <EditorTextFieldRoot>
+          <EditorTextFieldHeader header={header} />
+          <EditorTextFieldBody />
+        </EditorTextFieldRoot>
+      </EditorRoot>
+      <EditorRoot
         text={markdownText}
-        onChangeText={setMarkdownText}
+        setText={setMarkdownText}
         syntax="markdown"
         textProps={textProps}
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
         taggedLinkPropsMap={taggedLinkPropsMap}
         className={className}
-      />
+      >
+        <EditorSyntaxMenu />
+        <EditorTextFieldRoot>
+          <EditorTextFieldHeader header={header} />
+          <EditorTextFieldBody />
+        </EditorTextFieldRoot>
+      </EditorRoot>
     </>
   );
 };

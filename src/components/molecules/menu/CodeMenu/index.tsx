@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { CodeLabels, CodeParsing } from '../../../../common/types';
 import { createTestId } from '../../../../common/utils';
 import { CodeIcon } from '../../../../icons/CodeIcon';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
@@ -8,16 +7,16 @@ import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
-import {
-  CodeMenuHandlerProps,
-  handleOnBlockCodeItemClick,
-  handleOnCodeButtonClick,
-  handleOnInlineCodeItemClick,
-} from '../callbacks/code';
-import { BlockMenuProps, CommonMenuProps, ContentMenuProps } from '../common/type';
-import { blockCodeMenuSwitch, inlineCodeMenuSwitch } from '../switches/code';
 
-export type CodeMenuProps = CodeLabels & CodeParsing & ContentMenuProps & BlockMenuProps & CommonMenuProps;
+export type CodeMenuProps = {
+  inlineMenuSwitch: 'on' | 'off' | 'disabled';
+  blockMenuSwitch: 'on' | 'off' | 'disabled';
+  inlineLabel: string;
+  blockLabel: string;
+  onButtonClick: () => void;
+  onInlineItemClick: () => void;
+  onBlockItemClick: () => void;
+};
 
 export const CodeMenuConstants = {
   testId: 'code-menu',
@@ -34,22 +33,15 @@ export const CodeMenuConstants = {
 };
 
 export const CodeMenu: React.FC<CodeMenuProps> = ({
-  syntax,
-  text,
-  lineNodes,
-  nodes,
-  contentPosition,
-  blockPosition,
-  state,
-  setTextAndState,
-  disabled,
-  inlineLabel = CodeMenuConstants.items.inline.defaultLabel,
-  blockLabel = CodeMenuConstants.items.block.defaultLabel,
+  inlineMenuSwitch,
+  blockMenuSwitch,
+  inlineLabel,
+  blockLabel,
+  onButtonClick,
+  onInlineItemClick,
+  onBlockItemClick,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-  const props: CodeMenuHandlerProps = { syntax, inlineLabel, blockLabel };
-  const inlineMenuSwitch = inlineCodeMenuSwitch(lineNodes, contentPosition);
-  const blockMenuSwitch = blockCodeMenuSwitch(nodes, blockPosition, state);
 
   return (
     <DropdownMenu>
@@ -58,23 +50,8 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
         onOpen={onOpen}
         onClose={onClose}
         pressed={inlineMenuSwitch === 'on' || blockMenuSwitch === 'on'}
-        disabled={disabled || (inlineMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled')}
-        buttonProps={{
-          onClick: () =>
-            setTextAndState(
-              ...handleOnCodeButtonClick(
-                text,
-                lineNodes,
-                nodes,
-                contentPosition,
-                blockPosition,
-                state,
-                props,
-                inlineMenuSwitch,
-                blockMenuSwitch
-              )
-            ),
-        }}
+        disabled={inlineMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled'}
+        buttonProps={{ onClick: onButtonClick }}
         data-testid={createTestId(CodeMenuConstants.testId)}
       >
         <CodeIcon />
@@ -83,9 +60,7 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
         <DropdownMenuListItem
           selected={inlineMenuSwitch === 'on'}
           disabled={inlineMenuSwitch === 'disabled'}
-          onClick={() =>
-            setTextAndState(...handleOnInlineCodeItemClick(text, lineNodes, contentPosition, state, inlineMenuSwitch))
-          }
+          onClick={onInlineItemClick}
           data-testid={createTestId(CodeMenuConstants.items.inline.testId)}
         >
           {inlineLabel}
@@ -93,9 +68,7 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
         <DropdownMenuListItem
           selected={blockMenuSwitch === 'on'}
           disabled={blockMenuSwitch === 'disabled'}
-          onClick={() =>
-            setTextAndState(...handleOnBlockCodeItemClick(text, nodes, blockPosition, state, props, blockMenuSwitch))
-          }
+          onClick={onBlockItemClick}
           data-testid={createTestId(CodeMenuConstants.items.block.testId)}
         >
           {blockLabel}

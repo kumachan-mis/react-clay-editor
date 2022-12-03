@@ -7,7 +7,7 @@ export const MenuList: React.FC<MenuListProps> = ({ ...rest }) => <StyledMenuLis
 
 const StyledMenuList = styled.div`
   width: 100%;
-  height: 36px;
+  min-height: 36px;
   display: flex;
   list-style: none;
   align-items: center;

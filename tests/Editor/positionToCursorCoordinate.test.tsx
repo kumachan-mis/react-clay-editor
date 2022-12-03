@@ -5,7 +5,7 @@ import { CharConstants } from '../../src/components/atoms/text/Char';
 import { CharGroupConstants } from '../../src/components/atoms/text/CharGroup';
 import { LineConstants } from '../../src/components/atoms/text/Line';
 import { LineGroupConstants } from '../../src/components/atoms/text/LineGroup';
-import { positionToCursorCoordinate } from '../../src/components/organisms/Editor/common/cursor';
+import { positionToCursorCoordinate } from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import {
   MockEditor,
@@ -37,11 +37,11 @@ describe('function positionToCursorCoordinate in Editor', () => {
     const charGroupElements = screen.getAllByTestId(/^chargroup-L\d+C\d+-\d+$/);
     const lineElements = screen.getAllByTestId(/^line-L\d+$/);
     const lineGroupElements = screen.getAllByTestId(/^linegroup-L\d+-\d+$/);
-    const body = screen.getByTestId('text-field-body');
+    const textField = screen.getByTestId('text-field');
 
     const originalElementsFromPoint = document.elementFromPoint;
 
-    const elements = [...charElements, ...charGroupElements, ...lineElements, ...lineGroupElements, body];
+    const elements = [...charElements, ...charGroupElements, ...lineElements, ...lineGroupElements, textField];
     Object.defineProperty(document, 'elementsFromPoint', {
       value: (x: number, y: number) => mockElementsFromPoint(x, y, elements),
       configurable: true,
@@ -81,17 +81,19 @@ describe('function positionToCursorCoordinate in Editor', () => {
       return spyOnGetBoundingClientRect.lineGroup(firstLineIndex, lastLineIndex);
     });
 
-    const spiedEditorBodyGetBoundingClientRect = spyOnGetBoundingClientRect.editorBody();
+    const spiedTextFieldGetBoundingClientRect = spyOnGetBoundingClientRect.textField();
 
-    const textField = screen.getByTestId('text-field-root');
-    expect(positionToCursorCoordinate(text, testCase.inputPosition, textField)).toEqual(testCase.expectedCoordinate);
+    const textFieldRoot = screen.getByTestId('text-field-root');
+    expect(positionToCursorCoordinate(text, testCase.inputPosition, textFieldRoot)).toEqual(
+      testCase.expectedCoordinate
+    );
 
     for (const spiedGetBoundingClientRects of [
       ...spiedCharGetBoundingClientRects,
       ...spiedCharGroupGetBoundingClientRects,
       ...spiedLineGetBoundingClientRects,
       ...spiedLineGroupGetBoundingClientRects,
-      spiedEditorBodyGetBoundingClientRect,
+      spiedTextFieldGetBoundingClientRect,
     ]) {
       spiedGetBoundingClientRects.mockRestore();
     }

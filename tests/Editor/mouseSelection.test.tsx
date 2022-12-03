@@ -3,9 +3,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
 import * as selection from '../../src/components/molecules/selection/Selection';
-import { TextSelection } from '../../src/components/molecules/selection/Selection/types';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
-import * as cursor from '../../src/components/organisms/Editor/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
+import { CursorSelection } from '../../src/types/selection/cursorSelection';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
 
@@ -52,10 +52,10 @@ describe('mouseSelection in Editor', () => {
       spyOnGetBoundingClientRect.char(event.coordinate.lineIndex, event.coordinate.charIndex)
     );
 
-    const body = screen.getByTestId('text-field-body');
+    const textField = screen.getByTestId('text-field');
     for (const event of testCase.inputEvents) {
       const { lineIndex, charIndex } = event.coordinate;
-      fireEvent[event.type](body, { clientX: charIndex, clientY: lineIndex, ...event.init });
+      fireEvent[event.type](textField, { clientX: charIndex, clientY: lineIndex, ...event.init });
     }
 
     const expectedSelectionText = testCase.expectedSelectionLines.join('\n');
@@ -65,8 +65,8 @@ describe('mouseSelection in Editor', () => {
       expect(screen.queryAllByTestId('selection')).toEqual([]);
     }
 
-    const MockSelection: React.FC<{ textSelection: TextSelection | undefined }> = ({ textSelection }) => (
-      <div data-testid="mock-selected-text">{getSelectionText(text, textSelection)}</div>
+    const MockSelection: React.FC<{ cursorSelection: CursorSelection | undefined }> = ({ cursorSelection }) => (
+      <div data-testid="mock-selected-text">{getSelectionText(text, cursorSelection)}</div>
     );
 
     SpiedSelection.mockImplementation(MockSelection);

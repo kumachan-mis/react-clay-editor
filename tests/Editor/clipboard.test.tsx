@@ -2,7 +2,7 @@ import { EventType } from '@testing-library/dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import * as cursor from '../../src/components/organisms/Editor/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 
@@ -61,9 +61,9 @@ describe('clipboardEvents (read) in Editor', () => {
     const text = common.textLines.join('\n');
     render(<MockEditor initText={text} />);
 
-    const body = screen.getByTestId('text-field-body');
+    const textField = screen.getByTestId('text-field');
     for (const event of testCase.inputMouseEvents) {
-      fireEvent[event.type](body, {
+      fireEvent[event.type](textField, {
         clientX: event.coordinate.charIndex,
         clientY: event.coordinate.lineIndex,
       });
@@ -87,7 +87,7 @@ describe('clipboardEvents (write) in Editor', () => {
     const text = common.textLines.join('\n');
     render(<MockEditor initText={text} />);
 
-    const body = screen.getByTestId('text-field-body');
+    const body = screen.getByTestId('text-field');
     for (const event of testCase.inputMouseEvents) {
       fireEvent[event.type](body, {
         clientX: event.coordinate.charIndex,

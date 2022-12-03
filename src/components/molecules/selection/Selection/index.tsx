@@ -1,11 +1,15 @@
 import React from 'react';
 
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { SelectionRect } from '../../../atoms/selection/SelectionRect';
 
 import { useSelection } from './hooks';
-import { Props } from './types';
 
-export const Selection: React.FC<Props> = (props) => {
+export type SelectionProps = {
+  cursorSelection: CursorSelection | undefined;
+};
+
+export const Selection: React.FC<SelectionProps> = (props) => {
   const { state, ref } = useSelection(props);
 
   return (

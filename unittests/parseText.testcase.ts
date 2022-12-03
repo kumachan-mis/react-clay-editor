@@ -1,5 +1,5 @@
-import { parserConstants } from '../src/parser/constants';
-import { TextNode, ParsingOptions } from '../src/parser/types';
+import { TextNode, ParsingOptions } from '../src/parser';
+import { createTaggedLinkRegex } from '../src/parser/taggedLink/parseTaggedLink';
 
 type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] : RecursivePartial<T[P]>;
@@ -284,7 +284,7 @@ export const commonTestCases: TestCase[] = [
     name: 'tagged link',
     text: ['[@: tagged link test]'].join('\n'),
     parsingOptions: {
-      taggedLinkRegexes: [parserConstants.common.taggedLink('@')],
+      taggedLinkRegexes: [createTaggedLinkRegex('@')],
     },
     expected: [
       {
@@ -414,7 +414,7 @@ export const commonTestCases: TestCase[] = [
       'left https://test.com right',
     ].join('\n'),
     parsingOptions: {
-      taggedLinkRegexes: [parserConstants.common.taggedLink('@')],
+      taggedLinkRegexes: [createTaggedLinkRegex('@')],
     },
     expected: [
       {

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { TextLabels } from '../../../../common/types';
 import { createTestId } from '../../../../common/utils';
 import { SectionIcon } from '../../../../icons/Section';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
@@ -8,11 +7,17 @@ import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
-import { handleOnSectionButtonClick, handleOnSectionItemClick, SectionMenuHandlerProps } from '../callbacks/section';
-import { CommonMenuProps, LineMenuProps } from '../common/type';
-import { sectionMenuSwitch } from '../switches/section';
 
-export type SectionMenuProps = TextLabels & LineMenuProps & CommonMenuProps;
+export type SectionMenuProps = {
+  menuSwitch: 'off' | 'normal' | 'larger' | 'largest' | 'disabled';
+  normalLabel: string;
+  largerLabel: string;
+  largestLabel: string;
+  onButtonClick: () => void;
+  onNormalItemClick: () => void;
+  onLargerItemClick: () => void;
+  onLargestItemClick: () => void;
+};
 
 export const SectionMenuConstants = {
   testId: 'section-menu',
@@ -33,31 +38,16 @@ export const SectionMenuConstants = {
 };
 
 export const SectionMenu: React.FC<SectionMenuProps> = ({
-  syntax,
-  text,
-  lineNodes: nodes,
-  state,
-  setTextAndState,
-  normalLabel = SectionMenuConstants.items.normal.defaultLabel,
-  largerLabel = SectionMenuConstants.items.larger.defaultLabel,
-  largestLabel = SectionMenuConstants.items.largest.defaultLabel,
+  menuSwitch,
+  normalLabel,
+  largerLabel,
+  largestLabel,
+  onButtonClick,
+  onNormalItemClick,
+  onLargerItemClick,
+  onLargestItemClick,
 }) => {
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
-
-  const menuSwitch = sectionMenuSwitch(syntax, nodes, state);
-  const handlerProps: SectionMenuHandlerProps = { syntax, normalLabel, largerLabel, largestLabel };
-
-  const handleOnButtonClick = () =>
-    setTextAndState(...handleOnSectionButtonClick(text, nodes, state, handlerProps, menuSwitch));
-
-  const handleOnNormalItemClick = () =>
-    setTextAndState(...handleOnSectionItemClick(text, nodes, state, handlerProps, 'normal', menuSwitch));
-
-  const handleOnLargerItemClick = () =>
-    setTextAndState(...handleOnSectionItemClick(text, nodes, state, handlerProps, 'larger', menuSwitch));
-
-  const handleOnLargestItemClick = () =>
-    setTextAndState(...handleOnSectionItemClick(text, nodes, state, handlerProps, 'largest', menuSwitch));
 
   return (
     <DropdownMenu>
@@ -67,7 +57,7 @@ export const SectionMenu: React.FC<SectionMenuProps> = ({
         onClose={onClose}
         pressed={menuSwitch !== 'off' && menuSwitch !== 'disabled'}
         disabled={menuSwitch === 'disabled'}
-        buttonProps={{ onClick: handleOnButtonClick }}
+        buttonProps={{ onClick: onButtonClick }}
         data-testid={createTestId(SectionMenuConstants.testId)}
       >
         <SectionIcon />
@@ -75,21 +65,21 @@ export const SectionMenu: React.FC<SectionMenuProps> = ({
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         <DropdownMenuListItem
           selected={menuSwitch === 'normal'}
-          onClick={handleOnNormalItemClick}
+          onClick={onNormalItemClick}
           data-testid={createTestId(SectionMenuConstants.items.normal.testId)}
         >
           {normalLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
           selected={menuSwitch === 'larger'}
-          onClick={handleOnLargerItemClick}
+          onClick={onLargerItemClick}
           data-testid={createTestId(SectionMenuConstants.items.larger.testId)}
         >
           {largerLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
           selected={menuSwitch === 'largest'}
-          onClick={handleOnLargestItemClick}
+          onClick={onLargestItemClick}
           data-testid={createTestId(SectionMenuConstants.items.largest.testId)}
         >
           {largestLabel}

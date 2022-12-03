@@ -1,11 +1,11 @@
-import { CursorCoordinate } from '../src/components/molecules/cursor/Cursor/types';
-import { TextSelection } from '../src/components/molecules/selection/Selection/types';
+import { CursorCoordinate } from '../src/types/cursor/cursorCoordinate';
+import { CursorSelection } from '../src/types/selection/cursorSelection';
 
 export interface TestCase {
   name: string;
   text: string;
   cursorCoordinate: CursorCoordinate | undefined;
-  expected: TextSelection | undefined;
+  expected: CursorSelection | undefined;
 }
 
 export const testCases: TestCase[] = [

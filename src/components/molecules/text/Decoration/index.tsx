@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { DecorationNode, Decoration as DecorationStyle, TextNode } from '../../../../parser/types';
+import { TextNode } from '../../../../parser';
+import { DecorationNode, Decoration as DecorationStyle } from '../../../../parser/decoration/types';
 import { Char } from '../../../atoms/text/Char';
 import { TextNodeComponentProps } from '../common/types';
 

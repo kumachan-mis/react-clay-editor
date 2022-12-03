@@ -3,8 +3,8 @@ import { render, screen, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { EditorProps } from '../../src';
-import * as cursor from '../../src/components/organisms/Editor/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
+import { EditorProps } from '../../src/contexts/EditorPropsContext';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
@@ -31,7 +31,7 @@ interface TestCase extends BaseTestCase {
 }
 
 interface Common {
-  options?: Omit<EditorProps, 'text' | 'onChangeText' | 'syntax'>;
+  options?: Omit<EditorProps, 'text' | 'setText' | 'syntax'>;
 }
 
 const originalUserAgent = window.navigator.userAgent;
@@ -90,10 +90,10 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common
     const text = testCase.textLines.join('\n');
     render(<MockEditor syntax={syntax} initText={text} {...common?.options} />);
 
-    const body = screen.getByTestId('text-field-body');
+    const textField = screen.getByTestId('text-field');
     for (const event of testCase.inputMouse) {
       const { lineIndex, charIndex } = event.coordinate;
-      fireEvent[event.type](body, { clientX: charIndex, clientY: lineIndex, ...event.init });
+      fireEvent[event.type](textField, { clientX: charIndex, clientY: lineIndex, ...event.init });
     }
 
     const menu = screen.getByTestId(testCase.inputMenu.name);

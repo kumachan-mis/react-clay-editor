@@ -1,15 +1,17 @@
 import { render, screen, Screen } from '@testing-library/react';
 import React from 'react';
 
-import { Viewer, ViewerProps } from '../../src';
 import { useEmbededLinkForceClickable } from '../../src/components/atoms/text/EmbededLink/hooks';
 import * as hooks from '../../src/components/molecules/text/Text/TextNodeComponent.hooks';
+import { ViewerRoot, ViewerRootProps } from '../../src/components/organisms/ViewerRoot';
+import { ViewerTextFieldBody } from '../../src/components/organisms/ViewerTextFieldBody';
+import { ViewerTextFieldRoot } from '../../src/components/organisms/ViewerTextFieldRoot';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 
 interface TestCase extends BaseTestCase {
   name: string;
   inputLines: string[];
-  options?: Omit<ViewerProps, 'text' | 'syntax' | 'cursorCoordinate'>;
+  options?: Omit<ViewerRootProps, 'text' | 'syntax'>;
   expectedTestIdCounts?: { [testId: string]: number | undefined };
   expectedViewLines?: string[];
   expectedEditLines?: string[];
@@ -34,16 +36,29 @@ function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase) => voi
     const spiedUseTextNodeComponent = jest.spyOn(hooks, 'useTextNodeComponent');
     const text = testCase.inputLines.join('\n');
 
-    const { unmount } = render(<Viewer text={text} syntax={syntax} {...testCase?.options} />);
+    const { unmount } = render(
+      <ViewerRoot text={text} syntax={syntax} {...testCase?.options}>
+        <ViewerTextFieldRoot>
+          <ViewerTextFieldBody />
+        </ViewerTextFieldRoot>
+      </ViewerRoot>
+    );
     expectTestIdCountsToBe(screen, testCase.expectedTestIdCounts);
     expectTextLinesToBe(screen, testCase.expectedViewLines);
+
     unmount();
 
     spiedUseTextNodeComponent.mockImplementation(() => {
       const linkForceClickable = useEmbededLinkForceClickable();
       return { editMode: () => true, linkForceClickable };
     });
-    render(<Viewer text={text} syntax={syntax} {...testCase?.options} />);
+    render(
+      <ViewerRoot text={text} syntax={syntax} {...testCase?.options}>
+        <ViewerTextFieldRoot>
+          <ViewerTextFieldBody />
+        </ViewerTextFieldRoot>
+      </ViewerRoot>
+    );
     expectTextLinesToBe(screen, testCase.expectedEditLines || testCase.inputLines);
     spiedUseTextNodeComponent.mockRestore();
   };

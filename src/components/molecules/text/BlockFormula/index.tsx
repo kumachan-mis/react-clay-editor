@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BlockFormulaNode } from '../../../../parser/types';
+import { BlockFormulaNode } from '../../../../parser/blockFormula/types';
 import { LineGroup } from '../../../atoms/text/LineGroup';
 import { TextNodeComponentProps } from '../common/types';
 

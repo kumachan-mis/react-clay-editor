@@ -1,14 +1,5 @@
 import React from 'react';
 
-import {
-  BracketLinkVisual,
-  CodeVisual,
-  FormulaVisual,
-  HashtagVisual,
-  TaggedLinkVisual,
-  TextVisual,
-} from '../../../../common/types';
-import { TextNode } from '../../../../parser/types';
 import { BlockCode } from '../BlockCode';
 import { BlockFormula } from '../BlockFormula';
 import { BracketLink } from '../BracketLink';
@@ -22,18 +13,7 @@ import { NormalLine } from '../NormalLine';
 import { Quotation } from '../Quotation';
 import { TaggedLink } from '../TaggedLink';
 import { Url } from '../Url';
-
-export type TextNodeComponentProps = {
-  node: TextNode;
-  editMode: (node: TextNode) => boolean;
-  linkForceClickable: boolean;
-  textVisual?: TextVisual;
-  bracketLinkVisual?: BracketLinkVisual;
-  hashtagVisual?: HashtagVisual;
-  taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
-  codeVisual?: CodeVisual;
-  formulaVisual?: FormulaVisual;
-};
+import { TextNodeComponentProps } from '../common/types';
 
 export const TextNodeComponent: React.FC<TextNodeComponentProps> = ({ node, ...rest }) => {
   switch (node.type) {

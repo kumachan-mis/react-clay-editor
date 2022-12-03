@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ContentFormulaNode } from '../../../../parser/types';
+import { ContentFormulaNode } from '../../../../parser/content/types';
 import { Char } from '../../../atoms/text/Char';
 import { CharGroup } from '../../../atoms/text/CharGroup';
 import { KaTeX } from '../../../atoms/text/KaTeX';
