@@ -4,7 +4,7 @@ import React from 'react';
 
 import * as selection from '../../src/components/molecules/selection/Selection';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
-import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
 import { CursorSelection } from '../../src/types/selection/cursorSelection';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, SpyOnGetBoundingClientRect } from '../mocks';
@@ -52,10 +52,10 @@ describe('mouseSelection in Editor', () => {
       spyOnGetBoundingClientRect.char(event.coordinate.lineIndex, event.coordinate.charIndex)
     );
 
-    const body = screen.getByTestId('text-field-body');
+    const textField = screen.getByTestId('text-field');
     for (const event of testCase.inputEvents) {
       const { lineIndex, charIndex } = event.coordinate;
-      fireEvent[event.type](body, { clientX: charIndex, clientY: lineIndex, ...event.init });
+      fireEvent[event.type](textField, { clientX: charIndex, clientY: lineIndex, ...event.init });
     }
 
     const expectedSelectionText = testCase.expectedSelectionLines.join('\n');

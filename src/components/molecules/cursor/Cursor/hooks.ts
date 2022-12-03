@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { getTextFieldBody } from '../../../atoms/editor/TextFieldBody/utils';
-import { getTextFieldRoot } from '../../../atoms/editor/TextFieldRoot/utils';
+import { getTextField } from '../../../atoms/root/TextField/utils';
+import { getTextFieldRoot } from '../../../atoms/root/TextFieldRoot/utils';
 import { SuggestionListBodyConstants } from '../../../atoms/suggestion/SuggesionListBody';
 import { SuggestionListItemConstants } from '../../../atoms/suggestion/SuggesionListItem';
 import { getCharAt } from '../../../atoms/text/Char/utils';
@@ -57,7 +57,7 @@ function propsToState(props: CursorProps, state: CursorState, element: HTMLEleme
   const textFieldRootElement = getTextFieldRoot(element);
 
   const textFieldRootRect = textFieldRootElement?.getBoundingClientRect();
-  const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
+  const textFieldBodyRect = getTextField(element)?.getBoundingClientRect();
   if (!props.cursorCoordinate || !textFieldBodyRect || !textFieldRootElement || !textFieldRootRect) {
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
@@ -82,7 +82,7 @@ function propsToState(props: CursorProps, state: CursorState, element: HTMLEleme
 }
 
 function propsToStateOnScrollOrResize(props: CursorProps, state: CursorState, element: HTMLElement): CursorState {
-  const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
+  const textFieldBodyRect = getTextField(element)?.getBoundingClientRect();
   if (!props.cursorCoordinate || !textFieldBodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
   const { cursorCoordinate: coordinate } = props;

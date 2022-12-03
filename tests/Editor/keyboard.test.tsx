@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { EditorProps } from '../../src';
-import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
+import { EditorProps } from '../../src/contexts/EditorPropsContext';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
@@ -96,7 +96,7 @@ describe('keyboardShortcuts (macos) in Editor', () => {
 function createTest(syntax: 'bracket' | 'markdown'): (testCase: TestCase, common: Common | undefined) => void {
   return (testCase, common) => {
     render(<MockEditor syntax={syntax} {...common?.options} />);
-    userEvent.click(screen.getByTestId('text-field-body'));
+    userEvent.click(screen.getByTestId('text-field'));
     userEvent.keyboard(resolveTypingAlias(testCase.inputTyping, common?.typingAlias).join(''));
     expectTextLinesToBe(screen, testCase.expectedLines);
   };

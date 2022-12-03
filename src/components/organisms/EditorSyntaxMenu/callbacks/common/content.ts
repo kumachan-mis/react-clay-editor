@@ -10,7 +10,7 @@ import {
   selectionToRange,
   undefinedIfZeroSelection,
 } from '../../../../molecules/selection/Selection/utils';
-import { insertText } from '../../../TextFieldBody/common/text';
+import { insertText } from '../../../EditorTextFieldBody/common/text';
 import { isEndPoint } from '../../common/utils';
 import { ContentPosition } from '../../hooks/contentPosition';
 

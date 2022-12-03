@@ -1,13 +1,8 @@
 import React from 'react';
 
 import { EditorProps, useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
-import {
-  EditorState,
-  useEditorStateContext,
-  useEditorStateValueContext,
-  useSetEditorStateContext,
-} from '../../../contexts/EditorStateContext';
-import { useEditorTextContext, useEditorTextValueContext } from '../../../contexts/EditorTextContext';
+import { EditorState, useEditorStateContext, useEditorStateValueContext } from '../../../contexts/EditorStateContext';
+import { useEditorTextContext } from '../../../contexts/EditorTextContext';
 import { useEditorTextNodesValueContext } from '../../../contexts/EditorTextNodesContext';
 import { CursorProps } from '../../molecules/cursor/Cursor';
 import { SelectionProps } from '../../molecules/selection/Selection';
@@ -22,37 +17,7 @@ import {
   handleOnTextCopy,
   handleOnTextPaste,
   handleOnSuggestionMouseDown,
-  handleOnClick,
-  handleOnMouseDown,
 } from './callbacks';
-
-export function useTextFieldBody(): {
-  ref: React.RefObject<HTMLDivElement>;
-  onMouseDown: React.MouseEventHandler<HTMLDivElement>;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
-} {
-  const text = useEditorTextValueContext();
-  const setState = useSetEditorStateContext();
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  const onMouseDown = React.useCallback(
-    (event: React.MouseEvent) => {
-      if (event.button !== 0) return;
-      setState((state) => handleOnMouseDown(text, state, event, ref.current));
-    },
-    [setState, text, ref]
-  );
-
-  const onClick = React.useCallback(
-    (event: React.MouseEvent) => {
-      if (event.button !== 0) return;
-      setState((state) => handleOnClick(text, state, event, ref.current));
-    },
-    [setState, text, ref]
-  );
-
-  return { ref, onMouseDown, onClick };
-}
 
 export function useSelection(): SelectionProps {
   const { cursorSelection } = useEditorStateValueContext();

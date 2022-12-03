@@ -5,7 +5,7 @@ import { LineNode } from '../../../../../parser/line/types';
 import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection } from '../../../../molecules/selection/Selection/utils';
-import { insertText } from '../../../TextFieldBody/common/text';
+import { insertText } from '../../../EditorTextFieldBody/common/text';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
 import { BlockMenuSwitch } from '../../switches/common/block';

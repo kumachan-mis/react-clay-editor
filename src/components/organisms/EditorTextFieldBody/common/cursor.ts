@@ -1,6 +1,6 @@
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
-import { TextFieldBodyConstants } from '../../../atoms/editor/TextFieldBody';
-import { TextFieldHeaderConstants } from '../../../atoms/editor/TextFieldHeader';
+import { TextFieldConstants } from '../../../atoms/root/TextField';
+import { TextFieldHeaderConstants } from '../../../atoms/root/TextFieldHeader';
 import { CharConstants } from '../../../atoms/text/Char';
 import { getCharAt } from '../../../atoms/text/Char/utils';
 import { CharGroupConstants } from '../../../atoms/text/CharGroup';
@@ -32,7 +32,7 @@ export function positionToCursorCoordinate(
   cursorCoordinate = cursorCoordinateLineGroup(lines, position, elements, element);
   if (cursorCoordinate) return cursorCoordinate;
 
-  const marginBottomElement = findElement(elements, TextFieldBodyConstants.selectIdRegex, element);
+  const marginBottomElement = findElement(elements, TextFieldConstants.selectIdRegex, element);
   if (!marginBottomElement) return undefined;
   return { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
 }

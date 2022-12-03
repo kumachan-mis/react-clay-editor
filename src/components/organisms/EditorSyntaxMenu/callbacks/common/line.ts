@@ -4,7 +4,7 @@ import { isPureLineNode } from '../../../../../parser/line/utils';
 import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection, undefinedIfZeroSelection } from '../../../../molecules/selection/Selection/utils';
-import { insertText } from '../../../TextFieldBody/common/text';
+import { insertText } from '../../../EditorTextFieldBody/common/text';
 import { getLineRange } from '../../common/utils';
 
 export type LineMenuConfig = {

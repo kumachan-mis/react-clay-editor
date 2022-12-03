@@ -4,7 +4,7 @@ import React from 'react';
 
 import * as selection from '../../src/components/molecules/selection/Selection';
 import { getSelectionText } from '../../src/components/molecules/selection/Selection/utils';
-import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
 import { CursorSelection } from '../../src/types/selection/cursorSelection';
 import { osUserAgents } from '../constants';
 import { runFixtureTests, BaseTestCase } from '../fixture';
@@ -43,7 +43,7 @@ describe('keyboardSelection in Editor', () => {
     const { rerender } = render(<MockEditor initText={text} />);
 
     spiedPositionToCursorCoordinate.mockImplementation(() => common.initCoordinate);
-    userEvent.click(screen.getByTestId('text-field-body'));
+    userEvent.click(screen.getByTestId('text-field'));
     userEvent.keyboard(testCase.inputTyping.join(''));
 
     const expectedSelectionText = testCase.expectedSelectionLines.join('\n');

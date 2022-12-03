@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { EditorProps } from '../../src';
-import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
+import { EditorProps } from '../../src/contexts/EditorPropsContext';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 
@@ -37,7 +37,7 @@ describe('UI of Suggestion List', () => {
 
   runFixtureTests<TestCase, Common | undefined>('Cursor', 'uiSuggestionList', (testCase, common) => {
     render(<MockEditor {...common?.options} />);
-    userEvent.click(screen.getByTestId('text-field-body'));
+    userEvent.click(screen.getByTestId('text-field'));
     userEvent.keyboard(testCase.inputTypingBefore.join(''));
 
     expect(screen.getByTestId('suggestion-header').textContent).toBe(testCase.expectedHeader);

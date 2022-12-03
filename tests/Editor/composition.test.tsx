@@ -3,8 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { EditorProps } from '../../src';
-import * as cursor from '../../src/components/organisms/TextFieldBody/common/cursor';
+import * as cursor from '../../src/components/organisms/EditorTextFieldBody/common/cursor';
+import { EditorProps } from '../../src/contexts/EditorPropsContext';
 import { runFixtureTests, BaseTestCase } from '../fixture';
 import { MockEditor, expectTextLinesToBe } from '../mocks';
 
@@ -36,7 +36,7 @@ describe('compositionEvents in Editor', () => {
   runFixtureTests<TestCase>('Editor', 'composition', (testCase) => {
     render(<MockEditor {...testCase?.options} />);
 
-    userEvent.click(screen.getByTestId('text-field-body'));
+    userEvent.click(screen.getByTestId('text-field'));
 
     const textarea = screen.getByRole('textbox');
     for (const event of testCase.inputEvents) {

@@ -2,10 +2,10 @@ import { css } from '@emotion/css';
 import React from 'react';
 
 import { EditorRoot } from '../../src/components/organisms/EditorRoot';
-import { SyntaxMenu } from '../../src/components/organisms/SyntaxMenu';
-import { TextFieldBody } from '../../src/components/organisms/TextFieldBody';
-import { TextFieldHeader } from '../../src/components/organisms/TextFieldHeader';
-import { TextFieldRoot } from '../../src/components/organisms/TextFieldRoot';
+import { EditorSyntaxMenu } from '../../src/components/organisms/EditorSyntaxMenu';
+import { EditorTextFieldBody } from '../../src/components/organisms/EditorTextFieldBody';
+import { EditorTextFieldHeader } from '../../src/components/organisms/EditorTextFieldHeader';
+import { EditorTextFieldRoot } from '../../src/components/organisms/EditorTextFieldRoot';
 import { BracketLinkProps, HashtagProps, TaggedLinkProps, TextProps } from '../../src/contexts/EditorPropsContext';
 
 const header = 'React Realtime Markup Editor';
@@ -275,11 +275,11 @@ export const App: React.FC = () => {
         taggedLinkPropsMap={taggedLinkPropsMap}
         className={className}
       >
-        <SyntaxMenu />
-        <TextFieldRoot>
-          <TextFieldHeader header={header} />
-          <TextFieldBody />
-        </TextFieldRoot>
+        <EditorSyntaxMenu />
+        <EditorTextFieldRoot>
+          <EditorTextFieldHeader header={header} />
+          <EditorTextFieldBody />
+        </EditorTextFieldRoot>
       </EditorRoot>
       <EditorRoot
         text={markdownText}
@@ -291,11 +291,11 @@ export const App: React.FC = () => {
         taggedLinkPropsMap={taggedLinkPropsMap}
         className={className}
       >
-        <SyntaxMenu />
-        <TextFieldRoot>
-          <TextFieldHeader header={header} />
-          <TextFieldBody />
-        </TextFieldRoot>
+        <EditorSyntaxMenu />
+        <EditorTextFieldRoot>
+          <EditorTextFieldHeader header={header} />
+          <EditorTextFieldBody />
+        </EditorTextFieldRoot>
       </EditorRoot>
     </>
   );

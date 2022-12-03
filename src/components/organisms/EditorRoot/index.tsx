@@ -4,7 +4,7 @@ import { EditorProps, EditorPropsContextProvider } from '../../../contexts/Edito
 import { EditorStateContextProvider } from '../../../contexts/EditorStateContext';
 import { EditorTextContextProvider } from '../../../contexts/EditorTextContext';
 import { EditorTextNodesContextProvider } from '../../../contexts/EditorTextNodesContext';
-import { EditorRoot as Atom } from '../../atoms/editor/EditorRoot';
+import { Root } from '../../atoms/root/Root';
 
 import { useDocument, useEditorRoot, useScroll } from './hooks';
 
@@ -31,8 +31,8 @@ const EditorRootInner: React.FC<React.PropsWithChildren<{ className?: string }>>
   useScroll();
 
   return (
-    <Atom className={className} ref={ref} onMouseDown={onMouseDown}>
+    <Root className={className} ref={ref} onMouseDown={onMouseDown}>
       {children}
-    </Atom>
+    </Root>
   );
 };

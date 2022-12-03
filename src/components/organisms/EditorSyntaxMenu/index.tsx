@@ -31,7 +31,7 @@ import { useSectionMenu } from './hooks/sectionMenu';
 import { useTaggedLinkMenu } from './hooks/taggedLink';
 import { useUnderlineMenu } from './hooks/underlineMenu';
 
-export const SyntaxMenu: React.FC = () => {
+export const EditorSyntaxMenu: React.FC = () => {
   const props = useEditorPropsValueContext();
   const nodes = useEditorTextNodesValueContext();
 

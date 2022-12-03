@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getTextFieldBody } from '../../../atoms/editor/TextFieldBody/utils';
+import { getTextField } from '../../../atoms/root/TextField/utils';
 import { SelectionRectProps } from '../../../atoms/selection/SelectionRect';
 import { getCharAt } from '../../../atoms/text/Char/utils';
 
@@ -47,7 +47,7 @@ export function useSelection(props: SelectionProps): { state: SelectionState; re
 }
 
 function propsToState(props: SelectionProps, element: HTMLElement): SelectionState {
-  const textFieldBodyRect = getTextFieldBody(element)?.getBoundingClientRect();
+  const textFieldBodyRect = getTextField(element)?.getBoundingClientRect();
   if (!props.cursorSelection || !textFieldBodyRect) {
     return { topRectProps: undefined, centerRectProps: undefined, bottomRectProps: undefined };
   }
