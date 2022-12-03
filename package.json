@@ -30,10 +30,12 @@
     "build-cjs": "yarn clean-cjs && tsc --build tsconfig.cjs.json",
     "build-esm": "yarn clean-esm && tsc --build tsconfig.esm.json",
     "build-sample": "yarn clean-sample && cross-env ENVIRONMENT=production webpack",
+    "build-target": "yarn clean-target && cross-env ENVIRONMENT=test webpack",
     "clean": "rm -Rf dist",
     "clean-cjs": "rm -Rf dist/lib",
     "clean-esm": "rm -Rf dist/esm",
     "clean-sample": "rm -Rf sample/dist",
+    "clean-target": "rm -Rf tests/dist",
     "deploy": "yarn build-sample && gh-pages -d sample/dist",
     "format": "sort-package-json && yarn prettierify",
     "gen-icons": "svgr --typescript --out-dir icons/dist -- icons",
@@ -41,9 +43,11 @@
     "lint-fix": "yarn lint --fix",
     "prepack": "yarn build",
     "prettierify": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
-    "start": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
-    "unittest": "cross-env ENVIRONMENT=test jest",
-    "typecheck": "yarn tsc --noEmit"
+    "start-sample": "yarn clean-sample && cross-env ENVIRONMENT=development webpack serve",
+    "start-target": "yarn clean-target && cross-env ENVIRONMENT=test webpack serve",
+    "test": "yarn build-target && playwright test",
+    "typecheck": "yarn tsc --noEmit",
+    "unittest": "cross-env ENVIRONMENT=test jest"
   },
   "devDependencies": {
     "@babel/core": "7.19.6",

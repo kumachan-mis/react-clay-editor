@@ -1,7 +1,5 @@
-const path = require('path');
-
 module.exports = {
-  roots: ["<rootDir>/unittests/"],
+  roots: ['<rootDir>/unittests/'],
   moduleFileExtensions: ['ts', 'js'],
   verbose: true,
 };
