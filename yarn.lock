@@ -1987,7 +1987,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/css@npm:^11.10.5":
+"@emotion/css@npm:11.10.5":
   version: 11.10.5
   resolution: "@emotion/css@npm:11.10.5"
   dependencies:
@@ -2339,6 +2339,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jest/globals@npm:29.3.1":
+  version: 29.3.1
+  resolution: "@jest/globals@npm:29.3.1"
+  dependencies:
+    "@jest/environment": ^29.3.1
+    "@jest/expect": ^29.3.1
+    "@jest/types": ^29.3.1
+    jest-mock: ^29.3.1
+  checksum: 4d2b9458aabf7c28fd167e53984477498c897b64eec67a7f84b8fff465235cae1456ee0721cb0e7943f0cda443c7656adb9801f9f34e27495b8ebbd9f3033100
+  languageName: node
+  linkType: hard
+
 "@jest/globals@npm:^29.2.2":
   version: 29.2.2
   resolution: "@jest/globals@npm:29.2.2"
@@ -2348,18 +2360,6 @@ __metadata:
     "@jest/types": ^29.2.1
     jest-mock: ^29.2.2
   checksum: 94adec44b31b84cdd3f51abf1d824bb62acfa7e0d60b9f7a960fa8677ec5894389262bf6f7fc7fab5b4cce05e3337d0d117a2846faa27dfdff736d6a9585469d
-  languageName: node
-  linkType: hard
-
-"@jest/globals@npm:^29.3.1":
-  version: 29.3.1
-  resolution: "@jest/globals@npm:29.3.1"
-  dependencies:
-    "@jest/environment": ^29.3.1
-    "@jest/expect": ^29.3.1
-    "@jest/types": ^29.3.1
-    jest-mock: ^29.3.1
-  checksum: 4d2b9458aabf7c28fd167e53984477498c897b64eec67a7f84b8fff465235cae1456ee0721cb0e7943f0cda443c7656adb9801f9f34e27495b8ebbd9f3033100
   languageName: node
   linkType: hard
 
@@ -2635,6 +2635,18 @@ __metadata:
     mkdirp: ^1.0.4
     rimraf: ^3.0.2
   checksum: c96381d4a37448ea280951e46233f7e541058cf57a57d4094dd4bdcaae43fa5872b5f2eb6bfb004591a68e29c5877abe3cdc210cb3588cbf20ab2877f31a7de7
+  languageName: node
+  linkType: hard
+
+"@playwright/test@npm:1.28.1":
+  version: 1.28.1
+  resolution: "@playwright/test@npm:1.28.1"
+  dependencies:
+    "@types/node": "*"
+    playwright-core: 1.28.1
+  bin:
+    playwright: cli.js
+  checksum: dc39dfdf848171a6c65fc32a9dbc95162684a4a1e3401dd157d7d6822a065d8dcb96b2484fc3b223baea4da774450fddaeaa6d4d21546d17d45f01884fa8d7c5
   languageName: node
   linkType: hard
 
@@ -8771,6 +8783,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.28.1":
+  version: 1.28.1
+  resolution: "playwright-core@npm:1.28.1"
+  bin:
+    playwright: cli.js
+  checksum: 8899e0d65de43ee10fadc171e0d48cd514bb574f3505478700094afa8a6e0dcd888a5c87af22acf31ebad455ada1327028909c42e20b8e25908b6255dc143bf0
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -8959,10 +8980,11 @@ __metadata:
     "@babel/preset-env": 7.19.4
     "@babel/preset-react": 7.18.6
     "@babel/preset-typescript": 7.18.6
-    "@emotion/css": ^11.10.5
+    "@emotion/css": 11.10.5
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
-    "@jest/globals": ^29.3.1
+    "@jest/globals": 29.3.1
+    "@playwright/test": 1.28.1
     "@svgr/cli": 6.5.1
     "@types/katex": 0.14.0
     "@types/node": 18.11.7
