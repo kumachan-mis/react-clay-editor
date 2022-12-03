@@ -11,11 +11,7 @@ export const SuggestionListItemConstants = {
 };
 
 export const SuggestionListItem: React.FC<SuggestionListItemProps> = ({ index, ...rest }) => (
-  <StyledSuggestionListItem
-    {...rest}
-    data-selectid={SuggestionListItemConstants.selectId(index)}
-    data-testid={SuggestionListItemConstants.testId(index)}
-  />
+  <StyledSuggestionListItem {...rest} data-selectid={SuggestionListItemConstants.selectId(index)} />
 );
 
 const StyledSuggestionListItem = styled.li`

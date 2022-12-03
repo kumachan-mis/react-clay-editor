@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
 import { CodeIcon } from '../../../../icons/CodeIcon';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
 import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
@@ -52,7 +51,6 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
         pressed={inlineMenuSwitch === 'on' || blockMenuSwitch === 'on'}
         disabled={inlineMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
-        data-testid={createTestId(CodeMenuConstants.testId)}
       >
         <CodeIcon />
       </DropdownMenuButton>
@@ -61,7 +59,6 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
           selected={inlineMenuSwitch === 'on'}
           disabled={inlineMenuSwitch === 'disabled'}
           onClick={onInlineItemClick}
-          data-testid={createTestId(CodeMenuConstants.items.inline.testId)}
         >
           {inlineLabel}
         </DropdownMenuListItem>
@@ -69,7 +66,6 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
           selected={blockMenuSwitch === 'on'}
           disabled={blockMenuSwitch === 'disabled'}
           onClick={onBlockItemClick}
-          data-testid={createTestId(CodeMenuConstants.items.block.testId)}
         >
           {blockLabel}
         </DropdownMenuListItem>

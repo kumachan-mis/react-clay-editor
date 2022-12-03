@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type CharGroupProps = {
   lineIndex: number;
   firstCharIndex: number;
@@ -16,11 +14,7 @@ export const CharGroupConstants = {
 };
 
 export const CharGroup: React.FC<CharGroupProps> = ({ lineIndex, firstCharIndex, lastCharIndex, ...rest }) => (
-  <StyledCharGroup
-    {...rest}
-    data-selectid={CharGroupConstants.selectId(lineIndex, firstCharIndex, lastCharIndex)}
-    data-testid={createTestId(CharGroupConstants.testId(lineIndex, firstCharIndex, lastCharIndex))}
-  />
+  <StyledCharGroup {...rest} data-selectid={CharGroupConstants.selectId(lineIndex, firstCharIndex, lastCharIndex)} />
 );
 
 const StyledCharGroup = styled.span`

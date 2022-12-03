@@ -9,11 +9,7 @@ export const SuggestionListBodyConstants = {
 };
 
 export const SuggestionListBody: React.FC<SuggestionListBodyProps> = ({ ...rest }) => (
-  <StyledSuggestionListBody
-    {...rest}
-    data-selectid={SuggestionListBodyConstants.selectId}
-    data-testid={SuggestionListBodyConstants.testId}
-  />
+  <StyledSuggestionListBody {...rest} data-selectid={SuggestionListBodyConstants.selectId} />
 );
 
 const StyledSuggestionListBody = styled.ul`

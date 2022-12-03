@@ -25,10 +25,7 @@ export const SuggestionListHeaderConstants = {
 };
 
 export const SuggestionListHeader: React.FC<SuggestionListHeaderProps> = ({ suggestionType }) => (
-  <StyledSuggestionListHeader
-    data-selectid={SuggestionListHeaderConstants.selectId}
-    data-testid={SuggestionListHeaderConstants.testId}
-  >
+  <StyledSuggestionListHeader data-selectid={SuggestionListHeaderConstants.selectId}>
     {SuggestionListHeaderConstants.name(suggestionType)}
   </StyledSuggestionListHeader>
 );

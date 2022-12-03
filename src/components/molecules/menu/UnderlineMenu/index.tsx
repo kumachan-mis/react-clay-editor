@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
 import { UnderlineIcon } from '../../../../icons/UnderlineIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 
@@ -14,12 +13,7 @@ export const UnderlineMenuConstants = {
 };
 
 export const UnderlineMenu: React.FC<UnderlineMenuProps> = ({ menuSwitch, onButtonClick }) => (
-  <IconButtonMenu
-    pressed={menuSwitch === 'on'}
-    disabled={menuSwitch === 'disabled'}
-    onClick={onButtonClick}
-    data-testid={createTestId(UnderlineMenuConstants.testId)}
-  >
+  <IconButtonMenu pressed={menuSwitch === 'on'} disabled={menuSwitch === 'disabled'} onClick={onButtonClick}>
     <UnderlineIcon />
   </IconButtonMenu>
 );

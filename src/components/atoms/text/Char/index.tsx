@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type CharProps = {
   lineIndex: number;
   charIndex: number;
@@ -14,9 +12,5 @@ export const CharConstants = {
 };
 
 export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, ...rest }) => (
-  <span
-    {...rest}
-    data-selectid={CharConstants.selectId(lineIndex, charIndex)}
-    data-testid={createTestId(CharConstants.testId(lineIndex, charIndex))}
-  />
+  <span {...rest} data-selectid={CharConstants.selectId(lineIndex, charIndex)} />
 );

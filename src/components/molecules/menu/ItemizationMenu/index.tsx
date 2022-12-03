@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
 import { ItemizationIcon } from '../../../../icons/Itemization';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
 import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
@@ -50,22 +49,12 @@ export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
         pressed={menuSwitch === 'allon'}
         disabled={menuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
-        data-testid={createTestId(ItemizationMenuConstants.testId)}
       >
         <ItemizationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuListItem
-          onClick={onIndentItemClick}
-          data-testid={createTestId(ItemizationMenuConstants.items.indent.testId)}
-        >
-          {indentLabel}
-        </DropdownMenuListItem>
-        <DropdownMenuListItem
-          disabled={menuSwitch === 'alloff'}
-          onClick={onOutdentItemClick}
-          data-testid={createTestId(ItemizationMenuConstants.items.outdent.testId)}
-        >
+        <DropdownMenuListItem onClick={onIndentItemClick}>{indentLabel}</DropdownMenuListItem>
+        <DropdownMenuListItem disabled={menuSwitch === 'alloff'} onClick={onOutdentItemClick}>
           {outdentLabel}
         </DropdownMenuListItem>
       </DropdownMenuList>

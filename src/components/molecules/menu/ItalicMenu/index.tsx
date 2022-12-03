@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
 import { ItalicIcon } from '../../../../icons/ItalicIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 
@@ -14,12 +13,7 @@ export const ItalicMenuConstants = {
 };
 
 export const ItalicMenu: React.FC<ItalicMenuProps> = ({ menuSwitch, onButtonClick }) => (
-  <IconButtonMenu
-    pressed={menuSwitch === 'on'}
-    disabled={menuSwitch === 'disabled'}
-    onClick={onButtonClick}
-    data-testid={createTestId(ItalicMenuConstants.testId)}
-  >
+  <IconButtonMenu pressed={menuSwitch === 'on'} disabled={menuSwitch === 'disabled'} onClick={onButtonClick}>
     <ItalicIcon />
   </IconButtonMenu>
 );

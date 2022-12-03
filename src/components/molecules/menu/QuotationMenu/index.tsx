@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
 import { QuotationIcon } from '../../../../icons/Quotation';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
 import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
@@ -50,22 +49,12 @@ export const QuotationMenu: React.FC<QuotationMenuProps> = ({
         pressed={menuSwitch === 'allon'}
         disabled={menuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
-        data-testid={createTestId(QuotationMenuConstants.testId)}
       >
         <QuotationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuListItem
-          onClick={onIndentItemClick}
-          data-testid={createTestId(QuotationMenuConstants.items.indent.testId)}
-        >
-          {indentLabel}
-        </DropdownMenuListItem>
-        <DropdownMenuListItem
-          disabled={menuSwitch === 'alloff'}
-          onClick={onOutdentItemClick}
-          data-testid={createTestId(QuotationMenuConstants.items.outdent.testId)}
-        >
+        <DropdownMenuListItem onClick={onIndentItemClick}>{indentLabel}</DropdownMenuListItem>
+        <DropdownMenuListItem disabled={menuSwitch === 'alloff'} onClick={onOutdentItemClick}>
           {outdentLabel}
         </DropdownMenuListItem>
       </DropdownMenuList>

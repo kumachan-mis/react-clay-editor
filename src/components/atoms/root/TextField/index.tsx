@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type TextFieldProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const TextFieldConstants = {
@@ -12,12 +10,7 @@ export const TextFieldConstants = {
 };
 
 const ForwardRefTextField: React.ForwardRefRenderFunction<HTMLDivElement, TextFieldProps> = ({ ...rest }, ref) => (
-  <StyledForwardRefTextField
-    {...rest}
-    ref={ref}
-    data-selectid={TextFieldConstants.selectId}
-    data-testid={createTestId(TextFieldConstants.testId)}
-  />
+  <StyledForwardRefTextField {...rest} ref={ref} data-selectid={TextFieldConstants.selectId} />
 );
 
 const StyledForwardRefTextField = styled.div`

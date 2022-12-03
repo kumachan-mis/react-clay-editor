@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
 import { TaggedlinkIcon } from '../../../../icons/TaggedlinkIcon';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
 import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
@@ -40,18 +39,12 @@ export const TaggedLinkMenu: React.FC<TaggedLinkMenuProps> = ({ menuSwitch, acti
         pressed={menuSwitch === 'on'}
         disabled={menuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
-        data-testid={createTestId(TaggedLinkMenuConstants.testId)}
       >
         <TaggedlinkIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         {tagEntries.map(([tagName, { label, onItemClick }]) => (
-          <DropdownMenuListItem
-            key={tagName}
-            selected={tagName === activeTagName}
-            onClick={onItemClick}
-            data-testid={createTestId(TaggedLinkMenuConstants.items.testId(tagName))}
-          >
+          <DropdownMenuListItem key={tagName} selected={tagName === activeTagName} onClick={onItemClick}>
             {TaggedLinkMenuConstants.items.taggedLabel(tagName, label)}
           </DropdownMenuListItem>
         ))}

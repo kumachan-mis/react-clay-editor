@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { createTestId } from '../../../../common/utils';
-
 export type LineProps = {
   lineIndex: number;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
@@ -14,11 +12,7 @@ export const LineConstants = {
 };
 
 export const Line: React.FC<LineProps> = ({ lineIndex, ...rest }) => (
-  <StyledLine
-    {...rest}
-    data-selectid={LineConstants.selectId(lineIndex)}
-    data-testid={createTestId(LineConstants.testId(lineIndex))}
-  />
+  <StyledLine {...rest} data-selectid={LineConstants.selectId(lineIndex)} />
 );
 
 const StyledLine = styled.div`

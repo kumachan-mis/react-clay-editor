@@ -1,4 +1,4 @@
-name: run-test
+name: test
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  test:
+  unittest:
     if: ${{ !startsWith(github.event.pull_request.title, '[WIP]') }}
     runs-on: ubuntu-latest
     strategy:
@@ -20,4 +20,4 @@ jobs:
       - run: yarn install
       - run: yarn typecheck
       - run: yarn lint
-      - run: yarn test
+      - run: yarn unittest
