@@ -37,15 +37,6 @@ const config: PlaywrightTestConfig = {
       testMatch: /.*(common|windows|bracket)\.test\.ts/,
     },
     {
-      name: 'windows-markdown',
-      use: {
-        ...devices['Desktop Chrome'],
-        userAgent: userAgents['Windows Chrome'],
-        baseURL: baseURLs['markdown'],
-      },
-      testMatch: /.*(common|windows|markdown)\.test\.ts/,
-    },
-    {
       name: 'macos-markdown',
       use: {
         ...devices['Desktop Chrome'],
@@ -53,15 +44,6 @@ const config: PlaywrightTestConfig = {
         baseURL: baseURLs['markdown'],
       },
       testMatch: /.*(common|macos|markdown)\.test\.ts/,
-    },
-    {
-      name: 'macos-bracket',
-      use: {
-        ...devices['Desktop Chrome'],
-        userAgent: userAgents['MacOS Chrome'],
-        baseURL: baseURLs['bracket'],
-      },
-      testMatch: /.*(common|macos|bracket)\.test\.ts/,
     },
   ],
   webServer: {
