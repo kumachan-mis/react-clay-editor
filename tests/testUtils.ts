@@ -8,4 +8,6 @@ export async function linesToBe(page: Page, lines: string[]): Promise<void> {
     const line = await locator.first().textContent();
     expect(line?.substring(0, line.length - 1)).toBe(lines[i]);
   }
+  const locator = page.locator(`[data-selectid=line-L${lines.length}]`);
+  await expect(locator).toHaveCount(0);
 }
