@@ -9,5 +9,5 @@
     "alwaysStrict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "sample/**/*", "tests/**/*", "unittests/**/*"]
+  "include": ["src/**/*", "sample/**/*", "target/**/*", "tests/**/*", "unittests/**/*"]
 }

@@ -37,7 +37,7 @@ const bracketLinkProps: BracketLinkProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
   }),
-  suggestions: ['react-realtime-markup-editor'],
+  suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
 const hashtagProps: HashtagProps = {
@@ -46,7 +46,7 @@ const hashtagProps: HashtagProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
   }),
-  suggestions: ['react-realtime-markup-editor'],
+  suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
 const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
@@ -68,7 +68,7 @@ const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
       target: '_blank',
       rel: 'noopener noreferrer',
     }),
-    suggestions: ['react-realtime-markup-editor'],
+    suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
   },
   github: {
     linkNameRegex: /@[^[\]]+\/[^[\]]+/,
@@ -89,7 +89,12 @@ const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
       target: '_blank',
       rel: 'noopener noreferrer',
     }),
-    suggestions: ['@kumachan-mis/react-realtime-markup-editor'],
+    suggestions: [
+      '@kumachan-mis/react-realtime-markup-editor',
+      '@KaTeX/KaTeX',
+      '@emotion-js/emotion',
+      '@facebook/react',
+    ],
   },
 };
 
