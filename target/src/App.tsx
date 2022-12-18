@@ -99,57 +99,57 @@ const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
 };
 
 export const App: React.FC = () => {
-  const [bracketText, setBracketText] = React.useState('');
-  const [markdownText, setMarkdownText] = React.useState('');
-
   switch (window.location.pathname) {
     case '/':
       return <div>Playwright Test</div>;
     case '/bracket':
     case '/bracket/':
-      return (
-        <div className={containerClassName}>
-          <EditorRoot
-            text={bracketText}
-            setText={setBracketText}
-            syntax="bracket"
-            textProps={textProps}
-            bracketLinkProps={bracketLinkProps}
-            hashtagProps={hashtagProps}
-            taggedLinkPropsMap={taggedLinkPropsMap}
-            className={className}
-          >
-            <EditorSyntaxMenu />
-            <EditorTextFieldRoot>
-              <EditorTextFieldHeader header={header} />
-              <EditorTextFieldBody />
-            </EditorTextFieldRoot>
-          </EditorRoot>
-        </div>
-      );
+      return <TestTargetEditor syntax="bracket" />;
     case '/markdown':
     case '/markdown/':
-      return (
-        <div className={containerClassName}>
-          <EditorRoot
-            text={markdownText}
-            setText={setMarkdownText}
-            syntax="markdown"
-            textProps={textProps}
-            bracketLinkProps={bracketLinkProps}
-            hashtagProps={hashtagProps}
-            taggedLinkPropsMap={taggedLinkPropsMap}
-            className={className}
-          >
-            <EditorSyntaxMenu />
-            <EditorTextFieldRoot>
-              <EditorTextFieldHeader header={header} />
-              <EditorTextFieldBody />
-            </EditorTextFieldRoot>
-          </EditorRoot>
-        </div>
-      );
+      return <TestTargetEditor syntax="markdown" />;
     default:
       return <div>404 Not Found</div>;
   }
 };
+
+const TestTargetEditor: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
+  const [text, setText] = React.useState('');
+
+  return (
+    <div className={containerClassName}>
+      <EditorRoot
+        text={text}
+        setText={setText}
+        syntax={syntax}
+        textProps={textProps}
+        bracketLinkProps={bracketLinkProps}
+        hashtagProps={hashtagProps}
+        taggedLinkPropsMap={taggedLinkPropsMap}
+        className={className}
+      >
+        <EditorSyntaxMenu />
+        <EditorTextFieldRoot>
+          <EditorTextFieldHeader header={header} />
+          <EditorTextFieldBody />
+        </EditorTextFieldRoot>
+        <MockLines text={text} />
+      </EditorRoot>
+    </div>
+  );
+};
+
+const MockLines: React.FC<{ text: string }> = ({ text }) => (
+  <div
+    className={css`
+      height: 0px;
+      overflow: hidden;
+    `}
+  >
+    {text.split('\n').map((line, i) => (
+      <div key={i} data-testid={`mock-L${i}`}>
+        {line}
+      </div>
+    ))}
+  </div>
+);
