@@ -5,7 +5,7 @@ import { useTextNodeComponent } from './TextNodeComponent.hooks';
 import { TextProps } from './types';
 
 export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, cursorSelection, ...visuals }) => {
-  const { editMode, linkForceClickable } = useTextNodeComponent(cursorCoordinate, cursorSelection);
+  const { getEditMode, linkForceClickable } = useTextNodeComponent(cursorCoordinate, cursorSelection);
 
   return (
     <>
@@ -13,7 +13,7 @@ export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, cursorSelec
         <TextNodeComponent
           key={index}
           node={node}
-          editMode={editMode}
+          getEditMode={getEditMode}
           linkForceClickable={linkForceClickable}
           {...visuals}
         />

@@ -7,14 +7,14 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type UrlProps = TextNodeComponentProps<UrlNode>;
 
-export const Url: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }) => {
+export const Url: React.FC<UrlProps> = ({ node, getEditMode, linkForceClickable }) => {
   const { lineIndex, url } = node;
   const [first] = node.range;
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
-      editMode={editModeValue}
+      editMode={editMode}
       forceClickable={linkForceClickable}
       anchorProps={() => ({ href: url, target: '_blank', rel: 'noopener noreferrer' })}
     >

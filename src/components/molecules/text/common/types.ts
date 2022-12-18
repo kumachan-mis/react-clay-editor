@@ -8,7 +8,7 @@ import { TextVisual } from '../../../../types/visual/text';
 
 export type TextNodeComponentProps<TTextNode extends TextNode = TextNode> = {
   node: TTextNode;
-  editMode: (node: TextNode) => boolean;
+  getEditMode: (node: TextNode) => boolean;
   linkForceClickable: boolean;
   textVisual?: TextVisual;
   bracketLinkVisual?: BracketLinkVisual;

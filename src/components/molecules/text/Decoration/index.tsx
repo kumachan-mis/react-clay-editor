@@ -10,20 +10,20 @@ export type DecorationProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<DecorationNode>;
 
-export const Decoration: React.FC<DecorationProps> = ({ node, editMode, ChildComponent, ...rest }) => {
+export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, ChildComponent, ...rest }) => {
   const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
   const [first, last] = node.range;
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
 
   return (
     <StyledDecoration {...decoration}>
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
-          {editModeValue ? char : ''}
+          {editMode ? char : ''}
         </Char>
       ))}
       {children.map((child, index) => (
-        <ChildComponent key={index} node={child} editMode={editMode} {...rest} />
+        <ChildComponent key={index} node={child} getEditMode={getEditMode} {...rest} />
       ))}
       {[...trailingMeta].map((char, index) => (
         <Char
@@ -31,7 +31,7 @@ export const Decoration: React.FC<DecorationProps> = ({ node, editMode, ChildCom
           lineIndex={lineIndex}
           charIndex={last - (trailingMeta.length - 1) + index}
         >
-          {editModeValue ? char : ''}
+          {editMode ? char : ''}
         </Char>
       ))}
     </StyledDecoration>
