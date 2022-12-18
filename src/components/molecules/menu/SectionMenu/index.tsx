@@ -19,15 +19,19 @@ export type SectionMenuProps = {
 };
 
 export const SectionMenuConstants = {
+  selectId: 'section-menu',
   items: {
     normal: {
       defaultLabel: 'normal',
+      selectId: 'normal-section-menu-item',
     },
     larger: {
       defaultLabel: 'larger',
+      selectId: 'larger-section-menu-item',
     },
     largest: {
       defaultLabel: 'largest',
+      selectId: 'largest-section-menu-item',
     },
   },
 };
@@ -45,7 +49,7 @@ export const SectionMenu: React.FC<SectionMenuProps> = ({
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu data-selectid={SectionMenuConstants.selectId}>
       <DropdownMenuButton
         open={open}
         onOpen={onOpen}
@@ -57,13 +61,25 @@ export const SectionMenu: React.FC<SectionMenuProps> = ({
         <SectionIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuListItem selected={menuSwitch === 'normal'} onClick={onNormalItemClick}>
+        <DropdownMenuListItem
+          selected={menuSwitch === 'normal'}
+          onClick={onNormalItemClick}
+          data-selectid={SectionMenuConstants.items.normal.selectId}
+        >
           {normalLabel}
         </DropdownMenuListItem>
-        <DropdownMenuListItem selected={menuSwitch === 'larger'} onClick={onLargerItemClick}>
+        <DropdownMenuListItem
+          selected={menuSwitch === 'larger'}
+          onClick={onLargerItemClick}
+          data-selectid={SectionMenuConstants.items.larger.selectId}
+        >
           {largerLabel}
         </DropdownMenuListItem>
-        <DropdownMenuListItem selected={menuSwitch === 'largest'} onClick={onLargestItemClick}>
+        <DropdownMenuListItem
+          selected={menuSwitch === 'largest'}
+          onClick={onLargestItemClick}
+          data-selectid={SectionMenuConstants.items.largest.selectId}
+        >
           {largestLabel}
         </DropdownMenuListItem>
       </DropdownMenuList>

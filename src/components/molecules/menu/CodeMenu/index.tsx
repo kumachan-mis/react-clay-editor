@@ -18,12 +18,15 @@ export type CodeMenuProps = {
 };
 
 export const CodeMenuConstants = {
+  selectId: 'code-menu',
   items: {
     inline: {
       defaultLabel: 'inline code',
+      selectId: 'inline-code-menu-item',
     },
     block: {
       defaultLabel: 'block code',
+      selectId: 'block-code-menu-item',
     },
   },
 };
@@ -40,7 +43,7 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu data-selectid={CodeMenuConstants.selectId}>
       <DropdownMenuButton
         open={open}
         onOpen={onOpen}
@@ -56,6 +59,7 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
           selected={inlineMenuSwitch === 'on'}
           disabled={inlineMenuSwitch === 'disabled'}
           onClick={onInlineItemClick}
+          data-selectid={CodeMenuConstants.items.inline.selectId}
         >
           {inlineLabel}
         </DropdownMenuListItem>
@@ -63,6 +67,7 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
           selected={blockMenuSwitch === 'on'}
           disabled={blockMenuSwitch === 'disabled'}
           onClick={onBlockItemClick}
+          data-selectid={CodeMenuConstants.items.block.selectId}
         >
           {blockLabel}
         </DropdownMenuListItem>

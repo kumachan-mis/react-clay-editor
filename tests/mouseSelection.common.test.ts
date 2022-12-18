@@ -1,6 +1,6 @@
-import test, { Page } from '@playwright/test';
+import test from '@playwright/test';
 
-import { linesToBe } from './testUtils';
+import { linesToBe, mouseMove, mouseSelect } from './testUtils';
 
 test.beforeEach(async ({ page }) => {
   const defaultText = [
@@ -93,23 +93,3 @@ test('move without down and up', async ({ page }) => {
     'by Thomas Edison.',
   ]);
 });
-
-async function mouseSelect(page: Page, fixedSelector: string, freeSelector: string) {
-  const fixedBoundingBox = await page.locator(fixedSelector).boundingBox();
-  const freeBoundingBox = await page.locator(freeSelector).boundingBox();
-  if (!fixedBoundingBox || !freeBoundingBox) return;
-
-  await page.mouse.move(fixedBoundingBox.x, fixedBoundingBox.y + fixedBoundingBox.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(freeBoundingBox.x, freeBoundingBox.y + freeBoundingBox.height / 2, { steps: 5 });
-  await page.mouse.up();
-}
-
-async function mouseMove(page: Page, fixedSelector: string, freeSelector: string) {
-  const fixedBoundingBox = await page.locator(fixedSelector).boundingBox();
-  const freeBoundingBox = await page.locator(freeSelector).boundingBox();
-  if (!fixedBoundingBox || !freeBoundingBox) return;
-
-  await page.mouse.move(fixedBoundingBox.x, fixedBoundingBox.y + fixedBoundingBox.height / 2);
-  await page.mouse.move(freeBoundingBox.x, freeBoundingBox.y + freeBoundingBox.height / 2, { steps: 5 });
-}

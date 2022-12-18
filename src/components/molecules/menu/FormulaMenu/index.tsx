@@ -20,15 +20,19 @@ export type FormulaMenuProps = {
 };
 
 export const FormulaMenuConstants = {
+  selectId: 'formula-menu',
   items: {
     inline: {
       defaultLabel: 'inline formula',
+      selectId: 'inline-formula-menu-item',
     },
     display: {
       defaultLabel: 'display formula',
+      selectId: 'display-formula-menu-item',
     },
     block: {
       defaultLabel: 'block formula',
+      selectId: 'block-formula-menu-item',
     },
   },
 };
@@ -47,7 +51,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu data-selectid={FormulaMenuConstants.selectId}>
       <DropdownMenuButton
         open={open}
         onOpen={onOpen}
@@ -63,6 +67,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
           selected={contentMenuSwitch === 'inline'}
           disabled={contentMenuSwitch === 'disabled'}
           onClick={onInlineItemClick}
+          data-selectid={FormulaMenuConstants.items.inline.selectId}
         >
           {inlineLabel}
         </DropdownMenuListItem>
@@ -70,6 +75,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
           selected={contentMenuSwitch === 'display'}
           disabled={contentMenuSwitch === 'disabled'}
           onClick={onDisplayItemClick}
+          data-selectid={FormulaMenuConstants.items.display.selectId}
         >
           {displayLabel}
         </DropdownMenuListItem>
@@ -77,6 +83,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
           selected={blockMenuSwitch === 'on'}
           disabled={blockMenuSwitch === 'disabled'}
           onClick={onBlockItemClick}
+          data-selectid={FormulaMenuConstants.items.block.selectId}
         >
           {blockLabel}
         </DropdownMenuListItem>

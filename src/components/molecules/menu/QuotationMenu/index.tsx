@@ -17,12 +17,15 @@ export type QuotationMenuProps = {
 };
 
 export const QuotationMenuConstants = {
+  selectId: 'quotation-menu',
   items: {
     indent: {
       defaultLabel: 'indent',
+      selectId: 'indent-quotation-menu-item',
     },
     outdent: {
       defaultLabel: 'outdent',
+      selectId: 'outdent-quotation-menu-item',
     },
   },
 };
@@ -38,7 +41,7 @@ export const QuotationMenu: React.FC<QuotationMenuProps> = ({
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu data-selectid={QuotationMenuConstants.selectId}>
       <DropdownMenuButton
         open={open}
         onOpen={onOpen}
@@ -50,8 +53,14 @@ export const QuotationMenu: React.FC<QuotationMenuProps> = ({
         <QuotationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuListItem onClick={onIndentItemClick}>{indentLabel}</DropdownMenuListItem>
-        <DropdownMenuListItem disabled={menuSwitch === 'alloff'} onClick={onOutdentItemClick}>
+        <DropdownMenuListItem onClick={onIndentItemClick} data-selectid={QuotationMenuConstants.items.indent.selectId}>
+          {indentLabel}
+        </DropdownMenuListItem>
+        <DropdownMenuListItem
+          disabled={menuSwitch === 'alloff'}
+          onClick={onOutdentItemClick}
+          data-selectid={QuotationMenuConstants.items.outdent.selectId}
+        >
           {outdentLabel}
         </DropdownMenuListItem>
       </DropdownMenuList>

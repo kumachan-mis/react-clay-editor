@@ -9,11 +9,17 @@ export type HashtagMenuProps = {
 };
 
 export const HashtagMenuConstants = {
+  selectId: 'hashtag-menu',
   defaultLabel: 'hashtag link',
 };
 
 export const HashtagMenu: React.FC<HashtagMenuProps> = ({ menuSwitch, onButtonClick }) => (
-  <IconButtonMenu pressed={menuSwitch === 'on'} disabled={menuSwitch === 'disabled'} onClick={onButtonClick}>
+  <IconButtonMenu
+    pressed={menuSwitch === 'on'}
+    disabled={menuSwitch === 'disabled'}
+    onClick={onButtonClick}
+    data-selectid={HashtagMenuConstants.selectId}
+  >
     <HashtagIcon />
   </IconButtonMenu>
 );

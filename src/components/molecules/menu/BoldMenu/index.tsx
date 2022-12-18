@@ -8,10 +8,17 @@ export type BoldMenuProps = {
   onButtonClick: () => void;
 };
 
-export const BoldMenuConstants = {};
+export const BoldMenuConstants = {
+  selectId: 'bold-menu',
+};
 
 export const BoldMenu: React.FC<BoldMenuProps> = ({ menuSwitch, onButtonClick }) => (
-  <IconButtonMenu pressed={menuSwitch === 'on'} disabled={menuSwitch === 'disabled'} onClick={onButtonClick}>
+  <IconButtonMenu
+    pressed={menuSwitch === 'on'}
+    disabled={menuSwitch === 'disabled'}
+    onClick={onButtonClick}
+    data-selectid={BoldMenuConstants.selectId}
+  >
     <BoldIcon />
   </IconButtonMenu>
 );
