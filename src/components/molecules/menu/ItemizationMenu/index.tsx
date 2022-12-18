@@ -17,12 +17,15 @@ export type ItemizationMenuProps = {
 };
 
 export const ItemizationMenuConstants = {
+  selectId: 'itemization-menu',
   items: {
     indent: {
       defaultLabel: 'indent',
+      selectId: 'indent-itemization-menu-item',
     },
     outdent: {
       defaultLabel: 'outdent',
+      selectId: 'outdent-itemization-menu-item',
     },
   },
 };
@@ -38,7 +41,7 @@ export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
   const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu data-selectid={ItemizationMenuConstants.selectId}>
       <DropdownMenuButton
         open={open}
         onOpen={onOpen}
@@ -50,8 +53,17 @@ export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
         <ItemizationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
-        <DropdownMenuListItem onClick={onIndentItemClick}>{indentLabel}</DropdownMenuListItem>
-        <DropdownMenuListItem disabled={menuSwitch === 'alloff'} onClick={onOutdentItemClick}>
+        <DropdownMenuListItem
+          onClick={onIndentItemClick}
+          data-selectid={ItemizationMenuConstants.items.indent.selectId}
+        >
+          {indentLabel}
+        </DropdownMenuListItem>
+        <DropdownMenuListItem
+          disabled={menuSwitch === 'alloff'}
+          onClick={onOutdentItemClick}
+          data-selectid={ItemizationMenuConstants.items.outdent.selectId}
+        >
           {outdentLabel}
         </DropdownMenuListItem>
       </DropdownMenuList>

@@ -14,9 +14,11 @@ export type TaggedLinkMenuProps = {
 };
 
 export const TaggedLinkMenuConstants = {
+  selectId: 'tagged-link-menu',
   items: {
     defaultLabel: 'tagged link',
     taggedLabel: (tagName: string, label: string) => `${tagName}: ${label}`,
+    selectId: (tagName: string) => `${tagName}-tagged-link-menu-item`,
   },
 };
 
@@ -29,7 +31,7 @@ export const TaggedLinkMenu: React.FC<TaggedLinkMenuProps> = ({ menuSwitch, acti
   else if (tagEntries.length > 0) onButtonClick = tagEntries[0][1].onItemClick;
 
   return (
-    <DropdownMenu>
+    <DropdownMenu data-selectid={TaggedLinkMenuConstants.selectId}>
       <DropdownMenuButton
         open={open}
         onOpen={onOpen}
@@ -42,7 +44,12 @@ export const TaggedLinkMenu: React.FC<TaggedLinkMenuProps> = ({ menuSwitch, acti
       </DropdownMenuButton>
       <DropdownMenuList open={open} anchorEl={anchorEl}>
         {tagEntries.map(([tagName, { label, onItemClick }]) => (
-          <DropdownMenuListItem key={tagName} selected={tagName === activeTagName} onClick={onItemClick}>
+          <DropdownMenuListItem
+            key={tagName}
+            selected={tagName === activeTagName}
+            onClick={onItemClick}
+            data-selectid={TaggedLinkMenuConstants.items.selectId(tagName)}
+          >
             {TaggedLinkMenuConstants.items.taggedLabel(tagName, label)}
           </DropdownMenuListItem>
         ))}

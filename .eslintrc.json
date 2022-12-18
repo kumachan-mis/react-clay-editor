@@ -11,7 +11,7 @@
   ],
   "plugins": ["@typescript-eslint", "import", "react", "react-hooks"],
   "rules": {
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "eqeqeq": "warn",
     "import/order": [
       "error",

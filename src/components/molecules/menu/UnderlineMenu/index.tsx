@@ -8,10 +8,17 @@ export type UnderlineMenuProps = {
   onButtonClick: () => void;
 };
 
-export const UnderlineMenuConstants = {};
+export const UnderlineMenuConstants = {
+  selectId: 'underline-menu',
+};
 
 export const UnderlineMenu: React.FC<UnderlineMenuProps> = ({ menuSwitch, onButtonClick }) => (
-  <IconButtonMenu pressed={menuSwitch === 'on'} disabled={menuSwitch === 'disabled'} onClick={onButtonClick}>
+  <IconButtonMenu
+    pressed={menuSwitch === 'on'}
+    disabled={menuSwitch === 'disabled'}
+    onClick={onButtonClick}
+    data-selectid={UnderlineMenuConstants.selectId}
+  >
     <UnderlineIcon />
   </IconButtonMenu>
 );
