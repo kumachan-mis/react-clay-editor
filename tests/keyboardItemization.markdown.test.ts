@@ -35,8 +35,7 @@ test('itemization enter (empty next)', async ({ page }) => {
   await page.keyboard.press('Space');
   await page.keyboard.type('4');
 
-  // bullet of itemization is expressed with white-space
-  await linesToBe(page, ['  item 1', '  item 2', '   item 3', '   item 4']);
+  await linesToBe(page, ['- item 1', '- item 2', ' - item 3', ' - item 4']);
 });
 
 test('itemization enter (non-empty next)', async ({ page }) => {
@@ -59,8 +58,7 @@ test('itemization enter (non-empty next)', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.keyboard.press('ArrowRight');
 
-  // bullet of itemization is expressed with white-space
-  await linesToBe(page, ['  x', '  x', '   y', '   y']);
+  await linesToBe(page, ['* x', '* x', ' * y', ' * y']);
 });
 
 test('non-itemization enter', async ({ page }) => {
