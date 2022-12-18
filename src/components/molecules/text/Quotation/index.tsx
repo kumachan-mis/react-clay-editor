@@ -13,11 +13,11 @@ export type QuotationProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<QuotationNode>;
 
-export const Quotation: React.FC<QuotationProps> = ({ node, editMode, textVisual, ChildComponent, ...rest }) => {
+export const Quotation: React.FC<QuotationProps> = ({ node, getEditMode, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, indentDepth, meta, contentLength, children } = node;
   const lineLength = indentDepth + meta.length + contentLength;
   const lineProps = textVisual?.lineProps?.(lineIndex);
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
 
   return (
     <Line lineIndex={lineIndex} {...lineProps}>
@@ -25,11 +25,11 @@ export const Quotation: React.FC<QuotationProps> = ({ node, editMode, textVisual
       <QuotationLineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
         {[...meta].map((char, index) => (
           <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
-            {editModeValue ? char : ''}
+            {editMode ? char : ''}
           </Char>
         ))}
         {children.map((child, index) => (
-          <ChildComponent key={index} node={child} editMode={editMode} textVisual={textVisual} {...rest} />
+          <ChildComponent key={index} node={child} getEditMode={getEditMode} textVisual={textVisual} {...rest} />
         ))}
       </QuotationLineContent>
     </Line>

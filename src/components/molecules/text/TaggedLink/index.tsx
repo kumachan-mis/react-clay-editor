@@ -8,22 +8,27 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
 
-export const TaggedLink: React.FC<TaggedLinkProps> = ({ node, editMode, linkForceClickable, taggedLinkVisualMap }) => {
+export const TaggedLink: React.FC<TaggedLinkProps> = ({
+  node,
+  getEditMode,
+  linkForceClickable,
+  taggedLinkVisualMap,
+}) => {
   const { lineIndex, linkName, trailingMeta } = node;
   const [facingMeta, tag] = splitTag(node);
   const [first, last] = node.range;
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
   const taggedLinkVisual = taggedLinkVisualMap?.[getTagName(node)];
 
   return (
     <EmbededLink
-      editMode={editModeValue}
+      editMode={editMode}
       forceClickable={linkForceClickable}
       anchorProps={(clickable) => taggedLinkVisual?.anchorProps?.(linkName, clickable)}
     >
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
-          {editModeValue ? char : ''}
+          {editMode ? char : ''}
         </Char>
       ))}
       {[...tag].map((char, index) => (
@@ -32,7 +37,7 @@ export const TaggedLink: React.FC<TaggedLinkProps> = ({ node, editMode, linkForc
           lineIndex={lineIndex}
           charIndex={first + facingMeta.length + index}
         >
-          {editModeValue || !taggedLinkVisual?.tagHidden ? char : ''}
+          {editMode || !taggedLinkVisual?.tagHidden ? char : ''}
         </Char>
       ))}
       {[...linkName].map((char, index) => (
@@ -50,7 +55,7 @@ export const TaggedLink: React.FC<TaggedLinkProps> = ({ node, editMode, linkForc
           lineIndex={lineIndex}
           charIndex={last - (trailingMeta.length - 1) + index}
         >
-          {editModeValue ? char : ''}
+          {editMode ? char : ''}
         </Char>
       ))}
     </EmbededLink>

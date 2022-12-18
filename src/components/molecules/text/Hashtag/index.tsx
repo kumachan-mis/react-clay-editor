@@ -8,14 +8,14 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type HashtagProps = TextNodeComponentProps<HashtagNode>;
 
-export const Hashtag: React.FC<HashtagProps> = ({ node, editMode, linkForceClickable, hashtagVisual }) => {
+export const Hashtag: React.FC<HashtagProps> = ({ node, getEditMode, linkForceClickable, hashtagVisual }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
-      editMode={editModeValue}
+      editMode={editMode}
       forceClickable={linkForceClickable}
       anchorProps={(clickable) => hashtagVisual?.anchorProps?.(getHashtagName(node), clickable)}
     >

@@ -7,7 +7,7 @@ import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/ho
 import { selectionToRange } from '../../selection/Selection/utils';
 
 export type UseTextNodeComponent = {
-  editMode: (node: TextNode) => boolean;
+  getEditMode: (node: TextNode) => boolean;
   linkForceClickable: boolean;
 };
 
@@ -15,14 +15,14 @@ export function useTextNodeComponent(
   cursorCoordinate?: CursorCoordinate,
   cursorSelection?: CursorSelection
 ): UseTextNodeComponent {
-  const editMode = React.useCallback(
+  const getEditMode = React.useCallback(
     (node: TextNode) => cursorOnTextNode(node, cursorCoordinate) || selectionOnTextNode(node, cursorSelection),
     [cursorCoordinate, cursorSelection]
   );
 
   const linkForceClickable = useEmbededLinkForceClickable();
 
-  return { editMode, linkForceClickable };
+  return { getEditMode, linkForceClickable };
 }
 
 function cursorOnTextNode(node: TextNode, cursorCoordinate?: CursorCoordinate): boolean {

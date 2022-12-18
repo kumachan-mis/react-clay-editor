@@ -7,20 +7,25 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type BracketLinkProps = TextNodeComponentProps<BracketLinkNode>;
 
-export const BracketLink: React.FC<BracketLinkProps> = ({ node, editMode, linkForceClickable, bracketLinkVisual }) => {
+export const BracketLink: React.FC<BracketLinkProps> = ({
+  node,
+  getEditMode,
+  linkForceClickable,
+  bracketLinkVisual,
+}) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
-      editMode={editModeValue}
+      editMode={editMode}
       forceClickable={linkForceClickable}
       anchorProps={(clickable) => bracketLinkVisual?.anchorProps?.(linkName, clickable)}
     >
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
-          {editModeValue ? char : ''}
+          {editMode ? char : ''}
         </Char>
       ))}
       {[...linkName].map((char, index) => (
@@ -38,7 +43,7 @@ export const BracketLink: React.FC<BracketLinkProps> = ({ node, editMode, linkFo
           lineIndex={lineIndex}
           charIndex={last - (trailingMeta.length - 1) + index}
         >
-          {editModeValue ? char : ''}
+          {editMode ? char : ''}
         </Char>
       ))}
     </EmbededLink>

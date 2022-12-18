@@ -9,11 +9,11 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type ContentFormulaProps = TextNodeComponentProps<ContentFormulaNode>;
 
-export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, editMode, formulaVisual }) => {
+export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, getEditMode, formulaVisual }) => {
   const { lineIndex, facingMeta, formula, trailingMeta } = node;
   const displayMode = node.type === 'displayFormula';
   const [first, last] = node.range;
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
   const codeElementProps = formulaVisual?.codeProps?.(formula);
 
   return (
@@ -22,7 +22,7 @@ export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, editMode, 
       firstCharIndex={first + facingMeta.length}
       lastCharIndex={last - trailingMeta.length}
     >
-      {!editModeValue ? (
+      {!editMode ? (
         <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
       ) : (
         <Monospace {...codeElementProps}>

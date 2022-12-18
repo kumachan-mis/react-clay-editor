@@ -10,22 +10,22 @@ import { BlockFormulaMeta } from './BlockFormulaMeta';
 
 export type BlockFormulaProps = TextNodeComponentProps<BlockFormulaNode>;
 
-export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, editMode, formulaVisual, ...rest }) => {
+export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, getEditMode, formulaVisual, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
   const [first, last] = node.range;
   const formula = children.map((child) => child.formulaLine).join('\n');
-  const editModeValue = editMode(node);
+  const editMode = getEditMode(node);
 
-  return !editModeValue && !/^\s*$/.test(formula) ? (
-    <BlockFormulaKaTeX node={node} editMode={editMode} formulaVisual={formulaVisual} {...rest} />
+  return !editMode && !/^\s*$/.test(formula) ? (
+    <BlockFormulaKaTeX node={node} getEditMode={getEditMode} formulaVisual={formulaVisual} {...rest} />
   ) : (
     <LineGroup firstLineIndex={first + 1} lastLineIndex={trailingMeta ? last - 1 : last}>
-      <BlockFormulaMeta node={facingMeta} editMode={editMode} formulaVisual={formulaVisual} {...rest} />
+      <BlockFormulaMeta node={facingMeta} getEditMode={getEditMode} formulaVisual={formulaVisual} {...rest} />
       {children.map((child, index) => (
-        <BlockFormulaLine key={index} node={child} editMode={editMode} formulaVisual={formulaVisual} {...rest} />
+        <BlockFormulaLine key={index} node={child} getEditMode={getEditMode} formulaVisual={formulaVisual} {...rest} />
       ))}
       {trailingMeta && (
-        <BlockFormulaMeta node={trailingMeta} editMode={editMode} formulaVisual={formulaVisual} {...rest} />
+        <BlockFormulaMeta node={trailingMeta} getEditMode={getEditMode} formulaVisual={formulaVisual} {...rest} />
       )}
     </LineGroup>
   );
