@@ -1,14 +1,14 @@
-import React from 'react';
-
-import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
-import { CursorBar } from '../../../atoms/cursor/CursorBar';
-import { CursorTextArea } from '../../../atoms/cursor/CursorTextArea';
-import { SuggestionList } from '../../../atoms/suggestion/SuggesionList';
-import { SuggestionListBody } from '../../../atoms/suggestion/SuggesionListBody';
-import { SuggestionListHeader } from '../../../atoms/suggestion/SuggesionListHeader';
-import { SuggestionListItem } from '../../../atoms/suggestion/SuggesionListItem';
+import { CursorBar } from 'src/components/atoms/cursor/CursorBar';
+import { CursorTextArea } from 'src/components/atoms/cursor/CursorTextArea';
+import { SuggestionList } from 'src/components/atoms/suggestion/SuggesionList';
+import { SuggestionListBody } from 'src/components/atoms/suggestion/SuggesionListBody';
+import { SuggestionListHeader } from 'src/components/atoms/suggestion/SuggesionListHeader';
+import { SuggestionListItem } from 'src/components/atoms/suggestion/SuggesionListItem';
+import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
 
 import { useCursor } from './hooks';
+
+import React from 'react';
 
 export type CursorProps = {
   cursorCoordinate: CursorCoordinate | undefined;

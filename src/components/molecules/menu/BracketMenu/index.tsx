@@ -1,7 +1,7 @@
-import React from 'react';
+import { IconButtonMenu } from 'src/components/atoms/menu/IconButtonMenu';
+import { BracketIcon } from 'src/icons/BracketIcon';
 
-import { BracketIcon } from '../../../../icons/BracketIcon';
-import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
+import React from 'react';
 
 export type BracketMenuProps = {
   menuSwitch: 'on' | 'off' | 'disabled';

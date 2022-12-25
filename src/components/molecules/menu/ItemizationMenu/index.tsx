@@ -1,11 +1,11 @@
-import React from 'react';
+import { DropdownMenu } from 'src/components/atoms/menu/DropdownMenu';
+import { useDropdownMenu } from 'src/components/atoms/menu/DropdownMenu/hooks';
+import { DropdownMenuButton } from 'src/components/atoms/menu/DropdownMenuButton';
+import { DropdownMenuList } from 'src/components/atoms/menu/DropdownMenuList';
+import { DropdownMenuListItem } from 'src/components/atoms/menu/DropdownMenuListItem';
+import { ItemizationIcon } from 'src/icons/Itemization';
 
-import { ItemizationIcon } from '../../../../icons/Itemization';
-import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
-import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
-import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
-import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
-import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
+import React from 'react';
 
 export type ItemizationMenuProps = {
   menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled';

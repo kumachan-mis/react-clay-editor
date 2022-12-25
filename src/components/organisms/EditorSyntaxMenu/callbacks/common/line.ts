@@ -1,11 +1,11 @@
-import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { LineNode } from '../../../../../parser/line/types';
-import { isPureLineNode } from '../../../../../parser/line/utils';
-import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
-import { CursorSelection } from '../../../../../types/selection/cursorSelection';
-import { copySelection, undefinedIfZeroSelection } from '../../../../molecules/selection/Selection/utils';
-import { insertText } from '../../../EditorTextFieldBody/common/text';
 import { getLineRange } from '../../common/utils';
+import { copySelection, undefinedIfZeroSelection } from 'src/components/molecules/selection/Selection/utils';
+import { insertText } from 'src/components/organisms/EditorTextFieldBody/common/text';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { LineNode } from 'src/parser/line/types';
+import { isPureLineNode } from 'src/parser/line/utils';
+import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
+import { CursorSelection } from 'src/types/selection/cursorSelection';
 
 export type LineMenuConfig = {
   meta: string;

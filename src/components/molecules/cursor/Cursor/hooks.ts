@@ -1,12 +1,12 @@
-import React from 'react';
-
-import { getTextField } from '../../../atoms/root/TextField/utils';
-import { getTextFieldRoot } from '../../../atoms/root/TextFieldRoot/utils';
-import { SuggestionListBodyConstants } from '../../../atoms/suggestion/SuggesionListBody';
-import { SuggestionListItemConstants } from '../../../atoms/suggestion/SuggesionListItem';
-import { getCharAt } from '../../../atoms/text/Char/utils';
+import { getTextField } from 'src/components/atoms/root/TextField/utils';
+import { getTextFieldRoot } from 'src/components/atoms/root/TextFieldRoot/utils';
+import { SuggestionListBodyConstants } from 'src/components/atoms/suggestion/SuggesionListBody';
+import { SuggestionListItemConstants } from 'src/components/atoms/suggestion/SuggesionListItem';
+import { getCharAt } from 'src/components/atoms/text/Char/utils';
 
 import { CursorProps } from './index';
+
+import React from 'react';
 
 export type CursorState = {
   position: { top: number; left: number };

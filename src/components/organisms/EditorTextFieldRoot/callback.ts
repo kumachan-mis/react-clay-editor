@@ -1,7 +1,7 @@
-import { EditorState } from '../../../contexts/EditorStateContext';
-import { getWordSelection, getLineSelection } from '../../molecules/selection/Selection/utils';
 import { positionToCursorCoordinate } from '../EditorTextFieldBody/common/cursor';
 import { resetSuggestion } from '../EditorTextFieldBody/common/suggestion';
+import { getWordSelection, getLineSelection } from 'src/components/molecules/selection/Selection/utils';
+import { EditorState } from 'src/contexts/EditorStateContext';
 
 export function handleOnMouseDown(
   text: string,

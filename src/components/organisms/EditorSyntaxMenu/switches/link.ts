@@ -1,7 +1,7 @@
-import { LineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition } from '../hooks/contentPosition';
+import { LineNode } from 'src/parser/line/types';
+import { isPureLineNode } from 'src/parser/line/utils';
 
 export type LinkMenuSwitch = 'on' | 'off' | 'disabled';
 

@@ -9,6 +9,7 @@
     "plugin:react-hooks/recommended",
     "prettier"
   ],
+  "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "import", "react", "react-hooks"],
   "rules": {
     "quotes": ["error", "single", { "avoidEscape": true }],
@@ -16,19 +17,28 @@
     "import/order": [
       "error",
       {
+        "pathGroups": [{ "pattern": "src/**", "group": "parent" }],
         "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc"
-        }
+        "alphabetize": { "order": "asc" }
       }
     ],
-    "react/prop-types": 0
+    "@typescript-eslint/no-var-requires": "off",
+    "import/no-named-as-default-member": "off",
+    "react/prop-types": "off"
   },
   "settings": {
-    "import/external-module-folders": [".yarn"]
+    "react": {
+      "version": "detect"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
   },
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
+  "env": {
+    "browser": true,
+    "node": true
   }
 }

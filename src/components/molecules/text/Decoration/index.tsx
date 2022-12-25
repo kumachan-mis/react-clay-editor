@@ -1,10 +1,10 @@
+import { TextNodeComponentProps } from '../common/types';
+import { Char } from 'src/components/atoms/text/Char';
+import { TextNode } from 'src/parser';
+import { DecorationNode, Decoration as DecorationStyle } from 'src/parser/decoration/types';
+
 import styled from '@emotion/styled';
 import React from 'react';
-
-import { TextNode } from '../../../../parser';
-import { DecorationNode, Decoration as DecorationStyle } from '../../../../parser/decoration/types';
-import { Char } from '../../../atoms/text/Char';
-import { TextNodeComponentProps } from '../common/types';
 
 export type DecorationProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;

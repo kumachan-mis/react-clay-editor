@@ -1,7 +1,7 @@
-import React from 'react';
+import { TextField } from 'src/components/atoms/root/TextField';
+import { TextFieldRoot } from 'src/components/atoms/root/TextFieldRoot';
 
-import { TextField } from '../../atoms/root/TextField';
-import { TextFieldRoot } from '../../atoms/root/TextFieldRoot';
+import React from 'react';
 
 export type ViewerTextFieldRootProps = React.PropsWithChildren;
 

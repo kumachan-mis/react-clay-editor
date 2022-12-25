@@ -1,12 +1,12 @@
-import React from 'react';
-
-import { BlockFormulaMetaNode } from '../../../../parser/blockFormula/types';
-import { Char } from '../../../atoms/text/Char';
-import { Line } from '../../../atoms/text/Line';
-import { LineContent } from '../../../atoms/text/LineContent';
-import { LineIndent } from '../../../atoms/text/LineIndent';
-import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
+import { Char } from 'src/components/atoms/text/Char';
+import { Line } from 'src/components/atoms/text/Line';
+import { LineContent } from 'src/components/atoms/text/LineContent';
+import { LineIndent } from 'src/components/atoms/text/LineIndent';
+import { Monospace } from 'src/components/atoms/text/Monospace';
+import { BlockFormulaMetaNode } from 'src/parser/blockFormula/types';
+
+import React from 'react';
 
 export type BlockFormulaMetaProps = TextNodeComponentProps<BlockFormulaMetaNode>;
 

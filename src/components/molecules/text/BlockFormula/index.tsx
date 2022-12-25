@@ -1,14 +1,14 @@
-import React from 'react';
-
-import { BlockFormulaNode } from '../../../../parser/blockFormula/types';
-import { KaTeX } from '../../../atoms/text/KaTeX';
-import { LineGroup } from '../../../atoms/text/LineGroup';
-import { LineGroupContent } from '../../../atoms/text/LineGroupContent';
-import { LineGroupIndent } from '../../../atoms/text/LineGroupIndent';
 import { TextNodeComponentProps } from '../common/types';
+import { KaTeX } from 'src/components/atoms/text/KaTeX';
+import { LineGroup } from 'src/components/atoms/text/LineGroup';
+import { LineGroupContent } from 'src/components/atoms/text/LineGroupContent';
+import { LineGroupIndent } from 'src/components/atoms/text/LineGroupIndent';
+import { BlockFormulaNode } from 'src/parser/blockFormula/types';
 
 import { BlockFormulaLine } from './BlockFormulaLine';
 import { BlockFormulaMeta } from './BlockFormulaMeta';
+
+import React from 'react';
 
 export type BlockFormulaProps = TextNodeComponentProps<BlockFormulaNode>;
 

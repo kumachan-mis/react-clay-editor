@@ -1,9 +1,9 @@
-import React from 'react';
-
-import { UrlNode } from '../../../../parser/url/types';
-import { Char } from '../../../atoms/text/Char';
-import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
+import { Char } from 'src/components/atoms/text/Char';
+import { EmbededLink } from 'src/components/atoms/text/EmbededLink';
+import { UrlNode } from 'src/parser/url/types';
+
+import React from 'react';
 
 export type UrlProps = TextNodeComponentProps<UrlNode>;
 

@@ -1,7 +1,7 @@
+import { Char } from '../Char';
+
 import styled from '@emotion/styled';
 import React from 'react';
-
-import { Char } from '../Char';
 
 export type LineContentProps = {
   lineIndex: number;

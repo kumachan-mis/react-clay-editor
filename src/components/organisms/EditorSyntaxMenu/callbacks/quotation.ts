@@ -1,7 +1,7 @@
-import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode } from '../../../../parser/line/types';
-import { QuotationLabels } from '../../../../types/label/quotation';
 import { QuotationMenuSwitch } from '../switches/quotation';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { LineNode } from 'src/parser/line/types';
+import { QuotationLabels } from 'src/types/label/quotation';
 
 import { handleOnLineMenuClick } from './common/line';
 

@@ -1,19 +1,17 @@
-import * as React from 'react';
-
-import { useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
-import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
-import { MenuList } from '../../atoms/menu/MenuList';
-import { BoldMenu } from '../../molecules/menu/BoldMenu';
-import { BracketMenu } from '../../molecules/menu/BracketMenu';
-import { CodeMenu } from '../../molecules/menu/CodeMenu';
-import { FormulaMenu } from '../../molecules/menu/FormulaMenu';
-import { HashtagMenu } from '../../molecules/menu/HashtagMenu';
-import { ItalicMenu } from '../../molecules/menu/ItalicMenu';
-import { ItemizationMenu } from '../../molecules/menu/ItemizationMenu';
-import { QuotationMenu } from '../../molecules/menu/QuotationMenu';
-import { SectionMenu } from '../../molecules/menu/SectionMenu';
-import { TaggedLinkMenu } from '../../molecules/menu/TaggedLinkMenu';
-import { UnderlineMenu } from '../../molecules/menu/UnderlineMenu';
+import { MenuList } from 'src/components/atoms/menu/MenuList';
+import { BoldMenu } from 'src/components/molecules/menu/BoldMenu';
+import { BracketMenu } from 'src/components/molecules/menu/BracketMenu';
+import { CodeMenu } from 'src/components/molecules/menu/CodeMenu';
+import { FormulaMenu } from 'src/components/molecules/menu/FormulaMenu';
+import { HashtagMenu } from 'src/components/molecules/menu/HashtagMenu';
+import { ItalicMenu } from 'src/components/molecules/menu/ItalicMenu';
+import { ItemizationMenu } from 'src/components/molecules/menu/ItemizationMenu';
+import { QuotationMenu } from 'src/components/molecules/menu/QuotationMenu';
+import { SectionMenu } from 'src/components/molecules/menu/SectionMenu';
+import { TaggedLinkMenu } from 'src/components/molecules/menu/TaggedLinkMenu';
+import { UnderlineMenu } from 'src/components/molecules/menu/UnderlineMenu';
+import { useEditorPropsValueContext } from 'src/contexts/EditorPropsContext';
+import { useTextNodesValueContext } from 'src/contexts/TextNodesContext';
 
 import { useBlockPosition } from './hooks/blockPosition';
 import { useBoldMenu } from './hooks/boldMenu';
@@ -30,6 +28,8 @@ import { useQuotationMenu } from './hooks/quotationMenu';
 import { useSectionMenu } from './hooks/sectionMenu';
 import { useTaggedLinkMenu } from './hooks/taggedLink';
 import { useUnderlineMenu } from './hooks/underlineMenu';
+
+import * as React from 'react';
 
 export const EditorSyntaxMenu: React.FC = () => {
   const props = useEditorPropsValueContext();

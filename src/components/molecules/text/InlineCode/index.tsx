@@ -1,9 +1,9 @@
-import React from 'react';
-
-import { InlineCodeNode } from '../../../../parser/inlineCode/types';
-import { Char } from '../../../atoms/text/Char';
-import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
+import { Char } from 'src/components/atoms/text/Char';
+import { Monospace } from 'src/components/atoms/text/Monospace';
+import { InlineCodeNode } from 'src/parser/inlineCode/types';
+
+import React from 'react';
 
 export type InlineCodeProps = TextNodeComponentProps<InlineCodeNode>;
 

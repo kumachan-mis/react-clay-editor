@@ -1,8 +1,8 @@
-import { TextProps } from '../../../../contexts/EditorPropsContext';
-import { LineNode } from '../../../../parser/line/types';
-import { SectionMenuConstants, SectionMenuProps } from '../../../molecules/menu/SectionMenu';
-import { handleOnSectionButtonClick, handleOnSectionItemClick, SectionMenuHandlerProps } from '../callbacks/section';
+import { SectionMenuHandlerProps, handleOnSectionButtonClick, handleOnSectionItemClick } from '../callbacks/section';
 import { sectionMenuSwitch } from '../switches/section';
+import { SectionMenuConstants, SectionMenuProps } from 'src/components/molecules/menu/SectionMenu';
+import { TextProps } from 'src/contexts/EditorPropsContext';
+import { LineNode } from 'src/parser/line/types';
 
 import { CommonMenuProps } from './types';
 

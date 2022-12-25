@@ -1,5 +1,5 @@
-import { TextNode, ParsingOptions } from '../src/parser';
-import { createTaggedLinkRegex } from '../src/parser/taggedLink/parseTaggedLink';
+import { ParsingOptions, TextNode } from 'src/parser';
+import { createTaggedLinkRegex } from 'src/parser/taggedLink/parseTaggedLink';
 
 type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] : RecursivePartial<T[P]>;

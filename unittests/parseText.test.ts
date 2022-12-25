@@ -1,8 +1,8 @@
+import { parseText } from 'src/parser';
+
+import { commonTestCases, branketTestCases, markdownTestCases, TestCase } from './parseText.testcase';
+
 import { expect, describe, test } from '@jest/globals';
-
-import { parseText } from '../src/parser';
-
-import { branketTestCases, commonTestCases, markdownTestCases, TestCase } from './parseText.testcase';
 
 describe('function parseText (bracket syntax)', () => {
   test.each<[string, TestCase]>(commonTestCases.map((testCase) => [testCase.name, testCase]))('%s', (_, testCase) => {

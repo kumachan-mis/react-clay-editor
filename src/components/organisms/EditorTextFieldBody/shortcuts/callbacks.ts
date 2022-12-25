@@ -1,10 +1,10 @@
-import { wordRegex } from '../../../../common/constants';
-import { EditorState } from '../../../../contexts/EditorStateContext';
-import { moveCursor, cursorCoordinateToTextIndex } from '../../../molecules/cursor/Cursor/utils';
-import { getSelectionText } from '../../../molecules/selection/Selection/utils';
-import { resetCursorSelection, updateSelectionAfterCursorMove } from '../common/selection';
+import { updateSelectionAfterCursorMove, resetCursorSelection } from '../common/selection';
 import { resetSuggestion } from '../common/suggestion';
 import { insertText } from '../common/text';
+import { wordRegex } from 'src/common/constants';
+import { cursorCoordinateToTextIndex, moveCursor } from 'src/components/molecules/cursor/Cursor/utils';
+import { getSelectionText } from 'src/components/molecules/selection/Selection/utils';
+import { EditorState } from 'src/contexts/EditorStateContext';
 
 import { ShortcutCommand } from './types';
 

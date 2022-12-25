@@ -2,7 +2,7 @@ import { ParsingContext, ParsingOptions } from '../common/types';
 import { parseContent } from '../content/parseContent';
 import { NormalLineNode } from '../normalLine/types';
 
-import { Decoration, DecorationNode } from './types';
+import { DecorationNode, Decoration } from './types';
 
 export const headingRegex = /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/;
 

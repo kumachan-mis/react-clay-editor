@@ -1,12 +1,10 @@
-import React from 'react';
-
-import { EditorProps, useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
-import { EditorState, useEditorStateContext, useEditorStateValueContext } from '../../../contexts/EditorStateContext';
-import { useTextContext } from '../../../contexts/TextContext';
-import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
-import { CursorProps } from '../../molecules/cursor/Cursor';
-import { SelectionProps } from '../../molecules/selection/Selection';
-import { TextProps } from '../../molecules/text/Text/types';
+import { CursorProps } from 'src/components/molecules/cursor/Cursor';
+import { SelectionProps } from 'src/components/molecules/selection/Selection';
+import { TextProps } from 'src/components/molecules/text/Text/types';
+import { useEditorPropsValueContext, EditorProps } from 'src/contexts/EditorPropsContext';
+import { useEditorStateValueContext, useEditorStateContext, EditorState } from 'src/contexts/EditorStateContext';
+import { useTextContext } from 'src/contexts/TextContext';
+import { useTextNodesValueContext } from 'src/contexts/TextNodesContext';
 
 import {
   handleOnKeyDown,
@@ -18,6 +16,8 @@ import {
   handleOnTextPaste,
   handleOnSuggestionMouseDown,
 } from './callbacks';
+
+import React from 'react';
 
 export function useSelection(): SelectionProps {
   const { cursorSelection } = useEditorStateValueContext();

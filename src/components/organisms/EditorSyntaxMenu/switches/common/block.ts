@@ -1,9 +1,9 @@
-import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../../parser/block/types';
-import { isBlockNode } from '../../../../../parser/block/utils';
-import { LineNode } from '../../../../../parser/line/types';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { BlockNode } from 'src/parser/block/types';
+import { isBlockNode } from 'src/parser/block/utils';
+import { LineNode } from 'src/parser/line/types';
 
 export type BlockMenuItemType = 'blockCode' | 'blockFormula';
 

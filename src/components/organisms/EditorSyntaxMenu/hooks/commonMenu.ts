@@ -1,5 +1,5 @@
-import { useEditorStateContext } from '../../../../contexts/EditorStateContext';
-import { useTextContext } from '../../../../contexts/TextContext';
+import { useEditorStateContext } from 'src/contexts/EditorStateContext';
+import { useTextContext } from 'src/contexts/TextContext';
 
 import { CommonMenuProps } from './types';
 

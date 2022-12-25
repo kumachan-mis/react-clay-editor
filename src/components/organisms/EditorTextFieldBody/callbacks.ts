@@ -1,12 +1,12 @@
-import { isMacOS } from '../../../common/utils';
-import { EditorProps } from '../../../contexts/EditorPropsContext';
-import { EditorState } from '../../../contexts/EditorStateContext';
-import { bracketItemizationRegex } from '../../../parser/itemization/parseBracketItemization';
-import { markdownItemizationRegex } from '../../../parser/itemization/parseMarkdownItemization';
-import { quotationRegex } from '../../../parser/quotation/parseQuotation';
-import { getSelectionText } from '../../molecules/selection/Selection/utils';
+import { isMacOS } from 'src/common/utils';
+import { getSelectionText } from 'src/components/molecules/selection/Selection/utils';
+import { EditorProps } from 'src/contexts/EditorPropsContext';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { bracketItemizationRegex } from 'src/parser/itemization/parseBracketItemization';
+import { markdownItemizationRegex } from 'src/parser/itemization/parseMarkdownItemization';
+import { quotationRegex } from 'src/parser/quotation/parseQuotation';
 
-import { showSuggestion, showIMEBasedSuggestion, insertSuggestion, resetSuggestion } from './common/suggestion';
+import { insertSuggestion, resetSuggestion, showSuggestion, showIMEBasedSuggestion } from './common/suggestion';
 import { insertText } from './common/text';
 import {
   handleOnShortcut,

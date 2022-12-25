@@ -1,8 +1,8 @@
-import { BracketLinkProps } from '../../../../contexts/EditorPropsContext';
-import { LineNode } from '../../../../parser/line/types';
-import { BracketMenuConstants, BracketMenuProps } from '../../../molecules/menu/BracketMenu';
-import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
-import { LinkMenuItem, linkMenuSwitch } from '../switches/link';
+import { LinkMenuHandlerProps, handleOnLinkItemClick } from '../callbacks/link';
+import { linkMenuSwitch, LinkMenuItem } from '../switches/link';
+import { BracketMenuConstants, BracketMenuProps } from 'src/components/molecules/menu/BracketMenu';
+import { BracketLinkProps } from 'src/contexts/EditorPropsContext';
+import { LineNode } from 'src/parser/line/types';
 
 import { ContentPosition } from './contentPosition';
 import { CommonMenuProps } from './types';

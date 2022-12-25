@@ -1,4 +1,4 @@
-import { CursorCoordinate } from '../src/types/cursor/cursorCoordinate';
+import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
 
 export interface TestCase {
   name: string;
