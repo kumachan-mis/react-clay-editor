@@ -1,7 +1,4 @@
 ### Project specific settings ###
-webpack.*.js
-jest.*.js
-playwright*.ts
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,react

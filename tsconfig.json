@@ -3,6 +3,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
     "target": "ESNext",
     "strict": true,

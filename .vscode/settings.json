@@ -14,6 +14,14 @@
     "editor.rulers": [120],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[json]": {
+    "editor.rulers": [120],
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.rulers": [120],
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "javascript.suggestionActions.enabled": false,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",

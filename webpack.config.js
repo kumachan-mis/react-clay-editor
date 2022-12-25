@@ -1,8 +1,9 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const path = require('path');
+
 const packageJson = require('./package.json');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const envVars = createEnvVars();
 
 const isProduction = envVars.NODE_ENV === 'production';
