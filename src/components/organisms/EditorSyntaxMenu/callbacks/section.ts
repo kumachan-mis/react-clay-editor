@@ -1,10 +1,10 @@
-import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode } from '../../../../parser/line/types';
-import { TextLabels } from '../../../../types/label/text';
-import { CursorSelection } from '../../../../types/selection/cursorSelection';
-import { copySelection, undefinedIfZeroSelection } from '../../../molecules/selection/Selection/utils';
 import { ContentPosition } from '../hooks/contentPosition';
-import { SectionMenuItemType, SectionMenuSwitch } from '../switches/section';
+import { SectionMenuSwitch, SectionMenuItemType } from '../switches/section';
+import { copySelection, undefinedIfZeroSelection } from 'src/components/molecules/selection/Selection/utils';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { LineNode } from 'src/parser/line/types';
+import { TextLabels } from 'src/types/label/text';
+import { CursorSelection } from 'src/types/selection/cursorSelection';
 
 import {
   insertContentAtCursor,

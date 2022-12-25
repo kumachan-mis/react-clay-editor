@@ -1,7 +1,7 @@
-import { LineNode } from '../../../../parser/line/types';
-import { ItalicMenuProps } from '../../../molecules/menu/ItalicMenu';
 import { DecorationMenuHandlerProps, handleOnDecorationClick } from '../callbacks/decoration';
 import { decorationMenuSwitch } from '../switches/decoration';
+import { ItalicMenuProps } from 'src/components/molecules/menu/ItalicMenu';
+import { LineNode } from 'src/parser/line/types';
 
 import { ContentPosition } from './contentPosition';
 import { CommonMenuProps } from './types';

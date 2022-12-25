@@ -1,4 +1,4 @@
-import { isMacOS } from '../../../../common/utils';
+import { isMacOS } from 'src/common/utils';
 
 import React from 'react';
 

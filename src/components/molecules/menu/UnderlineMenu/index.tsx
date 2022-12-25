@@ -1,5 +1,5 @@
-import { UnderlineIcon } from '../../../../icons/UnderlineIcon';
-import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
+import { IconButtonMenu } from 'src/components/atoms/menu/IconButtonMenu';
+import { UnderlineIcon } from 'src/icons/UnderlineIcon';
 
 import React from 'react';
 

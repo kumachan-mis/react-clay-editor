@@ -1,6 +1,6 @@
-import { BlockCodeNode } from '../../../../parser/blockCode/types';
-import { LineGroup } from '../../../atoms/text/LineGroup';
 import { TextNodeComponentProps } from '../common/types';
+import { LineGroup } from 'src/components/atoms/text/LineGroup';
+import { BlockCodeNode } from 'src/parser/blockCode/types';
 
 import { BlockCodeLine } from './BlockCodeLine';
 import { BlockCodeMeta } from './BlockCodeMeta';

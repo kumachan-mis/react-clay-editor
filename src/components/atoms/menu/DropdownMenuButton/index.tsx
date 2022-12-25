@@ -1,4 +1,4 @@
-import { ArrowIcon } from '../../../../icons/ArrowIcon';
+import { ArrowIcon } from 'src/icons/ArrowIcon';
 
 import styled from '@emotion/styled';
 import React from 'react';

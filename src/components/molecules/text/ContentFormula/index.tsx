@@ -1,9 +1,9 @@
-import { ContentFormulaNode } from '../../../../parser/content/types';
-import { Char } from '../../../atoms/text/Char';
-import { CharGroup } from '../../../atoms/text/CharGroup';
-import { KaTeX } from '../../../atoms/text/KaTeX';
-import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
+import { Char } from 'src/components/atoms/text/Char';
+import { CharGroup } from 'src/components/atoms/text/CharGroup';
+import { KaTeX } from 'src/components/atoms/text/KaTeX';
+import { Monospace } from 'src/components/atoms/text/Monospace';
+import { ContentFormulaNode } from 'src/parser/content/types';
 
 import React from 'react';
 

@@ -1,4 +1,4 @@
-import { LineContent } from '../../../atoms/text/LineContent';
+import { LineContent } from 'src/components/atoms/text/LineContent';
 
 import styled from '@emotion/styled';
 

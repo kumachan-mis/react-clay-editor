@@ -1,15 +1,15 @@
-import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode, PureLineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
-import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
-import { getTagName } from '../../../../parser/taggedLink/utils';
-import { BracketLinkLabels } from '../../../../types/label/bracketLink';
-import { HashtagLabels } from '../../../../types/label/hashtag';
-import { TaggedLinkLabels } from '../../../../types/label/taggedLink';
-import { Suggestion } from '../../../../types/suggestion/suggestion';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { LinkMenuItem, LinkMenuSwitch } from '../switches/link';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { LineNode, PureLineNode } from 'src/parser/line/types';
+import { isPureLineNode } from 'src/parser/line/utils';
+import { TaggedLinkNode } from 'src/parser/taggedLink/types';
+import { getTagName } from 'src/parser/taggedLink/utils';
+import { BracketLinkLabels } from 'src/types/label/bracketLink';
+import { HashtagLabels } from 'src/types/label/hashtag';
+import { TaggedLinkLabels } from 'src/types/label/taggedLink';
+import { Suggestion } from 'src/types/suggestion/suggestion';
 
 import {
   insertContentAtCursor,

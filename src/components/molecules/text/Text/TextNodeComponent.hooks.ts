@@ -1,8 +1,8 @@
-import { TextNode } from '../../../../parser';
-import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
-import { CursorSelection } from '../../../../types/selection/cursorSelection';
-import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/hooks';
 import { selectionToRange } from '../../selection/Selection/utils';
+import { useEmbededLinkForceClickable } from 'src/components/atoms/text/EmbededLink/hooks';
+import { TextNode } from 'src/parser';
+import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
+import { CursorSelection } from 'src/types/selection/cursorSelection';
 
 import React from 'react';
 

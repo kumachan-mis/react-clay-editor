@@ -1,14 +1,14 @@
-import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../../parser/block/types';
-import { isBlockNode } from '../../../../../parser/block/utils';
-import { LineNode } from '../../../../../parser/line/types';
-import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
-import { CursorSelection } from '../../../../../types/selection/cursorSelection';
-import { copySelection } from '../../../../molecules/selection/Selection/utils';
-import { insertText } from '../../../EditorTextFieldBody/common/text';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
 import { BlockMenuSwitch } from '../../switches/common/block';
+import { copySelection } from 'src/components/molecules/selection/Selection/utils';
+import { insertText } from 'src/components/organisms/EditorTextFieldBody/common/text';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { BlockNode } from 'src/parser/block/types';
+import { isBlockNode } from 'src/parser/block/utils';
+import { LineNode } from 'src/parser/line/types';
+import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
+import { CursorSelection } from 'src/types/selection/cursorSelection';
 
 export type BlockMenuConfig = {
   label: string;

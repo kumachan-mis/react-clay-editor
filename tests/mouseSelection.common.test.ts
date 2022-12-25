@@ -1,4 +1,4 @@
-import { linesToBe, mouseMove, mouseSelect } from './testUtils';
+import { mouseSelect, linesToBe, mouseMove } from './testUtils';
 
 import { test } from '@playwright/test';
 

@@ -1,11 +1,11 @@
-import { EditorState } from '../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../parser/block/types';
-import { LineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
-import { FormulaLabels } from '../../../../types/label/formula';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
-import { BlockFormulaMenuSwitch, ContentFormulaMenuSwitch } from '../switches/formula';
+import { ContentFormulaMenuSwitch, BlockFormulaMenuSwitch } from '../switches/formula';
+import { EditorState } from 'src/contexts/EditorStateContext';
+import { BlockNode } from 'src/parser/block/types';
+import { LineNode } from 'src/parser/line/types';
+import { isPureLineNode } from 'src/parser/line/utils';
+import { FormulaLabels } from 'src/types/label/formula';
 
 import { handleOnBlockMenuClick } from './common/block';
 import {

@@ -1,8 +1,8 @@
-import { EditorState } from '../../../contexts/EditorStateContext';
-import { coordinatesAreEqual } from '../../molecules/cursor/Cursor/utils';
 import { positionToCursorCoordinate } from '../EditorTextFieldBody/common/cursor';
 import { updateSelectionAfterCursorMove } from '../EditorTextFieldBody/common/selection';
-import { handleOnMoveDown, handleOnMoveUp } from '../EditorTextFieldBody/shortcuts/callbacks';
+import { handleOnMoveUp, handleOnMoveDown } from '../EditorTextFieldBody/shortcuts/callbacks';
+import { coordinatesAreEqual } from 'src/components/molecules/cursor/Cursor/utils';
+import { EditorState } from 'src/contexts/EditorStateContext';
 
 export function handleOnMouseMove(
   text: string,

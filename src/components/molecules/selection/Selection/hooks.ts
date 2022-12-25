@@ -1,10 +1,10 @@
-import { getTextField } from '../../../atoms/root/TextField/utils';
-import { SelectionRectProps } from '../../../atoms/selection/SelectionRect';
-import { getCharAt } from '../../../atoms/text/Char/utils';
+import { getTextField } from 'src/components/atoms/root/TextField/utils';
+import { SelectionRectProps } from 'src/components/atoms/selection/SelectionRect';
+import { getCharAt } from 'src/components/atoms/text/Char/utils';
 
 import { selectionToRange } from './utils';
 
-import { SelectionProps } from '.';
+import { SelectionProps } from './index';
 
 import React from 'react';
 

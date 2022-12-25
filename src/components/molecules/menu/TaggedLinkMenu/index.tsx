@@ -1,9 +1,9 @@
-import { TaggedlinkIcon } from '../../../../icons/TaggedlinkIcon';
-import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
-import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
-import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
-import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
-import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
+import { DropdownMenu } from 'src/components/atoms/menu/DropdownMenu';
+import { useDropdownMenu } from 'src/components/atoms/menu/DropdownMenu/hooks';
+import { DropdownMenuButton } from 'src/components/atoms/menu/DropdownMenuButton';
+import { DropdownMenuList } from 'src/components/atoms/menu/DropdownMenuList';
+import { DropdownMenuListItem } from 'src/components/atoms/menu/DropdownMenuListItem';
+import { TaggedlinkIcon } from 'src/icons/TaggedlinkIcon';
 
 import React from 'react';
 

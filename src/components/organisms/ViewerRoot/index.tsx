@@ -1,7 +1,7 @@
-import { TextValueContextProvider } from '../../../contexts/TextContext';
-import { TextNodesContextProvider } from '../../../contexts/TextNodesContext';
-import { ViewerProps, ViewerPropsContextProvider } from '../../../contexts/ViewerPropsContext';
-import { Root } from '../../atoms/root/Root';
+import { Root } from 'src/components/atoms/root/Root';
+import { TextValueContextProvider } from 'src/contexts/TextContext';
+import { TextNodesContextProvider } from 'src/contexts/TextNodesContext';
+import { ViewerProps, ViewerPropsContextProvider } from 'src/contexts/ViewerPropsContext';
 
 import React from 'react';
 

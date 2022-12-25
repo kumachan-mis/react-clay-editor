@@ -1,7 +1,5 @@
 import { expect, describe, test } from '@jest/globals';
-
-import { cursorCoordinateToTextIndex } from '../src/components/molecules/cursor/Cursor/utils';
-
+import { cursorCoordinateToTextIndex } from 'src/components/molecules/cursor/Cursor/utils';
 import { TestCase, testCases } from './cursorCoordinateToTextIndex.testcase';
 
 describe('function cursorCoordinateToTextIndex', () => {

@@ -1,8 +1,8 @@
-import { Cursor } from '../../molecules/cursor/Cursor';
-import { Selection } from '../../molecules/selection/Selection';
-import { Text } from '../../molecules/text/Text';
+import { Cursor } from 'src/components/molecules/cursor/Cursor';
+import { Selection } from 'src/components/molecules/selection/Selection';
+import { Text } from 'src/components/molecules/text/Text';
 
-import { useCursor, useSelection, useText } from './hooks';
+import { useSelection, useCursor, useText } from './hooks';
 
 import React from 'react';
 

@@ -1,11 +1,11 @@
-import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
-import { TextFieldConstants } from '../../../atoms/root/TextField';
-import { TextFieldHeaderConstants } from '../../../atoms/root/TextFieldHeader';
-import { CharConstants } from '../../../atoms/text/Char';
-import { getCharAt } from '../../../atoms/text/Char/utils';
-import { CharGroupConstants } from '../../../atoms/text/CharGroup';
-import { LineConstants } from '../../../atoms/text/Line';
-import { LineGroupConstants } from '../../../atoms/text/LineGroup';
+import { TextFieldConstants } from 'src/components/atoms/root/TextField';
+import { TextFieldHeaderConstants } from 'src/components/atoms/root/TextFieldHeader';
+import { CharConstants } from 'src/components/atoms/text/Char';
+import { getCharAt } from 'src/components/atoms/text/Char/utils';
+import { CharGroupConstants } from 'src/components/atoms/text/CharGroup';
+import { LineConstants } from 'src/components/atoms/text/Line';
+import { LineGroupConstants } from 'src/components/atoms/text/LineGroup';
+import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
 
 export function positionToCursorCoordinate(
   text: string,

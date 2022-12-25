@@ -1,5 +1,5 @@
-import { BlockCodeLineNode, BlockCodeMetaNode } from '../blockCode/types';
-import { BlockFormulaLineNode, BlockFormulaMetaNode } from '../blockFormula/types';
+import { BlockCodeMetaNode, BlockCodeLineNode } from '../blockCode/types';
+import { BlockFormulaMetaNode, BlockFormulaLineNode } from '../blockFormula/types';
 import { ItemizationNode } from '../itemization/types';
 import { NormalLineNode } from '../normalLine/types';
 import { QuotationNode } from '../quotation/types';
