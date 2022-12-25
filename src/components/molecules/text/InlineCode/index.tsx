@@ -7,6 +7,10 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type InlineCodeProps = TextNodeComponentProps<InlineCodeNode>;
 
+export const InlineCodeConstants = {
+  styleId: 'inline-code',
+};
+
 export const InlineCode: React.FC<InlineCodeProps> = ({ node, getEditMode, codeVisual }) => {
   const { lineIndex, facingMeta, code, trailingMeta } = node;
   const [first, last] = node.range;
@@ -14,7 +18,7 @@ export const InlineCode: React.FC<InlineCodeProps> = ({ node, getEditMode, codeV
   const codeElementProps = codeVisual?.codeProps?.(code);
 
   return (
-    <Monospace {...codeElementProps}>
+    <Monospace {...codeElementProps} data-styleid={InlineCodeConstants.styleId}>
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {editMode ? char : ''}

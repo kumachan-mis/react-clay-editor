@@ -7,6 +7,10 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type BracketLinkProps = TextNodeComponentProps<BracketLinkNode>;
 
+export const BracketLinkConstants = {
+  styleId: 'bracket-link',
+};
+
 export const BracketLink: React.FC<BracketLinkProps> = ({
   node,
   getEditMode,
@@ -22,6 +26,7 @@ export const BracketLink: React.FC<BracketLinkProps> = ({
       editMode={editMode}
       forceClickable={linkForceClickable}
       anchorProps={(clickable) => bracketLinkVisual?.anchorProps?.(linkName, clickable)}
+      data-styleid={BracketLinkConstants.styleId}
     >
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>

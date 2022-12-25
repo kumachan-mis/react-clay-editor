@@ -9,6 +9,10 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type ContentFormulaProps = TextNodeComponentProps<ContentFormulaNode>;
 
+export const ContentFormulaConstants = {
+  styleId: (displayMode: boolean) => (displayMode ? 'display-formula' : 'inline-formula'),
+};
+
 export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, getEditMode, formulaVisual }) => {
   const { lineIndex, facingMeta, formula, trailingMeta } = node;
   const displayMode = node.type === 'displayFormula';
@@ -21,6 +25,7 @@ export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, getEditMod
       lineIndex={lineIndex}
       firstCharIndex={first + facingMeta.length}
       lastCharIndex={last - trailingMeta.length}
+      data-styleid={ContentFormulaConstants.styleId(displayMode)}
     >
       {!editMode ? (
         <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
