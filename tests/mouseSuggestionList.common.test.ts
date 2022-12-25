@@ -3,7 +3,7 @@ import test, { expect } from '@playwright/test';
 import { linesToBe } from './testUtils';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('.');
+  await page.goto('./editor');
   await page.locator('[data-selectid=text-field]').click();
 });
 

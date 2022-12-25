@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
     'by Thomas Edison',
   ].join('\n');
 
-  await page.goto('.');
+  await page.goto('./editor');
   await page.locator('[data-selectid=text-field]').click();
   await page.keyboard.insertText(defaultText);
 });
