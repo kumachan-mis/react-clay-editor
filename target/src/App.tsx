@@ -6,11 +6,22 @@ import { EditorSyntaxMenu } from '../../src/components/organisms/EditorSyntaxMen
 import { EditorTextFieldBody } from '../../src/components/organisms/EditorTextFieldBody';
 import { EditorTextFieldHeader } from '../../src/components/organisms/EditorTextFieldHeader';
 import { EditorTextFieldRoot } from '../../src/components/organisms/EditorTextFieldRoot';
+import { ViewerRoot } from '../../src/components/organisms/ViewerRoot';
+import { ViewerTextFieldBody } from '../../src/components/organisms/ViewerTextFieldBody';
+import { ViewerTextFieldRoot } from '../../src/components/organisms/ViewerTextFieldRoot';
 import { BracketLinkProps, HashtagProps, TaggedLinkProps, TextProps } from '../../src/contexts/EditorPropsContext';
 
 const header = 'React Realtime Markup Editor';
 
-const className = css`
+const containerClassName = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const editorClassName = css`
   && {
     width: 70%;
     height: 70%;
@@ -19,12 +30,14 @@ const className = css`
   }
 `;
 
-const containerClassName = css`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const viewerClassNamme = css`
+  && {
+    width: 35%;
+    height: 70%;
+    border: solid 1px;
+    margin: 5px;
+    padding: 5px;
+  }
 `;
 
 const textProps: TextProps = {
@@ -102,12 +115,18 @@ export const App: React.FC = () => {
   switch (window.location.pathname) {
     case '/':
       return <div>Playwright Test</div>;
-    case '/bracket':
-    case '/bracket/':
+    case '/bracket/editor':
+    case '/bracket/editor/':
       return <TestTargetEditor syntax="bracket" />;
-    case '/markdown':
-    case '/markdown/':
+    case '/bracket/viewer':
+    case '/bracket/viewer/':
+      return <TestTargetViewer syntax="bracket" />;
+    case '/markdown/editor':
+    case '/markdown/editor/':
       return <TestTargetEditor syntax="markdown" />;
+    case '/markdown/viewer':
+    case '/markdown/viewer/':
+      return <TestTargetViewer syntax="markdown" />;
     default:
       return <div>404 Not Found</div>;
   }
@@ -126,7 +145,7 @@ const TestTargetEditor: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
         taggedLinkPropsMap={taggedLinkPropsMap}
-        className={className}
+        className={editorClassName}
       >
         <EditorSyntaxMenu />
         <EditorTextFieldRoot>
@@ -135,6 +154,34 @@ const TestTargetEditor: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax
         </EditorTextFieldRoot>
         <MockLines text={text} />
       </EditorRoot>
+    </div>
+  );
+};
+
+const TestTargetViewer: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
+  const [text, setText] = React.useState('');
+
+  return (
+    <div className={containerClassName}>
+      <textarea
+        className={viewerClassNamme}
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        data-testid="mock-textarea"
+      />
+      <ViewerRoot
+        text={text}
+        syntax={syntax}
+        textProps={textProps}
+        bracketLinkProps={bracketLinkProps}
+        hashtagProps={hashtagProps}
+        taggedLinkPropsMap={taggedLinkPropsMap}
+        className={viewerClassNamme}
+      >
+        <ViewerTextFieldRoot>
+          <ViewerTextFieldBody />
+        </ViewerTextFieldRoot>
+      </ViewerRoot>
     </div>
   );
 };

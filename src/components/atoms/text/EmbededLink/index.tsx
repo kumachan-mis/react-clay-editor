@@ -7,14 +7,16 @@ export type EmbededLinkProps = React.PropsWithChildren<{
   anchorProps: (clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
 }>;
 
-export const EmbededLinkConstants = {
-  selectId: 'embeded-link',
-};
-
-export const EmbededLink: React.FC<EmbededLinkProps> = ({ editMode, forceClickable, children, anchorProps }) => {
+export const EmbededLink: React.FC<EmbededLinkProps> = ({
+  editMode,
+  forceClickable,
+  children,
+  anchorProps,
+  ...rest
+}) => {
   const [state, setState] = React.useState({ clickable: false, hover: false });
   const clickable = (forceClickable && state.hover) || state.clickable;
-  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...rest } = anchorProps?.(clickable) || {};
+  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...anchorPropsRest } = anchorProps?.(clickable) || {};
 
   const handleOnMouseDown = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -55,7 +57,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({ editMode, forceClickab
       onMouseLeave={handleOnMouseLeave}
       onClick={handleOnClick}
       data-clickable={clickable}
-      data-selectid={EmbededLinkConstants.selectId}
+      {...anchorPropsRest}
       {...rest}
     >
       {children}

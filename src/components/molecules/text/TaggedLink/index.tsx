@@ -8,6 +8,10 @@ import { TextNodeComponentProps } from '../common/types';
 
 export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
 
+export const TaggedLinkConstants = {
+  styleId: (tagName: string) => `${tagName}-tagged-link`,
+};
+
 export const TaggedLink: React.FC<TaggedLinkProps> = ({
   node,
   getEditMode,
@@ -16,15 +20,17 @@ export const TaggedLink: React.FC<TaggedLinkProps> = ({
 }) => {
   const { lineIndex, linkName, trailingMeta } = node;
   const [facingMeta, tag] = splitTag(node);
+  const tagName = getTagName(node);
   const [first, last] = node.range;
   const editMode = getEditMode(node);
-  const taggedLinkVisual = taggedLinkVisualMap?.[getTagName(node)];
+  const taggedLinkVisual = taggedLinkVisualMap?.[tagName];
 
   return (
     <EmbededLink
       editMode={editMode}
       forceClickable={linkForceClickable}
       anchorProps={(clickable) => taggedLinkVisual?.anchorProps?.(linkName, clickable)}
+      data-styleid={TaggedLinkConstants.styleId(tagName)}
     >
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>

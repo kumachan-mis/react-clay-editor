@@ -13,6 +13,10 @@ export type QuotationProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<QuotationNode>;
 
+export const QuotationConstants = {
+  styleId: 'quotation',
+};
+
 export const Quotation: React.FC<QuotationProps> = ({ node, getEditMode, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, indentDepth, meta, contentLength, children } = node;
   const lineLength = indentDepth + meta.length + contentLength;
@@ -20,7 +24,7 @@ export const Quotation: React.FC<QuotationProps> = ({ node, getEditMode, textVis
   const editMode = getEditMode(node);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps}>
+    <Line lineIndex={lineIndex} {...lineProps} data-styleid={QuotationConstants.styleId}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
       <QuotationLineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
         {[...meta].map((char, index) => (

@@ -10,13 +10,23 @@ export type DecorationProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<DecorationNode>;
 
+export const DecorationConstants = {
+  styleId: (decoration: DecorationStyle) => {
+    let selctid = `decoration-${decoration.size}`;
+    if (decoration.bold) selctid += '-bold';
+    if (decoration.italic) selctid += '-italic';
+    if (decoration.underline) selctid += '-underline';
+    return selctid;
+  },
+};
+
 export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, ChildComponent, ...rest }) => {
   const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
   const [first, last] = node.range;
   const editMode = getEditMode(node);
 
   return (
-    <StyledDecoration {...decoration}>
+    <StyledDecoration {...decoration} data-styleid={DecorationConstants.styleId(decoration)}>
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {editMode ? char : ''}
