@@ -39,7 +39,7 @@
     "deploy": "yarn build-sample && gh-pages -d sample/dist",
     "format": "sort-package-json && yarn prettierify",
     "gen-icons": "svgr --typescript --out-dir icons/dist -- icons",
-    "lint": "eslint \"{src,tests,sample}/**/*.{ts,tsx}\"",
+    "lint": "eslint \"{src,sample,target,tests,unittests}/**/*.{ts,tsx}\"",
     "lint-fix": "yarn lint --fix",
     "prepack": "yarn build",
     "prettierify": "prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",

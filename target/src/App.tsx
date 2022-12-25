@@ -1,5 +1,3 @@
-import { css } from '@emotion/css';
-import React from 'react';
 import { EditorRoot } from 'src/components/organisms/EditorRoot';
 import { EditorSyntaxMenu } from 'src/components/organisms/EditorSyntaxMenu';
 import { EditorTextFieldBody } from 'src/components/organisms/EditorTextFieldBody';
@@ -9,6 +7,9 @@ import { ViewerRoot } from 'src/components/organisms/ViewerRoot';
 import { ViewerTextFieldBody } from 'src/components/organisms/ViewerTextFieldBody';
 import { ViewerTextFieldRoot } from 'src/components/organisms/ViewerTextFieldRoot';
 import { TextProps, BracketLinkProps, HashtagProps, TaggedLinkProps } from 'src/contexts/EditorPropsContext';
+
+import { css } from '@emotion/css';
+import React from 'react';
 
 const header = 'React Realtime Markup Editor';
 

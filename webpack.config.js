@@ -12,7 +12,10 @@ module.exports = {
   entry: envVars.ENTRY,
   target: 'web',
   mode: isProduction ? 'production' : 'development',
-  resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+  resolve: {
+    alias: { src: path.resolve(__dirname, 'src') },
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
