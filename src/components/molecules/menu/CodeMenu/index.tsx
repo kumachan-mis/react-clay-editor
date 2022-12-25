@@ -1,11 +1,11 @@
-import React from 'react';
-
 import { CodeIcon } from '../../../../icons/CodeIcon';
 import { DropdownMenu } from '../../../atoms/menu/DropdownMenu';
 import { useDropdownMenu } from '../../../atoms/menu/DropdownMenu/hooks';
 import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
+
+import React from 'react';
 
 export type CodeMenuProps = {
   inlineMenuSwitch: 'on' | 'off' | 'disabled';

@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { isMacOS } from '../../../../common/utils';
+
+import React from 'react';
 
 export function useEmbededLinkForceClickable(): boolean {
   const [linkForceClickable, setLinkForceClickable] = React.useState(false);

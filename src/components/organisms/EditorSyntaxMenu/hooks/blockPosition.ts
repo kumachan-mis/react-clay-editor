@@ -1,11 +1,11 @@
-import React from 'react';
-
 import { BlockNode } from '../../../../parser/block/types';
 import { isBlockNode } from '../../../../parser/block/utils';
 import { LineNode } from '../../../../parser/line/types';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { getLineRange } from '../common/utils';
+
+import React from 'react';
 
 export type BlockPosition = {
   blockIndex: number;

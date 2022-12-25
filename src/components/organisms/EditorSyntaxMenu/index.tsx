@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
 import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
 import { MenuList } from '../../atoms/menu/MenuList';
@@ -30,6 +28,8 @@ import { useQuotationMenu } from './hooks/quotationMenu';
 import { useSectionMenu } from './hooks/sectionMenu';
 import { useTaggedLinkMenu } from './hooks/taggedLink';
 import { useUnderlineMenu } from './hooks/underlineMenu';
+
+import * as React from 'react';
 
 export const EditorSyntaxMenu: React.FC = () => {
   const props = useEditorPropsValueContext();

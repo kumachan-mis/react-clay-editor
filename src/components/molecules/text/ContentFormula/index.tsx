@@ -1,11 +1,11 @@
-import React from 'react';
-
 import { ContentFormulaNode } from '../../../../parser/content/types';
 import { Char } from '../../../atoms/text/Char';
 import { CharGroup } from '../../../atoms/text/CharGroup';
 import { KaTeX } from '../../../atoms/text/KaTeX';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
+
+import React from 'react';
 
 export type ContentFormulaProps = TextNodeComponentProps<ContentFormulaNode>;
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { EditorProps, useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
 import { EditorState, useEditorStateContext, useEditorStateValueContext } from '../../../contexts/EditorStateContext';
 import { useTextContext } from '../../../contexts/TextContext';
@@ -18,6 +16,8 @@ import {
   handleOnTextPaste,
   handleOnSuggestionMouseDown,
 } from './callbacks';
+
+import React from 'react';
 
 export function useSelection(): SelectionProps {
   const { cursorSelection } = useEditorStateValueContext();

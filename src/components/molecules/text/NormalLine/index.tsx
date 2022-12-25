@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { TextNode } from '../../../../parser';
 import { NormalLineNode } from '../../../../parser/normalLine/types';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
 import { TextNodeComponentProps } from '../common/types';
+
+import React from 'react';
 
 export type NormalLineProps = {
   ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;

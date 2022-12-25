@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getTextField } from '../../../atoms/root/TextField/utils';
 import { getTextFieldRoot } from '../../../atoms/root/TextFieldRoot/utils';
 import { SuggestionListBodyConstants } from '../../../atoms/suggestion/SuggesionListBody';
@@ -7,6 +5,8 @@ import { SuggestionListItemConstants } from '../../../atoms/suggestion/Suggesion
 import { getCharAt } from '../../../atoms/text/Char/utils';
 
 import { CursorProps } from './index';
+
+import React from 'react';
 
 export type CursorState = {
   position: { top: number; left: number };

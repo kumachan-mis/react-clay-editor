@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BlockCode } from '../BlockCode';
 import { BlockFormula } from '../BlockFormula';
 import { BracketLink } from '../BracketLink';
@@ -14,6 +12,8 @@ import { Quotation } from '../Quotation';
 import { TaggedLink } from '../TaggedLink';
 import { Url } from '../Url';
 import { TextNodeComponentProps } from '../common/types';
+
+import React from 'react';
 
 export const TextNodeComponent: React.FC<TextNodeComponentProps> = ({ node, ...rest }) => {
   switch (node.type) {

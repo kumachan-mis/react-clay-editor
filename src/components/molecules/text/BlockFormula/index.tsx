@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BlockFormulaNode } from '../../../../parser/blockFormula/types';
 import { KaTeX } from '../../../atoms/text/KaTeX';
 import { LineGroup } from '../../../atoms/text/LineGroup';
@@ -9,6 +7,8 @@ import { TextNodeComponentProps } from '../common/types';
 
 import { BlockFormulaLine } from './BlockFormulaLine';
 import { BlockFormulaMeta } from './BlockFormulaMeta';
+
+import React from 'react';
 
 export type BlockFormulaProps = TextNodeComponentProps<BlockFormulaNode>;
 

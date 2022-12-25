@@ -1,6 +1,6 @@
-import test from '@playwright/test';
-
 import { linesToBe, mouseMove, mouseSelect } from './testUtils';
+
+import { test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   const defaultText = [

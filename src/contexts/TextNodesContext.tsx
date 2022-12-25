@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { parseText, ParsingOptions } from '../parser';
 import { BlockNode } from '../parser/block/types';
 import { LineNode } from '../parser/line/types';
@@ -9,6 +7,8 @@ import { CodeParsing } from '../types/parsing/code';
 import { FormulaParsing } from '../types/parsing/formula';
 import { HashtagParsing } from '../types/parsing/hashtag';
 import { TaggedLinkParsing } from '../types/parsing/taggedLink';
+
+import React from 'react';
 
 export type ParserProps = {
   syntax?: 'bracket' | 'markdown';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { EditorProps, EditorPropsContextProvider } from '../../../contexts/EditorPropsContext';
 import { EditorStateContextProvider } from '../../../contexts/EditorStateContext';
 import { TextContextProvider } from '../../../contexts/TextContext';
@@ -7,6 +5,8 @@ import { TextNodesContextProvider } from '../../../contexts/TextNodesContext';
 import { Root } from '../../atoms/root/Root';
 
 import { useDocument, useEditorRoot, useScroll } from './hooks';
+
+import React from 'react';
 
 export type EditorRootProps = React.PropsWithChildren<
   { text: string; setText: React.Dispatch<React.SetStateAction<string>> } & EditorProps

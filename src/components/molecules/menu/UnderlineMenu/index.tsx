@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { UnderlineIcon } from '../../../../icons/UnderlineIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
+
+import React from 'react';
 
 export type UnderlineMenuProps = {
   menuSwitch: 'on' | 'off' | 'disabled';

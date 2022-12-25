@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BlockCodeMetaNode } from '../../../../parser/blockCode/types';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
@@ -8,6 +6,8 @@ import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
 
 import { BlockCodeContent } from './BlockCodeContent';
+
+import React from 'react';
 
 export type BlockCodeMetaProps = TextNodeComponentProps<BlockCodeMetaNode>;
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorBar } from '../../../atoms/cursor/CursorBar';
 import { CursorTextArea } from '../../../atoms/cursor/CursorTextArea';
@@ -9,6 +7,8 @@ import { SuggestionListHeader } from '../../../atoms/suggestion/SuggesionListHea
 import { SuggestionListItem } from '../../../atoms/suggestion/SuggesionListItem';
 
 import { useCursor } from './hooks';
+
+import React from 'react';
 
 export type CursorProps = {
   cursorCoordinate: CursorCoordinate | undefined;

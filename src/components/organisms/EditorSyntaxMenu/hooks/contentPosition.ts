@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { ContentNode } from '../../../../parser/content/types';
 import { LineNode } from '../../../../parser/line/types';
 import { isPureLineNode } from '../../../../parser/line/utils';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
+
+import React from 'react';
 
 export type ContentPosition =
   | ContentPositionEmpty

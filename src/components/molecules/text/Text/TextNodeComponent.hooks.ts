@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { TextNode } from '../../../../parser';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/hooks';
 import { selectionToRange } from '../../selection/Selection/utils';
+
+import React from 'react';
 
 export type UseTextNodeComponent = {
   getEditMode: (node: TextNode) => boolean;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BracketLinkParsing } from '../types/parsing/bracketLink';
 import { CodeParsing } from '../types/parsing/code';
 import { FormulaParsing } from '../types/parsing/formula';
@@ -11,6 +9,8 @@ import { FormulaVisual } from '../types/visual/formula';
 import { HashtagVisual } from '../types/visual/hashtag';
 import { TaggedLinkVisual } from '../types/visual/taggedLink';
 import { TextVisual } from '../types/visual/text';
+
+import React from 'react';
 
 export type ViewerProps = {
   syntax?: 'bracket' | 'markdown';

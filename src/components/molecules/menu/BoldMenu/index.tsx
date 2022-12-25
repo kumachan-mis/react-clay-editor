@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { BoldIcon } from '../../../../icons/BoldIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
+
+import React from 'react';
 
 export type BoldMenuProps = {
   menuSwitch: 'on' | 'off' | 'disabled';

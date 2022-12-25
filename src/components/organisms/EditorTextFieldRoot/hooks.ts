@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { useSetEditorStateContext } from '../../../contexts/EditorStateContext';
 import { useTextValueContext } from '../../../contexts/TextContext';
 
 import { handleOnMouseDown, handleOnClick } from './callback';
+
+import React from 'react';
 
 export function useTextField(): {
   ref: React.RefObject<HTMLDivElement>;

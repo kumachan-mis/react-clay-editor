@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { Char } from '../Char';
+
+import React from 'react';
 
 export type ItemBulletContentProps = {
   lineIndex: number;

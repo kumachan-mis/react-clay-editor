@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { TextValueContextProvider } from '../../../contexts/TextContext';
 import { TextNodesContextProvider } from '../../../contexts/TextNodesContext';
 import { ViewerProps, ViewerPropsContextProvider } from '../../../contexts/ViewerPropsContext';
 import { Root } from '../../atoms/root/Root';
+
+import React from 'react';
 
 export type ViewerRootProps = React.PropsWithChildren<{ text: string } & ViewerProps>;
 

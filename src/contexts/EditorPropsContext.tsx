@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BracketLinkLabels } from '../types/label/bracketLink';
 import { CodeLabels } from '../types/label/code';
 import { FormulaLabels } from '../types/label/formula';
@@ -20,6 +18,8 @@ import { FormulaVisual } from '../types/visual/formula';
 import { HashtagVisual } from '../types/visual/hashtag';
 import { TaggedLinkVisual } from '../types/visual/taggedLink';
 import { TextVisual } from '../types/visual/text';
+
+import React from 'react';
 
 export type EditorProps = {
   syntax?: 'bracket' | 'markdown';

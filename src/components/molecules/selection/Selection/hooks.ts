@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getTextField } from '../../../atoms/root/TextField/utils';
 import { SelectionRectProps } from '../../../atoms/selection/SelectionRect';
 import { getCharAt } from '../../../atoms/text/Char/utils';
@@ -7,6 +5,8 @@ import { getCharAt } from '../../../atoms/text/Char/utils';
 import { selectionToRange } from './utils';
 
 import { SelectionProps } from '.';
+
+import React from 'react';
 
 export type SelectionState = {
   topRectProps: SelectionRectProps | undefined;

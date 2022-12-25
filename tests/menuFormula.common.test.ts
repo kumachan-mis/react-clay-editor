@@ -1,6 +1,6 @@
-import test, { expect } from '@playwright/test';
-
 import { linesToBe, mouseSelect } from './testUtils';
+
+import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('./editor');

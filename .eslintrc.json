@@ -27,6 +27,9 @@
     "react/prop-types": "off"
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   defaultEditorStateValue,
   useEditorStateContext,
@@ -8,6 +6,8 @@ import {
 import { useTextValueContext } from '../../../contexts/TextContext';
 
 import { handleOnMouseMove, handleOnMouseScrollDown, handleOnMouseScrollUp, handleOnMouseUp } from './callbacks';
+
+import React from 'react';
 
 export function useEditorRoot(): {
   ref: React.RefObject<HTMLDivElement>;

@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { CursorCoordinate } from '../types/cursor/cursorCoordinate';
 import { EditAction } from '../types/cursor/editAction';
 import { CursorSelection } from '../types/selection/cursorSelection';
+
+import React from 'react';
 
 export type EditorState = {
   cursorCoordinate: CursorCoordinate | undefined;

@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { NormalNode } from '../../../../parser/normal/types';
 import { Char } from '../../../atoms/text/Char';
 import { TextNodeComponentProps } from '../common/types';
+
+import React from 'react';
 
 export type NormalProps = TextNodeComponentProps<NormalNode>;
 

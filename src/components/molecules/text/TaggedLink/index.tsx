@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
 import { getTagName, splitTag } from '../../../../parser/taggedLink/utils';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
+
+import React from 'react';
 
 export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
 
