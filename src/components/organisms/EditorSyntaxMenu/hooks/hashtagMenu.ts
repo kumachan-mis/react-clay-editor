@@ -1,7 +1,7 @@
 import { LinkMenuHandlerProps, handleOnLinkItemClick } from '../callbacks/link';
 import { linkMenuSwitch, LinkMenuItem } from '../switches/link';
 import { HashtagMenuConstants, HashtagMenuProps } from 'src/components/molecules/menu/HashtagMenu';
-import { HashtagProps } from 'src/contexts/EditorPropsContext';
+import { EditorHashtagProps } from 'src/contexts/EditorPropsContext';
 import { LineNode } from 'src/parser/line/types';
 
 import { ContentPosition } from './contentPosition';
@@ -16,7 +16,7 @@ const defaultHandlerProps: LinkMenuHandlerProps = {
 export function useHashtagMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  hashtagProps: HashtagProps | undefined,
+  hashtagProps: EditorHashtagProps | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): HashtagMenuProps {
   const menuSwitch = hashtagProps?.disabled ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'hashtag');

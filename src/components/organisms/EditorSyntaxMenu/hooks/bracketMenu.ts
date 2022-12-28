@@ -1,7 +1,7 @@
 import { LinkMenuHandlerProps, handleOnLinkItemClick } from '../callbacks/link';
 import { linkMenuSwitch, LinkMenuItem } from '../switches/link';
 import { BracketMenuConstants, BracketMenuProps } from 'src/components/molecules/menu/BracketMenu';
-import { BracketLinkProps } from 'src/contexts/EditorPropsContext';
+import { EditorBracketLinkProps } from 'src/contexts/EditorPropsContext';
 import { LineNode } from 'src/parser/line/types';
 
 import { ContentPosition } from './contentPosition';
@@ -16,7 +16,7 @@ const defaultHandlerProps: LinkMenuHandlerProps = {
 export function useBracketMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  bracketProps: BracketLinkProps | undefined,
+  bracketProps: EditorBracketLinkProps | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): BracketMenuProps {
   const menuSwitch = bracketProps?.disabled ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'bracketLink');

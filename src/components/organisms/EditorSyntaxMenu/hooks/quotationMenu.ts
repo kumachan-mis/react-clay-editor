@@ -5,7 +5,7 @@ import {
 } from '../callbacks/quotation';
 import { quotationMenuSwitch } from '../switches/quotation';
 import { QuotationMenuConstants, QuotationMenuProps } from 'src/components/molecules/menu/QuotationMenu';
-import { QuotationProps } from 'src/contexts/EditorPropsContext';
+import { EditorQuotationProps } from 'src/contexts/EditorPropsContext';
 import { LineNode } from 'src/parser/line/types';
 
 import { CommonMenuProps } from './types';
@@ -17,7 +17,7 @@ const defaultHandlerProps: QuotationMenuHandlerProps = {
 
 export function useQuotationMenu(
   lineNodes: LineNode[],
-  quotationProps: QuotationProps | undefined,
+  quotationProps: EditorQuotationProps | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): QuotationMenuProps {
   const menuSwitch = quotationMenuSwitch(syntax, lineNodes, state);
