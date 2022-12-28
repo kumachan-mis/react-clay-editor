@@ -1,4 +1,4 @@
-import { CursorSelection } from 'src/types/selection/cursorSelection';
+import { CursorSelection } from '../src/types/selection/cursorSelection';
 
 export interface TestCase {
   name: string;

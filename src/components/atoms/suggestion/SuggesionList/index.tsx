@@ -1,4 +1,4 @@
-import { FONT_SIZES } from 'src/common/constants';
+import { FONT_SIZES } from '../../../../common/constants';
 
 import styled from '@emotion/styled';
 import React from 'react';

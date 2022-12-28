@@ -1,6 +1,6 @@
+import { EditorState } from '../../../../../contexts/EditorStateContext';
+import { LineNode } from '../../../../../parser/line/types';
 import { getLineRange } from '../../common/utils';
-import { EditorState } from 'src/contexts/EditorStateContext';
-import { LineNode } from 'src/parser/line/types';
 
 export type LineMenuItemType = 'itemization' | 'quotation';
 

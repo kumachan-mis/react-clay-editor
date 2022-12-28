@@ -1,14 +1,14 @@
+import { EditorCodeProps } from '../../../../contexts/EditorPropsContext';
+import { BlockNode } from '../../../../parser/block/types';
+import { LineNode } from '../../../../parser/line/types';
+import { CodeMenuConstants, CodeMenuProps } from '../../../molecules/menu/CodeMenu';
 import {
   CodeMenuHandlerProps,
   handleOnBlockCodeItemClick,
   handleOnCodeButtonClick,
   handleOnInlineCodeItemClick,
 } from '../callbacks/code';
-import { inlineCodeMenuSwitch, blockCodeMenuSwitch } from '../switches/code';
-import { CodeMenuConstants, CodeMenuProps } from 'src/components/molecules/menu/CodeMenu';
-import { EditorCodeProps } from 'src/contexts/EditorPropsContext';
-import { BlockNode } from 'src/parser/block/types';
-import { LineNode } from 'src/parser/line/types';
+import { blockCodeMenuSwitch, inlineCodeMenuSwitch } from '../switches/code';
 
 import { BlockPosition } from './blockPosition';
 import { ContentPosition } from './contentPosition';

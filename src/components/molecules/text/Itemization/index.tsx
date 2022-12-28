@@ -1,11 +1,11 @@
+import { TextNode } from '../../../../parser';
+import { ItemizationNode } from '../../../../parser/itemization/types';
+import { ItemBullet } from '../../../atoms/text/ItemBullet';
+import { ItemBulletContent } from '../../../atoms/text/ItemBulletContent';
+import { Line } from '../../../atoms/text/Line';
+import { LineContent } from '../../../atoms/text/LineContent';
+import { LineIndent } from '../../../atoms/text/LineIndent';
 import { TextNodeComponentProps } from '../common/types';
-import { ItemBullet } from 'src/components/atoms/text/ItemBullet';
-import { ItemBulletContent } from 'src/components/atoms/text/ItemBulletContent';
-import { Line } from 'src/components/atoms/text/Line';
-import { LineContent } from 'src/components/atoms/text/LineContent';
-import { LineIndent } from 'src/components/atoms/text/LineIndent';
-import { TextNode } from 'src/parser';
-import { ItemizationNode } from 'src/parser/itemization/types';
 
 import React from 'react';
 

@@ -1,5 +1,3 @@
-import { css } from '@emotion/css';
-import React from 'react';
 import {
   Divider,
   EditorBracketLinkProps,
@@ -11,7 +9,10 @@ import {
   EditorTextFieldBody,
   EditorTextFieldRoot,
   EditorTextProps,
-} from 'src';
+} from '../../src';
+
+import { css } from '@emotion/css';
+import React from 'react';
 
 // prettier-ignore
 const initialText =

@@ -3,9 +3,9 @@ import {
   useEditorStateContext,
   useSetEditorStateContext,
 } from '../../../contexts/EditorStateContext';
-import { useTextValueContext } from 'src/contexts/TextContext';
+import { useTextValueContext } from '../../../contexts/TextContext';
 
-import { handleOnMouseMove, handleOnMouseUp, handleOnMouseScrollUp, handleOnMouseScrollDown } from './callbacks';
+import { handleOnMouseMove, handleOnMouseScrollDown, handleOnMouseScrollUp, handleOnMouseUp } from './callbacks';
 
 import React from 'react';
 

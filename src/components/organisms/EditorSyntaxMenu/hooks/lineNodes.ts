@@ -1,5 +1,5 @@
-import { BlockNode } from 'src/parser/block/types';
-import { LineNode } from 'src/parser/line/types';
+import { BlockNode } from '../../../../parser/block/types';
+import { LineNode } from '../../../../parser/line/types';
 
 import React from 'react';
 

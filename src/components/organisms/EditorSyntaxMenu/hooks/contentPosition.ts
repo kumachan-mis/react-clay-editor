@@ -1,8 +1,8 @@
-import { ContentNode } from 'src/parser/content/types';
-import { LineNode } from 'src/parser/line/types';
-import { isPureLineNode } from 'src/parser/line/utils';
-import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
-import { CursorSelection } from 'src/types/selection/cursorSelection';
+import { ContentNode } from '../../../../parser/content/types';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 
 import React from 'react';
 

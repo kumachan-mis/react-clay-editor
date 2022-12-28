@@ -1,8 +1,8 @@
+import { HashtagNode } from '../../../../parser/hashtag/types';
+import { getHashtagName } from '../../../../parser/hashtag/utils';
+import { Char } from '../../../atoms/text/Char';
+import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
-import { Char } from 'src/components/atoms/text/Char';
-import { EmbededLink } from 'src/components/atoms/text/EmbededLink';
-import { HashtagNode } from 'src/parser/hashtag/types';
-import { getHashtagName } from 'src/parser/hashtag/utils';
 
 import React from 'react';
 

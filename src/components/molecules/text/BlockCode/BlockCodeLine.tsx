@@ -1,9 +1,9 @@
+import { BlockCodeLineNode } from '../../../../parser/blockCode/types';
+import { Char } from '../../../atoms/text/Char';
+import { Line } from '../../../atoms/text/Line';
+import { LineIndent } from '../../../atoms/text/LineIndent';
+import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
-import { Char } from 'src/components/atoms/text/Char';
-import { Line } from 'src/components/atoms/text/Line';
-import { LineIndent } from 'src/components/atoms/text/LineIndent';
-import { Monospace } from 'src/components/atoms/text/Monospace';
-import { BlockCodeLineNode } from 'src/parser/blockCode/types';
 
 import { BlockCodeContent } from './BlockCodeContent';
 
