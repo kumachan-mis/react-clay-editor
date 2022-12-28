@@ -1,5 +1,5 @@
 {
-  "./{src,tests,sample}/**/*.{js,jsx,ts,tsx}": ["eslint --fix"],
+  "./{src,target,tests,unittests}/**/*.{js,jsx,ts,tsx}": ["eslint --fix"],
   "./**/*.{css,htm,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}": ["prettier --write"],
   "./**/package.json": ["sort-package-json"]
 }
