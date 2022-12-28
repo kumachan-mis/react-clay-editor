@@ -1,4 +1,4 @@
-import katex, { KatexOptions, ParseError } from 'katex';
+import katex, { KatexOptions } from 'katex';
 import React from 'react';
 
 export type KaTeXProps = {
@@ -10,7 +10,7 @@ export const KaTeX: React.FC<KaTeXProps> = ({ options, children, ...rest }) => {
     try {
       return katex.renderToString(children as string, options);
     } catch (error: unknown) {
-      return error instanceof ParseError ? error.message : '';
+      return error instanceof katex.ParseError ? error.message : '';
     }
   }, [children, options]);
   return <span dangerouslySetInnerHTML={{ __html: innerHtml }} {...rest} />;

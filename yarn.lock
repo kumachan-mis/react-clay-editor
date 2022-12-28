@@ -1826,7 +1826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.28.1":
+"@playwright/test@npm:^1.29.1":
   version: 1.29.1
   resolution: "@playwright/test@npm:1.29.1"
   dependencies:
@@ -2137,10 +2137,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/katex@npm:^0.14.0":
-  version: 0.14.0
-  resolution: "@types/katex@npm:0.14.0"
-  checksum: 330e0d0337ba48c87f5b793965fbad673653789bf6e50dfe8d726a7b0cbefd37195055e31503aae629814aa79447e4f23a4b87ad1ac565c0d9a9d9978836f39b
+"@types/katex@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "@types/katex@npm:0.16.0"
+  checksum: f93ceb2496621d18a28252264c0b7f5b0bdf125f9dc92d1adfbd9bf00942cd2918de336fae628d3929e615aaf84b7adb1781711c4e4605664be0827b1013ec14
   languageName: node
   linkType: hard
 
@@ -2151,7 +2151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.11.10":
+"@types/node@npm:^18.11.18":
   version: 18.11.18
   resolution: "@types/node@npm:18.11.18"
   checksum: 03f17f9480f8d775c8a72da5ea7e9383db5f6d85aa5fefde90dd953a1449bd5e4ffde376f139da4f3744b4c83942166d2a7603969a6f8ea826edfb16e6e3b49d
@@ -2179,7 +2179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.9":
+"@types/react-dom@npm:^18.0.10":
   version: 18.0.10
   resolution: "@types/react-dom@npm:18.0.10"
   dependencies:
@@ -2247,7 +2247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.45.0":
+"@typescript-eslint/eslint-plugin@npm:^5.47.1":
   version: 5.47.1
   resolution: "@typescript-eslint/eslint-plugin@npm:5.47.1"
   dependencies:
@@ -2270,7 +2270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.45.0":
+"@typescript-eslint/parser@npm:^5.47.1":
   version: 5.47.1
   resolution: "@typescript-eslint/parser@npm:5.47.1"
   dependencies:
@@ -3155,19 +3155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "cross-env@npm:7.0.3"
-  dependencies:
-    cross-spawn: ^7.0.1
-  bin:
-    cross-env: src/bin/cross-env.js
-    cross-env-shell: src/bin/cross-env-shell.js
-  checksum: 26f2f3ea2ab32617f57effb70d329c2070d2f5630adc800985d8b30b56e8bf7f5f439dd3a0358b79cee6f930afc23cf8e23515f17ccfb30092c6b62c6b630a79
-  languageName: node
-  linkType: hard
-
-"cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -3870,7 +3858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.29.0":
+"eslint@npm:^8.30.0":
   version: 8.30.0
   resolution: "eslint@npm:8.30.0"
   dependencies:
@@ -5654,7 +5642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.16.3":
+"katex@npm:^0.16.4":
   version: 0.16.4
   resolution: "katex@npm:0.16.4"
   dependencies:
@@ -5703,7 +5691,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^13.0.4":
+"lint-staged@npm:^13.1.0":
   version: 13.1.0
   resolution: "lint-staged@npm:13.1.0"
   dependencies:
@@ -6572,7 +6560,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.8.0":
+"prettier@npm:^2.8.1":
   version: 2.8.1
   resolution: "prettier@npm:2.8.1"
   bin:
@@ -6685,17 +6673,16 @@ __metadata:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@jest/globals": ^29.3.1
-    "@playwright/test": ^1.28.1
+    "@playwright/test": ^1.29.1
     "@svgr/cli": ^6.5.1
-    "@types/katex": ^0.14.0
-    "@types/node": ^18.11.10
+    "@types/katex": ^0.16.0
+    "@types/node": ^18.11.18
     "@types/react": ^18.0.26
-    "@types/react-dom": ^18.0.9
-    "@typescript-eslint/eslint-plugin": ^5.45.0
-    "@typescript-eslint/parser": ^5.45.0
+    "@types/react-dom": ^18.0.10
+    "@typescript-eslint/eslint-plugin": ^5.47.1
+    "@typescript-eslint/parser": ^5.47.1
     "@vitejs/plugin-react": ^3.0.0
-    cross-env: ^7.0.3
-    eslint: ^8.29.0
+    eslint: ^8.30.0
     eslint-config-prettier: ^8.5.0
     eslint-import-resolver-typescript: ^3.5.2
     eslint-plugin-import: ^2.26.0
@@ -6704,14 +6691,14 @@ __metadata:
     gh-pages: ^4.0.0
     husky: ^8.0.2
     jest: ^29.3.1
-    katex: ^0.16.3
-    lint-staged: ^13.0.4
-    prettier: ^2.8.0
+    katex: ^0.16.4
+    lint-staged: ^13.1.0
+    prettier: ^2.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
     sort-package-json: ^2.1.0
-    typescript: ^4.8.4
-    vite: ^4.0.0
+    typescript: 4.8.4
+    vite: ^4.0.3
   peerDependencies:
     "@emotion/react": ">=11.0.0"
     "@emotion/styled": ">=11.0.0"
@@ -7685,23 +7672,23 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.8.4":
-  version: 4.9.4
-  resolution: "typescript@npm:4.9.4"
+"typescript@npm:4.8.4":
+  version: 4.8.4
+  resolution: "typescript@npm:4.8.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: e782fb9e0031cb258a80000f6c13530288c6d63f1177ed43f770533fdc15740d271554cdae86701c1dd2c83b082cea808b07e97fd68b38a172a83dbf9e0d0ef9
+  checksum: 3e4f061658e0c8f36c820802fa809e0fd812b85687a9a2f5430bc3d0368e37d1c9605c3ce9b39df9a05af2ece67b1d844f9f6ea8ff42819f13bcb80f85629af0
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>":
-  version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=701156"
+"typescript@patch:typescript@4.8.4#~builtin<compat/typescript>":
+  version: 4.8.4
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
+  checksum: 301459fc3eb3b1a38fe91bf96d98eb55da88a9cb17b4ef80b4d105d620f4d547ba776cc27b44cc2ef58b66eda23fe0a74142feb5e79a6fb99f54fc018a696afa
   languageName: node
   linkType: hard
 
@@ -7795,7 +7782,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.0.0":
+"vite@npm:^4.0.3":
   version: 4.0.3
   resolution: "vite@npm:4.0.3"
   dependencies:

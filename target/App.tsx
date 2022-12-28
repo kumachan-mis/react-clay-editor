@@ -10,6 +10,7 @@ import { TextProps, BracketLinkProps, HashtagProps, TaggedLinkProps } from 'src/
 
 import { css } from '@emotion/css';
 import React from 'react';
+import 'katex/dist/katex.min.css';
 
 const header = 'React Realtime Markup Editor';
 
@@ -114,7 +115,7 @@ const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
 export const App: React.FC = () => {
   switch (window.location.pathname) {
     case '/':
-      return <div>Playwright Test</div>;
+      return <div>React Realtime Markup Editor - Test</div>;
     case '/bracket/editor':
     case '/bracket/editor/':
       return <TestTargetEditor syntax="bracket" />;
