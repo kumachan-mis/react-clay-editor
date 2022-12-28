@@ -1,7 +1,7 @@
-import { cursorCoordinateToTextIndex, moveCursor } from 'src/components/molecules/cursor/Cursor/utils';
-import { selectionToRange } from 'src/components/molecules/selection/Selection/utils';
-import { EditorState } from 'src/contexts/EditorStateContext';
-import { EditAction } from 'src/types/cursor/editAction';
+import { EditorState } from '../../../../contexts/EditorStateContext';
+import { EditAction } from '../../../../types/cursor/editAction';
+import { cursorCoordinateToTextIndex, moveCursor } from '../../../molecules/cursor/Cursor/utils';
+import { selectionToRange } from '../../../molecules/selection/Selection/utils';
 
 import { resetCursorSelection } from './selection';
 

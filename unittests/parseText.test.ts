@@ -1,6 +1,6 @@
-import { parseText } from 'src/parser';
+import { parseText } from '../src/parser';
 
-import { commonTestCases, branketTestCases, markdownTestCases, TestCase } from './parseText.testcase';
+import { branketTestCases, commonTestCases, markdownTestCases, TestCase } from './parseText.testcase';
 
 import { expect, describe, test } from '@jest/globals';
 

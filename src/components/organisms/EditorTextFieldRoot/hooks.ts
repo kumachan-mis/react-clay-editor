@@ -1,5 +1,5 @@
-import { useSetEditorStateContext } from 'src/contexts/EditorStateContext';
-import { useTextValueContext } from 'src/contexts/TextContext';
+import { useSetEditorStateContext } from '../../../contexts/EditorStateContext';
+import { useTextValueContext } from '../../../contexts/TextContext';
 
 import { handleOnMouseDown, handleOnClick } from './callback';
 

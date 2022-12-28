@@ -1,8 +1,8 @@
+import { ContentNode } from '../../../../parser/content/types';
+import { PureLineNode } from '../../../../parser/line/types';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { ContentPosition, ContentPositionEndPoint } from '../hooks/contentPosition';
-import { ContentNode } from 'src/parser/content/types';
-import { PureLineNode } from 'src/parser/line/types';
-import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
-import { CursorSelection } from 'src/types/selection/cursorSelection';
 
 export function isEndPoint(contentPosition: ContentPosition): contentPosition is ContentPositionEndPoint {
   return ['empty', 'between', 'leftend', 'rightend'].includes(contentPosition.type);

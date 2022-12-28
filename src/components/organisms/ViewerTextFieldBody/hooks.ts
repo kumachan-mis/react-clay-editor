@@ -1,6 +1,6 @@
-import { TextProps } from 'src/components/molecules/text/Text/types';
-import { useTextNodesValueContext } from 'src/contexts/TextNodesContext';
-import { useViewerPropsValueContext } from 'src/contexts/ViewerPropsContext';
+import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
+import { useViewerPropsValueContext } from '../../../contexts/ViewerPropsContext';
+import { TextProps } from '../../molecules/text/Text/types';
 
 export function useText(): TextProps {
   const nodes = useTextNodesValueContext();

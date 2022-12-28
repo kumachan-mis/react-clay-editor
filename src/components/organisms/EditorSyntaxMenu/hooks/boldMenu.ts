@@ -1,7 +1,7 @@
+import { LineNode } from '../../../../parser/line/types';
+import { BoldMenuProps } from '../../../molecules/menu/BoldMenu';
 import { DecorationMenuHandlerProps, handleOnDecorationClick } from '../callbacks/decoration';
 import { decorationMenuSwitch } from '../switches/decoration';
-import { BoldMenuProps } from 'src/components/molecules/menu/BoldMenu';
-import { LineNode } from 'src/parser/line/types';
 
 import { ContentPosition } from './contentPosition';
 import { CommonMenuProps } from './types';

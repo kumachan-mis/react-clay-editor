@@ -1,10 +1,10 @@
-import { Root } from 'src/components/atoms/root/Root';
-import { EditorProps, EditorPropsContextProvider } from 'src/contexts/EditorPropsContext';
-import { EditorStateContextProvider } from 'src/contexts/EditorStateContext';
-import { TextContextProvider } from 'src/contexts/TextContext';
-import { TextNodesContextProvider } from 'src/contexts/TextNodesContext';
+import { EditorProps, EditorPropsContextProvider } from '../../../contexts/EditorPropsContext';
+import { EditorStateContextProvider } from '../../../contexts/EditorStateContext';
+import { TextContextProvider } from '../../../contexts/TextContext';
+import { TextNodesContextProvider } from '../../../contexts/TextNodesContext';
+import { Root } from '../../atoms/root/Root';
 
-import { useEditorRoot, useDocument, useScroll } from './hooks';
+import { useDocument, useEditorRoot, useScroll } from './hooks';
 
 import React from 'react';
 

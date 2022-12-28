@@ -1,14 +1,14 @@
-import { BracketLinkParsing } from 'src/types/parsing/bracketLink';
-import { CodeParsing } from 'src/types/parsing/code';
-import { FormulaParsing } from 'src/types/parsing/formula';
-import { HashtagParsing } from 'src/types/parsing/hashtag';
-import { TaggedLinkParsing } from 'src/types/parsing/taggedLink';
-import { BracketLinkVisual } from 'src/types/visual/bracketLink';
-import { CodeVisual } from 'src/types/visual/code';
-import { FormulaVisual } from 'src/types/visual/formula';
-import { HashtagVisual } from 'src/types/visual/hashtag';
-import { TaggedLinkVisual } from 'src/types/visual/taggedLink';
-import { TextVisual } from 'src/types/visual/text';
+import { BracketLinkParsing } from '../types/parsing/bracketLink';
+import { CodeParsing } from '../types/parsing/code';
+import { FormulaParsing } from '../types/parsing/formula';
+import { HashtagParsing } from '../types/parsing/hashtag';
+import { TaggedLinkParsing } from '../types/parsing/taggedLink';
+import { BracketLinkVisual } from '../types/visual/bracketLink';
+import { CodeVisual } from '../types/visual/code';
+import { FormulaVisual } from '../types/visual/formula';
+import { HashtagVisual } from '../types/visual/hashtag';
+import { TaggedLinkVisual } from '../types/visual/taggedLink';
+import { TextVisual } from '../types/visual/text';
 
 import React from 'react';
 

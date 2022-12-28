@@ -1,18 +1,18 @@
+import { EditorState } from '../../../../../contexts/EditorStateContext';
+import { ContentNode, TextLikeNode } from '../../../../../parser/content/types';
+import { isTextLikeNode } from '../../../../../parser/content/utils';
+import { LineNode, PureLineNode } from '../../../../../parser/line/types';
+import { isPureLineNode } from '../../../../../parser/line/utils';
+import { CursorSelection } from '../../../../../types/selection/cursorSelection';
+import { copyCoordinate } from '../../../../molecules/cursor/Cursor/utils';
 import {
   copySelection,
   selectionToRange,
   undefinedIfZeroSelection,
 } from '../../../../molecules/selection/Selection/utils';
+import { insertText } from '../../../EditorTextFieldBody/common/text';
 import { isEndPoint } from '../../common/utils';
 import { ContentPosition } from '../../hooks/contentPosition';
-import { copyCoordinate } from 'src/components/molecules/cursor/Cursor/utils';
-import { insertText } from 'src/components/organisms/EditorTextFieldBody/common/text';
-import { EditorState } from 'src/contexts/EditorStateContext';
-import { ContentNode, TextLikeNode } from 'src/parser/content/types';
-import { isTextLikeNode } from 'src/parser/content/utils';
-import { LineNode, PureLineNode } from 'src/parser/line/types';
-import { isPureLineNode } from 'src/parser/line/utils';
-import { CursorSelection } from 'src/types/selection/cursorSelection';
 
 export type ContentMenuConfig = {
   facingMeta: string;

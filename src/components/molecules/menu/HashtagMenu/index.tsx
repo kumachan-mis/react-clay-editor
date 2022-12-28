@@ -1,5 +1,5 @@
-import { IconButtonMenu } from 'src/components/atoms/menu/IconButtonMenu';
-import { HashtagIcon } from 'src/icons/HashtagIcon';
+import { HashtagIcon } from '../../../../icons/HashtagIcon';
+import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 
 import React from 'react';
 

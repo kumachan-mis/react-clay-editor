@@ -1,12 +1,12 @@
+import { QuotationProps } from '../../../../contexts/EditorPropsContext';
+import { LineNode } from '../../../../parser/line/types';
+import { QuotationMenuConstants, QuotationMenuProps } from '../../../molecules/menu/QuotationMenu';
 import {
   handleOnQuotationButtonClick,
   handleOnQuotationItemClick,
   QuotationMenuHandlerProps,
 } from '../callbacks/quotation';
 import { quotationMenuSwitch } from '../switches/quotation';
-import { QuotationMenuConstants, QuotationMenuProps } from 'src/components/molecules/menu/QuotationMenu';
-import { QuotationProps } from 'src/contexts/EditorPropsContext';
-import { LineNode } from 'src/parser/line/types';
 
 import { CommonMenuProps } from './types';
 

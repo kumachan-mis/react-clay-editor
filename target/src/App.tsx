@@ -1,12 +1,12 @@
-import { EditorRoot } from 'src/components/organisms/EditorRoot';
-import { EditorSyntaxMenu } from 'src/components/organisms/EditorSyntaxMenu';
-import { EditorTextFieldBody } from 'src/components/organisms/EditorTextFieldBody';
-import { EditorTextFieldHeader } from 'src/components/organisms/EditorTextFieldHeader';
-import { EditorTextFieldRoot } from 'src/components/organisms/EditorTextFieldRoot';
-import { ViewerRoot } from 'src/components/organisms/ViewerRoot';
-import { ViewerTextFieldBody } from 'src/components/organisms/ViewerTextFieldBody';
-import { ViewerTextFieldRoot } from 'src/components/organisms/ViewerTextFieldRoot';
-import { TextProps, BracketLinkProps, HashtagProps, TaggedLinkProps } from 'src/contexts/EditorPropsContext';
+import { EditorRoot } from '../../src/components/organisms/EditorRoot';
+import { EditorSyntaxMenu } from '../../src/components/organisms/EditorSyntaxMenu';
+import { EditorTextFieldBody } from '../../src/components/organisms/EditorTextFieldBody';
+import { EditorTextFieldHeader } from '../../src/components/organisms/EditorTextFieldHeader';
+import { EditorTextFieldRoot } from '../../src/components/organisms/EditorTextFieldRoot';
+import { ViewerRoot } from '../../src/components/organisms/ViewerRoot';
+import { ViewerTextFieldBody } from '../../src/components/organisms/ViewerTextFieldBody';
+import { ViewerTextFieldRoot } from '../../src/components/organisms/ViewerTextFieldRoot';
+import { BracketLinkProps, HashtagProps, TaggedLinkProps, TextProps } from '../../src/contexts/EditorPropsContext';
 
 import { css } from '@emotion/css';
 import React from 'react';

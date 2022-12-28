@@ -3,7 +3,7 @@ import { headingRegex, parseHeading } from '../decoration/parseHeading';
 import { bracketItemizationRegex, parseBracketItemization } from '../itemization/parseBracketItemization';
 import { markdownItemizationRegex, parseMarkdownItemization } from '../itemization/parseMarkdownItemization';
 import { parseNormalLine } from '../normalLine/parseNormalLine';
-import { quotationRegex, parseQuotation } from '../quotation/parseQuotation';
+import { parseQuotation, quotationRegex } from '../quotation/parseQuotation';
 
 import { LineNode } from './types';
 

@@ -1,5 +1,5 @@
-import { SelectionRect } from 'src/components/atoms/selection/SelectionRect';
-import { CursorSelection } from 'src/types/selection/cursorSelection';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
+import { SelectionRect } from '../../../atoms/selection/SelectionRect';
 
 import { useSelection } from './hooks';
 

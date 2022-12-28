@@ -1,6 +1,6 @@
 import { parseBlock } from '../block/parseBlock';
 import { BlockNode } from '../block/types';
-import { ParsingOptions, ParsingContext } from '../common/types';
+import { ParsingContext, ParsingOptions } from '../common/types';
 import { parseLine } from '../line/parseLine';
 import { LineNode } from '../line/types';
 

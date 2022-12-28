@@ -1,9 +1,9 @@
 const path = require('path');
 
-const packageJson = require('./package.json');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+
+const packageJson = require('./package.json');
 const envVars = createEnvVars();
 
 const isProduction = envVars.NODE_ENV === 'production';
@@ -12,10 +12,7 @@ module.exports = {
   entry: envVars.ENTRY,
   target: 'web',
   mode: isProduction ? 'production' : 'development',
-  resolve: {
-    alias: { src: path.resolve(__dirname, 'src') },
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  },
+  resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',

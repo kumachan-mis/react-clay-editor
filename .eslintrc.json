@@ -17,7 +17,6 @@
     "import/order": [
       "error",
       {
-        "pathGroups": [{ "pattern": "src/**", "group": "parent" }],
         "newlines-between": "always",
         "alphabetize": { "order": "asc" }
       }

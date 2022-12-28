@@ -1,5 +1,5 @@
-import { IconButtonMenu } from 'src/components/atoms/menu/IconButtonMenu';
-import { ItalicIcon } from 'src/icons/ItalicIcon';
+import { ItalicIcon } from '../../../../icons/ItalicIcon';
+import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 
 import React from 'react';
 

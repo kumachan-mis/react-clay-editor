@@ -1,11 +1,11 @@
-import { LinkMenuHandlerProps, handleOnLinkItemClick } from '../callbacks/link';
+import { TaggedLinkProps } from '../../../../contexts/EditorPropsContext';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
+import { getTagName } from '../../../../parser/taggedLink/utils';
+import { TaggedLinkMenuConstants, TaggedLinkMenuProps } from '../../../molecules/menu/TaggedLinkMenu';
+import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
-import { linkMenuSwitch, LinkMenuItem } from '../switches/link';
-import { TaggedLinkMenuConstants, TaggedLinkMenuProps } from 'src/components/molecules/menu/TaggedLinkMenu';
-import { TaggedLinkProps } from 'src/contexts/EditorPropsContext';
-import { LineNode } from 'src/parser/line/types';
-import { isPureLineNode } from 'src/parser/line/utils';
-import { getTagName } from 'src/parser/taggedLink/utils';
+import { LinkMenuItem, linkMenuSwitch } from '../switches/link';
 
 import { ContentPosition } from './contentPosition';
 import { CommonMenuProps } from './types';

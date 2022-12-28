@@ -1,8 +1,8 @@
+import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
+import { getTagName, splitTag } from '../../../../parser/taggedLink/utils';
+import { Char } from '../../../atoms/text/Char';
+import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
-import { Char } from 'src/components/atoms/text/Char';
-import { EmbededLink } from 'src/components/atoms/text/EmbededLink';
-import { TaggedLinkNode } from 'src/parser/taggedLink/types';
-import { splitTag, getTagName } from 'src/parser/taggedLink/utils';
 
 import React from 'react';
 

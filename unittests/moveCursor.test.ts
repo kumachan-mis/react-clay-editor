@@ -1,4 +1,4 @@
-import { moveCursor } from 'src/components/molecules/cursor/Cursor/utils';
+import { moveCursor } from '../src/components/molecules/cursor/Cursor/utils';
 
 import { TestCase, testCases } from './moveCursor.testcase';
 
