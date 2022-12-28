@@ -14,26 +14,26 @@ import React from 'react';
 
 export type ViewerProps = {
   syntax?: 'bracket' | 'markdown';
-  textProps?: TextProps;
-  bracketLinkProps?: BracketLinkProps;
-  hashtagProps?: HashtagProps;
-  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
-  codeProps?: CodeProps;
-  formulaProps?: FormulaProps;
+  textProps?: ViewerTextProps;
+  bracketLinkProps?: ViewerBracketLinkProps;
+  hashtagProps?: ViewerHashtagProps;
+  taggedLinkPropsMap?: { [tagName: string]: ViewerTaggedLinkProps };
+  codeProps?: ViewerCodeProps;
+  formulaProps?: ViewerFormulaProps;
   className?: string;
 };
 
-export type TextProps = TextVisual;
+export type ViewerTextProps = TextVisual;
 
-export type BracketLinkProps = BracketLinkVisual & BracketLinkParsing;
+export type ViewerBracketLinkProps = BracketLinkVisual & BracketLinkParsing;
 
-export type HashtagProps = HashtagVisual & HashtagParsing;
+export type ViewerHashtagProps = HashtagVisual & HashtagParsing;
 
-export type TaggedLinkProps = TaggedLinkVisual & TaggedLinkParsing;
+export type ViewerTaggedLinkProps = TaggedLinkVisual & TaggedLinkParsing;
 
-export type CodeProps = CodeVisual & CodeParsing;
+export type ViewerCodeProps = CodeVisual & CodeParsing;
 
-export type FormulaProps = FormulaVisual & FormulaParsing;
+export type ViewerFormulaProps = FormulaVisual & FormulaParsing;
 
 export const defaultViewerPropsValue: ViewerProps = {};
 

@@ -1,16 +1,20 @@
-import { EditorRoot } from 'src/components/organisms/EditorRoot';
-import { EditorSyntaxMenu } from 'src/components/organisms/EditorSyntaxMenu';
-import { EditorTextFieldBody } from 'src/components/organisms/EditorTextFieldBody';
-import { EditorTextFieldHeader } from 'src/components/organisms/EditorTextFieldHeader';
-import { EditorTextFieldRoot } from 'src/components/organisms/EditorTextFieldRoot';
-import { ViewerRoot } from 'src/components/organisms/ViewerRoot';
-import { ViewerTextFieldBody } from 'src/components/organisms/ViewerTextFieldBody';
-import { ViewerTextFieldRoot } from 'src/components/organisms/ViewerTextFieldRoot';
-import { TextProps, BracketLinkProps, HashtagProps, TaggedLinkProps } from 'src/contexts/EditorPropsContext';
-
 import { css } from '@emotion/css';
 import React from 'react';
 import 'katex/dist/katex.min.css';
+import {
+  EditorBracketLinkProps,
+  EditorHashtagProps,
+  EditorRoot,
+  EditorSyntaxMenu,
+  EditorTaggedLinkProps,
+  EditorTextFieldBody,
+  EditorTextFieldHeader,
+  EditorTextFieldRoot,
+  EditorTextProps,
+  ViewerRoot,
+  ViewerTextFieldBody,
+  ViewerTextFieldRoot,
+} from 'src';
 
 const header = 'React Realtime Markup Editor';
 
@@ -41,11 +45,11 @@ const viewerClassNamme = css`
   }
 `;
 
-const textProps: TextProps = {
+const textProps: EditorTextProps = {
   suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'],
 };
 
-const bracketLinkProps: BracketLinkProps = {
+const bracketLinkProps: EditorBracketLinkProps = {
   anchorProps: (linkName) => ({
     href: `https://www.npmjs.com/package/${linkName}`,
     target: '_blank',
@@ -54,7 +58,7 @@ const bracketLinkProps: BracketLinkProps = {
   suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
-const hashtagProps: HashtagProps = {
+const hashtagProps: EditorHashtagProps = {
   anchorProps: (hashtagName) => ({
     href: `https://www.npmjs.com/package/${hashtagName}`,
     target: '_blank',
@@ -63,7 +67,7 @@ const hashtagProps: HashtagProps = {
   suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
-const taggedLinkPropsMap: { [tag: string]: TaggedLinkProps } = {
+const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
   npm: {
     label: 'package',
     anchorProps: (linkName) => ({
