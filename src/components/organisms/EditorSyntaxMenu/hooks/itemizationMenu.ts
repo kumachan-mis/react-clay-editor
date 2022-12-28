@@ -5,7 +5,7 @@ import {
 } from '../callbacks/itemization';
 import { itemizationMenuSwitch } from '../switches/itemization';
 import { ItemizationMenuConstants, ItemizationMenuProps } from 'src/components/molecules/menu/ItemizationMenu';
-import { ItemizationProps } from 'src/contexts/EditorPropsContext';
+import { EditorItemizationProps } from 'src/contexts/EditorPropsContext';
 import { LineNode } from 'src/parser/line/types';
 
 import { CommonMenuProps } from './types';
@@ -17,7 +17,7 @@ const defaultHandlerProps: ItemizationMenuHandlerProps = {
 
 export function useItemizationMenu(
   lineNodes: LineNode[],
-  itemizationProps: ItemizationProps | undefined,
+  itemizationProps: EditorItemizationProps | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): ItemizationMenuProps {
   const menuSwitch = itemizationMenuSwitch(syntax, lineNodes, state);

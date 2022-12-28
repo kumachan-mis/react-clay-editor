@@ -23,32 +23,32 @@ import React from 'react';
 
 export type EditorProps = {
   syntax?: 'bracket' | 'markdown';
-  textProps?: TextProps;
-  itemizationProps?: ItemizationProps;
-  bracketLinkProps?: BracketLinkProps;
-  hashtagProps?: HashtagProps;
-  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkProps };
-  codeProps?: CodeProps;
-  formulaProps?: FormulaProps;
-  quotationProps?: QuotationProps;
+  textProps?: EditorTextProps;
+  itemizationProps?: EditorItemizationProps;
+  bracketLinkProps?: EditorBracketLinkProps;
+  hashtagProps?: EditorHashtagProps;
+  taggedLinkPropsMap?: { [tagName: string]: EditorTaggedLinkProps };
+  codeProps?: EditorCodeProps;
+  formulaProps?: EditorFormulaProps;
+  quotationProps?: EditorQuotationProps;
   className?: string;
 };
 
-export type TextProps = TextVisual & TextLabels & Suggestion;
+export type EditorTextProps = TextVisual & TextLabels & Suggestion;
 
-export type ItemizationProps = ItemizationLabels;
+export type EditorItemizationProps = ItemizationLabels;
 
-export type BracketLinkProps = BracketLinkVisual & BracketLinkLabels & BracketLinkParsing & Suggestion;
+export type EditorBracketLinkProps = BracketLinkVisual & BracketLinkLabels & BracketLinkParsing & Suggestion;
 
-export type HashtagProps = HashtagVisual & HashtagLabels & HashtagParsing & Suggestion;
+export type EditorHashtagProps = HashtagVisual & HashtagLabels & HashtagParsing & Suggestion;
 
-export type TaggedLinkProps = TaggedLinkVisual & TaggedLinkLabels & TaggedLinkParsing & Suggestion;
+export type EditorTaggedLinkProps = TaggedLinkVisual & TaggedLinkLabels & TaggedLinkParsing & Suggestion;
 
-export type CodeProps = CodeVisual & CodeLabels & CodeParsing;
+export type EditorCodeProps = CodeVisual & CodeLabels & CodeParsing;
 
-export type FormulaProps = FormulaVisual & FormulaLabels & FormulaParsing;
+export type EditorFormulaProps = FormulaVisual & FormulaLabels & FormulaParsing;
 
-export type QuotationProps = QuotationLabels;
+export type EditorQuotationProps = QuotationLabels;
 
 export const defaultEditorPropsValue: EditorProps = {};
 

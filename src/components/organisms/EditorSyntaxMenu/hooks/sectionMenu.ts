@@ -1,7 +1,7 @@
 import { SectionMenuHandlerProps, handleOnSectionButtonClick, handleOnSectionItemClick } from '../callbacks/section';
 import { sectionMenuSwitch } from '../switches/section';
 import { SectionMenuConstants, SectionMenuProps } from 'src/components/molecules/menu/SectionMenu';
-import { TextProps } from 'src/contexts/EditorPropsContext';
+import { EditorTextProps } from 'src/contexts/EditorPropsContext';
 import { LineNode } from 'src/parser/line/types';
 
 import { CommonMenuProps } from './types';
@@ -14,7 +14,7 @@ const defaultHandlerProps: SectionMenuHandlerProps = {
 
 export function useSectionMenu(
   lineNodes: LineNode[],
-  textProps: TextProps | undefined,
+  textProps: EditorTextProps | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): SectionMenuProps {
   const menuSwitch = sectionMenuSwitch(syntax, lineNodes, state);

@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": false,
+    "outFile": "./dist/index.d.ts"
+  },
+  "include": ["src/**/*"]
+}

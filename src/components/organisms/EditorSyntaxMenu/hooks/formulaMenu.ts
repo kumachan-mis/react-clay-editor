@@ -6,7 +6,7 @@ import {
 } from '../callbacks/formula';
 import { contentFormulaMenuSwitch, blockFormulaMenuSwitch } from '../switches/formula';
 import { FormulaMenuConstants, FormulaMenuProps } from 'src/components/molecules/menu/FormulaMenu';
-import { FormulaProps } from 'src/contexts/EditorPropsContext';
+import { EditorFormulaProps } from 'src/contexts/EditorPropsContext';
 import { BlockNode } from 'src/parser/block/types';
 import { LineNode } from 'src/parser/line/types';
 
@@ -25,7 +25,7 @@ export function useFormulaMenu(
   nodes: (LineNode | BlockNode)[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
-  formulaProps: FormulaProps | undefined,
+  formulaProps: EditorFormulaProps | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): FormulaMenuProps {
   const contentMenuSwitch = formulaProps?.disabled ? 'disabled' : contentFormulaMenuSwitch(lineNodes, contentPosition);

@@ -2,7 +2,7 @@ import { LinkMenuHandlerProps, handleOnLinkItemClick } from '../callbacks/link';
 import { getNestedContentNodeIfNonEndPoint } from '../common/utils';
 import { linkMenuSwitch, LinkMenuItem } from '../switches/link';
 import { TaggedLinkMenuConstants, TaggedLinkMenuProps } from 'src/components/molecules/menu/TaggedLinkMenu';
-import { TaggedLinkProps } from 'src/contexts/EditorPropsContext';
+import { EditorTaggedLinkProps } from 'src/contexts/EditorPropsContext';
 import { LineNode } from 'src/parser/line/types';
 import { isPureLineNode } from 'src/parser/line/utils';
 import { getTagName } from 'src/parser/taggedLink/utils';
@@ -19,7 +19,7 @@ const defaultLinkProps: LinkMenuHandlerProps = {
 export function useTaggedLinkMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  taggedLinkPropsMap: { [tagName: string]: TaggedLinkProps } | undefined,
+  taggedLinkPropsMap: { [tagName: string]: EditorTaggedLinkProps } | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): TaggedLinkMenuProps {
   const tagEntries = Object.entries(taggedLinkPropsMap || {});

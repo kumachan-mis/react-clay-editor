@@ -6,7 +6,7 @@ import {
 } from '../callbacks/code';
 import { inlineCodeMenuSwitch, blockCodeMenuSwitch } from '../switches/code';
 import { CodeMenuConstants, CodeMenuProps } from 'src/components/molecules/menu/CodeMenu';
-import { CodeProps } from 'src/contexts/EditorPropsContext';
+import { EditorCodeProps } from 'src/contexts/EditorPropsContext';
 import { BlockNode } from 'src/parser/block/types';
 import { LineNode } from 'src/parser/line/types';
 
@@ -24,7 +24,7 @@ export function useCodeMenu(
   nodes: (LineNode | BlockNode)[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
-  codeProps: CodeProps | undefined,
+  codeProps: EditorCodeProps | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): CodeMenuProps {
   const inlineMenuSwitch = codeProps?.disabled ? 'disabled' : inlineCodeMenuSwitch(lineNodes, contentPosition);

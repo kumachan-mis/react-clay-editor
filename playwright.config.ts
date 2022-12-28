@@ -1,5 +1,7 @@
 import { devices, PlaywrightTestConfig } from '@playwright/test';
 
+const TARGET_PORT = 5173;
+
 const userAgents = {
   'Windows Chrome': [
     'Mozilla/5.0',
@@ -20,8 +22,8 @@ const userAgents = {
 } as const;
 
 const baseURLs = {
-  bracket: 'http://localhost:8082/bracket/',
-  markdown: 'http://localhost:8082/markdown/',
+  bracket: `http://localhost:${TARGET_PORT}/bracket/`,
+  markdown: `http://localhost:${TARGET_PORT}/markdown/`,
 } as const;
 
 const config: PlaywrightTestConfig = {
@@ -47,8 +49,8 @@ const config: PlaywrightTestConfig = {
     },
   ],
   webServer: {
-    command: 'cross-env ENVIRONMENT=test webpack serve',
-    port: 8082,
+    command: 'yarn testdev',
+    port: TARGET_PORT,
   },
 };
 
