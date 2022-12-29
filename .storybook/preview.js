@@ -1,7 +1,12 @@
 import theme from './theme';
+import prettier from 'prettier/standalone';
+import prettierBabel from 'prettier/parser-babel';
 
 export const parameters = {
-  docs: { theme },
+  docs: {
+    theme,
+    transformSource: (input) => prettier.format(input, { parser: 'babel', plugins: [prettierBabel] }),
+  },
   options: {
     storySort: {
       order: [
