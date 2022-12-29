@@ -1,6 +1,6 @@
 # react-realtime-markup-editor
 
-A text document editor which is syntactically formattable in real time
+A document editor which reflects syntactic formatting in real time
 
 - The document editor is inspired by [Scrapbox](https://scrapbox.io/product)
 - Icons made from [Icon Fonts](http://www.onlinewebfonts.com/icon) is licensed by CC BY 3.0
