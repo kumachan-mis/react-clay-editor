@@ -27,7 +27,6 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
-    "figures/**/*",
     "README.md",
     "LICENSE"
   ],
