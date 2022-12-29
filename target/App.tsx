@@ -30,8 +30,6 @@ const editorClassName = css`
   && {
     width: 70%;
     height: 70%;
-    border: solid 1px;
-    padding: 5px;
   }
 `;
 
@@ -39,9 +37,7 @@ const viewerClassNamme = css`
   && {
     width: 35%;
     height: 70%;
-    border: solid 1px;
     margin: 5px;
-    padding: 5px;
   }
 `;
 

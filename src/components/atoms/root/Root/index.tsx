@@ -24,6 +24,8 @@ const StyledFlexRoot = styled.div`
 const StyledForwardRefRoot = styled.div`
   width: 400px;
   height: 400px;
+  border: solid 1px;
+  padding: 4px;
   font-family: sans-serif;
 
   & .katex-display {
