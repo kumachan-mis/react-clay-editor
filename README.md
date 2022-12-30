@@ -7,14 +7,20 @@ A document editor which reflects syntactic formatting in real time
 
 ## Installation
 
-```sh
+Run one of the following commands to install React Realtime Markup Editor.
+
+### With NPM
+
+```
 npm install react-realtime-markup-editor katex @emotion/react @emotion/styled
 ```
 
-or
+### With Yarn
 
-```sh
+```
 yarn add react-realtime-markup-editor katex @emotion/react @emotion/styled
 ```
 
 ## Documentation
+
+https://kumachan-mis.github.io/react-realtime-markup-editor/
