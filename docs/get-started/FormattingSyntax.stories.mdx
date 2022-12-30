@@ -247,7 +247,14 @@ or resource in your application, tagged links such as `[box: document_id]`, `[go
 work well to group and shorten link texts.
 
 Another example is a technical blog application. Since users will often refer GitHub and NPM webpage to write articles,
-tagged links `[npm: package_name]` and `[github: @username/repository_name]` will be useful. Here is the formatting result.
+tagged links `[npm: package_name]` and `[github: @username/repository_name]` will be useful. You can configure so that
+
+```
+[npm: react-realtime-markup-editor]
+[github: @kumachan-mis/react-realtime-markup-editor]
+```
+
+goes to
 
 <Canvas>
   <Story
@@ -296,6 +303,8 @@ tagged links `[npm: package_name]` and `[github: @username/repository_name]` wil
     {SyntaxViewer.bind({})}
   </Story>
 </Canvas>
+
+Click links above if you want to visit NPM and GitHub webpage of React Realtime Markup Editor.
 
 ## Code String
 
