@@ -1,6 +1,6 @@
 {
   "name": "react-realtime-markup-editor",
-  "version": "^0.29.0",
+  "version": "0.29.0",
   "description": "A document editor which reflects syntactic formatting in real time",
   "keywords": [
     "react",
@@ -56,6 +56,7 @@
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-docs": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
+    "@storybook/addon-links": "^6.5.15",
     "@storybook/addons": "^6.5.15",
     "@storybook/builder-webpack4": "^6.5.15",
     "@storybook/manager-webpack4": "^6.5.15",

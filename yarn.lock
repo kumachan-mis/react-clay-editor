@@ -3411,6 +3411,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-links@npm:^6.5.15":
+  version: 6.5.15
+  resolution: "@storybook/addon-links@npm:6.5.15"
+  dependencies:
+    "@storybook/addons": 6.5.15
+    "@storybook/client-logger": 6.5.15
+    "@storybook/core-events": 6.5.15
+    "@storybook/csf": 0.0.2--canary.4566f4d.1
+    "@storybook/router": 6.5.15
+    "@types/qs": ^6.9.5
+    core-js: ^3.8.2
+    global: ^4.4.0
+    prop-types: ^15.7.2
+    qs: ^6.10.0
+    regenerator-runtime: ^0.13.7
+    ts-dedent: ^2.0.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: ef40b02a3f48de2f591486fb04910e996bcb8d5fd406e2d6b81752659551b366ffc64f6cfdb461585e52c0ae98fa102be8595678e63a27171f9e2a0e20869bd6
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-measure@npm:6.5.15":
   version: 6.5.15
   resolution: "@storybook/addon-measure@npm:6.5.15"
@@ -14410,6 +14438,7 @@ __metadata:
     "@storybook/addon-actions": ^6.5.15
     "@storybook/addon-docs": ^6.5.15
     "@storybook/addon-essentials": ^6.5.15
+    "@storybook/addon-links": ^6.5.15
     "@storybook/addons": ^6.5.15
     "@storybook/builder-webpack4": ^6.5.15
     "@storybook/manager-webpack4": ^6.5.15
