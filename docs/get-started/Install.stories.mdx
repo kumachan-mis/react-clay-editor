@@ -31,7 +31,7 @@ import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from '../../src'
     {() => {
       const [text, setText] = React.useState(
         [
-          '[** Simplest Usage]',
+          '[* Simplest Usage]',
           ' import the following components',
           '  `EditorRoot`',
           '  `EditorTextFieldRoot`',
@@ -39,7 +39,9 @@ import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from '../../src'
           ' create nested commponent with them',
           ' give `text` and `setText` to `EditorRoot`',
           '',
-          'click [* Show code] to see the source code',
+          '[* source code]',
+          ' click "Show code" in the lower right',
+          ' this editor itself represents the simplest usage',
         ].join('\n')
       );
       return (
