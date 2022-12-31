@@ -29,7 +29,8 @@ export function useTaggedLinkMenu(
 
   const taggedItemMap: { [tagName: string]: { label: string; onItemClick: () => void } } = {};
 
-  for (const [tagName, taggedLinkProps] of tagEntries) {
+  for (const tagEntry of tagEntries) {
+    const [tagName, taggedLinkProps] = tagEntry;
     const handlerProps: LinkMenuHandlerProps = { ...defaultLinkProps, ...taggedLinkProps, syntax };
     const menuItem: LinkMenuItem = { type: 'taggedLink', tag: tagName };
     const { label } = handlerProps;
