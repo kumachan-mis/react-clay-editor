@@ -1,5 +1,142 @@
-import { Meta } from '@storybook/addon-docs';
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
 
 <Meta title="Get Started/Editor" />
 
+<Story name="Page">
+  <></>
+</Story>
+
 # Editor
+
+The editor is the main component of React Clay Editor.
+
+import { css } from '@emotion/css';
+import { EditorRoot, EditorSyntaxMenu, EditorTextFieldBody, EditorTextFieldHeader, EditorTextFieldRoot } from 'src';
+
+## Simple Editor
+
+<Canvas>
+  <Story name="Simple Editor">
+    {() => {
+      const [text, setText] = React.useState('This is a simple editor.');
+      return (
+        <EditorRoot text={text} setText={setText}>
+          <EditorTextFieldRoot>
+            <EditorTextFieldBody />
+          </EditorTextFieldRoot>
+        </EditorRoot>
+      );
+    }}
+  </Story>
+</Canvas>
+
+## Fullwidth
+
+`className` is available to overwrite the default styling.
+
+<Canvas>
+  <Story name="Fullwidth">
+    {() => {
+      const [text, setText] = React.useState(
+        ['This is a full-width editor.', '`className` is available to overwrite the default styling.'].join('\n')
+      );
+      return (
+        <EditorRoot
+          text={text}
+          setText={setText}
+          className={css`
+            && {
+              width: 100%;
+            }
+          `}
+        >
+          <EditorTextFieldRoot>
+            <EditorTextFieldBody />
+          </EditorTextFieldRoot>
+        </EditorRoot>
+      );
+    }}
+  </Story>
+</Canvas>
+
+Note that a className selector in CSS should be **doubled**. Here is an example using `@emotion/css`.
+
+```ts
+const className = css`
+  && {
+    width: 100%;
+  }
+`;
+// two ampersands (&&) is important
+```
+
+## With SyntaxMenu
+
+The syntax menu helps users who are not familiar with syntactic writing.
+
+<Canvas>
+  <Story name="With SyntaxMenu">
+    {() => {
+      const [text, setText] = React.useState(
+        [
+          'This is an editor with the syntax menu.',
+          'The syntax menu helps users who are not familiar with syntactic writing.',
+        ].join('\n')
+      );
+      return (
+        <EditorRoot text={text} setText={setText}>
+          <EditorSyntaxMenu />
+          <EditorTextFieldRoot>
+            <EditorTextFieldBody />
+          </EditorTextFieldRoot>
+        </EditorRoot>
+      );
+    }}
+  </Story>
+</Canvas>
+
+## With Header
+
+A text in the header is uneditable. It is useful to show a fixed title of a document.
+
+<Canvas>
+  <Story name="With Header">
+    {() => {
+      const [text, setText] = React.useState(
+        ['This is an editor with the header.', 'The header is useful to show a fixed title of a document.'].join('\n')
+      );
+      return (
+        <EditorRoot text={text} setText={setText}>
+          <EditorTextFieldRoot>
+            <EditorTextFieldHeader header="React Clay Editor Header" />
+            <EditorTextFieldBody />
+          </EditorTextFieldRoot>
+        </EditorRoot>
+      );
+    }}
+  </Story>
+</Canvas>
+
+## With User-Defined Footer
+
+You can customize the editor as you like.
+
+<Canvas>
+  <Story name="With User Defined Footer">
+    {() => {
+      const [text, setText] = React.useState(
+        ['This is an editor with an user-defined footer.', 'You can customize the editor as you like.'].join('\n')
+      );
+      return (
+        <EditorRoot text={text} setText={setText}>
+          <EditorTextFieldRoot>
+            <EditorTextFieldBody />
+          </EditorTextFieldRoot>
+          <div style={{ textAlign: 'end', fontSize: '0.7rem', color: 'rgba(0, 0, 0, 0.4)' }}>
+            React Clay Editor: a document editor quick editable and flexible like clay in hands
+          </div>
+        </EditorRoot>
+      );
+    }}
+  </Story>
+</Canvas>

@@ -22,20 +22,19 @@ npm install react-clay-editor katex @emotion/react @emotion/styled
 yarn add react-clay-editor katex @emotion/react @emotion/styled
 ```
 
-## Simplest Usege
+## Simple Usege
 
 React Clay Editor provides rich configurations to costomize as you like.
-
 However, if you want to try it quickly, an extremely simple way is available.
 
 import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from 'src';
 
 <Canvas>
-  <Story name="Simplest Usage">
+  <Story name="Simple Usage">
     {() => {
       const [text, setText] = React.useState(
         [
-          '[* Simplest Usage]',
+          '[* Simple Usage]',
           ' import the following components',
           '  `EditorRoot`',
           '  `EditorTextFieldRoot`',
@@ -45,7 +44,7 @@ import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from 'src';
           '',
           '[* source code]',
           ' click "Show code" in the lower right',
-          ' this editor itself represents the simplest usage',
+          ' this editor itself represents a simple usage',
         ].join('\n')
       );
       return (
