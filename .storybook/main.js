@@ -38,6 +38,9 @@ module.exports = {
       STORYBOOK_EMOTION_STYLED_SRC,
     };
   },
+  core: {
+    builder: 'webpack5',
+  },
   webpackFinal: async (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
