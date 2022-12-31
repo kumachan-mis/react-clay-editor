@@ -27,7 +27,7 @@ const SyntaxViewer = (args) => (
 
 # Formatting Syntax
 
-Two types of syntax are available in React Realtime Markup Editor.
+Two types of syntax are available in React Clay Editor.
 
 - Bracket-based syntax coming from [Scrapbox](https://scrapbox.io/product?lang=en)
 - Markdown-based syntax coming from [Markdown](https://www.markdownguide.org/)
@@ -238,7 +238,7 @@ For instance, The following hashtags are configured to open other pages of this 
 
 ## Tagged Link
 
-Tagged links are an original feature of React Realtime Markup Editor.
+Tagged links are an original feature of React Clay Editor.
 The notation of tagged links is the same in both types of syntax.
 
 They are useful when users of your application refer various types of external documents to speed up their writing.
@@ -250,8 +250,8 @@ Another example is a technical blog application. Since users will often refer Gi
 tagged links `[npm: package_name]` and `[github: @username/repository_name]` will be useful. You can configure so that
 
 ```
-[npm: react-realtime-markup-editor]
-[github: @kumachan-mis/react-realtime-markup-editor]
+[npm: react-clay-editor]
+[github: @kumachan-mis/react-clay-editor]
 ```
 
 goes to
@@ -260,7 +260,7 @@ goes to
   <Story
     name="Tagged Link"
     args={{
-      text: ['[npm: react-realtime-markup-editor]', '[github: @kumachan-mis/react-realtime-markup-editor]'].join('\n'),
+      text: ['[npm: react-clay-editor]', '[github: @kumachan-mis/react-clay-editor]'].join('\n'),
       taggedLinkPropsMap: {
         npm: {
           anchorProps: (linkName) => ({
@@ -304,7 +304,7 @@ goes to
   </Story>
 </Canvas>
 
-Click links above if you want to visit NPM and GitHub webpage of React Realtime Markup Editor.
+Click links above if you want to visit NPM and GitHub webpage of React Clay Editor.
 
 ## Code String
 

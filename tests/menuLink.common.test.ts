@@ -16,7 +16,7 @@ test('link menus: bracket, no-selection, empty-line', async ({ page }) => {
 
   await page.keyboard.press('Enter');
 
-  await linesToBe(page, ['[react-realtime-markup-editor]']);
+  await linesToBe(page, ['[react-clay-editor]']);
 });
 
 test('link menus: hashtag, no-selection, empty-line', async ({ page }) => {
@@ -42,7 +42,7 @@ test('link menus: tagged-link-button, no-selection, empty-line', async ({ page }
 
   await page.keyboard.press('Enter');
 
-  await linesToBe(page, ['[npm: react-realtime-markup-editor]']);
+  await linesToBe(page, ['[npm: react-clay-editor]']);
 });
 
 test('link menus: tagged-link-dropdown, no-selection, empty-line', async ({ page }) => {
@@ -55,7 +55,7 @@ test('link menus: tagged-link-dropdown, no-selection, empty-line', async ({ page
 
   await page.keyboard.press('Enter');
 
-  await linesToBe(page, ['[github: @kumachan-mis/react-realtime-markup-editor]']);
+  await linesToBe(page, ['[github: @kumachan-mis/react-clay-editor]']);
 });
 
 test('link menus: bracket, no-selection, in-bracket-link', async ({ page }) => {
@@ -316,18 +316,18 @@ test('link menus: hashtag, single-line-selection, in-bracket-link', async ({ pag
 });
 
 test('link menus: tagged-link-dropdown, single-line-selection, in-tagged-link', async ({ page }) => {
-  await page.keyboard.insertText(['[npm: react-realtime-markup-editor]'].join('\n'));
+  await page.keyboard.insertText(['[npm: react-clay-editor]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C5]', '[data-selectid=char-L0C16]');
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=npm-tagged-link-menu-item]').click();
 
-  await linesToBe(page, ['react-realtime-markup-editor']);
+  await linesToBe(page, ['react-clay-editor']);
 
   await page.keyboard.type('.');
 
-  await linesToBe(page, ['.time-markup-editor']);
+  await linesToBe(page, ['.-editor']);
 });
 
 test('link menus: tagged-link-dropdown, single-line-selection, in-bracket-link', async ({ page }) => {

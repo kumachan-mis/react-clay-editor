@@ -1,18 +1,15 @@
 {
-  "name": "react-realtime-markup-editor",
+  "name": "react-clay-editor",
   "version": "0.29.0",
-  "description": "A document editor which reflects syntactic formatting in real time",
+  "description": "A document editor quick editable and flexible like clay in hands",
   "keywords": [
     "react",
-    "document",
-    "editor",
-    "real time",
-    "syntactic"
+    "editor"
   ],
-  "homepage": "https://kumachan-mis.github.io/react-realtime-markup-editor",
+  "homepage": "https://kumachan-mis.github.io/react-clay-editor",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kumachan-mis/react-realtime-markup-editor.git"
+    "url": "git+https://github.com/kumachan-mis/react-clay-editor.git"
   },
   "license": "MIT",
   "author": "Yuya Suwa (@kumachan-mis)",

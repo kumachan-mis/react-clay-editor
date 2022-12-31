@@ -29,7 +29,6 @@
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": true,
-  "githubPullRequests.defaultMergeMethod": "squash",
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true

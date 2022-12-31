@@ -16,7 +16,7 @@ import {
   ViewerTextFieldRoot,
 } from 'src';
 
-const header = 'React Realtime Markup Editor';
+const header = 'React Clay Editor';
 
 const containerClassName = css`
   width: 100%;
@@ -42,7 +42,7 @@ const viewerClassNamme = css`
 `;
 
 const textProps: EditorTextProps = {
-  suggestions: ['React Realtime Markup Editor', 'Document Editor', 'Syntactic', 'Real Time'],
+  suggestions: ['React Clay Editor', 'Document Editor', 'Syntactic', 'Real Time'],
 };
 
 const bracketLinkProps: EditorBracketLinkProps = {
@@ -51,7 +51,7 @@ const bracketLinkProps: EditorBracketLinkProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
   }),
-  suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
+  suggestions: ['react-clay-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
 const hashtagProps: EditorHashtagProps = {
@@ -60,7 +60,7 @@ const hashtagProps: EditorHashtagProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
   }),
-  suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
+  suggestions: ['react-clay-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
 const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
@@ -82,7 +82,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
       target: '_blank',
       rel: 'noopener noreferrer',
     }),
-    suggestions: ['react-realtime-markup-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
+    suggestions: ['react-clay-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
   },
   github: {
     linkNameRegex: /@[^[\]]+\/[^[\]]+/,
@@ -103,19 +103,14 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
       target: '_blank',
       rel: 'noopener noreferrer',
     }),
-    suggestions: [
-      '@kumachan-mis/react-realtime-markup-editor',
-      '@KaTeX/KaTeX',
-      '@emotion-js/emotion',
-      '@facebook/react',
-    ],
+    suggestions: ['@kumachan-mis/react-clay-editor', '@KaTeX/KaTeX', '@emotion-js/emotion', '@facebook/react'],
   },
 };
 
 export const App: React.FC = () => {
   switch (window.location.pathname) {
     case '/':
-      return <div>React Realtime Markup Editor - Test</div>;
+      return <div>React Clay Editor - Test</div>;
     case '/bracket/editor':
     case '/bracket/editor/':
       return <TestTargetEditor syntax="bracket" />;

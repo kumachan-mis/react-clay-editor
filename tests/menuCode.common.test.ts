@@ -14,24 +14,24 @@ test('code menu: inline-code-button, no-selection, empty-line', async ({ page })
 
   await linesToBe(page, ['`inline code`']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['`React Realtime Markup Editor`']);
+  await linesToBe(page, ['`React Clay Editor`']);
 });
 
 test('code menu: inline-code-dropdown, no-selection, in-code', async ({ page }) => {
-  await page.keyboard.insertText(["`import { Editor } from 'react-realtime-markup-editor'`"].join('\n'));
+  await page.keyboard.insertText(["`import { EditorRoot } from 'react-clay-editor'`"].join('\n'));
 
   await page.locator('[data-selectid=char-L0C6]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-code-menu-item]').click();
 
-  await linesToBe(page, ["import { Editor } from 'react-realtime-markup-editor'"]);
+  await linesToBe(page, ["import { EditorRoot } from 'react-clay-editor'"]);
 
   await page.keyboard.type('.');
 
-  await linesToBe(page, ["impor.t { Editor } from 'react-realtime-markup-editor'"]);
+  await linesToBe(page, ["impor.t { EditorRoot } from 'react-clay-editor'"]);
 });
 
 test('code menu: inline-code-button, no-selection, in-normal', async ({ page }) => {
@@ -275,9 +275,9 @@ test('code menu: block-code, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['```', 'block code', '```']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['```', 'React Realtime Markup Editor', '```']);
+  await linesToBe(page, ['```', 'React Clay Editor', '```']);
 });
 
 test('code menu: block-code, no-selection, empty-code', async ({ page }) => {

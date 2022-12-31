@@ -11,7 +11,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.tsx'),
-      name: 'ReactRealtimeMarkupEditor',
+      name: 'ReactClayEditor',
       fileName: 'index',
     },
     rollupOptions: {
@@ -20,7 +20,7 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          katex: 'KaTeX',
+          katex: 'katex',
           '@emotion/react': 'emotionReact',
           '@emotion/styled': 'emotionStyled',
         },

@@ -14335,6 +14335,62 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-clay-editor@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "react-clay-editor@workspace:."
+  dependencies:
+    "@babel/core": ^7.20.7
+    "@emotion/css": ^11.10.5
+    "@emotion/react": ^11.10.5
+    "@emotion/styled": ^11.10.5
+    "@jest/globals": ^29.3.1
+    "@mdx-js/react": ^1.6.22
+    "@playwright/test": ^1.29.1
+    "@storybook/addon-actions": ^6.5.15
+    "@storybook/addon-docs": ^6.5.15
+    "@storybook/addon-essentials": ^6.5.15
+    "@storybook/addon-links": ^6.5.15
+    "@storybook/addons": ^6.5.15
+    "@storybook/builder-webpack4": ^6.5.15
+    "@storybook/manager-webpack4": ^6.5.15
+    "@storybook/react": ^6.5.15
+    "@storybook/theming": ^6.5.15
+    "@svgr/cli": ^6.5.1
+    "@types/katex": ^0.16.0
+    "@types/node": ^18.11.18
+    "@types/react": ^18.0.26
+    "@types/react-dom": ^18.0.10
+    "@typescript-eslint/eslint-plugin": ^5.47.1
+    "@typescript-eslint/parser": ^5.47.1
+    "@vitejs/plugin-react": ^3.0.0
+    babel-loader: ^8.3.0
+    eslint: ^8.30.0
+    eslint-config-prettier: ^8.5.0
+    eslint-import-resolver-typescript: ^3.5.2
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-react: ^7.31.11
+    eslint-plugin-react-hooks: ^4.6.0
+    gh-pages: ^4.0.0
+    husky: ^8.0.2
+    jest: ^29.3.1
+    katex: ^0.16.4
+    lint-staged: ^13.1.0
+    prettier: ^2.8.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    sort-package-json: ^2.1.0
+    ts-jest: ^29.0.3
+    typescript: 4.8.4
+    vite: ^4.0.3
+  peerDependencies:
+    "@emotion/react": ">=11.0.0"
+    "@emotion/styled": ">=11.0.0"
+    katex: ">=0.16.0"
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
+  languageName: unknown
+  linkType: soft
+
 "react-docgen-typescript@npm:^2.1.1":
   version: 2.2.2
   resolution: "react-docgen-typescript@npm:2.2.2"
@@ -14423,62 +14479,6 @@ __metadata:
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
   languageName: node
   linkType: hard
-
-"react-realtime-markup-editor@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "react-realtime-markup-editor@workspace:."
-  dependencies:
-    "@babel/core": ^7.20.7
-    "@emotion/css": ^11.10.5
-    "@emotion/react": ^11.10.5
-    "@emotion/styled": ^11.10.5
-    "@jest/globals": ^29.3.1
-    "@mdx-js/react": ^1.6.22
-    "@playwright/test": ^1.29.1
-    "@storybook/addon-actions": ^6.5.15
-    "@storybook/addon-docs": ^6.5.15
-    "@storybook/addon-essentials": ^6.5.15
-    "@storybook/addon-links": ^6.5.15
-    "@storybook/addons": ^6.5.15
-    "@storybook/builder-webpack4": ^6.5.15
-    "@storybook/manager-webpack4": ^6.5.15
-    "@storybook/react": ^6.5.15
-    "@storybook/theming": ^6.5.15
-    "@svgr/cli": ^6.5.1
-    "@types/katex": ^0.16.0
-    "@types/node": ^18.11.18
-    "@types/react": ^18.0.26
-    "@types/react-dom": ^18.0.10
-    "@typescript-eslint/eslint-plugin": ^5.47.1
-    "@typescript-eslint/parser": ^5.47.1
-    "@vitejs/plugin-react": ^3.0.0
-    babel-loader: ^8.3.0
-    eslint: ^8.30.0
-    eslint-config-prettier: ^8.5.0
-    eslint-import-resolver-typescript: ^3.5.2
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-react: ^7.31.11
-    eslint-plugin-react-hooks: ^4.6.0
-    gh-pages: ^4.0.0
-    husky: ^8.0.2
-    jest: ^29.3.1
-    katex: ^0.16.4
-    lint-staged: ^13.1.0
-    prettier: ^2.8.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    sort-package-json: ^2.1.0
-    ts-jest: ^29.0.3
-    typescript: 4.8.4
-    vite: ^4.0.3
-  peerDependencies:
-    "@emotion/react": ">=11.0.0"
-    "@emotion/styled": ">=11.0.0"
-    katex: ">=0.16.0"
-    react: ">=18.0.0"
-    react-dom: ">=18.0.0"
-  languageName: unknown
-  linkType: soft
 
 "react-refresh@npm:^0.11.0":
   version: 0.11.0

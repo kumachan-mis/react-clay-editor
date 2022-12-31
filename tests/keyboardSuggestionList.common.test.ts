@@ -31,7 +31,7 @@ test('text suggestion', async ({ page }) => {
 
   await linesToBe(page, [
     // expected lines
-    'React Realtime Markup Editor',
+    'React Clay Editor',
     'Real Time',
     'Real Time',
     'Syntactic',
@@ -79,7 +79,7 @@ test('bracket link suggestion', async ({ page }) => {
 
   await linesToBe(page, [
     // expected lines
-    '[react-realtime-markup-editor]',
+    '[react-clay-editor]',
     '[katex]',
     '[@emotion/react]',
     '[@emotion/styled]',
@@ -123,7 +123,7 @@ test('hashtag suggestion', async ({ page }) => {
 
   await linesToBe(page, [
     // expected lines
-    '#react-realtime-markup-editor ',
+    '#react-clay-editor ',
     '#katex ',
     '#@emotion/react ',
     '#@emotion/styled ',
@@ -156,7 +156,7 @@ test('tagged link suggestion', async ({ page }) => {
 
   await linesToBe(page, [
     // expected lines
-    '[github: @kumachan-mis/react-realtime-markup-editor]',
+    '[github: @kumachan-mis/react-clay-editor]',
     '[github: @KaTeX/KaTeX]',
     '[github: @facebook/react]',
     '[github: x',

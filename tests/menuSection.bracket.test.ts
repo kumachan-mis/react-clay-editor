@@ -14,9 +14,9 @@ test('section menu: button, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['[** larger]']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['[** React Realtime Markup Editor]']);
+  await linesToBe(page, ['[** React Clay Editor]']);
 });
 
 test('section menu: normal, no-selection, empty-line', async ({ page }) => {
@@ -27,9 +27,9 @@ test('section menu: normal, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['[* normal]']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['[* React Realtime Markup Editor]']);
+  await linesToBe(page, ['[* React Clay Editor]']);
 });
 
 test('section menu: larger, no-selection, empty-line', async ({ page }) => {
@@ -40,9 +40,9 @@ test('section menu: larger, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['[** larger]']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['[** React Realtime Markup Editor]']);
+  await linesToBe(page, ['[** React Clay Editor]']);
 });
 
 test('section menu: largest, no-selection, empty-line', async ({ page }) => {
@@ -53,9 +53,9 @@ test('section menu: largest, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['[*** largest]']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['[*** React Realtime Markup Editor]']);
+  await linesToBe(page, ['[*** React Clay Editor]']);
 });
 
 test('section menu: button, no-selection, normal-line (normal text)', async ({ page }) => {

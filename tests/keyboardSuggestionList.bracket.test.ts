@@ -36,7 +36,7 @@ test('decoration suggestion', async ({ page }) => {
 
   await linesToBe(page, [
     // expected lines
-    '[* React Realtime Markup Editor]',
+    '[* React Clay Editor]',
     '[* Document Editor]',
     '[** Real Time]',
     '[*** Syntactic]',
