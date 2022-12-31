@@ -35,7 +35,7 @@
     "dev-test": "vite --config viteconfig.tests.ts",
     "format": "sort-package-json && prettier --write \"**/*.{css,html,json,scss,ts,tsx}\"",
     "gen-icons": "svgr --typescript --out-dir icons/dist -- icons",
-    "lint": "eslint \"{src,target,tests,unittests}/**/*.{ts,tsx}\"",
+    "lint": "eslint \"{src,docs,target,tests,unittests}/**/*.{ts,tsx}\"",
     "lint-fix": "yarn lint --fix",
     "prepack": "yarn build",
     "test": "playwright test",
