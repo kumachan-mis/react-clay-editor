@@ -3,6 +3,7 @@ const packageJson = require('../package.json');
 
 module.exports = {
   stories: ['../docs/**/*.stories.mdx', '../docs/**/*.stories.@(js|jsx|ts|tsx)'],
+  staticDirs: ['../docs/public'],
   addons: ['@storybook/addon-docs', '@storybook/addon-links'],
   framework: '@storybook/react',
   env: (config) => {
