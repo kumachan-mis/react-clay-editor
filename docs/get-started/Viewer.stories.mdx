@@ -9,6 +9,9 @@ import { Canvas, Meta, Story } from '@storybook/addon-docs';
 # Viewer
 
 The viewer is the readonly component of React Clay Editor.
+You can implement a range of viewers and even custom editors by compounding components -
+`ViewerRoot`, `ViewerTextFieldRoot`, `ViewerTextFieldHeader`, `ViewerTextFieldBody`
+and your own ones.
 
 import { css } from '@emotion/css';
 import { ViewerRoot, ViewerSyntaxMenu, ViewerTextFieldBody, ViewerTextFieldHeader, ViewerTextFieldRoot } from 'src';
@@ -76,15 +79,18 @@ The header is useful to show a fixed title of a document.
   </Story>
 </Canvas>
 
-## Multi-Panes Editor
+## Dual-Paned Editor
 
-You can implement markdown-like editor which has multiple panes.
+You can implement a dual-paned editor by using the viewer and the standard `<textarea>`.
 
 <Canvas>
-  <Story name="Multi-Panes Editor">
+  <Story name="Dual-Paned Editor">
     {() => {
       const [text, setText] = React.useState(
-        ['# Multi-Panes Editor', 'You can implement markdown-like editor which has multiple panes.'].join('\n')
+        [
+          '# Dual-Paned Editor',
+          'You can implement a dual-paned editor by using the viewer and the standard `<textarea>`.',
+        ].join('\n')
       );
       return (
         <div
