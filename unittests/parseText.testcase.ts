@@ -72,7 +72,7 @@ export const commonTestCases: TestCase[] = [
           {
             type: 'inlineCode',
             lineIndex: 0,
-            range: [0, 54],
+            range: [0, 47],
             code: "import { EditorRoot } from 'react-clay-editor'",
           },
         ],
