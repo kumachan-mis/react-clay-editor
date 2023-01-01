@@ -7,7 +7,6 @@ export { EditorTextFieldBody } from './components/organisms/EditorTextFieldBody'
 export type { EditorRootProps } from './components/organisms/EditorRoot';
 export type { EditorTextFieldHeaderProps } from './components/organisms/EditorTextFieldHeader';
 export type {
-  EditorProps,
   EditorTextProps,
   EditorItemizationProps,
   EditorBracketLinkProps,
@@ -26,7 +25,6 @@ export { ViewerTextFieldBody } from './components/organisms/ViewerTextFieldBody'
 export type { ViewerRootProps } from './components/organisms/ViewerRoot';
 export type { ViewerTextFieldHeaderProps } from './components/organisms/ViewerTextFieldHeader';
 export type {
-  ViewerProps,
   ViewerTextProps,
   ViewerBracketLinkProps,
   ViewerHashtagProps,

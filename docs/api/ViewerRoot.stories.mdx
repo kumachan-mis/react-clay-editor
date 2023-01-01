@@ -1,5 +1,126 @@
 import { Meta } from '@storybook/addon-docs';
+import LinkTo from '@storybook/addon-links/react';
 
 <Meta title="API/ViewerRoot" />
 
+<Story name="Page">
+  <></>
+</Story>
+
 # ViewerRoot
+
+The root container of the viewer. It receives properties used whole of the components.
+
+## Import
+
+```ts
+import { ViewerRoot } from 'react-clay-editor';
+```
+
+## ViewerRootProps
+
+| name                 | type                                           | requried | description                                                                                                    |
+| -------------------- | ---------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------- |
+| `text`               | `string`                                       | YES      | syntactic text in the viewer                                                                                   |
+| `syntax`             | `'bracket'` or `'markdown'`                    | no       | syntax of the text                                                                                             |
+| `textProps`          | `ViewerTextProps`                              | no       | configurations of text, a subset of `EditorTextProps`                                                          |
+| `hashtagProps`       | `ViewerHashtagProps`                           | no       | configurations of hashtags, a subset of `EditorHashtagProps`                                                   |
+| `taggedLinkPropsMap` | `{ [tagName: string]: ViewerTaggedLinkProps }` | no       | map of tag names to configurations of tagged links, a subset of `{ [tagName: string]: EditorTaggedLinkProps }` |
+| `codeProps`          | `ViewerCodeProps`                              | no       | configurations of code strings, a subset of `EditorCodeProps`                                                  |
+| `formulaProps`       | `ViewerFormulaProps`                           | no       | configurations of math formulas, a subset of `EditorFormulaProps`                                              |
+| `className`          | `string`                                       | no       | CSS className of ViewerRoot                                                                                    |
+
+## ViewerTextProps
+
+`ViewerTextProps` is a subset of `EditorTextProps`. The following table shows what properties in `EditorTextProps` also
+exist in `ViewerTextProps`.
+
+| property in `EditorTextProps` | also exists in `ViewerTextProps` |
+| ----------------------------- | -------------------------------- |
+| lineProps                     | YES                              |
+| normalLabel                   | no                               |
+| largerLabel                   | no                               |
+| largestLabel                  | no                               |
+| suggestions                   | no                               |
+| initialSuggestionIndex        | no                               |
+
+Refer to <LinkTo kind="api-editorroot--page#editortextprops">EditorTextProps</LinkTo> for details of each property.
+
+## ViewerBracketLinkProps
+
+`ViewerBracketLinkProps` is a subset of `EditorBracketLinkProps`. The following table shows what properties in
+`EditorBracketLinkProps` also exist in `ViewerBracketLinkProps`.
+
+| property in `EditorBracketLinkProps` | also exists in `ViewerBracketLinkProps` |
+| ------------------------------------ | --------------------------------------- |
+| anchorProps                          | YES                                     |
+| label                                | no                                      |
+| suggestions                          | no                                      |
+| initialSuggestionIndex               | no                                      |
+| disabled                             | YES                                     |
+
+Refer to <LinkTo kind="api-editorroot--page#editorbracketlinkprops">EditorBracketLinkProps</LinkTo> for details of each
+property.
+
+## ViewerHashtagProps
+
+`ViewerHashtagProps` is a subset of `EditorHashtagProps`. The following table shows what properties in
+`EditorHashtagProps` also exist in `ViewerHashtagProps`.
+
+| property in `EditorHashtagProps` | also exists in `ViewerHashtagProps` |
+| -------------------------------- | ----------------------------------- |
+| anchorProps                      | YES                                 |
+| label                            | no                                  |
+| suggestions                      | no                                  |
+| initialSuggestionIndex           | no                                  |
+| disabled                         | YES                                 |
+
+Refer to <LinkTo kind="api-editorroot--page#editorhashtagprops">EditorHashtagProps</LinkTo> for details of each
+property.
+
+## ViewerTaggedLinkProps
+
+`ViewerTaggedLinkProps` is a subset of `EditorTaggedLinkProps`. The following table shows what properties in
+`EditorTaggedLinkProps` also exist in `ViewerTaggedLinkProps`.
+
+| property in `EditorTaggedLinkProps` | also exists in `ViewerTaggedLinkProps` |
+| ----------------------------------- | -------------------------------------- |
+| anchorProps                         | YES                                    |
+| tagHidden                           | YES                                    |
+| label                               | no                                     |
+| suggestions                         | no                                     |
+| initialSuggestionIndex              | no                                     |
+| linkNameRegex                       | YES                                    |
+
+Refer to <LinkTo kind="api-editorroot--page#editortaggedlinkprops">EditorTaggedLinkProps</LinkTo> for details of each
+property.
+
+## ViewerCodeProps
+
+`ViewerCodeProps` is a subset of `EditorCodeProps`. The following table shows what properties in `EditorCodeProps` also
+exist in `ViewerCodeProps`.
+
+| property in `EditorCodeProps` | also exists in `ViewerCodeProps` |
+| ----------------------------- | -------------------------------- |
+| codeProps                     | YES                              |
+| inlineLabel                   | no                               |
+| blockLabel                    | no                               |
+| disabled                      | YES                              |
+
+Refer to <LinkTo kind="api-editorroot--page#editorcodeprops">EditorCodeProps</LinkTo> for details of each property.
+
+## ViewerFormulaProps
+
+`ViewerFormulaProps` is a subset of `EditorFormulaProps`. The following table shows what properties in
+`EditorFormulaProps` also exist in `ViewerFormulaProps`.
+
+| property in `EditorFormulaProps` | also exists in `ViewerFormulaProps` |
+| -------------------------------- | ----------------------------------- |
+| codeProps                        | YES                                 |
+| inlineLabel                      | no                                  |
+| displayLabel                     | no                                  |
+| blockLabel                       | no                                  |
+| disabled                         | YES                                 |
+
+Refer to <LinkTo kind="api-editorroot--page#editorformulaprops">EditorFormulaProps</LinkTo> for details of each
+property.

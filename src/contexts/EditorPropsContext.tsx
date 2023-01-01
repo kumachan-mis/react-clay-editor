@@ -31,7 +31,6 @@ export type EditorProps = {
   codeProps?: EditorCodeProps;
   formulaProps?: EditorFormulaProps;
   quotationProps?: EditorQuotationProps;
-  className?: string;
 };
 
 export type EditorTextProps = TextVisual & TextLabels & Suggestion;
