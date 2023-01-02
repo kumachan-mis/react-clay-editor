@@ -49,7 +49,7 @@ const config: PlaywrightTestConfig = {
     },
   ],
   webServer: {
-    command: 'yarn testdev',
+    command: 'yarn dev-test',
     port: TARGET_PORT,
   },
 };

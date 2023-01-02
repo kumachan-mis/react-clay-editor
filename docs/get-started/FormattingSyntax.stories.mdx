@@ -1,0 +1,429 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { linkTo } from '@storybook/addon-links';
+
+<Meta title="Get Started/Formatting Syntax" />
+
+<Story name="Page">
+  <></>
+</Story>
+
+import { css } from '@emotion/css';
+import { ViewerRoot, ViewerTextFieldBody, ViewerTextFieldRoot } from 'src';
+const SyntaxViewer = (args) => (
+  <ViewerRoot
+    className={css`
+      && {
+        border: none;
+        height: auto;
+      }
+    `}
+    {...args}
+  >
+    <ViewerTextFieldRoot>
+      <ViewerTextFieldBody />
+    </ViewerTextFieldRoot>
+  </ViewerRoot>
+);
+
+# Formatting Syntax
+
+Two types of syntax are available in React Clay Editor.
+
+- Bracket-based syntax coming from [Scrapbox](https://scrapbox.io/product?lang=en)
+- Markdown-based syntax coming from [Markdown](https://www.markdownguide.org/)
+
+## Itemization
+
+### Bracket-based syntax
+
+```
+␣itemization
+␣␣nested itemization
+```
+
+(␣ means a whitespace) goes to
+
+<Canvas>
+  <Story
+    name="Bracket Itemization"
+    args={{ syntax: 'bracket', text: [' itemization', '  nested itemization'].join('\n') }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+### Markdown-based syntax
+
+```
+* asterisk itemization
+- hyphen itemization
+␣* nested asterisk itemization
+␣- nested hyphen itemization
+```
+
+(␣ means a whitespace) goes to
+
+<Canvas>
+  <Story
+    name="Markdown Itemization"
+    args={{
+      syntax: 'markdown',
+      text: [
+        '* asterisk itemization',
+        '- hyphen itemization',
+        ' * nested asterisk itemization',
+        ' - nested hyphen itemization',
+      ].join('\n'),
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+## Heading, Bold, Italic and Underline
+
+### Bracket-based syntax
+
+```
+[*** Largest Heading]
+[** Larger Heading]
+[* Normal Heading]
+This is [* bold text]
+This is [/ italic text]
+This is [_ underlined text]
+```
+
+goes to
+
+<Canvas>
+  <Story
+    name="Bracket Decoration"
+    args={{
+      syntax: 'bracket',
+      text: [
+        '[*** Largest Heading]',
+        '[** Larger Heading]',
+        '[* Normal Heading]',
+        'This is [* bold text]',
+        'This is [/ italic text]',
+        'This is [_ underlined text]',
+      ].join('\n'),
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+Combinations of bold, italic and underline are available. For instance,
+
+```
+This is [*/ bold italic text]
+This is [/_ italic underlined text]
+This is [_* underlined bold text]
+```
+
+goes to
+
+<Canvas>
+  <Story
+    name="Bracket Combined Decoration"
+    args={{
+      syntax: 'bracket',
+      text: [
+        'This is [*/ bold italic text]',
+        'This is [/_ italic underlined text]',
+        'This is [_* underlined bold text]',
+      ].join('\n'),
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+### Markdown-based syntax
+
+```
+# Largest Heading
+## Larger Heading
+### Normal Heading
+This is *bold text*
+This is _italic text_
+```
+
+goes to
+
+<Canvas>
+  <Story
+    name="Markdown Decoration"
+    args={{
+      syntax: 'markdown',
+      text: [
+        '# Largest Heading',
+        '## Larger Heading',
+        '### Normal Heading',
+        'This is *bold text*',
+        'This is _italic text_',
+      ].join('\n'),
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+**LIMITATIONS**: the underlined text and combinations of bold and italic are not supported yet.
+
+## Bracket Link
+
+The notation of bracket links is the same in both types of syntax.
+
+```
+[bracket link]
+```
+
+goes to
+
+<Canvas>
+  <Story name="Bracket Link" args={{ text: '[bracket link]' }}>
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+You can configure the behavior of bracket links. For instance, the following bracket links are configured to open other
+pages of this documentation.
+
+<Canvas>
+  <Story
+    name="Configured Bracket Link"
+    args={{
+      text: ['[get-started-introduction]', '[api-overview]'].join('\n'),
+      bracketLinkProps: { anchorProps: (linkName) => ({ onClick: linkTo(linkName) }) },
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+## Hashtag
+
+The notation of hashtags is the same in both types of syntax.
+
+```
+#hashtag
+```
+
+goes to
+
+<Canvas>
+  <Story name="Hashtag" args={{ text: '#hashtag' }}>
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+An underscore (`_`) in a hashtag name will be translated to a half-width whitespace (` `). #hashtag_name means a hashtag
+named as "hashtag name". You can configure the behavior of hashtag. For instance, The following hashtags are configured
+to open other pages of this documentation.
+
+<Canvas>
+  <Story
+    name="Configured Hashtag"
+    args={{
+      text: ['#get-started-introduction', '#api-overview'].join('\n'),
+      hashtagProps: { anchorProps: (linkName) => ({ onClick: linkTo(linkName) }) },
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+## Tagged Link
+
+Tagged links are an original feature of React Clay Editor. The notation of tagged links is the same in both types of
+syntax.
+
+They are useful when users of your application refer various external resourses to speed up their writing. If you
+develop a learning application or a business application, and users refer files in Box, search results of Google or
+documents in your application, tagged links such as `[box: document_id]`, `[google: search_query]`, `[@: resource_name]`
+work well to group and shorten link texts.
+
+Another example is a technical blog application. Since users will often refer GitHub and NPM webpage to write articles,
+tagged links `[npm: package_name]` and `[github: @username/repository_name]` will be useful. You can configure so that
+
+```
+[npm: react-clay-editor]
+[github: @kumachan-mis/react-clay-editor]
+```
+
+goes to
+
+<Canvas>
+  <Story
+    name="Tagged Link"
+    args={{
+      text: ['[npm: react-clay-editor]', '[github: @kumachan-mis/react-clay-editor]'].join('\n'),
+      taggedLinkPropsMap: {
+        npm: {
+          anchorProps: (linkName) => ({
+            className: css`
+              && {
+                color: #f75e8a;
+                border-bottom: solid 1px;
+                &[data-clickable='true'] {
+                  color: #e14978;
+                  font-weight: 500;
+                }
+              }
+            `,
+            href: `https://www.npmjs.com/package/${linkName}`,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+          }),
+        },
+        github: {
+          linkNameRegex: /@[^[\]]+\/[^[\]]+/,
+          anchorProps: (linkName) => ({
+            className: css`
+              && {
+                color: #595f6e;
+                border-bottom: solid 1px;
+                &[data-clickable='true'] {
+                  color: #08090b;
+                  font-weight: 500;
+                }
+              }
+            `,
+            href: `https://github.com/${linkName.substring(1)}`,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+          }),
+        },
+      },
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+Click links above if you want to visit NPM and GitHub webpage of React Clay Editor.
+
+## Code String
+
+The notation of code strings is the same in both types of syntax. The inline code string and the block code string are
+supported.
+
+````
+inline code
+`import React from 'react';`
+
+block code
+```
+const App: React.FC = () => {
+  const [text, setText] = React.useState('');
+  return (
+    <EditorRoot text={text} setText={setText}>
+      <EditorTextFieldRoot>
+        <EditorTextFieldBody />
+      </EditorTextFieldRoot>
+    </EditorRoot>
+  );
+};
+```
+````
+
+goes to
+
+<Canvas>
+  <Story
+    name="Code String"
+    args={{
+      text: [
+        'inline code',
+        "`import React from 'react';`",
+        '',
+        'block code',
+        '```',
+        'const App: React.FC = () => {',
+        "  const [text, setText] = React.useState('');",
+        '  return (',
+        '    <EditorRoot text={text} setText={setText}>',
+        '      <EditorTextFieldRoot>',
+        '        <EditorTextFieldBody />',
+        '      </EditorTextFieldRoot>',
+        '    </EditorRoot>',
+        '  );',
+        '};',
+        '```',
+      ].join('\n'),
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+## Math Formula
+
+The notation of tagged links is the same in both types of syntax. The inline math formula, display math formula and the
+block math formula are supported.
+
+```
+inline math formula
+$x = r \cos \theta, y = r \sin \theta$
+
+display math formula
+$$I = \int_a^b f(x) \mathrm{d}x$$
+
+block math formula
+$$
+A = \begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n}  \\
+a_{21} & a_{22} & \cdots & a_{2n}  \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}  \\
+\end{pmatrix}
+$$
+```
+
+goes to
+
+<Canvas>
+  <Story
+    name="Math Formula"
+    args={{
+      text: [
+        'inline math formula',
+        '$x = r \\cos \\theta, y = r \\sin \\theta$',
+        '',
+        'display math formula',
+        '$$I = \\int_a^b f(x) \\mathrm{d}x$$',
+        '',
+        'block math formula',
+        '$$',
+        'A = \\begin{pmatrix}',
+        'a_{11}  & a_{12}  & \\cdots & a_{1n}  \\\\',
+        'a_{21}  & a_{22}  & \\cdots & a_{2n}  \\\\',
+        '\\vdots & \\vdots & \\ddots & \\vdots \\\\',
+        'a_{m1}, & a_{m2}  & \\cdots & a_{mn}  \\\\',
+        '\\end{pmatrix}',
+        '$$',
+      ].join('\n'),
+    }}
+  >
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>
+
+## Quotation
+
+The notation of quotations is the same in both types of syntax.
+
+```
+> quotation
+␣> nested quotation
+```
+
+(␣ means a whitespace) goes to
+
+<Canvas>
+  <Story name="Quotation" args={{ syntax: 'bracket', text: ['> quotation', ' > nested itemization'].join('\n') }}>
+    {SyntaxViewer.bind({})}
+  </Story>
+</Canvas>

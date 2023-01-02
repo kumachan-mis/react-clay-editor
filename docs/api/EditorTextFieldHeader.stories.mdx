@@ -1,0 +1,26 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="API/EditorTextFieldHeader" />
+
+# EditorTextFieldHeader
+
+The component displaying an uneditable header. This is useful to show a fixed title of a document.
+
+import ApiExplanation from '../ts/ApiExplanation';
+
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+  <ApiExplanation colorized="scrollable-content" />
+</div>
+
+## Import
+
+```ts
+import { EditorTextFieldHeader } from 'react-clay-editor';
+```
+
+## Props
+
+| name   | type                                  | requried | default     | description                  |
+| ------ | ------------------------------------- | -------- | ----------- | ---------------------------- |
+| header | string                                | YES      | -           | text of an uneditable header |
+| size   | `'normal'`, `'larger'` or `'largest'` | no       | `'largest'` | font size of the header text |

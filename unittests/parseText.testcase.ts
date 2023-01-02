@@ -48,11 +48,10 @@ export const commonTestCases: TestCase[] = [
   {
     name: 'code',
     text: [
-      // eslint-disable-next-line quotes
-      "`import { Editor } from 'react-realtime-markup-editor'`",
+      "`import { EditorRoot } from 'react-clay-editor'`",
       '```',
-      'const SampleEditor: React.FC = () => {',
-      '  return <Editor />;',
+      'const App: React.FC = () => {',
+      '  return <></>;',
       '};',
       '```',
       '```',
@@ -73,9 +72,8 @@ export const commonTestCases: TestCase[] = [
           {
             type: 'inlineCode',
             lineIndex: 0,
-            range: [0, 54],
-            // eslint-disable-next-line quotes
-            code: "import { Editor } from 'react-realtime-markup-editor'",
+            range: [0, 47],
+            code: "import { EditorRoot } from 'react-clay-editor'",
           },
         ],
       },
@@ -92,13 +90,13 @@ export const commonTestCases: TestCase[] = [
             type: 'blockCodeLine',
             lineIndex: 2,
             indentDepth: 0,
-            codeLine: 'const SampleEditor: React.FC = () => {',
+            codeLine: 'const App: React.FC = () => {',
           },
           {
             type: 'blockCodeLine',
             lineIndex: 3,
             indentDepth: 0,
-            codeLine: '  return <Editor />;',
+            codeLine: '  return <></>;',
           },
           {
             type: 'blockCodeLine',

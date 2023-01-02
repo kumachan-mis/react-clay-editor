@@ -1,0 +1,59 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+<Meta title="Get Started/Install" />
+
+<Story name="Page">
+  <></>
+</Story>
+
+# Install
+
+Run one of the following commands to install React Clay Editor.
+
+## With NPM
+
+```
+npm install react-clay-editor katex @emotion/react @emotion/styled
+```
+
+## With Yarn
+
+```
+yarn add react-clay-editor katex @emotion/react @emotion/styled
+```
+
+## Simple Usege
+
+React Clay Editor provides rich configurations to costomize as you like. However, if you want to try it quickly, an
+extremely simple way is available.
+
+import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from 'src';
+
+<Canvas>
+  <Story name="Simple Usage">
+    {() => {
+      const [text, setText] = React.useState(
+        [
+          '[* Simple Usage]',
+          ' import the following components',
+          '  `EditorRoot`',
+          '  `EditorTextFieldRoot`',
+          '  `EditorTextFieldBody`',
+          ' create nested commponent with them',
+          ' give `text` and `setText` to `EditorRoot`',
+          '',
+          '[* source code]',
+          ' click "Show code" in the lower right',
+          ' this editor itself represents a simple usage',
+        ].join('\n')
+      );
+      return (
+        <EditorRoot text={text} setText={setText}>
+          <EditorTextFieldRoot>
+            <EditorTextFieldBody />
+          </EditorTextFieldRoot>
+        </EditorRoot>
+      );
+    }}
+  </Story>
+</Canvas>

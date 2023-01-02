@@ -14,9 +14,9 @@ test('quotation menu: button, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['> ']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['> React Realtime Markup Editor']);
+  await linesToBe(page, ['> React Clay Editor']);
 });
 
 test('quotation menu: indent, no-selection, empty-line', async ({ page }) => {
@@ -27,9 +27,9 @@ test('quotation menu: indent, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['> ']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['> React Realtime Markup Editor']);
+  await linesToBe(page, ['> React Clay Editor']);
 });
 
 test('quotation menu: outdent, no-selection, empty-line', async ({ page }) => {
@@ -40,9 +40,9 @@ test('quotation menu: outdent, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['React Realtime Markup Editor']);
+  await linesToBe(page, ['React Clay Editor']);
 });
 
 test('quotation menu: button, no-selection, normal-line', async ({ page }) => {

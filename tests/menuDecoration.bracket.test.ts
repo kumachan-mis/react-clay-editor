@@ -14,9 +14,9 @@ test('decoration menus: bold, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['[* bold]']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['[* React Realtime Markup Editor]']);
+  await linesToBe(page, ['[* React Clay Editor]']);
 });
 
 test('decoration menus: italic, no-selection, empty-line', async ({ page }) => {
@@ -26,9 +26,9 @@ test('decoration menus: italic, no-selection, empty-line', async ({ page }) => {
 
   await linesToBe(page, ['[/ italic]']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['[/ React Realtime Markup Editor]']);
+  await linesToBe(page, ['[/ React Clay Editor]']);
 });
 
 test('decoration menus: underline, no-selection, empty-line', async ({ page }) => {
@@ -38,9 +38,9 @@ test('decoration menus: underline, no-selection, empty-line', async ({ page }) =
 
   await linesToBe(page, ['[_ underline]']);
 
-  await page.keyboard.type('React Realtime Markup Editor');
+  await page.keyboard.type('React Clay Editor');
 
-  await linesToBe(page, ['[_ React Realtime Markup Editor]']);
+  await linesToBe(page, ['[_ React Clay Editor]']);
 });
 
 test('decoration menus: bold, no-selection, in-decoration', async ({ page }) => {
