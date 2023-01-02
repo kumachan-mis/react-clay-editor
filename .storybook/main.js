@@ -45,7 +45,6 @@ module.exports = {
   webpackFinal: async (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      src: path.resolve(__dirname, '../src'),
     };
     config.externals = {
       ...config.externals,
