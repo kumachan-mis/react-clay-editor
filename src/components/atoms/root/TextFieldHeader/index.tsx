@@ -21,9 +21,8 @@ const StyledTextFieldHeader = styled.div<{
   size: 'normal' | 'larger' | 'largest';
 }>(
   (props) => `
-  cursor: initial;
-  padding-bottom: 5px;
+  font-size: ${{ largest: '1.8rem', larger: '1.34rem', normal: '1rem' }[props.size]};
   font-weight: bold;
-  font-size: ${{ largest: '24px', larger: '20px', normal: '16px' }[props.size]};
+  cursor: initial;
 `
 );

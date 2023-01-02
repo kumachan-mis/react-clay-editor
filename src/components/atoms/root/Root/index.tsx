@@ -25,9 +25,11 @@ const StyledForwardRefRoot = styled.div`
   width: 500px;
   height: 300px;
   box-sizing: border-box;
-  border: solid 1px;
+  border: solid 1px rgba(0, 0, 0, 0.4);
   padding: 4px;
-  font-family: sans-serif;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  line-height: 1.4;
 
   & .katex-display {
     display: inline-block;

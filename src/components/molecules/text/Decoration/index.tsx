@@ -50,7 +50,7 @@ export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, Child
 
 export const StyledDecoration = styled.span(
   (props: DecorationStyle) => `
-  font-size: ${{ largest: '24px', larger: '20px', normal: '16px' }[props.size]};
+  font-size: ${{ largest: '1.8rem', larger: '1.34rem', normal: '1rem' }[props.size]};
   ${props.bold ? 'font-weight: bold;' : ''}
   ${props.italic ? 'font-style: italic;' : ''}
   ${props.underline ? 'border-bottom: 1px solid;' : ''}

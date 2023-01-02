@@ -24,7 +24,7 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, anchor
 
 const StyledDropdownMenuList = styled.div`
   min-width: 200px;
-  font-size: 14px;
+  font-size: 0.9rem;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
