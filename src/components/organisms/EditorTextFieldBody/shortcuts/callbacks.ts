@@ -1,7 +1,7 @@
 import { updateSelectionAfterCursorMove, resetCursorSelection } from '../common/selection';
 import { resetSuggestion } from '../common/suggestion';
 import { insertText } from '../common/text';
-import { wordRegex } from 'src/common/constants';
+import { WORD_REGEX } from 'src/common/constants';
 import { cursorCoordinateToTextIndex, moveCursor } from 'src/components/molecules/cursor/Cursor/utils';
 import { getSelectionText } from 'src/components/molecules/selection/Selection/utils';
 import { EditorState } from 'src/contexts/EditorStateContext';
@@ -333,7 +333,7 @@ export function handleOnMoveWordTop(
   const { cursorCoordinate, cursorSelection } = state;
 
   const newCursorCoordinate = (() => {
-    const groupWordRegex = new RegExp(wordRegex, 'g');
+    const groupWordRegex = new RegExp(WORD_REGEX, 'g');
     const lines = text.split('\n');
     const currentLine = lines[cursorCoordinate.lineIndex];
     let charIndex: number | undefined = undefined;
@@ -371,7 +371,7 @@ export function handleOnMoveWordBottom(
   const { cursorCoordinate, cursorSelection } = state;
 
   const newCursorCoordinate = (() => {
-    const groupWordRegex = new RegExp(wordRegex, 'g');
+    const groupWordRegex = new RegExp(WORD_REGEX, 'g');
     const lines = text.split('\n');
     const currentLine = lines[cursorCoordinate.lineIndex];
     let match: RegExpExecArray | null = null;

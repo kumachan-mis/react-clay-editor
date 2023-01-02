@@ -37,6 +37,6 @@ const StyledCursorTextArea = styled.textarea<{
   width: ${Math.min(props.value?.length || 0, 10) * props.cursorSize}px;
   height: ${props.cursorSize}px;
   min-height: ${props.cursorSize}px;
-  font-size: ${props.cursorSize}px;
+  font-size: ${props.cursorSize / 1.2}px;
 `
 );

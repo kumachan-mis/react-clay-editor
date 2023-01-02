@@ -38,7 +38,7 @@ export const QuotationMenu: React.FC<QuotationMenuProps> = ({
   onIndentItemClick,
   onOutdentItemClick,
 }) => {
-  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const [open, onOpen, onClose] = useDropdownMenu();
 
   return (
     <DropdownMenu data-selectid={QuotationMenuConstants.selectId}>
@@ -52,7 +52,7 @@ export const QuotationMenu: React.FC<QuotationMenuProps> = ({
       >
         <QuotationIcon />
       </DropdownMenuButton>
-      <DropdownMenuList open={open} anchorEl={anchorEl}>
+      <DropdownMenuList open={open}>
         <DropdownMenuListItem onClick={onIndentItemClick} data-selectid={QuotationMenuConstants.items.indent.selectId}>
           {indentLabel}
         </DropdownMenuListItem>

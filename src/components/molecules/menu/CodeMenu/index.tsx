@@ -40,7 +40,7 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
   onInlineItemClick,
   onBlockItemClick,
 }) => {
-  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const [open, onOpen, onClose] = useDropdownMenu();
 
   return (
     <DropdownMenu data-selectid={CodeMenuConstants.selectId}>
@@ -54,7 +54,7 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
       >
         <CodeIcon />
       </DropdownMenuButton>
-      <DropdownMenuList open={open} anchorEl={anchorEl}>
+      <DropdownMenuList open={open}>
         <DropdownMenuListItem
           selected={inlineMenuSwitch === 'on'}
           disabled={inlineMenuSwitch === 'disabled'}

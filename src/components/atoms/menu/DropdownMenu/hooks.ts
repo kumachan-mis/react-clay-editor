@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export function useDropdownMenu(): [boolean, HTMLElement | null, (anchorEl: HTMLElement) => void, () => void] {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-  return [!!anchorEl, anchorEl, (anchorEl) => setAnchorEl(anchorEl), () => setAnchorEl(null)];
+export function useDropdownMenu(): [boolean, () => void, () => void] {
+  const [open, setOpen] = React.useState(false);
+  return [open, () => setOpen(true), () => setOpen(false)];
 }
