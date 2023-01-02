@@ -43,9 +43,6 @@ module.exports = {
     builder: 'webpack5',
   },
   webpackFinal: async (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-    };
     config.externals = {
       ...config.externals,
       react: 'React',
