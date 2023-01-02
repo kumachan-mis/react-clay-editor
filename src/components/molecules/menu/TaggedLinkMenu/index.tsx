@@ -23,7 +23,7 @@ export const TaggedLinkMenuConstants = {
 };
 
 export const TaggedLinkMenu: React.FC<TaggedLinkMenuProps> = ({ menuSwitch, activeTagName, taggedItemMap }) => {
-  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const [open, onOpen, onClose] = useDropdownMenu();
   const tagEntries = Object.entries(taggedItemMap);
 
   let onButtonClick = undefined;
@@ -42,7 +42,7 @@ export const TaggedLinkMenu: React.FC<TaggedLinkMenuProps> = ({ menuSwitch, acti
       >
         <TaggedlinkIcon />
       </DropdownMenuButton>
-      <DropdownMenuList open={open} anchorEl={anchorEl}>
+      <DropdownMenuList open={open}>
         {tagEntries.map(([tagName, { label, onItemClick }]) => (
           <DropdownMenuListItem
             key={tagName}

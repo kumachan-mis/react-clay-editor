@@ -15,7 +15,6 @@ const ApiExplanation: React.FC<{
         </ScrollableContent>
       ))}
     </ScrollableContainer>
-    <FixedContent colorized={['all', 'fixed-content'].includes(colorized)}>fixed content</FixedContent>
   </FixedContainer>
 );
 
@@ -53,7 +52,7 @@ const ScrollableContainer = styled.div<{ colorized: boolean }>(
   ({ colorized }) => `
   flex-grow: 1;
   overflow-y: scroll;
-  margin: 0px 6px 0px 6px;
+  margin: 0px 6px 6px 6px;
   border: solid 6px ${colorized ? colorPalette.scrollableContainer : '#d1d1d1'};
 `
 );

@@ -46,7 +46,7 @@ export const SectionMenu: React.FC<SectionMenuProps> = ({
   onLargerItemClick,
   onLargestItemClick,
 }) => {
-  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const [open, onOpen, onClose] = useDropdownMenu();
 
   return (
     <DropdownMenu data-selectid={SectionMenuConstants.selectId}>
@@ -60,7 +60,7 @@ export const SectionMenu: React.FC<SectionMenuProps> = ({
       >
         <SectionIcon />
       </DropdownMenuButton>
-      <DropdownMenuList open={open} anchorEl={anchorEl}>
+      <DropdownMenuList open={open}>
         <DropdownMenuListItem
           selected={menuSwitch === 'normal'}
           onClick={onNormalItemClick}

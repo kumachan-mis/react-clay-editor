@@ -5,24 +5,20 @@ import React from 'react';
 
 export type DropdownMenuListProps = {
   open: boolean;
-  anchorEl: HTMLElement | null;
 } & React.PropsWithoutRef<React.ComponentProps<'ul'>>;
 
 export const DropdownMenuListConstants = {
   selectId: 'dropdown-menu-list',
 };
 
-export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, anchorEl, ...rest }) => {
-  const anchorRect = anchorEl?.getBoundingClientRect();
-
-  return !open ? (
+export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, ...rest }) =>
+  !open ? (
     <></>
   ) : (
     <StyledDropdownMenuList data-selectid={DropdownMenuListConstants.selectId}>
-      <StyledDropdownMenuListInner left={anchorRect?.left || 0} top={anchorRect?.bottom || 0} role="menu" {...rest} />
+      <StyledDropdownMenuListInner role="menu" {...rest} />
     </StyledDropdownMenuList>
   );
-};
 
 const StyledDropdownMenuList = styled.div`
   min-width: 200px;
@@ -35,15 +31,11 @@ const StyledDropdownMenuList = styled.div`
   position: absolute;
 `;
 
-const StyledDropdownMenuListInner = styled.ul<{ left: number; top: number }>(
-  (props) => `
+const StyledDropdownMenuListInner = styled.ul`
   width: 100%;
   margin: 0px;
   padding: 0px;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.04);
   list-style: none;
-  left: ${props.left}px;
-  top: ${props.top}px;
-`
-);
+`;

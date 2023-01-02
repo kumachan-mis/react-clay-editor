@@ -48,7 +48,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
   onDisplayItemClick,
   onBlockItemClick,
 }) => {
-  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const [open, onOpen, onClose] = useDropdownMenu();
 
   return (
     <DropdownMenu data-selectid={FormulaMenuConstants.selectId}>
@@ -62,7 +62,7 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
       >
         <FormulaIcon />
       </DropdownMenuButton>
-      <DropdownMenuList open={open} anchorEl={anchorEl}>
+      <DropdownMenuList open={open}>
         <DropdownMenuListItem
           selected={contentMenuSwitch === 'inline'}
           disabled={contentMenuSwitch === 'disabled'}

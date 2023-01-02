@@ -38,7 +38,7 @@ export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
   onIndentItemClick,
   onOutdentItemClick,
 }) => {
-  const [open, anchorEl, onOpen, onClose] = useDropdownMenu();
+  const [open, onOpen, onClose] = useDropdownMenu();
 
   return (
     <DropdownMenu data-selectid={ItemizationMenuConstants.selectId}>
@@ -52,7 +52,7 @@ export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
       >
         <ItemizationIcon />
       </DropdownMenuButton>
-      <DropdownMenuList open={open} anchorEl={anchorEl}>
+      <DropdownMenuList open={open}>
         <DropdownMenuListItem
           onClick={onIndentItemClick}
           data-selectid={ItemizationMenuConstants.items.indent.selectId}
