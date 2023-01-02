@@ -7,7 +7,7 @@ module.exports = {
   addons: ['@storybook/addon-docs', '@storybook/addon-links'],
   framework: '@storybook/react',
   env: (config) => {
-    const isProduction = config.mode === 'production';
+    const isProduction = config.NODE_ENV === 'production';
     const reactVersion = packageJson.devDependencies['react'].slice(1);
     const reactDomVersion = packageJson.devDependencies['react-dom'].slice(1);
     const katexVersion = packageJson.devDependencies['katex'].slice(1);
@@ -43,10 +43,6 @@ module.exports = {
     builder: 'webpack5',
   },
   webpackFinal: async (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      src: path.resolve(__dirname, '../src'),
-    };
     config.externals = {
       ...config.externals,
       react: 'React',
