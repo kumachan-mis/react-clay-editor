@@ -1,3 +1,5 @@
+import { FONT_SIZES, LINE_HEIGHTS } from 'src/common/constants';
+
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -29,7 +31,8 @@ const StyledForwardRefRoot = styled.div`
   padding: 4px;
   font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  line-height: 1.4;
+  font-size: ${FONT_SIZES.normal};
+  line-height: ${LINE_HEIGHTS.normal};
 
   & .katex-display {
     display: inline-block;
