@@ -68,8 +68,8 @@
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
     "@vitejs/plugin-react": "^3.0.0",
-    "babel-loader": "^8.3.0",
-    "eslint": "^8.30.0",
+    "babel-loader": "^9.1.0",
+    "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
@@ -95,5 +95,5 @@
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
-  "packageManager": "yarn@3.2.4"
+  "packageManager": "yarn@3.3.1"
 }
