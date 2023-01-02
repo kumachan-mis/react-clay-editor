@@ -1,5 +1,5 @@
 import { cursorCoordinateToTextIndex, coordinatesAreEqual } from '../../cursor/Cursor/utils';
-import { wordRegex } from 'src/common/constants';
+import { WORD_REGEX } from 'src/common/constants';
 import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
 import { CursorSelection } from 'src/types/selection/cursorSelection';
 import { CursorSelectionRange } from 'src/types/selection/cursorSelectionRange';
@@ -10,7 +10,7 @@ export function getWordSelection(
 ): CursorSelection | undefined {
   if (!cursorCoordinate) return undefined;
 
-  const groupWordRegex = new RegExp(wordRegex, 'g');
+  const groupWordRegex = new RegExp(WORD_REGEX, 'g');
   const lines = text.split('\n');
   const currentLine = lines[cursorCoordinate.lineIndex];
   let match: RegExpExecArray | null = null;

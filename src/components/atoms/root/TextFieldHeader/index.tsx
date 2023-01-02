@@ -1,3 +1,5 @@
+import { FONT_SIZES, LINE_HEIGHTS } from 'src/common/constants';
+
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -21,9 +23,9 @@ const StyledTextFieldHeader = styled.div<{
   size: 'normal' | 'larger' | 'largest';
 }>(
   (props) => `
-  cursor: initial;
-  padding-bottom: 5px;
+  font-size: ${FONT_SIZES[props.size]};
+  line-height: ${LINE_HEIGHTS[props.size]};
   font-weight: bold;
-  font-size: ${{ largest: '24px', larger: '20px', normal: '16px' }[props.size]};
+  cursor: initial;
 `
 );
