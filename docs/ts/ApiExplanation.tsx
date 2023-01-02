@@ -2,13 +2,20 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 const ApiExplanation: React.FC<{
-  colorized: 'all' | 'fixed-container' | 'fixed-content' | 'scrollable-container' | 'scrollable-content';
+  colorized:
+    | 'all'
+    | 'container'
+    | 'content'
+    | 'fixed-container'
+    | 'fixed-content'
+    | 'scrollable-container'
+    | 'scrollable-content';
 }> = ({ colorized }) => (
-  <FixedContainer colorized={['all', 'fixed-container'].includes(colorized)}>
-    <FixedContent colorized={['all', 'fixed-content'].includes(colorized)}>fixed content</FixedContent>
-    <ScrollableContainer colorized={['all', 'scrollable-container'].includes(colorized)}>
+  <FixedContainer colorized={['all', 'container', 'fixed-container'].includes(colorized)}>
+    <FixedContent colorized={['all', 'content', 'fixed-content'].includes(colorized)}>fixed content</FixedContent>
+    <ScrollableContainer colorized={['all', 'container', 'scrollable-container'].includes(colorized)}>
       {[...new Array(3)].map((_, i) => (
-        <ScrollableContent key={i} colorized={['all', 'scrollable-content'].includes(colorized)}>
+        <ScrollableContent key={i} colorized={['all', 'content', 'scrollable-content'].includes(colorized)}>
           {[...new Array(5)].map((_, i) => (
             <div key={i}>scrollable content</div>
           ))}

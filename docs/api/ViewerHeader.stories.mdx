@@ -1,21 +1,22 @@
 import { Meta } from '@storybook/addon-docs';
 
-<Meta title="API/ViewerTextFieldHeader" />
+<Meta title="API/ViewerHeader" />
 
-# ViewerTextFieldHeader
+# ViewerHeader
 
-The component displaying an uneditable header. This is useful to show a fixed title of a document.
+The component displaying an uneditable header. This is useful to show a fixed title of a document. The header can be
+both of a fixed content and a scrollable content.
 
 import ApiExplanation from '../ts/ApiExplanation';
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <ApiExplanation colorized="scrollable-content" />
+  <ApiExplanation colorized="content" />
 </div>
 
 ## Import
 
 ```ts
-import { ViewerTextFieldHeader } from 'react-clay-editor';
+import { ViewerHeader } from 'react-clay-editor';
 ```
 
 ## Props

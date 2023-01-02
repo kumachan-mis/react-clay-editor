@@ -4,11 +4,11 @@ import 'katex/dist/katex.min.css';
 import {
   EditorBracketLinkProps,
   EditorHashtagProps,
+  EditorHeader,
   EditorRoot,
   EditorSyntaxMenu,
   EditorTaggedLinkProps,
   EditorTextFieldBody,
-  EditorTextFieldHeader,
   EditorTextFieldRoot,
   EditorTextProps,
   ViewerRoot,
@@ -145,7 +145,7 @@ const TestTargetEditor: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax
       >
         <EditorSyntaxMenu />
         <EditorTextFieldRoot>
-          <EditorTextFieldHeader header={header} />
+          <EditorHeader header={header} />
           <EditorTextFieldBody />
         </EditorTextFieldRoot>
         <MockLines text={text} />

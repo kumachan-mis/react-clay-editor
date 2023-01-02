@@ -3,11 +3,11 @@ import React from 'react';
 import {
   EditorBracketLinkProps,
   EditorHashtagProps,
+  EditorHeader,
   EditorRoot,
   EditorSyntaxMenu,
   EditorTaggedLinkProps,
   EditorTextFieldBody,
-  EditorTextFieldHeader,
   EditorTextFieldRoot,
   EditorTextProps,
 } from 'src';
@@ -161,7 +161,7 @@ const DemoEditor: React.FC = () => {
     >
       <EditorSyntaxMenu />
       <EditorTextFieldRoot>
-        <EditorTextFieldHeader header="React Clay Editor" />
+        <EditorHeader header="React Clay Editor" />
         <EditorTextFieldBody />
       </EditorTextFieldRoot>
     </EditorRoot>
