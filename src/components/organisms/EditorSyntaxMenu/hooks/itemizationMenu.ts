@@ -1,12 +1,12 @@
+import { EditorItemizationProps } from '../../../../contexts/EditorPropsContext';
+import { LineNode } from '../../../../parser/line/types';
+import { ItemizationMenuConstants, ItemizationMenuProps } from '../../../molecules/menu/ItemizationMenu';
 import {
   handleOnItemizationButtonClick,
   handleOnItemizationItemClick,
   ItemizationMenuHandlerProps,
 } from '../callbacks/itemization';
 import { itemizationMenuSwitch } from '../switches/itemization';
-import { ItemizationMenuConstants, ItemizationMenuProps } from 'src/components/molecules/menu/ItemizationMenu';
-import { EditorItemizationProps } from 'src/contexts/EditorPropsContext';
-import { LineNode } from 'src/parser/line/types';
 
 import { CommonMenuProps } from './types';
 

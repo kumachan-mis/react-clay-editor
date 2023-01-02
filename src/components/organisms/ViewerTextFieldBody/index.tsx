@@ -1,4 +1,4 @@
-import { Text } from 'src/components/molecules/text/Text';
+import { Text } from '../../molecules/text/Text';
 
 import { useText } from './hooks';
 

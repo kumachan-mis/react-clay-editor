@@ -2,7 +2,7 @@ import { ParsingContext, ParsingOptions } from '../common/types';
 import { parseContent } from '../content/parseContent';
 import { ContentNode } from '../content/types';
 
-import { DecorationNode, Decoration } from './types';
+import { Decoration, DecorationNode } from './types';
 
 export const decorationRegex = /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/;
 

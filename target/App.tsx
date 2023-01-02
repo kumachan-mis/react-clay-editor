@@ -1,6 +1,3 @@
-import { css } from '@emotion/css';
-import React from 'react';
-import 'katex/dist/katex.min.css';
 import {
   Divider,
   EditorBracketLinkProps,
@@ -15,7 +12,12 @@ import {
   ViewerRoot,
   ViewerTextFieldBody,
   ViewerTextFieldRoot,
-} from 'src';
+} from '../src';
+
+import { css } from '@emotion/css';
+import React from 'react';
+
+import 'katex/dist/katex.min.css';
 
 const header = 'React Clay Editor';
 

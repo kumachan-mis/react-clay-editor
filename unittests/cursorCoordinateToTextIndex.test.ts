@@ -1,4 +1,4 @@
-import { cursorCoordinateToTextIndex } from 'src/components/molecules/cursor/Cursor/utils';
+import { cursorCoordinateToTextIndex } from '../src/components/molecules/cursor/Cursor/utils';
 
 import { TestCase, testCases } from './cursorCoordinateToTextIndex.testcase';
 

@@ -1,9 +1,9 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
+import { LineNode, PureLineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
 import { isEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { DecorationMenuItemType, DecorationMenuSwitch, DecorationMenuSwitchItem } from '../switches/decoration';
-import { EditorState } from 'src/contexts/EditorStateContext';
-import { LineNode, PureLineNode } from 'src/parser/line/types';
-import { isPureLineNode } from 'src/parser/line/utils';
 
 import {
   createContentByCursorSelection,

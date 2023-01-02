@@ -1,5 +1,5 @@
-import { EditorProps } from 'src/contexts/EditorPropsContext';
-import { EditorState } from 'src/contexts/EditorStateContext';
+import { EditorProps } from '../../../../contexts/EditorPropsContext';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 
 import { insertText } from './text';
 

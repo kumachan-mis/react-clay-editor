@@ -1,9 +1,9 @@
+import { BlockNode } from '../../../../parser/block/types';
+import { isBlockNode } from '../../../../parser/block/utils';
+import { LineNode } from '../../../../parser/line/types';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { getLineRange } from '../common/utils';
-import { BlockNode } from 'src/parser/block/types';
-import { isBlockNode } from 'src/parser/block/utils';
-import { LineNode } from 'src/parser/line/types';
-import { CursorCoordinate } from 'src/types/cursor/cursorCoordinate';
-import { CursorSelection } from 'src/types/selection/cursorSelection';
 
 import React from 'react';
 

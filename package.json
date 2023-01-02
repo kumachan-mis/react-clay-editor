@@ -31,6 +31,7 @@
     "build": "yarn clean && vite --config viteconfig.lib.ts build && tsc --build tsconfig.lib.json",
     "build-docs": "build-storybook --docs",
     "clean": "rm -Rf dist",
+    "deploy-docs": "yarn build-docs && gh-pages -d storybook-static",
     "dev-docs": "start-storybook -p 6006 --docs --no-manager-cache",
     "dev-test": "vite --config viteconfig.tests.ts",
     "format": "sort-package-json && prettier --write \"**/*.{css,htm,html,js,jsx,json,md,mdx,scss,ts,tsx,yaml,yml}\"",

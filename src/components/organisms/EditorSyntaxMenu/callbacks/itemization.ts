@@ -1,7 +1,7 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
+import { LineNode } from '../../../../parser/line/types';
+import { ItemizationLabels } from '../../../../types/label/itemization';
 import { ItemizationMenuSwitch } from '../switches/itemization';
-import { EditorState } from 'src/contexts/EditorStateContext';
-import { LineNode } from 'src/parser/line/types';
-import { ItemizationLabels } from 'src/types/label/itemization';
 
 import { handleOnLineMenuClick } from './common/line';
 

@@ -1,11 +1,11 @@
+import { EditorState } from '../../../../contexts/EditorStateContext';
+import { BlockNode } from '../../../../parser/block/types';
+import { LineNode } from '../../../../parser/line/types';
+import { isPureLineNode } from '../../../../parser/line/utils';
+import { CodeLabels } from '../../../../types/label/code';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
 import { CodeMenuSwitch } from '../switches/code';
-import { EditorState } from 'src/contexts/EditorStateContext';
-import { BlockNode } from 'src/parser/block/types';
-import { LineNode } from 'src/parser/line/types';
-import { isPureLineNode } from 'src/parser/line/utils';
-import { CodeLabels } from 'src/types/label/code';
 
 import { handleOnBlockMenuClick } from './common/block';
 import {

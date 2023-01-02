@@ -9,7 +9,7 @@ import { inlineCodeRegex, parseInlineCode } from '../inlineCode/parseInlineCode'
 import { inlineFormulaRegex, parseInlineFormula } from '../inlineFormula/parseInlineFormula';
 import { normalRegex, parseNormal } from '../normal/parseNormal';
 import { parseTaggedLink } from '../taggedLink/parseTaggedLink';
-import { urlRegex, parseUrl } from '../url/parseUrl';
+import { parseUrl, urlRegex } from '../url/parseUrl';
 
 import { ContentNode } from './types';
 

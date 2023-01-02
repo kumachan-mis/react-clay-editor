@@ -1,8 +1,8 @@
+import { FONT_SIZES, LINE_HEIGHTS } from '../../../../common/constants';
+import { TextNode } from '../../../../parser';
+import { DecorationNode, Decoration as DecorationStyle } from '../../../../parser/decoration/types';
+import { Char } from '../../../atoms/text/Char';
 import { TextNodeComponentProps } from '../common/types';
-import { FONT_SIZES, LINE_HEIGHTS } from 'src/common/constants';
-import { Char } from 'src/components/atoms/text/Char';
-import { TextNode } from 'src/parser';
-import { DecorationNode, Decoration as DecorationStyle } from 'src/parser/decoration/types';
 
 import styled from '@emotion/styled';
 import React from 'react';

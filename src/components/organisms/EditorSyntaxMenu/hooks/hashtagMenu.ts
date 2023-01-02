@@ -1,8 +1,8 @@
-import { LinkMenuHandlerProps, handleOnLinkItemClick } from '../callbacks/link';
-import { linkMenuSwitch, LinkMenuItem } from '../switches/link';
-import { HashtagMenuConstants, HashtagMenuProps } from 'src/components/molecules/menu/HashtagMenu';
-import { EditorHashtagProps } from 'src/contexts/EditorPropsContext';
-import { LineNode } from 'src/parser/line/types';
+import { EditorHashtagProps } from '../../../../contexts/EditorPropsContext';
+import { LineNode } from '../../../../parser/line/types';
+import { HashtagMenuConstants, HashtagMenuProps } from '../../../molecules/menu/HashtagMenu';
+import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
+import { LinkMenuItem, linkMenuSwitch } from '../switches/link';
 
 import { ContentPosition } from './contentPosition';
 import { CommonMenuProps } from './types';

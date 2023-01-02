@@ -1,14 +1,14 @@
+import { EditorFormulaProps } from '../../../../contexts/EditorPropsContext';
+import { BlockNode } from '../../../../parser/block/types';
+import { LineNode } from '../../../../parser/line/types';
+import { FormulaMenuConstants, FormulaMenuProps } from '../../../molecules/menu/FormulaMenu';
 import {
   FormulaMenuHandlerProps,
   handleOnBlockFormulaItemClick,
   handleOnContentFormulaItemClick,
   handleOnFormulaButtonClick,
 } from '../callbacks/formula';
-import { contentFormulaMenuSwitch, blockFormulaMenuSwitch } from '../switches/formula';
-import { FormulaMenuConstants, FormulaMenuProps } from 'src/components/molecules/menu/FormulaMenu';
-import { EditorFormulaProps } from 'src/contexts/EditorPropsContext';
-import { BlockNode } from 'src/parser/block/types';
-import { LineNode } from 'src/parser/line/types';
+import { blockFormulaMenuSwitch, contentFormulaMenuSwitch } from '../switches/formula';
 
 import { BlockPosition } from './blockPosition';
 import { ContentPosition } from './contentPosition';

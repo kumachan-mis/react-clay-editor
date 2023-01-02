@@ -1,5 +1,5 @@
-import { IconButtonMenu } from 'src/components/atoms/menu/IconButtonMenu';
-import { BoldIcon } from 'src/icons/BoldIcon';
+import { BoldIcon } from '../../../../icons/BoldIcon';
+import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 
 import React from 'react';
 

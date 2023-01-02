@@ -1,4 +1,4 @@
-import { EditorState } from 'src/contexts/EditorStateContext';
+import { EditorState } from '../../../../contexts/EditorStateContext';
 
 export type CommonMenuProps = {
   text: string;

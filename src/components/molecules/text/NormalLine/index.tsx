@@ -1,8 +1,8 @@
+import { TextNode } from '../../../../parser';
+import { NormalLineNode } from '../../../../parser/normalLine/types';
+import { Line } from '../../../atoms/text/Line';
+import { LineContent } from '../../../atoms/text/LineContent';
 import { TextNodeComponentProps } from '../common/types';
-import { Line } from 'src/components/atoms/text/Line';
-import { LineContent } from 'src/components/atoms/text/LineContent';
-import { TextNode } from 'src/parser';
-import { NormalLineNode } from 'src/parser/normalLine/types';
 
 import React from 'react';
 
