@@ -12,7 +12,7 @@ The editor is the main component of React Clay Editor. You can implement a range
 `EditorRoot`, `EditorTextFieldRoot`, `EditorHeader`, `EditorTextFieldBody`, `EditorSyntaxMenu` and your own ones.
 
 import { css } from '@emotion/css';
-import { EditorRoot, EditorSyntaxMenu, EditorTextFieldBody, EditorHeader, EditorTextFieldRoot } from 'src';
+import { Divider, EditorRoot, EditorSyntaxMenu, EditorTextFieldBody, EditorHeader, EditorTextFieldRoot } from 'src';
 
 ## Simple Editor
 
@@ -87,6 +87,7 @@ The syntax menu helps users who are not familiar with syntactic writing.
       return (
         <EditorRoot text={text} setText={setText}>
           <EditorSyntaxMenu />
+          <Divider />
           <EditorTextFieldRoot>
             <EditorTextFieldBody />
           </EditorTextFieldRoot>
@@ -158,6 +159,7 @@ You can customize the editor as you like.
           <EditorTextFieldRoot>
             <EditorTextFieldBody />
           </EditorTextFieldRoot>
+          <Divider />
           <div style={{ textAlign: 'end', fontSize: '0.7rem', color: 'rgba(0, 0, 0, 0.4)' }}>
             React Clay Editor: a document editor quick editable and flexible like clay in hands
           </div>

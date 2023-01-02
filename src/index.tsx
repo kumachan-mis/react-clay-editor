@@ -32,3 +32,5 @@ export type {
   ViewerCodeProps,
   ViewerFormulaProps,
 } from './contexts/ViewerPropsContext';
+
+export { Divider } from './components/organisms/Divider';

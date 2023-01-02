@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import React from 'react';
 import {
+  Divider,
   EditorBracketLinkProps,
   EditorHashtagProps,
   EditorHeader,
@@ -160,6 +161,7 @@ const DemoEditor: React.FC = () => {
       className={editorClassName}
     >
       <EditorSyntaxMenu />
+      <Divider />
       <EditorTextFieldRoot>
         <EditorHeader header="React Clay Editor" />
         <EditorTextFieldBody />
