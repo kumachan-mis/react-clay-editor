@@ -9,11 +9,11 @@ import { Canvas, Meta, Story } from '@storybook/addon-docs';
 # Viewer
 
 The viewer is the readonly component of React Clay Editor. You can implement a range of viewers and even custom editors
-by compounding components - `ViewerRoot`, `ViewerTextFieldRoot`, `ViewerTextFieldHeader`, `ViewerTextFieldBody` and your
-own ones.
+by compounding components - `ViewerRoot`, `ViewerTextFieldRoot`, `ViewerHeader`, `ViewerTextFieldBody` and your own
+ones.
 
 import { css } from '@emotion/css';
-import { ViewerRoot, ViewerSyntaxMenu, ViewerTextFieldBody, ViewerTextFieldHeader, ViewerTextFieldRoot } from 'src';
+import { ViewerRoot, ViewerSyntaxMenu, ViewerTextFieldBody, ViewerHeader, ViewerTextFieldRoot } from 'src';
 
 ## Simple Viewer
 
@@ -61,17 +61,35 @@ const className = css`
 
 ## With Header
 
-The header is useful to show a fixed title of a document.
+The header is useful to show a fixed title of a document. The header can be placed in both of a fixed area and a
+scrollable area.
 
 <Canvas>
-  <Story name="With Header">
+  <Story name="With Fixed Header">
     <ViewerRoot
-      text={['This is a viewer with the header.', 'The header is useful to show a fixed title of a document.'].join(
-        '\n'
-      )}
+      text={[
+        'This is a viewer with the header in a fixed area.',
+        'The header is useful to show a fixed title of a document.',
+      ].join('\n')}
+    >
+      <ViewerHeader header="Header in Fixed Area" />
+      <ViewerTextFieldRoot>
+        <ViewerTextFieldBody />
+      </ViewerTextFieldRoot>
+    </ViewerRoot>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="With Scrollable Header">
+    <ViewerRoot
+      text={[
+        'This is a viewer with the header in a scrollable area.',
+        'The header is useful to show a fixed title of a document.',
+      ].join('\n')}
     >
       <ViewerTextFieldRoot>
-        <ViewerTextFieldHeader header="React Clay Editor Header" />
+        <ViewerHeader header="Header in Scrollable Area" />
         <ViewerTextFieldBody />
       </ViewerTextFieldRoot>
     </ViewerRoot>

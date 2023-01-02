@@ -1,11 +1,11 @@
 export { EditorRoot } from './components/organisms/EditorRoot';
 export { EditorSyntaxMenu } from './components/organisms/EditorSyntaxMenu';
 export { EditorTextFieldRoot } from './components/organisms/EditorTextFieldRoot';
-export { EditorTextFieldHeader } from './components/organisms/EditorTextFieldHeader';
+export { EditorHeader } from './components/organisms/EditorHeader';
 export { EditorTextFieldBody } from './components/organisms/EditorTextFieldBody';
 
 export type { EditorRootProps } from './components/organisms/EditorRoot';
-export type { EditorTextFieldHeaderProps } from './components/organisms/EditorTextFieldHeader';
+export type { EditorHeaderProps } from './components/organisms/EditorHeader';
 export type {
   EditorTextProps,
   EditorItemizationProps,
@@ -19,11 +19,11 @@ export type {
 
 export { ViewerRoot } from './components/organisms/ViewerRoot';
 export { ViewerTextFieldRoot } from './components/organisms/ViewerTextFieldRoot';
-export { ViewerTextFieldHeader } from './components/organisms/ViewerTextFieldHeader';
+export { ViewerHeader } from './components/organisms/ViewerHeader';
 export { ViewerTextFieldBody } from './components/organisms/ViewerTextFieldBody';
 
 export type { ViewerRootProps } from './components/organisms/ViewerRoot';
-export type { ViewerTextFieldHeaderProps } from './components/organisms/ViewerTextFieldHeader';
+export type { ViewerHeaderProps } from './components/organisms/ViewerHeader';
 export type {
   ViewerTextProps,
   ViewerBracketLinkProps,
@@ -32,3 +32,5 @@ export type {
   ViewerCodeProps,
   ViewerFormulaProps,
 } from './contexts/ViewerPropsContext';
+
+export { Divider } from './components/organisms/Divider';

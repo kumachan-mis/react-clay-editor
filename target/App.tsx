@@ -2,13 +2,14 @@ import { css } from '@emotion/css';
 import React from 'react';
 import 'katex/dist/katex.min.css';
 import {
+  Divider,
   EditorBracketLinkProps,
   EditorHashtagProps,
+  EditorHeader,
   EditorRoot,
   EditorSyntaxMenu,
   EditorTaggedLinkProps,
   EditorTextFieldBody,
-  EditorTextFieldHeader,
   EditorTextFieldRoot,
   EditorTextProps,
   ViewerRoot,
@@ -144,8 +145,9 @@ const TestTargetEditor: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax
         className={editorClassName}
       >
         <EditorSyntaxMenu />
+        <Divider />
         <EditorTextFieldRoot>
-          <EditorTextFieldHeader header={header} />
+          <EditorHeader header={header} />
           <EditorTextFieldBody />
         </EditorTextFieldRoot>
         <MockLines text={text} />
