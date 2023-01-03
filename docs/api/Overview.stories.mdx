@@ -10,8 +10,38 @@ import ApiExplanation, { colorPalette } from '../ts/ApiExplanation';
 
 # Overview
 
-The API of React Clay Editor consists of multiple components. The components can be split up into four categories:
-containers of fixed contents, fixed contents, containers of scrollable contents and scrollable contents.
+The API of React Clay Editor consists of multiple components. The following examples use all public components.
+
+```tsx
+const Editor: React.FC<{ initialText: string }> = ({ initialText }) => {
+  const [text, setText] = React.useState(initialText);
+  return (
+    <EditorRoot text={text} setText={setText}>
+      <EditorSyntaxMenu />
+      <Divider />
+      <EditorTextFieldRoot>
+        <EditorHeader header="React Clay Editor" />
+        <EditorTextFieldBody />
+      </EditorTextFieldRoot>
+    </EditorRoot>
+  );
+};
+```
+
+```tsx
+const Viewer: React.FC<{ text: string }> = ({ text }) => (
+  <ViewerRoot text={text}>
+    <ViewerHeader header="React Clay Editor" />
+    <Divider />
+    <ViewerTextFieldRoot>
+      <ViewerTextFieldBody />
+    </ViewerTextFieldRoot>
+  </ViewerRoot>
+);
+```
+
+The public components can be split up into four categories: containers of fixed contents, fixed contents, containers of
+scrollable contents and scrollable contents.
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <ApiExplanation colorized="all" />

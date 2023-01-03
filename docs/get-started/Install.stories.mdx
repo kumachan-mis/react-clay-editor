@@ -29,7 +29,7 @@ extremely simple way is available.
 
 import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from '../../src';
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Simple Usage">
     {() => {
       const [text, setText] = React.useState(
@@ -41,10 +41,6 @@ import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from '../../src'
           '  `EditorTextFieldBody`',
           ' create nested commponent with them',
           ' give `text` and `setText` to `EditorRoot`',
-          '',
-          '[* source code]',
-          ' click "Show code" in the lower right',
-          ' this editor itself represents a simple usage',
         ].join('\n')
       );
       return (
