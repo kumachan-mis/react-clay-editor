@@ -10,7 +10,7 @@ import { Canvas, Meta, Story } from '@storybook/addon-docs';
 
 The viewer is the readonly component of React Clay Editor. You can implement a range of viewers and even custom editors
 by compounding components - `ViewerRoot`, `ViewerTextFieldRoot`, `ViewerHeader`, `ViewerTextFieldBody` and your own
-ones.
+components.
 
 import { css } from '@emotion/css';
 import { ViewerRoot, ViewerSyntaxMenu, ViewerTextFieldBody, ViewerHeader, ViewerTextFieldRoot } from '../../src';
@@ -48,7 +48,7 @@ import { ViewerRoot, ViewerSyntaxMenu, ViewerTextFieldBody, ViewerHeader, Viewer
   </Story>
 </Canvas>
 
-Note that a className selector in CSS should be **doubled**. Here is an example using `@emotion/css`.
+**NOTE**: a className selector in CSS should be **doubled**. Here is an example using `@emotion/css`.
 
 ```ts
 const className = css`

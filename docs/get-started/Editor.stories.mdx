@@ -9,7 +9,7 @@ import { Canvas, Meta, Story } from '@storybook/addon-docs';
 # Editor
 
 The editor is the main component of React Clay Editor. You can implement a range of editors by compounding components -
-`EditorRoot`, `EditorTextFieldRoot`, `EditorHeader`, `EditorTextFieldBody`, `EditorSyntaxMenu` and your own ones.
+`EditorRoot`, `EditorTextFieldRoot`, `EditorHeader`, `EditorTextFieldBody`, `EditorSyntaxMenu` and your own components.
 
 import { css } from '@emotion/css';
 import {
@@ -67,7 +67,7 @@ import {
   </Story>
 </Canvas>
 
-Note that a className selector in CSS should be **doubled**. Here is an example using `@emotion/css`.
+**NOTE**: a className selector in CSS should be **doubled**. Here is an example using `@emotion/css`.
 
 ```ts
 const className = css`

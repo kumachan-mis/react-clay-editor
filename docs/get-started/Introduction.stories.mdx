@@ -27,28 +27,29 @@ import DemoEditor from '../ts/DemoEditor';
 ### Writing While Learning or Working
 
 While learning or working, people create some documents to remember knowledge or share information. They would not
-afford to think deeply about typing and formatting of the text since they have to figure out what to write quickly.
+afford to think deeply about typing and formatting of their text since they have to figure out what to write quickly.
 Therefore, an editor while learning or working should have features to speed up writing. Our approarch is to allow
 people not to type keyboard theirselves - autocomplete and reference links.
 
 Though autocomplete is a common feature in an editor for programming, almost all editors for documentation does not have
-a feature to shortcut typing. React Clay Editor can show suggestions from given candidates and helps typing of user.
+a feature to shortcut typing. React Clay Editor can show suggestions from given candidates and helps typing of users.
 
-Utilizing already-existing documents is another good way to reduce typing. If rich links to documentations are
-available, putting links automatically make your document informative. React Clay Editor enables you to to shorten and
-group links with "tags". Since links become shorter, a lot of links does not lose readability of documents. What is
-more, since the links can be colorized by tags, users can recognize sources of links at a glance.
+Utilizing already-existing documents is another good way to reduce typing. If rich links are available, putting links
+automatically make a document informative. React Clay Editor enables you to shorten and group links with "tags". Since
+links become shorter, a lot of links does not lose readability of documents. What is more, since the links can be
+colorized by tags, users can recognize sources of links at a glance.
 
 ### Various Needs for a Text Editor
 
 Needs for a text editor are various. One example is how to apply formats. Some would say that they don't want to leave
-their hands while editing text. Others would say that they are used to formatting text by selecting text and clicking
-buttons. Another example is markdown or new one. Some would say that they love markdown-like experience. Others would
-say they are looking for a new editing experience.
+their hands while editing text. Others would say that they are used to formatting a text by selecting a part and
+clicking buttons. Another example is markdown or a "better" one. Some would say that they love markdown-like experience.
+Others would say they are looking for "better" editing experience.
 
-To answer these verious needs, React Clay Editor offers some choices. Users can apply format by syntactic writing. At
-the same time, users can do this by selecting text and clicking buttons in the syntax menu. The editor toggles between
-the view mode and edit the mode in-place. On the other hand, the viewer is available to implement a dual-paned editor.
+To answer these verious needs, React Clay Editor offers a choice. Users can apply formats by syntactic writing. At the
+same time, users can do this by selecting a part of their text and clicking buttons in the syntax menu. React Clay
+Editor provides another choice. The editor toggles between the view mode and the edit mode in-place. On the other hand,
+the viewer is available to implement a dual-paned editor.
 
 ## Features
 
@@ -61,19 +62,19 @@ the view mode and edit the mode in-place. On the other hand, the viewer is avail
 - **in-place mode change**: Like a markdown editor, React Clay Editor has two modes - the view mode and the edit mode. A
   significant difference from a markdown editor is how the mode is changed. In this editor, the mode is changed per a
   line, in real time and in-place. When a user put the cursor on a line, the line is changed to the edit mode, and the
-  other lines are stil in the view mode. If users use a markdown editor, they to come and go between these modes by
+  other lines are stil in the view mode. If users use a markdown editor, they have to come and go between these modes by
   clicking tabs, or they need doubled space to display both at once. If they use this editor, they need neither tabs nor
   too much space.
 
 - **suggestions of autocomplete**: Configrations for suggestions of autocomplete are available. If you give candidates
   to the editor, suggestions are shown in a normal text, headings and links. In the demo above, when you type just "R",
-  "React Clay Editor" and "Real Time" are shown in the popup. Then, when you hit the Enter key, "React Clay Editor"
+  "React Clay Editor" and "Real Time" are shown in the popup. Then, when you hit the enter key, "React Clay Editor"
   comes into the text.
 
 - **tagged links to references**: While learning or working, users would utilize various external resources like files
   in Box, search results by Google. However, a lot of long simular links will make it hard to read and write their
-  document. To solve this problem, this editor enables them to shorten and group links with "tags". In the demo above,
-  `npm` tag and `github` tag are provided. As a result, https://www.npmjs.com/package/react-clay-editor is shorten to
+  documents. To solve this problem, this editor enables them to shorten and group links with "tags". In the demo above,
+  `npm` tag and `github` tag are defined. As a result, https://www.npmjs.com/package/react-clay-editor is shorten to
   `npm: react-clay-editor` and https://github.com/kumachan-mis/react-clay-editor is shorten to
   `github: @kumachan-mis/react-clay-editor`. In addition, since the links are colorized, you can recognize sources of
   links at a glance.
@@ -81,10 +82,10 @@ the view mode and edit the mode in-place. On the other hand, the viewer is avail
 ### To Answer Various Needs
 
 - **syntax menu**: Formatting without a mouse is a good way to write documents quickly. However, some users are not
-  familiar with such syntactic writing. They may be used to applying formats by menu buttons like Microsoft Word. To
-  meet their needs, this package provides the syntax menu. It is a group of buttons and dropdown menus to insert and
-  delete the syntactic characters. Users can choose whether they apply formats by typing their keyboard or clicking
-  their mouse.
+  familiar with syntactic writing. They may be used to applying formats by menu buttons like Microsoft Word. To meet
+  their needs, this package provides the syntax menu. It is a group of buttons and dropdown menus to insert and delete
+  the syntactic characters. Users can choose whether they apply formats by typing their keyboard or clicking their
+  mouse.
 
 - **viewer component**: In-place mode change is a significant feature of React Clay Editor. Having said that, there is
   no reason to "forbid" experience presented by a markdown editor for years. There must be many users who love
@@ -94,7 +95,8 @@ the view mode and edit the mode in-place. On the other hand, the viewer is avail
   viewer shows the formatting results.
 
 - **multi-components API**: The API consists of multiple components - `<EditorRoot>`, `<EditorSyntaxMenu>`,
-  `<EditorTextFieldBody>` and others. It will be simpler when `<Editor>` component is defined for you. However, as we
-  described above, needs for a text editor are various and flexibility is highly important. If you don't need the syntax
-  menu, you only have to remove `<EditorSyntaxMenu>` from the components. If you want to add your own footer component,
-  you only have to add `<YourOwnFooter>` to the components. This is a notable advantage of multi-components API.
+  `<EditorTextFieldBody>` and others. It will be simpler when the `<Editor>` component is defined for you. However, as
+  we described above, needs for a text editor are various and flexibility is highly important. If you don't need the
+  syntax menu, you only have to remove `<EditorSyntaxMenu>` from the components. If you want to add your own footer
+  component, you only have to add `<YourOwnFooter>` to the components. This is a notable advantage of the
+  multi-components API.
