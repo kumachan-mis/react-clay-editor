@@ -7,25 +7,9 @@ import { linkTo } from '@storybook/addon-links';
   <></>
 </Story>
 
-import { css } from '@emotion/css';
-import { ViewerRoot, ViewerTextFieldBody, ViewerTextFieldRoot } from '../../src';
-const SyntaxViewer = (args) => (
-  <ViewerRoot
-    className={css`
-      && {
-        border: none;
-        height: auto;
-      }
-    `}
-    {...args}
-  >
-    <ViewerTextFieldRoot>
-      <ViewerTextFieldBody />
-    </ViewerTextFieldRoot>
-  </ViewerRoot>
-);
-
 # Formatting Syntax
+
+import SyntaxViewer from '../ts/SyntaxViewer';
 
 Two types of syntax are available in React Clay Editor.
 
