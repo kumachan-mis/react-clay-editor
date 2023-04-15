@@ -25,32 +25,32 @@ import { EditorRoot } from 'react-clay-editor';
 
 ## Props
 
-| name               | type                                         | requried | default                                                                                                  | description                                        |
-| ------------------ | -------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| text               | string                                       | YES      | -                                                                                                        | syntactic text in the editor                       |
-| setText            | Dispatch<SetStateAction<string\>>            | YES      | -                                                                                                        | callback function on the text updated              |
-| syntax             | `'bracket'` or `'markdown'`                  | no       | `'bracket'`                                                                                              | syntax of the text                                 |
-| textProps          | EditorTextProps                              | no       | see <LinkTo kind="api-editorroot--page#editortextprops">EditorTextProps</LinkTo>                         | configurations of text                             |
-| itemizationProps   | EditorItemizationProps                       | no       | see <LinkTo kind="api-editorroot--page#editoritemizationprops">EditorItemizationProps</LinkTo>           | configurations of itemizations                     |
-| bracketLinkProps   | EditorBracketLinkProps                       | no       | see <LinkTo kind="api-editorroot--page#editorbracketlinkprops">EditorBracketLinkProps</LinkTo>           | configurations of bracket links                    |
-| hashtagProps       | EditorHashtagProps                           | no       | see <LinkTo kind="api-editorroot--page#editorhashtagprops">EditorHashtagProps</LinkTo>                   | configurations of hashtags                         |
-| taggedLinkPropsMap | { [tagName: string]: EditorTaggedLinkProps } | no       | `{}` (see also <LinkTo kind="api-editorroot--page#editortaggedlinkprops">EditorTaggedLinkProps</LinkTo>) | map of tag names to configurations of tagged links |
-| codeProps          | EditorCodeProps                              | no       | see <LinkTo kind="api-editorroot--page#editorcodeprops">EditorCodeProps</LinkTo>                         | configurations of code strings                     |
-| formulaProps       | EditorFormulaProps                           | no       | see <LinkTo kind="api-editorroot--page#editorformulaprops">EditorFormulaProps</LinkTo>                   | configurations of math formulas                    |
-| quotationProps     | EditorQuotationProps                         | no       | see <LinkTo kind="api-editorroot--page#editorquotationprops">EditorQuotationProps</LinkTo>               | configurations of quotations                       |
-| className          | string                                       | no       | `undefined`                                                                                              | CSS className of EditorRoot                        |
-| children           | ReactNode                                    | no       | `undefined`                                                                                              | content of the component                           |
+| name               | type                                           | requried | default                                                                                                  | description                                        |
+| ------------------ | ---------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| text               | `string`                                       | YES      | -                                                                                                        | syntactic text in the editor                       |
+| setText            | `Dispatch<SetStateAction<string>>`             | YES      | -                                                                                                        | callback function on the text updated              |
+| syntax             | `'bracket'` or `'markdown'`                    | no       | `'bracket'`                                                                                              | syntax of the text                                 |
+| textProps          | `EditorTextProps`                              | no       | see <LinkTo kind="api-editorroot--page#editortextprops">EditorTextProps</LinkTo>                         | configurations of text                             |
+| itemizationProps   | `EditorItemizationProps`                       | no       | see <LinkTo kind="api-editorroot--page#editoritemizationprops">EditorItemizationProps</LinkTo>           | configurations of itemizations                     |
+| bracketLinkProps   | `EditorBracketLinkProps`                       | no       | see <LinkTo kind="api-editorroot--page#editorbracketlinkprops">EditorBracketLinkProps</LinkTo>           | configurations of bracket links                    |
+| hashtagProps       | `EditorHashtagProps`                           | no       | see <LinkTo kind="api-editorroot--page#editorhashtagprops">EditorHashtagProps</LinkTo>                   | configurations of hashtags                         |
+| taggedLinkPropsMap | `{ [tagName: string]: EditorTaggedLinkProps }` | no       | `{}` (see also <LinkTo kind="api-editorroot--page#editortaggedlinkprops">EditorTaggedLinkProps</LinkTo>) | map of tag names to configurations of tagged links |
+| codeProps          | `EditorCodeProps`                              | no       | see <LinkTo kind="api-editorroot--page#editorcodeprops">EditorCodeProps</LinkTo>                         | configurations of code strings                     |
+| formulaProps       | `EditorFormulaProps`                           | no       | see <LinkTo kind="api-editorroot--page#editorformulaprops">EditorFormulaProps</LinkTo>                   | configurations of math formulas                    |
+| quotationProps     | `EditorQuotationProps`                         | no       | see <LinkTo kind="api-editorroot--page#editorquotationprops">EditorQuotationProps</LinkTo>               | configurations of quotations                       |
+| className          | `string`                                       | no       | `undefined`                                                                                              | CSS className of EditorRoot                        |
+| children           | `ReactNode`                                    | no       | `undefined`                                                                                              | content of the component                           |
 
 ## EditorTextProps
 
-| name                   | type                                                                | default     | description                                                       |
-| ---------------------- | ------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
-| lineProps              | (lineIndex: number) => <br/>PropsWithoutRef<ComponentProps<'div'\>> | `undefined` | function returning props of line elements                         |
-| normalLabel            | string                                                              | `'normal'`  | label and the default text of normal sections in the syntax menu  |
-| largerLabel            | string                                                              | `'larger'`  | label and the default text of larger sections in the syntax menu  |
-| largestLabel           | string                                                              | `'largest'` | label and the default text of largest sections in the syntax menu |
-| suggestions            | string[]                                                            | `[]`        | candidates of autocomplete suggestion in headings and plain texts |
-| initialSuggestionIndex | number                                                              | `0`         | focused index of autocomplete suggestions when they pop up        |
+| name                   | type                                                            | default     | description                                                       |
+| ---------------------- | --------------------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
+| lineProps              | `(lineIndex: number) => PropsWithoutRef<ComponentProps<'div'>>` | `undefined` | function returning props of line elements                         |
+| normalLabel            | `string`                                                        | `'normal'`  | label and the default text of normal sections in the syntax menu  |
+| largerLabel            | `string`                                                        | `'larger'`  | label and the default text of larger sections in the syntax menu  |
+| largestLabel           | `string`                                                        | `'largest'` | label and the default text of largest sections in the syntax menu |
+| suggestions            | `string[]`                                                      | `[]`        | candidates of autocomplete suggestion in headings and plain texts |
+| initialSuggestionIndex | `number`                                                        | `0`         | focused index of autocomplete suggestions when they pop up        |
 
 ## EditorItemizationProps
 
@@ -61,57 +61,57 @@ import { EditorRoot } from 'react-clay-editor';
 
 ## EditorBracketLinkProps
 
-| name                   | type                                                                                 | default             | description                                                    |
-| ---------------------- | ------------------------------------------------------------------------------------ | ------------------- | -------------------------------------------------------------- |
-| anchorProps            | (linkName: string, clickable: boolean) => <br/>PropsWithoutRef<ComponentProps<'a'\>> | `undefined`         | function returning props of bracket link elements              |
-| label                  | string                                                                               | `'bracket link'`    | label and the default text of bracket links in the syntax menu |
-| suggestions            | string[]                                                                             | `[]`                | candidates of autocomplete suggestion in bracket links         |
-| initialSuggestionIndex | number                                                                               | `0`                 | focused index of autocomplete suggestions when they pop up     |
-| disabled               | boolean                                                                              | `undefined` (falsy) | if it is set to `true`, notations of bracket links are ignored |
+| name                   | type                                                                             | default             | description                                                    |
+| ---------------------- | -------------------------------------------------------------------------------- | ------------------- | -------------------------------------------------------------- |
+| anchorProps            | `(linkName: string, clickable: boolean) => PropsWithoutRef<ComponentProps<'a'>>` | `undefined`         | function returning props of bracket link elements              |
+| label                  | `string`                                                                         | `'bracket link'`    | label and the default text of bracket links in the syntax menu |
+| suggestions            | `string[]`                                                                       | `[]`                | candidates of autocomplete suggestion in bracket links         |
+| initialSuggestionIndex | `number`                                                                         | `0`                 | focused index of autocomplete suggestions when they pop up     |
+| disabled               | `boolean`                                                                        | `undefined` (falsy) | if it is set to `true`, notations of bracket links are ignored |
 
 ## EditorHashtagProps
 
-| name                   | type                                                                                 | default             | description                                                |
-| ---------------------- | ------------------------------------------------------------------------------------ | ------------------- | ---------------------------------------------------------- |
-| anchorProps            | (linkName: string, clickable: boolean) => <br/>PropsWithoutRef<ComponentProps<'a'\>> | `undefined`         | function returning props of hashtag elements               |
-| label                  | string                                                                               | `'hashtag'`         | label and the default text of hashtags in the syntax menu  |
-| suggestions            | string[]                                                                             | `[]`                | candidates of autocomplete suggestion in hashtags          |
-| initialSuggestionIndex | number                                                                               | `0`                 | focused index of autocomplete suggestions when they pop up |
-| disabled               | boolean                                                                              | `undefined` (falsy) | if it is set to `true`, notations of hashtags are ignored  |
+| name                   | type                                                                             | default             | description                                                |
+| ---------------------- | -------------------------------------------------------------------------------- | ------------------- | ---------------------------------------------------------- |
+| anchorProps            | `(linkName: string, clickable: boolean) => PropsWithoutRef<ComponentProps<'a'>>` | `undefined`         | function returning props of hashtag elements               |
+| label                  | `string`                                                                         | `'hashtag'`         | label and the default text of hashtags in the syntax menu  |
+| suggestions            | `string[]`                                                                       | `[]`                | candidates of autocomplete suggestion in hashtags          |
+| initialSuggestionIndex | `number`                                                                         | `0`                 | focused index of autocomplete suggestions when they pop up |
+| disabled               | `boolean`                                                                        | `undefined` (falsy) | if it is set to `true`, notations of hashtags are ignored  |
 
 ## EditorTaggedLinkProps
 
-| name                   | type                                                                                 | default             | description                                                                                                            |
-| ---------------------- | ------------------------------------------------------------------------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| anchorProps            | (linkName: string, clickable: boolean) => <br/>PropsWithoutRef<ComponentProps<'a'\>> | `undefined`         | function returning props of tagged link elements                                                                       |
-| tagHidden              | boolean                                                                              | `undefined` (falsy) | if is set to `true`, `[tag: tagged link]` goes to `<a>tagged link</a>`, not `<a>tag: tagged link</a>` in the view mode |
-| label                  | string                                                                               | `'tagged link'`     | label and the default text of tagged links in the syntax menu                                                          |
-| suggestions            | string[]                                                                             | `[]`                | candidates of autocomplete suggestion in tagged links                                                                  |
-| initialSuggestionIndex | number                                                                               | `0`                 | focused index of autocomplete suggestions when they pop up                                                             |
-| linkNameRegex          | RegExp                                                                               | `/[^[\]]+/`         | if a link name doesn't match it, `[tag: tagged link]` goes to a bracket link named `tag: tagged link`                  |
+| name                   | type                                                                             | default             | description                                                                                                            |
+| ---------------------- | -------------------------------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| anchorProps            | `(linkName: string, clickable: boolean) => PropsWithoutRef<ComponentProps<'a'>>` | `undefined`         | function returning props of tagged link elements                                                                       |
+| tagHidden              | `boolean`                                                                        | `undefined` (falsy) | if is set to `true`, `[tag: tagged link]` goes to `<a>tagged link</a>`, not `<a>tag: tagged link</a>` in the view mode |
+| label                  | `string`                                                                         | `'tagged link'`     | label and the default text of tagged links in the syntax menu                                                          |
+| suggestions            | `string[]`                                                                       | `[]`                | candidates of autocomplete suggestion in tagged links                                                                  |
+| initialSuggestionIndex | `number`                                                                         | `0`                 | focused index of autocomplete suggestions when they pop up                                                             |
+| linkNameRegex          | `RegExp`                                                                         | `/[^[\]]+/`         | if a link name doesn't match it, `[tag: tagged link]` goes to a bracket link named `tag: tagged link`                  |
 
 ## EditorCodeProps
 
-| name        | type                                                            | default             | description                                                          |
-| ----------- | --------------------------------------------------------------- | ------------------- | -------------------------------------------------------------------- |
-| codeProps   | (code: string) =><br/> PropsWithoutRef<ComponentProps<'code'\>> | `undefined`         | function returning props of code string elements                     |
-| inlineLabel | string                                                          | `inline code`       | label and the default text of inline code strings in the syntax menu |
-| blockLabel  | string                                                          | `block code`        | label and the default text of block code strings in the syntax menu  |
-| disabled    | boolean                                                         | `undefined` (falsy) | if it is set to `true`, notations of code strings are ignored        |
+| name        | type                                                        | default             | description                                                          |
+| ----------- | ----------------------------------------------------------- | ------------------- | -------------------------------------------------------------------- |
+| codeProps   | `(code: string) => PropsWithoutRef<ComponentProps<'code'>>` | `undefined`         | function returning props of code string elements                     |
+| inlineLabel | `string`                                                    | `inline code`       | label and the default text of inline code strings in the syntax menu |
+| blockLabel  | `string`                                                    | `block code`        | label and the default text of block code strings in the syntax menu  |
+| disabled    | `boolean`                                                   | `undefined` (falsy) | if it is set to `true`, notations of code strings are ignored        |
 
 ## EditorFormulaProps
 
-| name         | type                                                               | default             | description                                                            |
-| ------------ | ------------------------------------------------------------------ | ------------------- | ---------------------------------------------------------------------- |
-| codeProps    | (formula: string) =><br/> PropsWithoutRef<ComponentProps<'code'\>> | `undefined`         | function returning props of math formula elements                      |
-| inlineLabel  | string                                                             | `inline formula`    | label and the default text of inline math formulas in the syntax menu  |
-| displayLabel | string                                                             | `diaplay formula`   | label and the default text of display math formulas in the syntax menu |
-| blockLabel   | string                                                             | `block formula`     | label and the default text of block math formulas in the syntax menu   |
-| disabled     | boolean                                                            | `undefined` (falsy) | if it is set to `true`, notations of math formulas are ignored         |
+| name         | type                                                           | default             | description                                                            |
+| ------------ | -------------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------- |
+| codeProps    | `(formula: string) => PropsWithoutRef<ComponentProps<'code'>>` | `undefined`         | function returning props of math formula elements                      |
+| inlineLabel  | `string`                                                       | `inline formula`    | label and the default text of inline math formulas in the syntax menu  |
+| displayLabel | `string`                                                       | `diaplay formula`   | label and the default text of display math formulas in the syntax menu |
+| blockLabel   | `string`                                                       | `block formula`     | label and the default text of block math formulas in the syntax menu   |
+| disabled     | `boolean`                                                      | `undefined` (falsy) | if it is set to `true`, notations of math formulas are ignored         |
 
 ## EditorQuotationProps
 
-| name         | type   | default     | description                                            |
-| ------------ | ------ | ----------- | ------------------------------------------------------ |
-| indentLabel  | string | `'indent'`  | label of indentation of quotations in the syntax menu  |
-| outdentLabel | string | `'outdent'` | label of outdentation of quotations in the syntax menu |
+| name         | type     | default     | description                                            |
+| ------------ | -------- | ----------- | ------------------------------------------------------ |
+| indentLabel  | `string` | `'indent'`  | label of indentation of quotations in the syntax menu  |
+| outdentLabel | `string` | `'outdent'` | label of outdentation of quotations in the syntax menu |

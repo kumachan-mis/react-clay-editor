@@ -32,5 +32,6 @@
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
-  }
+  },
+  "mdx.experimentalLanguageServer": true
 }
