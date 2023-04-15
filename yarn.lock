@@ -1937,7 +1937,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.20.2, @babel/preset-env@npm:~7.21.0":
+"@babel/preset-env@npm:^7.20.2, @babel/preset-env@npm:^7.21.4, @babel/preset-env@npm:~7.21.0":
   version: 7.21.4
   resolution: "@babel/preset-env@npm:7.21.4"
   dependencies:
@@ -2066,7 +2066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.13.0":
+"@babel/preset-typescript@npm:^7.13.0, @babel/preset-typescript@npm:^7.21.4":
   version: 7.21.4
   resolution: "@babel/preset-typescript@npm:7.21.4"
   dependencies:
@@ -3496,17 +3496,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-mdx-gfm@npm:^7.0.4":
-  version: 7.0.4
-  resolution: "@storybook/addon-mdx-gfm@npm:7.0.4"
-  dependencies:
-    "@storybook/node-logger": 7.0.4
-    remark-gfm: ^3.0.1
-    ts-dedent: ^2.0.0
-  checksum: 7d8709708efe9973132cf822cf50495504f683f06cbb4a751b01d5937fa6be23f98e0e49d9d0cc9ab5cc667b5b3a91502bc96b9ad1c0303b0c0e3be379c7ecbb
-  languageName: node
-  linkType: hard
-
 "@storybook/addon-measure@npm:7.0.4":
   version: 7.0.4
   resolution: "@storybook/addon-measure@npm:7.0.4"
@@ -3600,7 +3589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addons@npm:7.0.4, @storybook/addons@npm:^7.0.4":
+"@storybook/addons@npm:7.0.4":
   version: 7.0.4
   resolution: "@storybook/addons@npm:7.0.4"
   dependencies:
@@ -3746,7 +3735,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/channel-postmessage@npm:7.0.4":
+"@storybook/channel-postmessage@npm:7.0.4, @storybook/channel-postmessage@npm:^7.0.4":
   version: 7.0.4
   resolution: "@storybook/channel-postmessage@npm:7.0.4"
   dependencies:
@@ -3760,7 +3749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/channel-websocket@npm:7.0.4":
+"@storybook/channel-websocket@npm:7.0.4, @storybook/channel-websocket@npm:^7.0.4":
   version: 7.0.4
   resolution: "@storybook/channel-websocket@npm:7.0.4"
   dependencies:
@@ -4160,7 +4149,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/preview-api@npm:7.0.4":
+"@storybook/preview-api@npm:7.0.4, @storybook/preview-api@npm:^7.0.4":
   version: 7.0.4
   resolution: "@storybook/preview-api@npm:7.0.4"
   dependencies:
@@ -4884,6 +4873,13 @@ __metadata:
   version: 2.4.1
   resolution: "@types/prettier@npm:2.4.1"
   checksum: df330c2d6fe7c282839b0f17701e069a9c6c96d2ff54704e933a1b3c1b98844d963a7cb00c5629d173604892ceee802312bbaeb8a97f5da21e13db8f653b519e
+  languageName: node
+  linkType: hard
+
+"@types/prettier@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "@types/prettier@npm:2.7.2"
+  checksum: b47d76a5252265f8d25dd2fe2a5a61dc43ba0e6a96ffdd00c594cb4fd74c1982c2e346497e3472805d97915407a09423804cc2110a0b8e1b22cffcab246479b7
   languageName: node
   linkType: hard
 
@@ -12829,6 +12825,9 @@ __metadata:
   resolution: "react-clay-editor@workspace:."
   dependencies:
     "@babel/core": ^7.21.4
+    "@babel/preset-env": ^7.21.4
+    "@babel/preset-react": ^7.18.6
+    "@babel/preset-typescript": ^7.21.4
     "@emotion/css": ^11.10.6
     "@emotion/react": ^11.10.6
     "@emotion/styled": ^11.10.6
@@ -12839,14 +12838,16 @@ __metadata:
     "@storybook/addon-docs": ^7.0.4
     "@storybook/addon-essentials": ^7.0.4
     "@storybook/addon-links": ^7.0.4
-    "@storybook/addon-mdx-gfm": ^7.0.4
-    "@storybook/addons": ^7.0.4
+    "@storybook/channel-postmessage": ^7.0.4
+    "@storybook/channel-websocket": ^7.0.4
+    "@storybook/preview-api": ^7.0.4
     "@storybook/react": ^7.0.4
     "@storybook/react-webpack5": ^7.0.4
     "@storybook/theming": ^7.0.4
     "@svgr/cli": ^7.0.0
     "@types/katex": ^0.16.0
     "@types/node": ^18.15.11
+    "@types/prettier": ^2.7.2
     "@types/react": ^18.0.35
     "@types/react-dom": ^18.0.11
     "@typescript-eslint/eslint-plugin": ^5.58.0
@@ -12868,6 +12869,7 @@ __metadata:
     prettier: ^2.8.7
     react: ^18.2.0
     react-dom: ^18.2.0
+    remark-gfm: ^3.0.1
     sort-package-json: ^2.4.1
     storybook: ^7.0.4
     ts-jest: ^29.1.0

@@ -1,9 +1,23 @@
-const path = require('path');
-const packageJson = require('../package.json');
-module.exports = {
+import { StorybookConfig } from '@storybook/react-webpack5';
+import packageJson from '../package.json';
+import remarkGfm from 'remark-gfm';
+
+const config: StorybookConfig = {
   stories: ['../docs/**/*.stories.mdx', '../docs/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: ['../docs/public'],
-  addons: ['@storybook/addon-docs', '@storybook/addon-links', '@storybook/addon-mdx-gfm'],
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
+    '@storybook/addon-links',
+  ],
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
@@ -41,7 +55,6 @@ module.exports = {
   },
   webpackFinal: async (config) => {
     config.externals = {
-      ...config.externals,
       react: 'React',
       'react-dom': 'ReactDOM',
       katex: 'katex',
@@ -51,6 +64,7 @@ module.exports = {
     return config;
   },
   docs: {
-    autodocs: true,
+    autodocs: 'tag',
   },
 };
+export default config;
