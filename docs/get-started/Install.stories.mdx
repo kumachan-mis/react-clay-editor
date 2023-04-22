@@ -2,10 +2,6 @@ import { Canvas, Meta, Story } from '@storybook/addon-docs';
 
 <Meta title="Get Started/Install" />
 
-<Story name="Page">
-  <></>
-</Story>
-
 # Install
 
 Run one of the following commands to install React Clay Editor.
@@ -29,7 +25,7 @@ extremely simple way is available.
 
 import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from '../../src';
 
-<Canvas withSource="open">
+<Canvas sourceState="shown">
   <Story name="Simple Usage">
     {() => {
       const [text, setText] = React.useState(
