@@ -1,10 +1,15 @@
-import { StorybookConfig } from '@storybook/react-webpack5';
+import { StorybookConfig } from '@storybook/react-vite';
 import packageJson from '../package.json';
+import viteConfigLib from '../viteconfig.lib';
 import remarkGfm from 'remark-gfm';
+import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
-  stories: ['../docs/**/*.stories.mdx', '../docs/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: [{ directory: '../docs/', files: '**/*.stories.mdx' }],
   staticDirs: ['../docs/public'],
+  core: {
+    builder: '@storybook/builder-vite',
+  },
   addons: [
     {
       name: '@storybook/addon-docs',
@@ -19,7 +24,7 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
   ],
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@storybook/react-vite',
     options: {},
   },
   env: (config) => {
@@ -53,18 +58,23 @@ const config: StorybookConfig = {
       STORYBOOK_EMOTION_STYLED_SRC,
     };
   },
-  webpackFinal: async (config) => {
-    config.externals = {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-      katex: 'katex',
-      '@emotion/react': 'emotionReact',
-      '@emotion/styled': 'emotionStyled',
-    };
-    return config;
-  },
-  docs: {
-    autodocs: 'tag',
+  viteFinal: async (config) => {
+    return mergeConfig(config, {
+      build: {
+        rollupOptions: {
+          external: ['react', 'react-dom', 'katex', '@emotion/react', '@emotion/styled'],
+          output: {
+            globals: {
+              react: 'React',
+              'react-dom': 'ReactDOM',
+              katex: 'katex',
+              '@emotion/react': 'emotionReact',
+              '@emotion/styled': 'emotionStyled',
+            },
+          },
+        },
+      },
+    });
   },
 };
 export default config;
