@@ -1,9 +1,14 @@
 import { Preview } from '@storybook/react';
 import theme from './theme';
+import prettier from 'prettier/standalone';
+import prettierBabel from 'prettier/parser-babel';
 
 const preview: Preview = {
   parameters: {
-    docs: { theme },
+    docs: {
+      theme,
+      transformSource: (input) => prettier.format(input, { parser: 'babel', plugins: [prettierBabel] }),
+    },
     options: {
       storySort: {
         order: [
