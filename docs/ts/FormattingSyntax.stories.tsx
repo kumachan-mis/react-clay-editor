@@ -86,6 +86,13 @@ export const MarkdownDecoration: Story = {
   },
 };
 
+export const MarkdownCombinedDecoration: Story = {
+  args: {
+    syntax: 'markdown',
+    text: ['This is *_bold italic_*', 'This is _*italic bold*_'].join('\n'),
+  },
+};
+
 export const BracketLink: Story = {
   args: { text: '[bracket link]' },
 };

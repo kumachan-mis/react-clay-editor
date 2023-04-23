@@ -1,8 +1,10 @@
 import { bracketLinkRegex, parseBracketLink } from '../bracketLink/parseBracketLink';
 import { ParsingContext, ParsingOptions } from '../common/types';
 import { boldRegex, parseBold } from '../decoration/parseBold';
+import { boldItalicRegex, parseBoldItalic } from '../decoration/parseBoldItalic';
 import { decorationRegex, parseDecoration } from '../decoration/parseDecoration';
 import { italicRegex, parseItalic } from '../decoration/parseItalic';
+import { italicBoldRegex, parseItalicBold } from '../decoration/parseItalicBold';
 import { displayFormulaRegex, parseDisplayFormula } from '../displayFormula/parseDisplayFormula';
 import { hashtagRegex, parseHashtag } from '../hashtag/parseHashtag';
 import { inlineCodeRegex, parseInlineCode } from '../inlineCode/parseInlineCode';
@@ -57,6 +59,10 @@ function parseMarkdownContent(text: string, context: ParsingContext, options: Pa
     return parseDisplayFormula(text, context, options);
   } else if (!options.formulaDisabled && inlineFormulaRegex.test(text)) {
     return parseInlineFormula(text, context, options);
+  } else if (!context.nested && boldItalicRegex.test(text)) {
+    return parseBoldItalic(text, context, options);
+  } else if (!context.nested && italicBoldRegex.test(text)) {
+    return parseItalicBold(text, context, options);
   } else if (!context.nested && boldRegex.test(text)) {
     return parseBold(text, context, options);
   } else if (!context.nested && italicRegex.test(text)) {

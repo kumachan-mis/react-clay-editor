@@ -57,9 +57,7 @@ function markdownDecorationMenuSwitch(
   switch (contentNode.type) {
     case 'decoration': {
       const { bold, italic } = contentNode.decoration;
-      if (bold) return { bold: 'on', italic: 'disabled', underline: 'disabled' };
-      if (italic) return { bold: 'disabled', italic: 'on', underline: 'disabled' };
-      return { bold: 'off', italic: 'off', underline: 'disabled' };
+      return { bold: bold ? 'on' : 'off', italic: italic ? 'on' : 'off', underline: 'disabled' };
     }
     case 'normal':
       return { bold: 'off', italic: 'off', underline: 'disabled' };
