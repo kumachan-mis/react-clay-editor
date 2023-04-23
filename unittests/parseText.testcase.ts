@@ -989,9 +989,15 @@ export const branketTestCases: TestCase[] = [
 export const markdownTestCases: TestCase[] = [
   {
     name: 'decoration text',
-    text: ['# Largest Text', '## Larger Text', '### Bold Text', '#### Also Bold Text', '*bold text*_italic text_'].join(
-      '\n'
-    ),
+    text: [
+      '# Largest Text',
+      '## Larger Text',
+      '### Bold Text',
+      '#### Also Bold Text',
+      '*bold text*_italic text_',
+      '*_bold italic text_*',
+      '_*italic bold text*_',
+    ].join('\n'),
     expected: [
       {
         type: 'normalLine',
@@ -1115,6 +1121,54 @@ export const markdownTestCases: TestCase[] = [
             decoration: {
               size: 'normal',
               bold: false,
+              italic: true,
+              underline: false,
+            },
+          },
+        ],
+      },
+      {
+        type: 'normalLine',
+        lineIndex: 5,
+        children: [
+          {
+            type: 'decoration',
+            lineIndex: 5,
+            range: [0, 19],
+            children: [
+              {
+                type: 'normal',
+                range: [2, 17],
+                text: 'bold italic text',
+              },
+            ],
+            decoration: {
+              size: 'normal',
+              bold: true,
+              italic: true,
+              underline: false,
+            },
+          },
+        ],
+      },
+      {
+        type: 'normalLine',
+        lineIndex: 6,
+        children: [
+          {
+            type: 'decoration',
+            lineIndex: 6,
+            range: [0, 19],
+            children: [
+              {
+                type: 'normal',
+                range: [2, 17],
+                text: 'italic bold text',
+              },
+            ],
+            decoration: {
+              size: 'normal',
+              bold: true,
               italic: true,
               underline: false,
             },

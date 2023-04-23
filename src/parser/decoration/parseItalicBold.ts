@@ -4,7 +4,7 @@ import { ContentNode } from '../content/types';
 
 import { DecorationNode } from './types';
 
-export const italicBoldRegex = /^(?<left>.*?)_\*(?<body>[^_*\s](.*[^_*\s])?)\*_(?<right>.*)$/;
+export const italicBoldRegex = /^(?<left>.*?)_\*(?<body>[^_*\s]([^*]*[^*\s])?)\*_(?<right>.*)$/;
 
 export function parseItalicBold(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const { left, body, right } = text.match(italicBoldRegex)?.groups as Record<string, string>;
