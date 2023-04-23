@@ -1,0 +1,47 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+<Meta title="Get Started/Viewer" />
+
+# Viewer
+
+The viewer is the readonly component of React Clay Editor. You can implement a range of viewers and even custom editors
+by compounding components - `ViewerRoot`, `ViewerTextFieldRoot`, `ViewerHeader`, `ViewerTextFieldBody` and your own
+components.
+
+import * as ViewerStories from '../ts/Viewer.stories.tsx';
+
+## Simple Viewer
+
+<Canvas of={ViewerStories.SimpleViewerStory} />
+
+## Fullwidth
+
+`className` is available to overwrite the default styling.
+
+<Canvas of={ViewerStories.FullwidthStory} />
+
+**NOTE**: a className selector in CSS should be **doubled**. Here is an example using `@emotion/css`.
+
+```ts
+const className = css`
+  && {
+    width: 100%;
+  }
+`;
+// two ampersands (&&) is important
+```
+
+## With Header
+
+The header is useful to show a fixed title of a document. The header can be placed in both of a fixed area and a
+scrollable area.
+
+<Canvas of={ViewerStories.WithFixedHeaderStory} />
+
+<Canvas of={ViewerStories.WithScrollableHeaderStory} />
+
+## Dual-Paned Editor
+
+You can implement a dual-paned editor by using the viewer and the standard `<textarea>`.
+
+<Canvas of={ViewerStories.DualPanedEditorStory} />

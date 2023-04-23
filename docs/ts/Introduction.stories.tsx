@@ -12,6 +12,7 @@ import {
 } from '../../src';
 
 import { css } from '@emotion/css';
+import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 // prettier-ignore
@@ -149,7 +150,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
   },
 };
 
-const DemoEditor: React.FC = () => {
+const Introduction: React.FC = () => {
   const [text, setText] = React.useState(initialText);
   return (
     <EditorRoot
@@ -171,4 +172,12 @@ const DemoEditor: React.FC = () => {
   );
 };
 
-export default DemoEditor;
+const meta: Meta<typeof Introduction> = {
+  component: Introduction,
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Introduction>;
+
+export const IntroductionStory: Story = {};
