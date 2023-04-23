@@ -4,7 +4,7 @@ import { ContentNode } from '../content/types';
 
 import { DecorationNode } from './types';
 
-export const boldRegex = /^(?<left>.*?)\*(?<body>[^*\s](.*[^*\s])?)\*(?<right>.*)$/;
+export const boldRegex = /^(?<left>.*?)\*(?<body>[^*\s]([^*]*[^*\s])?)\*(?<right>.*)$/;
 
 export function parseBold(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   const { left, body, right } = text.match(boldRegex)?.groups as Record<string, string>;

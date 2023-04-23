@@ -166,9 +166,19 @@ function handleOnMarkdownDecorationItemClick(
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (!isEndPoint(contentPosition) && contentNode.type !== 'normal') return [text, state];
-    const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
-    return insertContentAtCursor(text, nodes, state, config);
+    if (isEndPoint(contentPosition) || contentNode.type === 'normal') {
+      const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
+      return insertContentAtCursor(text, nodes, state, config);
+    }
+
+    if (contentNode.type === 'decoration') {
+      const newFacingMeta = contentNode.facingMeta + meta;
+      const newTrailingMeta = meta + contentNode.trailingMeta;
+      const config = { facingMeta: newFacingMeta, trailingMeta: newTrailingMeta };
+      return replaceContentAtCursor(text, nodes, contentPosition, state, config);
+    }
+
+    return [text, state];
   }
 
   function handleItemOnWithoutSelection(
@@ -177,7 +187,18 @@ function handleOnMarkdownDecorationItemClick(
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
-    return replaceContentAtCursor(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
+
+    let decoCount = 0;
+    for (const decoItem of ['bold', 'italic'] as const) {
+      if (contentNode.decoration[decoItem]) decoCount++;
+    }
+
+    const config = { facingMeta: '', trailingMeta: '' };
+    if (decoCount > 1) {
+      config.facingMeta = contentNode.facingMeta.replaceAll(meta, '');
+      config.trailingMeta = contentNode.trailingMeta.replaceAll(meta, '');
+    }
+    return replaceContentAtCursor(text, nodes, contentPosition, state, config);
   }
 
   function handleItemOffWithSelection(
@@ -185,9 +206,19 @@ function handleOnMarkdownDecorationItemClick(
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
-    if (contentNode.type !== 'normal') return [text, state];
-    const config = { facingMeta: meta, content: menuItem, trailingMeta: meta };
-    return createContentByCursorSelection(text, nodes, state, config);
+    if (contentNode.type === 'normal') {
+      const config = { facingMeta: meta, trailingMeta: meta };
+      return createContentByCursorSelection(text, nodes, state, config);
+    }
+
+    if (contentNode.type === 'decoration') {
+      const newFacingMeta = contentNode.facingMeta + meta;
+      const newTrailingMeta = meta + contentNode.trailingMeta;
+      const config = { facingMeta: newFacingMeta, trailingMeta: newTrailingMeta };
+      return splitContentByCursorSelection(text, nodes, contentPosition, state, config);
+    }
+
+    return [text, state];
   }
 
   function handleItemOnWithSelection(
@@ -196,7 +227,18 @@ function handleOnMarkdownDecorationItemClick(
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
-    return splitContentByCursorSelection(text, nodes, contentPosition, state, { facingMeta: '', trailingMeta: '' });
+
+    let decoCount = 0;
+    for (const decoItem of ['bold', 'italic'] as const) {
+      if (contentNode.decoration[decoItem]) decoCount++;
+    }
+
+    const config = { facingMeta: '', trailingMeta: '' };
+    if (decoCount > 1) {
+      config.facingMeta = contentNode.facingMeta.replaceAll(meta, '');
+      config.trailingMeta = contentNode.trailingMeta.replaceAll(meta, '');
+    }
+    return splitContentByCursorSelection(text, nodes, contentPosition, state, config);
   }
 
   if (!state.cursorCoordinate) return [text, state];
