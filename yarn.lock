@@ -4034,7 +4034,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/manager-api@npm:7.0.6":
+"@storybook/manager-api@npm:7.0.6, @storybook/manager-api@npm:^7.0.6":
   version: 7.0.6
   resolution: "@storybook/manager-api@npm:7.0.6"
   dependencies:
@@ -12881,6 +12881,7 @@ __metadata:
     "@storybook/addon-links": ^7.0.6
     "@storybook/channel-postmessage": ^7.0.6
     "@storybook/channel-websocket": ^7.0.6
+    "@storybook/manager-api": ^7.0.6
     "@storybook/preview-api": ^7.0.6
     "@storybook/react": ^7.0.6
     "@storybook/react-webpack5": ^7.0.6

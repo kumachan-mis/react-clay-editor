@@ -3,7 +3,7 @@ import packageJson from '../package.json';
 import remarkGfm from 'remark-gfm';
 
 const config: StorybookConfig = {
-  stories: ['../docs/**/*.stories.mdx', '../docs/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: [{ directory: '../docs' }],
   staticDirs: ['../docs/public'],
   addons: [
     {

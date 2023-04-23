@@ -1,0 +1,52 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+<Meta title="Get Started/Editor" />
+
+# Editor
+
+The editor is the main component of React Clay Editor. You can implement a range of editors by compounding components -
+`EditorRoot`, `EditorTextFieldRoot`, `EditorHeader`, `EditorTextFieldBody`, `EditorSyntaxMenu` and your own components.
+
+import * as EditorStories from '../ts/Editor.stories.tsx';
+
+## Simple Editor
+
+<Canvas of={EditorStories.SimpleEditorStory} />
+
+## Fullwidth
+
+`className` is available to overwrite the default styling.
+
+<Canvas of={EditorStories.FullwidthStory} />
+
+**NOTE**: a className selector in CSS should be **doubled**. Here is an example using `@emotion/css`.
+
+```ts
+const className = css`
+  && {
+    width: 100%;
+  }
+`;
+// two ampersands (&&) is important
+```
+
+## With SyntaxMenu
+
+The syntax menu helps users who are not familiar with syntactic writing.
+
+<Canvas of={EditorStories.WithSyntaxMenuStory} />
+
+## With Header
+
+A text in the header is uneditable. It is useful to show a fixed title of a document. The header can be placed in both
+of a fixed area and a scrollable area.
+
+<Canvas of={EditorStories.WithFixedHeaderStory} />
+
+<Canvas of={EditorStories.WithScrollableHeaderStory} />
+
+## With User-Defined Footer
+
+You can customize the editor as you like.
+
+<Canvas of={EditorStories.WithUserDefinedFooterStory} />

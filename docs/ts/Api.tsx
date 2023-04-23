@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-const ApiExplanation: React.FC<{
+const Api: React.FC<{
   colorized:
     | 'all'
     | 'container'
@@ -74,5 +74,5 @@ const ScrollableContent = styled.div<{ colorized: boolean }>(
 `
 );
 
-export default ApiExplanation;
+export default Api;
 export { colorPalette };

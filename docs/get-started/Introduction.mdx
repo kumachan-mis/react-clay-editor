@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { Canvas, Meta } from '@storybook/addon-docs';
 import LinkTo from '@storybook/addon-links/react';
 
 <Meta title="Get Started/Introduction" />
@@ -10,13 +10,9 @@ React Clay Editor is a document editor quick editable and flexible like clay in 
 - The editor is inspired by [Scrapbox](https://scrapbox.io/product?lang=en)
 - Icons made from [Icon Fonts](http://www.onlinewebfonts.com/icon) are licensed by CC BY 3.0
 
-import DemoEditor from '../ts/DemoEditor';
+import * as IntroductionStories from '../ts/Introduction.stories';
 
-<Canvas>
-  <Story name="Demo Editor">
-    <DemoEditor />
-  </Story>
-</Canvas>
+<Canvas of={IntroductionStories.IntroductionStory} />
 
 ## Motivation
 
