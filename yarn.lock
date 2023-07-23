@@ -4413,23 +4413,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/channel-postmessage@npm:7.1.0, @storybook/channel-postmessage@npm:^7.1.0":
+"@storybook/channel-postmessage@npm:7.1.0":
   version: 7.1.0
   resolution: "@storybook/channel-postmessage@npm:7.1.0"
   dependencies:
     "@storybook/channels": 7.1.0
     "@storybook/client-logger": 7.1.0
   checksum: b3ba7a92c4c9d0b1b8160c0773c2370282d4f0f5c524e89176119c8f7e7348eeff61d482d0c96dd4cb2ec40d99d95bcc694da0274320c6fa5b8c3f226575463b
-  languageName: node
-  linkType: hard
-
-"@storybook/channel-websocket@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "@storybook/channel-websocket@npm:7.1.0"
-  dependencies:
-    "@storybook/channels": 7.1.0
-    "@storybook/client-logger": 7.1.0
-  checksum: f6743e68e9fcd88a535aba8b18e4894fd061aa7e8655eaa8f611210959362e425780ab5ebc7f693af429488d3ec301e90fe7fdcae32de79c29c2debcc149d631
   languageName: node
   linkType: hard
 
@@ -13925,8 +13915,6 @@ __metadata:
     "@storybook/addon-docs": ^7.1.0
     "@storybook/addon-essentials": ^7.1.0
     "@storybook/addon-links": ^7.1.0
-    "@storybook/channel-postmessage": ^7.1.0
-    "@storybook/channel-websocket": ^7.1.0
     "@storybook/channels": ^7.1.0
     "@storybook/manager-api": ^7.1.0
     "@storybook/preview-api": ^7.1.0
