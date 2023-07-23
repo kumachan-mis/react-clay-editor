@@ -23,7 +23,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "javascript.suggestionActions.enabled": false,
-  "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
