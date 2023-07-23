@@ -126,9 +126,9 @@ dist
 !.yarn/sdks
 !.yarn/versions
 # Comment here to activate zero-installs
-.pnp.*
+# .pnp.*
 # and uncomment here to activate zero-installs
-# !.yarn/cache
+!.yarn/cache
 
 ### Node Patch ###
 # Serverless Webpack directories
