@@ -1,13 +1,24 @@
 import { linesToBe, mouseSelect } from './testUtils';
 
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('section menu: button, no-selection, empty-line', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('section menu: button, no-selection, empty-line', async () => {
   await page.locator('[data-selectid=char-L0C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -19,7 +30,7 @@ test('section menu: button, no-selection, empty-line', async ({ page }) => {
   await linesToBe(page, ['## React Clay Editor']);
 });
 
-test('section menu: normal, no-selection, empty-line', async ({ page }) => {
+test('section menu: normal, no-selection, empty-line', async () => {
   await page.locator('[data-selectid=char-L0C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -32,7 +43,7 @@ test('section menu: normal, no-selection, empty-line', async ({ page }) => {
   await linesToBe(page, ['### React Clay Editor']);
 });
 
-test('section menu: larger, no-selection, empty-line', async ({ page }) => {
+test('section menu: larger, no-selection, empty-line', async () => {
   await page.locator('[data-selectid=char-L0C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -45,7 +56,7 @@ test('section menu: larger, no-selection, empty-line', async ({ page }) => {
   await linesToBe(page, ['## React Clay Editor']);
 });
 
-test('section menu: largest, no-selection, empty-line', async ({ page }) => {
+test('section menu: largest, no-selection, empty-line', async () => {
   await page.locator('[data-selectid=char-L0C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -58,7 +69,7 @@ test('section menu: largest, no-selection, empty-line', async ({ page }) => {
   await linesToBe(page, ['# React Clay Editor']);
 });
 
-test('section menu: button, no-selection, normal-line (normal text)', async ({ page }) => {
+test('section menu: button, no-selection, normal-line (normal text)', async () => {
   await page.keyboard.insertText(['WYSIWYG Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C0]').click();
@@ -72,7 +83,7 @@ test('section menu: button, no-selection, normal-line (normal text)', async ({ p
   await linesToBe(page, ['## .WYSIWYG Editor']);
 });
 
-test('section menu: normal, no-selection, normal-line (normal text)', async ({ page }) => {
+test('section menu: normal, no-selection, normal-line (normal text)', async () => {
   await page.keyboard.insertText(['WYSIWYG Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C1]').click();
@@ -87,7 +98,7 @@ test('section menu: normal, no-selection, normal-line (normal text)', async ({ p
   await linesToBe(page, ['### W.YSIWYG Editor']);
 });
 
-test('section menu: larger, selection, normal-line (normal text)', async ({ page }) => {
+test('section menu: larger, selection, normal-line (normal text)', async () => {
   await page.keyboard.insertText(['WYSIWYG Editor'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C9]', '[data-selectid=char-L0C3]');
@@ -102,7 +113,7 @@ test('section menu: larger, selection, normal-line (normal text)', async ({ page
   await linesToBe(page, ['## WYS.ditor']);
 });
 
-test('section menu: button, no-selection, normal-line (decorated text)', async ({ page }) => {
+test('section menu: button, no-selection, normal-line (decorated text)', async () => {
   await page.keyboard.insertText(['`WYSIWYG` Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C8]').click();
@@ -116,7 +127,7 @@ test('section menu: button, no-selection, normal-line (decorated text)', async (
   await linesToBe(page, ['## `WYSIWYG.` Editor']);
 });
 
-test('section menu: largest, selection, normal-line (decorated text)', async ({ page }) => {
+test('section menu: largest, selection, normal-line (decorated text)', async () => {
   await page.keyboard.insertText(['`WYSIWYG` Editor'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C8]', '[data-selectid=char-L0C10]');
@@ -131,7 +142,7 @@ test('section menu: largest, selection, normal-line (decorated text)', async ({ 
   await linesToBe(page, ['# `WYSIWYG.Editor']);
 });
 
-test('section menu: button, no-selection, section-line (normal text)', async ({ page }) => {
+test('section menu: button, no-selection, section-line (normal text)', async () => {
   await page.keyboard.insertText(['### WYSIWYG Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C6]').click();
@@ -145,7 +156,7 @@ test('section menu: button, no-selection, section-line (normal text)', async ({ 
   await linesToBe(page, ['WY.SIWYG Editor']);
 });
 
-test('section menu: normal, no-selection, section-line (normal text)', async ({ page }) => {
+test('section menu: normal, no-selection, section-line (normal text)', async () => {
   await page.keyboard.insertText(['### WYSIWYG Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C6]').click();
@@ -160,7 +171,7 @@ test('section menu: normal, no-selection, section-line (normal text)', async ({ 
   await linesToBe(page, ['WY.SIWYG Editor']);
 });
 
-test('section menu: button, no-selection, section-line (decorated text)', async ({ page }) => {
+test('section menu: button, no-selection, section-line (decorated text)', async () => {
   await page.keyboard.insertText(['### $f(x)$'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C2]').click();
@@ -174,7 +185,7 @@ test('section menu: button, no-selection, section-line (decorated text)', async 
   await linesToBe(page, ['.$f(x)$']);
 });
 
-test('section menu: largest, selection, section-line (decorated text)', async ({ page }) => {
+test('section menu: largest, selection, section-line (decorated text)', async () => {
   await page.keyboard.insertText(['### $f(x)$'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C5]', '[data-selectid=char-L0C6]');
@@ -189,7 +200,7 @@ test('section menu: largest, selection, section-line (decorated text)', async ({
   await linesToBe(page, ['# $g(x)$']);
 });
 
-test('section menu: button, selection, section-line (larger text)', async ({ page }) => {
+test('section menu: button, selection, section-line (larger text)', async () => {
   await page.keyboard.insertText(['## WYSIWYG Editor'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C6]', '[data-selectid=char-L0C8]');
@@ -203,7 +214,7 @@ test('section menu: button, selection, section-line (larger text)', async ({ pag
   await linesToBe(page, ['WYS.YG Editor']);
 });
 
-test('section menu: normal, no-selection, section-line (larger text)', async ({ page }) => {
+test('section menu: normal, no-selection, section-line (larger text)', async () => {
   await page.keyboard.insertText(['## WYSIWYG Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C6]').click();
@@ -218,7 +229,7 @@ test('section menu: normal, no-selection, section-line (larger text)', async ({ 
   await linesToBe(page, ['### WYS.IWYG Editor']);
 });
 
-test('section menu: button, no-selection, other (line node)', async ({ page }) => {
+test('section menu: button, no-selection, other (line node)', async () => {
   await page.keyboard.insertText(['> ## Markup Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C17]').click();
@@ -232,7 +243,7 @@ test('section menu: button, no-selection, other (line node)', async ({ page }) =
   await linesToBe(page, ['> ## Markup Edito.r']);
 });
 
-test('section menu: disabled, no-selection, other (line node)', async ({ page }) => {
+test('section menu: disabled, no-selection, other (line node)', async () => {
   await page.keyboard.insertText(['- ## Markup Editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C17]').click();
@@ -246,7 +257,7 @@ test('section menu: disabled, no-selection, other (line node)', async ({ page })
   await linesToBe(page, ['- ## Markup Edito.r']);
 });
 
-test('section menu: button, no-selection, other (block node)', async ({ page }) => {
+test('section menu: button, no-selection, other (block node)', async () => {
   await page.keyboard.insertText(['```', '### block code', '```'].join('\n'));
 
   await page.locator('[data-selectid=char-L1C5]').click();
@@ -260,7 +271,7 @@ test('section menu: button, no-selection, other (block node)', async ({ page }) 
   await linesToBe(page, ['```', '### b.lock code', '```']);
 });
 
-test('section menu: disabled, selection, other (block node)', async ({ page }) => {
+test('section menu: disabled, selection, other (block node)', async () => {
   await page.keyboard.insertText(['```', '### block code', '```'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L1C5]', '[data-selectid=char-L1C4]');
@@ -274,7 +285,7 @@ test('section menu: disabled, selection, other (block node)', async ({ page }) =
   await linesToBe(page, ['```', '### .lock code', '```']);
 });
 
-test('section menu: button, multi-lines-selection', async ({ page }) => {
+test('section menu: button, multi-lines-selection', async () => {
   await page.keyboard.insertText(
     ['Editor', 'Source code editor, for editing source code', 'Text editor, for editing plain text'].join('\n')
   );
@@ -294,7 +305,7 @@ test('section menu: button, multi-lines-selection', async ({ page }) => {
   await linesToBe(page, ['. editor, for editing source code', 'Text editor, for editing plain text']);
 });
 
-test('section menu: disabled, multi-lines-selection', async ({ page }) => {
+test('section menu: disabled, multi-lines-selection', async () => {
   await page.keyboard.insertText(['Editor', ''].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L1C0]');

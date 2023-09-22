@@ -27,6 +27,7 @@ const containerClassName = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const editorClassName = css`
@@ -36,12 +37,19 @@ const editorClassName = css`
   }
 `;
 
-const viewerClassNamme = css`
+const viewerClassName = css`
   && {
     width: 35%;
     height: 70%;
     margin: 5px;
   }
+`;
+
+const resetButtonClassName = css`
+  position: absolute;
+  top: 36px;
+  left: 36px;
+  padding: 8px 16px;
 `;
 
 const textProps: EditorTextProps = {
@@ -113,30 +121,52 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
 export const App: React.FC = () => {
   switch (window.location.pathname) {
     case '/':
-      return <div>React Clay Editor - Test</div>;
+      return <RootPage />;
     case '/bracket/editor':
     case '/bracket/editor/':
-      return <TestTargetEditor syntax="bracket" />;
+      return <TestTargetEditorPage syntax="bracket" />;
     case '/bracket/viewer':
     case '/bracket/viewer/':
-      return <TestTargetViewer syntax="bracket" />;
+      return <TestTargetViewerPage syntax="bracket" />;
     case '/markdown/editor':
     case '/markdown/editor/':
-      return <TestTargetEditor syntax="markdown" />;
+      return <TestTargetEditorPage syntax="markdown" />;
     case '/markdown/viewer':
     case '/markdown/viewer/':
-      return <TestTargetViewer syntax="markdown" />;
+      return <TestTargetViewerPage syntax="markdown" />;
     default:
-      return <div>404 Not Found</div>;
+      return <NotFoundPage />;
   }
 };
 
-const TestTargetEditor: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
+const RootPage: React.FC = () => (
+  <div>
+    <div>React Clay Editor - Test</div>
+    <ul>
+      <li>
+        <a href="/bracket/editor">Bracket Editor</a>
+      </li>
+      <li>
+        <a href="/bracket/viewer">Bracket Viewer</a>
+      </li>
+      <li>
+        <a href="/markdown/editor">Markdown Editor</a>
+      </li>
+      <li>
+        <a href="/markdown/viewer">Markdown Viewer</a>
+      </li>
+    </ul>
+  </div>
+);
+
+const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
   const [text, setText] = React.useState('');
+  const [key, setKey] = React.useState(0);
 
   return (
     <div className={containerClassName}>
       <EditorRoot
+        key={key}
         text={text}
         setText={setText}
         syntax={syntax}
@@ -154,34 +184,56 @@ const TestTargetEditor: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax
         </EditorTextFieldRoot>
         <MockLines text={text} />
       </EditorRoot>
+      <button
+        className={resetButtonClassName}
+        onClick={() => {
+          setText('');
+          setKey((key) => key + 1); // force re-mount
+        }}
+        data-testid="refresh-button"
+      >
+        Refresh
+      </button>
     </div>
   );
 };
 
-const TestTargetViewer: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
+const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
   const [text, setText] = React.useState('');
+  const [key, setKey] = React.useState(0);
 
   return (
     <div className={containerClassName}>
       <textarea
-        className={viewerClassNamme}
+        className={viewerClassName}
         value={text}
         onChange={(event) => setText(event.target.value)}
         data-testid="mock-textarea"
       />
       <ViewerRoot
+        key={key}
         text={text}
         syntax={syntax}
         textProps={textProps}
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
         taggedLinkPropsMap={taggedLinkPropsMap}
-        className={viewerClassNamme}
+        className={viewerClassName}
       >
         <ViewerTextFieldRoot>
           <ViewerTextFieldBody />
         </ViewerTextFieldRoot>
       </ViewerRoot>
+      <button
+        className={resetButtonClassName}
+        onClick={() => {
+          setText('');
+          setKey((key) => key + 1); // force re-mount
+        }}
+        data-testid="refresh-button"
+      >
+        Refresh
+      </button>
     </div>
   );
 };
@@ -200,3 +252,5 @@ const MockLines: React.FC<{ text: string }> = ({ text }) => (
     ))}
   </div>
 );
+
+const NotFoundPage: React.FC = () => <div>404 Not Found</div>;

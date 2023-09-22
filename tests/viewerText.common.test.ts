@@ -1,17 +1,28 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./viewer');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.getByTestId('mock-textarea').click();
 });
 
-test('normal', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('normal', async () => {
   await page.keyboard.insertText('hello world');
 
   await expect(page.locator('[data-styleid=normal]').nth(0)).toHaveText('hello world');
 });
 
-test('hashtag', async ({ page }) => {
+test('hashtag', async () => {
   await page.keyboard.insertText('#hashtagtest, #hashtag_test, #hashtag-test');
 
   await expect(page.locator('[data-styleid=hashtag]').nth(0)).toHaveText('#hashtagtest');
@@ -19,19 +30,19 @@ test('hashtag', async ({ page }) => {
   await expect(page.locator('[data-styleid=hashtag]').nth(2)).toHaveText('#hashtag-test');
 });
 
-test('bracket link', async ({ page }) => {
+test('bracket link', async () => {
   await page.keyboard.insertText('[bracket test]');
 
   await expect(page.locator('[data-styleid=bracket-link]').nth(0)).toHaveText('bracket test');
 });
 
-test('tagged link', async ({ page }) => {
+test('tagged link', async () => {
   await page.keyboard.insertText('[npm: package name] [github: @username/repository]');
   await expect(page.locator('[data-styleid=npm-tagged-link]').nth(0)).toHaveText('npm: package name');
   await expect(page.locator('[data-styleid=github-tagged-link]').nth(0)).toHaveText('github: @username/repository');
 });
 
-test('formula', async ({ page }) => {
+test('formula', async () => {
   await page.keyboard.insertText(
     [
       // input text
@@ -50,7 +61,7 @@ test('formula', async ({ page }) => {
   await expect(page.locator('[data-styleid=block-formula]')).toHaveCount(2);
 });
 
-test('code', async ({ page }) => {
+test('code', async () => {
   await page.keyboard.insertText(
     [
       // input text
@@ -76,7 +87,7 @@ test('code', async ({ page }) => {
   );
 });
 
-test('quotation', async ({ page }) => {
+test('quotation', async () => {
   await page.keyboard.insertText('> Genius is one percent inspiration and ninety-nine percent perspiration');
   await expect(page.locator('[data-styleid=quotation]').nth(0)).toHaveText(
     'Genius is one percent inspiration and ninety-nine percent perspiration'

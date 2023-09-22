@@ -1,13 +1,24 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('text suggestion', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('text suggestion', async () => {
   await page.keyboard.type('R');
   await page.keyboard.press('Enter');
   await page.keyboard.press('Enter');
@@ -40,7 +51,7 @@ test('text suggestion', async ({ page }) => {
   ]);
 });
 
-test('bracket link suggestion', async ({ page }) => {
+test('bracket link suggestion', async () => {
   await page.keyboard.type('[');
   await page.keyboard.press('Enter');
   await page.keyboard.press('ArrowRight');
@@ -90,7 +101,7 @@ test('bracket link suggestion', async ({ page }) => {
   ]);
 });
 
-test('hashtag suggestion', async ({ page }) => {
+test('hashtag suggestion', async () => {
   await page.keyboard.type('#');
   await page.keyboard.press('Enter');
   await page.keyboard.press('Enter');
@@ -134,7 +145,7 @@ test('hashtag suggestion', async ({ page }) => {
   ]);
 });
 
-test('tagged link suggestion', async ({ page }) => {
+test('tagged link suggestion', async () => {
   await page.keyboard.type('[github:');
   await page.keyboard.press('Enter');
   await page.keyboard.press('ArrowRight');

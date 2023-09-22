@@ -1,13 +1,24 @@
 import { linesToBe, mouseSelect } from './testUtils';
 
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('decoration menus: bold, no-selection, empty-line', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('decoration menus: bold, no-selection, empty-line', async () => {
   await page.locator('[data-selectid=char-L0C0]').click();
 
   await page.locator('[data-selectid=bold-menu]').click();
@@ -19,7 +30,7 @@ test('decoration menus: bold, no-selection, empty-line', async ({ page }) => {
   await linesToBe(page, ['[* React Clay Editor]']);
 });
 
-test('decoration menus: italic, no-selection, empty-line', async ({ page }) => {
+test('decoration menus: italic, no-selection, empty-line', async () => {
   await page.locator('[data-selectid=char-L0C0]').click();
 
   await page.locator('[data-selectid=italic-menu]').click();
@@ -31,7 +42,7 @@ test('decoration menus: italic, no-selection, empty-line', async ({ page }) => {
   await linesToBe(page, ['[/ React Clay Editor]']);
 });
 
-test('decoration menus: underline, no-selection, empty-line', async ({ page }) => {
+test('decoration menus: underline, no-selection, empty-line', async () => {
   await page.locator('[data-selectid=char-L0C0]').click();
 
   await page.locator('[data-selectid=underline-menu]').click();
@@ -43,7 +54,7 @@ test('decoration menus: underline, no-selection, empty-line', async ({ page }) =
   await linesToBe(page, ['[_ React Clay Editor]']);
 });
 
-test('decoration menus: bold, no-selection, in-decoration', async ({ page }) => {
+test('decoration menus: bold, no-selection, in-decoration', async () => {
   await page.keyboard.insertText(['[* bold text]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C4]').click();
@@ -57,7 +68,7 @@ test('decoration menus: bold, no-selection, in-decoration', async ({ page }) => 
   await linesToBe(page, ['b.old text']);
 });
 
-test('decoration menus: italic, no-selection, in-decoration', async ({ page }) => {
+test('decoration menus: italic, no-selection, in-decoration', async () => {
   await page.keyboard.insertText(['[* bold text]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C7]').click();
@@ -71,7 +82,7 @@ test('decoration menus: italic, no-selection, in-decoration', async ({ page }) =
   await linesToBe(page, ['[*/ bold italic text]']);
 });
 
-test('decoration menus: underline, no-selection, in-decoration', async ({ page }) => {
+test('decoration menus: underline, no-selection, in-decoration', async () => {
   await page.keyboard.insertText(['[/_ italic underline text]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C20]').click();
@@ -87,7 +98,7 @@ test('decoration menus: underline, no-selection, in-decoration', async ({ page }
   await linesToBe(page, ['[/ italic text]']);
 });
 
-test('decoration menus: bold, no-selection, in-lacked-with-decoration-both', async ({ page }) => {
+test('decoration menus: bold, no-selection, in-lacked-with-decoration-both', async () => {
   await page.keyboard.insertText(['[*/ left][/ text][/* right]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C14]').click();
@@ -101,7 +112,7 @@ test('decoration menus: bold, no-selection, in-lacked-with-decoration-both', asy
   await linesToBe(page, ['[*/ left][/* te.xt][/* right]']);
 });
 
-test('decoration menus: underline, no-selection, in-lacked-with-decoration-right', async ({ page }) => {
+test('decoration menus: underline, no-selection, in-lacked-with-decoration-right', async () => {
   await page.keyboard.insertText(['[_*/ left][/* text][_ right]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C16]').click();
@@ -115,7 +126,7 @@ test('decoration menus: underline, no-selection, in-lacked-with-decoration-right
   await linesToBe(page, ['[_*/ left][/*_ te.xt][_ right]']);
 });
 
-test('decoration menus: italic, no-selection, in-lacked-with-decoration-right', async ({ page }) => {
+test('decoration menus: italic, no-selection, in-lacked-with-decoration-right', async () => {
   await page.keyboard.insertText(['[*/ left][* text][* right]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C14]').click();
@@ -129,7 +140,7 @@ test('decoration menus: italic, no-selection, in-lacked-with-decoration-right', 
   await linesToBe(page, ['[*/ left][*/ te.xt][* right]']);
 });
 
-test('decoration menus: italic, no-selection, in-normal', async ({ page }) => {
+test('decoration menus: italic, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C6]').click();
@@ -143,7 +154,7 @@ test('decoration menus: italic, no-selection, in-normal', async ({ page }) => {
   await linesToBe(page, ['normal[/ important] text']);
 });
 
-test('decoration menus: bold, no-selection, in-normal-with-decoration-left', async ({ page }) => {
+test('decoration menus: bold, no-selection, in-normal-with-decoration-left', async () => {
   await page.keyboard.insertText(['[* important]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C13]').click();
@@ -157,7 +168,7 @@ test('decoration menus: bold, no-selection, in-normal-with-decoration-left', asy
   await linesToBe(page, ['[* important][* really important]']);
 });
 
-test('decoration menus: underline, no-selection, in-normal-with-decoration-right', async ({ page }) => {
+test('decoration menus: underline, no-selection, in-normal-with-decoration-right', async () => {
   await page.keyboard.insertText(['[_ important]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C0]').click();
@@ -171,7 +182,7 @@ test('decoration menus: underline, no-selection, in-normal-with-decoration-right
   await linesToBe(page, ['[_ This is ][_ important]']);
 });
 
-test('decoration menus: bold, no-selection, other (section line)', async ({ page }) => {
+test('decoration menus: bold, no-selection, other (section line)', async () => {
   await page.keyboard.insertText(['`WYSIWYG` editor'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C6]').click();
@@ -185,7 +196,7 @@ test('decoration menus: bold, no-selection, other (section line)', async ({ page
   await linesToBe(page, ['`WYSIW.YG` editor']);
 });
 
-test('decoration menus: italic, no-selection, other (content node)', async ({ page }) => {
+test('decoration menus: italic, no-selection, other (content node)', async () => {
   await page.keyboard.insertText(['[bracket link]'].join('\n'));
 
   await page.locator('[data-selectid=char-L0C4]').click();
@@ -199,7 +210,7 @@ test('decoration menus: italic, no-selection, other (content node)', async ({ pa
   await linesToBe(page, ['[bra.cket link]']);
 });
 
-test('decoration menus: underline, no-selection, other (block node)', async ({ page }) => {
+test('decoration menus: underline, no-selection, other (block node)', async () => {
   await page.keyboard.insertText(['```', 'code string', '```'].join('\n'));
 
   await page.locator('[data-selectid=char-L1C6]').click();
@@ -213,7 +224,7 @@ test('decoration menus: underline, no-selection, other (block node)', async ({ p
   await linesToBe(page, ['```', 'code s.tring', '```']);
 });
 
-test('decoration menus: bold, single-line-selection, in-decoration-all', async ({ page }) => {
+test('decoration menus: bold, single-line-selection, in-decoration-all', async () => {
   await page.keyboard.insertText(['[* bold text]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L0C13]');
@@ -227,7 +238,7 @@ test('decoration menus: bold, single-line-selection, in-decoration-all', async (
   await linesToBe(page, ['.']);
 });
 
-test('decoration menus: italic, single-line-selection, in-decoration-all', async ({ page }) => {
+test('decoration menus: italic, single-line-selection, in-decoration-all', async () => {
   await page.keyboard.insertText(['[_ underline text]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L0C1]');
@@ -241,7 +252,7 @@ test('decoration menus: italic, single-line-selection, in-decoration-all', async
   await linesToBe(page, ['.underline text]']);
 });
 
-test('decoration menus: underline, single-line-selection, in-decoration-all', async ({ page }) => {
+test('decoration menus: underline, single-line-selection, in-decoration-all', async () => {
   await page.keyboard.insertText(['[_/ underline italic text]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C4]', '[data-selectid=char-L0C25]');
@@ -255,7 +266,7 @@ test('decoration menus: underline, single-line-selection, in-decoration-all', as
   await linesToBe(page, ['[/ .]']);
 });
 
-test('decoration menus: italic, single-line-selection, in-decoration-left (without-deco)', async ({ page }) => {
+test('decoration menus: italic, single-line-selection, in-decoration-left (without-deco)', async () => {
   await page.keyboard.insertText(['[* left mid right]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C3]', '[data-selectid=char-L0C7]');
@@ -269,7 +280,7 @@ test('decoration menus: italic, single-line-selection, in-decoration-left (witho
   await linesToBe(page, ['[*/ .][*  mid right]']);
 });
 
-test('decoration menus: italic, single-line-selection, in-decoration-left (with-deco)', async ({ page }) => {
+test('decoration menus: italic, single-line-selection, in-decoration-left (with-deco)', async () => {
   await page.keyboard.insertText(['[* left mid right]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L0C7]');
@@ -283,7 +294,7 @@ test('decoration menus: italic, single-line-selection, in-decoration-left (with-
   await linesToBe(page, ['.][*  mid right]']);
 });
 
-test('decoration menus: underline, single-line-selection, in-decoration-right (without-deco)', async ({ page }) => {
+test('decoration menus: underline, single-line-selection, in-decoration-right (without-deco)', async () => {
   await page.keyboard.insertText(['[*_ left mid right]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C13]', '[data-selectid=char-L0C18]');
@@ -297,7 +308,7 @@ test('decoration menus: underline, single-line-selection, in-decoration-right (w
   await linesToBe(page, ['[*_ left mid ][* .]']);
 });
 
-test('decoration menus: underline, single-line-selection, in-decoration-right (with-deco)', async ({ page }) => {
+test('decoration menus: underline, single-line-selection, in-decoration-right (with-deco)', async () => {
   await page.keyboard.insertText(['[*_ left mid right]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C13]', '[data-selectid=char-L0C19]');
@@ -311,7 +322,7 @@ test('decoration menus: underline, single-line-selection, in-decoration-right (w
   await linesToBe(page, ['[*_ left mid ][* .']);
 });
 
-test('decoration menus: bold, single-line-selection, in-decoration-mid', async ({ page }) => {
+test('decoration menus: bold, single-line-selection, in-decoration-mid', async () => {
   await page.keyboard.insertText(['[* left mid right]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C7]', '[data-selectid=char-L0C11]');
@@ -325,7 +336,7 @@ test('decoration menus: bold, single-line-selection, in-decoration-mid', async (
   await linesToBe(page, ['[* left].[*  right]']);
 });
 
-test('decoration menus: italic, single-line-selection, in-lacked-with-decoration-left', async ({ page }) => {
+test('decoration menus: italic, single-line-selection, in-lacked-with-decoration-left', async () => {
   await page.keyboard.insertText(['[*/ left][*  mid right]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C12]', '[data-selectid=char-L0C16]');
@@ -339,7 +350,7 @@ test('decoration menus: italic, single-line-selection, in-lacked-with-decoration
   await linesToBe(page, ['[*/ left][*/ .][*  right]']);
 });
 
-test('decoration menus: underline, single-line-selection, in-lacked-with-decoration-right', async ({ page }) => {
+test('decoration menus: underline, single-line-selection, in-lacked-with-decoration-right', async () => {
   await page.keyboard.insertText(['[*_ left][*  mid right]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C5]', '[data-selectid=char-L0C9]');
@@ -353,7 +364,7 @@ test('decoration menus: underline, single-line-selection, in-lacked-with-decorat
   await linesToBe(page, ['[*_ l][* .[*  mid right]']);
 });
 
-test('decoration menus: bold, single-line-selection, in-normal', async ({ page }) => {
+test('decoration menus: bold, single-line-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C10]');
@@ -367,7 +378,7 @@ test('decoration menus: bold, single-line-selection, in-normal', async ({ page }
   await linesToBe(page, ['no[* .]t']);
 });
 
-test('decoration menus: italic, single-line-selection, in-normal', async ({ page }) => {
+test('decoration menus: italic, single-line-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C10]');
@@ -381,7 +392,7 @@ test('decoration menus: italic, single-line-selection, in-normal', async ({ page
   await linesToBe(page, ['no[/ .]t']);
 });
 
-test('decoration menus: underline, single-line-selection, in-normal', async ({ page }) => {
+test('decoration menus: underline, single-line-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C10]');
@@ -395,7 +406,7 @@ test('decoration menus: underline, single-line-selection, in-normal', async ({ p
   await linesToBe(page, ['no[_ .]t']);
 });
 
-test('decoration menus: italic, single-line-selection, in-normal-with-decoration-left', async ({ page }) => {
+test('decoration menus: italic, single-line-selection, in-normal-with-decoration-left', async () => {
   await page.keyboard.insertText(['[/ normal] text'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C10]', '[data-selectid=char-L0C13]');
@@ -409,7 +420,7 @@ test('decoration menus: italic, single-line-selection, in-normal-with-decoration
   await linesToBe(page, ['[/ normal][/ .]xt']);
 });
 
-test('decoration menus: bold, single-line-selection, in-normal-with-decoration-right', async ({ page }) => {
+test('decoration menus: bold, single-line-selection, in-normal-with-decoration-right', async () => {
   await page.keyboard.insertText(['normal [* text]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C7]');
@@ -423,7 +434,7 @@ test('decoration menus: bold, single-line-selection, in-normal-with-decoration-r
   await linesToBe(page, ['no[* .][* text]']);
 });
 
-test('decoration menus: underline, single-line-selection, other (mixed with friends)', async ({ page }) => {
+test('decoration menus: underline, single-line-selection, other (mixed with friends)', async () => {
   await page.keyboard.insertText(['normal [_ text]'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C12]');
@@ -437,7 +448,7 @@ test('decoration menus: underline, single-line-selection, other (mixed with frie
   await linesToBe(page, ['no.xt]']);
 });
 
-test('decoration menus: italic, single-line-selection, other (mixed with foreigner)', async ({ page }) => {
+test('decoration menus: italic, single-line-selection, other (mixed with foreigner)', async () => {
   await page.keyboard.insertText(['normal #hashtag_link'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C12]');
@@ -451,7 +462,7 @@ test('decoration menus: italic, single-line-selection, other (mixed with foreign
   await linesToBe(page, ['no.tag_link']);
 });
 
-test('decoration menus: bold, multi-lines-selection', async ({ page }) => {
+test('decoration menus: bold, multi-lines-selection', async () => {
   await page.keyboard.insertText(['normal text', 'normal text too'].join('\n'));
 
   await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L1C4]');

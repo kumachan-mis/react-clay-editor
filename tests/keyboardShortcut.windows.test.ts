@@ -1,13 +1,24 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('select all (ctrl+a)', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('select all (ctrl+a)', async () => {
   await page.keyboard.insertText(['Hello', 'World'].join('\n'));
 
   await page.keyboard.press('Control+a');
@@ -16,7 +27,7 @@ test('select all (ctrl+a)', async ({ page }) => {
   await linesToBe(page, ['.']);
 });
 
-test('undo intert (ctrl+z)', async ({ page }) => {
+test('undo intert (ctrl+z)', async () => {
   await page.keyboard.press('Control+z');
 
   await page.keyboard.type('abc');
@@ -33,7 +44,7 @@ test('undo intert (ctrl+z)', async ({ page }) => {
   await linesToBe(page, ['ad']);
 });
 
-test('undo delete (ctrl+z)', async ({ page }) => {
+test('undo delete (ctrl+z)', async () => {
   await page.keyboard.type('abc');
   await page.keyboard.press('Backspace');
 
@@ -51,7 +62,7 @@ for (const { name, command } of [
   { name: 'ctrl+shift+z', command: 'Control+Shift+z' },
   { name: 'ctrl+y', command: 'Control+y' },
 ]) {
-  test(`redo insert (${name})`, async ({ page }) => {
+  test(`redo insert (${name})`, async () => {
     await page.keyboard.press(command);
 
     await page.keyboard.type('abc');
@@ -75,7 +86,7 @@ for (const { name, command } of [
   { name: 'ctrl+shift+z', command: 'Control+Shift+z' },
   { name: 'ctrl+y', command: 'Control+y' },
 ]) {
-  test(`redo delete (${name})`, async ({ page }) => {
+  test(`redo delete (${name})`, async () => {
     await page.keyboard.type('abc');
     await page.keyboard.press('Backspace');
     await page.keyboard.press('Control+z');
@@ -91,7 +102,7 @@ for (const { name, command } of [
   });
 }
 
-test('move word top (ctrl+arrowleft)', async ({ page }) => {
+test('move word top (ctrl+arrowleft)', async () => {
   await page.keyboard.insertText(
     [
       // default text
@@ -126,7 +137,7 @@ test('move word top (ctrl+arrowleft)', async ({ page }) => {
   ]);
 });
 
-test('move word bottom (ctrl+arrowright)', async ({ page }) => {
+test('move word bottom (ctrl+arrowright)', async () => {
   await page.keyboard.insertText(
     [
       // default text
@@ -157,7 +168,7 @@ test('move word bottom (ctrl+arrowright)', async ({ page }) => {
   ]);
 });
 
-test('move line top (home)', async ({ page }) => {
+test('move line top (home)', async () => {
   await page.keyboard.insertText(
     [
       // default text
@@ -182,7 +193,7 @@ test('move line top (home)', async ({ page }) => {
   ]);
 });
 
-test('move line bottom (end)', async ({ page }) => {
+test('move line bottom (end)', async () => {
   await page.keyboard.insertText(
     [
       // default text
@@ -207,7 +218,7 @@ test('move line bottom (end)', async ({ page }) => {
   ]);
 });
 
-test('move text top (ctrl+home)', async ({ page }) => {
+test('move text top (ctrl+home)', async () => {
   await page.keyboard.insertText(
     [
       // default text
@@ -229,7 +240,7 @@ test('move text top (ctrl+home)', async ({ page }) => {
   ]);
 });
 
-test('move text bottom  (ctrl+end)', async ({ page }) => {
+test('move text bottom  (ctrl+end)', async () => {
   await page.keyboard.insertText(
     [
       // default text

@@ -1,13 +1,24 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('heading suggestion', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('heading suggestion', async () => {
   await page.keyboard.type('# ');
   await page.keyboard.press('Enter');
   await page.keyboard.press('Enter');

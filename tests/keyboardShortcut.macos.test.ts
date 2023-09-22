@@ -1,13 +1,24 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('forward delete (ctrl+d)', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('forward delete (ctrl+d)', async () => {
   await page.keyboard.type('Hellp');
   await page.keyboard.press('ArrowLeft');
   await page.keyboard.press('Control+d');
@@ -26,7 +37,7 @@ test('forward delete (ctrl+d)', async ({ page }) => {
   await linesToBe(page, ['Hello', 'World']);
 });
 
-test('select all (command+a)', async ({ page }) => {
+test('select all (command+a)', async () => {
   await page.keyboard.insertText(['Hello', 'World'].join('\n'));
 
   await page.keyboard.press('Meta+a');
@@ -35,7 +46,7 @@ test('select all (command+a)', async ({ page }) => {
   await linesToBe(page, ['.']);
 });
 
-test('undo intert (command+z)', async ({ page }) => {
+test('undo intert (command+z)', async () => {
   await page.keyboard.press('Meta+z');
 
   await page.keyboard.type('abc');
@@ -52,7 +63,7 @@ test('undo intert (command+z)', async ({ page }) => {
   await linesToBe(page, ['ad']);
 });
 
-test('undo delete (command+z)', async ({ page }) => {
+test('undo delete (command+z)', async () => {
   await page.keyboard.type('abc');
   await page.keyboard.press('Backspace');
 
@@ -70,7 +81,7 @@ for (const { name, command } of [
   { name: 'command+shift+z', command: 'Meta+Shift+z' },
   { name: 'command+y', command: 'Meta+y' },
 ]) {
-  test(`redo insert (${name})`, async ({ page }) => {
+  test(`redo insert (${name})`, async () => {
     await page.keyboard.press(command);
 
     await page.keyboard.type('abc');
@@ -94,7 +105,7 @@ for (const { name, command } of [
   { name: 'command+shift+z', command: 'Meta+Shift+z' },
   { name: 'command+y', command: 'Meta+y' },
 ]) {
-  test(`redo delete (${name})`, async ({ page }) => {
+  test(`redo delete (${name})`, async () => {
     await page.keyboard.type('abc');
     await page.keyboard.press('Backspace');
     await page.keyboard.press('Meta+z');
@@ -110,7 +121,7 @@ for (const { name, command } of [
   });
 }
 
-test('move word top (alt+arrowleft)', async ({ page }) => {
+test('move word top (alt+arrowleft)', async () => {
   await page.keyboard.insertText(
     [
       // default text
@@ -145,7 +156,7 @@ test('move word top (alt+arrowleft)', async ({ page }) => {
   ]);
 });
 
-test('move word bottom (alt+arrowright)', async ({ page }) => {
+test('move word bottom (alt+arrowright)', async () => {
   await page.keyboard.insertText(
     [
       // default text
@@ -181,7 +192,7 @@ for (const { name, command } of [
   { name: 'home', command: 'Home' },
   { name: 'ctrl+a', command: 'Control+a' },
 ]) {
-  test(`move line top (${name})`, async ({ page }) => {
+  test(`move line top (${name})`, async () => {
     await page.keyboard.insertText(
       [
         // default text
@@ -212,7 +223,7 @@ for (const { name, command } of [
   { name: 'end', command: 'End' },
   { name: 'ctrl+e', command: 'Control+e' },
 ]) {
-  test(`move line bottom (${name})`, async ({ page }) => {
+  test(`move line bottom (${name})`, async () => {
     await page.keyboard.insertText(
       [
         // default text
@@ -242,7 +253,7 @@ for (const { name, command } of [
   { name: 'command+arrowup', command: 'Meta+ArrowUp' },
   { name: 'command+home', command: 'Meta+Home' },
 ]) {
-  test(`move text top (${name})`, async ({ page }) => {
+  test(`move text top (${name})`, async () => {
     await page.keyboard.insertText(
       [
         // default text
@@ -269,7 +280,7 @@ for (const { name, command } of [
   { name: 'command+arrowdown', command: 'Meta+ArrowDown' },
   { name: 'command+end', command: 'Meta+End' },
 ]) {
-  test(`move text bottom  (${name})`, async ({ page }) => {
+  test(`move text bottom  (${name})`, async () => {
     await page.keyboard.insertText(
       [
         // default text
