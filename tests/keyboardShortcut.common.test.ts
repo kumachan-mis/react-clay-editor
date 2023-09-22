@@ -1,13 +1,24 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('move up (ctrl+p)', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('move up (ctrl+p)', async () => {
   await page.keyboard.insertText(['abcde', 'fg', 'hijkl'].join('\n'));
   await page.locator('[data-selectid=char-L2C5]').click();
 
@@ -29,7 +40,7 @@ test('move up (ctrl+p)', async ({ page }) => {
   ]);
 });
 
-test('move down (ctrl+n)', async ({ page }) => {
+test('move down (ctrl+n)', async () => {
   await page.keyboard.insertText(['abcde', 'fg', 'hijkl'].join('\n'));
   await page.locator('[data-selectid=char-L0C5]').click();
 
@@ -51,7 +62,7 @@ test('move down (ctrl+n)', async ({ page }) => {
   ]);
 });
 
-test('move left (ctrl+b)', async ({ page }) => {
+test('move left (ctrl+b)', async () => {
   await page.keyboard.insertText(['ab', 'cd'].join('\n'));
   await page.locator('[data-selectid=char-L1C2]').click();
 
@@ -76,7 +87,7 @@ test('move left (ctrl+b)', async ({ page }) => {
   ]);
 });
 
-test('move right (ctrl+f)', async ({ page }) => {
+test('move right (ctrl+f)', async () => {
   await page.keyboard.insertText(['ab', 'cd'].join('\n'));
   await page.locator('[data-selectid=char-L0C0]').click();
 

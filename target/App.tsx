@@ -161,10 +161,12 @@ const RootPage: React.FC = () => (
 
 const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
   const [text, setText] = React.useState('');
+  const [key, setKey] = React.useState(0);
 
   return (
     <div className={containerClassName}>
       <EditorRoot
+        key={key}
         text={text}
         setText={setText}
         syntax={syntax}
@@ -182,8 +184,15 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
         </EditorTextFieldRoot>
         <MockLines text={text} />
       </EditorRoot>
-      <button className={resetButtonClassName} onClick={() => setText('')} data-testid="reset-button">
-        Reset
+      <button
+        className={resetButtonClassName}
+        onClick={() => {
+          setText('');
+          setKey((key) => key + 1); // force re-mount
+        }}
+        data-testid="refresh-button"
+      >
+        Refresh
       </button>
     </div>
   );
@@ -191,6 +200,7 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
 
 const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
   const [text, setText] = React.useState('');
+  const [key, setKey] = React.useState(0);
 
   return (
     <div className={containerClassName}>
@@ -201,6 +211,7 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
         data-testid="mock-textarea"
       />
       <ViewerRoot
+        key={key}
         text={text}
         syntax={syntax}
         textProps={textProps}
@@ -213,8 +224,15 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
           <ViewerTextFieldBody />
         </ViewerTextFieldRoot>
       </ViewerRoot>
-      <button className={resetButtonClassName} onClick={() => setText('')} data-testid="reset-button">
-        Reset
+      <button
+        className={resetButtonClassName}
+        onClick={() => {
+          setText('');
+          setKey((key) => key + 1); // force re-mount
+        }}
+        data-testid="refresh-button"
+      >
+        Refresh
       </button>
     </div>
   );

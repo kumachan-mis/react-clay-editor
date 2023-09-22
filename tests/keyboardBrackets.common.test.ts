@@ -1,13 +1,24 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('brackets auto-fill (empty)', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('brackets auto-fill (empty)', async () => {
   await page.keyboard.type('(');
   await page.keyboard.press('ArrowRight');
   await page.keyboard.type('{');
@@ -19,7 +30,7 @@ test('brackets auto-fill (empty)', async ({ page }) => {
   await linesToBe(page, ['(){}[].']);
 });
 
-test('brackets auto-fill (single-line selection)', async ({ page }) => {
+test('brackets auto-fill (single-line selection)', async () => {
   await page.keyboard.type('Hello');
   await page.keyboard.press('Space');
   await page.keyboard.type('Parens');
@@ -52,7 +63,7 @@ test('brackets auto-fill (single-line selection)', async ({ page }) => {
   await linesToBe(page, ['(Hello Parens).', '{Hello Braces}.', '[Hello Brackets].']);
 });
 
-test('brackets auto-fill (multi-line selection)', async ({ page }) => {
+test('brackets auto-fill (multi-line selection)', async () => {
   await page.keyboard.type('Hello');
   await page.keyboard.press('Enter');
   await page.keyboard.type('Parens');
@@ -91,7 +102,7 @@ test('brackets auto-fill (multi-line selection)', async ({ page }) => {
   await linesToBe(page, ['(Hello', 'Parens).', '{Hello', 'Braces}.', '[Hello', 'Brackets].']);
 });
 
-test('parens/braces/brackets auto-del', async ({ page }) => {
+test('parens/braces/brackets auto-del', async () => {
   await page.keyboard.type('(');
   await page.keyboard.press('ArrowRight');
   await page.keyboard.type('{');

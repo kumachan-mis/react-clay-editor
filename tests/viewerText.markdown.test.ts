@@ -1,11 +1,22 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./viewer');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.getByTestId('mock-textarea').click();
 });
 
-test('decoration', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('decoration', async () => {
   await page.keyboard.insertText(
     [
       // input text
@@ -25,7 +36,7 @@ test('decoration', async ({ page }) => {
   await expect(page.locator('[data-styleid=decoration-normal-italic]').nth(0)).toHaveText('italic text');
 });
 
-test('itemization', async ({ page }) => {
+test('itemization', async () => {
   await page.keyboard.insertText(
     [
       // input text

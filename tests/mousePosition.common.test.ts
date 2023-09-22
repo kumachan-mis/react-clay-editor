@@ -1,8 +1,15 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
+  await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
   const defaultText = [
     // default text
     '01234',
@@ -14,12 +21,16 @@ test.beforeEach(async ({ page }) => {
     '01234',
   ].join('\n');
 
-  await page.goto('./editor');
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
   await page.keyboard.insertText(defaultText);
 });
 
-test('beginning of char', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('beginning of char', async () => {
   const boundingBox = await page.locator('[data-selectid=char-L0C2]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + 2, boundingBox.y + boundingBox.height / 2);
@@ -38,7 +49,7 @@ test('beginning of char', async ({ page }) => {
   ]);
 });
 
-test('end of char', async ({ page }) => {
+test('end of char', async () => {
   const boundingBox = await page.locator('[data-selectid=char-L0C3]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width - 2, boundingBox.y + boundingBox.height / 2);
@@ -57,7 +68,7 @@ test('end of char', async ({ page }) => {
   ]);
 });
 
-test('beginning of char group', async ({ page }) => {
+test('beginning of char group', async () => {
   const boundingBox = await page.locator('[data-selectid=chargroup-L1C6-8]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + 2, boundingBox.y + boundingBox.height / 2);
@@ -76,7 +87,7 @@ test('beginning of char group', async ({ page }) => {
   ]);
 });
 
-test('end of char group', async ({ page }) => {
+test('end of char group', async () => {
   const boundingBox = await page.locator('[data-selectid=chargroup-L1C6-8]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width - 2, boundingBox.y + boundingBox.height / 2);
@@ -95,7 +106,7 @@ test('end of char group', async ({ page }) => {
   ]);
 });
 
-test('beginning of line', async ({ page }) => {
+test('beginning of line', async () => {
   const boundingBox = await page.locator('[data-selectid=line-L0]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + 2, boundingBox.y + boundingBox.height / 2);
@@ -114,7 +125,7 @@ test('beginning of line', async ({ page }) => {
   ]);
 });
 
-test('end of line', async ({ page }) => {
+test('end of line', async () => {
   const boundingBox = await page.locator('[data-selectid=line-L0]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width - 2, boundingBox.y + boundingBox.height / 2);
@@ -133,7 +144,7 @@ test('end of line', async ({ page }) => {
   ]);
 });
 
-test('beginning of line group', async ({ page }) => {
+test('beginning of line group', async () => {
   const boundingBox = await page.locator('[data-selectid=linegroup-L3-4]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width / 2, boundingBox.y + 2);
@@ -152,7 +163,7 @@ test('beginning of line group', async ({ page }) => {
   ]);
 });
 
-test('end of line group', async ({ page }) => {
+test('end of line group', async () => {
   const boundingBox = await page.locator('[data-selectid=linegroup-L3-4]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height - 2);
@@ -171,7 +182,7 @@ test('end of line group', async ({ page }) => {
   ]);
 });
 
-test('end of text field', async ({ page }) => {
+test('end of text field', async () => {
   const boundingBox = await page.locator('[data-selectid=text-field-root]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height - 2);
@@ -190,7 +201,7 @@ test('end of text field', async ({ page }) => {
   ]);
 });
 
-test('out of text field', async ({ page }) => {
+test('out of text field', async () => {
   await page.mouse.click(0, 0);
   await page.keyboard.type('.');
 

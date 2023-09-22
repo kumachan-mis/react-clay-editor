@@ -1,13 +1,24 @@
 import { linesToBe } from './testUtils';
 
-import { test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
+let page: Page;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   await page.goto('./editor');
+});
+
+test.beforeEach(async () => {
+  await page.getByTestId('refresh-button').click();
   await page.locator('[data-selectid=text-field]').click();
 });
 
-test('arrowleft', async ({ page }) => {
+test.afterAll(async () => {
+  await page.close();
+});
+
+test('arrowleft', async () => {
   await page.keyboard.type('ab');
   await page.keyboard.press('Enter');
   await page.keyboard.type('cd');
@@ -29,7 +40,7 @@ test('arrowleft', async ({ page }) => {
   await linesToBe(page, ['3ab2', 'c1d']);
 });
 
-test('arrowright', async ({ page }) => {
+test('arrowright', async () => {
   await page.keyboard.type('ab');
   await page.keyboard.press('Enter');
   await page.keyboard.type('cd');
@@ -55,7 +66,7 @@ test('arrowright', async ({ page }) => {
   await linesToBe(page, ['a1b', '2cd3']);
 });
 
-test('arrowup', async ({ page }) => {
+test('arrowup', async () => {
   await page.keyboard.type('abcde');
   await page.keyboard.press('Enter');
   await page.keyboard.type('fg');
@@ -75,7 +86,7 @@ test('arrowup', async ({ page }) => {
   await linesToBe(page, ['3abc2de', 'fg1', 'hijkl']);
 });
 
-test('arrowdown', async ({ page }) => {
+test('arrowdown', async () => {
   await page.keyboard.type('abcde');
   await page.keyboard.press('Enter');
   await page.keyboard.type('fg');
