@@ -1,4 +1,4 @@
-import { expect, Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 export async function mouseSelect(page: Page, fixedSelector: string, freeSelector: string) {
   const fixedBoundingBox = await page.locator(fixedSelector).boundingBox();
