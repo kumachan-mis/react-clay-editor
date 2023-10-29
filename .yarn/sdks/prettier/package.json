@@ -2,5 +2,6 @@
   "name": "prettier",
   "version": "2.8.8-sdk",
   "type": "commonjs",
-  "main": "./index.js"
+  "main": "./index.js",
+  "bin": "./bin-prettier.js"
 }
