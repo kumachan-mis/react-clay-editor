@@ -50,7 +50,7 @@ const RAW_RUNTIME_STATE =
           ["@svgr/cli", "npm:8.1.0"],\
           ["@types/katex", "npm:0.16.5"],\
           ["@types/node", "npm:20.8.9"],\
-          ["@types/prettier", "npm:3.0.0"],\
+          ["@types/prettier", "npm:2.7.3"],\
           ["@types/react", "npm:18.2.33"],\
           ["@types/react-dom", "npm:18.2.14"],\
           ["@typescript-eslint/eslint-plugin", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:6.9.0"],\
@@ -10864,11 +10864,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/prettier", [\
-      ["npm:3.0.0", {\
-        "packageLocation": "./.yarn/cache/@types-prettier-npm-3.0.0-6c770110eb-a2a512d304.zip/node_modules/@types/prettier/",\
+      ["npm:2.7.3", {\
+        "packageLocation": "./.yarn/cache/@types-prettier-npm-2.7.3-497316f37c-cda84c19ac.zip/node_modules/@types/prettier/",\
         "packageDependencies": [\
-          ["@types/prettier", "npm:3.0.0"],\
-          ["prettier", "npm:3.0.3"]\
+          ["@types/prettier", "npm:2.7.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -20649,13 +20648,6 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:2.8.8"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:3.0.3", {\
-        "packageLocation": "./.yarn/unplugged/prettier-npm-3.0.3-fced695dae/node_modules/prettier/",\
-        "packageDependencies": [\
-          ["prettier", "npm:3.0.3"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["pretty-error", [\
@@ -20976,7 +20968,7 @@ const RAW_RUNTIME_STATE =
           ["@svgr/cli", "npm:8.1.0"],\
           ["@types/katex", "npm:0.16.5"],\
           ["@types/node", "npm:20.8.9"],\
-          ["@types/prettier", "npm:3.0.0"],\
+          ["@types/prettier", "npm:2.7.3"],\
           ["@types/react", "npm:18.2.33"],\
           ["@types/react-dom", "npm:18.2.14"],\
           ["@typescript-eslint/eslint-plugin", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:6.9.0"],\
