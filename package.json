@@ -29,9 +29,10 @@
   ],
   "scripts": {
     "build": "yarn clean && vite --config viteconfig.lib.ts build && tsc --build tsconfig.lib.json",
-    "build-storybook": "storybook build --docs",
+    "build-storybook": "storybook build --docs && touch ./storybook-static/.nojekyll",
     "clean": "rm -Rf dist",
-    "deploy-storybook": "yarn build-storybook && gh-pages -d storybook-static",
+    "clean-storybook": "rm -rf node_modules/ storybook-static/",
+    "deploy-storybook": "yarn clean-storybook && yarn build-storybook && gh-pages --dotfiles --dist storybook-static",
     "dev": "vite --config viteconfig.tests.ts",
     "format": "sort-package-json && prettier --write \"**/*.{css,htm,html,js,jsx,json,md,mdx,scss,ts,tsx,yaml,yml}\"",
     "gen-icons": "svgr --typescript --out-dir icons/dist -- icons",
