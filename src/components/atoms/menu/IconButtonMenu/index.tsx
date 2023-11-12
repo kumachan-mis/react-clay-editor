@@ -9,45 +9,44 @@ export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ pressed, ...rest
   <StyledIconButtonMenu role="menuitem" aria-pressed={pressed} {...rest} />
 );
 
-const StyledIconButtonMenu = styled.button`
+const StyledIconButtonMenu = styled.button(
+  (props) => `
   width: 26px;
   height: 26px;
   padding: 1px;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid ${props.theme.iconButton.borderColor};
+  cursor: pointer;
 
+  background-color: ${props.theme.iconButton.unselectedBackgroundColor};
+  &:hover {
+    background-color: ${props.theme.iconButton.unselectedHoverBackgroundColor};
+  }
   svg {
-    fill: rgba(0, 0, 0);
+    fill: ${props.theme.iconButton.unselectedIconColor};
     width: 16px;
     height: 16px;
   }
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.12);
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
 
   &[aria-pressed='true'] {
-    background-color: #d9ebff;
-
+    background-color: ${props.theme.iconButton.selectedBackgroundColor};
     &:hover {
-      background-color: #d9e9f7;
+      background-color: ${props.theme.iconButton.selectedHoverBackgroundColor};
+    }
+    svg {
+      fill: ${props.theme.iconButton.unselectedIconColor};
     }
   }
 
   &:disabled {
-    background-color: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    background-color: ${props.theme.iconButton.disabledBackgroundColor};
     cursor: unset;
-
     svg {
-      fill: rgba(0, 0, 0, 0.2);
+      fill: ${props.theme.iconButton.disabledIconColor};
     }
   }
-`;
+`
+);

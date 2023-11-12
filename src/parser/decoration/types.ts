@@ -1,6 +1,6 @@
 import { ContentNode } from '../content/types';
 
-export type Decoration = {
+export type DecorationConfig = {
   size: 'normal' | 'larger' | 'largest';
   bold: boolean;
   italic: boolean;
@@ -14,5 +14,5 @@ export type DecorationNode = {
   facingMeta: string;
   children: ContentNode[];
   trailingMeta: string;
-  decoration: Decoration;
+  config: DecorationConfig;
 };

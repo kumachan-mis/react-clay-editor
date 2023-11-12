@@ -3,9 +3,8 @@ import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
+import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
 import { TextNodeComponentProps } from '../common/types';
-
-import { BlockCodeContent } from './BlockCodeContent';
 
 import React from 'react';
 
@@ -21,7 +20,7 @@ export const BlockCodeLine: React.FC<BlockCodeLineProps> = ({ node, textVisual, 
   return (
     <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-      <BlockCodeContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
+      <MonospaceLineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...codeLine].map((char, index) => (
             <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -29,7 +28,7 @@ export const BlockCodeLine: React.FC<BlockCodeLineProps> = ({ node, textVisual, 
             </Char>
           ))}
         </Monospace>
-      </BlockCodeContent>
+      </MonospaceLineContent>
     </Line>
   );
 };

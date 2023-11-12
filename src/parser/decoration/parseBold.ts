@@ -17,7 +17,7 @@ export function parseBold(text: string, context: ParsingContext, options: Parsin
     facingMeta: '*',
     children: parseContent(body, { ...context, charIndex: first + 1, nested: true }, options),
     trailingMeta: '*',
-    decoration: { ...context.decoration, bold: true },
+    config: { ...context.decorationConfig, bold: true },
   };
 
   return [

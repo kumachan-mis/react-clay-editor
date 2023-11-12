@@ -1,3 +1,4 @@
+import { DARK_THEME, LIGHT_THEME } from '../../../common/constants';
 import { EditorProps, EditorPropsContextProvider } from '../../../contexts/EditorPropsContext';
 import { EditorStateContextProvider } from '../../../contexts/EditorStateContext';
 import { TextContextProvider } from '../../../contexts/TextContext';
@@ -6,6 +7,7 @@ import { Root } from '../../atoms/root/Root';
 
 import { useDocument, useEditorRoot, useScroll } from './hooks';
 
+import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 
 export type EditorRootProps = React.PropsWithChildren<
@@ -17,7 +19,9 @@ export const EditorRoot: React.FC<EditorRootProps> = ({ text, setText, className
     <EditorPropsContextProvider props={props}>
       <TextNodesContextProvider text={text} props={props}>
         <EditorStateContextProvider>
-          <EditorRootInner className={className}>{children}</EditorRootInner>
+          <ThemeProvider theme={props.theme !== 'dark' ? LIGHT_THEME : DARK_THEME}>
+            <EditorRootInner className={className}>{children}</EditorRootInner>
+          </ThemeProvider>
         </EditorStateContextProvider>
       </TextNodesContextProvider>
     </EditorPropsContextProvider>

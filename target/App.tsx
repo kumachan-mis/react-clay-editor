@@ -15,20 +15,12 @@ import {
 } from '../src';
 
 import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 import React from 'react';
 
 import 'katex/dist/katex.min.css';
 
 const header = 'React Clay Editor';
-
-const containerClassName = css`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
 
 const editorClassName = css`
   && {
@@ -43,13 +35,6 @@ const viewerClassName = css`
     height: 70%;
     margin: 5px;
   }
-`;
-
-const resetButtonClassName = css`
-  position: absolute;
-  top: 36px;
-  left: 36px;
-  padding: 8px 16px;
 `;
 
 const textProps: EditorTextProps = {
@@ -84,7 +69,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
           border-bottom: solid 1px;
 
           &[data-clickable='true'] {
-            color: #e14978;
+            color: #f75e8a;
             font-weight: 500;
           }
         }
@@ -105,7 +90,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
           border-bottom: solid 1px;
 
           &[data-clickable='true'] {
-            color: #08090b;
+            color: #595f6e;
             font-weight: 500;
           }
         }
@@ -124,16 +109,16 @@ export const App: React.FC = () => {
       return <RootPage />;
     case '/bracket/editor':
     case '/bracket/editor/':
-      return <TestTargetEditorPage syntax="bracket" />;
+      return <TestTargetEditorPage syntax="bracket" theme="light" />;
     case '/bracket/viewer':
     case '/bracket/viewer/':
-      return <TestTargetViewerPage syntax="bracket" />;
+      return <TestTargetViewerPage syntax="bracket" theme="light" />;
     case '/markdown/editor':
     case '/markdown/editor/':
-      return <TestTargetEditorPage syntax="markdown" />;
+      return <TestTargetEditorPage syntax="markdown" theme="dark" />;
     case '/markdown/viewer':
     case '/markdown/viewer/':
-      return <TestTargetViewerPage syntax="markdown" />;
+      return <TestTargetViewerPage syntax="markdown" theme="dark" />;
     default:
       return <NotFoundPage />;
   }
@@ -159,17 +144,21 @@ const RootPage: React.FC = () => (
   </div>
 );
 
-const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
+const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'light' | 'dark' }> = ({
+  syntax,
+  theme,
+}) => {
   const [text, setText] = React.useState('');
   const [key, setKey] = React.useState(0);
 
   return (
-    <div className={containerClassName}>
+    <Container themeName={theme}>
       <EditorRoot
         key={key}
         text={text}
         setText={setText}
         syntax={syntax}
+        theme={theme}
         textProps={textProps}
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
@@ -184,8 +173,8 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
         </EditorTextFieldRoot>
         <MockLines text={text} />
       </EditorRoot>
-      <button
-        className={resetButtonClassName}
+      <RefreshButton
+        themeName={theme}
         onClick={() => {
           setText('');
           setKey((key) => key + 1); // force re-mount
@@ -193,19 +182,22 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
         data-testid="refresh-button"
       >
         Refresh
-      </button>
-    </div>
+      </RefreshButton>
+    </Container>
   );
 };
 
-const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ syntax }) => {
+const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'light' | 'dark' }> = ({
+  syntax,
+  theme,
+}) => {
   const [text, setText] = React.useState('');
   const [key, setKey] = React.useState(0);
 
   return (
-    <div className={containerClassName}>
-      <textarea
-        className={viewerClassName}
+    <Container themeName={theme}>
+      <TextArea
+        themeName={theme}
         value={text}
         onChange={(event) => setText(event.target.value)}
         data-testid="mock-textarea"
@@ -214,6 +206,7 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
         key={key}
         text={text}
         syntax={syntax}
+        theme={theme}
         textProps={textProps}
         bracketLinkProps={bracketLinkProps}
         hashtagProps={hashtagProps}
@@ -224,8 +217,8 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
           <ViewerTextFieldBody />
         </ViewerTextFieldRoot>
       </ViewerRoot>
-      <button
-        className={resetButtonClassName}
+      <RefreshButton
+        themeName={theme}
         onClick={() => {
           setText('');
           setKey((key) => key + 1); // force re-mount
@@ -233,10 +226,48 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown' }> = ({ sy
         data-testid="refresh-button"
       >
         Refresh
-      </button>
-    </div>
+      </RefreshButton>
+    </Container>
   );
 };
+
+const Container = styled.div<{ themeName: 'light' | 'dark' }>(
+  (props) => `
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
+`
+);
+
+const RefreshButton = styled.button<{ themeName: 'light' | 'dark' }>(
+  (props) => `
+  position: absolute;
+  top: 36px;
+  left: 36px;
+  cursor: pointer;
+  padding: 8px 16px;
+  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
+  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0)' : 'rgba(16, 20, 24, 0.0)'};
+  &:hover {
+    background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0.08)' : 'rgba(16, 20, 24, 0.04)'};
+  }
+`
+);
+
+const TextArea = styled.textarea<{ themeName: 'light' | 'dark' }>(
+  (props) => `
+  width: 35%;
+  height: 70%;
+  margin: 5px;
+  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.04)' : 'rgba(243, 246, 249, 1.0)'};
+  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
+  border-color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.12)' : 'rgba(243, 246, 249, 0.12)'};
+`
+);
 
 const MockLines: React.FC<{ text: string }> = ({ text }) => (
   <div

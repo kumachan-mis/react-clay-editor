@@ -1,5 +1,3 @@
-import { FONT_SIZES } from '../../../../common/constants';
-
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -20,22 +18,22 @@ export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, ...res
     </StyledDropdownMenuList>
   );
 
-const StyledDropdownMenuList = styled.div`
+const StyledDropdownMenuList = styled.div(
+  (props) => `
   min-width: 200px;
-  font-size: ${FONT_SIZES.menuitem};
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
-  background-color: rgba(255, 255, 255);
+  border: 1px solid ${props.theme.list.borderColor};
+  box-shadow: 0px 4px 8px ${props.theme.list.shadowColor};
+  background-color: ${props.theme.list.backgroundColor};
   z-index: 1;
   position: absolute;
-`;
+`
+);
 
 const StyledDropdownMenuListInner = styled.ul`
   width: 100%;
   margin: 0px;
   padding: 0px;
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.04);
   list-style: none;
 `;

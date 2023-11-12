@@ -25,11 +25,15 @@ const Api: React.FC<{
   </FixedContainer>
 );
 
-const colorPalette = {
+const colorPalette: { [name: string]: string } = {
   fixedContainer: '#ff8787',
   fixedContent: '#f8c4b4',
   scrollableContainer: '#bce29e',
   scrollableContent: '#e5ebb2',
+  text: '#333333',
+  disabledContainer: '#d1d1d1',
+  disabledContent: '#dddddd',
+  disabledText: '#bbbbbb',
 };
 
 const FixedContainer = styled.div<{ colorized: boolean }>(
@@ -39,7 +43,7 @@ const FixedContainer = styled.div<{ colorized: boolean }>(
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  border: solid 6px ${colorized ? colorPalette.fixedContainer : '#d1d1d1'};
+  border: solid 6px ${colorized ? colorPalette.fixedContainer : colorPalette.disabledContainer};
 `
 );
 
@@ -50,8 +54,8 @@ const FixedContent = styled.div<{ colorized: boolean }>(
   align-items: center;
   justify-content: center;
   margin: 6px;
-  color: ${colorized ? '#333333' : '#bbbbbb'};
-  background-color: ${colorized ? colorPalette.fixedContent : '#dddddd'};
+  color: ${colorized ? colorPalette.text : colorPalette.disabledText};
+  background-color: ${colorized ? colorPalette.fixedContent : colorPalette.disabledContent};
 `
 );
 
@@ -60,7 +64,7 @@ const ScrollableContainer = styled.div<{ colorized: boolean }>(
   flex-grow: 1;
   overflow-y: scroll;
   margin: 0px 6px 6px 6px;
-  border: solid 6px ${colorized ? colorPalette.scrollableContainer : '#d1d1d1'};
+  border: solid 6px ${colorized ? colorPalette.scrollableContainer : colorPalette.disabledContainer};
 `
 );
 
@@ -69,8 +73,8 @@ const ScrollableContent = styled.div<{ colorized: boolean }>(
   height: auto;
   text-align: center;
   margin: 6px;
-  color: ${colorized ? '#333333' : '#bbbbbb'};
-  background-color: ${colorized ? colorPalette.scrollableContent : '#dddddd'};
+  color: ${colorized ? colorPalette.text : colorPalette.disabledText};
+  background-color: ${colorized ? colorPalette.scrollableContent : colorPalette.disabledContent};
 `
 );
 

@@ -79,71 +79,53 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
 };
 
 const StyledDropdownMenuButton = styled.div`
+  display: flex;
   height: 26px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  display: flex;
-
-  &[aria-pressed='true'] {
-    background-color: #d9ebff;
-
-    &:hover {
-      background-color: #d9e9f7;
-    }
-  }
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-  }
-
-  &[aria-disabled='true'] {
-    background-color: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    cursor: unset;
-  }
 `;
 
-const StyledDropdownBaseButton = styled.button`
-  height: 26px;
-  border: unset;
+const StyledDropdownBaseButton = styled.button(
+  (props) => `
+  height: 100%;
   padding: 1px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  border: 1px solid ${props.theme.iconButton.borderColor};
 
+  background-color: ${props.theme.iconButton.unselectedBackgroundColor};
   &:hover {
-    background-color: rgba(0, 0, 0, 0.12);
+    background-color: ${props.theme.iconButton.unselectedHoverBackgroundColor};
   }
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.2);
+  svg {
+    fill: ${props.theme.iconButton.unselectedIconColor};
   }
 
   &[aria-pressed='true'] {
-    background-color: #d9ebff;
-
+    background-color: ${props.theme.iconButton.selectedBackgroundColor};
     &:hover {
-      background-color: #d9e9f7;
+      background-color: ${props.theme.iconButton.selectedHoverBackgroundColor};
+    }
+    svg {
+      fill: ${props.theme.iconButton.unselectedIconColor};
     }
   }
 
   &:disabled {
-    background-color: rgba(0, 0, 0, 0.02);
-    border: unset;
+    background-color: ${props.theme.iconButton.disabledBackgroundColor};
     cursor: unset;
-
     svg {
-      fill: rgba(0, 0, 0, 0.2);
+      fill: ${props.theme.iconButton.disabledIconColor};
     }
   }
-`;
+`
+);
 
 const StyledDropdownMainButton = styled(StyledDropdownBaseButton)`
   width: 26px;
   border-radius: 8px 0px 0px 8px;
 
   svg {
-    fill: rgba(0, 0, 0);
     width: 16px;
     height: 16px;
   }
@@ -154,7 +136,6 @@ const StyledDropdownArrowButton = styled(StyledDropdownBaseButton)`
   border-radius: 0px 8px 8px 0px;
 
   svg {
-    fill: rgba(0, 0, 0, 0.8);
     width: 8px;
     height: 8px;
   }

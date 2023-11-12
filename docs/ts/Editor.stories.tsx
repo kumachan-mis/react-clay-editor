@@ -20,7 +20,7 @@ export default meta;
 export const SimpleEditorStory: React.FC = () => {
   const [text, setText] = React.useState('This is a simple editor.');
   return (
-    <EditorRoot text={text} setText={setText}>
+    <EditorRoot text={text} setText={setText} theme="dark">
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
       </EditorTextFieldRoot>
@@ -36,6 +36,7 @@ export const FullwidthStory: React.FC = () => {
     <EditorRoot
       text={text}
       setText={setText}
+      theme="dark"
       className={css`
         && {
           width: 100%;
@@ -57,7 +58,7 @@ export const WithSyntaxMenuStory: React.FC = () => {
     ].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText}>
+    <EditorRoot text={text} setText={setText} theme="dark">
       <EditorSyntaxMenu />
       <Divider />
       <EditorTextFieldRoot>
@@ -75,7 +76,7 @@ export const WithFixedHeaderStory: React.FC = () => {
     ].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText}>
+    <EditorRoot text={text} setText={setText} theme="dark">
       <EditorHeader header="Header in Fixed Area" />
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
@@ -92,7 +93,7 @@ export const WithScrollableHeaderStory: React.FC = () => {
     ].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText}>
+    <EditorRoot text={text} setText={setText} theme="dark">
       <EditorTextFieldRoot>
         <EditorHeader header="Header in Scrollable Area" />
         <EditorTextFieldBody />
@@ -106,12 +107,12 @@ export const WithUserDefinedFooterStory: React.FC = () => {
     ['This is an editor with an user-defined footer.', 'You can customize the editor as you like.'].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText}>
+    <EditorRoot text={text} setText={setText} theme="dark">
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
       </EditorTextFieldRoot>
       <Divider />
-      <div style={{ textAlign: 'end', fontSize: '0.7rem', color: 'rgba(0, 0, 0, 0.4)' }}>
+      <div style={{ textAlign: 'end', fontSize: '0.7rem', color: 'rgba(16, 20, 24, 0.4)' }}>
         React Clay Editor: a document editor quick editable and flexible like clay in hands
       </div>
     </EditorRoot>

@@ -28,5 +28,5 @@ export function sectionMenuSwitch(
   if ((!syntax || syntax === 'bracket') && !/^\[\*+ $/.test(decorationNode.facingMeta)) return 'disabled';
   else if (syntax === 'markdown' && !/^#+ $/.test(decorationNode.facingMeta)) return 'disabled';
 
-  return decorationNode.decoration.size;
+  return decorationNode.config.size;
 }

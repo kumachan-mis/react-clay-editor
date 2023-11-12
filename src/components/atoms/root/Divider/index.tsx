@@ -8,7 +8,9 @@ export const DividerConstants = {
 
 export const Divider: React.FC = () => <StyledDivider data-selectid={DividerConstants.selectId} />;
 
-const StyledDivider = styled.div`
+const StyledDivider = styled.div(
+  (props) => `
   width: 100%;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-`;
+  border-bottom: solid 1px ${props.theme.base.dividerColor};
+`
+);

@@ -7,6 +7,7 @@ import React from 'react';
 
 const FormattingSyntax: React.FC<ViewerRootProps> = (props) => (
   <ViewerRoot
+    theme="dark"
     className={css`
       && {
         border: none;
@@ -126,7 +127,7 @@ export const TaggedLink: Story = {
               color: #f75e8a;
               border-bottom: solid 1px;
               &[data-clickable='true'] {
-                color: #e14978;
+                color: #f75e8a;
                 font-weight: 500;
               }
             }
@@ -144,7 +145,7 @@ export const TaggedLink: Story = {
               color: #595f6e;
               border-bottom: solid 1px;
               &[data-clickable='true'] {
-                color: #08090b;
+                color: #595f6e;
                 font-weight: 500;
               }
             }

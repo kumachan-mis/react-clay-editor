@@ -9,7 +9,7 @@ export type CursorBarProps = {
 export const CursorBar: React.FC<CursorBarProps> = (props) => (
   <StyledCursorBar {...props}>
     <svg width="2px" height={props.cursorSize}>
-      <rect x={0} y={0} width="1px" height="100%" />
+      <CursorBarRect x={0} y={0} width="1px" height="100%" />
     </svg>
   </StyledCursorBar>
 );
@@ -24,4 +24,9 @@ const StyledCursorBar = styled.div<{
   left: ${props.position.left}px;
   height: ${props.cursorSize}px;
 `
+);
+
+export const CursorBarRect = styled.rect(
+  (props) => `
+  fill: ${props.theme.base.cursorColor};`
 );

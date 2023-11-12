@@ -1,5 +1,3 @@
-import { FONT_SIZES, LINE_HEIGHTS } from '../../../../common/constants';
-
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -23,22 +21,25 @@ const StyledFlexRoot = styled.div`
   flex-direction: column;
 `;
 
-const StyledForwardRefRoot = styled.div`
+const StyledForwardRefRoot = styled.div(
+  (props) => `
   width: 500px;
   height: 300px;
   box-sizing: border-box;
-  border: solid 1px rgba(0, 0, 0, 0.2);
+  border: solid 1px ${props.theme.base.borderColor};
   padding: 4px;
-  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  font-size: ${FONT_SIZES.normal};
-  line-height: ${LINE_HEIGHTS.normal};
+  font-family: ${props.theme.base.fontFamily};
+  font-size:  ${props.theme.normal.fontSize};
+  line-height: ${props.theme.normal.lineHeight};
+  color: ${props.theme.base.color};
+  background-color: ${props.theme.base.backgroundColor};
 
   & .katex-display {
     display: inline-block;
     margin: 0;
     text-align: inherit;
   }
-`;
+`
+);
 
 export const Root = React.forwardRef(ForwardRefRoot);

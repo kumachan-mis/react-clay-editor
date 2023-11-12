@@ -19,5 +19,4 @@ const StyledSuggestionListBody = styled.ul`
   padding: 0px;
   border-radius: 0px 0px 8px 8px;
   overflow-y: scroll;
-  background-color: rgba(0, 0, 0, 0.04);
 `;

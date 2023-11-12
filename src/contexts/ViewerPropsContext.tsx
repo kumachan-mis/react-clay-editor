@@ -14,6 +14,7 @@ import React from 'react';
 
 export type ViewerProps = {
   syntax?: 'bracket' | 'markdown';
+  theme?: 'light' | 'dark';
   textProps?: ViewerTextProps;
   bracketLinkProps?: ViewerBracketLinkProps;
   hashtagProps?: ViewerHashtagProps;

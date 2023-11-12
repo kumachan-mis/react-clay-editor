@@ -27,7 +27,8 @@ const StyledItemBullet = styled(Char, {
 `
 );
 
-const StyledItemBulletInner = styled.span`
+const StyledItemBulletInner = styled.span(
+  (props) => `
   top: 0.5em;
   right: 0.75em;
   position: absolute;
@@ -35,5 +36,6 @@ const StyledItemBulletInner = styled.span`
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: #000000;
-`;
+  background-color: ${props.theme.base.color};
+`
+);

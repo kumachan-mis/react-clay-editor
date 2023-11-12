@@ -24,7 +24,6 @@ const StyledCursorTextArea = styled.textarea<{
   value?: string;
 }>(
   (props) => `
-  font-family: sans-serif;
   position: absolute;
   overflow: hidden;
   border: none;
@@ -38,5 +37,8 @@ const StyledCursorTextArea = styled.textarea<{
   height: ${props.cursorSize}px;
   min-height: ${props.cursorSize}px;
   font-size: ${props.cursorSize / 1.2}px;
+  font-family: ${props.theme.base.fontFamily};
+  color: ${props.theme.base.color};
+  background-color: ${props.theme.base.backgroundColor};
 `
 );

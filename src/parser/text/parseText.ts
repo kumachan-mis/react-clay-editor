@@ -11,7 +11,7 @@ export function parseText(text: string, options: ParsingOptions): (BlockNode | L
     lineIndex: 0,
     charIndex: 0,
     nested: false,
-    decoration: { size: 'normal', bold: false, italic: false, underline: false },
+    decorationConfig: { size: 'normal', bold: false, italic: false, underline: false },
   };
 
   while (context.lineIndex < lines.length) {

@@ -1,10 +1,9 @@
-import { FONT_SIZES, LINE_HEIGHTS } from '../../../../common/constants';
 import { TextNode } from '../../../../parser';
-import { DecorationNode, Decoration as DecorationStyle } from '../../../../parser/decoration/types';
+import { DecorationNode, DecorationConfig } from '../../../../parser/decoration/types';
 import { Char } from '../../../atoms/text/Char';
+import { DecorationContent } from '../../../atoms/text/DecorationContent';
 import { TextNodeComponentProps } from '../common/types';
 
-import styled from '@emotion/styled';
 import React from 'react';
 
 export type DecorationProps = {
@@ -12,22 +11,22 @@ export type DecorationProps = {
 } & TextNodeComponentProps<DecorationNode>;
 
 export const DecorationConstants = {
-  styleId: (decoration: DecorationStyle) => {
-    let selctid = `decoration-${decoration.size}`;
-    if (decoration.bold) selctid += '-bold';
-    if (decoration.italic) selctid += '-italic';
-    if (decoration.underline) selctid += '-underline';
+  styleId: (config: DecorationConfig) => {
+    let selctid = `decoration-${config.size}`;
+    if (config.bold) selctid += '-bold';
+    if (config.italic) selctid += '-italic';
+    if (config.underline) selctid += '-underline';
     return selctid;
   },
 };
 
 export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, ChildComponent, ...rest }) => {
-  const { lineIndex, facingMeta, decoration, trailingMeta, children } = node;
+  const { lineIndex, facingMeta, config, trailingMeta, children } = node;
   const [first, last] = node.range;
   const editMode = getEditMode(node);
 
   return (
-    <StyledDecoration {...decoration} data-styleid={DecorationConstants.styleId(decoration)}>
+    <DecorationContent {...config} data-styleid={DecorationConstants.styleId(config)}>
       {[...facingMeta].map((char, index) => (
         <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
           {editMode ? char : ''}
@@ -45,16 +44,6 @@ export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, Child
           {editMode ? char : ''}
         </Char>
       ))}
-    </StyledDecoration>
+    </DecorationContent>
   );
 };
-
-export const StyledDecoration = styled.span(
-  (props: DecorationStyle) => `
-  font-size: ${FONT_SIZES[props.size]};
-  line-height: ${LINE_HEIGHTS[props.size]};
-  ${props.bold ? 'font-weight: bold;' : ''}
-  ${props.italic ? 'font-style: italic;' : ''}
-  ${props.underline ? 'border-bottom: 1px solid;' : ''}
-`
-);

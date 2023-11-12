@@ -30,8 +30,7 @@ const StyledSelectionRect = styled.div<{
 }>(
   (props) => `
   position: absolute;
-  background-color: #accef7;
-  opacity: 0.5;
+  background-color: ${props.theme.base.selectionColor};
   top: ${props.top}px;
   left: ${props.left}px;
   width: ${props.width}px;

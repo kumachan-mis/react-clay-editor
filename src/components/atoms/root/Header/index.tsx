@@ -1,5 +1,3 @@
-import { FONT_SIZES, LINE_HEIGHTS } from '../../../../common/constants';
-
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -23,8 +21,8 @@ const StyledHeader = styled.div<{
   size: 'normal' | 'larger' | 'largest';
 }>(
   (props) => `
-  font-size: ${FONT_SIZES[props.size]};
-  line-height: ${LINE_HEIGHTS[props.size]};
+  font-size: ${props.theme[props.size].fontSize};
+  line-height: ${props.theme[props.size].lineHeight};
   font-weight: bold;
   cursor: initial;
 `
