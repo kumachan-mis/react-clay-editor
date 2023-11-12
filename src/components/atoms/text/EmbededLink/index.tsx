@@ -65,12 +65,14 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
   );
 };
 
-const StyledEmbededLink = styled.a`
+const StyledEmbededLink = styled.a(
+  (props) => `
   text-decoration-line: none;
-  color: #5e8af7;
+  color: ${props.theme.link.color};
   cursor: text;
   &[data-clickable='true'] {
-    color: #425a9d;
+    color: ${props.theme.link.clickableColor};
     cursor: pointer;
   }
-`;
+`
+);

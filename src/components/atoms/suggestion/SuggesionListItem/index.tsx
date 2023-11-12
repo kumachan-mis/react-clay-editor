@@ -13,18 +13,28 @@ export const SuggestionListItem: React.FC<SuggestionListItemProps> = ({ index, .
   <StyledSuggestionListItem {...rest} data-selectid={SuggestionListItemConstants.selectId(index)} />
 );
 
-const StyledSuggestionListItem = styled.li`
+const StyledSuggestionListItem = styled.li(
+  (props) => `
   list-style-type: none;
   cursor: pointer;
   padding: 2px 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  &[aria-selected='true'] {
-    background-color: #eff7ff;
-  }
+  border-bottom: 1px solid ${props.theme.listItem.dividerColor};
+
+  color: ${props.theme.listItem.unselectedColor};
+  background-color: ${props.theme.listItem.unselectedBackgroundColor};
   &:hover {
-    background-color: #d9e9f7;
+    background-color: ${props.theme.listItem.unselectedHoverBackgroundColor};
   }
-`;
+
+  &[aria-selected='true'] {
+    color: ${props.theme.listItem.selectedColor};
+    background-color: ${props.theme.listItem.selectedBackgroundColor};
+    &:hover {
+      background-color: ${props.theme.listItem.selectedHoverBackgroundColor};
+    }
+  }
+`
+);

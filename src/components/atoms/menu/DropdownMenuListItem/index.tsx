@@ -10,35 +10,34 @@ export const DropdownMenuListItem: React.FC<DropdownMenuListItemProps> = ({ sele
   <StyledDropdownMenuListItem role="menuitem" aria-selected={selected} aria-disabled={disabled} {...rest} />
 );
 
-const StyledDropdownMenuListItem = styled.li`
+const StyledDropdownMenuListItem = styled.li(
+  (props) => `
   padding: 2px 8px;
-  border-radius: 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
+  border-radius: 8px;
+  border-bottom: 1px solid ${props.theme.listItem.dividerColor};
 
+  color: ${props.theme.listItem.unselectedColor};
+  background-color: ${props.theme.listItem.unselectedBackgroundColor};
   &:hover {
-    background-color: rgba(0, 0, 0, 0.12);
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: ${props.theme.listItem.unselectedHoverBackgroundColor};
   }
 
   &[aria-selected='true'] {
-    background-color: #d9ebff;
-
+    color: ${props.theme.listItem.selectedColor};
+    background-color: ${props.theme.listItem.selectedBackgroundColor};
     &:hover {
-      background-color: #d9e9f7;
+      background-color: ${props.theme.listItem.selectedHoverBackgroundColor};
     }
   }
 
   &[aria-disabled='true'] {
-    background-color: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    color: ${props.theme.listItem.disabledColor};
+    background-color: ${props.theme.listItem.disabledBackgroundColor};
     cursor: unset;
-    color: rgba(0, 0, 0, 0.2);
   }
-`;
+`
+);

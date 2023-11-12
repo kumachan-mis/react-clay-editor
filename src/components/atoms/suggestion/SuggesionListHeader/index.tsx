@@ -30,14 +30,15 @@ export const SuggestionListHeader: React.FC<SuggestionListHeaderProps> = ({ sugg
   </StyledSuggestionListHeader>
 );
 
-const StyledSuggestionListHeader = styled.div`
+const StyledSuggestionListHeader = styled.div(
+  (props) => `
   width: 100%;
   box-sizing: border-box;
   padding: 4px;
   border-radius: 8px 8px 0px 0px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid ${props.theme.listItem.dividerColor};
   white-space: nowrap;
   text-align: center;
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.12);
-`;
+`
+);

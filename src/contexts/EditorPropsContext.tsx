@@ -23,6 +23,7 @@ import React from 'react';
 
 export type EditorProps = {
   syntax?: 'bracket' | 'markdown';
+  theme?: 'light' | 'dark';
   textProps?: EditorTextProps;
   itemizationProps?: EditorItemizationProps;
   bracketLinkProps?: EditorBracketLinkProps;
