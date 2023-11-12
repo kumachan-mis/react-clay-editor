@@ -56,7 +56,7 @@ const hashtagProps: EditorHashtagProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
   }),
-  suggestions: ['react-clay-editor', 'katex', 'react'],
+  suggestions: ['react-clay-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
 const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
@@ -173,7 +173,7 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
         </EditorTextFieldRoot>
         <MockLines text={text} />
       </EditorRoot>
-      <RefreshButtonClassName
+      <RefreshButton
         themeName={theme}
         onClick={() => {
           setText('');
@@ -182,7 +182,7 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
         data-testid="refresh-button"
       >
         Refresh
-      </RefreshButtonClassName>
+      </RefreshButton>
     </Container>
   );
 };
@@ -217,7 +217,7 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
           <ViewerTextFieldBody />
         </ViewerTextFieldRoot>
       </ViewerRoot>
-      <RefreshButtonClassName
+      <RefreshButton
         themeName={theme}
         onClick={() => {
           setText('');
@@ -226,7 +226,7 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
         data-testid="refresh-button"
       >
         Refresh
-      </RefreshButtonClassName>
+      </RefreshButton>
     </Container>
   );
 };
@@ -243,14 +243,14 @@ const Container = styled.div<{ themeName: 'light' | 'dark' }>(
 `
 );
 
-const RefreshButtonClassName = styled.button<{ themeName: 'light' | 'dark' }>(
+const RefreshButton = styled.button<{ themeName: 'light' | 'dark' }>(
   (props) => `
   position: absolute;
   top: 36px;
   left: 36px;
   cursor: pointer;
   padding: 8px 16px;
-  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.04)' : 'rgba(243, 246, 249, 1.0)'};
+  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
   background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0)' : 'rgba(16, 20, 24, 0.0)'};
   &:hover {
     background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0.08)' : 'rgba(16, 20, 24, 0.04)'};
