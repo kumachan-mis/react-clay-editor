@@ -35,7 +35,7 @@ function bracketDecorationMenuSwitch(nodes: LineNode[], contentPosition: Content
   const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
   switch (contentNode.type) {
     case 'decoration': {
-      const { bold, italic, underline } = contentNode.decoration;
+      const { bold, italic, underline } = contentNode.config;
       return { bold: bold ? 'on' : 'off', italic: italic ? 'on' : 'off', underline: underline ? 'on' : 'off' };
     }
     case 'normal':
@@ -56,7 +56,7 @@ function markdownDecorationMenuSwitch(
   const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
   switch (contentNode.type) {
     case 'decoration': {
-      const { bold, italic } = contentNode.decoration;
+      const { bold, italic } = contentNode.config;
       return { bold: bold ? 'on' : 'off', italic: italic ? 'on' : 'off', underline: 'disabled' };
     }
     case 'normal':

@@ -1,10 +1,10 @@
-import { Decoration } from '../decoration/types';
+import { DecorationConfig } from '../decoration/types';
 
 export type ParsingContext = {
   lineIndex: number;
   charIndex: number;
   nested: boolean;
-  decoration: Decoration;
+  decorationConfig: DecorationConfig;
 };
 
 export type ParsingOptions = {

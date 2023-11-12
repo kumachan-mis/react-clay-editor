@@ -76,7 +76,7 @@ function handleOnBracketDecorationItemClick(
 
     let decoCount = 0;
     for (const decoItem of ['bold', 'italic', 'underline'] as const) {
-      if (contentNode.decoration[decoItem]) decoCount++;
+      if (contentNode.config[decoItem]) decoCount++;
     }
 
     const config = { facingMeta: '', trailingMeta: '' };
@@ -115,7 +115,7 @@ function handleOnBracketDecorationItemClick(
 
     let decoCount = 0;
     for (const decoItem of ['bold', 'italic', 'underline'] as const) {
-      if (contentNode.decoration[decoItem]) decoCount++;
+      if (contentNode.config[decoItem]) decoCount++;
     }
 
     const config = { facingMeta: '', trailingMeta: '' };
@@ -190,7 +190,7 @@ function handleOnMarkdownDecorationItemClick(
 
     let decoCount = 0;
     for (const decoItem of ['bold', 'italic'] as const) {
-      if (contentNode.decoration[decoItem]) decoCount++;
+      if (contentNode.config[decoItem]) decoCount++;
     }
 
     const config = { facingMeta: '', trailingMeta: '' };
@@ -230,7 +230,7 @@ function handleOnMarkdownDecorationItemClick(
 
     let decoCount = 0;
     for (const decoItem of ['bold', 'italic'] as const) {
-      if (contentNode.decoration[decoItem]) decoCount++;
+      if (contentNode.config[decoItem]) decoCount++;
     }
 
     const config = { facingMeta: '', trailingMeta: '' };

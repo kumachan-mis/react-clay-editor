@@ -17,7 +17,7 @@ export function parseBoldItalic(text: string, context: ParsingContext, options: 
     facingMeta: '*_',
     children: parseContent(body, { ...context, charIndex: first + 2, nested: true }, options),
     trailingMeta: '_*',
-    decoration: { ...context.decoration, bold: true, italic: true },
+    config: { ...context.decorationConfig, bold: true, italic: true },
   };
 
   return [

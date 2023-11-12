@@ -2,22 +2,26 @@ import { ParsingContext, ParsingOptions } from '../common/types';
 import { parseContent } from '../content/parseContent';
 import { NormalLineNode } from '../normalLine/types';
 
-import { Decoration, DecorationNode } from './types';
+import { DecorationConfig, DecorationNode } from './types';
 
 export const headingRegex = /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/;
 
 export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
   const { heading, body } = line.match(headingRegex)?.groups as Record<string, string>;
-  const decoration = stringToDecoration(heading);
+  const config = stringToConfig(heading);
 
   const childNode: DecorationNode = {
     type: 'decoration',
     lineIndex: context.lineIndex,
     range: [0, line.length - 1],
     facingMeta: `${heading} `,
-    children: parseContent(body, { ...context, charIndex: heading.length + 1, nested: true, decoration }, options),
+    children: parseContent(
+      body,
+      { ...context, charIndex: heading.length + 1, nested: true, decorationConfig: config },
+      options
+    ),
     trailingMeta: '',
-    decoration: decoration,
+    config,
   };
 
   const node: NormalLineNode = {
@@ -32,7 +36,7 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
   return node;
 }
 
-function stringToDecoration(heading: string): Decoration {
+function stringToConfig(heading: string): DecorationConfig {
   let size: 'normal' | 'largest' | 'larger' = 'normal';
 
   switch (heading) {

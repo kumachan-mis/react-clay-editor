@@ -17,7 +17,7 @@ export function parseItalic(text: string, context: ParsingContext, options: Pars
     facingMeta: '_',
     children: parseContent(body, { ...context, charIndex: first + 1, nested: true }, options),
     trailingMeta: '_',
-    decoration: { ...context.decoration, italic: true },
+    config: { ...context.decorationConfig, italic: true },
   };
 
   return [

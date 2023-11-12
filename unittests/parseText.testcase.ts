@@ -602,7 +602,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'Largest Text',
               },
             ],
-            decoration: {
+            config: {
               size: 'largest',
               bold: true,
               italic: false,
@@ -621,7 +621,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'Also Largest Text',
               },
             ],
-            decoration: {
+            config: {
               size: 'largest',
               bold: true,
               italic: false,
@@ -640,7 +640,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'Larger Text',
               },
             ],
-            decoration: {
+            config: {
               size: 'larger',
               bold: true,
               italic: false,
@@ -659,7 +659,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'bold text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -678,7 +678,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'italic text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: false,
               italic: true,
@@ -697,7 +697,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'underlined text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: false,
               italic: false,
@@ -717,7 +717,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'bold italic text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: true,
@@ -732,7 +732,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'italic bold text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: true,
@@ -747,7 +747,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'bold italic text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: true,
@@ -767,7 +767,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'bold underlined text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -782,7 +782,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'underlined bold text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -797,7 +797,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'bold underlined text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -817,7 +817,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'italic underlined text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: false,
               italic: true,
@@ -832,7 +832,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'underlined italic text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: false,
               italic: true,
@@ -852,7 +852,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'bold italic underlined text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: true,
@@ -967,7 +967,7 @@ export const branketTestCases: TestCase[] = [
                 text: 'decoration text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -1015,7 +1015,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'Largest Text',
               },
             ],
-            decoration: {
+            config: {
               size: 'largest',
               bold: true,
               italic: false,
@@ -1035,7 +1035,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'Larger Text',
               },
             ],
-            decoration: {
+            config: {
               size: 'larger',
               bold: true,
               italic: false,
@@ -1055,7 +1055,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'Bold Text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -1075,7 +1075,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'Also Bold Text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -1099,7 +1099,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'bold text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -1118,7 +1118,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'italic text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: false,
               italic: true,
@@ -1142,7 +1142,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'bold italic text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: true,
@@ -1166,7 +1166,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'italic bold text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: true,
@@ -1254,7 +1254,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'bold text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: true,
               italic: false,
@@ -1290,7 +1290,7 @@ export const markdownTestCases: TestCase[] = [
                 text: 'italic text',
               },
             ],
-            decoration: {
+            config: {
               size: 'normal',
               bold: false,
               italic: true,

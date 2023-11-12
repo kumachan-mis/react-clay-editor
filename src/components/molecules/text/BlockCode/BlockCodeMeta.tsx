@@ -1,11 +1,10 @@
 import { BlockCodeMetaNode } from '../../../../parser/blockCode/types';
 import { Char } from '../../../atoms/text/Char';
+import { CodeLineContent } from '../../../atoms/text/CodeLineContent';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
-
-import { BlockCodeContent } from './BlockCodeContent';
 
 import React from 'react';
 
@@ -20,7 +19,7 @@ export const BlockCodeMeta: React.FC<BlockCodeMetaProps> = ({ node, textVisual, 
   return (
     <Line lineIndex={lineIndex} {...lineProps}>
       <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-      <BlockCodeContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
+      <CodeLineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...codeMeta].map((char, index) => (
             <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
@@ -28,7 +27,7 @@ export const BlockCodeMeta: React.FC<BlockCodeMetaProps> = ({ node, textVisual, 
             </Char>
           ))}
         </Monospace>
-      </BlockCodeContent>
+      </CodeLineContent>
     </Line>
   );
 };
