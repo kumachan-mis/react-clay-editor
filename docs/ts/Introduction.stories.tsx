@@ -116,7 +116,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
           border-bottom: solid 1px;
 
           &[data-clickable='true'] {
-            color: #e14978;
+            color: #f75e8a;
             font-weight: 500;
           }
         }
@@ -137,7 +137,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
           border-bottom: solid 1px;
 
           &[data-clickable='true'] {
-            color: #08090b;
+            color: #595f6e;
             font-weight: 500;
           }
         }
@@ -154,6 +154,7 @@ const Introduction: React.FC = () => {
   const [text, setText] = React.useState(initialText);
   return (
     <EditorRoot
+      theme="dark"
       text={text}
       setText={setText}
       textProps={textProps}

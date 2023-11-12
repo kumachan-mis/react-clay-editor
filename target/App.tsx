@@ -69,7 +69,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
           border-bottom: solid 1px;
 
           &[data-clickable='true'] {
-            color: #e14978;
+            color: #f75e8a;
             font-weight: 500;
           }
         }
@@ -90,7 +90,7 @@ const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
           border-bottom: solid 1px;
 
           &[data-clickable='true'] {
-            color: #08090b;
+            color: #595f6e;
             font-weight: 500;
           }
         }
@@ -239,7 +239,7 @@ const Container = styled.div<{ themeName: 'light' | 'dark' }>(
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: ${props.themeName !== 'dark' ? 'rgba(255, 255, 255, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
+  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
 `
 );
 
@@ -250,10 +250,10 @@ const RefreshButtonClassName = styled.button<{ themeName: 'light' | 'dark' }>(
   left: 36px;
   cursor: pointer;
   padding: 8px 16px;
-  color: ${props.themeName !== 'dark' ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 1.0)'};
-  background-color: ${props.themeName !== 'dark' ? 'rgba(255, 255, 255, 0)' : 'rgba(0, 0, 0, 0.0)'};
+  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.04)' : 'rgba(243, 246, 249, 1.0)'};
+  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0)' : 'rgba(16, 20, 24, 0.0)'};
   &:hover {
-    background-color: ${props.themeName !== 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)'};
+    background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0.08)' : 'rgba(16, 20, 24, 0.04)'};
   }
 `
 );
@@ -263,9 +263,9 @@ const TextArea = styled.textarea<{ themeName: 'light' | 'dark' }>(
   width: 35%;
   height: 70%;
   margin: 5px;
-  color: ${props.themeName !== 'dark' ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 1.0)'};
-  background-color: ${props.themeName !== 'dark' ? 'rgba(255, 255, 255, 1.0)' : 'rgba(18, 18, 18, 1.0)'};
-  border-color: ${props.themeName !== 'dark' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)'};
+  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.04)' : 'rgba(243, 246, 249, 1.0)'};
+  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
+  border-color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.12)' : 'rgba(243, 246, 249, 0.12)'};
 `
 );
 
