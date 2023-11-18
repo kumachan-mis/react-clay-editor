@@ -44,6 +44,7 @@ const FixedContainer = styled.div<{ colorized: boolean }>(
   flex-direction: column;
   box-sizing: border-box;
   border: solid 6px ${colorized ? colorPalette.fixedContainer : colorPalette.disabledContainer};
+  background-color: rgba(243, 246, 249, 1.0);
 `
 );
 
