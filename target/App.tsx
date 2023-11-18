@@ -251,7 +251,7 @@ const RefreshButton = styled.button<{ themeName: 'light' | 'dark' }>(
   cursor: pointer;
   padding: 8px 16px;
   color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
-  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0)' : 'rgba(16, 20, 24, 0.0)'};
+  background-color: transparent;
   &:hover {
     background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0.08)' : 'rgba(16, 20, 24, 0.04)'};
   }
@@ -263,7 +263,7 @@ const TextArea = styled.textarea<{ themeName: 'light' | 'dark' }>(
   width: 35%;
   height: 70%;
   margin: 5px;
-  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.04)' : 'rgba(243, 246, 249, 1.0)'};
+  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
   background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
   border-color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.12)' : 'rgba(243, 246, 249, 0.12)'};
 `
