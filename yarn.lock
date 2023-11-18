@@ -4753,7 +4753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:7.5.3, @storybook/addon-actions@npm:^7.5.3":
+"@storybook/addon-actions@npm:7.5.3":
   version: 7.5.3
   resolution: "@storybook/addon-actions@npm:7.5.3"
   dependencies:
@@ -5119,7 +5119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/channels@npm:7.5.3, @storybook/channels@npm:^7.5.3":
+"@storybook/channels@npm:7.5.3":
   version: 7.5.3
   resolution: "@storybook/channels@npm:7.5.3"
   dependencies:
@@ -5463,7 +5463,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/preview-api@npm:7.5.3, @storybook/preview-api@npm:^7.5.3":
+"@storybook/preview-api@npm:7.5.3":
   version: 7.5.3
   resolution: "@storybook/preview-api@npm:7.5.3"
   dependencies:
@@ -14016,15 +14016,11 @@ __metadata:
     "@jest/globals": "npm:^29.7.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@playwright/test": "npm:^1.40.0"
-    "@storybook/addon-actions": "npm:^7.5.3"
     "@storybook/addon-docs": "npm:^7.5.3"
     "@storybook/addon-essentials": "npm:^7.5.3"
     "@storybook/addon-links": "npm:^7.5.3"
     "@storybook/builder-vite": "npm:^7.5.3"
-    "@storybook/channels": "npm:^7.5.3"
-    "@storybook/global": "npm:^5.0.0"
     "@storybook/manager-api": "npm:^7.5.3"
-    "@storybook/preview-api": "npm:^7.5.3"
     "@storybook/react": "npm:^7.5.3"
     "@storybook/react-vite": "npm:^7.5.3"
     "@storybook/theming": "npm:^7.5.3"
