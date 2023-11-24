@@ -45,7 +45,7 @@ test('tagged link', async () => {
 test('formula', async () => {
   await page.keyboard.insertText(
     [
-      // input text
+      // Input text
       '$f(x)$ $\\unknown$',
       '$$\\int_a^b f(x) dx$$',
       '$$',
@@ -64,7 +64,7 @@ test('formula', async () => {
 test('code', async () => {
   await page.keyboard.insertText(
     [
-      // input text
+      // Input text
       "`import React from 'react';`",
       '```',
       'const Component = () => (',

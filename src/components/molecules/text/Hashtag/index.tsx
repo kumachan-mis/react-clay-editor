@@ -19,13 +19,13 @@ export const Hashtag: React.FC<HashtagProps> = ({ node, getEditMode, linkForceCl
 
   return (
     <EmbededLink
-      editMode={editMode}
-      forceClickable={linkForceClickable}
       anchorProps={(clickable) => hashtagVisual?.anchorProps?.(getHashtagName(node), clickable)}
       data-styleid={HashtagConstants.styleId}
+      editMode={editMode}
+      forceClickable={linkForceClickable}
     >
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
-        <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
           {char}
         </Char>
       ))}

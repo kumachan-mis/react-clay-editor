@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type LineIndentProps = {
-  lineIndex: number;
-  indentDepth: number;
+  readonly lineIndex: number;
+  readonly indentDepth: number;
 } & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, ...rest }) => (
   <StyledLineIndent indentDepth={indentDepth} {...rest}>
     {[...Array(indentDepth).keys()].map((charIndex) => (
-      <StyledLineIndentPad key={charIndex} charIndex={charIndex} lineIndex={lineIndex}>
+      <StyledLineIndentPad charIndex={charIndex} key={charIndex} lineIndex={lineIndex}>
         {' '}
       </StyledLineIndentPad>
     ))}

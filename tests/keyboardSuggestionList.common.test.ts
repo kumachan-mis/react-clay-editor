@@ -41,7 +41,7 @@ test('text suggestion', async () => {
   await page.keyboard.press('Enter');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'React Clay Editor',
     'Real Time',
     'Real Time',
@@ -89,7 +89,7 @@ test('bracket link suggestion', async () => {
   await page.keyboard.press('Enter');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '[react-clay-editor]',
     '[katex]',
     '[@emotion/react]',
@@ -133,7 +133,7 @@ test('hashtag suggestion', async () => {
   await page.keyboard.press('Enter');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '#react-clay-editor ',
     '#katex ',
     '#@emotion/react ',
@@ -166,7 +166,7 @@ test('tagged link suggestion', async () => {
   await page.keyboard.press('Enter');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '[github: @kumachan-mis/react-clay-editor]',
     '[github: @KaTeX/KaTeX]',
     '[github: @facebook/react]',

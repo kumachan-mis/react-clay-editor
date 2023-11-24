@@ -2,18 +2,18 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type CursorTextAreaProps = {
-  position: { top: number; left: number };
-  cursorSize: number;
-  value?: string;
+  readonly position: { top: number; left: number };
+  readonly cursorSize: number;
+  readonly value?: string;
 } & React.PropsWithoutRef<React.ComponentProps<'textarea'>>;
 
 export const CursorTextArea: React.FC<CursorTextAreaProps> = ({ position, cursorSize, ...rest }) => (
   <StyledCursorTextArea
-    position={position}
-    cursorSize={cursorSize}
-    wrap="off"
-    spellCheck={false}
     autoCapitalize="none"
+    cursorSize={cursorSize}
+    position={position}
+    spellCheck={false}
+    wrap="off"
     {...rest}
   />
 );

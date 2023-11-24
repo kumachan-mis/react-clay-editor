@@ -5,12 +5,12 @@ type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] : RecursivePartial<T[P]>;
 };
 
-export interface TestCase {
+export type TestCase = {
   name: string;
   text: string;
   parsingOptions?: ParsingOptions;
   expected: RecursivePartial<TextNode>[];
-}
+};
 
 export const commonTestCases: TestCase[] = [
   {

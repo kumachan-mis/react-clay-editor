@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type LineContentProps = {
-  lineIndex: number;
-  lineLength: number;
-  indentDepth?: number;
+  readonly lineIndex: number;
+  readonly lineLength: number;
+  readonly indentDepth?: number;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const LineContent: React.FC<LineContentProps> = ({
@@ -19,7 +19,7 @@ export const LineContent: React.FC<LineContentProps> = ({
   return (
     <StyledLineContent indentDepth={indentDepth} {...rest}>
       {children}
-      <Char lineIndex={lineIndex} charIndex={lineLength}>
+      <Char charIndex={lineLength} lineIndex={lineIndex}>
         {' '}
       </Char>
     </StyledLineContent>

@@ -108,7 +108,7 @@ export function handleOnSectionItemClick(
 
 function getSectionMeta(props: SectionMenuHandlerProps, menuItem: SectionMenuItemType): SectionMeta {
   if (!props.syntax || props.syntax === 'bracket') {
-    // bracket syntax
+    // Bracket syntax
     switch (menuItem) {
       case 'normal':
         return { facingMeta: '[* ', sectionName: props.normalLabel, trailingMeta: ']' };
@@ -118,7 +118,7 @@ function getSectionMeta(props: SectionMenuHandlerProps, menuItem: SectionMenuIte
         return { facingMeta: '[*** ', sectionName: props.largestLabel, trailingMeta: ']' };
     }
   } else {
-    // markdown syntax
+    // Markdown syntax
     switch (menuItem) {
       case 'normal':
         return { facingMeta: '### ', sectionName: props.normalLabel, trailingMeta: '' };

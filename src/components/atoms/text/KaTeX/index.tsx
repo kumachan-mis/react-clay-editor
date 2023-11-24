@@ -2,7 +2,7 @@ import katex, { KatexOptions } from 'katex';
 import React from 'react';
 
 export type KaTeXProps = {
-  options?: KatexOptions;
+  readonly options?: KatexOptions;
 } & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const KaTeX: React.FC<KaTeXProps> = ({ options, children, ...rest }) => {
@@ -13,5 +13,6 @@ export const KaTeX: React.FC<KaTeXProps> = ({ options, children, ...rest }) => {
       return error instanceof katex.ParseError ? error.message : '';
     }
   }, [children, options]);
+  // eslint-disable-next-line react/no-danger
   return <span dangerouslySetInnerHTML={{ __html: innerHtml }} {...rest} />;
 };

@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type LineGroupProps = {
-  firstLineIndex: number;
-  lastLineIndex: number;
+  readonly firstLineIndex: number;
+  readonly lastLineIndex: number;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const LineGroupConstants = {

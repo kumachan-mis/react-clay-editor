@@ -54,11 +54,11 @@ export function handleOnKeyDown(
       if (groups) return insertText(newText, newState, groups.indent + groups.meta);
 
       if (!props.syntax || props.syntax === 'bracket') {
-        // bracket syntax
+        // Bracket syntax
         const groups = newPrevLine.match(bracketItemizationRegex)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       } else {
-        // markdown syntax
+        // Markdown syntax
         const groups = newPrevLine.match(markdownItemizationRegex)?.groups;
         if (groups) return insertText(newText, newState, groups.indent + groups.bullet);
       }

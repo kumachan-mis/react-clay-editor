@@ -9,10 +9,10 @@ import { LineNode } from './types';
 
 export function parseLine(line: string, options: ParsingOptions, context: ParsingContext): LineNode {
   if (!options.syntax || options.syntax === 'bracket') {
-    // bracket syntax
+    // Bracket syntax
     return parseBracketLine(line, context, options);
   } else {
-    // markdown syntax
+    // Markdown syntax
     return parseMarkdownLine(line, context, options);
   }
 }

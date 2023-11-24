@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type DropdownMenuButtonProps = {
-  open: boolean;
-  onOpen: (anchorEl: HTMLElement) => void;
-  onClose: () => void;
-  pressed?: boolean;
-  disabled?: boolean;
-  buttonProps?: React.PropsWithoutRef<React.ComponentProps<'button'>>;
+  readonly open: boolean;
+  readonly onOpen: (anchorEl: HTMLElement) => void;
+  readonly onClose: () => void;
+  readonly pressed?: boolean;
+  readonly disabled?: boolean;
+  readonly buttonProps?: React.PropsWithoutRef<React.ComponentProps<'button'>>;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const DropdownMenuButtonConstants = {
@@ -56,7 +56,7 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
   const { disabled: mainDisabled, ...mainRest } = buttonProps || {};
 
   return (
-    <StyledDropdownMenuButton role="group" aria-pressed={pressed} aria-disabled={disabled} {...rest}>
+    <StyledDropdownMenuButton aria-disabled={disabled} aria-pressed={pressed} role="group" {...rest}>
       <StyledDropdownMainButton
         disabled={disabled || mainDisabled}
         {...mainRest}
@@ -65,12 +65,12 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
         {children}
       </StyledDropdownMainButton>
       <StyledDropdownArrowButton
-        disabled={disabled}
-        ref={arrowRef}
-        onClick={handleOnArrowClick}
-        aria-haspopup="true"
         aria-expanded={open}
+        aria-haspopup="true"
         data-selectid={DropdownMenuButtonConstants.arrow.selectId}
+        disabled={disabled}
+        onClick={handleOnArrowClick}
+        ref={arrowRef}
       >
         <ArrowIcon />
       </StyledDropdownArrowButton>

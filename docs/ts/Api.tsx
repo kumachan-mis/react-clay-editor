@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 const Api: React.FC<{
-  colorized:
+  readonly colorized:
     | 'all'
     | 'container'
     | 'content'
@@ -15,7 +15,7 @@ const Api: React.FC<{
     <FixedContent colorized={['all', 'content', 'fixed-content'].includes(colorized)}>fixed content</FixedContent>
     <ScrollableContainer colorized={['all', 'container', 'scrollable-container'].includes(colorized)}>
       {[...new Array(3)].map((_, i) => (
-        <ScrollableContent key={i} colorized={['all', 'content', 'scrollable-content'].includes(colorized)}>
+        <ScrollableContent colorized={['all', 'content', 'scrollable-content'].includes(colorized)} key={i}>
           {[...new Array(5)].map((_, i) => (
             <div key={i}>scrollable content</div>
           ))}
@@ -25,7 +25,7 @@ const Api: React.FC<{
   </FixedContainer>
 );
 
-const colorPalette: { [name: string]: string } = {
+const colorPalette: Record<string, string> = {
   fixedContainer: '#ff8787',
   fixedContent: '#f8c4b4',
   scrollableContainer: '#bce29e',

@@ -10,7 +10,7 @@ import { TextNodeComponentProps } from '../common/types';
 import React from 'react';
 
 export type ItemizationProps = {
-  ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+  readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<ItemizationNode>;
 
 export const ItemizationConstants = {
@@ -25,12 +25,12 @@ export const Itemization: React.FC<ItemizationProps> = ({ node, getEditMode, tex
 
   return (
     <Line lineIndex={lineIndex} {...lineProps} data-styleid={ItemizationConstants.styleId}>
-      <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-      <ItemBullet lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} />
-      <LineContent lineIndex={lineIndex} indentDepth={indentDepth + 1} lineLength={lineLength}>
-        <ItemBulletContent lineIndex={lineIndex} indentDepth={indentDepth} bullet={bullet} cursorOn={editMode} />
+      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
+      <ItemBullet bullet={bullet} indentDepth={indentDepth} lineIndex={lineIndex} />
+      <LineContent indentDepth={indentDepth + 1} lineIndex={lineIndex} lineLength={lineLength}>
+        <ItemBulletContent bullet={bullet} cursorOn={editMode} indentDepth={indentDepth} lineIndex={lineIndex} />
         {children.map((child, index) => (
-          <ChildComponent key={index} node={child} getEditMode={getEditMode} textVisual={textVisual} {...rest} />
+          <ChildComponent getEditMode={getEditMode} key={index} node={child} textVisual={textVisual} {...rest} />
         ))}
       </LineContent>
     </Line>

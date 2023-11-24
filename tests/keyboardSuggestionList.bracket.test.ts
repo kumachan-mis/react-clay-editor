@@ -46,7 +46,7 @@ test('decoration suggestion', async () => {
   await page.keyboard.press('ArrowRight');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '[* React Clay Editor]',
     '[* Document Editor]',
     '[** Real Time]',

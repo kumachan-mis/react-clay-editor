@@ -35,7 +35,7 @@ test('select on word top', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine .nt perspiration',
     'by Thomas Edison',
@@ -52,7 +52,7 @@ test('select on word bottom', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine perce. perspiration',
     'by Thomas Edison',
@@ -69,7 +69,7 @@ test('select on text top', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '.nt perspiration',
     'by Thomas Edison',
   ]);
@@ -85,7 +85,7 @@ test('select on text bottom', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine perce.',
   ]);

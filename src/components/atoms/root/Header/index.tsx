@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type HeaderProps = {
-  header: string;
-  size?: 'normal' | 'larger' | 'largest';
+  readonly header: string;
+  readonly size?: 'normal' | 'larger' | 'largest';
 };
 
 export const HeaderConstants = {
@@ -12,7 +12,7 @@ export const HeaderConstants = {
 };
 
 export const Header: React.FC<HeaderProps> = ({ size = 'largest', header }) => (
-  <StyledHeader size={size} data-selectid={HeaderConstants.selectId}>
+  <StyledHeader data-selectid={HeaderConstants.selectId} size={size}>
     {header}
   </StyledHeader>
 );

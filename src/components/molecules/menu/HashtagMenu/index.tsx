@@ -4,8 +4,8 @@ import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 import React from 'react';
 
 export type HashtagMenuProps = {
-  menuSwitch: 'on' | 'off' | 'disabled';
-  onButtonClick: () => void;
+  readonly menuSwitch: 'on' | 'off' | 'disabled';
+  readonly onButtonClick: () => void;
 };
 
 export const HashtagMenuConstants = {
@@ -15,10 +15,10 @@ export const HashtagMenuConstants = {
 
 export const HashtagMenu: React.FC<HashtagMenuProps> = ({ menuSwitch, onButtonClick }) => (
   <IconButtonMenu
-    pressed={menuSwitch === 'on'}
+    data-selectid={HashtagMenuConstants.selectId}
     disabled={menuSwitch === 'disabled'}
     onClick={onButtonClick}
-    data-selectid={HashtagMenuConstants.selectId}
+    pressed={menuSwitch === 'on'}
   >
     <HashtagIcon />
   </IconButtonMenu>

@@ -20,13 +20,13 @@ export const SimpleViewerStory: React.FC = () => (
 
 export const FullwidthStory: React.FC = () => (
   <ViewerRoot
-    text={['This is a full-width viewer.', '`className` is available to overwrite the default styling.'].join('\n')}
-    theme="dark"
     className={css`
       && {
         width: 100%;
       }
     `}
+    text={['This is a full-width viewer.', '`className` is available to overwrite the default styling.'].join('\n')}
+    theme="dark"
   >
     <ViewerTextFieldRoot>
       <ViewerTextFieldBody />
@@ -82,8 +82,6 @@ export const DualPanedEditorStory: React.FC = () => {
       `}
     >
       <textarea
-        value={text}
-        onChange={(event) => setText(event.target.value)}
         className={css`
           && {
             width: 45%;
@@ -94,11 +92,10 @@ export const DualPanedEditorStory: React.FC = () => {
             border-color: rgba(243, 246, 249, 0.12);
           }
         `}
+        onChange={(event) => setText(event.target.value)}
+        value={text}
       />
       <ViewerRoot
-        text={text}
-        syntax="markdown"
-        theme="dark"
         className={css`
           && {
             width: 45%;
@@ -106,6 +103,9 @@ export const DualPanedEditorStory: React.FC = () => {
             margin: 5px;
           }
         `}
+        syntax="markdown"
+        text={text}
+        theme="dark"
       >
         <ViewerTextFieldRoot>
           <ViewerTextFieldBody />

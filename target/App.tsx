@@ -59,7 +59,7 @@ const hashtagProps: EditorHashtagProps = {
   suggestions: ['react-clay-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
-const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
+const taggedLinkPropsMap: Record<string, EditorTaggedLinkProps> = {
   npm: {
     label: 'package',
     anchorProps: (linkName) => ({
@@ -144,7 +144,7 @@ const RootPage: React.FC = () => (
   </div>
 );
 
-const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'light' | 'dark' }> = ({
+const TestTargetEditorPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; readonly theme: 'light' | 'dark' }> = ({
   syntax,
   theme,
 }) => {
@@ -154,16 +154,16 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
   return (
     <Container themeName={theme}>
       <EditorRoot
+        bracketLinkProps={bracketLinkProps}
+        className={editorClassName}
+        hashtagProps={hashtagProps}
         key={key}
-        text={text}
         setText={setText}
         syntax={syntax}
-        theme={theme}
-        textProps={textProps}
-        bracketLinkProps={bracketLinkProps}
-        hashtagProps={hashtagProps}
         taggedLinkPropsMap={taggedLinkPropsMap}
-        className={editorClassName}
+        text={text}
+        textProps={textProps}
+        theme={theme}
       >
         <EditorSyntaxMenu />
         <Divider />
@@ -174,12 +174,12 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
         <MockLines text={text} />
       </EditorRoot>
       <RefreshButton
-        themeName={theme}
+        data-testid="refresh-button"
         onClick={() => {
           setText('');
-          setKey((key) => key + 1); // force re-mount
+          setKey((key) => key + 1); // Force re-mount
         }}
-        data-testid="refresh-button"
+        themeName={theme}
       >
         Refresh
       </RefreshButton>
@@ -187,7 +187,7 @@ const TestTargetEditorPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
   );
 };
 
-const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'light' | 'dark' }> = ({
+const TestTargetViewerPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; readonly theme: 'light' | 'dark' }> = ({
   syntax,
   theme,
 }) => {
@@ -197,33 +197,33 @@ const TestTargetViewerPage: React.FC<{ syntax: 'bracket' | 'markdown'; theme: 'l
   return (
     <Container themeName={theme}>
       <TextArea
+        data-testid="mock-textarea"
+        onChange={(event) => setText(event.target.value)}
         themeName={theme}
         value={text}
-        onChange={(event) => setText(event.target.value)}
-        data-testid="mock-textarea"
       />
       <ViewerRoot
-        key={key}
-        text={text}
-        syntax={syntax}
-        theme={theme}
-        textProps={textProps}
         bracketLinkProps={bracketLinkProps}
-        hashtagProps={hashtagProps}
-        taggedLinkPropsMap={taggedLinkPropsMap}
         className={viewerClassName}
+        hashtagProps={hashtagProps}
+        key={key}
+        syntax={syntax}
+        taggedLinkPropsMap={taggedLinkPropsMap}
+        text={text}
+        textProps={textProps}
+        theme={theme}
       >
         <ViewerTextFieldRoot>
           <ViewerTextFieldBody />
         </ViewerTextFieldRoot>
       </ViewerRoot>
       <RefreshButton
-        themeName={theme}
+        data-testid="refresh-button"
         onClick={() => {
           setText('');
-          setKey((key) => key + 1); // force re-mount
+          setKey((key) => key + 1); // Force re-mount
         }}
-        data-testid="refresh-button"
+        themeName={theme}
       >
         Refresh
       </RefreshButton>
@@ -269,7 +269,7 @@ const TextArea = styled.textarea<{ themeName: 'light' | 'dark' }>(
 `
 );
 
-const MockLines: React.FC<{ text: string }> = ({ text }) => (
+const MockLines: React.FC<{ readonly text: string }> = ({ text }) => (
   <div
     className={css`
       height: 0px;
@@ -277,7 +277,7 @@ const MockLines: React.FC<{ text: string }> = ({ text }) => (
     `}
   >
     {text.split('\n').map((line, i) => (
-      <div key={i} data-testid={`mock-L${i}`}>
+      <div data-testid={`mock-L${i}`} key={i}>
         {line}
       </div>
     ))}

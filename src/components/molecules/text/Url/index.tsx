@@ -18,13 +18,13 @@ export const Url: React.FC<UrlProps> = ({ node, getEditMode, linkForceClickable 
 
   return (
     <EmbededLink
-      editMode={editMode}
-      forceClickable={linkForceClickable}
       anchorProps={() => ({ href: url, target: '_blank', rel: 'noopener noreferrer' })}
       data-styleid={UrlConstants.styleId}
+      editMode={editMode}
+      forceClickable={linkForceClickable}
     >
       {[...url].map((char, index) => (
-        <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
           {char}
         </Char>
       ))}

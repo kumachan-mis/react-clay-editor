@@ -7,13 +7,13 @@ import React from 'react';
 
 const FormattingSyntax: React.FC<ViewerRootProps> = (props) => (
   <ViewerRoot
-    theme="dark"
     className={css`
       && {
         border: none;
         height: auto;
       }
     `}
+    theme="dark"
     {...props}
   >
     <ViewerTextFieldRoot>

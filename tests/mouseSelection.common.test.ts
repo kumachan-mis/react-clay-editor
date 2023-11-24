@@ -30,7 +30,7 @@ test('one line selection', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'G.ercent inspiration and',
     'ninety-nine percent perspiration',
     'by Thomas Edison',
@@ -42,7 +42,7 @@ test('two lines selection', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine percent persp.omas Edison',
   ]);
@@ -53,7 +53,7 @@ test('three lines selection', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspira.Edison',
   ]);
 });
@@ -63,7 +63,7 @@ test('double click selection', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine percent perspiration',
     'by Thomas .',
@@ -75,7 +75,7 @@ test('triple click selection', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine percent perspiration',
     '.',
@@ -98,7 +98,7 @@ test('move without down and up', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine percent perspiration',
     'by Thomas Edison.',

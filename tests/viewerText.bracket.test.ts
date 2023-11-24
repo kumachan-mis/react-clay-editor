@@ -19,7 +19,7 @@ test.afterAll(async () => {
 test('decoration', async () => {
   await page.keyboard.insertText(
     [
-      // input text
+      // Input text
       '[**** Largest Text][*** Also Largest Text][** Larger Text]',
       '[* bold text][/ italic text][_ underlined text]',
     ].join('\n')
@@ -36,7 +36,7 @@ test('decoration', async () => {
 test('itemization', async () => {
   await page.keyboard.insertText(
     [
-      // input text
+      // Input text
       ' itemized text',
       '  nested itemized text',
       '\titemized text',

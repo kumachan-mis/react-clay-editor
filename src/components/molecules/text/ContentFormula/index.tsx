@@ -22,17 +22,17 @@ export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, getEditMod
 
   return (
     <CharGroup
-      lineIndex={lineIndex}
+      data-styleid={ContentFormulaConstants.styleId(displayMode)}
       firstCharIndex={first + facingMeta.length}
       lastCharIndex={last - trailingMeta.length}
-      data-styleid={ContentFormulaConstants.styleId(displayMode)}
+      lineIndex={lineIndex}
     >
       {!editMode ? (
         <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
       ) : (
         <Monospace {...codeElementProps}>
           {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
-            <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+            <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
               {char}
             </Char>
           ))}

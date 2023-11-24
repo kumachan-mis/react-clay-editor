@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type DropdownMenuListItemProps = {
-  selected?: boolean;
-  disabled?: boolean;
+  readonly selected?: boolean;
+  readonly disabled?: boolean;
 } & React.PropsWithoutRef<React.ComponentProps<'li'>>;
 
 export const DropdownMenuListItem: React.FC<DropdownMenuListItemProps> = ({ selected, disabled, ...rest }) => (
-  <StyledDropdownMenuListItem role="menuitem" aria-selected={selected} aria-disabled={disabled} {...rest} />
+  <StyledDropdownMenuListItem aria-disabled={disabled} aria-selected={selected} role="menuitem" {...rest} />
 );
 
 const StyledDropdownMenuListItem = styled.li(

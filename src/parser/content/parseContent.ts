@@ -17,10 +17,10 @@ import { ContentNode } from './types';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   if (!options.syntax || options.syntax === 'bracket') {
-    // bracket syntax
+    // Bracket syntax
     return parseBracketContent(text, context, options);
   } else {
-    // markdown syntax
+    // Markdown syntax
     return parseMarkdownContent(text, context, options);
   }
 }

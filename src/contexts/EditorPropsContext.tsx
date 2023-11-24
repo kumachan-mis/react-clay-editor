@@ -28,7 +28,7 @@ export type EditorProps = {
   itemizationProps?: EditorItemizationProps;
   bracketLinkProps?: EditorBracketLinkProps;
   hashtagProps?: EditorHashtagProps;
-  taggedLinkPropsMap?: { [tagName: string]: EditorTaggedLinkProps };
+  taggedLinkPropsMap?: Record<string, EditorTaggedLinkProps>;
   codeProps?: EditorCodeProps;
   formulaProps?: EditorFormulaProps;
   quotationProps?: EditorQuotationProps;
@@ -58,7 +58,7 @@ export function useEditorPropsValueContext(): EditorProps {
   return React.useContext(EditorPropsValueContext);
 }
 
-export const EditorPropsContextProvider: React.FC<React.PropsWithChildren<{ props: EditorProps }>> = ({
+export const EditorPropsContextProvider: React.FC<React.PropsWithChildren<{ readonly props: EditorProps }>> = ({
   props,
   children,
 }) => <EditorPropsValueContext.Provider value={props}>{children}</EditorPropsValueContext.Provider>;

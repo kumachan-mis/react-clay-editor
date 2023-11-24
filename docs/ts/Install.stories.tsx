@@ -22,7 +22,7 @@ export const InstallStory: React.FC = () => {
     ].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText} theme="dark">
+    <EditorRoot setText={setText} text={text} theme="dark">
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
       </EditorTextFieldRoot>

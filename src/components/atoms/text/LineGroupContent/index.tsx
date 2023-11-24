@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type LineGroupContentProps = {
-  indentDepth: number;
+  readonly indentDepth: number;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const LineGroupContent: React.FC<LineGroupContentProps> = ({ indentDepth, ...rest }) => (

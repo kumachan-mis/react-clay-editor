@@ -17,7 +17,7 @@ export const Normal: React.FC<NormalProps> = ({ node }) => {
   return (
     <span data-styleid={NormalConstants.styleId}>
       {[...text].map((char, index) => (
-        <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
           {char}
         </Char>
       ))}

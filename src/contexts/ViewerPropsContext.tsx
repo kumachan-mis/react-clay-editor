@@ -18,7 +18,7 @@ export type ViewerProps = {
   textProps?: ViewerTextProps;
   bracketLinkProps?: ViewerBracketLinkProps;
   hashtagProps?: ViewerHashtagProps;
-  taggedLinkPropsMap?: { [tagName: string]: ViewerTaggedLinkProps };
+  taggedLinkPropsMap?: Record<string, ViewerTaggedLinkProps>;
   codeProps?: ViewerCodeProps;
   formulaProps?: ViewerFormulaProps;
 };
@@ -43,7 +43,7 @@ export function useViewerPropsValueContext(): ViewerProps {
   return React.useContext(ViewerPropsValueContext);
 }
 
-export const ViewerPropsContextProvider: React.FC<React.PropsWithChildren<{ props: ViewerProps }>> = ({
+export const ViewerPropsContextProvider: React.FC<React.PropsWithChildren<{ readonly props: ViewerProps }>> = ({
   props,
   children,
 }) => <ViewerPropsValueContext.Provider value={props}>{children}</ViewerPropsValueContext.Provider>;

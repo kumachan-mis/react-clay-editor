@@ -8,12 +8,13 @@ export function useTextValueContext(): string {
   return React.useContext(TextValueContext);
 }
 
-export const TextValueContextProvider: React.FC<React.PropsWithChildren<{ text: string }>> = ({ text, children }) => (
-  <TextValueContext.Provider value={text}>{children}</TextValueContext.Provider>
-);
+export const TextValueContextProvider: React.FC<React.PropsWithChildren<{ readonly text: string }>> = ({
+  text,
+  children,
+}) => <TextValueContext.Provider value={text}>{children}</TextValueContext.Provider>;
 
 export const defaultSetText: React.Dispatch<React.SetStateAction<string>> = () => {
-  // do nothing
+  // Do nothing
 };
 
 const SetTextContext = React.createContext(defaultSetText);
@@ -27,7 +28,7 @@ export function useTextContext(): [string, React.Dispatch<React.SetStateAction<s
 }
 
 export const TextContextProvider: React.FC<
-  React.PropsWithChildren<{ text: string; setText: React.Dispatch<React.SetStateAction<string>> }>
+  React.PropsWithChildren<{ readonly text: string; readonly setText: React.Dispatch<React.SetStateAction<string>> }>
 > = ({ text, setText, children }) => (
   <TextValueContext.Provider value={text}>
     <SetTextContext.Provider value={setText}>{children}</SetTextContext.Provider>

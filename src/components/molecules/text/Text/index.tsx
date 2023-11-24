@@ -11,10 +11,10 @@ export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, cursorSelec
     <>
       {nodes.map((node, index) => (
         <TextNodeComponent
-          key={index}
-          node={node}
           getEditMode={getEditMode}
+          key={index}
           linkForceClickable={linkForceClickable}
+          node={node}
           {...visuals}
         />
       ))}

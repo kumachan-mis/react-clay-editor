@@ -29,10 +29,10 @@ export function handleOnDecorationClick(
   if (!contentPosition || menuSwitchItem === 'disabled') return [text, state];
 
   if (!props.syntax || props.syntax === 'bracket') {
-    // bracket syntax
+    // Bracket syntax
     return handleOnBracketDecorationItemClick(text, nodes, contentPosition, state, menuItem, menuSwitchItem);
   } else {
-    // markdown syntax
+    // Markdown syntax
     if (menuItem === 'underline') return [text, state];
     return handleOnMarkdownDecorationItemClick(text, nodes, contentPosition, state, menuItem, menuSwitchItem);
   }

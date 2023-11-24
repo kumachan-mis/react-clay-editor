@@ -23,30 +23,30 @@ export const BracketLink: React.FC<BracketLinkProps> = ({
 
   return (
     <EmbededLink
-      editMode={editMode}
-      forceClickable={linkForceClickable}
       anchorProps={(clickable) => bracketLinkVisual?.anchorProps?.(linkName, clickable)}
       data-styleid={BracketLinkConstants.styleId}
+      editMode={editMode}
+      forceClickable={linkForceClickable}
     >
       {[...facingMeta].map((char, index) => (
-        <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
           {editMode ? char : ''}
         </Char>
       ))}
       {[...linkName].map((char, index) => (
         <Char
+          charIndex={first + facingMeta.length + index}
           key={first + facingMeta.length + index}
           lineIndex={lineIndex}
-          charIndex={first + facingMeta.length + index}
         >
           {char}
         </Char>
       ))}
       {[...trailingMeta].map((char, index) => (
         <Char
+          charIndex={last - (trailingMeta.length - 1) + index}
           key={last - (trailingMeta.length - 1) + index}
           lineIndex={lineIndex}
-          charIndex={last - (trailingMeta.length - 1) + index}
         >
           {editMode ? char : ''}
         </Char>

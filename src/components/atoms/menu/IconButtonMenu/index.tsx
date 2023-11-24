@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type IconButtonMenuProps = {
-  pressed?: boolean;
+  readonly pressed?: boolean;
 } & React.PropsWithoutRef<React.ComponentProps<'button'>>;
 
 export const IconButtonMenu: React.FC<IconButtonMenuProps> = ({ pressed, ...rest }) => (
-  <StyledIconButtonMenu role="menuitem" aria-pressed={pressed} {...rest} />
+  <StyledIconButtonMenu aria-pressed={pressed} role="menuitem" {...rest} />
 );
 
 const StyledIconButtonMenu = styled.button(

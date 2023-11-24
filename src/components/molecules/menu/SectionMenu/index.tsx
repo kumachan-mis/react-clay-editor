@@ -8,14 +8,14 @@ import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
 import React from 'react';
 
 export type SectionMenuProps = {
-  menuSwitch: 'off' | 'normal' | 'larger' | 'largest' | 'disabled';
-  normalLabel: string;
-  largerLabel: string;
-  largestLabel: string;
-  onButtonClick: () => void;
-  onNormalItemClick: () => void;
-  onLargerItemClick: () => void;
-  onLargestItemClick: () => void;
+  readonly menuSwitch: 'off' | 'normal' | 'larger' | 'largest' | 'disabled';
+  readonly normalLabel: string;
+  readonly largerLabel: string;
+  readonly largestLabel: string;
+  readonly onButtonClick: () => void;
+  readonly onNormalItemClick: () => void;
+  readonly onLargerItemClick: () => void;
+  readonly onLargestItemClick: () => void;
 };
 
 export const SectionMenuConstants = {
@@ -51,34 +51,34 @@ export const SectionMenu: React.FC<SectionMenuProps> = ({
   return (
     <DropdownMenu data-selectid={SectionMenuConstants.selectId}>
       <DropdownMenuButton
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        pressed={menuSwitch !== 'off' && menuSwitch !== 'disabled'}
-        disabled={menuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
+        disabled={menuSwitch === 'disabled'}
+        onClose={onClose}
+        onOpen={onOpen}
+        open={open}
+        pressed={menuSwitch !== 'off' && menuSwitch !== 'disabled'}
       >
         <SectionIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open}>
         <DropdownMenuListItem
-          selected={menuSwitch === 'normal'}
-          onClick={onNormalItemClick}
           data-selectid={SectionMenuConstants.items.normal.selectId}
+          onClick={onNormalItemClick}
+          selected={menuSwitch === 'normal'}
         >
           {normalLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
-          selected={menuSwitch === 'larger'}
-          onClick={onLargerItemClick}
           data-selectid={SectionMenuConstants.items.larger.selectId}
+          onClick={onLargerItemClick}
+          selected={menuSwitch === 'larger'}
         >
           {largerLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
-          selected={menuSwitch === 'largest'}
-          onClick={onLargestItemClick}
           data-selectid={SectionMenuConstants.items.largest.selectId}
+          onClick={onLargestItemClick}
+          selected={menuSwitch === 'largest'}
         >
           {largestLabel}
         </DropdownMenuListItem>

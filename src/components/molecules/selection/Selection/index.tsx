@@ -6,7 +6,7 @@ import { useSelection } from './hooks';
 import React from 'react';
 
 export type SelectionProps = {
-  cursorSelection: CursorSelection | undefined;
+  readonly cursorSelection: CursorSelection | undefined;
 };
 
 export const Selection: React.FC<SelectionProps> = (props) => {

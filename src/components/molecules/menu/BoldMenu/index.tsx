@@ -4,8 +4,8 @@ import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 import React from 'react';
 
 export type BoldMenuProps = {
-  menuSwitch: 'on' | 'off' | 'disabled';
-  onButtonClick: () => void;
+  readonly menuSwitch: 'on' | 'off' | 'disabled';
+  readonly onButtonClick: () => void;
 };
 
 export const BoldMenuConstants = {
@@ -14,10 +14,10 @@ export const BoldMenuConstants = {
 
 export const BoldMenu: React.FC<BoldMenuProps> = ({ menuSwitch, onButtonClick }) => (
   <IconButtonMenu
-    pressed={menuSwitch === 'on'}
+    data-selectid={BoldMenuConstants.selectId}
     disabled={menuSwitch === 'disabled'}
     onClick={onButtonClick}
-    data-selectid={BoldMenuConstants.selectId}
+    pressed={menuSwitch === 'on'}
   >
     <BoldIcon />
   </IconButtonMenu>

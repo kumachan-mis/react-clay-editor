@@ -11,7 +11,7 @@ test.beforeAll(async ({ browser }) => {
 
 test.beforeEach(async () => {
   const defaultText = [
-    // default text
+    // Default text
     '01234',
     '01234$xyz$01234',
     '$$',
@@ -38,7 +38,7 @@ test('beginning of char', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01.234',
     '01234$xyz$01234',
     '$$',
@@ -57,7 +57,7 @@ test('end of char', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '0123.4',
     '01234$xyz$01234',
     '$$',
@@ -76,7 +76,7 @@ test('beginning of char group', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01234',
     '01234$.xyz$01234',
     '$$',
@@ -95,7 +95,7 @@ test('end of char group', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01234',
     '01234$xyz.$01234',
     '$$',
@@ -114,7 +114,7 @@ test('beginning of line', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '.01234',
     '01234$xyz$01234',
     '$$',
@@ -133,7 +133,7 @@ test('end of line', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01234.',
     '01234$xyz$01234',
     '$$',
@@ -152,7 +152,7 @@ test('beginning of line group', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01234',
     '01234$xyz$01234',
     '$$',
@@ -171,7 +171,7 @@ test('end of line group', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01234',
     '01234$xyz$01234',
     '$$',
@@ -190,7 +190,7 @@ test('end of text field', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01234',
     '01234$xyz$01234',
     '$$',
@@ -206,7 +206,7 @@ test('out of text field', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '01234',
     '01234$xyz$01234',
     '$$',

@@ -39,7 +39,7 @@ export function useEditorStateValueContext(): EditorState {
 }
 
 export const defaultSetEditorState: React.Dispatch<React.SetStateAction<EditorState>> = () => {
-  // do nothing
+  // Do nothing
 };
 
 const SetEditorStateContext = React.createContext(defaultSetEditorState);

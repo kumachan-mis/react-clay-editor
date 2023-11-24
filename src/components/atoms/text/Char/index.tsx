@@ -1,8 +1,8 @@
 import React from 'react';
 
 export type CharProps = {
-  lineIndex: number;
-  charIndex: number;
+  readonly lineIndex: number;
+  readonly charIndex: number;
 } & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const CharConstants = {

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type SuggestionListHeaderProps = {
-  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
+  readonly suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
 };
 
 export const SuggestionListHeaderConstants = {

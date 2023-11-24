@@ -38,7 +38,7 @@ export function handleOnShortcut(
     default:
       return [text, state];
 
-    // any shortcut commands with a-z are not defined for the following functions
+    // Any shortcut commands with a-z are not defined for the following functions
     // - backwardDelete
     // - moveWordTop
     // - moveWordBottom

@@ -4,13 +4,13 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type ItemBulletProps = {
-  lineIndex: number;
-  indentDepth: number;
-  bullet: string;
+  readonly lineIndex: number;
+  readonly indentDepth: number;
+  readonly bullet: string;
 };
 
 export const ItemBullet: React.FC<ItemBulletProps> = ({ lineIndex, indentDepth }) => (
-  <StyledItemBullet charIndex={indentDepth} lineIndex={lineIndex} indentDepth={indentDepth}>
+  <StyledItemBullet charIndex={indentDepth} indentDepth={indentDepth} lineIndex={lineIndex}>
     <StyledItemBulletInner />{' '}
   </StyledItemBullet>
 );
