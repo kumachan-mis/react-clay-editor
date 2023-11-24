@@ -19,9 +19,9 @@ export const BlockCode: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
 
   return (
     <LineGroup
+      data-styleid={BlockCodeConstants.styleId}
       firstLineIndex={first + 1}
       lastLineIndex={trailingMeta ? last - 1 : last}
-      data-styleid={BlockCodeConstants.styleId}
     >
       <BlockCodeMeta node={facingMeta} {...rest} />
       {children.map((child, index) => (

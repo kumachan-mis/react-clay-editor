@@ -33,7 +33,7 @@ test('move up (ctrl+p)', async () => {
   await page.keyboard.type('3');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '3abc2de',
     'fg1',
     'hijkl',
@@ -55,7 +55,7 @@ test('move down (ctrl+n)', async () => {
   await page.keyboard.type('3');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'abcde',
     'fg1',
     'hij2kl3',
@@ -81,7 +81,7 @@ test('move left (ctrl+b)', async () => {
   await page.keyboard.type('3');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     '3ab2',
     'c1d',
   ]);
@@ -104,7 +104,7 @@ test('move right (ctrl+f)', async () => {
   await page.keyboard.type('3');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'a1b',
     '2cd3',
   ]);

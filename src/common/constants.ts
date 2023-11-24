@@ -158,4 +158,4 @@ export const DARK_THEME: Theme = {
   },
 } as const;
 
-export const WORD_REGEX: RegExp = /[^\s!"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~]+/;
+export const WORD_REGEX = /[^\s!"#$%&'()*+,-./:;<=>?@[\\\]^`{|}~]+/;

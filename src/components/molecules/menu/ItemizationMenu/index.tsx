@@ -8,12 +8,12 @@ import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
 import React from 'react';
 
 export type ItemizationMenuProps = {
-  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled';
-  indentLabel: string;
-  outdentLabel: string;
-  onButtonClick: () => void;
-  onIndentItemClick: () => void;
-  onOutdentItemClick: () => void;
+  readonly menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled';
+  readonly indentLabel: string;
+  readonly outdentLabel: string;
+  readonly onButtonClick: () => void;
+  readonly onIndentItemClick: () => void;
+  readonly onOutdentItemClick: () => void;
 };
 
 export const ItemizationMenuConstants = {
@@ -43,26 +43,26 @@ export const ItemizationMenu: React.FC<ItemizationMenuProps> = ({
   return (
     <DropdownMenu data-selectid={ItemizationMenuConstants.selectId}>
       <DropdownMenuButton
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        pressed={menuSwitch === 'allon'}
-        disabled={menuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
+        disabled={menuSwitch === 'disabled'}
+        onClose={onClose}
+        onOpen={onOpen}
+        open={open}
+        pressed={menuSwitch === 'allon'}
       >
         <ItemizationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open}>
         <DropdownMenuListItem
-          onClick={onIndentItemClick}
           data-selectid={ItemizationMenuConstants.items.indent.selectId}
+          onClick={onIndentItemClick}
         >
           {indentLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
+          data-selectid={ItemizationMenuConstants.items.outdent.selectId}
           disabled={menuSwitch === 'alloff'}
           onClick={onOutdentItemClick}
-          data-selectid={ItemizationMenuConstants.items.outdent.selectId}
         >
           {outdentLabel}
         </DropdownMenuListItem>

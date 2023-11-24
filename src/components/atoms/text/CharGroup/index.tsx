@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type CharGroupProps = {
-  lineIndex: number;
-  firstCharIndex: number;
-  lastCharIndex: number;
+  readonly lineIndex: number;
+  readonly firstCharIndex: number;
+  readonly lastCharIndex: number;
 } & React.PropsWithoutRef<React.ComponentProps<'span'>>;
 
 export const CharGroupConstants = {

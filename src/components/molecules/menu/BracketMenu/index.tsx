@@ -4,8 +4,8 @@ import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 import React from 'react';
 
 export type BracketMenuProps = {
-  menuSwitch: 'on' | 'off' | 'disabled';
-  onButtonClick: () => void;
+  readonly menuSwitch: 'on' | 'off' | 'disabled';
+  readonly onButtonClick: () => void;
 };
 
 export const BracketMenuConstants = {
@@ -15,10 +15,10 @@ export const BracketMenuConstants = {
 
 export const BracketMenu: React.FC<BracketMenuProps> = ({ menuSwitch, onButtonClick }) => (
   <IconButtonMenu
-    pressed={menuSwitch === 'on'}
+    data-selectid={BracketMenuConstants.selectId}
     disabled={menuSwitch === 'disabled'}
     onClick={onButtonClick}
-    data-selectid={BracketMenuConstants.selectId}
+    pressed={menuSwitch === 'on'}
   >
     <BracketIcon />
   </IconButtonMenu>

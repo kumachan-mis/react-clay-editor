@@ -8,12 +8,12 @@ import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
 import React from 'react';
 
 export type QuotationMenuProps = {
-  menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled';
-  indentLabel: string;
-  outdentLabel: string;
-  onButtonClick: () => void;
-  onIndentItemClick: () => void;
-  onOutdentItemClick: () => void;
+  readonly menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled';
+  readonly indentLabel: string;
+  readonly outdentLabel: string;
+  readonly onButtonClick: () => void;
+  readonly onIndentItemClick: () => void;
+  readonly onOutdentItemClick: () => void;
 };
 
 export const QuotationMenuConstants = {
@@ -43,23 +43,23 @@ export const QuotationMenu: React.FC<QuotationMenuProps> = ({
   return (
     <DropdownMenu data-selectid={QuotationMenuConstants.selectId}>
       <DropdownMenuButton
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        pressed={menuSwitch === 'allon'}
-        disabled={menuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
+        disabled={menuSwitch === 'disabled'}
+        onClose={onClose}
+        onOpen={onOpen}
+        open={open}
+        pressed={menuSwitch === 'allon'}
       >
         <QuotationIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open}>
-        <DropdownMenuListItem onClick={onIndentItemClick} data-selectid={QuotationMenuConstants.items.indent.selectId}>
+        <DropdownMenuListItem data-selectid={QuotationMenuConstants.items.indent.selectId} onClick={onIndentItemClick}>
           {indentLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
+          data-selectid={QuotationMenuConstants.items.outdent.selectId}
           disabled={menuSwitch === 'alloff'}
           onClick={onOutdentItemClick}
-          data-selectid={QuotationMenuConstants.items.outdent.selectId}
         >
           {outdentLabel}
         </DropdownMenuListItem>

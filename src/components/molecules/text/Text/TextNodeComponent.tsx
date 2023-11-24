@@ -22,11 +22,11 @@ export const TextNodeComponent: React.FC<TextNodeComponentProps> = ({ node, ...r
     case 'blockFormula':
       return <BlockFormula node={node} {...rest} />;
     case 'quotation':
-      return <Quotation node={node} ChildComponent={TextNodeComponent} {...rest} />;
+      return <Quotation ChildComponent={TextNodeComponent} node={node} {...rest} />;
     case 'itemization':
-      return <Itemization node={node} ChildComponent={TextNodeComponent} {...rest} />;
+      return <Itemization ChildComponent={TextNodeComponent} node={node} {...rest} />;
     case 'normalLine':
-      return <NormalLine node={node} ChildComponent={TextNodeComponent} {...rest} />;
+      return <NormalLine ChildComponent={TextNodeComponent} node={node} {...rest} />;
     case 'inlineCode':
       return <InlineCode node={node} {...rest} />;
     case 'displayFormula':
@@ -34,7 +34,7 @@ export const TextNodeComponent: React.FC<TextNodeComponentProps> = ({ node, ...r
     case 'inlineFormula':
       return <ContentFormula node={node} {...rest} />;
     case 'decoration':
-      return <Decoration node={node} ChildComponent={TextNodeComponent} {...rest} />;
+      return <Decoration ChildComponent={TextNodeComponent} node={node} {...rest} />;
     case 'taggedLink':
       return <TaggedLink node={node} {...rest} />;
     case 'bracketLink':

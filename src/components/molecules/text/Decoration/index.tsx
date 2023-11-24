@@ -7,7 +7,7 @@ import { TextNodeComponentProps } from '../common/types';
 import React from 'react';
 
 export type DecorationProps = {
-  ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+  readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<DecorationNode>;
 
 export const DecorationConstants = {
@@ -28,18 +28,18 @@ export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, Child
   return (
     <DecorationContent {...config} data-styleid={DecorationConstants.styleId(config)}>
       {[...facingMeta].map((char, index) => (
-        <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
           {editMode ? char : ''}
         </Char>
       ))}
       {children.map((child, index) => (
-        <ChildComponent key={index} node={child} getEditMode={getEditMode} {...rest} />
+        <ChildComponent getEditMode={getEditMode} key={index} node={child} {...rest} />
       ))}
       {[...trailingMeta].map((char, index) => (
         <Char
+          charIndex={last - (trailingMeta.length - 1) + index}
           key={last - (trailingMeta.length - 1) + index}
           lineIndex={lineIndex}
-          charIndex={last - (trailingMeta.length - 1) + index}
         >
           {editMode ? char : ''}
         </Char>

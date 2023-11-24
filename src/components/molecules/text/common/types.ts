@@ -13,7 +13,7 @@ export type TextNodeComponentProps<TTextNode extends TextNode = TextNode> = {
   textVisual?: TextVisual;
   bracketLinkVisual?: BracketLinkVisual;
   hashtagVisual?: HashtagVisual;
-  taggedLinkVisualMap?: { [tagName: string]: TaggedLinkVisual };
+  taggedLinkVisualMap?: Record<string, TaggedLinkVisual>;
   codeVisual?: CodeVisual;
   formulaVisual?: FormulaVisual;
 };

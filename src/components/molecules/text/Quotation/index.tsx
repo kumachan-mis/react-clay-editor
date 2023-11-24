@@ -9,7 +9,7 @@ import { TextNodeComponentProps } from '../common/types';
 import React from 'react';
 
 export type QuotationProps = {
-  ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+  readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<QuotationNode>;
 
 export const QuotationConstants = {
@@ -24,15 +24,15 @@ export const Quotation: React.FC<QuotationProps> = ({ node, getEditMode, textVis
 
   return (
     <Line lineIndex={lineIndex} {...lineProps} data-styleid={QuotationConstants.styleId}>
-      <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-      <QuotationLineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
+      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
+      <QuotationLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
         {[...meta].map((char, index) => (
-          <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
+          <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
             {editMode ? char : ''}
           </Char>
         ))}
         {children.map((child, index) => (
-          <ChildComponent key={index} node={child} getEditMode={getEditMode} textVisual={textVisual} {...rest} />
+          <ChildComponent getEditMode={getEditMode} key={index} node={child} textVisual={textVisual} {...rest} />
         ))}
       </QuotationLineContent>
     </Line>

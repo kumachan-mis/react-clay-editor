@@ -48,10 +48,10 @@ export function showSuggestion(text: string, props: EditorProps, state: EditorSt
   const configs: SuggestionConfig[] = [];
 
   if (!props.syntax || props.syntax === 'bracket') {
-    // bracket syntax
+    // Bracket syntax
     configs.push({ suggestionType: 'text', ...props.textProps, ...suggestionConstants.decoration });
   } else {
-    // markdown syntax
+    // Markdown syntax
     configs.push({ suggestionType: 'text', ...props.textProps, ...suggestionConstants.heading });
   }
 

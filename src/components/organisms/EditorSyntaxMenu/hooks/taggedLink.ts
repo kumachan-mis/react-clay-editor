@@ -19,7 +19,7 @@ const defaultLinkProps: LinkMenuHandlerProps = {
 export function useTaggedLinkMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  taggedLinkPropsMap: { [tagName: string]: EditorTaggedLinkProps } | undefined,
+  taggedLinkPropsMap: Record<string, EditorTaggedLinkProps> | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): TaggedLinkMenuProps {
   const tagEntries = Object.entries(taggedLinkPropsMap || {});
@@ -27,7 +27,7 @@ export function useTaggedLinkMenu(
   const menuSwitch = tagEntries.length === 0 ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'taggedLink');
   const activeTagName = getActiveTagName(lineNodes, contentPosition);
 
-  const taggedItemMap: { [tagName: string]: { label: string; onItemClick: () => void } } = {};
+  const taggedItemMap: Record<string, { label: string; onItemClick: () => void }> = {};
 
   for (const tagEntry of tagEntries) {
     const [tagName, taggedLinkProps] = tagEntry;

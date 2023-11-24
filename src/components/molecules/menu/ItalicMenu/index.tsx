@@ -4,8 +4,8 @@ import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 import React from 'react';
 
 export type ItalicMenuProps = {
-  menuSwitch: 'on' | 'off' | 'disabled';
-  onButtonClick: () => void;
+  readonly menuSwitch: 'on' | 'off' | 'disabled';
+  readonly onButtonClick: () => void;
 };
 
 export const ItalicMenuConstants = {
@@ -14,10 +14,10 @@ export const ItalicMenuConstants = {
 
 export const ItalicMenu: React.FC<ItalicMenuProps> = ({ menuSwitch, onButtonClick }) => (
   <IconButtonMenu
-    pressed={menuSwitch === 'on'}
+    data-selectid={ItalicMenuConstants.selectId}
     disabled={menuSwitch === 'disabled'}
     onClick={onButtonClick}
-    data-selectid={ItalicMenuConstants.selectId}
+    pressed={menuSwitch === 'on'}
   >
     <ItalicIcon />
   </IconButtonMenu>

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type SuggestionListItemProps = {
-  index: number;
+  readonly index: number;
 } & React.PropsWithoutRef<React.ComponentProps<'li'>>;
 
 export const SuggestionListItemConstants = {

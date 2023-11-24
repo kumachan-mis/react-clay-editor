@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type DropdownMenuListProps = {
-  open: boolean;
+  readonly open: boolean;
 } & React.PropsWithoutRef<React.ComponentProps<'ul'>>;
 
 export const DropdownMenuListConstants = {
@@ -10,9 +10,7 @@ export const DropdownMenuListConstants = {
 };
 
 export const DropdownMenuList: React.FC<DropdownMenuListProps> = ({ open, ...rest }) =>
-  !open ? (
-    <></>
-  ) : (
+  open && (
     <StyledDropdownMenuList data-selectid={DropdownMenuListConstants.selectId}>
       <StyledDropdownMenuListInner role="menu" {...rest} />
     </StyledDropdownMenuList>

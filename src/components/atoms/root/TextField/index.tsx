@@ -9,7 +9,7 @@ export const TextFieldConstants = {
 };
 
 const ForwardRefTextField: React.ForwardRefRenderFunction<HTMLDivElement, TextFieldProps> = ({ ...rest }, ref) => (
-  <StyledForwardRefTextField {...rest} ref={ref} data-selectid={TextFieldConstants.selectId} />
+  <StyledForwardRefTextField {...rest} data-selectid={TextFieldConstants.selectId} ref={ref} />
 );
 
 const StyledForwardRefTextField = styled.div`

@@ -1,12 +1,12 @@
 import { CursorCoordinate } from '../src/types/cursor/cursorCoordinate';
 import { CursorSelection } from '../src/types/selection/cursorSelection';
 
-export interface TestCase {
+export type TestCase = {
   name: string;
   text: string;
   cursorCoordinate: CursorCoordinate | undefined;
   expected: CursorSelection | undefined;
-}
+};
 
 export const testCases: TestCase[] = [
   {

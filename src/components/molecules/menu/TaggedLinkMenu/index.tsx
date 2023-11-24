@@ -8,9 +8,9 @@ import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
 import React from 'react';
 
 export type TaggedLinkMenuProps = {
-  menuSwitch: 'on' | 'off' | 'disabled';
-  activeTagName: string | undefined;
-  taggedItemMap: { [tagName: string]: { label: string; onItemClick: () => void } };
+  readonly menuSwitch: 'on' | 'off' | 'disabled';
+  readonly activeTagName: string | undefined;
+  readonly taggedItemMap: Record<string, { label: string; onItemClick: () => void }>;
 };
 
 export const TaggedLinkMenuConstants = {
@@ -33,22 +33,22 @@ export const TaggedLinkMenu: React.FC<TaggedLinkMenuProps> = ({ menuSwitch, acti
   return (
     <DropdownMenu data-selectid={TaggedLinkMenuConstants.selectId}>
       <DropdownMenuButton
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        pressed={menuSwitch === 'on'}
-        disabled={menuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
+        disabled={menuSwitch === 'disabled'}
+        onClose={onClose}
+        onOpen={onOpen}
+        open={open}
+        pressed={menuSwitch === 'on'}
       >
         <TaggedlinkIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open}>
         {tagEntries.map(([tagName, { label, onItemClick }]) => (
           <DropdownMenuListItem
-            key={tagName}
-            selected={tagName === activeTagName}
-            onClick={onItemClick}
             data-selectid={TaggedLinkMenuConstants.items.selectId(tagName)}
+            key={tagName}
+            onClick={onItemClick}
+            selected={tagName === activeTagName}
           >
             {TaggedLinkMenuConstants.items.taggedLabel(tagName, label)}
           </DropdownMenuListItem>

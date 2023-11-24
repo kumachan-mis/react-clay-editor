@@ -1,11 +1,11 @@
 import { CursorSelection } from '../src/types/selection/cursorSelection';
 
-export interface TestCase {
+export type TestCase = {
   name: string;
   text: string;
   cursorSelection: CursorSelection | undefined;
   expected: string;
-}
+};
 
 export const testCases: TestCase[] = [
   {

@@ -24,9 +24,9 @@ export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, getEditMode, f
 
   return !editMode && !/^\s*$/.test(formula) ? (
     <LineGroup
+      data-styleid={BlockFormulaConstants.styleId}
       firstLineIndex={first + 1}
       lastLineIndex={trailingMeta ? last - 1 : last}
-      data-styleid={BlockFormulaConstants.styleId}
     >
       <LineGroupIndent indentDepth={facingMeta.indentDepth} />
       <LineGroupContent indentDepth={facingMeta.indentDepth}>
@@ -35,16 +35,16 @@ export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, getEditMode, f
     </LineGroup>
   ) : (
     <LineGroup
+      data-styleid={BlockFormulaConstants.styleId}
       firstLineIndex={first + 1}
       lastLineIndex={trailingMeta ? last - 1 : last}
-      data-styleid={BlockFormulaConstants.styleId}
     >
-      <BlockFormulaMeta node={facingMeta} getEditMode={getEditMode} formulaVisual={formulaVisual} {...rest} />
+      <BlockFormulaMeta formulaVisual={formulaVisual} getEditMode={getEditMode} node={facingMeta} {...rest} />
       {children.map((child, index) => (
-        <BlockFormulaLine key={index} node={child} getEditMode={getEditMode} formulaVisual={formulaVisual} {...rest} />
+        <BlockFormulaLine formulaVisual={formulaVisual} getEditMode={getEditMode} key={index} node={child} {...rest} />
       ))}
       {trailingMeta && (
-        <BlockFormulaMeta node={trailingMeta} getEditMode={getEditMode} formulaVisual={formulaVisual} {...rest} />
+        <BlockFormulaMeta formulaVisual={formulaVisual} getEditMode={getEditMode} node={trailingMeta} {...rest} />
       )}
     </LineGroup>
   );

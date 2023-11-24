@@ -19,10 +19,10 @@ export function decorationMenuSwitch(
   if (!contentPosition) return { bold: 'disabled', italic: 'disabled', underline: 'disabled' };
 
   if (!syntax || syntax === 'bracket') {
-    // bracket syntax
+    // Bracket syntax
     return bracketDecorationMenuSwitch(nodes, contentPosition);
   } else {
-    // markdown syntax
+    // Markdown syntax
     return markdownDecorationMenuSwitch(nodes, contentPosition);
   }
 }

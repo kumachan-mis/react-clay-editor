@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type EmbededLinkProps = React.PropsWithChildren<{
-  editMode: boolean;
-  forceClickable: boolean;
-  anchorProps: (clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
+  readonly editMode: boolean;
+  readonly forceClickable: boolean;
+  readonly anchorProps: (clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
 }>;
 
 export const EmbededLink: React.FC<EmbededLinkProps> = ({
@@ -52,11 +52,11 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
 
   return (
     <StyledEmbededLink
+      data-clickable={clickable}
+      onClick={handleOnClick}
       onMouseDown={handleOnMouseDown}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
-      onClick={handleOnClick}
-      data-clickable={clickable}
       {...anchorPropsRest}
       {...rest}
     >

@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type SelectionRectProps = {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
+  readonly top: number;
+  readonly left: number;
+  readonly width: number;
+  readonly height: number;
 };
 
 export const SelectionRectConstants = {
@@ -14,11 +14,11 @@ export const SelectionRectConstants = {
 
 export const SelectionRect: React.FC<SelectionRectProps> = ({ top, left, width, height }) => (
   <StyledSelectionRect
-    top={top}
-    left={left}
-    width={width}
-    height={height}
     data-selectid={SelectionRectConstants.selectId}
+    height={height}
+    left={left}
+    top={top}
+    width={width}
   />
 );
 

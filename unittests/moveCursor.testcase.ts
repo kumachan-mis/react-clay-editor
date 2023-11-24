@@ -1,12 +1,12 @@
 import { CursorCoordinate } from '../src/types/cursor/cursorCoordinate';
 
-export interface TestCase {
+export type TestCase = {
   name: string;
   text: string;
   cursorCoordinate: CursorCoordinate;
   amount: number;
   expected: CursorCoordinate;
-}
+};
 
 export const testCases: TestCase[] = [
   {

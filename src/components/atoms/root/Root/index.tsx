@@ -9,7 +9,7 @@ export const RootConstants = {
 };
 
 const ForwardRefRoot: React.ForwardRefRenderFunction<HTMLDivElement, RootProps> = ({ children, ...rest }, ref) => (
-  <StyledForwardRefRoot {...rest} ref={ref} data-selectid={RootConstants.selectId}>
+  <StyledForwardRefRoot {...rest} data-selectid={RootConstants.selectId} ref={ref}>
     <StyledFlexRoot>{children}</StyledFlexRoot>
   </StyledForwardRefRoot>
 );

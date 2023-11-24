@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type CursorBarProps = {
-  position: { top: number; left: number };
-  cursorSize: number;
+  readonly position: { top: number; left: number };
+  readonly cursorSize: number;
 };
 
 export const CursorBar: React.FC<CursorBarProps> = (props) => (
   <StyledCursorBar {...props}>
-    <svg width="2px" height={props.cursorSize}>
-      <CursorBarRect x={0} y={0} width="1px" height="100%" />
+    <svg height={props.cursorSize} width="2px">
+      <CursorBarRect height="100%" width="1px" x={0} y={0} />
     </svg>
   </StyledCursorBar>
 );

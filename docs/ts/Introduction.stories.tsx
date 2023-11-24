@@ -15,9 +15,8 @@ import { css } from '@emotion/css';
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-// prettier-ignore
-const initialText =
-`A document editor quick editable and flexible like clay in hands
+// Prettier-ignore
+const initialText = `A document editor quick editable and flexible like clay in hands
 
 [** Itemization]
  itemizations
@@ -106,7 +105,7 @@ const hashtagProps: EditorHashtagProps = {
   suggestions: ['react-clay-editor', 'katex', '@emotion/react', '@emotion/styled', 'react'],
 };
 
-const taggedLinkPropsMap: { [tag: string]: EditorTaggedLinkProps } = {
+const taggedLinkPropsMap: Record<string, EditorTaggedLinkProps> = {
   npm: {
     label: 'package',
     anchorProps: (linkName) => ({
@@ -154,14 +153,14 @@ const Introduction: React.FC = () => {
   const [text, setText] = React.useState(initialText);
   return (
     <EditorRoot
-      theme="dark"
-      text={text}
-      setText={setText}
-      textProps={textProps}
       bracketLinkProps={bracketLinkProps}
-      hashtagProps={hashtagProps}
-      taggedLinkPropsMap={taggedLinkPropsMap}
       className={editorClassName}
+      hashtagProps={hashtagProps}
+      setText={setText}
+      taggedLinkPropsMap={taggedLinkPropsMap}
+      text={text}
+      textProps={textProps}
+      theme="dark"
     >
       <EditorSyntaxMenu />
       <Divider />

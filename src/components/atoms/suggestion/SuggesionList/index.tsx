@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type SuggestionListProps = {
-  position: { top: number; left: number };
-  cursorSize: number;
+  readonly position: { top: number; left: number };
+  readonly cursorSize: number;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const SuggestionList: React.FC<SuggestionListProps> = ({ position, cursorSize, ...rest }) => (
-  <StyledSuggestionList position={position} cursorSize={cursorSize} {...rest} />
+  <StyledSuggestionList cursorSize={cursorSize} position={position} {...rest} />
 );
 
 const StyledSuggestionList = styled.div<{

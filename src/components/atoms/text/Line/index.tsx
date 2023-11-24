@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export type LineProps = {
-  lineIndex: number;
+  readonly lineIndex: number;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
 export const LineConstants = {

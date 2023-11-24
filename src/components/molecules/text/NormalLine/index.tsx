@@ -7,7 +7,7 @@ import { TextNodeComponentProps } from '../common/types';
 import React from 'react';
 
 export type NormalLineProps = {
-  ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+  readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<NormalLineNode>;
 
 export const NormalLineConstants = {

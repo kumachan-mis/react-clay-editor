@@ -20,24 +20,24 @@ export const InlineCode: React.FC<InlineCodeProps> = ({ node, getEditMode, codeV
   return (
     <Monospace {...codeElementProps} data-styleid={InlineCodeConstants.styleId}>
       {[...facingMeta].map((char, index) => (
-        <Char key={first + index} lineIndex={lineIndex} charIndex={first + index}>
+        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
           {editMode ? char : ''}
         </Char>
       ))}
       {[...code].map((char, index) => (
         <Char
+          charIndex={first + facingMeta.length + index}
           key={first + facingMeta.length + index}
           lineIndex={lineIndex}
-          charIndex={first + facingMeta.length + index}
         >
           {char}
         </Char>
       ))}
       {[...trailingMeta].map((char, index) => (
         <Char
+          charIndex={last - (trailingMeta.length - 1) + index}
           key={last - (trailingMeta.length - 1) + index}
           lineIndex={lineIndex}
-          charIndex={last - (trailingMeta.length - 1) + index}
         >
           {editMode ? char : ''}
         </Char>

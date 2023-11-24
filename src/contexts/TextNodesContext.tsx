@@ -14,7 +14,7 @@ export type ParserProps = {
   syntax?: 'bracket' | 'markdown';
   bracketLinkProps?: BracketLinkParsing;
   hashtagProps?: HashtagParsing;
-  taggedLinkPropsMap?: { [tagName: string]: TaggedLinkParsing };
+  taggedLinkPropsMap?: Record<string, TaggedLinkParsing>;
   codeProps?: CodeParsing;
   formulaProps?: FormulaParsing;
 };
@@ -27,11 +27,9 @@ export function useTextNodesValueContext(): (LineNode | BlockNode)[] {
   return React.useContext(TextNodesValueContext);
 }
 
-export const TextNodesContextProvider: React.FC<React.PropsWithChildren<{ text: string; props: ParserProps }>> = ({
-  text,
-  props,
-  children,
-}) => {
+export const TextNodesContextProvider: React.FC<
+  React.PropsWithChildren<{ readonly text: string; readonly props: ParserProps }>
+> = ({ text, props, children }) => {
   const options: ParsingOptions = {
     syntax: props.syntax,
     bracketLinkDisabled: props.bracketLinkProps?.disabled,

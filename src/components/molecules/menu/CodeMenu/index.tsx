@@ -8,13 +8,13 @@ import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
 import React from 'react';
 
 export type CodeMenuProps = {
-  inlineMenuSwitch: 'on' | 'off' | 'disabled';
-  blockMenuSwitch: 'on' | 'off' | 'disabled';
-  inlineLabel: string;
-  blockLabel: string;
-  onButtonClick: () => void;
-  onInlineItemClick: () => void;
-  onBlockItemClick: () => void;
+  readonly inlineMenuSwitch: 'on' | 'off' | 'disabled';
+  readonly blockMenuSwitch: 'on' | 'off' | 'disabled';
+  readonly inlineLabel: string;
+  readonly blockLabel: string;
+  readonly onButtonClick: () => void;
+  readonly onInlineItemClick: () => void;
+  readonly onBlockItemClick: () => void;
 };
 
 export const CodeMenuConstants = {
@@ -45,29 +45,29 @@ export const CodeMenu: React.FC<CodeMenuProps> = ({
   return (
     <DropdownMenu data-selectid={CodeMenuConstants.selectId}>
       <DropdownMenuButton
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        pressed={inlineMenuSwitch === 'on' || blockMenuSwitch === 'on'}
-        disabled={inlineMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
+        disabled={inlineMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled'}
+        onClose={onClose}
+        onOpen={onOpen}
+        open={open}
+        pressed={inlineMenuSwitch === 'on' || blockMenuSwitch === 'on'}
       >
         <CodeIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open}>
         <DropdownMenuListItem
-          selected={inlineMenuSwitch === 'on'}
+          data-selectid={CodeMenuConstants.items.inline.selectId}
           disabled={inlineMenuSwitch === 'disabled'}
           onClick={onInlineItemClick}
-          data-selectid={CodeMenuConstants.items.inline.selectId}
+          selected={inlineMenuSwitch === 'on'}
         >
           {inlineLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
-          selected={blockMenuSwitch === 'on'}
+          data-selectid={CodeMenuConstants.items.block.selectId}
           disabled={blockMenuSwitch === 'disabled'}
           onClick={onBlockItemClick}
-          data-selectid={CodeMenuConstants.items.block.selectId}
+          selected={blockMenuSwitch === 'on'}
         >
           {blockLabel}
         </DropdownMenuListItem>

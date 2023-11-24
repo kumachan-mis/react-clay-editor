@@ -11,20 +11,20 @@ import { useCursor } from './hooks';
 import React from 'react';
 
 export type CursorProps = {
-  cursorCoordinate: CursorCoordinate | undefined;
-  cursorScroll: 'none' | 'fired' | 'pause' | 'up' | 'down';
-  textAreaValue: string;
-  suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
-  suggestions: string[];
-  suggestionIndex: number;
-  onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-  onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onTextCompositionStart: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
-  onTextCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
-  onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onTextCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onTextPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
-  onSuggestionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
+  readonly cursorCoordinate: CursorCoordinate | undefined;
+  readonly cursorScroll: 'none' | 'fired' | 'pause' | 'up' | 'down';
+  readonly textAreaValue: string;
+  readonly suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
+  readonly suggestions: string[];
+  readonly suggestionIndex: number;
+  readonly onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  readonly onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  readonly onTextCompositionStart: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
+  readonly onTextCompositionEnd: (event: React.CompositionEvent<HTMLTextAreaElement>) => void;
+  readonly onTextCut: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  readonly onTextCopy: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  readonly onTextPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  readonly onSuggestionMouseDown: (event: React.MouseEvent<HTMLLIElement>) => void;
 };
 
 export const Cursor: React.FC<CursorProps> = (props) => {
@@ -32,28 +32,28 @@ export const Cursor: React.FC<CursorProps> = (props) => {
 
   return (
     <span ref={ref}>
-      <CursorBar position={state.position} cursorSize={state.cursorSize} />
+      <CursorBar cursorSize={state.cursorSize} position={state.position} />
       <CursorTextArea
-        position={state.position}
         cursorSize={state.cursorSize}
-        value={props.textAreaValue}
-        onKeyDown={props.onKeyDown}
         onChange={props.onTextChange}
-        onCompositionStart={props.onTextCompositionStart}
         onCompositionEnd={props.onTextCompositionEnd}
-        onCut={props.onTextCut}
+        onCompositionStart={props.onTextCompositionStart}
         onCopy={props.onTextCopy}
+        onCut={props.onTextCut}
+        onKeyDown={props.onKeyDown}
         onPaste={props.onTextPaste}
+        position={state.position}
+        value={props.textAreaValue}
       />
       {props.suggestions.length > 0 && (
-        <SuggestionList position={state.position} cursorSize={state.cursorSize}>
+        <SuggestionList cursorSize={state.cursorSize} position={state.position}>
           <SuggestionListHeader suggestionType={props.suggestionType} />
           <SuggestionListBody>
             {props.suggestions.map((suggestion, index) => (
               <SuggestionListItem
-                key={index}
-                index={index}
                 aria-selected={props.suggestionIndex === index}
+                index={index}
+                key={index}
                 onMouseDown={props.onSuggestionMouseDown}
               >
                 {suggestion}

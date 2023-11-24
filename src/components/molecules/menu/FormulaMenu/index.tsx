@@ -8,15 +8,15 @@ import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
 import React from 'react';
 
 export type FormulaMenuProps = {
-  contentMenuSwitch: 'inline' | 'display' | 'off' | 'disabled';
-  blockMenuSwitch: 'on' | 'off' | 'disabled';
-  inlineLabel: string;
-  displayLabel: string;
-  blockLabel: string;
-  onButtonClick: () => void;
-  onInlineItemClick: () => void;
-  onDisplayItemClick: () => void;
-  onBlockItemClick: () => void;
+  readonly contentMenuSwitch: 'inline' | 'display' | 'off' | 'disabled';
+  readonly blockMenuSwitch: 'on' | 'off' | 'disabled';
+  readonly inlineLabel: string;
+  readonly displayLabel: string;
+  readonly blockLabel: string;
+  readonly onButtonClick: () => void;
+  readonly onInlineItemClick: () => void;
+  readonly onDisplayItemClick: () => void;
+  readonly onBlockItemClick: () => void;
 };
 
 export const FormulaMenuConstants = {
@@ -53,37 +53,37 @@ export const FormulaMenu: React.FC<FormulaMenuProps> = ({
   return (
     <DropdownMenu data-selectid={FormulaMenuConstants.selectId}>
       <DropdownMenuButton
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        pressed={contentMenuSwitch === 'inline' || contentMenuSwitch === 'display' || blockMenuSwitch === 'on'}
-        disabled={contentMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled'}
         buttonProps={{ onClick: onButtonClick }}
+        disabled={contentMenuSwitch === 'disabled' && blockMenuSwitch === 'disabled'}
+        onClose={onClose}
+        onOpen={onOpen}
+        open={open}
+        pressed={contentMenuSwitch === 'inline' || contentMenuSwitch === 'display' || blockMenuSwitch === 'on'}
       >
         <FormulaIcon />
       </DropdownMenuButton>
       <DropdownMenuList open={open}>
         <DropdownMenuListItem
-          selected={contentMenuSwitch === 'inline'}
+          data-selectid={FormulaMenuConstants.items.inline.selectId}
           disabled={contentMenuSwitch === 'disabled'}
           onClick={onInlineItemClick}
-          data-selectid={FormulaMenuConstants.items.inline.selectId}
+          selected={contentMenuSwitch === 'inline'}
         >
           {inlineLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
-          selected={contentMenuSwitch === 'display'}
+          data-selectid={FormulaMenuConstants.items.display.selectId}
           disabled={contentMenuSwitch === 'disabled'}
           onClick={onDisplayItemClick}
-          data-selectid={FormulaMenuConstants.items.display.selectId}
+          selected={contentMenuSwitch === 'display'}
         >
           {displayLabel}
         </DropdownMenuListItem>
         <DropdownMenuListItem
-          selected={blockMenuSwitch === 'on'}
+          data-selectid={FormulaMenuConstants.items.block.selectId}
           disabled={blockMenuSwitch === 'disabled'}
           onClick={onBlockItemClick}
-          data-selectid={FormulaMenuConstants.items.block.selectId}
+          selected={blockMenuSwitch === 'on'}
         >
           {blockLabel}
         </DropdownMenuListItem>

@@ -124,7 +124,7 @@ for (const { name, command } of [
 test('move word top (alt+arrowleft)', async () => {
   await page.keyboard.insertText(
     [
-      // default text
+      // Default text
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
@@ -149,7 +149,7 @@ test('move word top (alt+arrowleft)', async () => {
   await page.keyboard.press('ArrowLeft');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'three words,sentence.',
     '32three 1words,0sentence.',
     'three words,sentence.',
@@ -159,7 +159,7 @@ test('move word top (alt+arrowleft)', async () => {
 test('move word bottom (alt+arrowright)', async () => {
   await page.keyboard.insertText(
     [
-      // default text
+      // Default text
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
@@ -180,7 +180,7 @@ test('move word bottom (alt+arrowright)', async () => {
   await page.keyboard.type('3');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'three words,sentence.',
     'three0 words1,sentence2.3',
     'three words,sentence.',
@@ -195,7 +195,7 @@ for (const { name, command } of [
   test(`move line top (${name})`, async () => {
     await page.keyboard.insertText(
       [
-        // default text
+        // Default text
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
@@ -210,7 +210,7 @@ for (const { name, command } of [
     await page.keyboard.type('1');
 
     await linesToBe(page, [
-      // expected lines
+      // Expected lines
       'three words,sentence.',
       '10three words,sentence.',
       'three words,sentence.',
@@ -226,7 +226,7 @@ for (const { name, command } of [
   test(`move line bottom (${name})`, async () => {
     await page.keyboard.insertText(
       [
-        // default text
+        // Default text
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
@@ -241,7 +241,7 @@ for (const { name, command } of [
     await page.keyboard.type('1');
 
     await linesToBe(page, [
-      // expected lines
+      // Expected lines
       'three words,sentence.',
       'three words,sentence.01',
       'three words,sentence.',
@@ -256,7 +256,7 @@ for (const { name, command } of [
   test(`move text top (${name})`, async () => {
     await page.keyboard.insertText(
       [
-        // default text
+        // Default text
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
@@ -268,7 +268,7 @@ for (const { name, command } of [
     await page.keyboard.type('0');
 
     await linesToBe(page, [
-      // expected lines
+      // Expected lines
       '0three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
@@ -283,7 +283,7 @@ for (const { name, command } of [
   test(`move text bottom  (${name})`, async () => {
     await page.keyboard.insertText(
       [
-        // default text
+        // Default text
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
@@ -295,7 +295,7 @@ for (const { name, command } of [
     await page.keyboard.type('0');
 
     await linesToBe(page, [
-      // expected lines
+      // Expected lines
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.0',

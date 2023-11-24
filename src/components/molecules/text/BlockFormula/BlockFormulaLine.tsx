@@ -18,11 +18,11 @@ export const BlockFormulaLine: React.FC<BlockFormulaLineProps> = ({ node, textVi
 
   return (
     <Line lineIndex={lineIndex} {...lineProps}>
-      <LineIndent lineIndex={lineIndex} indentDepth={indentDepth} />
-      <MonospaceLineContent lineIndex={lineIndex} indentDepth={indentDepth} lineLength={lineLength}>
+      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
+      <MonospaceLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...formulaLine].map((char, index) => (
-            <Char key={indentDepth + index} lineIndex={lineIndex} charIndex={indentDepth + index}>
+            <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
               {char}
             </Char>
           ))}

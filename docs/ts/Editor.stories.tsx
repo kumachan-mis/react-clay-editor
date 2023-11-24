@@ -20,7 +20,7 @@ export default meta;
 export const SimpleEditorStory: React.FC = () => {
   const [text, setText] = React.useState('This is a simple editor.');
   return (
-    <EditorRoot text={text} setText={setText} theme="dark">
+    <EditorRoot setText={setText} text={text} theme="dark">
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
       </EditorTextFieldRoot>
@@ -34,14 +34,14 @@ export const FullwidthStory: React.FC = () => {
   );
   return (
     <EditorRoot
-      text={text}
-      setText={setText}
-      theme="dark"
       className={css`
         && {
           width: 100%;
         }
       `}
+      setText={setText}
+      text={text}
+      theme="dark"
     >
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
@@ -58,7 +58,7 @@ export const WithSyntaxMenuStory: React.FC = () => {
     ].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText} theme="dark">
+    <EditorRoot setText={setText} text={text} theme="dark">
       <EditorSyntaxMenu />
       <Divider />
       <EditorTextFieldRoot>
@@ -76,7 +76,7 @@ export const WithFixedHeaderStory: React.FC = () => {
     ].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText} theme="dark">
+    <EditorRoot setText={setText} text={text} theme="dark">
       <EditorHeader header="Header in Fixed Area" />
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
@@ -93,7 +93,7 @@ export const WithScrollableHeaderStory: React.FC = () => {
     ].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText} theme="dark">
+    <EditorRoot setText={setText} text={text} theme="dark">
       <EditorTextFieldRoot>
         <EditorHeader header="Header in Scrollable Area" />
         <EditorTextFieldBody />
@@ -107,7 +107,7 @@ export const WithUserDefinedFooterStory: React.FC = () => {
     ['This is an editor with an user-defined footer.', 'You can customize the editor as you like.'].join('\n')
   );
   return (
-    <EditorRoot text={text} setText={setText} theme="dark">
+    <EditorRoot setText={setText} text={text} theme="dark">
       <EditorTextFieldRoot>
         <EditorTextFieldBody />
       </EditorTextFieldRoot>

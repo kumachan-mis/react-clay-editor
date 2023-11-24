@@ -36,7 +36,7 @@ test('select on move left', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine per.nt perspiration',
     'by Thomas Edison',
@@ -54,7 +54,7 @@ test('select on move right', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine perce. perspiration',
     'by Thomas Edison',
@@ -71,7 +71,7 @@ test('select on move up', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one per.nt perspiration',
     'by Thomas Edison',
   ]);
@@ -87,7 +87,7 @@ test('select on move down', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine perce.',
   ]);
@@ -103,7 +103,7 @@ test('select on move line top', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     '.nt perspiration',
     'by Thomas Edison',
@@ -120,7 +120,7 @@ test('select on move line bottom', async () => {
   await page.keyboard.type('.');
 
   await linesToBe(page, [
-    // expected lines
+    // Expected lines
     'Genius is one percent inspiration and',
     'ninety-nine perce.',
     'by Thomas Edison',
