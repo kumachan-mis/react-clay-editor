@@ -13720,10 +13720,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["http-cache-semantics", [\
-      ["npm:4.1.0", {\
-        "packageLocation": "./.yarn/cache/http-cache-semantics-npm-4.1.0-860520a31f-c9c29508b2.zip/node_modules/http-cache-semantics/",\
+      ["npm:4.1.1", {\
+        "packageLocation": "./.yarn/cache/http-cache-semantics-npm-4.1.1-1120131375-362d5ed66b.zip/node_modules/http-cache-semantics/",\
         "packageDependencies": [\
-          ["http-cache-semantics", "npm:4.1.0"]\
+          ["http-cache-semantics", "npm:4.1.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -15741,7 +15741,7 @@ const RAW_RUNTIME_STATE =
           ["make-fetch-happen", "npm:8.0.14"],\
           ["agentkeepalive", "npm:4.1.4"],\
           ["cacache", "npm:15.3.0"],\
-          ["http-cache-semantics", "npm:4.1.0"],\
+          ["http-cache-semantics", "npm:4.1.1"],\
           ["http-proxy-agent", "npm:4.0.1"],\
           ["https-proxy-agent", "npm:5.0.0"],\
           ["is-lambda", "npm:1.0.1"],\
