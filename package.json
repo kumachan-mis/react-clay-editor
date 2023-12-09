@@ -57,7 +57,7 @@
     "@storybook/addon-links": "^7.5.3",
     "@storybook/builder-vite": "^7.5.3",
     "@storybook/manager-api": "^7.5.3",
-    "@storybook/react": "^7.5.3",
+    "@storybook/react": "^7.6.4",
     "@storybook/react-vite": "^7.5.3",
     "@storybook/theming": "^7.5.3",
     "@svgr/cli": "^8.1.0",
