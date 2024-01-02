@@ -13,8 +13,6 @@ import { TaggedLink } from '../TaggedLink';
 import { Url } from '../Url';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export const TextNodeComponent: React.FC<TextNodeComponentProps> = ({ node, ...rest }) => {
   switch (node.type) {
     case 'blockCode':

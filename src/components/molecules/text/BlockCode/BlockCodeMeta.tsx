@@ -6,8 +6,6 @@ import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type BlockCodeMetaProps = TextNodeComponentProps<BlockCodeMetaNode>;
 
 export const BlockCodeMeta: React.FC<BlockCodeMetaProps> = ({ node, textVisual, codeVisual }) => {

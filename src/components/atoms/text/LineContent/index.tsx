@@ -1,7 +1,6 @@
 import { Char } from '../Char';
 
 import styled from '@emotion/styled';
-import React from 'react';
 
 export type LineContentProps = {
   readonly lineIndex: number;

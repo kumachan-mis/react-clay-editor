@@ -6,8 +6,6 @@ import { LineIndent } from '../../../atoms/text/LineIndent';
 import { QuotationLineContent } from '../../../atoms/text/QuotationLineContent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type QuotationProps = {
   readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<QuotationNode>;

@@ -8,8 +8,6 @@ import { SuggestionListItem } from '../../../atoms/suggestion/SuggesionListItem'
 
 import { useCursor } from './hooks';
 
-import React from 'react';
-
 export type CursorProps = {
   readonly cursorCoordinate: CursorCoordinate | undefined;
   readonly cursorScroll: 'none' | 'fired' | 'pause' | 'up' | 'down';

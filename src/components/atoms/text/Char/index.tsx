@@ -1,5 +1,3 @@
-import React from 'react';
-
 export type CharProps = {
   readonly lineIndex: number;
   readonly charIndex: number;

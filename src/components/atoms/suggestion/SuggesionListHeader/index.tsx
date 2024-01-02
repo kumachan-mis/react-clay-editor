@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 
 export type SuggestionListHeaderProps = {
   readonly suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';

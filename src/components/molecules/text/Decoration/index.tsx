@@ -4,8 +4,6 @@ import { Char } from '../../../atoms/text/Char';
 import { DecorationContent } from '../../../atoms/text/DecorationContent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type DecorationProps = {
   readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<DecorationNode>;

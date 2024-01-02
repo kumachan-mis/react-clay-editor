@@ -4,8 +4,6 @@ import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type NormalLineProps = {
   readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<NormalLineNode>;

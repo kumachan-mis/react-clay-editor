@@ -58,7 +58,8 @@
     "react/no-danger": "error",
     "react/no-unsafe": "error",
     "react/prefer-read-only-props": "error",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off"
   },
   "overrides": [
     {

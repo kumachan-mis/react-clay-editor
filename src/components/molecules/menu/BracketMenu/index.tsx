@@ -1,8 +1,6 @@
 import { BracketIcon } from '../../../../icons/BracketIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 
-import React from 'react';
-
 export type BracketMenuProps = {
   readonly menuSwitch: 'on' | 'off' | 'disabled';
   readonly onButtonClick: () => void;

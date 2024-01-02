@@ -3,8 +3,6 @@ import { SelectionRect } from '../../../atoms/selection/SelectionRect';
 
 import { useSelection } from './hooks';
 
-import React from 'react';
-
 export type SelectionProps = {
   readonly cursorSelection: CursorSelection | undefined;
 };

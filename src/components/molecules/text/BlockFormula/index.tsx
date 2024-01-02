@@ -8,8 +8,6 @@ import { TextNodeComponentProps } from '../common/types';
 import { BlockFormulaLine } from './BlockFormulaLine';
 import { BlockFormulaMeta } from './BlockFormulaMeta';
 
-import React from 'react';
-
 export type BlockFormulaProps = TextNodeComponentProps<BlockFormulaNode>;
 
 export const BlockFormulaConstants = {

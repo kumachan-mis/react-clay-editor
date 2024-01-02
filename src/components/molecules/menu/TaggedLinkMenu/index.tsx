@@ -5,8 +5,6 @@ import { DropdownMenuButton } from '../../../atoms/menu/DropdownMenuButton';
 import { DropdownMenuList } from '../../../atoms/menu/DropdownMenuList';
 import { DropdownMenuListItem } from '../../../atoms/menu/DropdownMenuListItem';
 
-import React from 'react';
-
 export type TaggedLinkMenuProps = {
   readonly menuSwitch: 'on' | 'off' | 'disabled';
   readonly activeTagName: string | undefined;

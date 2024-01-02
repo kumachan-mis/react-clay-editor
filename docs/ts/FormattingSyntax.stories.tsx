@@ -3,7 +3,6 @@ import { ViewerRoot, ViewerRootProps, ViewerTextFieldBody, ViewerTextFieldRoot }
 import { css } from '@emotion/css';
 import { linkTo } from '@storybook/addon-links';
 import { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 
 const FormattingSyntax: React.FC<ViewerRootProps> = (props) => (
   <ViewerRoot

@@ -1,7 +1,5 @@
 import { Char } from '../Char';
 
-import React from 'react';
-
 export type ItemBulletContentProps = {
   readonly lineIndex: number;
   readonly indentDepth: number;

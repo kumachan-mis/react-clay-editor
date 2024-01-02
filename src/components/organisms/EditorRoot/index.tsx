@@ -8,7 +8,6 @@ import { Root } from '../../atoms/root/Root';
 import { useDocument, useEditorRoot, useScroll } from './hooks';
 
 import { ThemeProvider } from '@emotion/react';
-import React from 'react';
 
 export type EditorRootProps = React.PropsWithChildren<
   {

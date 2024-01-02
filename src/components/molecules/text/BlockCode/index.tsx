@@ -5,8 +5,6 @@ import { TextNodeComponentProps } from '../common/types';
 import { BlockCodeLine } from './BlockCodeLine';
 import { BlockCodeMeta } from './BlockCodeMeta';
 
-import React from 'react';
-
 export type BlockCodeProps = TextNodeComponentProps<BlockCodeNode>;
 
 export const BlockCodeConstants = {

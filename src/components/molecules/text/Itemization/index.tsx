@@ -7,8 +7,6 @@ import { LineContent } from '../../../atoms/text/LineContent';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type ItemizationProps = {
   readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
 } & TextNodeComponentProps<ItemizationNode>;
