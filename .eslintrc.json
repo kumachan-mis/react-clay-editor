@@ -41,7 +41,15 @@
     "prefer-const": "error",
     "require-await": "error",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "import/order": ["error", { "newlines-between": "always" }],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        },
+        "newlines-between": "always"
+      }
+    ],
     "import/no-named-as-default-member": "off",
     "react/forbid-prop-types": "error",
     "react/function-component-definition": [
