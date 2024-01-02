@@ -25,12 +25,11 @@
   "javascript.suggestionActions.enabled": false,
   "eslint.nodePath": ".yarn/sdks",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "editor.formatOnSave": true,
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
-  },
-  "mdx.experimentalLanguageServer": true
+  }
 }
