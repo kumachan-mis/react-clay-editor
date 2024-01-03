@@ -22,7 +22,7 @@ export function useTaggedLinkMenu(
   taggedLinkPropsMap: Record<string, EditorTaggedLinkProps> | undefined,
   { text, state, setText, setState, syntax }: CommonMenuProps
 ): TaggedLinkMenuProps {
-  const tagEntries = Object.entries(taggedLinkPropsMap || {});
+  const tagEntries = Object.entries(taggedLinkPropsMap ?? {});
 
   const menuSwitch = tagEntries.length === 0 ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'taggedLink');
   const activeTagName = getActiveTagName(lineNodes, contentPosition);

@@ -4,8 +4,6 @@ import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type HashtagProps = TextNodeComponentProps<HashtagNode>;
 
 export const HashtagConstants = {

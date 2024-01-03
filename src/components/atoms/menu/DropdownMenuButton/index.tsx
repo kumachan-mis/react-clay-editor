@@ -34,7 +34,13 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
   const arrowRef = React.useRef<HTMLButtonElement>(null);
 
   const handleOnArrowClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => (open ? onClose() : onOpen(event.currentTarget)),
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (open) {
+        onClose();
+      } else {
+        onOpen(event.currentTarget);
+      }
+    },
     [open, onClose, onOpen]
   );
 
@@ -53,12 +59,12 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
     };
   }, [handleOnClickAway]);
 
-  const { disabled: mainDisabled, ...mainRest } = buttonProps || {};
+  const { disabled: mainDisabled, ...mainRest } = buttonProps ?? {};
 
   return (
     <StyledDropdownMenuButton aria-disabled={disabled} aria-pressed={pressed} role="group" {...rest}>
       <StyledDropdownMainButton
-        disabled={disabled || mainDisabled}
+        disabled={disabled ?? mainDisabled}
         {...mainRest}
         data-selectid={DropdownMenuButtonConstants.main.selectId}
       >

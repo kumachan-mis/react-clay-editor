@@ -3,8 +3,6 @@ import { Char } from '../../../atoms/text/Char';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type InlineCodeProps = TextNodeComponentProps<InlineCodeNode>;
 
 export const InlineCodeConstants = {

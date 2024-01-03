@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 
 export type SuggestionListProps = {
   readonly position: { top: number; left: number };

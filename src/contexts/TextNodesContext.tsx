@@ -36,7 +36,7 @@ export const TextNodesContextProvider: React.FC<
     hashtagDisabled: props.hashtagProps?.disabled,
     codeDisabled: props.codeProps?.disabled,
     formulaDisabled: props.formulaProps?.disabled,
-    taggedLinkRegexes: Object.entries(props.taggedLinkPropsMap || {}).map(([tagName, taggedLinkProps]) =>
+    taggedLinkRegexes: Object.entries(props.taggedLinkPropsMap ?? {}).map(([tagName, taggedLinkProps]) =>
       createTaggedLinkRegex(tagName, taggedLinkProps.linkNameRegex)
     ),
   };

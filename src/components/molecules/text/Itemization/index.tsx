@@ -1,4 +1,3 @@
-import { TextNode } from '../../../../parser';
 import { ItemizationNode } from '../../../../parser/itemization/types';
 import { ItemBullet } from '../../../atoms/text/ItemBullet';
 import { ItemBulletContent } from '../../../atoms/text/ItemBulletContent';
@@ -7,10 +6,8 @@ import { LineContent } from '../../../atoms/text/LineContent';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type ItemizationProps = {
-  readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+  readonly ChildComponent: React.FC<TextNodeComponentProps>;
 } & TextNodeComponentProps<ItemizationNode>;
 
 export const ItemizationConstants = {

@@ -5,8 +5,6 @@ import { KaTeX } from '../../../atoms/text/KaTeX';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type ContentFormulaProps = TextNodeComponentProps<ContentFormulaNode>;
 
 export const ContentFormulaConstants = {

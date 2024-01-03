@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 
 export type CursorTextAreaProps = {
   readonly position: { top: number; left: number };
@@ -33,7 +32,7 @@ const StyledCursorTextArea = styled.textarea<{
   z-index: 1;
   top: ${props.position.top}px;
   left: ${props.position.left}px;
-  width: ${Math.min(props.value?.length || 0, 10) * props.cursorSize}px;
+  width: ${Math.min(props.value?.length ?? 0, 10) * props.cursorSize}px;
   height: ${props.cursorSize}px;
   min-height: ${props.cursorSize}px;
   font-size: ${props.cursorSize / 1.2}px;

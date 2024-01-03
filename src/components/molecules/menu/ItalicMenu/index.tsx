@@ -1,8 +1,6 @@
 import { ItalicIcon } from '../../../../icons/ItalicIcon';
 import { IconButtonMenu } from '../../../atoms/menu/IconButtonMenu';
 
-import React from 'react';
-
 export type ItalicMenuProps = {
   readonly menuSwitch: 'on' | 'off' | 'disabled';
   readonly onButtonClick: () => void;

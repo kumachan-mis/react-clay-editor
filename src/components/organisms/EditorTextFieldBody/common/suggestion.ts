@@ -55,7 +55,7 @@ export function showSuggestion(text: string, props: EditorProps, state: EditorSt
     configs.push({ suggestionType: 'text', ...props.textProps, ...suggestionConstants.heading });
   }
 
-  for (const [tagName, taggedLinkProps] of Object.entries(props.taggedLinkPropsMap || {})) {
+  for (const [tagName, taggedLinkProps] of Object.entries(props.taggedLinkPropsMap ?? {})) {
     configs.push({ suggestionType: 'taggedLink', ...taggedLinkProps, ...suggestionConstants.taggedLink(tagName) });
   }
 
@@ -87,7 +87,7 @@ function showConfiguredSuggestion(text: string, state: EditorState, config: Sugg
 
   let suggestionIndex = config.initialSuggestionIndex;
   if (!suggestionIndex || suggestions.length !== allSuggestions.length) suggestionIndex = 0;
-  const suggestionStart = config.getSuggestionStart?.(groups.text) || groups.text?.length || 0;
+  const suggestionStart = config.getSuggestionStart?.(groups.text) ?? groups.text.length;
   return { ...state, suggestionType: config.suggestionType, suggestions, suggestionIndex, suggestionStart };
 }
 

@@ -5,7 +5,6 @@ import { ViewerProps, ViewerPropsContextProvider } from '../../../contexts/Viewe
 import { Root } from '../../atoms/root/Root';
 
 import { ThemeProvider } from '@emotion/react';
-import React from 'react';
 
 export type ViewerRootProps = React.PropsWithChildren<
   { readonly text: string; readonly className?: string } & ViewerProps

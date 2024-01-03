@@ -16,10 +16,10 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
 }) => {
   const [state, setState] = React.useState({ clickable: false, hover: false });
   const clickable = (forceClickable && state.hover) || state.clickable;
-  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...anchorPropsRest } = anchorProps?.(clickable) || {};
+  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...anchorPropsRest } = anchorProps(clickable) ?? {};
 
   const handleOnMouseDown = React.useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
       if (editMode) event.preventDefault();
       onMouseDown?.(event);
     },
@@ -27,7 +27,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
   );
 
   const handleOnMouseEnter = React.useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
       onMouseEnter?.(event);
       setState({ clickable: !editMode, hover: true });
     },
@@ -35,7 +35,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
   );
 
   const handleOnMouseLeave = React.useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
       onMouseLeave?.(event);
       setState({ clickable: false, hover: false });
     },
@@ -43,7 +43,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
   );
 
   const handleOnClick = React.useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
       if (clickable) onClick?.(event);
       else event.preventDefault();
     },

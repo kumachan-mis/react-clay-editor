@@ -1,4 +1,3 @@
-import { TextNode } from '../../../../parser';
 import { QuotationNode } from '../../../../parser/quotation/types';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
@@ -6,10 +5,8 @@ import { LineIndent } from '../../../atoms/text/LineIndent';
 import { QuotationLineContent } from '../../../atoms/text/QuotationLineContent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type QuotationProps = {
-  readonly ChildComponent: React.FC<TextNodeComponentProps<TextNode>>;
+  readonly ChildComponent: React.FC<TextNodeComponentProps>;
 } & TextNodeComponentProps<QuotationNode>;
 
 export const QuotationConstants = {

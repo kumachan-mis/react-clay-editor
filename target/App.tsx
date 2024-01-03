@@ -198,7 +198,9 @@ const TestTargetViewerPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; 
     <Container themeName={theme}>
       <TextArea
         data-testid="mock-textarea"
-        onChange={(event) => setText(event.target.value)}
+        onChange={(event) => {
+          setText(event.target.value);
+        }}
         themeName={theme}
         value={text}
       />

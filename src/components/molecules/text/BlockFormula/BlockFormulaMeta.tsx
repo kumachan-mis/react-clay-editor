@@ -6,8 +6,6 @@ import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
 import { TextNodeComponentProps } from '../common/types';
 
-import React from 'react';
-
 export type BlockFormulaMetaProps = TextNodeComponentProps<BlockFormulaMetaNode>;
 
 export const BlockFormulaMeta: React.FC<BlockFormulaMetaProps> = ({ node, textVisual, formulaVisual }) => {

@@ -2,16 +2,12 @@
   "root": true,
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/stylistic",
     "plugin:import/recommended",
-    "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:storybook/recommended",
     "prettier"
   ],
-  "plugins": ["@typescript-eslint", "import", "react", "react-hooks"],
   "rules": {
     "no-duplicate-imports": "error",
     "no-unreachable-loop": "error",
@@ -40,8 +36,15 @@
     "no-useless-return": "error",
     "prefer-const": "error",
     "require-await": "error",
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "import/order": ["error", { "newlines-between": "always" }],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        },
+        "newlines-between": "always"
+      }
+    ],
     "import/no-named-as-default-member": "off",
     "react/forbid-prop-types": "error",
     "react/function-component-definition": [
@@ -58,9 +61,21 @@
     "react/no-danger": "error",
     "react/no-unsafe": "error",
     "react/prefer-read-only-props": "error",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off"
   },
   "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/strict-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked",
+        "plugin:import/typescript"
+      ],
+      "rules": {
+        "@typescript-eslint/consistent-type-definitions": ["error", "type"]
+      }
+    },
     {
       "files": ["tests/**/*.ts", "tests/**/*.tsx", "unittests/**/*.ts", "unittests/**/*.tsx"],
       "rules": {
@@ -69,6 +84,10 @@
       }
     }
   ],
+  "parserOptions": {
+    "project": true,
+    "tsconfigRootDir": "."
+  },
   "settings": {
     "react": {
       "version": "detect"
