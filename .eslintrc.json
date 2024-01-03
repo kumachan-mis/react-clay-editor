@@ -2,10 +2,7 @@
   "root": true,
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/strict-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:import/recommended",
-    "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:storybook/recommended",
@@ -39,7 +36,6 @@
     "no-useless-return": "error",
     "prefer-const": "error",
     "require-await": "error",
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "import/order": [
       "error",
       {
@@ -69,6 +65,17 @@
     "react/react-in-jsx-scope": "off"
   },
   "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/strict-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked",
+        "plugin:import/typescript"
+      ],
+      "rules": {
+        "@typescript-eslint/consistent-type-definitions": ["error", "type"]
+      }
+    },
     {
       "files": ["tests/**/*.ts", "tests/**/*.tsx", "unittests/**/*.ts", "unittests/**/*.tsx"],
       "rules": {
