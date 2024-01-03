@@ -1,3 +1,3 @@
 export function isMacOS(): boolean {
-  return navigator.userAgent.indexOf('Mac OS X') > -1;
+  return navigator.userAgent.includes('Mac OS X');
 }

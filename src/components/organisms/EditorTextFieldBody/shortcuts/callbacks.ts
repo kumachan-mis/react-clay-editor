@@ -285,7 +285,7 @@ export function handleOnMoveLeft(
 
   const newCursorCoordinate = moveCursor(text, cursorCoordinate, -1);
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,
@@ -309,7 +309,7 @@ export function handleOnMoveRight(
 
   const newCursorCoordinate = moveCursor(text, cursorCoordinate, 1);
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,
@@ -339,7 +339,6 @@ export function handleOnMoveWordTop(
     let charIndex: number | undefined = undefined;
     let match: RegExpExecArray | null = null;
     while ((match = groupWordRegex.exec(currentLine))) {
-      if (!match) break;
       const candidateIndex = groupWordRegex.lastIndex - match[0].length;
       if (candidateIndex >= cursorCoordinate.charIndex) break;
       charIndex = candidateIndex;
@@ -347,7 +346,7 @@ export function handleOnMoveWordTop(
     return { lineIndex: cursorCoordinate.lineIndex, charIndex: charIndex ?? 0 };
   })();
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,
@@ -374,9 +373,7 @@ export function handleOnMoveWordBottom(
     const groupWordRegex = new RegExp(WORD_REGEX, 'g');
     const lines = text.split('\n');
     const currentLine = lines[cursorCoordinate.lineIndex];
-    let match: RegExpExecArray | null = null;
-    while ((match = groupWordRegex.exec(currentLine))) {
-      if (!match) break;
+    while (groupWordRegex.exec(currentLine)) {
       const candidateIndex = groupWordRegex.lastIndex;
       if (candidateIndex > cursorCoordinate.charIndex) {
         return { lineIndex: cursorCoordinate.lineIndex, charIndex: candidateIndex };
@@ -385,7 +382,7 @@ export function handleOnMoveWordBottom(
     return { lineIndex: cursorCoordinate.lineIndex, charIndex: currentLine.length };
   })();
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,
@@ -409,7 +406,7 @@ export function handleOnMoveLineTop(
 
   const newCursorCoordinate = { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 };
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,
@@ -437,7 +434,7 @@ export function handleOnMoveLineBottom(
     charIndex: lines[cursorCoordinate.lineIndex].length,
   };
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,
@@ -461,7 +458,7 @@ export function handleOnMoveTextTop(
 
   const newCursorCoordinate = { lineIndex: 0, charIndex: 0 };
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,
@@ -486,7 +483,7 @@ export function handleOnMoveTextBottom(
   const lines = text.split('\n');
   const newCursorCoordinate = { lineIndex: lines.length - 1, charIndex: lines[lines.length - 1].length };
 
-  const disabled = !event?.shiftKey;
+  const disabled = !event.shiftKey;
   const newCursorSelection = updateSelectionAfterCursorMove(
     cursorSelection,
     cursorCoordinate,

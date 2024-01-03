@@ -12,7 +12,9 @@ export function useEmbededLinkForceClickable(): boolean {
         !event.shiftKey
     );
   }, []);
-  const handleOnKeyUp = React.useCallback(() => setLinkForceClickable(false), []);
+  const handleOnKeyUp = React.useCallback(() => {
+    setLinkForceClickable(false);
+  }, []);
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleOnKeyDown);

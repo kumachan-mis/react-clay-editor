@@ -15,7 +15,6 @@ export function getWordSelection(
   const currentLine = lines[cursorCoordinate.lineIndex];
   let match: RegExpExecArray | null = null;
   while ((match = groupWordRegex.exec(currentLine))) {
-    if (!match) break;
     const from = groupWordRegex.lastIndex - match[0].length;
     const to = groupWordRegex.lastIndex;
     if (to < cursorCoordinate.charIndex) continue;

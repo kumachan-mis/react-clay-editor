@@ -87,7 +87,7 @@ function showConfiguredSuggestion(text: string, state: EditorState, config: Sugg
 
   let suggestionIndex = config.initialSuggestionIndex;
   if (!suggestionIndex || suggestions.length !== allSuggestions.length) suggestionIndex = 0;
-  const suggestionStart = config.getSuggestionStart?.(groups.text) ?? groups.text?.length ?? 0;
+  const suggestionStart = config.getSuggestionStart?.(groups.text) ?? groups.text.length;
   return { ...state, suggestionType: config.suggestionType, suggestions, suggestionIndex, suggestionStart };
 }
 

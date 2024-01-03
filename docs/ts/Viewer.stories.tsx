@@ -92,7 +92,9 @@ export const DualPanedEditorStory: React.FC = () => {
             border-color: rgba(243, 246, 249, 0.12);
           }
         `}
-        onChange={(event) => setText(event.target.value)}
+        onChange={(event) => {
+          setText(event.target.value);
+        }}
         value={text}
       />
       <ViewerRoot

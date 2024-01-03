@@ -44,9 +44,9 @@ function cursorCoordinateChar(
   element: HTMLElement
 ): CursorCoordinate | undefined {
   const charElement = findElement(elements, CharConstants.selectIdRegex, element);
-  if (!charElement) return undefined;
+  const selectId = charElement?.getAttribute('data-selectid');
+  if (!charElement || !selectId) return undefined;
 
-  const selectId = charElement.getAttribute('data-selectid')!;
   const groups = selectId.match(CharConstants.selectIdRegex)?.groups as Record<string, string>;
   const lineIndex = Number.parseInt(groups.lineIndex, 10);
   const charIndex = Number.parseInt(groups.charIndex, 10);
@@ -67,9 +67,9 @@ function cursorCoordinateCharGroup(
   element: HTMLElement
 ): CursorCoordinate | undefined {
   const charGroupElement = findElement(elements, CharGroupConstants.selectIdRegex, element);
-  if (!charGroupElement) return undefined;
+  const selectId = charGroupElement?.getAttribute('data-selectid');
+  if (!charGroupElement || !selectId) return undefined;
 
-  const selectId = charGroupElement.getAttribute('data-selectid')!;
   const groups = selectId.match(CharGroupConstants.selectIdRegex)?.groups as Record<string, string>;
   const lineIndex = Number.parseInt(groups.lineIndex, 10);
   const firstCharIndex = Number.parseInt(groups.first, 10);
@@ -92,9 +92,9 @@ function cursorCoordinateLine(
   element: HTMLElement
 ): CursorCoordinate | undefined {
   const lineElement = findElement(elements, LineConstants.selectIdRegex, element);
-  if (!lineElement) return undefined;
+  const selectId = lineElement?.getAttribute('data-selectid');
+  if (!lineElement || !selectId) return undefined;
 
-  const selectId = lineElement.getAttribute('data-selectid')!;
   const groups = selectId.match(LineConstants.selectIdRegex)?.groups as Record<string, string>;
   const lineIndex = Number.parseInt(groups.lineIndex, 10);
   const [x, y] = position;
@@ -134,9 +134,9 @@ function cursorCoordinateLineGroup(
   element: HTMLElement
 ): CursorCoordinate | undefined {
   const lineGroupElement = findElement(elements, LineGroupConstants.selectIdRegex, element);
-  if (!lineGroupElement) return undefined;
+  const selectId = lineGroupElement?.getAttribute('data-selectid');
+  if (!lineGroupElement || !selectId) return undefined;
 
-  const selectId = lineGroupElement.getAttribute('data-selectid')!;
   const groups = selectId.match(LineGroupConstants.selectIdRegex)?.groups as Record<string, string>;
   const firstLineIndex = Number.parseInt(groups.first, 10);
   const lastLineIndex = Number.parseInt(groups.last, 10);
