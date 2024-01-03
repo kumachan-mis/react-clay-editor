@@ -344,7 +344,7 @@ export function handleOnMoveWordTop(
       if (candidateIndex >= cursorCoordinate.charIndex) break;
       charIndex = candidateIndex;
     }
-    return { lineIndex: cursorCoordinate.lineIndex, charIndex: charIndex || 0 };
+    return { lineIndex: cursorCoordinate.lineIndex, charIndex: charIndex ?? 0 };
   })();
 
   const disabled = !event?.shiftKey;

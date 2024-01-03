@@ -53,12 +53,12 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
     };
   }, [handleOnClickAway]);
 
-  const { disabled: mainDisabled, ...mainRest } = buttonProps || {};
+  const { disabled: mainDisabled, ...mainRest } = buttonProps ?? {};
 
   return (
     <StyledDropdownMenuButton aria-disabled={disabled} aria-pressed={pressed} role="group" {...rest}>
       <StyledDropdownMainButton
-        disabled={disabled || mainDisabled}
+        disabled={disabled ?? mainDisabled}
         {...mainRest}
         data-selectid={DropdownMenuButtonConstants.main.selectId}
       >

@@ -46,7 +46,7 @@ function cursorCoordinateChar(
   const charElement = findElement(elements, CharConstants.selectIdRegex, element);
   if (!charElement) return undefined;
 
-  const selectId = charElement.getAttribute('data-selectid') as string;
+  const selectId = charElement.getAttribute('data-selectid')!;
   const groups = selectId.match(CharConstants.selectIdRegex)?.groups as Record<string, string>;
   const lineIndex = Number.parseInt(groups.lineIndex, 10);
   const charIndex = Number.parseInt(groups.charIndex, 10);
@@ -69,7 +69,7 @@ function cursorCoordinateCharGroup(
   const charGroupElement = findElement(elements, CharGroupConstants.selectIdRegex, element);
   if (!charGroupElement) return undefined;
 
-  const selectId = charGroupElement.getAttribute('data-selectid') as string;
+  const selectId = charGroupElement.getAttribute('data-selectid')!;
   const groups = selectId.match(CharGroupConstants.selectIdRegex)?.groups as Record<string, string>;
   const lineIndex = Number.parseInt(groups.lineIndex, 10);
   const firstCharIndex = Number.parseInt(groups.first, 10);
@@ -94,7 +94,7 @@ function cursorCoordinateLine(
   const lineElement = findElement(elements, LineConstants.selectIdRegex, element);
   if (!lineElement) return undefined;
 
-  const selectId = lineElement.getAttribute('data-selectid') as string;
+  const selectId = lineElement.getAttribute('data-selectid')!;
   const groups = selectId.match(LineConstants.selectIdRegex)?.groups as Record<string, string>;
   const lineIndex = Number.parseInt(groups.lineIndex, 10);
   const [x, y] = position;
@@ -136,7 +136,7 @@ function cursorCoordinateLineGroup(
   const lineGroupElement = findElement(elements, LineGroupConstants.selectIdRegex, element);
   if (!lineGroupElement) return undefined;
 
-  const selectId = lineGroupElement.getAttribute('data-selectid') as string;
+  const selectId = lineGroupElement.getAttribute('data-selectid')!;
   const groups = selectId.match(LineGroupConstants.selectIdRegex)?.groups as Record<string, string>;
   const firstLineIndex = Number.parseInt(groups.first, 10);
   const lastLineIndex = Number.parseInt(groups.last, 10);
@@ -152,5 +152,5 @@ function cursorCoordinateLineGroup(
 }
 
 function findElement(elements: HTMLElement[], selectIdRegex: RegExp, element: HTMLElement): HTMLElement | undefined {
-  return elements.find((e) => selectIdRegex.test(e.getAttribute('data-selectid') || '') && element.contains(e));
+  return elements.find((e) => selectIdRegex.test(e.getAttribute('data-selectid') ?? '') && element.contains(e));
 }

@@ -13,9 +13,9 @@ const Api: React.FC<{
   <FixedContainer colorized={['all', 'container', 'fixed-container'].includes(colorized)}>
     <FixedContent colorized={['all', 'content', 'fixed-content'].includes(colorized)}>fixed content</FixedContent>
     <ScrollableContainer colorized={['all', 'container', 'scrollable-container'].includes(colorized)}>
-      {[...new Array(3)].map((_, i) => (
+      {[...Array(3).keys()].map((i) => (
         <ScrollableContent colorized={['all', 'content', 'scrollable-content'].includes(colorized)} key={i}>
-          {[...new Array(5)].map((_, i) => (
+          {[...Array(5).keys()].map((i) => (
             <div key={i}>scrollable content</div>
           ))}
         </ScrollableContent>

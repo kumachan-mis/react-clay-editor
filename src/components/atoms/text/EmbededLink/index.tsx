@@ -16,7 +16,7 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
 }) => {
   const [state, setState] = React.useState({ clickable: false, hover: false });
   const clickable = (forceClickable && state.hover) || state.clickable;
-  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...anchorPropsRest } = anchorProps?.(clickable) || {};
+  const { onMouseDown, onMouseEnter, onMouseLeave, onClick, ...anchorPropsRest } = anchorProps?.(clickable) ?? {};
 
   const handleOnMouseDown = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
