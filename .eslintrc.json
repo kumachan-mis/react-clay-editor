@@ -11,7 +11,6 @@
     "plugin:storybook/recommended",
     "prettier"
   ],
-  "plugins": ["@typescript-eslint", "import", "react", "react-hooks"],
   "rules": {
     "no-duplicate-imports": "error",
     "no-unreachable-loop": "error",
