@@ -56,4 +56,4 @@ jobs:
         run: yarn playwright install chromium
 
       - name: Run End-to-End Tests
-      - run: yarn test
+        run: yarn test
