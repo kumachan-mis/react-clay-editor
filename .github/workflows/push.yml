@@ -1,0 +1,13 @@
+name: Push
+
+on:
+  push:
+    branches: [main]
+jobs:
+  unittest:
+    uses: ./.github/workflows/reusable-unittest.yml
+  test:
+    uses: ./.github/workflows/reusable-test.yml
+  release:
+    needs: [unittest, test]
+    uses: ./.github/workflows/reusable-release.yml
