@@ -1,0 +1,30 @@
+name: Unit Test
+
+on:
+  workflow_call:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run NPM Audit
+        run: yarn npm audit
+
+      - name: Run Typecheck
+        run: yarn typecheck
+
+      - name: Run Lint
+        run: yarn lint
+
+      - name: Run Unit Tests
+        run: yarn unittest

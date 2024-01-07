@@ -1,0 +1,10 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: ['*']
+jobs:
+  unittest:
+    uses: ./.github/workflows/reusable-unittest.yml
+  test:
+    uses: ./.github/workflows/reusable-test.yml

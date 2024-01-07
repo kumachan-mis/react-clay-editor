@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup  Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install Headless Chrome
+        run: yarn playwright install chromium
+
+      - name: Run End-to-End Tests
+        run: yarn test
