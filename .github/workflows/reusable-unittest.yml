@@ -7,7 +7,8 @@ jobs:
   unittest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -17,14 +18,14 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run NPM Audit
+      - name: Run audit
         run: yarn npm audit
 
-      - name: Run Typecheck
+      - name: Run typecheck
         run: yarn typecheck
 
-      - name: Run Lint
+      - name: Run lint
         run: yarn lint
 
-      - name: Run Unit Tests
+      - name: Run unit tests
         run: yarn unittest

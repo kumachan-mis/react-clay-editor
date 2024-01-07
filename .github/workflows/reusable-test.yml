@@ -17,8 +17,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Install Headless Chrome
+      - name: Install headless chrome
         run: yarn playwright install chromium
 
-      - name: Run End-to-End Tests
+      - name: Run end-to-end tests
         run: yarn test
