@@ -11,3 +11,5 @@ jobs:
   release:
     needs: [unittest, test]
     uses: ./.github/workflows/reusable-release.yml
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
