@@ -13,13 +13,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.10.0
-
       - name: Release new version
-        run: yarn semantic-release
+        uses: cycjimmy/semantic-release-action@v4
     permissions:
       contents: write
       issues: write
