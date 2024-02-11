@@ -13,3 +13,6 @@ jobs:
     uses: ./.github/workflows/reusable-release.yml
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  ghpages:
+    needs: [release]
+    uses: ./.github/workflows/reusable-ghpages.yml
