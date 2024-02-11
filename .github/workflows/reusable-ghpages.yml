@@ -30,3 +30,6 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      pages: write
+      id-token: write
