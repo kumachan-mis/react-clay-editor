@@ -58,7 +58,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-storybook", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:0.8.0"],\
           ["husky", "npm:9.0.11"],\
           ["jest", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:29.7.0"],\
-          ["katex", "npm:0.16.9"],\
+          ["katex", "npm:0.16.10"],\
           ["lint-staged", "npm:15.2.2"],\
           ["prettier", "npm:2.8.8"],\
           ["react", "npm:18.2.0"],\
@@ -13474,10 +13474,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["katex", [\
-      ["npm:0.16.9", {\
-        "packageLocation": "./.yarn/cache/katex-npm-0.16.9-721692b7ff-0a1ea1e87c.zip/node_modules/katex/",\
+      ["npm:0.16.10", {\
+        "packageLocation": "./.yarn/cache/katex-npm-0.16.10-4839f14dbd-3670340123.zip/node_modules/katex/",\
         "packageDependencies": [\
-          ["katex", "npm:0.16.9"],\
+          ["katex", "npm:0.16.10"],\
           ["commander", "npm:8.3.0"]\
         ],\
         "linkType": "HARD"\
@@ -15758,7 +15758,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-storybook", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:0.8.0"],\
           ["husky", "npm:9.0.11"],\
           ["jest", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:29.7.0"],\
-          ["katex", "npm:0.16.9"],\
+          ["katex", "npm:0.16.10"],\
           ["lint-staged", "npm:15.2.2"],\
           ["prettier", "npm:2.8.8"],\
           ["react", "npm:18.2.0"],\
