@@ -24,7 +24,7 @@ const moduleWrapper = (tsserver) => {
   const dependencyTreeRoots = new Set(
     pnpApi.getDependencyTreeRoots().map((locator) => {
       return `${locator.name}@${locator.reference}`;
-    }),
+    })
   );
 
   // VSCode sends the zip paths to TS using the "zip://" prefix, that TS
@@ -203,7 +203,7 @@ const moduleWrapper = (tsserver) => {
           const [, major, minor] = (
             process.env.VSCODE_IPC_HOOK.match(
               // The RegExp from https://semver.org/ but without the caret at the start
-              /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/,
+              /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
             ) ?? []
           ).map(Number);
 
@@ -232,8 +232,8 @@ const moduleWrapper = (tsserver) => {
         JSON.parse(
           JSON.stringify(msg, (key, value) => {
             return typeof value === `string` ? toEditorPath(value) : value;
-          }),
-        ),
+          })
+        )
       );
     },
   });
