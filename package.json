@@ -96,5 +96,5 @@
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.2.2"
 }
