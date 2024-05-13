@@ -86,7 +86,7 @@
     "sort-package-json": "^2.10.0",
     "storybook": "^8.0.10",
     "ts-jest": "^29.1.2",
-    "typescript": "^5.4.5",
+    "typescript": "5.4.3",
     "vite": "^5.2.11"
   },
   "peerDependencies": {
