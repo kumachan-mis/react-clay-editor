@@ -13,6 +13,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup  Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
+
+      - name: Install dependencies
+        run: yarn install
+
       - name: Release new version
         uses: cycjimmy/semantic-release-action@v4
     permissions:
