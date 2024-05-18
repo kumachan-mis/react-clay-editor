@@ -9,29 +9,19 @@ import { handleOnMouseMove, handleOnMouseScrollDown, handleOnMouseScrollUp, hand
 
 import React from 'react';
 
-export function useEditorRoot(): {
+type UseWindowProps = {
   ref: React.RefObject<HTMLDivElement>;
+};
+
+type UseEditorRootProps = {
+  ref: React.RefObject<HTMLDivElement>;
+};
+
+type UseEditorRootReturn = {
   onMouseDown: React.MouseEventHandler<HTMLDivElement>;
-} {
-  const ref = React.useRef<HTMLDivElement>(null);
+};
 
-  const onDocumentMouseUp = React.useCallback(() => {
-    ref.current?.querySelector('textarea')?.focus({ preventScroll: true });
-    document.removeEventListener('mouseup', onDocumentMouseUp);
-  }, [ref]);
-
-  const onMouseDown = React.useCallback(
-    (event: React.MouseEvent) => {
-      document.addEventListener('mouseup', onDocumentMouseUp);
-      event.nativeEvent.stopPropagation();
-    },
-    [onDocumentMouseUp]
-  );
-
-  return { ref, onMouseDown };
-}
-
-export function useDocument(ref: React.RefObject<HTMLDivElement>): void {
+export function useWindow({ ref }: UseWindowProps): void {
   const text = useTextValueContext();
   const setState = useSetEditorStateContext();
 
@@ -60,25 +50,42 @@ export function useDocument(ref: React.RefObject<HTMLDivElement>): void {
   );
 
   React.useEffect(() => {
-    document.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousedown', onMouseDown);
     return () => {
-      document.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousedown', onMouseDown);
     };
   }, [onMouseDown]);
 
   React.useEffect(() => {
-    document.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove);
     return () => {
-      document.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mousemove', onMouseMove);
     };
   }, [onMouseMove]);
 
   React.useEffect(() => {
-    document.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mouseup', onMouseUp);
     return () => {
-      document.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('mouseup', onMouseUp);
     };
   }, [onMouseUp]);
+}
+
+export function useEditorRoot({ ref }: UseEditorRootProps): UseEditorRootReturn {
+  const onWindowMouseUp = React.useCallback(() => {
+    ref.current?.querySelector('textarea')?.focus({ preventScroll: true });
+    window.removeEventListener('mouseup', onWindowMouseUp);
+  }, [ref]);
+
+  const onMouseDown = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      window.addEventListener('mouseup', onWindowMouseUp);
+      event.nativeEvent.stopPropagation();
+    },
+    [onWindowMouseUp]
+  );
+
+  return { onMouseDown };
 }
 
 export function useScroll(): void {

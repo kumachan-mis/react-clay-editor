@@ -5,11 +5,13 @@ import { handleOnMouseDown, handleOnClick } from './callback';
 
 import React from 'react';
 
-export function useTextField(): {
+type UseTextFieldReturn = {
   ref: React.RefObject<HTMLDivElement>;
   onMouseDown: React.MouseEventHandler<HTMLDivElement>;
   onClick: React.MouseEventHandler<HTMLDivElement>;
-} {
+};
+
+export function useTextField(): UseTextFieldReturn {
   const text = useTextValueContext();
   const setState = useSetEditorStateContext();
   const ref = React.useRef<HTMLDivElement>(null);

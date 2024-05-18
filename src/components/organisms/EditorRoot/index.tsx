@@ -5,9 +5,10 @@ import { TextContextProvider } from '../../../contexts/TextContext';
 import { TextNodesContextProvider } from '../../../contexts/TextNodesContext';
 import { Root } from '../../atoms/root/Root';
 
-import { useDocument, useEditorRoot, useScroll } from './hooks';
+import { useEditorRoot, useScroll, useWindow } from './hooks';
 
 import { ThemeProvider } from '@emotion/react';
+import React from 'react';
 
 export type EditorRootProps = React.PropsWithChildren<
   {
@@ -35,10 +36,10 @@ const EditorRootInner: React.FC<React.PropsWithChildren<{ readonly className?: s
   className,
   children,
 }) => {
-  const { ref, onMouseDown } = useEditorRoot();
-
-  useDocument(ref);
+  const ref = React.useRef<HTMLDivElement>(null);
+  useWindow({ ref });
   useScroll();
+  const { onMouseDown } = useEditorRoot({ ref });
 
   return (
     <Root className={className} onMouseDown={onMouseDown} ref={ref}>

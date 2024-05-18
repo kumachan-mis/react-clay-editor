@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 export function useDropdownMenu(): [boolean, () => void, () => void] {
   const [open, setOpen] = React.useState(false);
