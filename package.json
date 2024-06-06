@@ -13,15 +13,7 @@
   },
   "license": "MIT",
   "author": "Yuya Suwa (@kumachan-mis)",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.umd.js",
-      "import": "./dist/index.mjs"
-    }
-  },
-  "main": "dist/lib/index.umd.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
@@ -29,7 +21,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "yarn clean && vite --config viteconfig.lib.mts build && tsc --build tsconfig.lib.json",
+    "build": "yarn clean && tsc --build tsconfig.lib.json",
     "build-storybook": "yarn clean-storybook && storybook build --docs && touch ./storybook-static/.nojekyll",
     "clean": "rm -Rf dist",
     "clean-storybook": "rm -rf node_modules/ storybook-static/",
