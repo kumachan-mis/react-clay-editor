@@ -12,7 +12,7 @@ const FormattingSyntax: React.FC<ViewerRootProps> = (props) => (
         height: auto;
       }
     `}
-    theme="dark"
+    palette="dark"
     {...props}
   >
     <ViewerTextFieldRoot>
