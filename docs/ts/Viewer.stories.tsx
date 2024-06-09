@@ -11,7 +11,7 @@ const meta: Meta = {
 export default meta;
 
 export const SimpleViewerStory: React.FC = () => (
-  <ViewerRoot text="This is a simple viewer." theme="dark">
+  <ViewerRoot palette="dark" text="This is a simple viewer.">
     <ViewerTextFieldRoot>
       <ViewerTextFieldBody />
     </ViewerTextFieldRoot>
@@ -25,8 +25,8 @@ export const FullwidthStory: React.FC = () => (
         width: 100%;
       }
     `}
+    palette="dark"
     text={['This is a full-width viewer.', '`className` is available to overwrite the default styling.'].join('\n')}
-    theme="dark"
   >
     <ViewerTextFieldRoot>
       <ViewerTextFieldBody />
@@ -36,11 +36,11 @@ export const FullwidthStory: React.FC = () => (
 
 export const WithFixedHeaderStory: React.FC = () => (
   <ViewerRoot
+    palette="dark"
     text={[
       'This is a viewer with the header in a fixed area.',
       'The header is useful to show a fixed title of a document.',
     ].join('\n')}
-    theme="dark"
   >
     <ViewerHeader header="Header in Fixed Area" />
     <ViewerTextFieldRoot>
@@ -51,11 +51,11 @@ export const WithFixedHeaderStory: React.FC = () => (
 
 export const WithScrollableHeaderStory: React.FC = () => (
   <ViewerRoot
+    palette="dark"
     text={[
       'This is a viewer with the header in a scrollable area.',
       'The header is useful to show a fixed title of a document.',
     ].join('\n')}
-    theme="dark"
   >
     <ViewerTextFieldRoot>
       <ViewerHeader header="Header in Scrollable Area" />
@@ -105,9 +105,9 @@ export const DualPanedEditorStory: React.FC = () => {
             margin: 5px;
           }
         `}
+        palette="dark"
         syntax="markdown"
         text={text}
-        theme="dark"
       >
         <ViewerTextFieldRoot>
           <ViewerTextFieldBody />

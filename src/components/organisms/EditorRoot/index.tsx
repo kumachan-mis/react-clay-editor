@@ -23,7 +23,7 @@ export const EditorRoot: React.FC<EditorRootProps> = ({ text, setText, className
     <EditorPropsContextProvider props={props}>
       <TextNodesContextProvider props={props} text={text}>
         <EditorStateContextProvider>
-          <ThemeProvider theme={props.theme !== 'dark' ? LIGHT_THEME : DARK_THEME}>
+          <ThemeProvider theme={props.palette !== 'dark' ? LIGHT_THEME : DARK_THEME}>
             <EditorRootInner className={className}>{children}</EditorRootInner>
           </ThemeProvider>
         </EditorStateContextProvider>

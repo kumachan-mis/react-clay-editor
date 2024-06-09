@@ -109,16 +109,16 @@ export const App: React.FC = () => {
       return <RootPage />;
     case '/bracket/editor':
     case '/bracket/editor/':
-      return <TestTargetEditorPage syntax="bracket" theme="light" />;
+      return <TestTargetEditorPage palette="light" syntax="bracket" />;
     case '/bracket/viewer':
     case '/bracket/viewer/':
-      return <TestTargetViewerPage syntax="bracket" theme="light" />;
+      return <TestTargetViewerPage palette="light" syntax="bracket" />;
     case '/markdown/editor':
     case '/markdown/editor/':
-      return <TestTargetEditorPage syntax="markdown" theme="dark" />;
+      return <TestTargetEditorPage palette="dark" syntax="markdown" />;
     case '/markdown/viewer':
     case '/markdown/viewer/':
-      return <TestTargetViewerPage syntax="markdown" theme="dark" />;
+      return <TestTargetViewerPage palette="dark" syntax="markdown" />;
     default:
       return <NotFoundPage />;
   }
@@ -144,26 +144,26 @@ const RootPage: React.FC = () => (
   </div>
 );
 
-const TestTargetEditorPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; readonly theme: 'light' | 'dark' }> = ({
-  syntax,
-  theme,
-}) => {
+const TestTargetEditorPage: React.FC<{
+  readonly syntax: 'bracket' | 'markdown';
+  readonly palette: 'light' | 'dark';
+}> = ({ syntax, palette }) => {
   const [text, setText] = React.useState('');
   const [key, setKey] = React.useState(0);
 
   return (
-    <Container themeName={theme}>
+    <Container palette={palette}>
       <EditorRoot
         bracketLinkProps={bracketLinkProps}
         className={editorClassName}
         hashtagProps={hashtagProps}
         key={key}
+        palette={palette}
         setText={setText}
         syntax={syntax}
         taggedLinkPropsMap={taggedLinkPropsMap}
         text={text}
         textProps={textProps}
-        theme={theme}
       >
         <EditorSyntaxMenu />
         <Divider />
@@ -179,7 +179,7 @@ const TestTargetEditorPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; 
           setText('');
           setKey((key) => key + 1); // Force re-mount
         }}
-        themeName={theme}
+        palette={palette}
       >
         Refresh
       </RefreshButton>
@@ -187,21 +187,21 @@ const TestTargetEditorPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; 
   );
 };
 
-const TestTargetViewerPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; readonly theme: 'light' | 'dark' }> = ({
-  syntax,
-  theme,
-}) => {
+const TestTargetViewerPage: React.FC<{
+  readonly syntax: 'bracket' | 'markdown';
+  readonly palette: 'light' | 'dark';
+}> = ({ syntax, palette }) => {
   const [text, setText] = React.useState('');
   const [key, setKey] = React.useState(0);
 
   return (
-    <Container themeName={theme}>
+    <Container palette={palette}>
       <TextArea
         data-testid="mock-textarea"
         onChange={(event) => {
           setText(event.target.value);
         }}
-        themeName={theme}
+        palette={palette}
         value={text}
       />
       <ViewerRoot
@@ -209,11 +209,11 @@ const TestTargetViewerPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; 
         className={viewerClassName}
         hashtagProps={hashtagProps}
         key={key}
+        palette={palette}
         syntax={syntax}
         taggedLinkPropsMap={taggedLinkPropsMap}
         text={text}
         textProps={textProps}
-        theme={theme}
       >
         <ViewerTextFieldRoot>
           <ViewerTextFieldBody />
@@ -225,7 +225,7 @@ const TestTargetViewerPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; 
           setText('');
           setKey((key) => key + 1); // Force re-mount
         }}
-        themeName={theme}
+        palette={palette}
       >
         Refresh
       </RefreshButton>
@@ -233,7 +233,7 @@ const TestTargetViewerPage: React.FC<{ readonly syntax: 'bracket' | 'markdown'; 
   );
 };
 
-const Container = styled.div<{ themeName: 'light' | 'dark' }>(
+const Container = styled.div<{ palette: 'light' | 'dark' }>(
   (props) => `
   width: 100%;
   height: 100%;
@@ -241,33 +241,33 @@ const Container = styled.div<{ themeName: 'light' | 'dark' }>(
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
+  background-color: ${props.palette !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
 `
 );
 
-const RefreshButton = styled.button<{ themeName: 'light' | 'dark' }>(
+const RefreshButton = styled.button<{ palette: 'light' | 'dark' }>(
   (props) => `
   position: absolute;
   top: 36px;
   left: 36px;
   cursor: pointer;
   padding: 8px 16px;
-  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
+  color: ${props.palette !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
   background-color: transparent;
   &:hover {
-    background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 0.08)' : 'rgba(16, 20, 24, 0.04)'};
+    background-color: ${props.palette !== 'dark' ? 'rgba(243, 246, 249, 0.08)' : 'rgba(16, 20, 24, 0.04)'};
   }
 `
 );
 
-const TextArea = styled.textarea<{ themeName: 'light' | 'dark' }>(
+const TextArea = styled.textarea<{ palette: 'light' | 'dark' }>(
   (props) => `
   width: 35%;
   height: 70%;
   margin: 5px;
-  color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
-  background-color: ${props.themeName !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
-  border-color: ${props.themeName !== 'dark' ? 'rgba(16, 20, 24, 0.12)' : 'rgba(243, 246, 249, 0.12)'};
+  color: ${props.palette !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
+  background-color: ${props.palette !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
+  border-color: ${props.palette !== 'dark' ? 'rgba(16, 20, 24, 0.12)' : 'rgba(243, 246, 249, 0.12)'};
 `
 );
 

@@ -1,6 +1,4 @@
-import { DecorationTheme } from '../types/visual/theme';
-
-import { Theme } from '@emotion/react';
+import { DecorationTheme, Theme } from '../types/visual/theme';
 
 const BASE_FONT_FAMILY: string = [
   // BASE_FONT_FAMILY

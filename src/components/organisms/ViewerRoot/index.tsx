@@ -14,7 +14,7 @@ export const ViewerRoot: React.FC<ViewerRootProps> = ({ text, className, childre
   <TextValueContextProvider text={text}>
     <ViewerPropsContextProvider props={props}>
       <TextNodesContextProvider props={props} text={text}>
-        <ThemeProvider theme={props.theme !== 'dark' ? LIGHT_THEME : DARK_THEME}>
+        <ThemeProvider theme={props.palette !== 'dark' ? LIGHT_THEME : DARK_THEME}>
           <ViewerRootInner className={className}>{children}</ViewerRootInner>
         </ThemeProvider>
       </TextNodesContextProvider>

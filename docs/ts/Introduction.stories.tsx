@@ -156,11 +156,11 @@ const Introduction: React.FC = () => {
       bracketLinkProps={bracketLinkProps}
       className={editorClassName}
       hashtagProps={hashtagProps}
+      palette="dark"
       setText={setText}
       taggedLinkPropsMap={taggedLinkPropsMap}
       text={text}
       textProps={textProps}
-      theme="dark"
     >
       <EditorSyntaxMenu />
       <Divider />

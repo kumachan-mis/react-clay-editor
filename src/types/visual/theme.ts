@@ -58,3 +58,16 @@ export type IconButtonTheme = {
   disabledBackgroundColor: string;
   borderColor: string;
 };
+
+export type Theme = {
+  base: BaseTheme;
+  normal: DecorationTheme;
+  larger: DecorationTheme;
+  largest: DecorationTheme;
+  link: LinkTheme;
+  monospace: MonospaceTheme;
+  quotation: QuotationTheme;
+  list: ListTheme;
+  listItem: ListItemTheme;
+  iconButton: IconButtonTheme;
+};
