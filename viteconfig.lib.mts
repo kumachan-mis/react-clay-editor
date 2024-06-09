@@ -17,6 +17,7 @@ export default defineConfig({
     rollupOptions: {
       external: ['react', 'react-dom', 'katex', '@emotion/react', '@emotion/styled'],
       output: {
+        interop: 'auto',
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
