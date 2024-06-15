@@ -26,7 +26,7 @@ export const ContentFormula: React.FC<ContentFormulaProps> = ({ node, getEditMod
       lineIndex={lineIndex}
     >
       {!editMode ? (
-        <KaTeX options={{ throwOnError: false, displayMode }}>{formula}</KaTeX>
+        <KaTeX displayMode={displayMode}>{formula}</KaTeX>
       ) : (
         <Monospace {...codeElementProps}>
           {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (

@@ -28,7 +28,7 @@ export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, getEditMode, f
     >
       <LineGroupIndent indentDepth={facingMeta.indentDepth} />
       <LineGroupContent indentDepth={facingMeta.indentDepth}>
-        <KaTeX options={{ throwOnError: false, displayMode: true }}>{formula}</KaTeX>
+        <KaTeX displayMode>{formula}</KaTeX>
       </LineGroupContent>
     </LineGroup>
   ) : (

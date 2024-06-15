@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type CharProps = {
   readonly lineIndex: number;
   readonly charIndex: number;
@@ -8,6 +10,8 @@ export const CharConstants = {
   selectIdRegex: RegExp('char-L(?<lineIndex>\\d+)C(?<charIndex>\\d+)'),
 };
 
-export const Char: React.FC<CharProps> = ({ lineIndex, charIndex, ...rest }) => (
+const CharComponent: React.FC<CharProps> = ({ lineIndex, charIndex, ...rest }) => (
   <span {...rest} data-selectid={CharConstants.selectId(lineIndex, charIndex)} />
 );
+
+export const Char = React.memo(CharComponent);

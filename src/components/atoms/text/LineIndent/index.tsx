@@ -1,21 +1,12 @@
 import { Char } from '../Char';
 
 import styled from '@emotion/styled';
+import React from 'react';
 
 export type LineIndentProps = {
   readonly lineIndex: number;
   readonly indentDepth: number;
 } & React.PropsWithoutRef<React.ComponentProps<'span'>>;
-
-export const LineIndent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, ...rest }) => (
-  <StyledLineIndent indentDepth={indentDepth} {...rest}>
-    {[...Array(indentDepth).keys()].map((charIndex) => (
-      <StyledLineIndentPad charIndex={charIndex} key={charIndex} lineIndex={lineIndex}>
-        {' '}
-      </StyledLineIndentPad>
-    ))}
-  </StyledLineIndent>
-);
 
 const StyledLineIndent = styled.span<{
   indentDepth: number;
@@ -33,3 +24,15 @@ const StyledLineIndentPad = styled(Char)`
   width: 1.5em;
   overflow: hidden;
 `;
+
+const LineIndentComponent: React.FC<LineIndentProps> = ({ lineIndex, indentDepth, ...rest }) => (
+  <StyledLineIndent indentDepth={indentDepth} {...rest}>
+    {[...Array(indentDepth).keys()].map((charIndex) => (
+      <StyledLineIndentPad charIndex={charIndex} key={charIndex} lineIndex={lineIndex}>
+        {' '}
+      </StyledLineIndentPad>
+    ))}
+  </StyledLineIndent>
+);
+
+export const LineIndent = React.memo(LineIndentComponent);

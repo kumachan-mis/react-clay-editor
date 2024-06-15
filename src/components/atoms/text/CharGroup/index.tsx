@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 export type CharGroupProps = {
   readonly lineIndex: number;
@@ -11,10 +12,12 @@ export const CharGroupConstants = {
   selectIdRegex: RegExp('chargroup-L(?<lineIndex>\\d+)C(?<first>\\d+)-(?<last>\\d+)'),
 };
 
-export const CharGroup: React.FC<CharGroupProps> = ({ lineIndex, firstCharIndex, lastCharIndex, ...rest }) => (
-  <StyledCharGroup {...rest} data-selectid={CharGroupConstants.selectId(lineIndex, firstCharIndex, lastCharIndex)} />
-);
-
 const StyledCharGroup = styled.span`
   display: inline-block;
 `;
+
+const CharGroupComponent: React.FC<CharGroupProps> = ({ lineIndex, firstCharIndex, lastCharIndex, ...rest }) => (
+  <StyledCharGroup {...rest} data-selectid={CharGroupConstants.selectId(lineIndex, firstCharIndex, lastCharIndex)} />
+);
+
+export const CharGroup = React.memo(CharGroupComponent);

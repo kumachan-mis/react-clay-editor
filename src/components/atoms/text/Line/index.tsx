@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 export type LineProps = {
   readonly lineIndex: number;
@@ -9,10 +10,12 @@ export const LineConstants = {
   selectIdRegex: RegExp('line-L(?<lineIndex>\\d+)'),
 };
 
-export const Line: React.FC<LineProps> = ({ lineIndex, ...rest }) => (
-  <StyledLine {...rest} data-selectid={LineConstants.selectId(lineIndex)} />
-);
-
 const StyledLine = styled.div`
   position: relative;
 `;
+
+const LineComponent: React.FC<LineProps> = ({ lineIndex, ...rest }) => (
+  <StyledLine {...rest} data-selectid={LineConstants.selectId(lineIndex)} />
+);
+
+export const Line = React.memo(LineComponent);

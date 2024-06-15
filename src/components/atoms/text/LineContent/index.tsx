@@ -1,6 +1,7 @@
 import { Char } from '../Char';
 
 import styled from '@emotion/styled';
+import React from 'react';
 
 export type LineContentProps = {
   readonly lineIndex: number;
@@ -8,7 +9,15 @@ export type LineContentProps = {
   readonly indentDepth?: number;
 } & React.PropsWithoutRef<React.ComponentProps<'div'>>;
 
-export const LineContent: React.FC<LineContentProps> = ({
+const StyledLineContent = styled.div<{
+  indentDepth: number;
+}>(
+  (props) => `
+  margin-left: ${1.5 * props.indentDepth}em;
+`
+);
+
+const LineContentComponent: React.FC<LineContentProps> = ({
   lineIndex,
   lineLength,
   indentDepth = 0,
@@ -25,10 +34,4 @@ export const LineContent: React.FC<LineContentProps> = ({
   );
 };
 
-const StyledLineContent = styled.div<{
-  indentDepth: number;
-}>(
-  (props) => `
-  margin-left: ${1.5 * props.indentDepth}em;
-`
-);
+export const LineContent = React.memo(LineContentComponent);

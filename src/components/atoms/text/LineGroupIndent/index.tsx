@@ -1,17 +1,9 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 export type LineGroupIndentProps = {
   readonly indentDepth: number;
 } & React.PropsWithoutRef<React.ComponentProps<'span'>>;
-
-export const LineGroupIndent: React.FC<LineGroupIndentProps> = ({ indentDepth, children, ...rest }) => (
-  <StyledLineGroupIndent indentDepth={indentDepth} {...rest}>
-    {[...Array(indentDepth).keys()].map((charIndex) => (
-      <StyledLineGroupIndentPad key={charIndex}> </StyledLineGroupIndentPad>
-    ))}
-    {children}
-  </StyledLineGroupIndent>
-);
 
 const StyledLineGroupIndent = styled.span<{
   indentDepth: number;
@@ -29,3 +21,14 @@ const StyledLineGroupIndentPad = styled.span`
   width: 1.5em;
   overflow: hidden;
 `;
+
+const LineGroupIndentComponent: React.FC<LineGroupIndentProps> = ({ indentDepth, children, ...rest }) => (
+  <StyledLineGroupIndent indentDepth={indentDepth} {...rest}>
+    {[...Array(indentDepth).keys()].map((charIndex) => (
+      <StyledLineGroupIndentPad key={charIndex}> </StyledLineGroupIndentPad>
+    ))}
+    {children}
+  </StyledLineGroupIndent>
+);
+
+export const LineGroupIndent = React.memo(LineGroupIndentComponent);

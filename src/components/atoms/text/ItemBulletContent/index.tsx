@@ -1,5 +1,7 @@
 import { Char } from '../Char';
 
+import React from 'react';
+
 export type ItemBulletContentProps = {
   readonly lineIndex: number;
   readonly indentDepth: number;
@@ -7,7 +9,7 @@ export type ItemBulletContentProps = {
   readonly cursorOn: boolean;
 };
 
-export const ItemBulletContent: React.FC<ItemBulletContentProps> = ({ lineIndex, indentDepth, bullet, cursorOn }) => (
+const ItemBulletContentComponent: React.FC<ItemBulletContentProps> = ({ lineIndex, indentDepth, bullet, cursorOn }) => (
   <>
     {[...Array(bullet.length - 1).keys()].map((charIndex) => (
       <Char charIndex={indentDepth + charIndex + 1} key={indentDepth + charIndex + 1} lineIndex={lineIndex}>
@@ -16,3 +18,5 @@ export const ItemBulletContent: React.FC<ItemBulletContentProps> = ({ lineIndex,
     ))}
   </>
 );
+
+export const ItemBulletContent = React.memo(ItemBulletContentComponent);
