@@ -2,7 +2,6 @@ import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { HeaderConstants } from '../../../atoms/root/Header';
 import { TextFieldConstants } from '../../../atoms/root/TextField';
 import { CharConstants } from '../../../atoms/text/Char';
-import { getCharAt } from '../../../atoms/text/Char/utils';
 import { CharGroupConstants } from '../../../atoms/text/CharGroup';
 import { LineConstants } from '../../../atoms/text/Line';
 import { LineGroupConstants } from '../../../atoms/text/LineGroup';
@@ -103,7 +102,7 @@ function cursorCoordinateLine(
   let [charIndex, minDistance] = [lines[lineIndex].length, Number.MAX_VALUE];
 
   for (let index = 0; index <= currentLine.length; index++) {
-    const charElement = getCharAt(lineIndex, index, element);
+    const charElement = lineElement.querySelector(`span[data-selectid="${CharConstants.selectId(lineIndex, index)}"]`);
     const charRect = charElement?.getBoundingClientRect();
     if (!charRect) continue;
 
