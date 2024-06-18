@@ -3,13 +3,15 @@ import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
 
+import React from 'react';
+
 export type BracketLinkProps = TextNodeComponentProps<BracketLinkNode>;
 
 export const BracketLinkConstants = {
   styleId: 'bracket-link',
 };
 
-export const BracketLink: React.FC<BracketLinkProps> = ({
+const BracketLinkComponent: React.FC<BracketLinkProps> = ({
   node,
   getEditMode,
   linkForceClickable,
@@ -52,3 +54,23 @@ export const BracketLink: React.FC<BracketLinkProps> = ({
     </EmbededLink>
   );
 };
+
+function bracketLinkNodeEquals(a: BracketLinkNode, b: BracketLinkNode): boolean {
+  return (
+    a.lineIndex === b.lineIndex &&
+    a.range[0] === b.range[0] &&
+    a.range[1] === b.range[1] &&
+    a.facingMeta === b.facingMeta &&
+    a.linkName === b.linkName &&
+    a.trailingMeta === b.trailingMeta
+  );
+}
+
+export const BracketLink = React.memo(
+  BracketLinkComponent,
+  (prev, next) =>
+    bracketLinkNodeEquals(prev.node, next.node) &&
+    prev.getEditMode === next.getEditMode &&
+    prev.linkForceClickable === next.linkForceClickable &&
+    prev.bracketLinkVisual === next.bracketLinkVisual
+);

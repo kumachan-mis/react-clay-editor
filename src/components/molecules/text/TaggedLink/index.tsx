@@ -4,13 +4,15 @@ import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
 
+import React from 'react';
+
 export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
 
 export const TaggedLinkConstants = {
   styleId: (tagName: string) => `${tagName}-tagged-link`,
 };
 
-export const TaggedLink: React.FC<TaggedLinkProps> = ({
+const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
   node,
   getEditMode,
   linkForceClickable,
@@ -65,3 +67,22 @@ export const TaggedLink: React.FC<TaggedLinkProps> = ({
     </EmbededLink>
   );
 };
+
+function taggedLinkNodeEquals(a: TaggedLinkNode, b: TaggedLinkNode): boolean {
+  return (
+    a.lineIndex === b.lineIndex &&
+    a.range[0] === b.range[0] &&
+    a.range[1] === b.range[1] &&
+    a.linkName === b.linkName &&
+    a.trailingMeta === b.trailingMeta
+  );
+}
+
+export const TaggedLink = React.memo(
+  TaggedLinkComponent,
+  (prev, next) =>
+    taggedLinkNodeEquals(prev.node, next.node) &&
+    prev.getEditMode === next.getEditMode &&
+    prev.linkForceClickable === next.linkForceClickable &&
+    prev.taggedLinkVisualMap === next.taggedLinkVisualMap
+);

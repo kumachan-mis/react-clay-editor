@@ -6,9 +6,11 @@ import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
 import { TextNodeComponentProps } from '../common/types';
 
+import React from 'react';
+
 export type BlockCodeMetaProps = TextNodeComponentProps<BlockCodeMetaNode>;
 
-export const BlockCodeMeta: React.FC<BlockCodeMetaProps> = ({ node, textVisual, codeVisual }) => {
+const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, textVisual, codeVisual }) => {
   const { lineIndex, indentDepth, codeMeta } = node;
   const lineLength = indentDepth + codeMeta.length;
   const lineProps = textVisual?.lineProps?.(lineIndex);
@@ -29,3 +31,15 @@ export const BlockCodeMeta: React.FC<BlockCodeMetaProps> = ({ node, textVisual, 
     </Line>
   );
 };
+
+function blockCodeMetaNodeEquals(a: BlockCodeMetaNode, b: BlockCodeMetaNode): boolean {
+  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.codeMeta === b.codeMeta;
+}
+
+export const BlockCodeMeta = React.memo(
+  BlockCodeMetaComponent,
+  (prev, next) =>
+    blockCodeMetaNodeEquals(prev.node, next.node) &&
+    prev.textVisual === next.textVisual &&
+    prev.codeVisual === next.codeVisual
+);

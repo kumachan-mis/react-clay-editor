@@ -2,13 +2,15 @@ import { NormalNode } from '../../../../parser/normal/types';
 import { Char } from '../../../atoms/text/Char';
 import { TextNodeComponentProps } from '../common/types';
 
+import React from 'react';
+
 export type NormalProps = TextNodeComponentProps<NormalNode>;
 
 export const NormalConstants = {
   styleId: 'normal',
 };
 
-export const Normal: React.FC<NormalProps> = ({ node }) => {
+const NormalComponent: React.FC<NormalProps> = ({ node }) => {
   const { lineIndex, text } = node;
   const [first] = node.range;
 
@@ -22,3 +24,9 @@ export const Normal: React.FC<NormalProps> = ({ node }) => {
     </span>
   );
 };
+
+function normalNodeEquals(a: NormalNode, b: NormalNode): boolean {
+  return a.lineIndex === b.lineIndex && a.range[0] === b.range[0] && a.range[1] === b.range[1] && a.text === b.text;
+}
+
+export const Normal = React.memo(NormalComponent, (prev, next) => normalNodeEquals(prev.node, next.node));

@@ -6,9 +6,11 @@ import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
 import { TextNodeComponentProps } from '../common/types';
 
+import React from 'react';
+
 export type BlockFormulaMetaProps = TextNodeComponentProps<BlockFormulaMetaNode>;
 
-export const BlockFormulaMeta: React.FC<BlockFormulaMetaProps> = ({ node, textVisual, formulaVisual }) => {
+const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, textVisual, formulaVisual }) => {
   const { formulaMeta, lineIndex, indentDepth } = node;
   const lineLength = indentDepth + formulaMeta.length;
   const lineProps = textVisual?.lineProps?.(lineIndex);
@@ -29,3 +31,15 @@ export const BlockFormulaMeta: React.FC<BlockFormulaMetaProps> = ({ node, textVi
     </Line>
   );
 };
+
+function blockFormulaMetaNodeEquals(a: BlockFormulaMetaNode, b: BlockFormulaMetaNode): boolean {
+  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.formulaMeta === b.formulaMeta;
+}
+
+export const BlockFormulaMeta = React.memo(
+  BlockFormulaMetaComponent,
+  (prev, next) =>
+    blockFormulaMetaNodeEquals(prev.node, next.node) &&
+    prev.textVisual === next.textVisual &&
+    prev.formulaVisual === next.formulaVisual
+);

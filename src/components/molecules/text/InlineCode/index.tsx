@@ -3,13 +3,15 @@ import { Char } from '../../../atoms/text/Char';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { TextNodeComponentProps } from '../common/types';
 
+import React from 'react';
+
 export type InlineCodeProps = TextNodeComponentProps<InlineCodeNode>;
 
 export const InlineCodeConstants = {
   styleId: 'inline-code',
 };
 
-export const InlineCode: React.FC<InlineCodeProps> = ({ node, getEditMode, codeVisual }) => {
+const InlineCodeComponent: React.FC<InlineCodeProps> = ({ node, getEditMode, codeVisual }) => {
   const { lineIndex, facingMeta, code, trailingMeta } = node;
   const [first, last] = node.range;
   const editMode = getEditMode(node);
@@ -43,3 +45,22 @@ export const InlineCode: React.FC<InlineCodeProps> = ({ node, getEditMode, codeV
     </Monospace>
   );
 };
+
+function inlineCodeNodeEquals(a: InlineCodeNode, b: InlineCodeNode): boolean {
+  return (
+    a.lineIndex === b.lineIndex &&
+    a.range[0] === b.range[0] &&
+    a.range[1] === b.range[1] &&
+    a.facingMeta === b.facingMeta &&
+    a.code === b.code &&
+    a.trailingMeta === b.trailingMeta
+  );
+}
+
+export const InlineCode = React.memo(
+  InlineCodeComponent,
+  (prev, next) =>
+    inlineCodeNodeEquals(prev.node, next.node) &&
+    prev.getEditMode === next.getEditMode &&
+    prev.codeVisual === next.codeVisual
+);

@@ -2,7 +2,6 @@ import { TextNode } from '../../../../parser';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/hooks';
-import { selectionToRange } from '../../selection/Selection/utils';
 
 import React from 'react';
 
@@ -16,8 +15,10 @@ export function useTextNodeComponent(
   cursorSelection?: CursorSelection
 ): UseTextNodeComponent {
   const getEditMode = React.useCallback(
-    (node: TextNode) => cursorOnTextNode(node, cursorCoordinate) || selectionOnTextNode(node, cursorSelection),
-    [cursorCoordinate, cursorSelection]
+    (node: TextNode) =>
+      cursorOnTextNode(node, cursorCoordinate?.lineIndex) ||
+      selectionOnTextNode(node, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex),
+    [cursorCoordinate?.lineIndex, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex]
   );
 
   const linkForceClickable = useEmbededLinkForceClickable();
@@ -25,22 +26,27 @@ export function useTextNodeComponent(
   return { getEditMode, linkForceClickable };
 }
 
-function cursorOnTextNode(node: TextNode, cursorCoordinate?: CursorCoordinate): boolean {
-  if (!cursorCoordinate) return false;
+function cursorOnTextNode(node: TextNode, cursorCoordinateLineIndex?: number): boolean {
+  if (cursorCoordinateLineIndex === undefined) return false;
   if (node.type === 'blockCode' || node.type === 'blockFormula') {
     const [first, last] = node.range;
-    return first <= cursorCoordinate.lineIndex && cursorCoordinate.lineIndex <= last;
+    return first <= cursorCoordinateLineIndex && cursorCoordinateLineIndex <= last;
   }
-  return cursorCoordinate.lineIndex === node.lineIndex;
+  return cursorCoordinateLineIndex === node.lineIndex;
 }
 
-function selectionOnTextNode(node: TextNode, cursorSelection?: CursorSelection): boolean {
-  if (!cursorSelection) return false;
-  const { start, end } = selectionToRange(cursorSelection);
+function selectionOnTextNode(
+  node: TextNode,
+  cursorSelectionFixedLineIndex?: number,
+  cursorSelectionFreeLineIndex?: number
+): boolean {
+  if (cursorSelectionFixedLineIndex === undefined || cursorSelectionFreeLineIndex === undefined) return false;
+  const startLineIndex = Math.min(cursorSelectionFixedLineIndex, cursorSelectionFreeLineIndex);
+  const endLineIndex = Math.max(cursorSelectionFixedLineIndex, cursorSelectionFreeLineIndex);
 
   if (node.type === 'blockCode' || node.type === 'blockFormula') {
     const [first, last] = node.range;
-    return start.lineIndex <= last && first <= end.lineIndex;
+    return startLineIndex <= last && first <= endLineIndex;
   }
-  return start.lineIndex <= node.lineIndex && node.lineIndex <= end.lineIndex;
+  return startLineIndex <= node.lineIndex && node.lineIndex <= endLineIndex;
 }

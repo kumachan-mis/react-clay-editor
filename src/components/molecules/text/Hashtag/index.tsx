@@ -4,13 +4,15 @@ import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
 import { TextNodeComponentProps } from '../common/types';
 
+import React from 'react';
+
 export type HashtagProps = TextNodeComponentProps<HashtagNode>;
 
 export const HashtagConstants = {
   styleId: 'hashtag',
 };
 
-export const Hashtag: React.FC<HashtagProps> = ({ node, getEditMode, linkForceClickable, hashtagVisual }) => {
+const HashtagComponent: React.FC<HashtagProps> = ({ node, getEditMode, linkForceClickable, hashtagVisual }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
   const editMode = getEditMode(node);
@@ -30,3 +32,23 @@ export const Hashtag: React.FC<HashtagProps> = ({ node, getEditMode, linkForceCl
     </EmbededLink>
   );
 };
+
+function hashtagNodeEquals(a: HashtagNode, b: HashtagNode): boolean {
+  return (
+    a.lineIndex === b.lineIndex &&
+    a.range[0] === b.range[0] &&
+    a.range[1] === b.range[1] &&
+    a.facingMeta === b.facingMeta &&
+    a.linkName === b.linkName &&
+    a.trailingMeta === b.trailingMeta
+  );
+}
+
+export const Hashtag = React.memo(
+  HashtagComponent,
+  (prev, next) =>
+    hashtagNodeEquals(prev.node, next.node) &&
+    prev.getEditMode === next.getEditMode &&
+    prev.linkForceClickable === next.linkForceClickable &&
+    prev.hashtagVisual === next.hashtagVisual
+);
