@@ -13,11 +13,10 @@ export const ContentFormulaConstants = {
   styleId: (displayMode: boolean) => (displayMode ? 'display-formula' : 'inline-formula'),
 };
 
-const ContentFormulaComponent: React.FC<ContentFormulaProps> = ({ node, getEditMode, formulaVisual }) => {
+const ContentFormulaComponent: React.FC<ContentFormulaProps> = ({ node, editMode, formulaVisual }) => {
   const { lineIndex, facingMeta, formula, trailingMeta } = node;
   const displayMode = node.type === 'displayFormula';
   const [first, last] = node.range;
-  const editMode = getEditMode(node);
   const codeElementProps = formulaVisual?.codeProps?.(formula);
 
   return (
@@ -57,6 +56,6 @@ export const ContentFormula = React.memo(
   ContentFormulaComponent,
   (prev, next) =>
     contentFormulaNodeEquals(prev.node, next.node) &&
-    prev.getEditMode === next.getEditMode &&
+    prev.editMode === next.editMode &&
     prev.formulaVisual === next.formulaVisual
 );

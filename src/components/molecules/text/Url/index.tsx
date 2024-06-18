@@ -11,10 +11,9 @@ export const UrlConstants = {
   styleId: 'url',
 };
 
-const UrlComponent: React.FC<UrlProps> = ({ node, getEditMode, linkForceClickable }) => {
+const UrlComponent: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }) => {
   const { lineIndex, url } = node;
   const [first] = node.range;
-  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
@@ -40,6 +39,6 @@ export const Url = React.memo(
   UrlComponent,
   (prev, next) =>
     urlNodeEquals(prev.node, next.node) &&
-    prev.getEditMode === next.getEditMode &&
+    prev.editMode === next.editMode &&
     prev.linkForceClickable === next.linkForceClickable
 );

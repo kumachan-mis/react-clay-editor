@@ -17,10 +17,9 @@ export const DecorationConstants = {
   },
 };
 
-export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, ChildComponent, ...rest }) => {
+export const Decoration: React.FC<DecorationProps> = ({ node, editMode, ChildComponent, ...rest }) => {
   const { lineIndex, facingMeta, config, trailingMeta, children } = node;
   const [first, last] = node.range;
-  const editMode = getEditMode(node);
 
   return (
     <DecorationContent {...config} data-styleid={DecorationConstants.styleId(config)}>
@@ -30,7 +29,7 @@ export const Decoration: React.FC<DecorationProps> = ({ node, getEditMode, Child
         </Char>
       ))}
       {children.map((child, index) => (
-        <ChildComponent getEditMode={getEditMode} key={index} node={child} {...rest} />
+        <ChildComponent editMode={editMode} key={index} node={child} {...rest} />
       ))}
       {[...trailingMeta].map((char, index) => (
         <Char

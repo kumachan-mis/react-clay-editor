@@ -13,13 +13,12 @@ export const BracketLinkConstants = {
 
 const BracketLinkComponent: React.FC<BracketLinkProps> = ({
   node,
-  getEditMode,
+  editMode,
   linkForceClickable,
   bracketLinkVisual,
 }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
-  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
@@ -70,7 +69,7 @@ export const BracketLink = React.memo(
   BracketLinkComponent,
   (prev, next) =>
     bracketLinkNodeEquals(prev.node, next.node) &&
-    prev.getEditMode === next.getEditMode &&
+    prev.editMode === next.editMode &&
     prev.linkForceClickable === next.linkForceClickable &&
     prev.bracketLinkVisual === next.bracketLinkVisual
 );

@@ -12,10 +12,9 @@ export const HashtagConstants = {
   styleId: 'hashtag',
 };
 
-const HashtagComponent: React.FC<HashtagProps> = ({ node, getEditMode, linkForceClickable, hashtagVisual }) => {
+const HashtagComponent: React.FC<HashtagProps> = ({ node, editMode, linkForceClickable, hashtagVisual }) => {
   const { lineIndex, facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
-  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
@@ -48,7 +47,7 @@ export const Hashtag = React.memo(
   HashtagComponent,
   (prev, next) =>
     hashtagNodeEquals(prev.node, next.node) &&
-    prev.getEditMode === next.getEditMode &&
+    prev.editMode === next.editMode &&
     prev.linkForceClickable === next.linkForceClickable &&
     prev.hashtagVisual === next.hashtagVisual
 );

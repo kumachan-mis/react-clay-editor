@@ -11,10 +11,9 @@ export const InlineCodeConstants = {
   styleId: 'inline-code',
 };
 
-const InlineCodeComponent: React.FC<InlineCodeProps> = ({ node, getEditMode, codeVisual }) => {
+const InlineCodeComponent: React.FC<InlineCodeProps> = ({ node, editMode, codeVisual }) => {
   const { lineIndex, facingMeta, code, trailingMeta } = node;
   const [first, last] = node.range;
-  const editMode = getEditMode(node);
   const codeElementProps = codeVisual?.codeProps?.(code);
 
   return (
@@ -60,7 +59,5 @@ function inlineCodeNodeEquals(a: InlineCodeNode, b: InlineCodeNode): boolean {
 export const InlineCode = React.memo(
   InlineCodeComponent,
   (prev, next) =>
-    inlineCodeNodeEquals(prev.node, next.node) &&
-    prev.getEditMode === next.getEditMode &&
-    prev.codeVisual === next.codeVisual
+    inlineCodeNodeEquals(prev.node, next.node) && prev.editMode === next.editMode && prev.codeVisual === next.codeVisual
 );

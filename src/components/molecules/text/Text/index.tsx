@@ -9,7 +9,7 @@ export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, cursorSelec
     <>
       {nodes.map((node, index) => (
         <TextNodeComponent
-          getEditMode={getEditMode}
+          editMode={getEditMode(node)}
           key={index}
           linkForceClickable={linkForceClickable}
           node={node}

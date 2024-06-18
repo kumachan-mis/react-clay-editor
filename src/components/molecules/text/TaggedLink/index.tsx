@@ -14,7 +14,7 @@ export const TaggedLinkConstants = {
 
 const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
   node,
-  getEditMode,
+  editMode,
   linkForceClickable,
   taggedLinkVisualMap,
 }) => {
@@ -22,7 +22,6 @@ const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
   const [facingMeta, tag] = splitTag(node);
   const tagName = getTagName(node);
   const [first, last] = node.range;
-  const editMode = getEditMode(node);
   const taggedLinkVisual = taggedLinkVisualMap?.[tagName];
 
   return (
@@ -82,7 +81,7 @@ export const TaggedLink = React.memo(
   TaggedLinkComponent,
   (prev, next) =>
     taggedLinkNodeEquals(prev.node, next.node) &&
-    prev.getEditMode === next.getEditMode &&
+    prev.editMode === next.editMode &&
     prev.linkForceClickable === next.linkForceClickable &&
     prev.taggedLinkVisualMap === next.taggedLinkVisualMap
 );
