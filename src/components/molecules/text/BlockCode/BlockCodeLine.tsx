@@ -10,7 +10,7 @@ import React from 'react';
 
 export type BlockCodeLineProps = TextNodeComponentProps<BlockCodeLineNode>;
 
-export const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, textVisual, codeVisual }) => {
+const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, textVisual, codeVisual }) => {
   const { codeLine, lineIndex, indentDepth } = node;
 
   const lineLength = indentDepth + codeLine.length;
