@@ -1,6 +1,6 @@
-import { ContentNode } from '../../../../parser/content/types';
-import { LineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
+import { ContentNode } from '../../../../parser/content/contentNode';
+import { LineNode } from '../../../../parser/line/lineNode';
+import { isPureLineNode } from '../../../../parser/line/pureLineNode';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 

@@ -1,8 +1,8 @@
-import { ParsingContext } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
 
+import { BlockFormulaNode } from './blockFormulaNode';
 import { createBlockFormulaLineRegex, parseBlockFormulaLine } from './parseBlockFormulaLine';
 import { blockFormulaMetaRegex, parseBlockFormulaMeta } from './parseBlockFormulaMeta';
-import { BlockFormulaNode } from './types';
 
 export function parseBlockFormula(lines: string[], context: ParsingContext): BlockFormulaNode {
   const originalLineIndex = context.lineIndex;

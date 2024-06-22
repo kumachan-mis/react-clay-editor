@@ -1,12 +1,11 @@
-import { HashtagNode } from '../../../../parser/hashtag/types';
-import { getHashtagName } from '../../../../parser/hashtag/utils';
+import { HashtagNode, getHashtagName, hashtagNodeEquals } from '../../../../parser/hashtag/hashtagNode';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type HashtagProps = TextNodeComponentProps<HashtagNode>;
+export type HashtagProps = TextNodeProps<HashtagNode>;
 
 export const HashtagConstants = {
   styleId: 'hashtag',
@@ -31,17 +30,6 @@ const HashtagComponent: React.FC<HashtagProps> = ({ node, editMode, linkForceCli
     </EmbededLink>
   );
 };
-
-function hashtagNodeEquals(a: HashtagNode, b: HashtagNode): boolean {
-  return (
-    a.lineIndex === b.lineIndex &&
-    a.range[0] === b.range[0] &&
-    a.range[1] === b.range[1] &&
-    a.facingMeta === b.facingMeta &&
-    a.linkName === b.linkName &&
-    a.trailingMeta === b.trailingMeta
-  );
-}
 
 export const Hashtag = React.memo(
   HashtagComponent,

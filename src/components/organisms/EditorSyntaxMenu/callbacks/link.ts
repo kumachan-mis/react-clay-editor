@@ -1,8 +1,7 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode, PureLineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
-import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
-import { getTagName } from '../../../../parser/taggedLink/utils';
+import { LineNode } from '../../../../parser/line/lineNode';
+import { PureLineNode, isPureLineNode } from '../../../../parser/line/pureLineNode';
+import { TaggedLinkNode, getTagName } from '../../../../parser/taggedLink/taggedLinkNode';
 import { BracketLinkLabels } from '../../../../types/label/bracketLink';
 import { HashtagLabels } from '../../../../types/label/hashtag';
 import { TaggedLinkLabels } from '../../../../types/label/taggedLink';

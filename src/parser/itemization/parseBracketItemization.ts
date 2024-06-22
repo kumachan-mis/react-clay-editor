@@ -1,7 +1,8 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
 import { parseContent } from '../content/parseContent';
 
-import { ItemizationNode } from './types';
+import { ItemizationNode } from './itemizationNode';
 
 export const bracketItemizationRegex = /^(?<indent>\s*)(?<bullet>\s)(?<content>(\S.*)?)$/;
 

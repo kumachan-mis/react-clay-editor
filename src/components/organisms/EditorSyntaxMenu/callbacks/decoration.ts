@@ -1,6 +1,6 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode, PureLineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
+import { LineNode } from '../../../../parser/line/lineNode';
+import { PureLineNode, isPureLineNode } from '../../../../parser/line/pureLineNode';
 import { isEndPoint } from '../common/utils';
 import { ContentPosition, ContentPositionEmpty } from '../hooks/contentPosition';
 import { DecorationMenuItemType, DecorationMenuSwitch, DecorationMenuSwitchItem } from '../switches/decoration';

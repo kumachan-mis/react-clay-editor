@@ -1,11 +1,14 @@
-import { DecorationNode, DecorationConfig } from '../../../../parser/decoration/types';
+import { DecorationConfig } from '../../../../parser/decoration/decorationConfig';
+import { DecorationNode, decorationNodeEquals } from '../../../../parser/decoration/decorationNode';
 import { Char } from '../../../atoms/text/Char';
 import { DecorationContent } from '../../../atoms/text/DecorationContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
+
+import React from 'react';
 
 export type DecorationProps = {
-  readonly ChildComponent: React.FC<TextNodeComponentProps>;
-} & TextNodeComponentProps<DecorationNode>;
+  readonly ChildComponent: React.FC<TextNodeProps>;
+} & TextNodeProps<DecorationNode>;
 
 export const DecorationConstants = {
   styleId: (config: DecorationConfig) => {
@@ -17,7 +20,7 @@ export const DecorationConstants = {
   },
 };
 
-export const Decoration: React.FC<DecorationProps> = ({ node, editMode, ChildComponent, ...rest }) => {
+const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ChildComponent, ...rest }) => {
   const { lineIndex, facingMeta, config, trailingMeta, children } = node;
   const [first, last] = node.range;
 
@@ -43,3 +46,8 @@ export const Decoration: React.FC<DecorationProps> = ({ node, editMode, ChildCom
     </DecorationContent>
   );
 };
+
+export const Decoration: React.FC<DecorationProps> = React.memo(
+  DecorationComponent,
+  createTextNodePropsEquals(decorationNodeEquals)
+);

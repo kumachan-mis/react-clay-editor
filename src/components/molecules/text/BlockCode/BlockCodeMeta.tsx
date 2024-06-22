@@ -1,14 +1,14 @@
-import { BlockCodeMetaNode } from '../../../../parser/blockCode/types';
+import { BlockCodeMetaNode, blockCodeMetaNodeEquals } from '../../../../parser/blockCode/blockCodeMetaNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type BlockCodeMetaProps = TextNodeComponentProps<BlockCodeMetaNode>;
+export type BlockCodeMetaProps = TextNodeProps<BlockCodeMetaNode>;
 
 const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, textVisual, codeVisual }) => {
   const { lineIndex, indentDepth, codeMeta } = node;
@@ -31,10 +31,6 @@ const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, textVisual
     </Line>
   );
 };
-
-function blockCodeMetaNodeEquals(a: BlockCodeMetaNode, b: BlockCodeMetaNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.codeMeta === b.codeMeta;
-}
 
 export const BlockCodeMeta = React.memo(
   BlockCodeMetaComponent,

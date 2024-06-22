@@ -1,14 +1,14 @@
-import { BlockFormulaMetaNode } from '../../../../parser/blockFormula/types';
+import { BlockFormulaMetaNode, blockFormulaMetaNodeEquals } from '../../../../parser/blockFormula/blockFormulaMetaNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type BlockFormulaMetaProps = TextNodeComponentProps<BlockFormulaMetaNode>;
+export type BlockFormulaMetaProps = TextNodeProps<BlockFormulaMetaNode>;
 
 const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, textVisual, formulaVisual }) => {
   const { formulaMeta, lineIndex, indentDepth } = node;
@@ -31,10 +31,6 @@ const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, text
     </Line>
   );
 };
-
-function blockFormulaMetaNodeEquals(a: BlockFormulaMetaNode, b: BlockFormulaMetaNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.formulaMeta === b.formulaMeta;
-}
 
 export const BlockFormulaMeta = React.memo(
   BlockFormulaMetaComponent,

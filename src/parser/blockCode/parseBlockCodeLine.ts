@@ -1,6 +1,6 @@
-import { ParsingContext } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
 
-import { BlockCodeLineNode } from './types';
+import { BlockCodeLineNode } from './blockCodeLineNode';
 
 export function createBlockCodeLineRegex(indentDepth: number): RegExp {
   return RegExp(`^(?<indent>\\s{${indentDepth}})(?<codeLine>.*)$`);

@@ -1,14 +1,14 @@
-import { BlockFormulaLineNode } from '../../../../parser/blockFormula/types';
+import { BlockFormulaLineNode, blockFormulaLineNodeEquals } from '../../../../parser/blockFormula/blockFormulaLineNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type BlockFormulaLineProps = TextNodeComponentProps<BlockFormulaLineNode>;
+export type BlockFormulaLineProps = TextNodeProps<BlockFormulaLineNode>;
 
 const BlockFormulaLineComponent: React.FC<BlockFormulaLineProps> = ({ node, textVisual, formulaVisual }) => {
   const { formulaLine, lineIndex, indentDepth } = node;
@@ -31,10 +31,6 @@ const BlockFormulaLineComponent: React.FC<BlockFormulaLineProps> = ({ node, text
     </Line>
   );
 };
-
-function blockFormulaLineNodeEquals(a: BlockFormulaLineNode, b: BlockFormulaLineNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.formulaLine === b.formulaLine;
-}
 
 export const BlockFormulaLine = React.memo(
   BlockFormulaLineComponent,

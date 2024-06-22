@@ -1,5 +1,5 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { TextLabels } from '../../../../types/label/text';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { copySelection, undefinedIfZeroSelection } from '../../../molecules/selection/Selection/utils';

@@ -1,7 +1,7 @@
-import { ParsingContext } from '../common/types';
-import { ContentNode } from '../content/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ContentNode } from '../content/contentNode';
 
-import { NormalNode } from './types';
+import { NormalNode } from './normalNode';
 
 export const normalRegex = /^(?<text>.+)$/;
 

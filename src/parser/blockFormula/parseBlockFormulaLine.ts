@@ -1,6 +1,6 @@
-import { ParsingContext } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
 
-import { BlockFormulaLineNode } from './types';
+import { BlockFormulaLineNode } from './blockFormulaLineNode';
 
 export function createBlockFormulaLineRegex(indentDepth: number): RegExp {
   return RegExp(`^(?<indent>\\s{${indentDepth}})(?<formulaLine>.*)$`);

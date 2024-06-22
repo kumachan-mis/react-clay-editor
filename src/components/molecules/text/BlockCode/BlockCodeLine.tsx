@@ -1,14 +1,14 @@
-import { BlockCodeLineNode } from '../../../../parser/blockCode/types';
+import { BlockCodeLineNode, blockCodeLineNodeEquals } from '../../../../parser/blockCode/blockCodeLineNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type BlockCodeLineProps = TextNodeComponentProps<BlockCodeLineNode>;
+export type BlockCodeLineProps = TextNodeProps<BlockCodeLineNode>;
 
 const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, textVisual, codeVisual }) => {
   const { codeLine, lineIndex, indentDepth } = node;
@@ -32,10 +32,6 @@ const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, textVisual
     </Line>
   );
 };
-
-function blockCodeLineNodeEquals(a: BlockCodeLineNode, b: BlockCodeLineNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.codeLine === b.codeLine;
-}
 
 export const BlockCodeLine = React.memo(
   BlockCodeLineComponent,

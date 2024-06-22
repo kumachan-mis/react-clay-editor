@@ -1,13 +1,13 @@
-import { ContentFormulaNode } from '../../../../parser/content/types';
+import { ContentFormulaNode, contentFormulaNodeEquals } from '../../../../parser/content/contentFormulaNode';
 import { Char } from '../../../atoms/text/Char';
 import { CharGroup } from '../../../atoms/text/CharGroup';
 import { KaTeX } from '../../../atoms/text/KaTeX';
 import { Monospace } from '../../../atoms/text/Monospace';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type ContentFormulaProps = TextNodeComponentProps<ContentFormulaNode>;
+export type ContentFormulaProps = TextNodeProps<ContentFormulaNode>;
 
 export const ContentFormulaConstants = {
   styleId: (displayMode: boolean) => (displayMode ? 'display-formula' : 'inline-formula'),
@@ -40,17 +40,6 @@ const ContentFormulaComponent: React.FC<ContentFormulaProps> = ({ node, editMode
     </CharGroup>
   );
 };
-
-function contentFormulaNodeEquals(a: ContentFormulaNode, b: ContentFormulaNode): boolean {
-  return (
-    a.lineIndex === b.lineIndex &&
-    a.range[0] === b.range[0] &&
-    a.range[1] === b.range[1] &&
-    a.facingMeta === b.facingMeta &&
-    a.formula === b.formula &&
-    a.trailingMeta === b.trailingMeta
-  );
-}
 
 export const ContentFormula = React.memo(
   ContentFormulaComponent,

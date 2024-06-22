@@ -1,5 +1,5 @@
 import { EditorHashtagProps } from '../../../../contexts/EditorPropsContext';
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { HashtagMenuConstants, HashtagMenuProps } from '../../../molecules/menu/HashtagMenu';
 import { handleOnLinkItemClick, LinkMenuHandlerProps } from '../callbacks/link';
 import { LinkMenuItem, linkMenuSwitch } from '../switches/link';

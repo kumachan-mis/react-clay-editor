@@ -1,8 +1,8 @@
-import { ParsingContext } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
 
+import { BlockCodeNode } from './blockCodeNode';
 import { createBlockCodeLineRegex, parseBlockCodeLine } from './parseBlockCodeLine';
 import { blockCodeMetaRegex, parseBlockCodeMeta } from './parseBlockCodeMeta';
-import { BlockCodeNode } from './types';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
   const originalLineIndex = context.lineIndex;

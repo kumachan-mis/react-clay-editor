@@ -1,6 +1,5 @@
-import { BlockNode } from '../../../../parser/block/types';
-import { isBlockNode } from '../../../../parser/block/utils';
-import { LineNode } from '../../../../parser/line/types';
+import { TopLevelNode } from '../../../../parser';
+import { isBlockNode } from '../../../../parser/block/blockNode';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { getLineRange } from '../common/utils';
@@ -12,7 +11,7 @@ export type BlockPosition = {
 };
 
 export function useBlockPosition(
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   cursorCoordinate: CursorCoordinate | undefined,
   cursorSelection: CursorSelection | undefined
 ): BlockPosition | undefined {
@@ -28,7 +27,7 @@ export function useBlockPosition(
   return blockPosition;
 }
 
-function searchBlockPosition(lineIndex: number, nodes: (LineNode | BlockNode)[]): BlockPosition | undefined {
+function searchBlockPosition(lineIndex: number, nodes: TopLevelNode[]): BlockPosition | undefined {
   if (nodes.length === 0) return undefined;
 
   const found = (() => {

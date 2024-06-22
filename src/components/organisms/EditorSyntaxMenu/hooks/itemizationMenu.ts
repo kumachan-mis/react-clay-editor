@@ -1,5 +1,5 @@
 import { EditorItemizationProps } from '../../../../contexts/EditorPropsContext';
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { ItemizationMenuConstants, ItemizationMenuProps } from '../../../molecules/menu/ItemizationMenu';
 import {
   handleOnItemizationButtonClick,

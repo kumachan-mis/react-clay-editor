@@ -1,11 +1,11 @@
-import { UrlNode } from '../../../../parser/url/types';
+import { UrlNode, urlNodeEquals } from '../../../../parser/url/urlNode';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type UrlProps = TextNodeComponentProps<UrlNode>;
+export type UrlProps = TextNodeProps<UrlNode>;
 
 export const UrlConstants = {
   styleId: 'url',
@@ -30,10 +30,6 @@ const UrlComponent: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }
     </EmbededLink>
   );
 };
-
-function urlNodeEquals(a: UrlNode, b: UrlNode): boolean {
-  return a.lineIndex === b.lineIndex && a.range[0] === b.range[0] && a.range[1] === b.range[1] && a.url === b.url;
-}
 
 export const Url = React.memo(
   UrlComponent,

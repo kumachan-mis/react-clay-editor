@@ -1,7 +1,8 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
 import { parseContent } from '../content/parseContent';
 
-import { QuotationNode } from './types';
+import { QuotationNode } from './quotationNode';
 
 export const quotationRegex = /^(?<indent>\s*)(?<meta>> )(?<content>.*)$/;
 

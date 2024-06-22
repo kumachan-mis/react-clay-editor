@@ -1,9 +1,9 @@
-import { BlockNode } from '../../../../parser/block/types';
-import { LineNode } from '../../../../parser/line/types';
+import { TopLevelNode } from '../../../../parser';
+import { LineNode } from '../../../../parser/line/lineNode';
 
 import React from 'react';
 
-export function useLineNodes(nodes: (LineNode | BlockNode)[]): LineNode[] {
+export function useLineNodes(nodes: TopLevelNode[]): LineNode[] {
   const lineNodes = React.useMemo(() => {
     const lineNodes: LineNode[] = [];
     for (const node of nodes) {

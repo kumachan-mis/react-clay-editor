@@ -1,5 +1,5 @@
-import { LineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
+import { LineNode } from '../../../../parser/line/lineNode';
+import { isPureLineNode } from '../../../../parser/line/pureLineNode';
 import { isEndPoint } from '../common/utils';
 import { ContentPosition } from '../hooks/contentPosition';
 

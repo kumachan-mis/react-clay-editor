@@ -4,7 +4,7 @@ import { useTextContext } from '../../../contexts/TextContext';
 import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
 import { CursorProps } from '../../molecules/cursor/Cursor';
 import { SelectionProps } from '../../molecules/selection/Selection';
-import { TextProps } from '../../molecules/text/Text/types';
+import { TextProps } from '../../molecules/text/Text';
 
 import {
   handleOnKeyDown,

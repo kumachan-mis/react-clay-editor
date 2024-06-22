@@ -1,5 +1,5 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { ItemizationLabels } from '../../../../types/label/itemization';
 import { ItemizationMenuSwitch } from '../switches/itemization';
 

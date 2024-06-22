@@ -1,11 +1,12 @@
 import { parseBlock } from '../block/parseBlock';
-import { BlockNode } from '../block/types';
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
 import { parseLine } from '../line/parseLine';
-import { LineNode } from '../line/types';
 
-export function parseText(text: string, options: ParsingOptions): (BlockNode | LineNode)[] {
-  const nodes: (BlockNode | LineNode)[] = [];
+import { TopLevelNode } from './topLevelNode';
+
+export function parseText(text: string, options: ParsingOptions): TopLevelNode[] {
+  const nodes: TopLevelNode[] = [];
   const lines = text.split('\n');
   const context: ParsingContext = {
     lineIndex: 0,

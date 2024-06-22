@@ -1,6 +1,6 @@
 import { EditorCodeProps } from '../../../../contexts/EditorPropsContext';
-import { BlockNode } from '../../../../parser/block/types';
-import { LineNode } from '../../../../parser/line/types';
+import { TopLevelNode } from '../../../../parser';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { CodeMenuConstants, CodeMenuProps } from '../../../molecules/menu/CodeMenu';
 import {
   CodeMenuHandlerProps,
@@ -21,7 +21,7 @@ const defaultHandlerProps: CodeMenuHandlerProps = {
 
 export function useCodeMenu(
   lineNodes: LineNode[],
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   codeProps: EditorCodeProps | undefined,

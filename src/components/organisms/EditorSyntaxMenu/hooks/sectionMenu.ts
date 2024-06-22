@@ -1,5 +1,5 @@
 import { EditorTextProps } from '../../../../contexts/EditorPropsContext';
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { SectionMenuConstants, SectionMenuProps } from '../../../molecules/menu/SectionMenu';
 import { handleOnSectionButtonClick, handleOnSectionItemClick, SectionMenuHandlerProps } from '../callbacks/section';
 import { sectionMenuSwitch } from '../switches/section';

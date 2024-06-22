@@ -1,7 +1,6 @@
 import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../../parser/block/types';
-import { isBlockNode } from '../../../../../parser/block/utils';
-import { LineNode } from '../../../../../parser/line/types';
+import { TopLevelNode } from '../../../../../parser';
+import { BlockNode, isBlockNode } from '../../../../../parser/block/blockNode';
 import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection } from '../../../../molecules/selection/Selection/utils';
@@ -17,7 +16,7 @@ export type BlockMenuConfig = {
 
 export function handleOnBlockMenuClick(
   text: string,
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   menuSwitch: BlockMenuSwitch,

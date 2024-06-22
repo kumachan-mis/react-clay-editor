@@ -1,20 +1,22 @@
-import { ItemizationNode } from '../../../../parser/itemization/types';
+import { ItemizationNode, itemizationNodeEquals } from '../../../../parser/itemization/itemizationNode';
 import { ItemBullet } from '../../../atoms/text/ItemBullet';
 import { ItemBulletContent } from '../../../atoms/text/ItemBulletContent';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
 import { LineIndent } from '../../../atoms/text/LineIndent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
+
+import React from 'react';
 
 export type ItemizationProps = {
-  readonly ChildComponent: React.FC<TextNodeComponentProps>;
-} & TextNodeComponentProps<ItemizationNode>;
+  readonly ChildComponent: React.FC<TextNodeProps>;
+} & TextNodeProps<ItemizationNode>;
 
 export const ItemizationConstants = {
   styleId: 'itemization',
 };
 
-export const Itemization: React.FC<ItemizationProps> = ({ node, editMode, textVisual, ChildComponent, ...rest }) => {
+const ItemizationComponent: React.FC<ItemizationProps> = ({ node, editMode, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, indentDepth, bullet, contentLength, children } = node;
   const lineLength = indentDepth + bullet.length + contentLength;
   const lineProps = textVisual?.lineProps?.(lineIndex);
@@ -32,3 +34,8 @@ export const Itemization: React.FC<ItemizationProps> = ({ node, editMode, textVi
     </Line>
   );
 };
+
+export const Itemization: React.FC<ItemizationProps> = React.memo(
+  ItemizationComponent,
+  createTextNodePropsEquals(itemizationNodeEquals)
+);

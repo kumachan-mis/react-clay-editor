@@ -1,12 +1,16 @@
-import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
-import { getTagName, splitTag } from '../../../../parser/taggedLink/utils';
+import {
+  TaggedLinkNode,
+  getTagName,
+  splitTag,
+  taggedLinkNodeEquals,
+} from '../../../../parser/taggedLink/taggedLinkNode';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
+export type TaggedLinkProps = TextNodeProps<TaggedLinkNode>;
 
 export const TaggedLinkConstants = {
   styleId: (tagName: string) => `${tagName}-tagged-link`,
@@ -66,16 +70,6 @@ const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
     </EmbededLink>
   );
 };
-
-function taggedLinkNodeEquals(a: TaggedLinkNode, b: TaggedLinkNode): boolean {
-  return (
-    a.lineIndex === b.lineIndex &&
-    a.range[0] === b.range[0] &&
-    a.range[1] === b.range[1] &&
-    a.linkName === b.linkName &&
-    a.trailingMeta === b.trailingMeta
-  );
-}
 
 export const TaggedLink = React.memo(
   TaggedLinkComponent,

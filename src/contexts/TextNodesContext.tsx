@@ -1,6 +1,4 @@
-import { parseText, ParsingOptions } from '../parser';
-import { BlockNode } from '../parser/block/types';
-import { LineNode } from '../parser/line/types';
+import { parseText, ParsingOptions, TopLevelNode } from '../parser';
 import { createTaggedLinkRegex } from '../parser/taggedLink/parseTaggedLink';
 import { BracketLinkParsing } from '../types/parsing/bracketLink';
 import { CodeParsing } from '../types/parsing/code';
@@ -19,11 +17,11 @@ export type ParserProps = {
   formulaProps?: FormulaParsing;
 };
 
-export const defaultTextNodes: (LineNode | BlockNode)[] = [];
+export const defaultTextNodes: TopLevelNode[] = [];
 
 const TextNodesValueContext = React.createContext(defaultTextNodes);
 
-export function useTextNodesValueContext(): (LineNode | BlockNode)[] {
+export function useTextNodesValueContext(): TopLevelNode[] {
   return React.useContext(TextNodesValueContext);
 }
 

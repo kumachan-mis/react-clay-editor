@@ -1,6 +1,6 @@
-import { ParsingContext } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
 
-import { BlockCodeMetaNode } from './types';
+import { BlockCodeMetaNode } from './blockCodeMetaNode';
 
 export const blockCodeMetaRegex = /^(?<indent>\s*)(?<codeMeta>```)$/;
 

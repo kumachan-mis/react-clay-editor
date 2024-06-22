@@ -1,21 +1,21 @@
-import { TextNodeComponent } from './TextNodeComponent';
-import { useTextNodeComponent } from './TextNodeComponent.hooks';
-import { TextProps } from './types';
+import { TopLevelNode } from '../../../../parser';
+import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
+import { CursorSelection } from '../../../../types/selection/cursorSelection';
+import { TextNodeVisuals } from '../common/textNodeVisuals';
+
+import { TextNodeList } from './TextNodeList';
+import { useTextNodeList } from './TextNodeList.hooks';
+
+import React from 'react';
+
+export type TextProps = {
+  readonly nodes: TopLevelNode[];
+  readonly cursorCoordinate?: CursorCoordinate;
+  readonly cursorSelection?: CursorSelection;
+} & TextNodeVisuals;
 
 export const Text: React.FC<TextProps> = ({ nodes, cursorCoordinate, cursorSelection, ...visuals }) => {
-  const { getEditMode, linkForceClickable } = useTextNodeComponent(cursorCoordinate, cursorSelection);
+  const { getEditMode, linkForceClickable } = useTextNodeList(cursorCoordinate, cursorSelection);
 
-  return (
-    <>
-      {nodes.map((node, index) => (
-        <TextNodeComponent
-          editMode={getEditMode(node)}
-          key={index}
-          linkForceClickable={linkForceClickable}
-          node={node}
-          {...visuals}
-        />
-      ))}
-    </>
-  );
+  return <TextNodeList {...visuals} getEditMode={getEditMode} linkForceClickable={linkForceClickable} nodes={nodes} />;
 };

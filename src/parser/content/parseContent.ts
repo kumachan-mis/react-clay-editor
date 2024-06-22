@@ -1,5 +1,6 @@
 import { bracketLinkRegex, parseBracketLink } from '../bracketLink/parseBracketLink';
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
 import { boldRegex, parseBold } from '../decoration/parseBold';
 import { boldItalicRegex, parseBoldItalic } from '../decoration/parseBoldItalic';
 import { decorationRegex, parseDecoration } from '../decoration/parseDecoration';
@@ -13,7 +14,7 @@ import { normalRegex, parseNormal } from '../normal/parseNormal';
 import { parseTaggedLink } from '../taggedLink/parseTaggedLink';
 import { parseUrl, urlRegex } from '../url/parseUrl';
 
-import { ContentNode } from './types';
+import { ContentNode } from './contentNode';
 
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   if (!options.syntax || options.syntax === 'bracket') {

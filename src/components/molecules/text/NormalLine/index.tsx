@@ -1,17 +1,19 @@
-import { NormalLineNode } from '../../../../parser/normalLine/types';
+import { NormalLineNode, normalLineNodeEquals } from '../../../../parser/normalLine/normalLineNode';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
+
+import React from 'react';
 
 export type NormalLineProps = {
-  readonly ChildComponent: React.FC<TextNodeComponentProps>;
-} & TextNodeComponentProps<NormalLineNode>;
+  readonly ChildComponent: React.FC<TextNodeProps>;
+} & TextNodeProps<NormalLineNode>;
 
 export const NormalLineConstants = {
   styleId: 'normal-line',
 };
 
-export const NormalLine: React.FC<NormalLineProps> = ({ node, textVisual, ChildComponent, ...rest }) => {
+const NormalLineComponent: React.FC<NormalLineProps> = ({ node, textVisual, ChildComponent, ...rest }) => {
   const { lineIndex, contentLength, children } = node;
   const lineProps = textVisual?.lineProps?.(lineIndex);
 
@@ -25,3 +27,8 @@ export const NormalLine: React.FC<NormalLineProps> = ({ node, textVisual, ChildC
     </Line>
   );
 };
+
+export const NormalLine: React.FC<NormalLineProps> = React.memo(
+  NormalLineComponent,
+  createTextNodePropsEquals(normalLineNodeEquals)
+);

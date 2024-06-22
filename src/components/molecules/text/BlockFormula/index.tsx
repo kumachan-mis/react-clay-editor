@@ -1,20 +1,22 @@
-import { BlockFormulaNode } from '../../../../parser/blockFormula/types';
+import { BlockFormulaNode, blockFormulaNodeEquals } from '../../../../parser/blockFormula/blockFormulaNode';
 import { KaTeX } from '../../../atoms/text/KaTeX';
 import { LineGroup } from '../../../atoms/text/LineGroup';
 import { LineGroupContent } from '../../../atoms/text/LineGroupContent';
 import { LineGroupIndent } from '../../../atoms/text/LineGroupIndent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
 
 import { BlockFormulaLine } from './BlockFormulaLine';
 import { BlockFormulaMeta } from './BlockFormulaMeta';
 
-export type BlockFormulaProps = TextNodeComponentProps<BlockFormulaNode>;
+import React from 'react';
+
+export type BlockFormulaProps = TextNodeProps<BlockFormulaNode>;
 
 export const BlockFormulaConstants = {
   styleId: 'block-formula',
 };
 
-export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, editMode, formulaVisual, ...rest }) => {
+const BlockFormulaComponent: React.FC<BlockFormulaProps> = ({ node, editMode, formulaVisual, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
   const [first, last] = node.range;
   const formula = children.map((child) => child.formulaLine).join('\n');
@@ -46,3 +48,5 @@ export const BlockFormula: React.FC<BlockFormulaProps> = ({ node, editMode, form
     </LineGroup>
   );
 };
+
+export const BlockFormula = React.memo(BlockFormulaComponent, createTextNodePropsEquals(blockFormulaNodeEquals));

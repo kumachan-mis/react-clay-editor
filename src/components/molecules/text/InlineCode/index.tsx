@@ -1,11 +1,11 @@
-import { InlineCodeNode } from '../../../../parser/inlineCode/types';
+import { InlineCodeNode, inlineCodeNodeEquals } from '../../../../parser/inlineCode/inlineCodeNode';
 import { Char } from '../../../atoms/text/Char';
 import { Monospace } from '../../../atoms/text/Monospace';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type InlineCodeProps = TextNodeComponentProps<InlineCodeNode>;
+export type InlineCodeProps = TextNodeProps<InlineCodeNode>;
 
 export const InlineCodeConstants = {
   styleId: 'inline-code',
@@ -44,17 +44,6 @@ const InlineCodeComponent: React.FC<InlineCodeProps> = ({ node, editMode, codeVi
     </Monospace>
   );
 };
-
-function inlineCodeNodeEquals(a: InlineCodeNode, b: InlineCodeNode): boolean {
-  return (
-    a.lineIndex === b.lineIndex &&
-    a.range[0] === b.range[0] &&
-    a.range[1] === b.range[1] &&
-    a.facingMeta === b.facingMeta &&
-    a.code === b.code &&
-    a.trailingMeta === b.trailingMeta
-  );
-}
 
 export const InlineCode = React.memo(
   InlineCodeComponent,

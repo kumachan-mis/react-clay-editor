@@ -1,17 +1,19 @@
-import { BlockCodeNode } from '../../../../parser/blockCode/types';
+import { BlockCodeNode, blockCodeNodeEquals } from '../../../../parser/blockCode/blockCodeNode';
 import { LineGroup } from '../../../atoms/text/LineGroup';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
 
 import { BlockCodeLine } from './BlockCodeLine';
 import { BlockCodeMeta } from './BlockCodeMeta';
 
-export type BlockCodeProps = TextNodeComponentProps<BlockCodeNode>;
+import React from 'react';
+
+export type BlockCodeProps = TextNodeProps<BlockCodeNode>;
 
 export const BlockCodeConstants = {
   styleId: 'block-code',
 };
 
-export const BlockCode: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
+const BlockCodeComponent: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
   const [first, last] = node.range;
 
@@ -29,3 +31,5 @@ export const BlockCode: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
     </LineGroup>
   );
 };
+
+export const BlockCode = React.memo(BlockCodeComponent, createTextNodePropsEquals(blockCodeNodeEquals));

@@ -1,8 +1,8 @@
 import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { ContentNode, TextLikeNode } from '../../../../../parser/content/types';
-import { isTextLikeNode } from '../../../../../parser/content/utils';
-import { LineNode, PureLineNode } from '../../../../../parser/line/types';
-import { isPureLineNode } from '../../../../../parser/line/utils';
+import { ContentNode } from '../../../../../parser/content/contentNode';
+import { TextLikeNode, isTextLikeNode } from '../../../../../parser/content/textLikeNode';
+import { LineNode } from '../../../../../parser/line/lineNode';
+import { PureLineNode, isPureLineNode } from '../../../../../parser/line/pureLineNode';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copyCoordinate } from '../../../../molecules/cursor/Cursor/utils';
 import {

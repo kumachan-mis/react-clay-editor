@@ -1,6 +1,6 @@
-import { ParsingContext } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
 
-import { BlockFormulaMetaNode } from './types';
+import { BlockFormulaMetaNode } from './blockFormulaMetaNode';
 
 export const blockFormulaMetaRegex = /^(?<indent>\s*)(?<formulaMeta>\$\$)$/;
 
