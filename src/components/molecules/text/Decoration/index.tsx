@@ -2,13 +2,12 @@ import { DecorationConfig } from '../../../../parser/decoration/decorationConfig
 import { DecorationNode, decorationNodeEquals } from '../../../../parser/decoration/decorationNode';
 import { Char } from '../../../atoms/text/Char';
 import { DecorationContent } from '../../../atoms/text/DecorationContent';
+import { TextNode } from '../Text/TextNode';
 import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type DecorationProps = {
-  readonly ChildComponent: React.FC<TextNodeProps>;
-} & TextNodeProps<DecorationNode>;
+export type DecorationProps = TextNodeProps<DecorationNode>;
 
 export const DecorationConstants = {
   styleId: (config: DecorationConfig) => {
@@ -20,7 +19,7 @@ export const DecorationConstants = {
   },
 };
 
-const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ChildComponent, ...rest }) => {
+const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ...rest }) => {
   const { facingMeta, config, trailingMeta, children } = node;
   const [first, last] = node.range;
 
@@ -32,7 +31,7 @@ const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ChildC
         </Char>
       ))}
       {children.map((child, index) => (
-        <ChildComponent editMode={editMode} key={index} node={child} {...rest} />
+        <TextNode editMode={editMode} key={index} node={child} {...rest} />
       ))}
       {[...trailingMeta].map((char, index) => (
         <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>

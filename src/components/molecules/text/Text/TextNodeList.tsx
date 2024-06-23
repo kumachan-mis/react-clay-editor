@@ -1,5 +1,6 @@
 import { TopLevelNode } from '../../../../parser';
 import { topLevelNodesEquals } from '../../../../parser/text/topLevelNode';
+import { textNodesWithReactKey } from '../common/TextNodeProps';
 import { TextNodeVisuals, textNodeVisualsEquals } from '../common/textNodeVisuals';
 
 import { TextNode } from './TextNode';
@@ -14,8 +15,8 @@ export type TextNodeListProps = {
 
 const TextNodeListComponent: React.FC<TextNodeListProps> = ({ nodes, getEditMode, ...rest }) => (
   <div>
-    {nodes.map((node, index) => (
-      <TextNode editMode={getEditMode(node)} key={index} node={node} {...rest} />
+    {textNodesWithReactKey(nodes).map(([key, node]) => (
+      <TextNode editMode={getEditMode(node)} key={key} node={node} {...rest} />
     ))}
   </div>
 );

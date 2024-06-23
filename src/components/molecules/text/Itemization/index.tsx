@@ -4,19 +4,18 @@ import { ItemBulletContent } from '../../../atoms/text/ItemBulletContent';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
 import { LineIndent } from '../../../atoms/text/LineIndent';
+import { TextNode } from '../Text/TextNode';
 import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
 
 import React from 'react';
 
-export type ItemizationProps = {
-  readonly ChildComponent: React.FC<TextNodeProps>;
-} & TextNodeProps<ItemizationNode>;
+export type ItemizationProps = TextNodeProps<ItemizationNode>;
 
 export const ItemizationConstants = {
   styleId: 'itemization',
 };
 
-const ItemizationComponent: React.FC<ItemizationProps> = ({ node, editMode, textVisual, ChildComponent, ...rest }) => {
+const ItemizationComponent: React.FC<ItemizationProps> = ({ node, editMode, textVisual, ...rest }) => {
   const { lineIndex, indentDepth, bullet, contentLength, children } = node;
   const lineLength = indentDepth + bullet.length + contentLength;
   const lineProps = textVisual?.lineProps?.(lineIndex);
@@ -28,7 +27,7 @@ const ItemizationComponent: React.FC<ItemizationProps> = ({ node, editMode, text
       <LineContent indentDepth={indentDepth + 1} lineLength={lineLength}>
         <ItemBulletContent bullet={bullet} cursorOn={editMode} indentDepth={indentDepth} />
         {children.map((child, index) => (
-          <ChildComponent editMode={editMode} key={index} node={child} textVisual={textVisual} {...rest} />
+          <TextNode editMode={editMode} key={index} node={child} textVisual={textVisual} {...rest} />
         ))}
       </LineContent>
     </Line>
