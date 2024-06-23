@@ -10,15 +10,14 @@ import React from 'react';
 
 export type BlockCodeLineProps = TextNodeProps<BlockCodeLineNode>;
 
-const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, textVisual, codeVisual }) => {
+const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, codeVisual }) => {
   const { codeLine, lineIndex, indentDepth } = node;
 
   const lineLength = indentDepth + codeLine.length;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
   const codeElementProps = codeVisual?.codeProps?.(codeLine);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps}>
+    <Line lineIndex={lineIndex}>
       <LineIndent indentDepth={indentDepth} />
       <MonospaceLineContent indentDepth={indentDepth} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
@@ -35,8 +34,5 @@ const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, textVisual
 
 export const BlockCodeLine = React.memo(
   BlockCodeLineComponent,
-  (prev, next) =>
-    blockCodeLineNodeEquals(prev.node, next.node) &&
-    prev.textVisual === next.textVisual &&
-    prev.codeVisual === next.codeVisual
+  (prev, next) => blockCodeLineNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual
 );

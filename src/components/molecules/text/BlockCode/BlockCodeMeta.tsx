@@ -10,14 +10,13 @@ import React from 'react';
 
 export type BlockCodeMetaProps = TextNodeProps<BlockCodeMetaNode>;
 
-const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, textVisual, codeVisual }) => {
+const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, codeVisual }) => {
   const { lineIndex, indentDepth, codeMeta } = node;
   const lineLength = indentDepth + codeMeta.length;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
   const codeElementProps = codeVisual?.codeProps?.(codeMeta);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps}>
+    <Line lineIndex={lineIndex}>
       <LineIndent indentDepth={indentDepth} />
       <MonospaceLineContent indentDepth={indentDepth} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
@@ -34,8 +33,5 @@ const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, textVisual
 
 export const BlockCodeMeta = React.memo(
   BlockCodeMetaComponent,
-  (prev, next) =>
-    blockCodeMetaNodeEquals(prev.node, next.node) &&
-    prev.textVisual === next.textVisual &&
-    prev.codeVisual === next.codeVisual
+  (prev, next) => blockCodeMetaNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual
 );

@@ -14,13 +14,12 @@ export const QuotationConstants = {
   styleId: 'quotation',
 };
 
-const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, textVisual, ...rest }) => {
+const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, ...rest }) => {
   const { lineIndex, indentDepth, meta, contentLength, children } = node;
   const lineLength = indentDepth + meta.length + contentLength;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps} data-styleid={QuotationConstants.styleId}>
+    <Line data-styleid={QuotationConstants.styleId} lineIndex={lineIndex}>
       <LineIndent indentDepth={indentDepth} />
       <QuotationLineContent indentDepth={indentDepth} lineLength={lineLength}>
         {[...meta].map((char, index) => (
@@ -29,7 +28,7 @@ const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, textVisu
           </Char>
         ))}
         {children.map((child, index) => (
-          <TextNode editMode={editMode} key={index} node={child} textVisual={textVisual} {...rest} />
+          <TextNode editMode={editMode} key={index} node={child} {...rest} />
         ))}
       </QuotationLineContent>
     </Line>

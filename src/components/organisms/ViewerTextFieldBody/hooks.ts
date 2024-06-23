@@ -8,7 +8,6 @@ export function useText(): TextProps {
 
   return {
     nodes,
-    textVisual: props.textProps,
     bracketLinkVisual: props.bracketLinkProps,
     hashtagVisual: props.hashtagProps,
     codeVisual: props.codeProps,

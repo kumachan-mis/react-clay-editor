@@ -10,14 +10,13 @@ import React from 'react';
 
 export type BlockFormulaMetaProps = TextNodeProps<BlockFormulaMetaNode>;
 
-const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, textVisual, formulaVisual }) => {
+const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, formulaVisual }) => {
   const { formulaMeta, lineIndex, indentDepth } = node;
   const lineLength = indentDepth + formulaMeta.length;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
   const codeElementProps = formulaVisual?.codeProps?.(formulaMeta);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps}>
+    <Line lineIndex={lineIndex}>
       <LineIndent indentDepth={indentDepth} />
       <MonospaceLineContent indentDepth={indentDepth} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
@@ -34,8 +33,5 @@ const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, text
 
 export const BlockFormulaMeta = React.memo(
   BlockFormulaMetaComponent,
-  (prev, next) =>
-    blockFormulaMetaNodeEquals(prev.node, next.node) &&
-    prev.textVisual === next.textVisual &&
-    prev.formulaVisual === next.formulaVisual
+  (prev, next) => blockFormulaMetaNodeEquals(prev.node, next.node) && prev.formulaVisual === next.formulaVisual
 );

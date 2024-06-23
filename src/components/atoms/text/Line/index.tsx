@@ -3,7 +3,8 @@ import React from 'react';
 
 export type LineProps = {
   readonly lineIndex: number;
-} & React.PropsWithoutRef<React.ComponentProps<'div'>>;
+  readonly children?: React.ReactNode;
+};
 
 export const LineConstants = {
   selectId: (lineIndex: number): string => `line-L${lineIndex}`,

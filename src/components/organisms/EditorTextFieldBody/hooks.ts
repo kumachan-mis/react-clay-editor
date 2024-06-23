@@ -82,7 +82,6 @@ export function useText(): TextProps {
     nodes,
     cursorCoordinate,
     cursorSelection,
-    textVisual: props.textProps,
     bracketLinkVisual: props.bracketLinkProps,
     hashtagVisual: props.hashtagProps,
     codeVisual: props.codeProps,

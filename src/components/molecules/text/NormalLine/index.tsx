@@ -12,15 +12,14 @@ export const NormalLineConstants = {
   styleId: 'normal-line',
 };
 
-const NormalLineComponent: React.FC<NormalLineProps> = ({ node, textVisual, ...rest }) => {
+const NormalLineComponent: React.FC<NormalLineProps> = ({ node, ...rest }) => {
   const { lineIndex, contentLength, children } = node;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps} data-styleid={NormalLineConstants.styleId}>
+    <Line data-styleid={NormalLineConstants.styleId} lineIndex={lineIndex}>
       <LineContent lineLength={contentLength}>
         {children.map((child, index) => (
-          <TextNode key={index} node={child} textVisual={textVisual} {...rest} />
+          <TextNode key={index} node={child} {...rest} />
         ))}
       </LineContent>
     </Line>

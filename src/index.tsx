@@ -25,7 +25,6 @@ export { ViewerTextFieldBody } from './components/organisms/ViewerTextFieldBody'
 export type { ViewerRootProps } from './components/organisms/ViewerRoot';
 export type { ViewerHeaderProps } from './components/organisms/ViewerHeader';
 export type {
-  ViewerTextProps,
   ViewerBracketLinkProps,
   ViewerHashtagProps,
   ViewerTaggedLinkProps,
