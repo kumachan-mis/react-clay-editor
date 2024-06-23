@@ -14,7 +14,6 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
 
   const childNode: DecorationNode = {
     type: 'decoration',
-    lineIndex: context.lineIndex,
     range: [0, line.length - 1],
     facingMeta: `${heading} `,
     children: parseContent(

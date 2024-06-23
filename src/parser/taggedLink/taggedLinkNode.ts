@@ -1,6 +1,5 @@
 export type TaggedLinkNode = {
   type: 'taggedLink';
-  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   linkName: string;
@@ -9,7 +8,6 @@ export type TaggedLinkNode = {
 
 export function taggedLinkNodeEquals(a: TaggedLinkNode, b: TaggedLinkNode): boolean {
   return (
-    a.lineIndex === b.lineIndex &&
     a.range[0] === b.range[0] &&
     a.range[1] === b.range[1] &&
     a.linkName === b.linkName &&

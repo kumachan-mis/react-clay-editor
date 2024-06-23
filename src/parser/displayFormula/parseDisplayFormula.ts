@@ -13,7 +13,6 @@ export function parseDisplayFormula(text: string, context: ParsingContext, optio
 
   const node: DisplayFormulaNode = {
     type: 'displayFormula',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '$$',
     formula,

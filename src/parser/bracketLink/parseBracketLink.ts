@@ -13,7 +13,6 @@ export function parseBracketLink(text: string, context: ParsingContext, options:
 
   const node: BracketLinkNode = {
     type: 'bracketLink',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '[',
     linkName,

@@ -22,7 +22,6 @@ export function parseTaggedLink(
 
   const node: TaggedLinkNode = {
     type: 'taggedLink',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: `[${tag} `,
     linkName,

@@ -13,7 +13,6 @@ export function parseInlineFormula(text: string, context: ParsingContext, option
 
   const node: InlineFormulaNode = {
     type: 'inlineFormula',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '$',
     formula,

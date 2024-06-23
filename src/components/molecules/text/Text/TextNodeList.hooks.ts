@@ -1,4 +1,4 @@
-import { TextNode } from '../../../../parser';
+import { TopLevelNode } from '../../../../parser';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/hooks';
@@ -6,7 +6,7 @@ import { useEmbededLinkForceClickable } from '../../../atoms/text/EmbededLink/ho
 import React from 'react';
 
 export type UseTextNodeListReturn = {
-  getEditMode: (node: TextNode) => boolean;
+  getEditMode: (node: TopLevelNode) => boolean;
   linkForceClickable: boolean;
 };
 
@@ -15,7 +15,7 @@ export function useTextNodeList(
   cursorSelection?: CursorSelection
 ): UseTextNodeListReturn {
   const getEditMode = React.useCallback(
-    (node: TextNode) =>
+    (node: TopLevelNode) =>
       cursorOnTextNode(node, cursorCoordinate?.lineIndex) ||
       selectionOnTextNode(node, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex),
     [cursorCoordinate?.lineIndex, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex]
@@ -26,7 +26,7 @@ export function useTextNodeList(
   return { getEditMode, linkForceClickable };
 }
 
-function cursorOnTextNode(node: TextNode, cursorCoordinateLineIndex?: number): boolean {
+function cursorOnTextNode(node: TopLevelNode, cursorCoordinateLineIndex?: number): boolean {
   if (cursorCoordinateLineIndex === undefined) return false;
   if (node.type === 'blockCode' || node.type === 'blockFormula') {
     const [first, last] = node.range;
@@ -36,7 +36,7 @@ function cursorOnTextNode(node: TextNode, cursorCoordinateLineIndex?: number): b
 }
 
 function selectionOnTextNode(
-  node: TextNode,
+  node: TopLevelNode,
   cursorSelectionFixedLineIndex?: number,
   cursorSelectionFreeLineIndex?: number
 ): boolean {

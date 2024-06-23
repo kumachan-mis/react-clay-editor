@@ -13,7 +13,6 @@ export function parseInlineCode(text: string, context: ParsingContext, options: 
 
   const node: InlineCodeNode = {
     type: 'inlineCode',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '`',
     code,

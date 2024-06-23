@@ -13,7 +13,6 @@ export function parseBold(text: string, context: ParsingContext, options: Parsin
 
   const node: DecorationNode = {
     type: 'decoration',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '*',
     children: parseContent(body, { ...context, charIndex: first + 1, nested: true }, options),

@@ -13,7 +13,6 @@ export function parseUrl(text: string, context: ParsingContext, options: Parsing
 
   const node: UrlNode = {
     type: 'url',
-    lineIndex: context.lineIndex,
     range: [first, last],
     url,
   };

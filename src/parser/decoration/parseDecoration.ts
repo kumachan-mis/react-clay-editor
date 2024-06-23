@@ -15,7 +15,6 @@ export function parseDecoration(text: string, context: ParsingContext, options: 
 
   const node: DecorationNode = {
     type: 'decoration',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: `[${decoration} `,
     children: parseContent(

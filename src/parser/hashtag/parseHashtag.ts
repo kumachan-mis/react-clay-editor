@@ -13,7 +13,6 @@ export function parseHashtag(text: string, context: ParsingContext, options: Par
 
   const node: HashtagNode = {
     type: 'hashtag',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '#',
     linkName,

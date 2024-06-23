@@ -13,7 +13,6 @@ export function parseItalicBold(text: string, context: ParsingContext, options: 
 
   const node: DecorationNode = {
     type: 'decoration',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '_*',
     children: parseContent(body, { ...context, charIndex: first + 2, nested: true }, options),

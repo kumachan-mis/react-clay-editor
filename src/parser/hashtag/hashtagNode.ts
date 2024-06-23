@@ -1,6 +1,5 @@
 export type HashtagNode = {
   type: 'hashtag';
-  lineIndex: number;
   range: [number, number];
   facingMeta: string;
   linkName: string;
@@ -9,7 +8,6 @@ export type HashtagNode = {
 
 export function hashtagNodeEquals(a: HashtagNode, b: HashtagNode): boolean {
   return (
-    a.lineIndex === b.lineIndex &&
     a.range[0] === b.range[0] &&
     a.range[1] === b.range[1] &&
     a.facingMeta === b.facingMeta &&

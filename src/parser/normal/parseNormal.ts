@@ -10,7 +10,6 @@ export function parseNormal(text: string, context: ParsingContext): ContentNode[
 
   const node: NormalNode = {
     type: 'normal',
-    lineIndex: context.lineIndex,
     text,
     range: [first, last],
   };
