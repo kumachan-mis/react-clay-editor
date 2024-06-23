@@ -12,7 +12,7 @@ export const HashtagConstants = {
 };
 
 const HashtagComponent: React.FC<HashtagProps> = ({ node, editMode, linkForceClickable, hashtagVisual }) => {
-  const { lineIndex, facingMeta, linkName, trailingMeta } = node;
+  const { facingMeta, linkName, trailingMeta } = node;
   const [first] = node.range;
 
   return (
@@ -23,7 +23,7 @@ const HashtagComponent: React.FC<HashtagProps> = ({ node, editMode, linkForceCli
       forceClickable={linkForceClickable}
     >
       {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {char}
         </Char>
       ))}

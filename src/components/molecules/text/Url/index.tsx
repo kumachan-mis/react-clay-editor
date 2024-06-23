@@ -12,7 +12,7 @@ export const UrlConstants = {
 };
 
 const UrlComponent: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }) => {
-  const { lineIndex, url } = node;
+  const { url } = node;
   const [first] = node.range;
 
   return (
@@ -23,7 +23,7 @@ const UrlComponent: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }
       forceClickable={linkForceClickable}
     >
       {[...url].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {char}
         </Char>
       ))}

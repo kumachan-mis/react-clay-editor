@@ -11,13 +11,13 @@ export const NormalConstants = {
 };
 
 const NormalComponent: React.FC<NormalProps> = ({ node }) => {
-  const { lineIndex, text } = node;
+  const { text } = node;
   const [first] = node.range;
 
   return (
     <span data-styleid={NormalConstants.styleId}>
       {[...text].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {char}
         </Char>
       ))}

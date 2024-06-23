@@ -22,7 +22,7 @@ const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
   linkForceClickable,
   taggedLinkVisualMap,
 }) => {
-  const { lineIndex, linkName, trailingMeta } = node;
+  const { linkName, trailingMeta } = node;
   const [facingMeta, tag] = splitTag(node);
   const tagName = getTagName(node);
   const [first, last] = node.range;
@@ -36,16 +36,12 @@ const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
       forceClickable={linkForceClickable}
     >
       {[...facingMeta].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
       {[...tag].map((char, index) => (
-        <Char
-          charIndex={first + facingMeta.length + index}
-          key={first + facingMeta.length + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={first + facingMeta.length + index} key={first + facingMeta.length + index}>
           {editMode || !taggedLinkVisual?.tagHidden ? char : ''}
         </Char>
       ))}
@@ -53,17 +49,12 @@ const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
         <Char
           charIndex={first + facingMeta.length + tag.length + index}
           key={first + facingMeta.length + tag.length + index}
-          lineIndex={lineIndex}
         >
           {char}
         </Char>
       ))}
       {[...trailingMeta].map((char, index) => (
-        <Char
-          charIndex={last - (trailingMeta.length - 1) + index}
-          key={last - (trailingMeta.length - 1) + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
       ))}

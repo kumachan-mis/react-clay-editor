@@ -12,32 +12,24 @@ export const InlineCodeConstants = {
 };
 
 const InlineCodeComponent: React.FC<InlineCodeProps> = ({ node, editMode, codeVisual }) => {
-  const { lineIndex, facingMeta, code, trailingMeta } = node;
+  const { facingMeta, code, trailingMeta } = node;
   const [first, last] = node.range;
   const codeElementProps = codeVisual?.codeProps?.(code);
 
   return (
     <Monospace {...codeElementProps} data-styleid={InlineCodeConstants.styleId}>
       {[...facingMeta].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
       {[...code].map((char, index) => (
-        <Char
-          charIndex={first + facingMeta.length + index}
-          key={first + facingMeta.length + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={first + facingMeta.length + index} key={first + facingMeta.length + index}>
           {char}
         </Char>
       ))}
       {[...trailingMeta].map((char, index) => (
-        <Char
-          charIndex={last - (trailingMeta.length - 1) + index}
-          key={last - (trailingMeta.length - 1) + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
       ))}

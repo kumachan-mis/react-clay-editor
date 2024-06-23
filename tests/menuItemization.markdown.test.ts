@@ -19,7 +19,7 @@ test.afterAll(async () => {
 });
 
 test('itemization menu: button, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -31,7 +31,7 @@ test('itemization menu: button, no-selection, empty-line', async () => {
 });
 
 test('itemization menu: indent, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=indent-itemization-menu-item]').click();
@@ -44,7 +44,7 @@ test('itemization menu: indent, no-selection, empty-line', async () => {
 });
 
 test('itemization menu: outdent, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=outdent-itemization-menu-item]')).toBeDisabled();
@@ -59,7 +59,7 @@ test('itemization menu: outdent, no-selection, empty-line', async () => {
 test('itemization menu: button, no-selection, normal-line', async () => {
   await page.keyboard.insertText(['This will be an item'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C5]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C5]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -73,7 +73,7 @@ test('itemization menu: button, no-selection, normal-line', async () => {
 test('itemization menu: indent, no-selection, normal-line', async () => {
   await page.keyboard.insertText(['This will be an item'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C5]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C5]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=indent-itemization-menu-item]').click();
@@ -88,7 +88,11 @@ test('itemization menu: indent, no-selection, normal-line', async () => {
 test('itemization menu: outdent, selection, normal-line', async () => {
   await page.keyboard.insertText(['This will not be an item'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C5]', '[data-selectid=char-L0C8]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C5]',
+    '[data-selectid=line-L0] [data-selectid=char-C8]'
+  );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=outdent-itemization-menu-item]')).toBeDisabled();
@@ -103,7 +107,7 @@ test('itemization menu: outdent, selection, normal-line', async () => {
 test('itemization menu: button, no-selection, itemized-line', async () => {
   await page.keyboard.insertText(['- This will be a normal line'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -117,7 +121,11 @@ test('itemization menu: button, no-selection, itemized-line', async () => {
 test('itemization menu: indent, selection, itemized-line', async () => {
   await page.keyboard.insertText(['- This will be a nested item'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C6]', '[data-selectid=char-L0C9]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C6]',
+    '[data-selectid=line-L0] [data-selectid=char-C9]'
+  );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=indent-itemization-menu-item]').click();
@@ -132,7 +140,7 @@ test('itemization menu: indent, selection, itemized-line', async () => {
 test('itemization menu: outdent, no-selection, itemized-line', async () => {
   await page.keyboard.insertText(['* This will be a normal line'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=outdent-itemization-menu-item]').click();
@@ -147,7 +155,7 @@ test('itemization menu: outdent, no-selection, itemized-line', async () => {
 test('itemization menu: button, no-selection, nested-itemized-line', async () => {
   await page.keyboard.insertText(['\t- This will be also a normal line'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -161,7 +169,7 @@ test('itemization menu: button, no-selection, nested-itemized-line', async () =>
 test('itemization menu: indent, no-selection, nested-itemized-line', async () => {
   await page.keyboard.insertText(['\t* This will be a deep nested item'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=indent-itemization-menu-item]').click();
@@ -176,7 +184,7 @@ test('itemization menu: indent, no-selection, nested-itemized-line', async () =>
 test('itemization menu: outdent, no-selection, nested-itemized-line', async () => {
   await page.keyboard.insertText(['\t- This will be a shallow nested item'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=outdent-itemization-menu-item]').click();
@@ -191,7 +199,7 @@ test('itemization menu: outdent, no-selection, nested-itemized-line', async () =
 test('itemization menu: button, no-selection, other-line (line node)', async () => {
   await page.keyboard.insertText(['> This is a quotation'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C13]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C13]').click();
 
   await expect(page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -205,7 +213,7 @@ test('itemization menu: button, no-selection, other-line (line node)', async () 
 test('itemization menu: button, no-selection, other-line (block node)', async () => {
   await page.keyboard.insertText(['$$', '\\int_a^b f(x) dx', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C6]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C6]').click();
 
   await expect(page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -219,7 +227,7 @@ test('itemization menu: button, no-selection, other-line (block node)', async ()
 test('itemization menu: disabled, no-selection, other-line (line node)', async () => {
   await page.keyboard.insertText(['> This is a quotation'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C13]').click();
+  await page.locator('[data-selectid=line-L0] [data-selectid=char-C13]').click();
 
   await expect(
     page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]')
@@ -235,7 +243,7 @@ test('itemization menu: disabled, no-selection, other-line (line node)', async (
 test('itemization menu: disabled, no-selection, other-line (block node)', async () => {
   await page.keyboard.insertText(['$$', '\\int_a^b f(x) dx', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C6]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C6]').click();
 
   await expect(
     page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]')
@@ -251,7 +259,11 @@ test('itemization menu: disabled, no-selection, other-line (block node)', async 
 test('itemization menu: button, selection, all-normal-or-itemized-line', async () => {
   await page.keyboard.insertText(['This is normal text', '* This is an item'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C7]', '[data-selectid=char-L1C0]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C7]',
+    '[data-selectid=line-L1] [data-selectid=char-C0]'
+  );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -265,7 +277,11 @@ test('itemization menu: button, selection, all-normal-or-itemized-line', async (
 test('itemization menu: button, selection, all-itemized-line', async () => {
   await page.keyboard.insertText(['- This is an item', '\t* This is also an item'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C6]', '[data-selectid=char-L1C2]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C6]',
+    '[data-selectid=line-L1] [data-selectid=char-C2]'
+  );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -279,7 +295,11 @@ test('itemization menu: button, selection, all-itemized-line', async () => {
 test('itemization menu: indent, selection, all-normal-or-itemized-line', async () => {
   await page.keyboard.insertText(['This is normal text', '- This is an item'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C11]', '[data-selectid=char-L1C1]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C11]',
+    '[data-selectid=line-L1] [data-selectid=char-C1]'
+  );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=indent-itemization-menu-item]').click();
@@ -294,7 +314,11 @@ test('itemization menu: indent, selection, all-normal-or-itemized-line', async (
 test('itemization menu: outdent, selection, all-normal-or-itemized-line', async () => {
   await page.keyboard.insertText(['This is normal text', '* This is an item'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C11]', '[data-selectid=char-L1C1]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C11]',
+    '[data-selectid=line-L1] [data-selectid=char-C1]'
+  );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=outdent-itemization-menu-item]').click();
@@ -309,7 +333,11 @@ test('itemization menu: outdent, selection, all-normal-or-itemized-line', async 
 test('itemization menu: button, selection, has-other-line', async () => {
   await page.keyboard.insertText(['This is normal text', ' ```', ' code string', ' ```'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C11]', '[data-selectid=char-L2C3]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C11]',
+    '[data-selectid=line-L2] [data-selectid=char-C3]'
+  );
 
   await expect(page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -323,7 +351,11 @@ test('itemization menu: button, selection, has-other-line', async () => {
 test('itemization menu: disabled, selection, has-other-line', async () => {
   await page.keyboard.insertText(['This is normal text', ' ```', ' code string', ' ```'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C11]', '[data-selectid=char-L2C3]');
+  await mouseSelect(
+    page,
+    '[data-selectid=line-L0] [data-selectid=char-C11]',
+    '[data-selectid=line-L2] [data-selectid=char-C3]'
+  );
 
   await expect(
     page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]')

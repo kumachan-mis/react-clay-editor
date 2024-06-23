@@ -22,10 +22,10 @@ const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, textVisu
 
   return (
     <Line lineIndex={lineIndex} {...lineProps} data-styleid={QuotationConstants.styleId}>
-      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
-      <QuotationLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
+      <LineIndent indentDepth={indentDepth} />
+      <QuotationLineContent indentDepth={indentDepth} lineLength={lineLength}>
         {[...meta].map((char, index) => (
-          <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
+          <Char charIndex={indentDepth + index} key={indentDepth + index}>
             {editMode ? char : ''}
           </Char>
         ))}

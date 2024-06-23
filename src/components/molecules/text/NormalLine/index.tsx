@@ -19,7 +19,7 @@ const NormalLineComponent: React.FC<NormalLineProps> = ({ node, textVisual, Chil
 
   return (
     <Line lineIndex={lineIndex} {...lineProps} data-styleid={NormalLineConstants.styleId}>
-      <LineContent lineIndex={lineIndex} lineLength={contentLength}>
+      <LineContent lineLength={contentLength}>
         {children.map((child, index) => (
           <ChildComponent key={index} node={child} textVisual={textVisual} {...rest} />
         ))}

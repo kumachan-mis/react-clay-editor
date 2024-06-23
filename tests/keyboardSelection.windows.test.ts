@@ -26,7 +26,7 @@ test.afterAll(async () => {
 });
 
 test('select on word top', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('Control+ArrowLeft');
@@ -43,7 +43,7 @@ test('select on word top', async () => {
 });
 
 test('select on word bottom', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('Control+ArrowRight');
@@ -60,7 +60,7 @@ test('select on word bottom', async () => {
 });
 
 test('select on text top', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('Control+Home');
@@ -76,7 +76,7 @@ test('select on text top', async () => {
 });
 
 test('select on text bottom', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('Control+End');

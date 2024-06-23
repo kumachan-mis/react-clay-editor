@@ -17,7 +17,7 @@ const BracketLinkComponent: React.FC<BracketLinkProps> = ({
   linkForceClickable,
   bracketLinkVisual,
 }) => {
-  const { lineIndex, facingMeta, linkName, trailingMeta } = node;
+  const { facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
 
   return (
@@ -28,25 +28,17 @@ const BracketLinkComponent: React.FC<BracketLinkProps> = ({
       forceClickable={linkForceClickable}
     >
       {[...facingMeta].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
       {[...linkName].map((char, index) => (
-        <Char
-          charIndex={first + facingMeta.length + index}
-          key={first + facingMeta.length + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={first + facingMeta.length + index} key={first + facingMeta.length + index}>
           {char}
         </Char>
       ))}
       {[...trailingMeta].map((char, index) => (
-        <Char
-          charIndex={last - (trailingMeta.length - 1) + index}
-          key={last - (trailingMeta.length - 1) + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
       ))}

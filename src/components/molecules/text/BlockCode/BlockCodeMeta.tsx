@@ -18,11 +18,11 @@ const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, textVisual
 
   return (
     <Line lineIndex={lineIndex} {...lineProps}>
-      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
-      <MonospaceLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
+      <LineIndent indentDepth={indentDepth} />
+      <MonospaceLineContent indentDepth={indentDepth} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...codeMeta].map((char, index) => (
-            <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
+            <Char charIndex={indentDepth + index} key={indentDepth + index}>
               {char}
             </Char>
           ))}

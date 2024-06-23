@@ -26,7 +26,7 @@ test.afterAll(async () => {
 });
 
 test('select on move left', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('ArrowLeft');
@@ -44,7 +44,7 @@ test('select on move left', async () => {
 });
 
 test('select on move right', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('ArrowRight');
@@ -62,7 +62,7 @@ test('select on move right', async () => {
 });
 
 test('select on move up', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('ArrowUp');
@@ -78,7 +78,7 @@ test('select on move up', async () => {
 });
 
 test('select on move down', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('ArrowDown');
@@ -94,7 +94,7 @@ test('select on move down', async () => {
 });
 
 test('select on move line top', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('Home');
@@ -111,7 +111,7 @@ test('select on move line top', async () => {
 });
 
 test('select on move line bottom', async () => {
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator('[data-selectid=line-L1] [data-selectid=char-C17]').click();
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('End');

@@ -14,7 +14,7 @@ export const ContentFormulaConstants = {
 };
 
 const ContentFormulaComponent: React.FC<ContentFormulaProps> = ({ node, editMode, formulaVisual }) => {
-  const { lineIndex, facingMeta, formula, trailingMeta } = node;
+  const { facingMeta, formula, trailingMeta } = node;
   const displayMode = node.type === 'displayFormula';
   const [first, last] = node.range;
   const codeElementProps = formulaVisual?.codeProps?.(formula);
@@ -24,14 +24,13 @@ const ContentFormulaComponent: React.FC<ContentFormulaProps> = ({ node, editMode
       data-styleid={ContentFormulaConstants.styleId(displayMode)}
       firstCharIndex={first + facingMeta.length}
       lastCharIndex={last - trailingMeta.length}
-      lineIndex={lineIndex}
     >
       {!editMode ? (
         <KaTeX displayMode={displayMode}>{formula}</KaTeX>
       ) : (
         <Monospace {...codeElementProps}>
           {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
-            <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+            <Char charIndex={first + index} key={first + index}>
               {char}
             </Char>
           ))}

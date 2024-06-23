@@ -21,13 +21,13 @@ export const DecorationConstants = {
 };
 
 const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ChildComponent, ...rest }) => {
-  const { lineIndex, facingMeta, config, trailingMeta, children } = node;
+  const { facingMeta, config, trailingMeta, children } = node;
   const [first, last] = node.range;
 
   return (
     <DecorationContent {...config} data-styleid={DecorationConstants.styleId(config)}>
       {[...facingMeta].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
@@ -35,11 +35,7 @@ const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ChildC
         <ChildComponent editMode={editMode} key={index} node={child} {...rest} />
       ))}
       {[...trailingMeta].map((char, index) => (
-        <Char
-          charIndex={last - (trailingMeta.length - 1) + index}
-          key={last - (trailingMeta.length - 1) + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
       ))}
