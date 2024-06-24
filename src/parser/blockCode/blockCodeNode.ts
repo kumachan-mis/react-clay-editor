@@ -1,5 +1,5 @@
 import { BlockCodeLineNode, blockCodeLineNodesEquals } from './blockCodeLineNode';
-import { BlockCodeMetaNode, blockCodeMetaNodeEquals } from './blockCodeMetaNode';
+import { BlockCodeMetaNode, blockCodeMetaNodeEquals, optinalBlockCodeMetaNodeEquals } from './blockCodeMetaNode';
 
 export type BlockCodeNode = {
   type: 'blockCode';
@@ -15,6 +15,6 @@ export function blockCodeNodeEquals(a: BlockCodeNode, b: BlockCodeNode): boolean
     a.range[1] === b.range[1] &&
     blockCodeMetaNodeEquals(a.facingMeta, b.facingMeta) &&
     blockCodeLineNodesEquals(a.children, b.children) &&
-    blockCodeMetaNodeEquals(a.trailingMeta, b.trailingMeta)
+    optinalBlockCodeMetaNodeEquals(a.trailingMeta, b.trailingMeta)
   );
 }

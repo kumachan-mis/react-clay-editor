@@ -1,5 +1,9 @@
 import { BlockFormulaLineNode, blockFormulaLineNodesEquals } from './blockFormulaLineNode';
-import { BlockFormulaMetaNode, blockFormulaMetaNodeEquals } from './blockFormulaMetaNode';
+import {
+  BlockFormulaMetaNode,
+  blockFormulaMetaNodeEquals,
+  optinalBlockFormulaMetaNodeEquals,
+} from './blockFormulaMetaNode';
 
 export type BlockFormulaNode = {
   type: 'blockFormula';
@@ -15,6 +19,6 @@ export function blockFormulaNodeEquals(prev: BlockFormulaNode, next: BlockFormul
     prev.range[1] === next.range[1] &&
     blockFormulaMetaNodeEquals(prev.facingMeta, next.facingMeta) &&
     blockFormulaLineNodesEquals(prev.children, next.children) &&
-    blockFormulaMetaNodeEquals(prev.trailingMeta, next.trailingMeta)
+    optinalBlockFormulaMetaNodeEquals(prev.trailingMeta, next.trailingMeta)
   );
 }

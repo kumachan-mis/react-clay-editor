@@ -5,12 +5,16 @@ export type BlockFormulaMetaNode = {
   formulaMeta: string;
 };
 
-export function blockFormulaMetaNodeEquals(
+export function optinalBlockFormulaMetaNodeEquals(
   a: BlockFormulaMetaNode | undefined,
   b: BlockFormulaMetaNode | undefined
 ): boolean {
   if (a === undefined || b === undefined) {
-    return a === undefined && b === undefined;
+    return a === b;
   }
+  return blockFormulaMetaNodeEquals(a, b);
+}
+
+export function blockFormulaMetaNodeEquals(a: BlockFormulaMetaNode, b: BlockFormulaMetaNode): boolean {
   return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.formulaMeta === b.formulaMeta;
 }
