@@ -22,8 +22,8 @@ export const commonTestCases: TestCase[] = [
     expected: [
       {
         type: 'quotation',
-        lineIndex: 0,
-        indentDepth: 0,
+        indent: '',
+        meta: '> ',
         children: [
           {
             type: 'normal',
@@ -31,16 +31,19 @@ export const commonTestCases: TestCase[] = [
             text: 'Genius is one percent inspiration and ninety-nine percent perspiration',
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'quotation',
-        indentDepth: 1,
+        indent: ' ',
+        meta: '> ',
         children: [
           {
             type: 'normal',
             text: 'Anyone who has never made a mistake has never tried anything new',
           },
         ],
+        _lineIndex: 1,
       },
     ],
   },
@@ -62,11 +65,13 @@ export const commonTestCases: TestCase[] = [
       '    return x*x*x;',
       '  }',
       '// This is actually a normal text',
+      '```',
+      '```',
+      '  ```',
     ].join('\n'),
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'inlineCode',
@@ -74,93 +79,98 @@ export const commonTestCases: TestCase[] = [
             code: "import { EditorRoot } from 'react-clay-editor'",
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'blockCode',
-        range: [1, 5],
         facingMeta: {
           type: 'blockCodeMeta',
-          lineIndex: 1,
-          indentDepth: 0,
+          indent: '',
+          _lineIndex: 1,
         },
         children: [
           {
             type: 'blockCodeLine',
-            lineIndex: 2,
-            indentDepth: 0,
+            indent: '',
             codeLine: 'const App: React.FC = () => {',
+            _lineIndex: 2,
           },
           {
             type: 'blockCodeLine',
-            lineIndex: 3,
-            indentDepth: 0,
+            indent: '',
             codeLine: '  return <></>;',
+            _lineIndex: 3,
           },
           {
             type: 'blockCodeLine',
-            lineIndex: 4,
-            indentDepth: 0,
+            indent: '',
             codeLine: '};',
+            _lineIndex: 4,
           },
         ],
         trailingMeta: {
           type: 'blockCodeMeta',
-          lineIndex: 5,
-          indentDepth: 0,
+          indent: '',
+          _lineIndex: 5,
         },
       },
       {
         type: 'blockCode',
-        range: [6, 9],
         facingMeta: {
           type: 'blockCodeMeta',
-          lineIndex: 6,
-          indentDepth: 0,
+          indent: '',
+          _lineIndex: 6,
         },
         children: [
           {
             type: 'blockCodeLine',
-            lineIndex: 7,
-            indentDepth: 0,
+            indent: '',
             codeLine: 'function square(x: number): number {',
+            _lineIndex: 7,
           },
           {
             type: 'blockCodeLine',
-            lineIndex: 8,
-            indentDepth: 0,
+            indent: '',
             codeLine: '  return x*x;',
+            _lineIndex: 8,
           },
           {
             type: 'blockCodeLine',
-            lineIndex: 9,
-            indentDepth: 0,
+            indent: '',
             codeLine: '}',
+            _lineIndex: 9,
           },
         ],
+        _lineRange: [6, 9],
       },
       {
         type: 'blockCode',
         facingMeta: {
           type: 'blockCodeMeta',
-          indentDepth: 2,
+          indent: '  ',
+          _lineIndex: 10,
         },
         children: [
           {
             type: 'blockCodeLine',
-            indentDepth: 2,
+            indent: '  ',
             codeLine: 'function cube(x: number): number {',
+            _lineIndex: 11,
           },
           {
             type: 'blockCodeLine',
-            indentDepth: 2,
+            indent: '  ',
             codeLine: '  return x*x*x;',
+            _lineIndex: 12,
           },
           {
             type: 'blockCodeLine',
-            indentDepth: 2,
+            indent: '  ',
             codeLine: '}',
+            _lineIndex: 13,
           },
         ],
+        _lineRange: [10, 13],
       },
       {
         type: 'normalLine',
@@ -170,6 +180,32 @@ export const commonTestCases: TestCase[] = [
             text: '// This is actually a normal text',
           },
         ],
+        _lineIndex: 14,
+      },
+      {
+        type: 'blockCode',
+        facingMeta: {
+          type: 'blockCodeMeta',
+          indent: '',
+          _lineIndex: 15,
+        },
+        children: [],
+        trailingMeta: {
+          type: 'blockCodeMeta',
+          indent: '',
+          _lineIndex: 16,
+        },
+        _lineRange: [15, 16],
+      },
+      {
+        type: 'blockCode',
+        facingMeta: {
+          type: 'blockCodeMeta',
+          indent: '  ',
+          _lineIndex: 17,
+        },
+        children: [],
+        _lineRange: [17, 17],
       },
     ],
   },
@@ -186,11 +222,13 @@ export const commonTestCases: TestCase[] = [
       '  $$',
       '  \\sum_{m=1}^M b_m',
       'c_n',
+      '$$',
+      '$$',
+      '  $$',
     ].join('\n'),
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'inlineFormula',
@@ -198,10 +236,10 @@ export const commonTestCases: TestCase[] = [
             formula: 'f(x)',
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'normalLine',
-        lineIndex: 1,
         children: [
           {
             type: 'displayFormula',
@@ -209,59 +247,62 @@ export const commonTestCases: TestCase[] = [
             formula: '\\int_a^b f(x) dx',
           },
         ],
+        _lineIndex: 1,
       },
       {
         type: 'blockFormula',
-        range: [2, 4],
         facingMeta: {
           type: 'blockFormulaMeta',
-          lineIndex: 2,
-          indentDepth: 0,
+          indent: '',
+          _lineIndex: 2,
         },
         children: [
           {
             type: 'blockFormulaLine',
-            lineIndex: 3,
-            indentDepth: 0,
+            indent: '',
             formulaLine: '\\int_a^b f(x) dx',
+            _lineIndex: 3,
           },
         ],
         trailingMeta: {
           type: 'blockFormulaMeta',
-          lineIndex: 4,
-          indentDepth: 0,
+          indent: '',
+          _lineIndex: 4,
         },
       },
       {
         type: 'blockFormula',
-        range: [5, 6],
         facingMeta: {
           type: 'blockFormulaMeta',
-          lineIndex: 5,
-          indentDepth: 0,
+          indent: '',
+          _lineIndex: 5,
         },
         children: [
           {
             type: 'blockFormulaLine',
-            lineIndex: 6,
-            indentDepth: 0,
+            indent: '',
             formulaLine: '\\sum_{n=1}^N a_n',
+            _lineIndex: 6,
           },
         ],
+        _lineRange: [5, 6],
       },
       {
         type: 'blockFormula',
         facingMeta: {
           type: 'blockFormulaMeta',
-          indentDepth: 2,
+          indent: '  ',
+          _lineIndex: 7,
         },
         children: [
           {
             type: 'blockFormulaLine',
-            indentDepth: 2,
+            indent: '  ',
             formulaLine: '\\sum_{m=1}^M b_m',
+            _lineIndex: 8,
           },
         ],
+        _lineRange: [7, 8],
       },
       {
         type: 'normalLine',
@@ -271,6 +312,32 @@ export const commonTestCases: TestCase[] = [
             text: 'c_n',
           },
         ],
+        _lineIndex: 9,
+      },
+      {
+        type: 'blockFormula',
+        facingMeta: {
+          type: 'blockFormulaMeta',
+          indent: '',
+          _lineIndex: 10,
+        },
+        children: [],
+        trailingMeta: {
+          type: 'blockFormulaMeta',
+          indent: '',
+          _lineIndex: 11,
+        },
+        _lineRange: [10, 11],
+      },
+      {
+        type: 'blockFormula',
+        facingMeta: {
+          type: 'blockFormulaMeta',
+          indent: '  ',
+          _lineIndex: 12,
+        },
+        children: [],
+        _lineRange: [12, 12],
       },
     ],
   },
@@ -283,7 +350,6 @@ export const commonTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'taggedLink',
@@ -291,6 +357,7 @@ export const commonTestCases: TestCase[] = [
             linkName: 'tagged link test',
           },
         ],
+        _lineIndex: 0,
       },
     ],
   },
@@ -300,7 +367,6 @@ export const commonTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'bracketLink',
@@ -308,6 +374,7 @@ export const commonTestCases: TestCase[] = [
             linkName: 'bracket test',
           },
         ],
+        _lineIndex: 0,
       },
     ],
   },
@@ -317,7 +384,6 @@ export const commonTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'hashtag',
@@ -353,6 +419,7 @@ export const commonTestCases: TestCase[] = [
             text: '.',
           },
         ],
+        _lineIndex: 0,
       },
     ],
   },
@@ -362,7 +429,6 @@ export const commonTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'url',
@@ -370,6 +436,7 @@ export const commonTestCases: TestCase[] = [
             url: 'https://example.com',
           },
         ],
+        _lineIndex: 0,
       },
     ],
   },
@@ -379,7 +446,6 @@ export const commonTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'normal',
@@ -387,6 +453,7 @@ export const commonTestCases: TestCase[] = [
             text: 'hello world',
           },
         ],
+        _lineIndex: 0,
       },
     ],
   },
@@ -406,7 +473,6 @@ export const commonTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'normal',
@@ -424,10 +490,10 @@ export const commonTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'normalLine',
-        lineIndex: 1,
         children: [
           {
             type: 'normal',
@@ -445,10 +511,10 @@ export const commonTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 1,
       },
       {
         type: 'normalLine',
-        lineIndex: 2,
         children: [
           {
             type: 'normal',
@@ -466,10 +532,10 @@ export const commonTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 2,
       },
       {
         type: 'normalLine',
-        lineIndex: 3,
         children: [
           {
             type: 'normal',
@@ -487,10 +553,10 @@ export const commonTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 3,
       },
       {
         type: 'normalLine',
-        lineIndex: 4,
         children: [
           {
             type: 'normal',
@@ -510,10 +576,10 @@ export const commonTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 4,
       },
       {
         type: 'normalLine',
-        lineIndex: 5,
         children: [
           {
             type: 'normal',
@@ -531,6 +597,7 @@ export const commonTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 5,
       },
     ],
   },
@@ -541,6 +608,7 @@ export const commonTestCases: TestCase[] = [
       {
         type: 'normalLine',
         children: [],
+        _lineIndex: 0,
       },
     ],
   },
@@ -559,7 +627,6 @@ export const branketTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'decoration',
@@ -664,6 +731,7 @@ export const branketTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'normalLine',
@@ -714,6 +782,7 @@ export const branketTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 1,
       },
       {
         type: 'normalLine',
@@ -764,6 +833,7 @@ export const branketTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 2,
       },
       {
         type: 'normalLine',
@@ -799,6 +869,7 @@ export const branketTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 3,
       },
       {
         type: 'normalLine',
@@ -819,6 +890,7 @@ export const branketTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 4,
       },
     ],
   },
@@ -835,8 +907,8 @@ export const branketTestCases: TestCase[] = [
     expected: [
       {
         type: 'itemization',
-        lineIndex: 0,
-        indentDepth: 0,
+        indent: '',
+        bullet: ' ',
         children: [
           {
             type: 'normal',
@@ -844,11 +916,12 @@ export const branketTestCases: TestCase[] = [
             text: 'itemized text',
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'itemization',
-        lineIndex: 1,
-        indentDepth: 1,
+        indent: ' ',
+        bullet: ' ',
         children: [
           {
             type: 'normal',
@@ -856,46 +929,55 @@ export const branketTestCases: TestCase[] = [
             text: 'nested itemized text',
           },
         ],
+        _lineIndex: 1,
       },
       {
         type: 'itemization',
-        indentDepth: 0,
+        indent: '',
+        bullet: '\t',
         children: [
           {
             type: 'normal',
             text: 'itemized text',
           },
         ],
+        _lineIndex: 2,
       },
       {
         type: 'itemization',
-        indentDepth: 2,
+        indent: '\t\t',
+        bullet: '\t',
         children: [
           {
             type: 'normal',
             text: 'nested itemized text',
           },
         ],
+        _lineIndex: 3,
       },
       {
         type: 'itemization',
-        indentDepth: 0,
+        indent: '',
+        bullet: '　',
         children: [
           {
             type: 'normal',
             text: '箇条書きテキスト',
           },
         ],
+        _lineIndex: 4,
       },
       {
         type: 'itemization',
-        indentDepth: 3,
+        indent: '　　　',
+        bullet: '　',
         children: [
           {
             type: 'normal',
             text: 'ネストした箇条書きテキスト',
           },
         ],
+        _lineIndex: 5,
       },
     ],
   },
@@ -905,7 +987,6 @@ export const branketTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'normal',
@@ -935,6 +1016,7 @@ export const branketTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 0,
       },
     ],
   },
@@ -955,7 +1037,6 @@ export const markdownTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'decoration',
@@ -975,6 +1056,7 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'normalLine',
@@ -995,6 +1077,7 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 1,
       },
       {
         type: 'normalLine',
@@ -1015,6 +1098,7 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 2,
       },
       {
         type: 'normalLine',
@@ -1035,10 +1119,10 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 3,
       },
       {
         type: 'normalLine',
-        lineIndex: 4,
         children: [
           {
             type: 'decoration',
@@ -1075,10 +1159,10 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 4,
       },
       {
         type: 'normalLine',
-        lineIndex: 5,
         children: [
           {
             type: 'decoration',
@@ -1098,10 +1182,10 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 5,
       },
       {
         type: 'normalLine',
-        lineIndex: 6,
         children: [
           {
             type: 'decoration',
@@ -1121,6 +1205,7 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
+        _lineIndex: 6,
       },
     ],
   },
@@ -1130,8 +1215,8 @@ export const markdownTestCases: TestCase[] = [
     expected: [
       {
         type: 'itemization',
-        lineIndex: 0,
-        indentDepth: 0,
+        indent: '',
+        bullet: '- ',
         children: [
           {
             type: 'normal',
@@ -1139,11 +1224,12 @@ export const markdownTestCases: TestCase[] = [
             text: 'itemized text',
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'itemization',
-        lineIndex: 1,
-        indentDepth: 1,
+        indent: ' ',
+        bullet: '- ',
         children: [
           {
             type: 'normal',
@@ -1151,26 +1237,31 @@ export const markdownTestCases: TestCase[] = [
             text: 'nested itemized text',
           },
         ],
+        _lineIndex: 1,
       },
       {
         type: 'itemization',
-        indentDepth: 0,
+        indent: '',
+        bullet: '* ',
         children: [
           {
             type: 'normal',
             text: 'itemized text',
           },
         ],
+        _lineIndex: 2,
       },
       {
         type: 'itemization',
-        indentDepth: 2,
+        indent: '\t\t',
+        bullet: '* ',
         children: [
           {
             type: 'normal',
             text: 'nested itemized text',
           },
         ],
+        _lineIndex: 3,
       },
     ],
   },
@@ -1180,7 +1271,6 @@ export const markdownTestCases: TestCase[] = [
     expected: [
       {
         type: 'normalLine',
-        lineIndex: 0,
         children: [
           {
             type: 'normal',
@@ -1210,10 +1300,10 @@ export const markdownTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 0,
       },
       {
         type: 'normalLine',
-        lineIndex: 1,
         children: [
           {
             type: 'normal',
@@ -1243,6 +1333,7 @@ export const markdownTestCases: TestCase[] = [
             text: ' right',
           },
         ],
+        _lineIndex: 1,
       },
     ],
   },
