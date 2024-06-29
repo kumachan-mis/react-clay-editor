@@ -15,11 +15,12 @@ export function parseBracketItemization(
 
   const node: ItemizationNode = {
     type: 'itemization',
-    lineIndex: context.lineIndex,
+    lineId: context.lineIds[context.lineIndex],
+    indent,
     bullet,
-    indentDepth: indent.length,
     contentLength: content.length,
     children: parseContent(content, { ...context, charIndex: indent.length + bullet.length }, options),
+    _lineIndex: context.lineIndex,
   };
 
   context.lineIndex++;

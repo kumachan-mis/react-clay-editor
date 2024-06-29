@@ -11,9 +11,10 @@ export function parseBlockCodeLine(line: string, context: ParsingContext, regex:
 
   const node: BlockCodeLineNode = {
     type: 'blockCodeLine',
-    lineIndex: context.lineIndex,
-    indentDepth: indent.length,
+    lineId: context.lineIds[context.lineIndex],
+    indent,
     codeLine,
+    _lineIndex: context.lineIndex,
   };
 
   return node;

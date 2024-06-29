@@ -1,20 +1,25 @@
-import { ContentNode, contentNodesEquals } from '../content/contentNode';
+import { ContentNode, contentNodeToString, contentNodesEquals } from '../content/contentNode';
 
 export type QuotationNode = {
   type: 'quotation';
-  lineIndex: number;
-  indentDepth: number;
-  contentLength: number;
+  lineId: string;
+  indent: string;
   meta: string;
+  contentLength: number;
   children: ContentNode[];
+  _lineIndex: number;
 };
 
 export function quotationNodeEquals(a: QuotationNode, b: QuotationNode): boolean {
   return (
-    a.lineIndex === b.lineIndex &&
-    a.indentDepth === b.indentDepth &&
-    a.contentLength === b.contentLength &&
+    a.lineId === b.lineId &&
+    a.indent === b.indent &&
     a.meta === b.meta &&
+    a.contentLength === b.contentLength &&
     contentNodesEquals(a.children, b.children)
   );
+}
+
+export function quotationNodeToString(node: QuotationNode): string {
+  return node.indent + node.meta + node.children.map(contentNodeToString).join('');
 }

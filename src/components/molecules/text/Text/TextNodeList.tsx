@@ -1,4 +1,5 @@
 import { TopLevelNode } from '../../../../parser';
+import { isBlockNode } from '../../../../parser/block/blockNode';
 import { topLevelNodesEquals } from '../../../../parser/text/topLevelNode';
 import { TextNodeVisuals, textNodeVisualsEquals } from '../common/textNodeVisuals';
 
@@ -14,8 +15,13 @@ export type TextNodeListProps = {
 
 const TextNodeListComponent: React.FC<TextNodeListProps> = ({ nodes, getEditMode, ...rest }) => (
   <div>
-    {nodes.map((node, index) => (
-      <TextNode editMode={getEditMode(node)} key={index} node={node} {...rest} />
+    {nodes.map((node) => (
+      <TextNode
+        editMode={getEditMode(node)}
+        key={isBlockNode(node) ? node.facingMeta.lineId : node.lineId}
+        node={node}
+        {...rest}
+      />
     ))}
   </div>
 );

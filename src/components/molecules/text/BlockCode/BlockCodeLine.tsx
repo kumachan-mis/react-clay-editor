@@ -11,18 +11,18 @@ import React from 'react';
 export type BlockCodeLineProps = TextNodeProps<BlockCodeLineNode>;
 
 const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, codeVisual }) => {
-  const { codeLine, lineIndex, indentDepth } = node;
+  const { codeLine, lineId, indent } = node;
 
-  const lineLength = indentDepth + codeLine.length;
+  const lineLength = indent.length + codeLine.length;
   const codeElementProps = codeVisual?.codeProps?.(codeLine);
 
   return (
-    <Line lineIndex={lineIndex}>
-      <LineIndent indentDepth={indentDepth} />
-      <MonospaceLineContent indentDepth={indentDepth} lineLength={lineLength}>
+    <Line lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...codeLine].map((char, index) => (
-            <Char charIndex={indentDepth + index} key={indentDepth + index}>
+            <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
           ))}

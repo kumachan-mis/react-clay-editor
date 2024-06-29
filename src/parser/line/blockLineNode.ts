@@ -1,7 +1,15 @@
-import { BlockCodeLineNode, blockCodeLineNodeEquals } from '../blockCode/blockCodeLineNode';
-import { BlockCodeMetaNode, blockCodeMetaNodeEquals } from '../blockCode/blockCodeMetaNode';
-import { BlockFormulaLineNode, blockFormulaLineNodeEquals } from '../blockFormula/blockFormulaLineNode';
-import { BlockFormulaMetaNode, blockFormulaMetaNodeEquals } from '../blockFormula/blockFormulaMetaNode';
+import { BlockCodeLineNode, blockCodeLineNodeEquals, blockCodeLineNodeToString } from '../blockCode/blockCodeLineNode';
+import { BlockCodeMetaNode, blockCodeMetaNodeEquals, blockCodeMetaNodeToString } from '../blockCode/blockCodeMetaNode';
+import {
+  BlockFormulaLineNode,
+  blockFormulaLineNodeEquals,
+  blockFormulaLineNodeToString,
+} from '../blockFormula/blockFormulaLineNode';
+import {
+  BlockFormulaMetaNode,
+  blockFormulaMetaNodeEquals,
+  blockFormulaMetaNodeToString,
+} from '../blockFormula/blockFormulaMetaNode';
 import { TextNode } from '../text/textNode';
 
 export type BlockLineNode = BlockCodeMetaNode | BlockCodeLineNode | BlockFormulaMetaNode | BlockFormulaLineNode;
@@ -21,4 +29,17 @@ export function blockLineNodeEquals(a: BlockLineNode, b: BlockLineNode): boolean
     return blockFormulaLineNodeEquals(a, b);
   }
   return false;
+}
+
+export function blockLineNodeToString(node: BlockLineNode): string {
+  switch (node.type) {
+    case 'blockCodeMeta':
+      return blockCodeMetaNodeToString(node);
+    case 'blockCodeLine':
+      return blockCodeLineNodeToString(node);
+    case 'blockFormulaMeta':
+      return blockFormulaMetaNodeToString(node);
+    case 'blockFormulaLine':
+      return blockFormulaLineNodeToString(node);
+  }
 }

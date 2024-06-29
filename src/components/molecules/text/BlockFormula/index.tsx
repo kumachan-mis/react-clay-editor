@@ -18,29 +18,23 @@ export const BlockFormulaConstants = {
 
 const BlockFormulaComponent: React.FC<BlockFormulaProps> = ({ node, editMode, formulaVisual, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
-  const [first, last] = node.range;
   const formula = children.map((child) => child.formulaLine).join('\n');
 
+  const firstNode = children.length > 0 ? children[0] : facingMeta;
+  const lastNode = children.length > 0 ? children[children.length - 1] : trailingMeta ?? facingMeta;
+
   return !editMode && !/^\s*$/.test(formula) ? (
-    <LineGroup
-      data-styleid={BlockFormulaConstants.styleId}
-      firstLineIndex={first + 1}
-      lastLineIndex={trailingMeta ? last - 1 : last}
-    >
-      <LineGroupIndent indentDepth={facingMeta.indentDepth} />
-      <LineGroupContent indentDepth={facingMeta.indentDepth}>
+    <LineGroup data-styleid={BlockFormulaConstants.styleId} firstLineId={firstNode.lineId} lastLineId={lastNode.lineId}>
+      <LineGroupIndent indentDepth={facingMeta.indent.length} />
+      <LineGroupContent indentDepth={facingMeta.indent.length}>
         <KaTeX displayMode>{formula}</KaTeX>
       </LineGroupContent>
     </LineGroup>
   ) : (
-    <LineGroup
-      data-styleid={BlockFormulaConstants.styleId}
-      firstLineIndex={first + 1}
-      lastLineIndex={trailingMeta ? last - 1 : last}
-    >
+    <LineGroup data-styleid={BlockFormulaConstants.styleId} firstLineId={firstNode.lineId} lastLineId={lastNode.lineId}>
       <BlockFormulaMeta editMode={editMode} formulaVisual={formulaVisual} node={facingMeta} {...rest} />
-      {children.map((child, index) => (
-        <BlockFormulaLine editMode={editMode} formulaVisual={formulaVisual} key={index} node={child} {...rest} />
+      {children.map((child) => (
+        <BlockFormulaLine editMode={editMode} formulaVisual={formulaVisual} key={child.lineId} node={child} {...rest} />
       ))}
       {trailingMeta && (
         <BlockFormulaMeta editMode={editMode} formulaVisual={formulaVisual} node={trailingMeta} {...rest} />

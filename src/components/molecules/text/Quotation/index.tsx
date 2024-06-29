@@ -15,15 +15,15 @@ export const QuotationConstants = {
 };
 
 const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, ...rest }) => {
-  const { lineIndex, indentDepth, meta, contentLength, children } = node;
-  const lineLength = indentDepth + meta.length + contentLength;
+  const { lineId, indent, meta, contentLength, children } = node;
+  const lineLength = indent.length + meta.length + contentLength;
 
   return (
-    <Line data-styleid={QuotationConstants.styleId} lineIndex={lineIndex}>
-      <LineIndent indentDepth={indentDepth} />
-      <QuotationLineContent indentDepth={indentDepth} lineLength={lineLength}>
+    <Line data-styleid={QuotationConstants.styleId} lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <QuotationLineContent indentDepth={indent.length} lineLength={lineLength}>
         {[...meta].map((char, index) => (
-          <Char charIndex={indentDepth + index} key={indentDepth + index}>
+          <Char charIndex={indent.length + index} key={indent.length + index}>
             {editMode ? char : ''}
           </Char>
         ))}

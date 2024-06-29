@@ -15,3 +15,7 @@ export function bracketLinkNodeEquals(a: BracketLinkNode, b: BracketLinkNode): b
     a.trailingMeta === b.trailingMeta
   );
 }
+
+export function bracketLinkNodeToString(node: BracketLinkNode): string {
+  return node.facingMeta + node.linkName + node.trailingMeta;
+}

@@ -1,8 +1,9 @@
 export type BlockCodeMetaNode = {
   type: 'blockCodeMeta';
-  lineIndex: number;
-  indentDepth: number;
+  lineId: string;
+  indent: string;
   codeMeta: string;
+  _lineIndex: number;
 };
 
 export function optinalBlockCodeMetaNodeEquals(
@@ -16,5 +17,9 @@ export function optinalBlockCodeMetaNodeEquals(
 }
 
 export function blockCodeMetaNodeEquals(a: BlockCodeMetaNode, b: BlockCodeMetaNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.codeMeta === b.codeMeta;
+  return a.lineId === b.lineId && a.indent === b.indent && a.codeMeta === b.codeMeta;
+}
+
+export function blockCodeMetaNodeToString(node: BlockCodeMetaNode): string {
+  return node.indent + node.codeMeta;
 }

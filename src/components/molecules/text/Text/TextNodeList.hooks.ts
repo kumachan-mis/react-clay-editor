@@ -29,10 +29,10 @@ export function useTextNodeList(
 function cursorOnTextNode(node: TopLevelNode, cursorCoordinateLineIndex?: number): boolean {
   if (cursorCoordinateLineIndex === undefined) return false;
   if (node.type === 'blockCode' || node.type === 'blockFormula') {
-    const [first, last] = node.range;
+    const [first, last] = node._lineRange;
     return first <= cursorCoordinateLineIndex && cursorCoordinateLineIndex <= last;
   }
-  return cursorCoordinateLineIndex === node.lineIndex;
+  return cursorCoordinateLineIndex === node._lineIndex;
 }
 
 function selectionOnTextNode(
@@ -45,8 +45,8 @@ function selectionOnTextNode(
   const endLineIndex = Math.max(cursorSelectionFixedLineIndex, cursorSelectionFreeLineIndex);
 
   if (node.type === 'blockCode' || node.type === 'blockFormula') {
-    const [first, last] = node.range;
+    const [first, last] = node._lineRange;
     return startLineIndex <= last && first <= endLineIndex;
   }
-  return startLineIndex <= node.lineIndex && node.lineIndex <= endLineIndex;
+  return startLineIndex <= node._lineIndex && node._lineIndex <= endLineIndex;
 }

@@ -9,9 +9,10 @@ export function parseBlockFormulaMeta(line: string, context: ParsingContext): Bl
 
   const node: BlockFormulaMetaNode = {
     type: 'blockFormulaMeta',
-    lineIndex: context.lineIndex,
-    indentDepth: indent.length,
+    lineId: context.lineIds[context.lineIndex],
+    indent,
     formulaMeta,
+    _lineIndex: context.lineIndex,
   };
 
   return node;

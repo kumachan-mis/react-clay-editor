@@ -1,8 +1,9 @@
 export type BlockFormulaMetaNode = {
   type: 'blockFormulaMeta';
-  lineIndex: number;
-  indentDepth: number;
+  lineId: string;
+  indent: string;
   formulaMeta: string;
+  _lineIndex: number;
 };
 
 export function optinalBlockFormulaMetaNodeEquals(
@@ -15,6 +16,10 @@ export function optinalBlockFormulaMetaNodeEquals(
   return blockFormulaMetaNodeEquals(a, b);
 }
 
+export function blockFormulaMetaNodeToString(node: BlockFormulaMetaNode): string {
+  return node.indent + node.formulaMeta;
+}
+
 export function blockFormulaMetaNodeEquals(a: BlockFormulaMetaNode, b: BlockFormulaMetaNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.formulaMeta === b.formulaMeta;
+  return a.lineId === b.lineId && a.indent === b.indent && a.formulaMeta === b.formulaMeta;
 }

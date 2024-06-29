@@ -1,6 +1,6 @@
-import { ContentNode, contentNodesEquals } from '../content/contentNode';
+import { ContentNode, contentNodeToString, contentNodesEquals } from '../content/contentNode';
 
-import { DecorationConfig } from './decorationConfig';
+import { DecorationConfig, decorationConfigEquals } from './decorationConfig';
 
 export type DecorationNode = {
   type: 'decoration';
@@ -18,6 +18,10 @@ export function decorationNodeEquals(a: DecorationNode, b: DecorationNode): bool
     a.facingMeta === b.facingMeta &&
     contentNodesEquals(a.children, b.children) &&
     a.trailingMeta === b.trailingMeta &&
-    a.config === b.config
+    decorationConfigEquals(a.config, b.config)
   );
+}
+
+export function decorationNodeToString(node: DecorationNode): string {
+  return node.facingMeta + node.children.map(contentNodeToString).join('') + node.trailingMeta;
 }

@@ -15,11 +15,12 @@ export function parseMarkdownItemization(
 
   const node: ItemizationNode = {
     type: 'itemization',
-    lineIndex: context.lineIndex,
+    lineId: context.lineIds[context.lineIndex],
     bullet,
-    indentDepth: indent.length,
+    indent,
     contentLength: content.length,
     children: parseContent(content, { ...context, charIndex: indent.length + bullet.length }, options),
+    _lineIndex: context.lineIndex,
   };
 
   context.lineIndex++;

@@ -1,5 +1,6 @@
 import { useEditorPropsValueContext } from '../../../contexts/EditorPropsContext';
 import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
+import { topLevelNodeToLineNodes } from '../../../parser/text/topLevelNode';
 import { MenuList } from '../../atoms/menu/MenuList';
 import { BoldMenu } from '../../molecules/menu/BoldMenu';
 import { BracketMenu } from '../../molecules/menu/BracketMenu';
@@ -23,7 +24,6 @@ import { useFormulaMenu } from './hooks/formulaMenu';
 import { useHashtagMenu } from './hooks/hashtagMenu';
 import { useItalicMenu } from './hooks/italicMenu';
 import { useItemizationMenu } from './hooks/itemizationMenu';
-import { useLineNodes } from './hooks/lineNodes';
 import { useQuotationMenu } from './hooks/quotationMenu';
 import { useSectionMenu } from './hooks/sectionMenu';
 import { useTaggedLinkMenu } from './hooks/taggedLink';
@@ -35,8 +35,8 @@ export const EditorSyntaxMenu: React.FC = () => {
   const props = useEditorPropsValueContext();
   const nodes = useTextNodesValueContext();
 
+  const lineNodes = topLevelNodeToLineNodes(nodes);
   const common = useCommonMenu(props.syntax);
-  const lineNodes = useLineNodes(nodes);
   const contentPosition = useContentPosition(lineNodes, common.state.cursorCoordinate, common.state.cursorSelection);
   const blockPosition = useBlockPosition(nodes, common.state.cursorCoordinate, common.state.cursorSelection);
 

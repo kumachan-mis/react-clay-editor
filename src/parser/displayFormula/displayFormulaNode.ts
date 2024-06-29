@@ -15,3 +15,7 @@ export function displayFormulaNodeEquals(a: DisplayFormulaNode, b: DisplayFormul
     a.trailingMeta === b.trailingMeta
   );
 }
+
+export function displayFormulaNodeToString(node: DisplayFormulaNode): string {
+  return node.facingMeta + node.formula + node.trailingMeta;
+}

@@ -21,7 +21,7 @@ export function useBlockPosition(
     const blockPosition = searchBlockPosition(firstLineIndex, nodes);
     if (!blockPosition) return undefined;
     const blockNode = nodes[blockPosition.blockIndex];
-    if (!isBlockNode(blockNode) || lastLineIndex > blockNode.range[1]) return undefined;
+    if (!isBlockNode(blockNode) || lastLineIndex > blockNode._lineRange[1]) return undefined;
     return blockPosition;
   }, [nodes, cursorCoordinate, cursorSelection]);
   return blockPosition;
@@ -35,7 +35,7 @@ function searchBlockPosition(lineIndex: number, nodes: TopLevelNode[]): BlockPos
     while (left < right) {
       const mid = Math.floor((left + right) / 2);
       const node = nodes[mid];
-      const range = isBlockNode(node) ? node.range : [node.lineIndex, node.lineIndex];
+      const range = isBlockNode(node) ? node._lineRange : [node._lineIndex, node._lineIndex];
       if (lineIndex < range[0]) {
         right = mid - 1;
       } else if (range[1] < lineIndex) {

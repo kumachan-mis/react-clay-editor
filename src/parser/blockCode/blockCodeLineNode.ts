@@ -1,12 +1,17 @@
 export type BlockCodeLineNode = {
   type: 'blockCodeLine';
-  lineIndex: number;
-  indentDepth: number;
+  lineId: string;
+  indent: string;
   codeLine: string;
+  _lineIndex: number;
 };
 
 export function blockCodeLineNodeEquals(a: BlockCodeLineNode, b: BlockCodeLineNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.codeLine === b.codeLine;
+  return a.lineId === b.lineId && a.indent === b.indent && a.codeLine === b.codeLine;
+}
+
+export function blockCodeLineNodeToString(node: BlockCodeLineNode): string {
+  return node.indent + node.codeLine;
 }
 
 export function blockCodeLineNodesEquals(a: BlockCodeLineNode[], b: BlockCodeLineNode[]): boolean {

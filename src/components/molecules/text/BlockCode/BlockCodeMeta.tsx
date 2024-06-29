@@ -11,17 +11,17 @@ import React from 'react';
 export type BlockCodeMetaProps = TextNodeProps<BlockCodeMetaNode>;
 
 const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, codeVisual }) => {
-  const { lineIndex, indentDepth, codeMeta } = node;
-  const lineLength = indentDepth + codeMeta.length;
+  const { lineId, indent, codeMeta } = node;
+  const lineLength = indent.length + codeMeta.length;
   const codeElementProps = codeVisual?.codeProps?.(codeMeta);
 
   return (
-    <Line lineIndex={lineIndex}>
-      <LineIndent indentDepth={indentDepth} />
-      <MonospaceLineContent indentDepth={indentDepth} lineLength={lineLength}>
+    <Line lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...codeMeta].map((char, index) => (
-            <Char charIndex={indentDepth + index} key={indentDepth + index}>
+            <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
           ))}

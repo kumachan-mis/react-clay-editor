@@ -1,6 +1,6 @@
-import { NormalNode, normalNodeEquals } from '../normal/normalNode';
+import { NormalNode, normalNodeEquals, normalNodeToString } from '../normal/normalNode';
 import { TextNode } from '../text/textNode';
-import { UrlNode, urlNodeEquals } from '../url/urlNode';
+import { UrlNode, urlNodeEquals, urlNodeToString } from '../url/urlNode';
 
 export type TextLikeNode = UrlNode | NormalNode;
 
@@ -15,4 +15,13 @@ export function textLikeNodeEquals(a: TextLikeNode, b: TextLikeNode): boolean {
     return normalNodeEquals(a, b);
   }
   return false;
+}
+
+export function textLikeNodeToString(node: TextLikeNode): string {
+  switch (node.type) {
+    case 'url':
+      return urlNodeToString(node);
+    case 'normal':
+      return normalNodeToString(node);
+  }
 }

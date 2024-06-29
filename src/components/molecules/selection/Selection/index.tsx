@@ -5,6 +5,7 @@ import { useSelection } from './hooks';
 
 export type SelectionProps = {
   readonly cursorSelection: CursorSelection | undefined;
+  readonly lineIds: string[];
 };
 
 export const Selection: React.FC<SelectionProps> = (props) => {

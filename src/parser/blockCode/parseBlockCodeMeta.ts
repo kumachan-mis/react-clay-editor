@@ -9,9 +9,10 @@ export function parseBlockCodeMeta(line: string, context: ParsingContext): Block
 
   const node: BlockCodeMetaNode = {
     type: 'blockCodeMeta',
-    lineIndex: context.lineIndex,
-    indentDepth: indent.length,
+    lineId: context.lineIds[context.lineIndex],
+    indent,
     codeMeta,
+    _lineIndex: context.lineIndex,
   };
 
   return node;

@@ -24,7 +24,11 @@ export function blockMenuSwitch(
   const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
-  if (nodes.every((node) => !isBlockNode(node) || node.range[1] < firstLineIndex || lastLineIndex < node.range[0])) {
+  if (
+    nodes.every(
+      (node) => !isBlockNode(node) || node._lineRange[1] < firstLineIndex || lastLineIndex < node._lineRange[0]
+    )
+  ) {
     return 'off';
   }
   return 'disabled';

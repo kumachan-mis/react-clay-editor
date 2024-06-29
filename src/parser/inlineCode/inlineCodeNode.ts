@@ -15,3 +15,7 @@ export function inlineCodeNodeEquals(a: InlineCodeNode, b: InlineCodeNode): bool
     a.trailingMeta === b.trailingMeta
   );
 }
+
+export function inlineCodeNodeToString(node: InlineCodeNode): string {
+  return node.facingMeta + node.code + node.trailingMeta;
+}

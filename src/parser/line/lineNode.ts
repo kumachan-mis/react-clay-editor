@@ -1,7 +1,7 @@
 import { TextNode } from '../text/textNode';
 
-import { BlockLineNode, blockLineNodeEquals, isBlockLineNode } from './blockLineNode';
-import { PureLineNode, isPureLineNode, pureLineNodeEquals } from './pureLineNode';
+import { BlockLineNode, blockLineNodeEquals, blockLineNodeToString, isBlockLineNode } from './blockLineNode';
+import { PureLineNode, isPureLineNode, pureLineNodeEquals, pureLineNodeToString } from './pureLineNode';
 
 export type LineNode = BlockLineNode | PureLineNode;
 
@@ -16,4 +16,12 @@ export function lineNodeEquals(a: LineNode, b: LineNode): boolean {
     return pureLineNodeEquals(a, b);
   }
   return false;
+}
+
+export function lineNodeToString(node: LineNode): string {
+  if (isBlockLineNode(node)) {
+    return blockLineNodeToString(node);
+  } else {
+    return pureLineNodeToString(node);
+  }
 }

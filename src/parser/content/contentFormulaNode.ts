@@ -1,5 +1,13 @@
-import { DisplayFormulaNode, displayFormulaNodeEquals } from '../displayFormula/displayFormulaNode';
-import { InlineFormulaNode, inlineFormulaNodeEquals } from '../inlineFormula/inlineFormulaNode';
+import {
+  DisplayFormulaNode,
+  displayFormulaNodeEquals,
+  displayFormulaNodeToString,
+} from '../displayFormula/displayFormulaNode';
+import {
+  InlineFormulaNode,
+  inlineFormulaNodeEquals,
+  inlineFormulaNodeToString,
+} from '../inlineFormula/inlineFormulaNode';
 import { TextNode } from '../text/textNode';
 
 export type ContentFormulaNode = DisplayFormulaNode | InlineFormulaNode;
@@ -15,4 +23,13 @@ export function contentFormulaNodeEquals(a: ContentFormulaNode, b: ContentFormul
     return displayFormulaNodeEquals(a, b);
   }
   return false;
+}
+
+export function contentFormulaNodeToString(node: ContentFormulaNode): string {
+  switch (node.type) {
+    case 'inlineFormula':
+      return inlineFormulaNodeToString(node);
+    case 'displayFormula':
+      return displayFormulaNodeToString(node);
+  }
 }

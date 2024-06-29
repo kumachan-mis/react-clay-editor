@@ -15,6 +15,10 @@ export function taggedLinkNodeEquals(a: TaggedLinkNode, b: TaggedLinkNode): bool
   );
 }
 
+export function taggedLinkNodeToString(node: TaggedLinkNode): string {
+  return node.facingMeta + node.linkName + node.trailingMeta;
+}
+
 export function splitTag(taggedLinkNode: TaggedLinkNode): [string, string] {
   return [taggedLinkNode.facingMeta.substring(0, 1), taggedLinkNode.facingMeta.substring(1)];
 }

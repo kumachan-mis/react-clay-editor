@@ -19,3 +19,7 @@ export function hashtagNodeEquals(a: HashtagNode, b: HashtagNode): boolean {
 export function getHashtagName(hashtagNode: HashtagNode): string {
   return hashtagNode.linkName.replaceAll('_', ' ');
 }
+
+export function hashtagNodeToString(node: HashtagNode): string {
+  return node.facingMeta + node.linkName + node.trailingMeta;
+}

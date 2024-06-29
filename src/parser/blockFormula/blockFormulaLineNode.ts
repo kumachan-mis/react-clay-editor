@@ -1,12 +1,17 @@
 export type BlockFormulaLineNode = {
   type: 'blockFormulaLine';
-  lineIndex: number;
-  indentDepth: number;
+  lineId: string;
+  indent: string;
   formulaLine: string;
+  _lineIndex: number;
 };
 
 export function blockFormulaLineNodeEquals(a: BlockFormulaLineNode, b: BlockFormulaLineNode): boolean {
-  return a.lineIndex === b.lineIndex && a.indentDepth === b.indentDepth && a.formulaLine === b.formulaLine;
+  return a.lineId === b.lineId && a.indent === b.indent && a.formulaLine === b.formulaLine;
+}
+
+export function blockFormulaLineNodeToString(node: BlockFormulaLineNode): string {
+  return node.indent + node.formulaLine;
 }
 
 export function blockFormulaLineNodesEquals(a: BlockFormulaLineNode[], b: BlockFormulaLineNode[]): boolean {

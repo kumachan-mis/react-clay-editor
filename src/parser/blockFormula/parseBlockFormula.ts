@@ -5,26 +5,25 @@ import { createBlockFormulaLineRegex, parseBlockFormulaLine } from './parseBlock
 import { blockFormulaMetaRegex, parseBlockFormulaMeta } from './parseBlockFormulaMeta';
 
 export function parseBlockFormula(lines: string[], context: ParsingContext): BlockFormulaNode {
-  const originalLineIndex = context.lineIndex;
   const facingMeta = parseBlockFormulaMeta(lines[context.lineIndex], context);
-  const formulaLineRegex = createBlockFormulaLineRegex(facingMeta.indentDepth);
+  const formulaLineRegex = createBlockFormulaLineRegex(facingMeta.indent.length);
   context.lineIndex++;
 
   const node: BlockFormulaNode = {
     type: 'blockFormula',
-    range: [originalLineIndex, context.lineIndex],
     facingMeta,
     children: [],
+    _lineRange: [context.lineIndex - 1, context.lineIndex - 1],
   };
 
   while (context.lineIndex < lines.length) {
     if (blockFormulaMetaRegex.test(lines[context.lineIndex])) {
       const mayTrailingMeta = parseBlockFormulaMeta(lines[context.lineIndex], context);
-      if (mayTrailingMeta.indentDepth === facingMeta.indentDepth) {
+      if (mayTrailingMeta.indent.length === facingMeta.indent.length) {
         node.trailingMeta = mayTrailingMeta;
         context.lineIndex++;
       }
-      node.range[1] = context.lineIndex - 1;
+      node._lineRange[1] = context.lineIndex - 1;
       return node;
     }
 
@@ -33,6 +32,6 @@ export function parseBlockFormula(lines: string[], context: ParsingContext): Blo
     context.lineIndex++;
   }
 
-  node.range[1] = context.lineIndex - 1;
+  node._lineRange[1] = context.lineIndex - 1;
   return node;
 }

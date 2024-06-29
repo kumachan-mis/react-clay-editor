@@ -13,10 +13,10 @@ export const NormalLineConstants = {
 };
 
 const NormalLineComponent: React.FC<NormalLineProps> = ({ node, ...rest }) => {
-  const { lineIndex, contentLength, children } = node;
+  const { lineId, contentLength, children } = node;
 
   return (
-    <Line data-styleid={NormalLineConstants.styleId} lineIndex={lineIndex}>
+    <Line data-styleid={NormalLineConstants.styleId} lineId={lineId}>
       <LineContent lineLength={contentLength}>
         {children.map((child, index) => (
           <TextNode key={index} node={child} {...rest} />

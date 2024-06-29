@@ -11,11 +11,12 @@ export function parseQuotation(line: string, context: ParsingContext, options: P
 
   const node: QuotationNode = {
     type: 'quotation',
-    lineIndex: context.lineIndex,
-    indentDepth: indent.length,
-    contentLength: content.length,
+    lineId: context.lineIds[context.lineIndex],
+    indent,
     meta,
+    contentLength: content.length,
     children: parseContent(content, { ...context, charIndex: indent.length + meta.length }, options),
+    _lineIndex: context.lineIndex,
   };
 
   context.lineIndex++;

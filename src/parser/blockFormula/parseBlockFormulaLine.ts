@@ -11,9 +11,10 @@ export function parseBlockFormulaLine(line: string, context: ParsingContext, reg
 
   const node: BlockFormulaLineNode = {
     type: 'blockFormulaLine',
-    lineIndex: context.lineIndex,
-    indentDepth: indent.length,
+    lineId: context.lineIds[context.lineIndex],
+    indent,
     formulaLine,
+    _lineIndex: context.lineIndex,
   };
 
   return node;

@@ -62,7 +62,11 @@ function propsToState(props: CursorProps, state: CursorState, element: HTMLEleme
     return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
   }
 
-  const charElement = getCharAt(props.cursorCoordinate.lineIndex, props.cursorCoordinate.charIndex, element);
+  const charElement = getCharAt(
+    props.lineIds[props.cursorCoordinate.lineIndex],
+    props.cursorCoordinate.charIndex,
+    element
+  );
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
@@ -85,8 +89,8 @@ function propsToStateOnScrollOrResize(props: CursorProps, state: CursorState, el
   const textFieldBodyRect = getTextField(element)?.getBoundingClientRect();
   if (!props.cursorCoordinate || !textFieldBodyRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 
-  const { cursorCoordinate: coordinate } = props;
-  const charElement = getCharAt(coordinate.lineIndex, coordinate.charIndex, element);
+  const { cursorCoordinate: coordinate, lineIds } = props;
+  const charElement = getCharAt(lineIds[coordinate.lineIndex], coordinate.charIndex, element);
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };
 

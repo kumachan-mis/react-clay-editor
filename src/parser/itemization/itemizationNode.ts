@@ -1,20 +1,25 @@
-import { ContentNode, contentNodesEquals } from '../content/contentNode';
+import { ContentNode, contentNodeToString, contentNodesEquals } from '../content/contentNode';
 
 export type ItemizationNode = {
   type: 'itemization';
-  lineIndex: number;
+  lineId: string;
+  indent: string;
   bullet: string;
-  indentDepth: number;
   contentLength: number;
   children: ContentNode[];
+  _lineIndex: number;
 };
 
 export function itemizationNodeEquals(a: ItemizationNode, b: ItemizationNode): boolean {
   return (
-    a.lineIndex === b.lineIndex &&
+    a.lineId === b.lineId &&
+    a.indent === b.indent &&
     a.bullet === b.bullet &&
-    a.indentDepth === b.indentDepth &&
     a.contentLength === b.contentLength &&
     contentNodesEquals(a.children, b.children)
   );
+}
+
+export function itemizationNodeToString(node: ItemizationNode): string {
+  return node.indent + node.bullet + node.children.map(contentNodeToString).join('');
 }

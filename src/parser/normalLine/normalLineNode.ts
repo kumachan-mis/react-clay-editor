@@ -1,14 +1,17 @@
-import { ContentNode, contentNodesEquals } from '../content/contentNode';
+import { ContentNode, contentNodeToString, contentNodesEquals } from '../content/contentNode';
 
 export type NormalLineNode = {
   type: 'normalLine';
-  lineIndex: number;
+  lineId: string;
   contentLength: number;
   children: ContentNode[];
+  _lineIndex: number;
 };
 
 export function normalLineNodeEquals(a: NormalLineNode, b: NormalLineNode): boolean {
-  return (
-    a.lineIndex === b.lineIndex && a.contentLength === b.contentLength && contentNodesEquals(a.children, b.children)
-  );
+  return a.lineId === b.lineId && a.contentLength === b.contentLength && contentNodesEquals(a.children, b.children);
+}
+
+export function normalLineNodeToString(node: NormalLineNode): string {
+  return node.children.map(contentNodeToString).join('');
 }

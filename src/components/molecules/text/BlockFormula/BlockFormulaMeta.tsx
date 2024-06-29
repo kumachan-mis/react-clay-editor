@@ -11,17 +11,17 @@ import React from 'react';
 export type BlockFormulaMetaProps = TextNodeProps<BlockFormulaMetaNode>;
 
 const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, formulaVisual }) => {
-  const { formulaMeta, lineIndex, indentDepth } = node;
-  const lineLength = indentDepth + formulaMeta.length;
+  const { formulaMeta, lineId, indent } = node;
+  const lineLength = indent.length + formulaMeta.length;
   const codeElementProps = formulaVisual?.codeProps?.(formulaMeta);
 
   return (
-    <Line lineIndex={lineIndex}>
-      <LineIndent indentDepth={indentDepth} />
-      <MonospaceLineContent indentDepth={indentDepth} lineLength={lineLength}>
+    <Line lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...formulaMeta].map((char, index) => (
-            <Char charIndex={indentDepth + index} key={indentDepth + index}>
+            <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
           ))}

@@ -16,15 +16,15 @@ export const ItemizationConstants = {
 };
 
 const ItemizationComponent: React.FC<ItemizationProps> = ({ node, editMode, ...rest }) => {
-  const { lineIndex, indentDepth, bullet, contentLength, children } = node;
-  const lineLength = indentDepth + bullet.length + contentLength;
+  const { lineId, indent, bullet, contentLength, children } = node;
+  const lineLength = indent.length + bullet.length + contentLength;
 
   return (
-    <Line data-styleid={ItemizationConstants.styleId} lineIndex={lineIndex}>
-      <LineIndent indentDepth={indentDepth} />
-      <ItemBullet bullet={bullet} indentDepth={indentDepth} />
-      <LineContent indentDepth={indentDepth + 1} lineLength={lineLength}>
-        <ItemBulletContent bullet={bullet} cursorOn={editMode} indentDepth={indentDepth} />
+    <Line data-styleid={ItemizationConstants.styleId} lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <ItemBullet bullet={bullet} indentDepth={indent.length} />
+      <LineContent indentDepth={indent.length + 1} lineLength={lineLength}>
+        <ItemBulletContent bullet={bullet} cursorOn={editMode} indentDepth={indent.length} />
         {children.map((child, index) => (
           <TextNode editMode={editMode} key={index} node={child} {...rest} />
         ))}

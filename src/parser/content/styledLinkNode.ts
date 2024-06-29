@@ -1,6 +1,6 @@
-import { BracketLinkNode, bracketLinkNodeEquals } from '../bracketLink/bracketLinkNode';
-import { HashtagNode, hashtagNodeEquals } from '../hashtag/hashtagNode';
-import { TaggedLinkNode, taggedLinkNodeEquals } from '../taggedLink/taggedLinkNode';
+import { BracketLinkNode, bracketLinkNodeEquals, bracketLinkNodeToString } from '../bracketLink/bracketLinkNode';
+import { HashtagNode, hashtagNodeEquals, hashtagNodeToString } from '../hashtag/hashtagNode';
+import { TaggedLinkNode, taggedLinkNodeEquals, taggedLinkNodeToString } from '../taggedLink/taggedLinkNode';
 import { TextNode } from '../text/textNode';
 
 export type StyledLinkNode = TaggedLinkNode | BracketLinkNode | HashtagNode;
@@ -18,4 +18,15 @@ export function styledLinkNodeEquals(a: StyledLinkNode, b: StyledLinkNode): bool
     return hashtagNodeEquals(a, b);
   }
   return false;
+}
+
+export function styledLinkNodeToString(node: StyledLinkNode): string {
+  switch (node.type) {
+    case 'taggedLink':
+      return taggedLinkNodeToString(node);
+    case 'bracketLink':
+      return bracketLinkNodeToString(node);
+    case 'hashtag':
+      return hashtagNodeToString(node);
+  }
 }

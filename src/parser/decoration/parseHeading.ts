@@ -27,9 +27,10 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
 
   const node: NormalLineNode = {
     type: 'normalLine',
-    lineIndex: context.lineIndex,
+    lineId: context.lineIds[context.lineIndex],
     contentLength: line.length,
     children: [childNode],
+    _lineIndex: context.lineIndex,
   };
 
   context.lineIndex++;

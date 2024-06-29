@@ -15,3 +15,7 @@ export function inlineFormulaNodeEquals(a: InlineFormulaNode, b: InlineFormulaNo
     a.trailingMeta === b.trailingMeta
   );
 }
+
+export function inlineFormulaNodeToString(node: InlineFormulaNode): string {
+  return node.facingMeta + node.formula + node.trailingMeta;
+}

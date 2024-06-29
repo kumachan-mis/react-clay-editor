@@ -3,11 +3,11 @@ import { LineConstants } from '../Line';
 
 import { CharConstants } from './index';
 
-export function getCharAt(lineIndex: number, charIndex: number, element: HTMLElement): HTMLElement | null {
+export function getCharAt(lineId: string, charIndex: number, element: HTMLElement): HTMLElement | null {
   let rootElement = getRoot(element);
   if (!rootElement) rootElement = element;
 
-  const lineSelector = `div[data-selectid="${LineConstants.selectId(lineIndex)}"]`;
+  const lineSelector = `div[data-selectid="${LineConstants.selectId(lineId)}"]`;
   const lineElement = rootElement.querySelector<HTMLElement>(lineSelector);
   if (!lineElement) return null;
 
