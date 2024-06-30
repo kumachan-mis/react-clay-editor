@@ -101,8 +101,19 @@ function handleBlockMenuAllInRange(text: string, state: EditorState, blockNode: 
   const { cursorCoordinate, cursorSelection } = state;
   const lines = text.split('\n');
 
-  const [start, end] = [blockNode._lineRange[0] + 1, blockNode._lineRange[1]];
-  const insertedText = lines.slice(start, blockNode.trailingMeta ? end : end + 1).join('\n');
+  if (blockNode.children.length === 0) {
+    const blockSelection: CursorSelection = {
+      fixed: { lineIndex: blockNode._lineRange[0], charIndex: 0 },
+      free: { lineIndex: blockNode._lineRange[1], charIndex: lines[blockNode._lineRange[1]].length },
+    };
+    const [newText, newState] = insertText(text, { ...state, cursorSelection: blockSelection }, '');
+    return [newText, newState];
+  }
+
+  const start = blockNode._lineRange[0] + 1;
+  const end = blockNode._lineRange[1] + (blockNode.trailingMeta ? 0 : 1);
+
+  const insertedText = lines.slice(start, end).join('\n');
   const blockSelection: CursorSelection = {
     fixed: { lineIndex: blockNode._lineRange[0], charIndex: 0 },
     free: { lineIndex: blockNode._lineRange[1], charIndex: lines[blockNode._lineRange[1]].length },
@@ -283,7 +294,9 @@ function allInRange(blockNode: BlockNode, [firstLineIndex, lastLineIndex]: [numb
   const [top, bottom] = blockNode._lineRange;
   if (firstLineIndex === top && lastLineIndex === top) return true;
   if (!!blockNode.trailingMeta && firstLineIndex === bottom && lastLineIndex === bottom) return true;
-  const topIndexes = [top, top + 1];
+
+  const topIndexes = blockNode.children.length > 0 ? [top, top + 1] : [top];
   const bottomIndexes = blockNode.trailingMeta ? [bottom, bottom - 1] : [bottom];
+
   return topIndexes.includes(firstLineIndex) && bottomIndexes.includes(lastLineIndex);
 }

@@ -26,8 +26,11 @@ export function getLineRange(
   cursorSelection: CursorSelection | undefined
 ): [number, number] {
   let [firstLineIndex, lastLineIndex] = [cursorCoordinate.lineIndex, cursorCoordinate.lineIndex];
-  if (cursorSelection)
+  if (cursorSelection) {
     [firstLineIndex, lastLineIndex] = [cursorSelection.fixed.lineIndex, cursorSelection.free.lineIndex];
-  if (firstLineIndex > lastLineIndex) [firstLineIndex, lastLineIndex] = [lastLineIndex, firstLineIndex];
+  }
+  if (firstLineIndex > lastLineIndex) {
+    [firstLineIndex, lastLineIndex] = [lastLineIndex, firstLineIndex];
+  }
   return [firstLineIndex, lastLineIndex];
 }

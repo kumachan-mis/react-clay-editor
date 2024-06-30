@@ -454,7 +454,35 @@ test('formula menu: block-formula, no-selection, empty-line', async () => {
   await linesToBe(page, ['$$', '\\int f(x)g(y) dx', '$$']);
 });
 
-test('code menu: block-formula, no-selection, empty-formula', async () => {
+test('formula menu: block-formula, no-selection, no-formula-line (with-trailing-meta)', async () => {
+  await page.keyboard.insertText(['$$', '$$'].join('\n'));
+
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
+
+  await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
+});
+
+test('formula menu: block-formula, no-selection, no-formula-line (without-trailing-meta)', async () => {
+  await page.keyboard.insertText(['$$'].join('\n'));
+
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
+
+  await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
+});
+
+test('formula menu: block-formula, no-selection, empty-formula', async () => {
   await page.keyboard.insertText(['$$', '', '$$'].join('\n'));
 
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
@@ -599,6 +627,24 @@ test('formula menu: block-formula, no-selection, in-other-with-formula-below', a
   await page.keyboard.type('.');
 
   await linesToBe(page, ['$$', ' norm.al line', '$$', '$$', 'f(x)g(x)', '$$']);
+});
+
+test('formula menu: block-formula, selection, no-formula-line', async () => {
+  await page.keyboard.insertText(['$$', '$$'].join('\n'));
+
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]'
+  );
+
+  await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
 });
 
 test('formula menu: block-formula, selection, all-formula-lines (syntax)', async () => {

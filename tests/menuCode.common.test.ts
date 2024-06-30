@@ -335,6 +335,34 @@ test('code menu: block-code, no-selection, empty-line', async () => {
   await linesToBe(page, ['```', 'React Clay Editor', '```']);
 });
 
+test('code menu: block-code, no-selection, no-code-line (with-trailing-meta)', async () => {
+  await page.keyboard.insertText(['```', '```'].join('\n'));
+
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]').click();
+
+  await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
+});
+
+test('code menu: block-code, no-selection, no-code-line (without-trailing-meta)', async () => {
+  await page.keyboard.insertText(['```'].join('\n'));
+
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
+
+  await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
+});
+
 test('code menu: block-code, no-selection, empty-code', async () => {
   await page.keyboard.insertText(['```', '', '```'].join('\n'));
 
@@ -479,6 +507,24 @@ test('code menu: block-code, no-selection, in-other-with-code-below', async () =
   await page.keyboard.type('.');
 
   await linesToBe(page, ['```', ' norm.al line', '```', '```', 'const a = 1;', '```']);
+});
+
+test('code menu: block-code, selection, no-code-line', async () => {
+  await page.keyboard.insertText(['```', '```'].join('\n'));
+
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
+  );
+
+  await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
 });
 
 test('code menu: block-code, selection, all-code-lines (syntax)', async () => {
