@@ -19,7 +19,7 @@ test.afterAll(async () => {
 });
 
 test('code menu: inline-code-button, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -33,7 +33,7 @@ test('code menu: inline-code-button, no-selection, empty-line', async () => {
 test('code menu: inline-code-dropdown, no-selection, in-code', async () => {
   await page.keyboard.insertText(["`import { EditorRoot } from 'react-clay-editor'`"].join('\n'));
 
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-code-menu-item]').click();
@@ -48,7 +48,7 @@ test('code menu: inline-code-dropdown, no-selection, in-code', async () => {
 test('code menu: inline-code-button, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C9]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -62,7 +62,7 @@ test('code menu: inline-code-button, no-selection, in-normal', async () => {
 test('code menu: inline-code-dropdown, no-selection, in-normal-with-code-left', async () => {
   await page.keyboard.insertText(['`const a = 0;`normal text'].join('\n'));
 
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C14]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C14]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-code-menu-item]').click();
@@ -77,7 +77,7 @@ test('code menu: inline-code-dropdown, no-selection, in-normal-with-code-left', 
 test('code menu: inline-code-button, no-selection, in-normal-with-code-right', async () => {
   await page.keyboard.insertText(['normal text`const a = 0;`'].join('\n'));
 
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C11]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -91,7 +91,7 @@ test('code menu: inline-code-button, no-selection, in-normal-with-code-right', a
 test('code menu: inline-code-dropdown, no-selection, other (content node)', async () => {
   await page.keyboard.insertText(['[bracket link]'].join('\n'));
 
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C11]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=inline-code-menu-item]')).toBeDisabled();
@@ -106,7 +106,7 @@ test('code menu: inline-code-dropdown, no-selection, other (content node)', asyn
 test('code menu: inline-code-dropdown, no-selection, other (block node)', async () => {
   await page.keyboard.insertText(['```', 'nothing happened', '```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L1] [data-selectid=char-C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=inline-code-menu-item]')).toBeDisabled();
@@ -123,8 +123,8 @@ test('code menu: inline-code-button, single-line-selection, in-code-all (syntax 
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C0]',
-    '[data-selectid=line-L0] [data-selectid=char-C16]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -141,8 +141,8 @@ test('code menu: inline-code-dropdown, single-line-selection, in-code-all (text)
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C1]',
-    '[data-selectid=line-L0] [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -160,8 +160,8 @@ test('code menu: inline-code-button, single-line-selection, in-code-all (syntax)
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C0]',
-    '[data-selectid=line-L0] [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -178,8 +178,8 @@ test('code menu: inline-code-dropdown, single-line-selection, in-code-left', asy
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C0]',
-    '[data-selectid=line-L0] [data-selectid=char-C9]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -197,8 +197,8 @@ test('code menu: inline-code-button, single-line-selection, in-code-mid', async 
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C3]',
-    '[data-selectid=line-L0] [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -215,8 +215,8 @@ test('code menu: inline-code-dropdown, single-line-selection, in-code-right', as
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C8]',
-    '[data-selectid=line-L0] [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -234,8 +234,8 @@ test('code menu: inline-code-button, single-line-selection, in-normal', async ()
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C16]',
-    '[data-selectid=line-L0] [data-selectid=char-C24]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C24]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -252,8 +252,8 @@ test('code menu: inline-code-dropdown, single-line-selection, in-normal-with-cod
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C11]',
-    '[data-selectid=line-L0] [data-selectid=char-C19]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C19]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -271,8 +271,8 @@ test('code menu: inline-code-button, single-line-selection, in-normal-with-code-
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C20]',
-    '[data-selectid=line-L0] [data-selectid=char-C26]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C20]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C26]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -289,8 +289,8 @@ test('code menu: inline-code-dropdown, single-line-selection, other (mixed with 
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C3]',
-    '[data-selectid=line-L0] [data-selectid=char-C8]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -308,8 +308,8 @@ test('code menu: inline-code-button, single-line-selection, other (mixed with fr
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C8]',
-    '[data-selectid=line-L0] [data-selectid=char-C30]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C30]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -323,7 +323,7 @@ test('code menu: inline-code-button, single-line-selection, other (mixed with fr
 });
 
 test('code menu: block-code, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-code-menu-item]').click();
@@ -338,7 +338,7 @@ test('code menu: block-code, no-selection, empty-line', async () => {
 test('code menu: block-code, no-selection, empty-code', async () => {
   await page.keyboard.insertText(['```', '', '```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L1] [data-selectid=char-C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -352,7 +352,7 @@ test('code menu: block-code, no-selection, empty-code', async () => {
 test('code menu: block-code, no-selection, in-code (code)', async () => {
   await page.keyboard.insertText([' ```', ' const a = 1;', ' ```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L1] [data-selectid=char-C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-code-menu-item]').click();
@@ -367,7 +367,7 @@ test('code menu: block-code, no-selection, in-code (code)', async () => {
 test('code menu: block-code, no-selection, in-code (syntax)', async () => {
   await page.keyboard.insertText(['```', 'const a = 1;', 'const b = 2;', '```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L3] [data-selectid=char-C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -381,7 +381,7 @@ test('code menu: block-code, no-selection, in-code (syntax)', async () => {
 test('code menu: block-code, no-selection, in-code-top', async () => {
   await page.keyboard.insertText(['  ```', '  const a = 1;', '  const b = 2;', '  ```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L1] [data-selectid=char-C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -395,7 +395,7 @@ test('code menu: block-code, no-selection, in-code-top', async () => {
 test('code menu: block-code, no-selection, in-code-mid', async () => {
   await page.keyboard.insertText(['```', 'const a = 1;', 'const b = 2;', 'const c = 3;', '```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L2] [data-selectid=char-C1]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-code-menu-item]').click();
@@ -410,7 +410,7 @@ test('code menu: block-code, no-selection, in-code-mid', async () => {
 test('code menu: block-code, no-selection, in-code-bottom', async () => {
   await page.keyboard.insertText(['  ```', '  const a = 1;', '  const b = 2;', '  ```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L2] [data-selectid=char-C9]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C9]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -424,7 +424,7 @@ test('code menu: block-code, no-selection, in-code-bottom', async () => {
 test('code menu: block-code, no-selection, in-other-line', async () => {
   await page.keyboard.insertText([' normal line'].join('\n'));
 
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-code-menu-item]').click();
@@ -439,7 +439,7 @@ test('code menu: block-code, no-selection, in-other-line', async () => {
 test('code menu: block-code, no-selection, in-other-line (with nested code)', async () => {
   await page.keyboard.insertText([' ```', ' const a = 1', ' ```', ' normal line'].join('\n'));
 
-  await page.locator('[data-selectid=line-L3] [data-selectid=char-C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-code-menu-item]').click();
@@ -454,7 +454,7 @@ test('code menu: block-code, no-selection, in-other-line (with nested code)', as
 test('code menu: block-code, no-selection, in-other-with-code-above', async () => {
   await page.keyboard.insertText([' ```', ' const a = 1;', 'normal line'].join('\n'));
 
-  await page.locator('[data-selectid=line-L2] [data-selectid=char-C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-code-menu-item]').click();
@@ -469,7 +469,7 @@ test('code menu: block-code, no-selection, in-other-with-code-above', async () =
 test('code menu: block-code, no-selection, in-other-with-code-below', async () => {
   await page.keyboard.insertText([' normal line', '```', 'const a = 1;', '```'].join('\n'));
 
-  await page.locator('[data-selectid=line-L0] [data-selectid=char-C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]').click();
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-code-menu-item]').click();
@@ -486,8 +486,8 @@ test('code menu: block-code, selection, all-code-lines (syntax)', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C1]',
-    '[data-selectid=line-L0] [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -504,8 +504,8 @@ test('code menu: block-code, selection, all-code-lines (code)', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L1] [data-selectid=char-C4]',
-    '[data-selectid=line-L2] [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -523,8 +523,8 @@ test('code menu: block-code, selection, all-code-lines (code and syntax)', async
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C1]',
-    '[data-selectid=line-L2] [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -542,8 +542,8 @@ test('code menu: block-code, selection, all-code-lines-top', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C1]',
-    '[data-selectid=line-L1] [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -561,8 +561,8 @@ test('code menu: block-code, selection, in-code-mid', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L2] [data-selectid=char-C8]',
-    '[data-selectid=line-L2] [data-selectid=char-C0]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C8]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C0]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -580,8 +580,8 @@ test('code menu: block-code, selection, all-code-lines-bottom', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L2] [data-selectid=char-C1]',
-    '[data-selectid=line-L2] [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -598,8 +598,8 @@ test('code menu: block-code, selection, all-other-lines', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C1]',
-    '[data-selectid=line-L1] [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -617,8 +617,8 @@ test('code menu: block-code, selection, in-other-with-code-above', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C1]',
-    '[data-selectid=line-L1] [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -636,8 +636,8 @@ test('code menu: block-code, selection, in-other-with-code-below', async () => {
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L3] [data-selectid=char-C9]',
-    '[data-selectid=line-L3] [data-selectid=char-C11]'
+    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C9]',
+    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C11]'
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -655,8 +655,8 @@ test('code menu: block-code, selection, mixed-lines (code and other)', async () 
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L2] [data-selectid=char-C1]',
-    '[data-selectid=line-L3] [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C6]'
   );
 
   await expect(page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
@@ -673,8 +673,8 @@ test('code menu: block-code, selection, mixed-lines (double code)', async () => 
 
   await mouseSelect(
     page,
-    '[data-selectid=line-L3] [data-selectid=char-C1]',
-    '[data-selectid=line-L1] [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]'
   );
 
   await expect(page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();

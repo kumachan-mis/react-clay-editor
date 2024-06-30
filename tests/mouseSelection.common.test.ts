@@ -28,8 +28,8 @@ test.afterAll(async () => {
 test('one line selection', async () => {
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C1]',
-    '[data-selectid=line-L0] [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]'
   );
   await page.keyboard.type('.');
 
@@ -44,8 +44,8 @@ test('one line selection', async () => {
 test('two lines selection', async () => {
   await mouseSelect(
     page,
-    '[data-selectid=line-L1] [data-selectid=char-C25]',
-    '[data-selectid=line-L2] [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C25]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]'
   );
   await page.keyboard.type('.');
 
@@ -59,8 +59,8 @@ test('two lines selection', async () => {
 test('three lines selection', async () => {
   await mouseSelect(
     page,
-    '[data-selectid=line-L0] [data-selectid=char-C29]',
-    '[data-selectid=line-L2] [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C29]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C10]'
   );
   await page.keyboard.type('.');
 
@@ -71,7 +71,7 @@ test('three lines selection', async () => {
 });
 
 test('double click selection', async () => {
-  await page.locator('[data-selectid=line-L2] [data-selectid=char-C15]').click({ clickCount: 2 });
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C15]').click({ clickCount: 2 });
   await page.keyboard.type('.');
 
   await linesToBe(page, [
@@ -83,7 +83,7 @@ test('double click selection', async () => {
 });
 
 test('triple click selection', async () => {
-  await page.locator('[data-selectid=line-L2] [data-selectid=char-C15]').click({ clickCount: 3 });
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C15]').click({ clickCount: 3 });
   await page.keyboard.type('.');
 
   await linesToBe(page, [
@@ -97,8 +97,8 @@ test('triple click selection', async () => {
 test('"down then up without move', async () => {
   await mouseSelect(
     page,
-    '[data-selectid=line-L2] [data-selectid=char-C15]',
-    '[data-selectid=line-L2] [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C15]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C15]'
   );
   await page.keyboard.type('.');
 
@@ -112,8 +112,8 @@ test('"down then up without move', async () => {
 test('move without down and up', async () => {
   await mouseMove(
     page,
-    '[data-selectid=line-L1] [data-selectid=char-C25]',
-    '[data-selectid=line-L2] [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C25]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]'
   );
   await page.keyboard.type('.');
 
