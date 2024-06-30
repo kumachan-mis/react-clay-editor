@@ -7393,7 +7393,7 @@ const RAW_RUNTIME_STATE =
           ["util", "npm:0.12.5"],\
           ["util-deprecate", "npm:1.0.2"],\
           ["watchpack", "npm:2.4.0"],\
-          ["ws", "virtual:f00bd1db373d79fed083e43feeb250211bbbfde7b9fac5f870077e388692afaf66eee055ab1a6be10dd7f79e76b611625d31b78519c46aa0d32cc070152a8b28#npm:8.14.2"]\
+          ["ws", "virtual:f00bd1db373d79fed083e43feeb250211bbbfde7b9fac5f870077e388692afaf66eee055ab1a6be10dd7f79e76b611625d31b78519c46aa0d32cc070152a8b28#npm:8.17.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -20442,17 +20442,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["ws", [\
-      ["npm:8.14.2", {\
-        "packageLocation": "./.yarn/cache/ws-npm-8.14.2-b339ac47a2-815ff01d9b.zip/node_modules/ws/",\
+      ["npm:8.17.1", {\
+        "packageLocation": "./.yarn/cache/ws-npm-8.17.1-f57fb24a2c-4264ae92c0.zip/node_modules/ws/",\
         "packageDependencies": [\
-          ["ws", "npm:8.14.2"]\
+          ["ws", "npm:8.17.1"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:f00bd1db373d79fed083e43feeb250211bbbfde7b9fac5f870077e388692afaf66eee055ab1a6be10dd7f79e76b611625d31b78519c46aa0d32cc070152a8b28#npm:8.14.2", {\
-        "packageLocation": "./.yarn/__virtual__/ws-virtual-4172ead855/0/cache/ws-npm-8.14.2-b339ac47a2-815ff01d9b.zip/node_modules/ws/",\
+      ["virtual:f00bd1db373d79fed083e43feeb250211bbbfde7b9fac5f870077e388692afaf66eee055ab1a6be10dd7f79e76b611625d31b78519c46aa0d32cc070152a8b28#npm:8.17.1", {\
+        "packageLocation": "./.yarn/__virtual__/ws-virtual-0128ac01f0/0/cache/ws-npm-8.17.1-f57fb24a2c-4264ae92c0.zip/node_modules/ws/",\
         "packageDependencies": [\
-          ["ws", "virtual:f00bd1db373d79fed083e43feeb250211bbbfde7b9fac5f870077e388692afaf66eee055ab1a6be10dd7f79e76b611625d31b78519c46aa0d32cc070152a8b28#npm:8.14.2"],\
+          ["ws", "virtual:f00bd1db373d79fed083e43feeb250211bbbfde7b9fac5f870077e388692afaf66eee055ab1a6be10dd7f79e76b611625d31b78519c46aa0d32cc070152a8b28#npm:8.17.1"],\
           ["@types/bufferutil", null],\
           ["@types/utf-8-validate", null],\
           ["bufferutil", null],\
