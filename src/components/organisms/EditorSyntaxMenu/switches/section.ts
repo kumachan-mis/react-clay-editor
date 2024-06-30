@@ -1,5 +1,4 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { DecorationNode } from '../../../../parser/decoration/decorationNode';
 import { LineNode } from '../../../../parser/line/lineNode';
 
 export type SectionMenuItemType = 'normal' | 'larger' | 'largest';
@@ -19,7 +18,7 @@ export function sectionMenuSwitch(
   const lineNode = nodes[cursorCoordinate.lineIndex];
   if (lineNode.type !== 'normalLine') return 'disabled';
 
-  const decorationNodes = lineNode.children.filter((node) => node.type === 'decoration') as DecorationNode[];
+  const decorationNodes = lineNode.children.filter((node) => node.type === 'decoration');
   if (decorationNodes.length > 1 || (decorationNodes.length === 1 && lineNode.children.length !== 1)) return 'disabled';
 
   if (decorationNodes.length === 0) return 'off';
