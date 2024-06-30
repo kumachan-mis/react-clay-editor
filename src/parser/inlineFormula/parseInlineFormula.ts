@@ -1,8 +1,9 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
+import { ContentNode } from '../content/contentNode';
 import { parseContent } from '../content/parseContent';
-import { ContentNode } from '../content/types';
 
-import { InlineFormulaNode } from './types';
+import { InlineFormulaNode } from './inlineFormulaNode';
 
 export const inlineFormulaRegex = /^(?<left>.*?)\$(?<formula>[^$]+)\$(?<right>.*)$/;
 
@@ -12,7 +13,6 @@ export function parseInlineFormula(text: string, context: ParsingContext, option
 
   const node: InlineFormulaNode = {
     type: 'inlineFormula',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '$',
     formula,

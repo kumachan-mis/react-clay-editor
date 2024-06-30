@@ -1,8 +1,9 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
+import { ContentNode } from '../content/contentNode';
 import { parseContent } from '../content/parseContent';
-import { ContentNode } from '../content/types';
 
-import { DecorationNode } from './types';
+import { DecorationNode } from './decorationNode';
 
 export const boldRegex = /^(?<left>.*?)\*(?<body>[^*\s]([^*]*[^*\s])?)\*(?<right>.*)$/;
 
@@ -12,7 +13,6 @@ export function parseBold(text: string, context: ParsingContext, options: Parsin
 
   const node: DecorationNode = {
     type: 'decoration',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '*',
     children: parseContent(body, { ...context, charIndex: first + 1, nested: true }, options),

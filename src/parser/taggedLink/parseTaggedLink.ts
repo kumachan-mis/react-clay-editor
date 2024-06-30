@@ -1,8 +1,9 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
+import { ContentNode } from '../content/contentNode';
 import { parseContent } from '../content/parseContent';
-import { ContentNode } from '../content/types';
 
-import { TaggedLinkNode } from './types';
+import { TaggedLinkNode } from './taggedLinkNode';
 
 export function createTaggedLinkRegex(tagName: string, linkNameRegex = /[^[\]]+/): RegExp {
   const tag = tagName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -21,7 +22,6 @@ export function parseTaggedLink(
 
   const node: TaggedLinkNode = {
     type: 'taggedLink',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: `[${tag} `,
     linkName,

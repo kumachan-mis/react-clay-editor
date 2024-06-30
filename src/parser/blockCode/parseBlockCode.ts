@@ -1,31 +1,30 @@
-import { ParsingContext } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
 
+import { BlockCodeNode } from './blockCodeNode';
 import { createBlockCodeLineRegex, parseBlockCodeLine } from './parseBlockCodeLine';
 import { blockCodeMetaRegex, parseBlockCodeMeta } from './parseBlockCodeMeta';
-import { BlockCodeNode } from './types';
 
 export function parseBlockCode(lines: string[], context: ParsingContext): BlockCodeNode {
-  const originalLineIndex = context.lineIndex;
   const facingMeta = parseBlockCodeMeta(lines[context.lineIndex], context);
-  const blockCodeLineRegex = createBlockCodeLineRegex(facingMeta.indentDepth);
+  const blockCodeLineRegex = createBlockCodeLineRegex(facingMeta.indent.length);
 
   context.lineIndex++;
 
   const node: BlockCodeNode = {
     type: 'blockCode',
-    range: [originalLineIndex, context.lineIndex],
     facingMeta,
     children: [],
+    _lineRange: [context.lineIndex - 1, context.lineIndex - 1],
   };
 
   while (context.lineIndex < lines.length) {
     if (blockCodeMetaRegex.test(lines[context.lineIndex])) {
       const mayTrailingMeta = parseBlockCodeMeta(lines[context.lineIndex], context);
-      if (mayTrailingMeta.indentDepth === facingMeta.indentDepth) {
+      if (mayTrailingMeta.indent.length === facingMeta.indent.length) {
         node.trailingMeta = mayTrailingMeta;
         context.lineIndex++;
       }
-      node.range[1] = context.lineIndex - 1;
+      node._lineRange[1] = context.lineIndex - 1;
       return node;
     }
 
@@ -34,6 +33,6 @@ export function parseBlockCode(lines: string[], context: ParsingContext): BlockC
     context.lineIndex++;
   }
 
-  node.range[1] = context.lineIndex - 1;
+  node._lineRange[1] = context.lineIndex - 1;
   return node;
 }

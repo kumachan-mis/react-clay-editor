@@ -1,6 +1,5 @@
-import { BlockNode } from '../../../../parser/block/types';
-import { isBlockNode } from '../../../../parser/block/utils';
-import { LineNode } from '../../../../parser/line/types';
+import { TopLevelNode } from '../../../../parser';
+import { isBlockNode } from '../../../../parser/block/blockNode';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { getLineRange } from '../common/utils';
@@ -12,7 +11,7 @@ export type BlockPosition = {
 };
 
 export function useBlockPosition(
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   cursorCoordinate: CursorCoordinate | undefined,
   cursorSelection: CursorSelection | undefined
 ): BlockPosition | undefined {
@@ -22,13 +21,13 @@ export function useBlockPosition(
     const blockPosition = searchBlockPosition(firstLineIndex, nodes);
     if (!blockPosition) return undefined;
     const blockNode = nodes[blockPosition.blockIndex];
-    if (!isBlockNode(blockNode) || lastLineIndex > blockNode.range[1]) return undefined;
+    if (!isBlockNode(blockNode) || lastLineIndex > blockNode._lineRange[1]) return undefined;
     return blockPosition;
   }, [nodes, cursorCoordinate, cursorSelection]);
   return blockPosition;
 }
 
-function searchBlockPosition(lineIndex: number, nodes: (LineNode | BlockNode)[]): BlockPosition | undefined {
+function searchBlockPosition(lineIndex: number, nodes: TopLevelNode[]): BlockPosition | undefined {
   if (nodes.length === 0) return undefined;
 
   const found = (() => {
@@ -36,7 +35,7 @@ function searchBlockPosition(lineIndex: number, nodes: (LineNode | BlockNode)[])
     while (left < right) {
       const mid = Math.floor((left + right) / 2);
       const node = nodes[mid];
-      const range = isBlockNode(node) ? node.range : [node.lineIndex, node.lineIndex];
+      const range = isBlockNode(node) ? node._lineRange : [node._lineIndex, node._lineIndex];
       if (lineIndex < range[0]) {
         right = mid - 1;
       } else if (range[1] < lineIndex) {

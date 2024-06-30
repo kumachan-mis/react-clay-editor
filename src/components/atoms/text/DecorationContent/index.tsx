@@ -1,4 +1,4 @@
-import { DecorationConfig } from '../../../../parser/decoration/types';
+import { DecorationConfig } from '../../../../parser/decoration/decorationConfig';
 
 import styled from '@emotion/styled';
 

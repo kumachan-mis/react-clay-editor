@@ -1,26 +1,27 @@
-import { BlockCodeMetaNode } from '../../../../parser/blockCode/types';
+import { BlockCodeMetaNode, blockCodeMetaNodeEquals } from '../../../../parser/blockCode/blockCodeMetaNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
-export type BlockCodeMetaProps = TextNodeComponentProps<BlockCodeMetaNode>;
+import React from 'react';
 
-export const BlockCodeMeta: React.FC<BlockCodeMetaProps> = ({ node, textVisual, codeVisual }) => {
-  const { lineIndex, indentDepth, codeMeta } = node;
-  const lineLength = indentDepth + codeMeta.length;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
+export type BlockCodeMetaProps = TextNodeProps<BlockCodeMetaNode>;
+
+const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, codeVisual }) => {
+  const { lineId, indent, codeMeta } = node;
+  const lineLength = indent.length + codeMeta.length;
   const codeElementProps = codeVisual?.codeProps?.(codeMeta);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps}>
-      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
-      <MonospaceLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
+    <Line lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...codeMeta].map((char, index) => (
-            <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
+            <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
           ))}
@@ -29,3 +30,8 @@ export const BlockCodeMeta: React.FC<BlockCodeMetaProps> = ({ node, textVisual, 
     </Line>
   );
 };
+
+export const BlockCodeMeta = React.memo(
+  BlockCodeMetaComponent,
+  (prev, next) => blockCodeMetaNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual
+);

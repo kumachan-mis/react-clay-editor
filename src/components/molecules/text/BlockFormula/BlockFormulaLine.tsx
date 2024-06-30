@@ -1,26 +1,27 @@
-import { BlockFormulaLineNode } from '../../../../parser/blockFormula/types';
+import { BlockFormulaLineNode, blockFormulaLineNodeEquals } from '../../../../parser/blockFormula/blockFormulaLineNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
-export type BlockFormulaLineProps = TextNodeComponentProps<BlockFormulaLineNode>;
+import React from 'react';
 
-export const BlockFormulaLine: React.FC<BlockFormulaLineProps> = ({ node, textVisual, formulaVisual }) => {
-  const { formulaLine, lineIndex, indentDepth } = node;
-  const lineLength = indentDepth + formulaLine.length;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
+export type BlockFormulaLineProps = TextNodeProps<BlockFormulaLineNode>;
+
+const BlockFormulaLineComponent: React.FC<BlockFormulaLineProps> = ({ node, formulaVisual }) => {
+  const { formulaLine, lineId, indent } = node;
+  const lineLength = indent.length + formulaLine.length;
   const codeElementProps = formulaVisual?.codeProps?.(formulaLine);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps}>
-      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
-      <MonospaceLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
+    <Line lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...formulaLine].map((char, index) => (
-            <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
+            <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
           ))}
@@ -29,3 +30,8 @@ export const BlockFormulaLine: React.FC<BlockFormulaLineProps> = ({ node, textVi
     </Line>
   );
 };
+
+export const BlockFormulaLine = React.memo(
+  BlockFormulaLineComponent,
+  (prev, next) => blockFormulaLineNodeEquals(prev.node, next.node) && prev.formulaVisual === next.formulaVisual
+);

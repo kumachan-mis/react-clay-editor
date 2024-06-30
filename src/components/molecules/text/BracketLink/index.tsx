@@ -1,23 +1,24 @@
-import { BracketLinkNode } from '../../../../parser/bracketLink/types';
+import { BracketLinkNode, bracketLinkNodeEquals } from '../../../../parser/bracketLink/bracketLinkNode';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
-export type BracketLinkProps = TextNodeComponentProps<BracketLinkNode>;
+import React from 'react';
+
+export type BracketLinkProps = TextNodeProps<BracketLinkNode>;
 
 export const BracketLinkConstants = {
   styleId: 'bracket-link',
 };
 
-export const BracketLink: React.FC<BracketLinkProps> = ({
+const BracketLinkComponent: React.FC<BracketLinkProps> = ({
   node,
-  getEditMode,
+  editMode,
   linkForceClickable,
   bracketLinkVisual,
 }) => {
-  const { lineIndex, facingMeta, linkName, trailingMeta } = node;
+  const { facingMeta, linkName, trailingMeta } = node;
   const [first, last] = node.range;
-  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
@@ -27,28 +28,29 @@ export const BracketLink: React.FC<BracketLinkProps> = ({
       forceClickable={linkForceClickable}
     >
       {[...facingMeta].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
       {[...linkName].map((char, index) => (
-        <Char
-          charIndex={first + facingMeta.length + index}
-          key={first + facingMeta.length + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={first + facingMeta.length + index} key={first + facingMeta.length + index}>
           {char}
         </Char>
       ))}
       {[...trailingMeta].map((char, index) => (
-        <Char
-          charIndex={last - (trailingMeta.length - 1) + index}
-          key={last - (trailingMeta.length - 1) + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
       ))}
     </EmbededLink>
   );
 };
+
+export const BracketLink = React.memo(
+  BracketLinkComponent,
+  (prev, next) =>
+    bracketLinkNodeEquals(prev.node, next.node) &&
+    prev.editMode === next.editMode &&
+    prev.linkForceClickable === next.linkForceClickable &&
+    prev.bracketLinkVisual === next.bracketLinkVisual
+);

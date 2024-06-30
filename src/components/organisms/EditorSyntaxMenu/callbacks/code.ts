@@ -1,7 +1,7 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../parser/block/types';
-import { LineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
+import { TopLevelNode } from '../../../../parser';
+import { LineNode } from '../../../../parser/line/lineNode';
+import { isPureLineNode } from '../../../../parser/line/pureLineNode';
 import { CodeLabels } from '../../../../types/label/code';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
@@ -24,7 +24,7 @@ export type CodeMenuHandlerProps = {
 export function handleOnCodeButtonClick(
   text: string,
   lineNodes: LineNode[],
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   state: EditorState,
@@ -75,7 +75,7 @@ export function handleOnInlineCodeItemClick(
 
 export function handleOnBlockCodeItemClick(
   text: string,
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   props: CodeMenuHandlerProps,

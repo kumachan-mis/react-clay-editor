@@ -1,27 +1,28 @@
-import { BlockCodeLineNode } from '../../../../parser/blockCode/types';
+import { BlockCodeLineNode, blockCodeLineNodeEquals } from '../../../../parser/blockCode/blockCodeLineNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { Monospace } from '../../../atoms/text/Monospace';
 import { MonospaceLineContent } from '../../../atoms/text/MonospaceLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
-export type BlockCodeLineProps = TextNodeComponentProps<BlockCodeLineNode>;
+import React from 'react';
 
-export const BlockCodeLine: React.FC<BlockCodeLineProps> = ({ node, textVisual, codeVisual }) => {
-  const { codeLine, lineIndex, indentDepth } = node;
+export type BlockCodeLineProps = TextNodeProps<BlockCodeLineNode>;
 
-  const lineLength = indentDepth + codeLine.length;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
+const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, codeVisual }) => {
+  const { codeLine, lineId, indent } = node;
+
+  const lineLength = indent.length + codeLine.length;
   const codeElementProps = codeVisual?.codeProps?.(codeLine);
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps}>
-      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
-      <MonospaceLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
+    <Line lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
           {[...codeLine].map((char, index) => (
-            <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
+            <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
           ))}
@@ -30,3 +31,8 @@ export const BlockCodeLine: React.FC<BlockCodeLineProps> = ({ node, textVisual, 
     </Line>
   );
 };
+
+export const BlockCodeLine = React.memo(
+  BlockCodeLineComponent,
+  (prev, next) => blockCodeLineNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual
+);

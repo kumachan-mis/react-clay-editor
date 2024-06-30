@@ -20,7 +20,7 @@ test.afterAll(async () => {
 
 test('move up (ctrl+p)', async () => {
   await page.keyboard.insertText(['abcde', 'fg', 'hijkl'].join('\n'));
-  await page.locator('[data-selectid=char-L2C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]').click();
 
   await page.keyboard.press('Control+p');
   await page.keyboard.type('1');
@@ -42,7 +42,7 @@ test('move up (ctrl+p)', async () => {
 
 test('move down (ctrl+n)', async () => {
   await page.keyboard.insertText(['abcde', 'fg', 'hijkl'].join('\n'));
-  await page.locator('[data-selectid=char-L0C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]').click();
 
   await page.keyboard.press('Control+n');
   await page.keyboard.type('1');
@@ -64,7 +64,7 @@ test('move down (ctrl+n)', async () => {
 
 test('move left (ctrl+b)', async () => {
   await page.keyboard.insertText(['ab', 'cd'].join('\n'));
-  await page.locator('[data-selectid=char-L1C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C2]').click();
 
   await page.keyboard.press('Control+b');
   await page.keyboard.type('1');
@@ -89,7 +89,7 @@ test('move left (ctrl+b)', async () => {
 
 test('move right (ctrl+f)', async () => {
   await page.keyboard.insertText(['ab', 'cd'].join('\n'));
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.keyboard.press('Control+f');
   await page.keyboard.type('1');

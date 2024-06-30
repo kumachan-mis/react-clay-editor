@@ -11,6 +11,7 @@ import { useCursor } from './hooks';
 export type CursorProps = {
   readonly cursorCoordinate: CursorCoordinate | undefined;
   readonly cursorScroll: 'none' | 'fired' | 'pause' | 'up' | 'down';
+  readonly lineIds: string[];
   readonly textAreaValue: string;
   readonly suggestionType: 'text' | 'bracketLink' | 'hashtag' | 'taggedLink' | 'none';
   readonly suggestions: string[];

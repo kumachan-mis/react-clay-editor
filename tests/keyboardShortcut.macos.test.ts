@@ -130,7 +130,7 @@ test('move word top (alt+arrowleft)', async () => {
       'three words,sentence.',
     ].join('\n')
   );
-  await page.locator('[data-selectid=char-L1C19]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
   await page.keyboard.press('Alt+ArrowLeft');
   await page.keyboard.type('0');
@@ -165,7 +165,7 @@ test('move word bottom (alt+arrowright)', async () => {
       'three words,sentence.',
     ].join('\n')
   );
-  await page.locator('[data-selectid=char-L1C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
   await page.keyboard.press('Alt+ArrowRight');
   await page.keyboard.type('0');
@@ -201,7 +201,7 @@ for (const { name, command } of [
         'three words,sentence.',
       ].join('\n')
     );
-    await page.locator('[data-selectid=char-L1C19]').click();
+    await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
     await page.keyboard.press(command);
     await page.keyboard.type('0');
@@ -232,7 +232,7 @@ for (const { name, command } of [
         'three words,sentence.',
       ].join('\n')
     );
-    await page.locator('[data-selectid=char-L1C0]').click();
+    await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
     await page.keyboard.press(command);
     await page.keyboard.type('0');
@@ -262,7 +262,7 @@ for (const { name, command } of [
         'three words,sentence.',
       ].join('\n')
     );
-    await page.locator('[data-selectid=char-L1C19]').click();
+    await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
     await page.keyboard.press(command);
     await page.keyboard.type('0');
@@ -289,7 +289,7 @@ for (const { name, command } of [
         'three words,sentence.',
       ].join('\n')
     );
-    await page.locator('[data-selectid=char-L1C0]').click();
+    await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
     await page.keyboard.press(command);
     await page.keyboard.type('0');

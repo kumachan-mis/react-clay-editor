@@ -1,18 +1,19 @@
-import { UrlNode } from '../../../../parser/url/types';
+import { UrlNode, urlNodeEquals } from '../../../../parser/url/urlNode';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
-export type UrlProps = TextNodeComponentProps<UrlNode>;
+import React from 'react';
+
+export type UrlProps = TextNodeProps<UrlNode>;
 
 export const UrlConstants = {
   styleId: 'url',
 };
 
-export const Url: React.FC<UrlProps> = ({ node, getEditMode, linkForceClickable }) => {
-  const { lineIndex, url } = node;
+const UrlComponent: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }) => {
+  const { url } = node;
   const [first] = node.range;
-  const editMode = getEditMode(node);
 
   return (
     <EmbededLink
@@ -22,10 +23,18 @@ export const Url: React.FC<UrlProps> = ({ node, getEditMode, linkForceClickable 
       forceClickable={linkForceClickable}
     >
       {[...url].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {char}
         </Char>
       ))}
     </EmbededLink>
   );
 };
+
+export const Url = React.memo(
+  UrlComponent,
+  (prev, next) =>
+    urlNodeEquals(prev.node, next.node) &&
+    prev.editMode === next.editMode &&
+    prev.linkForceClickable === next.linkForceClickable
+);

@@ -6,6 +6,7 @@ import { handleOnMoveDown, handleOnMoveUp } from '../EditorTextFieldBody/shortcu
 
 export function handleOnMouseMove(
   text: string,
+  lineIdToIndex: Map<string, number>,
   state: EditorState,
   event: MouseEvent,
   element: HTMLElement | null
@@ -25,7 +26,7 @@ export function handleOnMouseMove(
 
   const { cursorCoordinate, cursorSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
-  const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
+  const newCursorCoordinate = positionToCursorCoordinate(text, position, lineIdToIndex, element);
   if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
     return { ...state, cursorScroll };
   }
@@ -35,6 +36,7 @@ export function handleOnMouseMove(
 
 export function handleOnMouseUp(
   text: string,
+  lineIdToIndex: Map<string, number>,
   state: EditorState,
   event: MouseEvent,
   element: HTMLElement | null
@@ -46,7 +48,7 @@ export function handleOnMouseUp(
 
   const { cursorCoordinate, cursorSelection } = state;
   const position: [number, number] = [event.clientX, event.clientY];
-  const newCursorCoordinate = positionToCursorCoordinate(text, position, element);
+  const newCursorCoordinate = positionToCursorCoordinate(text, position, lineIdToIndex, element);
   if (!newCursorCoordinate || coordinatesAreEqual(newCursorCoordinate, cursorCoordinate)) {
     return { ...state, cursorScroll: cursorScroll };
   }

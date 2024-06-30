@@ -1,8 +1,10 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
 import { parseContent } from '../content/parseContent';
-import { NormalLineNode } from '../normalLine/types';
+import { NormalLineNode } from '../normalLine/normalLineNode';
 
-import { DecorationConfig, DecorationNode } from './types';
+import { DecorationConfig } from './decorationConfig';
+import { DecorationNode } from './decorationNode';
 
 export const headingRegex = /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/;
 
@@ -12,7 +14,6 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
 
   const childNode: DecorationNode = {
     type: 'decoration',
-    lineIndex: context.lineIndex,
     range: [0, line.length - 1],
     facingMeta: `${heading} `,
     children: parseContent(
@@ -26,9 +27,10 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
 
   const node: NormalLineNode = {
     type: 'normalLine',
-    lineIndex: context.lineIndex,
+    lineId: context.lineIds[context.lineIndex],
     contentLength: line.length,
     children: [childNode],
+    _lineIndex: context.lineIndex,
   };
 
   context.lineIndex++;

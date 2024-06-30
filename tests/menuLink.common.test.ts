@@ -19,7 +19,7 @@ test.afterAll(async () => {
 });
 
 test('link menus: bracket, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=bracket-menu]').click();
 
@@ -31,7 +31,7 @@ test('link menus: bracket, no-selection, empty-line', async () => {
 });
 
 test('link menus: hashtag, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=hashtag-menu]').click();
 
@@ -45,7 +45,7 @@ test('link menus: hashtag, no-selection, empty-line', async () => {
 });
 
 test('link menus: tagged-link-button, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -57,7 +57,7 @@ test('link menus: tagged-link-button, no-selection, empty-line', async () => {
 });
 
 test('link menus: tagged-link-dropdown, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=github-tagged-link-menu-item]').click();
@@ -72,7 +72,7 @@ test('link menus: tagged-link-dropdown, no-selection, empty-line', async () => {
 test('link menus: bracket, no-selection, in-bracket-link', async () => {
   await page.keyboard.insertText(['[This is normal text]'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C15]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]').click();
 
   await page.locator('[data-selectid=bracket-menu]').click();
 
@@ -86,7 +86,7 @@ test('link menus: bracket, no-selection, in-bracket-link', async () => {
 test('link menus: bracket, no-selection, in-hashtag-link', async () => {
   await page.keyboard.insertText(['#nothing_happened'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]').click();
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();
 
@@ -100,7 +100,7 @@ test('link menus: bracket, no-selection, in-hashtag-link', async () => {
 test('link menus: hashtag, no-selection, in-hashtag-link', async () => {
   await page.keyboard.insertText(['#normal_text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]').click();
 
   await page.locator('[data-selectid=hashtag-menu]').click();
 
@@ -114,7 +114,7 @@ test('link menus: hashtag, no-selection, in-hashtag-link', async () => {
 test('link menus: hashtag, no-selection, in-tagged-link', async () => {
   await page.keyboard.insertText(['[npm: nothing happend]'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C8]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]').click();
 
   await expect(page.locator('[data-selectid=hashtag-menu]')).toBeDisabled();
 
@@ -128,7 +128,7 @@ test('link menus: hashtag, no-selection, in-tagged-link', async () => {
 test('link menus: tagged-link-button, no-selection, in-tagged-link', async () => {
   await page.keyboard.insertText(['[npm: react]'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -142,7 +142,7 @@ test('link menus: tagged-link-button, no-selection, in-tagged-link', async () =>
 test('link menus: tagged-link-dropdown, no-selection, in-tagged-link (same tag)', async () => {
   await page.keyboard.insertText(['[npm: react]'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=npm-tagged-link-menu-item]').click();
@@ -157,7 +157,7 @@ test('link menus: tagged-link-dropdown, no-selection, in-tagged-link (same tag)'
 test('link menus: tagged-link-dropdown, no-selection, in-tagged-link (other tag)', async () => {
   await page.keyboard.insertText(['[npm: @facebook/react]'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=github-tagged-link-menu-item]').click();
@@ -172,7 +172,7 @@ test('link menus: tagged-link-dropdown, no-selection, in-tagged-link (other tag)
 test('link menus: tagged-link-button, no-selection, in-bracket-link', async () => {
   await page.keyboard.insertText(['[nothing happend]'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C1]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]').click();
 
   await expect(page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -186,7 +186,7 @@ test('link menus: tagged-link-button, no-selection, in-bracket-link', async () =
 test('link menus: bracket, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C1]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]').click();
 
   await page.locator('[data-selectid=bracket-menu]').click();
 
@@ -200,7 +200,7 @@ test('link menus: bracket, no-selection, in-normal', async () => {
 test('link menus: hashtag, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=hashtag-menu]').click();
 
@@ -214,7 +214,7 @@ test('link menus: hashtag, no-selection, in-normal', async () => {
 test('link menus: tagged-link-button, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -228,7 +228,7 @@ test('link menus: tagged-link-button, no-selection, in-normal', async () => {
 test('link menus: tagged-link-dropdown, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=npm-tagged-link-menu-item]').click();
@@ -243,7 +243,7 @@ test('link menus: tagged-link-dropdown, no-selection, in-normal', async () => {
 test('link menus: bracket, no-selection, other (content node)', async () => {
   await page.keyboard.insertText(['$f(x)g(x)$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]').click();
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();
 
@@ -257,7 +257,7 @@ test('link menus: bracket, no-selection, other (content node)', async () => {
 test('link menus: tagged-link-dropdown, no-selection, other (block node)', async () => {
   await page.keyboard.insertText(['$$', '\\sum_{i=0}^{n-1}a_nb_n', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C17]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C17]').click();
 
   await expect(
     page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]')
@@ -273,7 +273,11 @@ test('link menus: tagged-link-dropdown, no-selection, other (block node)', async
 test('link menus: bracket, single-line-selection, in-bracket-link', async () => {
   await page.keyboard.insertText(['[This is normal text]'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C15]', '[data-selectid=char-L0C9]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
+  );
 
   await page.locator('[data-selectid=bracket-menu]').click();
 
@@ -287,7 +291,11 @@ test('link menus: bracket, single-line-selection, in-bracket-link', async () => 
 test('link menus: bracket, single-line-selection, in-tagged-link', async () => {
   await page.keyboard.insertText(['[npm: nothing happened]'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C5]', '[data-selectid=char-L0C6]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+  );
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();
 
@@ -301,7 +309,11 @@ test('link menus: bracket, single-line-selection, in-tagged-link', async () => {
 test('link menus: hashtag, single-line-selection, in-hashtag-link', async () => {
   await page.keyboard.insertText(['#normal_text'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C7]', '[data-selectid=char-L0C0]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]'
+  );
 
   await page.locator('[data-selectid=hashtag-menu]').click();
 
@@ -315,7 +327,11 @@ test('link menus: hashtag, single-line-selection, in-hashtag-link', async () => 
 test('link menus: hashtag, single-line-selection, in-bracket-link', async () => {
   await page.keyboard.insertText(['[nothing happend]'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C8]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+  );
 
   await expect(page.locator('[data-selectid=hashtag-menu]')).toBeDisabled();
 
@@ -329,7 +345,11 @@ test('link menus: hashtag, single-line-selection, in-bracket-link', async () => 
 test('link menus: tagged-link-dropdown, single-line-selection, in-tagged-link', async () => {
   await page.keyboard.insertText(['[npm: react-clay-editor]'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C5]', '[data-selectid=char-L0C16]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]'
+  );
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=npm-tagged-link-menu-item]').click();
@@ -344,7 +364,11 @@ test('link menus: tagged-link-dropdown, single-line-selection, in-tagged-link', 
 test('link menus: tagged-link-dropdown, single-line-selection, in-bracket-link', async () => {
   await page.keyboard.insertText(['[nothing happend]'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C13]', '[data-selectid=char-L0C17]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C17]'
+  );
 
   await expect(
     page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]')
@@ -360,7 +384,11 @@ test('link menus: tagged-link-dropdown, single-line-selection, in-bracket-link',
 test('link menus: bracket, single-line-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C1]', '[data-selectid=char-L0C6]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+  );
 
   await page.locator('[data-selectid=bracket-menu]').click();
 
@@ -374,7 +402,11 @@ test('link menus: bracket, single-line-selection, in-normal', async () => {
 test('link menus: hashtag, single-line-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C3]', '[data-selectid=char-L0C7]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]'
+  );
 
   await page.locator('[data-selectid=hashtag-menu]').click();
 
@@ -388,7 +420,11 @@ test('link menus: hashtag, single-line-selection, in-normal', async () => {
 test('link menus: tagged-link-button, single-line-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C6]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+  );
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -402,7 +438,11 @@ test('link menus: tagged-link-button, single-line-selection, in-normal', async (
 test('link menus: tagged-link-button, single-line-selection, other (content node)', async () => {
   await page.keyboard.insertText(['$f(x)g(x)$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C6]', '[data-selectid=char-L0C9]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
+  );
 
   await expect(page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -416,7 +456,11 @@ test('link menus: tagged-link-button, single-line-selection, other (content node
 test('link menus: bracket, single-line-selection, other (block node)', async () => {
   await page.keyboard.insertText(['$$', '\\sum_{i=0}^{n-1}a_nb_n', '$$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L1C17]', '[data-selectid=char-L1C14]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C17]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C14]'
+  );
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();
 
@@ -430,7 +474,11 @@ test('link menus: bracket, single-line-selection, other (block node)', async () 
 test('link menus: hashtag, single-line-selection, other (mixed with friend)', async () => {
   await page.keyboard.insertText(['#hashtag #hashtag2'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C1]', '[data-selectid=char-L0C12]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]'
+  );
 
   await expect(page.locator('[data-selectid=hashtag-menu]')).toBeDisabled();
 
@@ -444,7 +492,11 @@ test('link menus: hashtag, single-line-selection, other (mixed with friend)', as
 test('link menus: tagged-link-dropdown, single-line-selection, other (mixed with foreigner)', async () => {
   await page.keyboard.insertText(['[github: nothing_happened] `code string`'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C19]', '[data-selectid=char-L0C29]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C19]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C29]'
+  );
 
   await expect(
     page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]')
@@ -460,7 +512,11 @@ test('link menus: tagged-link-dropdown, single-line-selection, other (mixed with
 test('link menus: bracket, multi-lines-selection', async () => {
   await page.keyboard.insertText(['normal text', 'normal text too'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C7]', '[data-selectid=char-L1C4]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]'
+  );
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();
 

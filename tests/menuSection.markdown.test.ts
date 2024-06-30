@@ -19,7 +19,7 @@ test.afterAll(async () => {
 });
 
 test('section menu: button, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -31,7 +31,7 @@ test('section menu: button, no-selection, empty-line', async () => {
 });
 
 test('section menu: normal, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=normal-section-menu-item]').click();
@@ -44,7 +44,7 @@ test('section menu: normal, no-selection, empty-line', async () => {
 });
 
 test('section menu: larger, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=larger-section-menu-item]').click();
@@ -57,7 +57,7 @@ test('section menu: larger, no-selection, empty-line', async () => {
 });
 
 test('section menu: largest, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=largest-section-menu-item]').click();
@@ -72,7 +72,7 @@ test('section menu: largest, no-selection, empty-line', async () => {
 test('section menu: button, no-selection, normal-line (normal text)', async () => {
   await page.keyboard.insertText(['WYSIWYG Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -86,7 +86,7 @@ test('section menu: button, no-selection, normal-line (normal text)', async () =
 test('section menu: normal, no-selection, normal-line (normal text)', async () => {
   await page.keyboard.insertText(['WYSIWYG Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C1]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=normal-section-menu-item]').click();
@@ -101,7 +101,11 @@ test('section menu: normal, no-selection, normal-line (normal text)', async () =
 test('section menu: larger, selection, normal-line (normal text)', async () => {
   await page.keyboard.insertText(['WYSIWYG Editor'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C9]', '[data-selectid=char-L0C3]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]'
+  );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=larger-section-menu-item]').click();
@@ -116,7 +120,7 @@ test('section menu: larger, selection, normal-line (normal text)', async () => {
 test('section menu: button, no-selection, normal-line (decorated text)', async () => {
   await page.keyboard.insertText(['`WYSIWYG` Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C8]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -130,7 +134,11 @@ test('section menu: button, no-selection, normal-line (decorated text)', async (
 test('section menu: largest, selection, normal-line (decorated text)', async () => {
   await page.keyboard.insertText(['`WYSIWYG` Editor'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C8]', '[data-selectid=char-L0C10]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]'
+  );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=largest-section-menu-item]').click();
@@ -145,7 +153,7 @@ test('section menu: largest, selection, normal-line (decorated text)', async () 
 test('section menu: button, no-selection, section-line (normal text)', async () => {
   await page.keyboard.insertText(['### WYSIWYG Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -159,7 +167,7 @@ test('section menu: button, no-selection, section-line (normal text)', async () 
 test('section menu: normal, no-selection, section-line (normal text)', async () => {
   await page.keyboard.insertText(['### WYSIWYG Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=normal-section-menu-item]').click();
@@ -174,7 +182,7 @@ test('section menu: normal, no-selection, section-line (normal text)', async () 
 test('section menu: button, no-selection, section-line (decorated text)', async () => {
   await page.keyboard.insertText(['### $f(x)$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -188,7 +196,11 @@ test('section menu: button, no-selection, section-line (decorated text)', async 
 test('section menu: largest, selection, section-line (decorated text)', async () => {
   await page.keyboard.insertText(['### $f(x)$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C5]', '[data-selectid=char-L0C6]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+  );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=largest-section-menu-item]').click();
@@ -203,7 +215,11 @@ test('section menu: largest, selection, section-line (decorated text)', async ()
 test('section menu: button, selection, section-line (larger text)', async () => {
   await page.keyboard.insertText(['## WYSIWYG Editor'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C6]', '[data-selectid=char-L0C8]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+  );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -217,7 +233,7 @@ test('section menu: button, selection, section-line (larger text)', async () => 
 test('section menu: normal, no-selection, section-line (larger text)', async () => {
   await page.keyboard.insertText(['## WYSIWYG Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=normal-section-menu-item]').click();
@@ -232,7 +248,7 @@ test('section menu: normal, no-selection, section-line (larger text)', async () 
 test('section menu: button, no-selection, other (line node)', async () => {
   await page.keyboard.insertText(['> ## Markup Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C17]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C17]').click();
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -246,7 +262,7 @@ test('section menu: button, no-selection, other (line node)', async () => {
 test('section menu: disabled, no-selection, other (line node)', async () => {
   await page.keyboard.insertText(['- ## Markup Editor'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C17]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C17]').click();
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
 
@@ -260,7 +276,7 @@ test('section menu: disabled, no-selection, other (line node)', async () => {
 test('section menu: button, no-selection, other (block node)', async () => {
   await page.keyboard.insertText(['```', '### block code', '```'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]').click();
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -274,7 +290,11 @@ test('section menu: button, no-selection, other (block node)', async () => {
 test('section menu: disabled, selection, other (block node)', async () => {
   await page.keyboard.insertText(['```', '### block code', '```'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L1C5]', '[data-selectid=char-L1C4]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]'
+  );
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
 
@@ -290,7 +310,11 @@ test('section menu: button, multi-lines-selection', async () => {
     ['Editor', 'Source code editor, for editing source code', 'Text editor, for editing plain text'].join('\n')
   );
 
-  await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L1C11]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C11]'
+  );
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
 
@@ -308,7 +332,11 @@ test('section menu: button, multi-lines-selection', async () => {
 test('section menu: disabled, multi-lines-selection', async () => {
   await page.keyboard.insertText(['Editor', ''].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L1C0]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]'
+  );
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
 

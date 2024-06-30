@@ -1,8 +1,9 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
+import { ContentNode } from '../content/contentNode';
 import { parseContent } from '../content/parseContent';
-import { ContentNode } from '../content/types';
 
-import { UrlNode } from './types';
+import { UrlNode } from './urlNode';
 
 export const urlRegex = /^(?<left>.*?)(?<url>https?:\/\/[\w/:%#$&?()~.=+-]+)(?<right>.*)$/;
 
@@ -12,7 +13,6 @@ export function parseUrl(text: string, context: ParsingContext, options: Parsing
 
   const node: UrlNode = {
     type: 'url',
-    lineIndex: context.lineIndex,
     range: [first, last],
     url,
   };

@@ -1,7 +1,7 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../parser/block/types';
-import { LineNode } from '../../../../parser/line/types';
-import { isPureLineNode } from '../../../../parser/line/utils';
+import { TopLevelNode } from '../../../../parser';
+import { LineNode } from '../../../../parser/line/lineNode';
+import { isPureLineNode } from '../../../../parser/line/pureLineNode';
 import { FormulaLabels } from '../../../../types/label/formula';
 import { BlockPosition } from '../hooks/blockPosition';
 import { ContentPosition } from '../hooks/contentPosition';
@@ -24,7 +24,7 @@ export type FormulaMenuHandlerProps = {
 export function handleOnFormulaButtonClick(
   text: string,
   lineNodes: LineNode[],
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   state: EditorState,
@@ -85,7 +85,7 @@ export function handleOnContentFormulaItemClick(
 
 export function handleOnBlockFormulaItemClick(
   text: string,
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   props: FormulaMenuHandlerProps,

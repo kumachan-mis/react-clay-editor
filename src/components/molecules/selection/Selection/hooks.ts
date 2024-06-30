@@ -53,8 +53,8 @@ function propsToState(props: SelectionProps, element: HTMLElement): SelectionSta
   }
 
   const { start, end } = selectionToRange(props.cursorSelection);
-  const startElement = getCharAt(start.lineIndex, start.charIndex, element);
-  const endElement = getCharAt(end.lineIndex, end.charIndex, element);
+  const startElement = getCharAt(props.lineIds[start.lineIndex], start.charIndex, element);
+  const endElement = getCharAt(props.lineIds[end.lineIndex], end.charIndex, element);
   const startRect = startElement?.getBoundingClientRect();
   const endRect = endElement?.getBoundingClientRect();
 

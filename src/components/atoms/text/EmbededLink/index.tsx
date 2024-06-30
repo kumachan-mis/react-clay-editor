@@ -7,7 +7,19 @@ export type EmbededLinkProps = React.PropsWithChildren<{
   readonly anchorProps: (clickable: boolean) => React.PropsWithoutRef<React.ComponentProps<'a'>> | undefined;
 }>;
 
-export const EmbededLink: React.FC<EmbededLinkProps> = ({
+const StyledEmbededLink = styled.a(
+  (props) => `
+  text-decoration-line: none;
+  color: ${props.theme.link.color};
+  cursor: text;
+  &[data-clickable='true'] {
+    color: ${props.theme.link.clickableColor};
+    cursor: pointer;
+  }
+`
+);
+
+const EmbededLinkComponent: React.FC<EmbededLinkProps> = ({
   editMode,
   forceClickable,
   children,
@@ -65,14 +77,4 @@ export const EmbededLink: React.FC<EmbededLinkProps> = ({
   );
 };
 
-const StyledEmbededLink = styled.a(
-  (props) => `
-  text-decoration-line: none;
-  color: ${props.theme.link.color};
-  cursor: text;
-  &[data-clickable='true'] {
-    color: ${props.theme.link.clickableColor};
-    cursor: pointer;
-  }
-`
-);
+export const EmbededLink = React.memo(EmbededLinkComponent);

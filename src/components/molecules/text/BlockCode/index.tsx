@@ -1,31 +1,33 @@
-import { BlockCodeNode } from '../../../../parser/blockCode/types';
+import { BlockCodeNode, blockCodeNodeEquals } from '../../../../parser/blockCode/blockCodeNode';
 import { LineGroup } from '../../../atoms/text/LineGroup';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
 
 import { BlockCodeLine } from './BlockCodeLine';
 import { BlockCodeMeta } from './BlockCodeMeta';
 
-export type BlockCodeProps = TextNodeComponentProps<BlockCodeNode>;
+import React from 'react';
+
+export type BlockCodeProps = TextNodeProps<BlockCodeNode>;
 
 export const BlockCodeConstants = {
   styleId: 'block-code',
 };
 
-export const BlockCode: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
+const BlockCodeComponent: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
-  const [first, last] = node.range;
+
+  const firstNode = children.length > 0 ? children[0] : facingMeta;
+  const lastNode = children.length > 0 ? children[children.length - 1] : trailingMeta ?? facingMeta;
 
   return (
-    <LineGroup
-      data-styleid={BlockCodeConstants.styleId}
-      firstLineIndex={first + 1}
-      lastLineIndex={trailingMeta ? last - 1 : last}
-    >
+    <LineGroup data-styleid={BlockCodeConstants.styleId} firstLineId={firstNode.lineId} lastLineId={lastNode.lineId}>
       <BlockCodeMeta node={facingMeta} {...rest} />
-      {children.map((child, index) => (
-        <BlockCodeLine key={index} node={child} {...rest} />
+      {children.map((child) => (
+        <BlockCodeLine key={child.lineId} node={child} {...rest} />
       ))}
       {trailingMeta && <BlockCodeMeta node={trailingMeta} {...rest} />}
     </LineGroup>
   );
 };
+
+export const BlockCode = React.memo(BlockCodeComponent, createTextNodePropsEquals(blockCodeNodeEquals));

@@ -1,3 +1,5 @@
 export { parseText } from './text/parseText';
-export type { TextNode } from './text/types';
-export type { ParsingOptions } from './common/types';
+export { textNodeEquals } from './text/textNode';
+export type { TextNode } from './text/textNode';
+export type { TopLevelNode } from './text/topLevelNode';
+export type { ParsingOptions } from './common/parsingOptions';

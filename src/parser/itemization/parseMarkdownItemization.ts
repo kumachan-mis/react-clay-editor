@@ -1,7 +1,8 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
 import { parseContent } from '../content/parseContent';
 
-import { ItemizationNode } from './types';
+import { ItemizationNode } from './itemizationNode';
 
 export const markdownItemizationRegex = /^(?<indent>\s*)(?<bullet>[*-] )(?<content>(.*)?)$/;
 
@@ -14,11 +15,12 @@ export function parseMarkdownItemization(
 
   const node: ItemizationNode = {
     type: 'itemization',
-    lineIndex: context.lineIndex,
+    lineId: context.lineIds[context.lineIndex],
     bullet,
-    indentDepth: indent.length,
+    indent,
     contentLength: content.length,
     children: parseContent(content, { ...context, charIndex: indent.length + bullet.length }, options),
+    _lineIndex: context.lineIndex,
   };
 
   context.lineIndex++;

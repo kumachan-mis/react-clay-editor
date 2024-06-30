@@ -1,8 +1,9 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
+import { ContentNode } from '../content/contentNode';
 import { parseContent } from '../content/parseContent';
-import { ContentNode } from '../content/types';
 
-import { BracketLinkNode } from './types';
+import { BracketLinkNode } from './bracketLinkNode';
 
 export const bracketLinkRegex = /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/;
 
@@ -12,7 +13,6 @@ export function parseBracketLink(text: string, context: ParsingContext, options:
 
   const node: BracketLinkNode = {
     type: 'bracketLink',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '[',
     linkName,

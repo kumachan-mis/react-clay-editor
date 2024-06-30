@@ -1,5 +1,5 @@
 import { EditorState } from '../../../../contexts/EditorStateContext';
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { QuotationLabels } from '../../../../types/label/quotation';
 import { QuotationMenuSwitch } from '../switches/quotation';
 

@@ -19,7 +19,7 @@ test.afterAll(async () => {
 });
 
 test('formula menu: inline-formula-button, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -34,7 +34,7 @@ test('formula menu: inline-formula-button, no-selection, empty-line', async () =
 });
 
 test('formula menu: display-formula-dropdown, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=display-formula-menu-item]').click();
@@ -52,7 +52,7 @@ test('formula menu: display-formula-dropdown, no-selection, empty-line', async (
 test('formula menu: inline-formula-dropdown, no-selection, in-formula (inline)', async () => {
   await page.keyboard.insertText(['$f(x)$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-formula-menu-item]').click();
@@ -67,7 +67,7 @@ test('formula menu: inline-formula-dropdown, no-selection, in-formula (inline)',
 test('formula menu: inline-formula-dropdown, no-selection, in-formula (display)', async () => {
   await page.keyboard.insertText(['$$f(x)$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C7]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-formula-menu-item]').click();
@@ -82,7 +82,7 @@ test('formula menu: inline-formula-dropdown, no-selection, in-formula (display)'
 test('formula menu: display-formula-dropdown, no-selection, in-formula (inline)', async () => {
   await page.keyboard.insertText(['$f(x)$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=display-formula-menu-item]').click();
@@ -97,7 +97,7 @@ test('formula menu: display-formula-dropdown, no-selection, in-formula (inline)'
 test('formula menu: display-formula-button, no-selection, in-formula (inline)', async () => {
   await page.keyboard.insertText(['$$f(x)$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C4]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C4]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -111,7 +111,7 @@ test('formula menu: display-formula-button, no-selection, in-formula (inline)', 
 test('formula menu: inline-formula-button, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C9]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -126,7 +126,7 @@ test('formula menu: inline-formula-button, no-selection, in-normal', async () =>
 test('formula menu: inline-formula-dropdown, no-selection, in-normal-with-nextto-display', async () => {
   await page.keyboard.insertText(['$$f(x)g(x)$$text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C12]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-formula-menu-item]').click();
@@ -142,7 +142,7 @@ test('formula menu: inline-formula-dropdown, no-selection, in-normal-with-nextto
 test('formula menu: display-formula-dropdown, no-selection, in-normal', async () => {
   await page.keyboard.insertText(['normal text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C9]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=display-formula-menu-item]').click();
@@ -158,7 +158,7 @@ test('formula menu: display-formula-dropdown, no-selection, in-normal', async ()
 test('formula menu: display-formula-dropdown, no-selection, in-normal-with-nextto-inline', async () => {
   await page.keyboard.insertText(['text$f(x)g(x)$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C4]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C4]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=display-formula-menu-item]').click();
@@ -174,7 +174,7 @@ test('formula menu: display-formula-dropdown, no-selection, in-normal-with-nextt
 test('formula menu: inline-formula-dropdown, no-selection, in-normal-with-formula-left', async () => {
   await page.keyboard.insertText(['$f(x)$normal text'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-formula-menu-item]').click();
@@ -190,7 +190,7 @@ test('formula menu: inline-formula-dropdown, no-selection, in-normal-with-formul
 test('formula menu: inline-formula-button, no-selection, in-normal-with-formula-right', async () => {
   await page.keyboard.insertText(['normal text$$g(y)$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C11]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -205,7 +205,7 @@ test('formula menu: inline-formula-button, no-selection, in-normal-with-formula-
 test('formula menu: inline-formula-dropdown, no-selection, other (content node)', async () => {
   await page.keyboard.insertText(['[bracket link]'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C11]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=inline-formula-menu-item]')).toBeDisabled();
@@ -220,7 +220,7 @@ test('formula menu: inline-formula-dropdown, no-selection, other (content node)'
 test('formula menu: display-formula-dropdown, no-selection, other (block node)', async () => {
   await page.keyboard.insertText(['$$', 'nothing happened', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=display-formula-menu-item]')).toBeDisabled();
@@ -235,7 +235,11 @@ test('formula menu: display-formula-dropdown, no-selection, other (block node)',
 test('formula menu: inline-formula-button, single-line-selection, in-formula-all (syntax and text)', async () => {
   await page.keyboard.insertText(['$formula string$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L0C16]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -249,7 +253,11 @@ test('formula menu: inline-formula-button, single-line-selection, in-formula-all
 test('formula menu: display-formula-dropdown, single-line-selection, in-formula-all (text)', async () => {
   await page.keyboard.insertText(['$$formula string$$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C2]', '[data-selectid=char-L0C16]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=display-formula-menu-item]').click();
@@ -264,7 +272,11 @@ test('formula menu: display-formula-dropdown, single-line-selection, in-formula-
 test('formula menu: inline-formula-button, single-line-selection, in-formula-all (syntax)', async () => {
   await page.keyboard.insertText(['$formula string$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L0C1]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -278,7 +290,11 @@ test('formula menu: inline-formula-button, single-line-selection, in-formula-all
 test('formula menu: inline-formula-dropdown, single-line-selection, in-formula-left', async () => {
   await page.keyboard.insertText(['$\\sum_{i = 0}^{n-1} a_ib_i$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C0]', '[data-selectid=char-L0C13]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-formula-menu-item]').click();
@@ -293,7 +309,11 @@ test('formula menu: inline-formula-dropdown, single-line-selection, in-formula-l
 test('formula menu: inline-formula-button, single-line-selection, in-formula-mid', async () => {
   await page.keyboard.insertText(['$\\sum_{i = 0}^{n-1} a_ib_i$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C6]', '[data-selectid=char-L0C14]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C14]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -307,7 +327,11 @@ test('formula menu: inline-formula-button, single-line-selection, in-formula-mid
 test('formula menu: display-formula-dropdown, single-line-selection, in-formula-right', async () => {
   await page.keyboard.insertText(['$$\\sum_{i = 0}^{n-1} a_ib_i$$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C21]', '[data-selectid=char-L0C28]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C21]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C28]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=display-formula-menu-item]').click();
@@ -322,7 +346,11 @@ test('formula menu: display-formula-dropdown, single-line-selection, in-formula-
 test('formula menu: inline-formula-button, single-line-selection, in-normal', async () => {
   await page.keyboard.insertText(['$left formula$mid normal text$right formula$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C16]', '[data-selectid=char-L0C24]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C24]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -336,7 +364,11 @@ test('formula menu: inline-formula-button, single-line-selection, in-normal', as
 test('formula menu: inline-formula-dropdown, single-line-selection, in-normal-with-formula-left', async () => {
   await page.keyboard.insertText(['$left formula$mid normal text$right formula$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C14]', '[data-selectid=char-L0C22]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C14]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C22]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=inline-formula-menu-item]').click();
@@ -351,7 +383,11 @@ test('formula menu: inline-formula-dropdown, single-line-selection, in-normal-wi
 test('formula menu: display-formula-dropdown, single-line-selection, in-normal-with-formula-right', async () => {
   await page.keyboard.insertText(['$left formula$mid normal text$right formula$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C23]', '[data-selectid=char-L0C29]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C23]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C29]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=display-formula-menu-item]').click();
@@ -366,7 +402,11 @@ test('formula menu: display-formula-dropdown, single-line-selection, in-normal-w
 test('formula menu: inline-formula-dropdown, single-line-selection, other (mixed with foreigner)', async () => {
   await page.keyboard.insertText(['`code string`'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C3]', '[data-selectid=char-L0C8]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=inline-formula-menu-item]')).toBeDisabled();
@@ -381,7 +421,11 @@ test('formula menu: inline-formula-dropdown, single-line-selection, other (mixed
 test('formula menu: inline-formula-button, single-line-selection, other (mixed with friend)', async () => {
   await page.keyboard.insertText(['$left formula$mid normal text$right formula$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C8]', '[data-selectid=char-L0C30]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C30]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await expect(page.locator('[data-selectid=inline-formula-menu-item]')).toBeDisabled();
@@ -394,7 +438,7 @@ test('formula menu: inline-formula-button, single-line-selection, other (mixed w
 });
 
 test('formula menu: block-formula, no-selection, empty-line', async () => {
-  await page.locator('[data-selectid=char-L0C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -410,10 +454,38 @@ test('formula menu: block-formula, no-selection, empty-line', async () => {
   await linesToBe(page, ['$$', '\\int f(x)g(y) dx', '$$']);
 });
 
-test('code menu: block-formula, no-selection, empty-formula', async () => {
+test('formula menu: block-formula, no-selection, no-formula-line (with-trailing-meta)', async () => {
+  await page.keyboard.insertText(['$$', '$$'].join('\n'));
+
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]').click();
+
+  await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
+});
+
+test('formula menu: block-formula, no-selection, no-formula-line (without-trailing-meta)', async () => {
+  await page.keyboard.insertText(['$$'].join('\n'));
+
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]').click();
+
+  await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
+});
+
+test('formula menu: block-formula, no-selection, empty-formula', async () => {
   await page.keyboard.insertText(['$$', '', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C0]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -427,7 +499,7 @@ test('code menu: block-formula, no-selection, empty-formula', async () => {
 test('formula menu: block-formula, no-selection, in-formula (formula)', async () => {
   await page.keyboard.insertText([' $$', ' f(x)g(y)', ' $$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -442,7 +514,7 @@ test('formula menu: block-formula, no-selection, in-formula (formula)', async ()
 test('formula menu: block-formula, no-selection, in-formula (syntax)', async () => {
   await page.keyboard.insertText(['$$', 'f(x)g(y)', '\\lim_{z \\to 0} h(z)', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L3C2]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C2]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -456,7 +528,7 @@ test('formula menu: block-formula, no-selection, in-formula (syntax)', async () 
 test('formula menu: block-formula, no-selection, in-formula-top', async () => {
   await page.keyboard.insertText(['  $$', '  f(x)g(y)', '  r(x)\\theta(y)', '  $$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L1C6]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C6]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -470,7 +542,7 @@ test('formula menu: block-formula, no-selection, in-formula-top', async () => {
 test('formula menu: block-formula, no-selection, in-formula-mid', async () => {
   await page.keyboard.insertText(['$$', 'x = \\cos \\theta', 'y = \\sin \\theta', 'z = z_0', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L2C1]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -485,7 +557,7 @@ test('formula menu: block-formula, no-selection, in-formula-mid', async () => {
 test('formula menu: block-formula, no-selection, in-formula-bottom', async () => {
   await page.keyboard.insertText(['  $$', '  x = \\cos \\theta;', '  y = \\sin \\theta', '  $$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L2C9]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C9]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -500,7 +572,7 @@ test('formula menu: block-formula, no-selection, in-formula-bottom', async () =>
 test('formula menu: block-formula, no-selection, in-other-line', async () => {
   await page.keyboard.insertText([' normal line'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -515,7 +587,7 @@ test('formula menu: block-formula, no-selection, in-other-line', async () => {
 test('formula menu: block-formula, no-selection, in-other-line (with nested formula)', async () => {
   await page.keyboard.insertText([' $$', ' f(x)g(x)', ' $$', ' normal line'].join('\n'));
 
-  await page.locator('[data-selectid=char-L3C3]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -530,7 +602,7 @@ test('formula menu: block-formula, no-selection, in-other-line (with nested form
 test('formula menu: block-formula, no-selection, in-other-with-formula-above', async () => {
   await page.keyboard.insertText([' $$', ' f(x)g(x)', 'normal line'].join('\n'));
 
-  await page.locator('[data-selectid=char-L2C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -545,7 +617,7 @@ test('formula menu: block-formula, no-selection, in-other-with-formula-above', a
 test('formula menu: block-formula, no-selection, in-other-with-formula-below', async () => {
   await page.keyboard.insertText([' normal line', '$$', 'f(x)g(x)', '$$'].join('\n'));
 
-  await page.locator('[data-selectid=char-L0C5]').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]').click();
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -557,10 +629,32 @@ test('formula menu: block-formula, no-selection, in-other-with-formula-below', a
   await linesToBe(page, ['$$', ' norm.al line', '$$', '$$', 'f(x)g(x)', '$$']);
 });
 
+test('formula menu: block-formula, selection, no-formula-line', async () => {
+  await page.keyboard.insertText(['$$', '$$'].join('\n'));
+
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]'
+  );
+
+  await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
+
+  await linesToBe(page, ['']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['.']);
+});
+
 test('formula menu: block-formula, selection, all-formula-lines (syntax)', async () => {
   await page.keyboard.insertText(['$$', 'x = \\cos \\theta;', 'y = \\sin \\theta', '$$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C1]', '[data-selectid=char-L0C2]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -575,7 +669,11 @@ test('formula menu: block-formula, selection, all-formula-lines (syntax)', async
 test('formula menu: block-formula, selection, all-formula-lines (formula)', async () => {
   await page.keyboard.insertText([' $$', ' x = \\cos \\theta;', ' y = \\sin \\theta'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L1C4]', '[data-selectid=char-L2C6]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -589,7 +687,11 @@ test('formula menu: block-formula, selection, all-formula-lines (formula)', asyn
 test('formula menu: block-formula, selection, all-formula-lines (formula and syntax)', async () => {
   await page.keyboard.insertText([' $$', ' x = \\cos \\theta;', ' y = \\sin \\theta'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C1]', '[data-selectid=char-L2C6]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -604,7 +706,11 @@ test('formula menu: block-formula, selection, all-formula-lines (formula and syn
 test('formula menu: block-formula, selection, all-formula-lines-top', async () => {
   await page.keyboard.insertText([' $$', ' x = \\cos \\theta;', ' y = \\sin \\theta', ' $$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C1]', '[data-selectid=char-L1C5]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -619,7 +725,11 @@ test('formula menu: block-formula, selection, all-formula-lines-top', async () =
 test('formula menu: block-formula, selection, in-formula-mid', async () => {
   await page.keyboard.insertText([' $$', ' x = \\cos \\theta', ' y = \\sin \\theta', ' z = z_0', ' $$'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L2C8]', '[data-selectid=char-L2C0]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C8]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C0]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -634,7 +744,11 @@ test('formula menu: block-formula, selection, in-formula-mid', async () => {
 test('formula menu: block-formula, selection, all-formula-lines-bottom', async () => {
   await page.keyboard.insertText([' $$', ' x = \\cos \\theta', ' y = \\sin \\theta'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L2C1]', '[data-selectid=char-L2C5]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-main-button]').click();
 
@@ -648,7 +762,11 @@ test('formula menu: block-formula, selection, all-formula-lines-bottom', async (
 test('formula menu: block-formula, selection, all-other-lines', async () => {
   await page.keyboard.insertText(['normal line `formula string`', '$f(x)$ normal line'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C1]', '[data-selectid=char-L1C3]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -663,7 +781,11 @@ test('formula menu: block-formula, selection, all-other-lines', async () => {
 test('formula menu: block-formula, selection, in-other-with-formula-above', async () => {
   await page.keyboard.insertText(['normal text', 'normal text', '$$', 'f(x)g(x)'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L0C1]', '[data-selectid=char-L1C3]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -678,7 +800,11 @@ test('formula menu: block-formula, selection, in-other-with-formula-above', asyn
 test('formula menu: block-formula, selection, in-other-with-formula-below', async () => {
   await page.keyboard.insertText(['$$', 'f(x)g(x)', '$$', 'normal text', 'normal text'].join('\n'));
 
-  await mouseSelect(page, '[data-selectid=char-L3C9]', '[data-selectid=char-L3C11]');
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]'
+  );
 
   await page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]').click();
   await page.locator('[data-selectid=block-formula-menu-item]').click();
@@ -693,8 +819,12 @@ test('formula menu: block-formula, selection, in-other-with-formula-below', asyn
 test('formula menu: block-formula, selection, mixed-lines (formula and other)', async () => {
   await page.keyboard.insertText(['$$', 'f(x)g(x)', '$$', 'normal text', 'normal text'].join('\n'));
 
-  await page.locator('[data-selectid=linegroup-L1-1]').click();
-  await mouseSelect(page, '[data-selectid=char-L2C1]', '[data-selectid=char-L3C6]');
+  await page.locator('[data-selectid^=linegroup-L]').click();
+  await mouseSelect(
+    page,
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]',
+    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C6]'
+  );
 
   await expect(page.locator('[data-selectid=formula-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
 
@@ -708,8 +838,8 @@ test('formula menu: block-formula, selection, mixed-lines (formula and other)', 
 test('formula menu: block-formula, selection, mixed-lines (double formula)', async () => {
   await page.keyboard.insertText(['$$', 'x = \\cos \\theta', '$$', '$$', 'y = \\sin \\theta'].join('\n'));
 
-  await page.locator('[data-selectid=linegroup-L4-4]').click();
-  await page.locator('[data-selectid=char-L3C1]').click();
+  await page.locator(':nth-match([data-selectid^=linegroup-L], 2)').click();
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]').click();
   await page.keyboard.press('Shift+ArrowUp');
   await page.keyboard.press('Shift+ArrowUp');
   await page.keyboard.press('Shift+ArrowRight');

@@ -40,14 +40,13 @@ import { EditorRoot } from 'react-clay-editor';
 
 ## EditorTextProps
 
-| name                   | type                                                            | default     | description                                                       |
-| ---------------------- | --------------------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
-| lineProps              | `(lineIndex: number) => PropsWithoutRef<ComponentProps<'div'>>` | `undefined` | function returning props of line elements                         |
-| normalLabel            | `string`                                                        | `'normal'`  | label and the default text of normal sections in the syntax menu  |
-| largerLabel            | `string`                                                        | `'larger'`  | label and the default text of larger sections in the syntax menu  |
-| largestLabel           | `string`                                                        | `'largest'` | label and the default text of largest sections in the syntax menu |
-| suggestions            | `string[]`                                                      | `[]`        | candidates of autocomplete suggestion in headings and plain texts |
-| initialSuggestionIndex | `number`                                                        | `0`         | focused index of autocomplete suggestions when they pop up        |
+| name                   | type       | default     | description                                                       |
+| ---------------------- | ---------- | ----------- | ----------------------------------------------------------------- |
+| normalLabel            | `string`   | `'normal'`  | label and the default text of normal sections in the syntax menu  |
+| largerLabel            | `string`   | `'larger'`  | label and the default text of larger sections in the syntax menu  |
+| largestLabel           | `string`   | `'largest'` | label and the default text of largest sections in the syntax menu |
+| suggestions            | `string[]` | `[]`        | candidates of autocomplete suggestion in headings and plain texts |
+| initialSuggestionIndex | `number`   | `0`         | focused index of autocomplete suggestions when they pop up        |
 
 ## EditorItemizationProps
 

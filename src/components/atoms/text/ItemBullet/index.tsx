@@ -1,18 +1,12 @@
 import { Char } from '../Char';
 
 import styled from '@emotion/styled';
+import React from 'react';
 
 export type ItemBulletProps = {
-  readonly lineIndex: number;
   readonly indentDepth: number;
   readonly bullet: string;
 };
-
-export const ItemBullet: React.FC<ItemBulletProps> = ({ lineIndex, indentDepth }) => (
-  <StyledItemBullet charIndex={indentDepth} indentDepth={indentDepth} lineIndex={lineIndex}>
-    <StyledItemBulletInner />{' '}
-  </StyledItemBullet>
-);
 
 const StyledItemBullet = styled(Char, {
   shouldForwardProp: (name) => name !== 'indentDepth',
@@ -38,3 +32,11 @@ const StyledItemBulletInner = styled.span(
   background-color: ${props.theme.base.color};
 `
 );
+
+const ItemBulletComponent: React.FC<ItemBulletProps> = ({ indentDepth }) => (
+  <StyledItemBullet charIndex={indentDepth} indentDepth={indentDepth}>
+    <StyledItemBulletInner />{' '}
+  </StyledItemBullet>
+);
+
+export const ItemBullet = React.memo(ItemBulletComponent);

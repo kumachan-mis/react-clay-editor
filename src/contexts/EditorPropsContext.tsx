@@ -17,7 +17,6 @@ import { CodeVisual } from '../types/visual/code';
 import { FormulaVisual } from '../types/visual/formula';
 import { HashtagVisual } from '../types/visual/hashtag';
 import { TaggedLinkVisual } from '../types/visual/taggedLink';
-import { TextVisual } from '../types/visual/text';
 
 import React from 'react';
 
@@ -34,7 +33,7 @@ export type EditorProps = {
   quotationProps?: EditorQuotationProps;
 };
 
-export type EditorTextProps = TextVisual & TextLabels & Suggestion;
+export type EditorTextProps = TextLabels & Suggestion;
 
 export type EditorItemizationProps = ItemizationLabels;
 

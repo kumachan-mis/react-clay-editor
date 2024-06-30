@@ -1,37 +1,41 @@
-import { QuotationNode } from '../../../../parser/quotation/types';
+import { QuotationNode, quotationNodeEquals } from '../../../../parser/quotation/quotationNode';
 import { Char } from '../../../atoms/text/Char';
 import { Line } from '../../../atoms/text/Line';
 import { LineIndent } from '../../../atoms/text/LineIndent';
 import { QuotationLineContent } from '../../../atoms/text/QuotationLineContent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNode } from '../Text/TextNode';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
 
-export type QuotationProps = {
-  readonly ChildComponent: React.FC<TextNodeComponentProps>;
-} & TextNodeComponentProps<QuotationNode>;
+import React from 'react';
+
+export type QuotationProps = TextNodeProps<QuotationNode>;
 
 export const QuotationConstants = {
   styleId: 'quotation',
 };
 
-export const Quotation: React.FC<QuotationProps> = ({ node, getEditMode, textVisual, ChildComponent, ...rest }) => {
-  const { lineIndex, indentDepth, meta, contentLength, children } = node;
-  const lineLength = indentDepth + meta.length + contentLength;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
-  const editMode = getEditMode(node);
+const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, ...rest }) => {
+  const { lineId, indent, meta, contentLength, children } = node;
+  const lineLength = indent.length + meta.length + contentLength;
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps} data-styleid={QuotationConstants.styleId}>
-      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
-      <QuotationLineContent indentDepth={indentDepth} lineIndex={lineIndex} lineLength={lineLength}>
+    <Line data-styleid={QuotationConstants.styleId} lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <QuotationLineContent indentDepth={indent.length} lineLength={lineLength}>
         {[...meta].map((char, index) => (
-          <Char charIndex={indentDepth + index} key={indentDepth + index} lineIndex={lineIndex}>
+          <Char charIndex={indent.length + index} key={indent.length + index}>
             {editMode ? char : ''}
           </Char>
         ))}
         {children.map((child, index) => (
-          <ChildComponent getEditMode={getEditMode} key={index} node={child} textVisual={textVisual} {...rest} />
+          <TextNode editMode={editMode} key={index} node={child} {...rest} />
         ))}
       </QuotationLineContent>
     </Line>
   );
 };
+
+export const Quotation: React.FC<QuotationProps> = React.memo(
+  QuotationComponent,
+  createTextNodePropsEquals(quotationNodeEquals)
+);

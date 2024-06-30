@@ -2,9 +2,10 @@ import { EditorProps, useEditorPropsValueContext } from '../../../contexts/Edito
 import { EditorState, useEditorStateContext, useEditorStateValueContext } from '../../../contexts/EditorStateContext';
 import { useTextContext } from '../../../contexts/TextContext';
 import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
+import { topLevelNodeToLineNodes } from '../../../parser/text/topLevelNode';
 import { CursorProps } from '../../molecules/cursor/Cursor';
 import { SelectionProps } from '../../molecules/selection/Selection';
-import { TextProps } from '../../molecules/text/Text/types';
+import { TextProps } from '../../molecules/text/Text';
 
 import {
   handleOnKeyDown,
@@ -20,14 +21,21 @@ import {
 import React from 'react';
 
 export function useSelection(): SelectionProps {
+  const nodes = useTextNodesValueContext();
   const { cursorSelection } = useEditorStateValueContext();
-  return { cursorSelection };
+
+  const lineIds = React.useMemo(() => topLevelNodeToLineNodes(nodes).map((node) => node.lineId), [nodes]);
+
+  return { cursorSelection, lineIds };
 }
 
 export function useCursor(): CursorProps {
   const [text, setText] = useTextContext();
   const [state, setState] = useEditorStateContext();
   const props = useEditorPropsValueContext();
+  const nodes = useTextNodesValueContext();
+
+  const lineIds = React.useMemo(() => topLevelNodeToLineNodes(nodes).map((node) => node.lineId), [nodes]);
 
   const createEventHandler = React.useCallback(
     <Event>(
@@ -58,6 +66,7 @@ export function useCursor(): CursorProps {
   return {
     cursorCoordinate: state.cursorCoordinate,
     textAreaValue: state.textAreaValue,
+    lineIds,
     suggestionType: state.suggestionType,
     suggestions: state.suggestions,
     suggestionIndex: state.suggestionIndex,
@@ -82,7 +91,6 @@ export function useText(): TextProps {
     nodes,
     cursorCoordinate,
     cursorSelection,
-    textVisual: props.textProps,
     bracketLinkVisual: props.bracketLinkProps,
     hashtagVisual: props.hashtagProps,
     codeVisual: props.codeProps,

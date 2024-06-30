@@ -1,4 +1,4 @@
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { BoldMenuProps } from '../../../molecules/menu/BoldMenu';
 import { DecorationMenuHandlerProps, handleOnDecorationClick } from '../callbacks/decoration';
 import { decorationMenuSwitch } from '../switches/decoration';

@@ -1,26 +1,31 @@
-import { TaggedLinkNode } from '../../../../parser/taggedLink/types';
-import { getTagName, splitTag } from '../../../../parser/taggedLink/utils';
+import {
+  TaggedLinkNode,
+  getTagName,
+  splitTag,
+  taggedLinkNodeEquals,
+} from '../../../../parser/taggedLink/taggedLinkNode';
 import { Char } from '../../../atoms/text/Char';
 import { EmbededLink } from '../../../atoms/text/EmbededLink';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNodeProps } from '../common/TextNodeProps';
 
-export type TaggedLinkProps = TextNodeComponentProps<TaggedLinkNode>;
+import React from 'react';
+
+export type TaggedLinkProps = TextNodeProps<TaggedLinkNode>;
 
 export const TaggedLinkConstants = {
   styleId: (tagName: string) => `${tagName}-tagged-link`,
 };
 
-export const TaggedLink: React.FC<TaggedLinkProps> = ({
+const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
   node,
-  getEditMode,
+  editMode,
   linkForceClickable,
   taggedLinkVisualMap,
 }) => {
-  const { lineIndex, linkName, trailingMeta } = node;
+  const { linkName, trailingMeta } = node;
   const [facingMeta, tag] = splitTag(node);
   const tagName = getTagName(node);
   const [first, last] = node.range;
-  const editMode = getEditMode(node);
   const taggedLinkVisual = taggedLinkVisualMap?.[tagName];
 
   return (
@@ -31,16 +36,12 @@ export const TaggedLink: React.FC<TaggedLinkProps> = ({
       forceClickable={linkForceClickable}
     >
       {[...facingMeta].map((char, index) => (
-        <Char charIndex={first + index} key={first + index} lineIndex={lineIndex}>
+        <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
       {[...tag].map((char, index) => (
-        <Char
-          charIndex={first + facingMeta.length + index}
-          key={first + facingMeta.length + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={first + facingMeta.length + index} key={first + facingMeta.length + index}>
           {editMode || !taggedLinkVisual?.tagHidden ? char : ''}
         </Char>
       ))}
@@ -48,20 +49,24 @@ export const TaggedLink: React.FC<TaggedLinkProps> = ({
         <Char
           charIndex={first + facingMeta.length + tag.length + index}
           key={first + facingMeta.length + tag.length + index}
-          lineIndex={lineIndex}
         >
           {char}
         </Char>
       ))}
       {[...trailingMeta].map((char, index) => (
-        <Char
-          charIndex={last - (trailingMeta.length - 1) + index}
-          key={last - (trailingMeta.length - 1) + index}
-          lineIndex={lineIndex}
-        >
+        <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
       ))}
     </EmbededLink>
   );
 };
+
+export const TaggedLink = React.memo(
+  TaggedLinkComponent,
+  (prev, next) =>
+    taggedLinkNodeEquals(prev.node, next.node) &&
+    prev.editMode === next.editMode &&
+    prev.linkForceClickable === next.linkForceClickable &&
+    prev.taggedLinkVisualMap === next.taggedLinkVisualMap
+);

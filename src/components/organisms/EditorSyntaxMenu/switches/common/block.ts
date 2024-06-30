@@ -1,7 +1,6 @@
 import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../../parser/block/types';
-import { isBlockNode } from '../../../../../parser/block/utils';
-import { LineNode } from '../../../../../parser/line/types';
+import { TopLevelNode } from '../../../../../parser';
+import { isBlockNode } from '../../../../../parser/block/blockNode';
 import { getLineRange } from '../../common/utils';
 import { BlockPosition } from '../../hooks/blockPosition';
 
@@ -10,7 +9,7 @@ export type BlockMenuItemType = 'blockCode' | 'blockFormula';
 export type BlockMenuSwitch = 'on' | 'off' | 'disabled';
 
 export function blockMenuSwitch(
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   menuItemType: BlockMenuItemType
@@ -25,7 +24,11 @@ export function blockMenuSwitch(
   const { cursorCoordinate, cursorSelection } = state;
   const [firstLineIndex, lastLineIndex] = getLineRange(cursorCoordinate, cursorSelection);
 
-  if (nodes.every((node) => !isBlockNode(node) || node.range[1] < firstLineIndex || lastLineIndex < node.range[0])) {
+  if (
+    nodes.every(
+      (node) => !isBlockNode(node) || node._lineRange[1] < firstLineIndex || lastLineIndex < node._lineRange[0]
+    )
+  ) {
     return 'off';
   }
   return 'disabled';

@@ -1,6 +1,6 @@
 import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { LineNode } from '../../../../../parser/line/types';
-import { isPureLineNode } from '../../../../../parser/line/utils';
+import { LineNode } from '../../../../../parser/line/lineNode';
+import { isPureLineNode } from '../../../../../parser/line/pureLineNode';
 import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection, undefinedIfZeroSelection } from '../../../../molecules/selection/Selection/utils';
@@ -56,14 +56,14 @@ function handleLineMenuOn(
     if (lineNode.type !== 'itemization' && lineNode.type !== 'quotation') continue;
 
     const newCharIndex = (charIndex: number): number => {
-      const newCharIndex = charIndex - lineNode.indentDepth - config.meta.length;
+      const newCharIndex = charIndex - lineNode.indent.length - config.meta.length;
       return newCharIndex >= 0 ? newCharIndex : 0;
     };
 
     const cursorCoordinate: CursorCoordinate = { lineIndex, charIndex: 0 };
     const cursorSelection: CursorSelection = {
       fixed: { lineIndex, charIndex: 0 },
-      free: { lineIndex, charIndex: lineNode.indentDepth + config.meta.length },
+      free: { lineIndex, charIndex: lineNode.indent.length + config.meta.length },
     };
     [newText, newState] = insertText(newText, { ...newState, cursorCoordinate, cursorSelection }, '');
     if (newCursorCoordinate.lineIndex === lineIndex) {
@@ -189,7 +189,7 @@ function handleLineMenuOutdent(
     const lineNode = nodes[lineIndex];
     if (lineNode.type !== 'itemization' && lineNode.type !== 'quotation') continue;
 
-    const deletionLength = lineNode.indentDepth === 0 ? config.meta.length : 1;
+    const deletionLength = lineNode.indent.length === 0 ? config.meta.length : 1;
     const newCharIndex = (charIndex: number): number => {
       const newCharIndex = charIndex - deletionLength;
       return newCharIndex >= 0 ? newCharIndex : 0;

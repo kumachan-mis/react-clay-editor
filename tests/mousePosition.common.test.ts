@@ -31,7 +31,9 @@ test.afterAll(async () => {
 });
 
 test('beginning of char', async () => {
-  const boundingBox = await page.locator('[data-selectid=char-L0C2]').boundingBox();
+  const boundingBox = await page
+    .locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]')
+    .boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + 2, boundingBox.y + boundingBox.height / 2);
   }
@@ -50,7 +52,9 @@ test('beginning of char', async () => {
 });
 
 test('end of char', async () => {
-  const boundingBox = await page.locator('[data-selectid=char-L0C3]').boundingBox();
+  const boundingBox = await page
+    .locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]')
+    .boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width - 2, boundingBox.y + boundingBox.height / 2);
   }
@@ -69,7 +73,9 @@ test('end of char', async () => {
 });
 
 test('beginning of char group', async () => {
-  const boundingBox = await page.locator('[data-selectid=chargroup-L1C6-8]').boundingBox();
+  const boundingBox = await page
+    .locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=chargroup-C6-8]')
+    .boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + 2, boundingBox.y + boundingBox.height / 2);
   }
@@ -88,7 +94,9 @@ test('beginning of char group', async () => {
 });
 
 test('end of char group', async () => {
-  const boundingBox = await page.locator('[data-selectid=chargroup-L1C6-8]').boundingBox();
+  const boundingBox = await page
+    .locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=chargroup-C6-8]')
+    .boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width - 2, boundingBox.y + boundingBox.height / 2);
   }
@@ -107,7 +115,7 @@ test('end of char group', async () => {
 });
 
 test('beginning of line', async () => {
-  const boundingBox = await page.locator('[data-selectid=line-L0]').boundingBox();
+  const boundingBox = await page.locator(':nth-match([data-selectid^=line-L], 1)').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + 2, boundingBox.y + boundingBox.height / 2);
   }
@@ -126,7 +134,7 @@ test('beginning of line', async () => {
 });
 
 test('end of line', async () => {
-  const boundingBox = await page.locator('[data-selectid=line-L0]').boundingBox();
+  const boundingBox = await page.locator(':nth-match([data-selectid^=line-L], 1)').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width - 2, boundingBox.y + boundingBox.height / 2);
   }
@@ -145,7 +153,7 @@ test('end of line', async () => {
 });
 
 test('beginning of line group', async () => {
-  const boundingBox = await page.locator('[data-selectid=linegroup-L3-4]').boundingBox();
+  const boundingBox = await page.locator('[data-selectid^=linegroup-L]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width / 2, boundingBox.y + 2);
   }
@@ -164,7 +172,7 @@ test('beginning of line group', async () => {
 });
 
 test('end of line group', async () => {
-  const boundingBox = await page.locator('[data-selectid=linegroup-L3-4]').boundingBox();
+  const boundingBox = await page.locator('[data-selectid^=linegroup-L]').boundingBox();
   if (boundingBox) {
     await page.mouse.click(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height - 2);
   }

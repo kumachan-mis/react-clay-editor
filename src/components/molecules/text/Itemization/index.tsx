@@ -1,35 +1,39 @@
-import { ItemizationNode } from '../../../../parser/itemization/types';
+import { ItemizationNode, itemizationNodeEquals } from '../../../../parser/itemization/itemizationNode';
 import { ItemBullet } from '../../../atoms/text/ItemBullet';
 import { ItemBulletContent } from '../../../atoms/text/ItemBulletContent';
 import { Line } from '../../../atoms/text/Line';
 import { LineContent } from '../../../atoms/text/LineContent';
 import { LineIndent } from '../../../atoms/text/LineIndent';
-import { TextNodeComponentProps } from '../common/types';
+import { TextNode } from '../Text/TextNode';
+import { TextNodeProps, createTextNodePropsEquals } from '../common/TextNodeProps';
 
-export type ItemizationProps = {
-  readonly ChildComponent: React.FC<TextNodeComponentProps>;
-} & TextNodeComponentProps<ItemizationNode>;
+import React from 'react';
+
+export type ItemizationProps = TextNodeProps<ItemizationNode>;
 
 export const ItemizationConstants = {
   styleId: 'itemization',
 };
 
-export const Itemization: React.FC<ItemizationProps> = ({ node, getEditMode, textVisual, ChildComponent, ...rest }) => {
-  const { lineIndex, indentDepth, bullet, contentLength, children } = node;
-  const lineLength = indentDepth + bullet.length + contentLength;
-  const lineProps = textVisual?.lineProps?.(lineIndex);
-  const editMode = getEditMode(node);
+const ItemizationComponent: React.FC<ItemizationProps> = ({ node, editMode, ...rest }) => {
+  const { lineId, indent, bullet, contentLength, children } = node;
+  const lineLength = indent.length + bullet.length + contentLength;
 
   return (
-    <Line lineIndex={lineIndex} {...lineProps} data-styleid={ItemizationConstants.styleId}>
-      <LineIndent indentDepth={indentDepth} lineIndex={lineIndex} />
-      <ItemBullet bullet={bullet} indentDepth={indentDepth} lineIndex={lineIndex} />
-      <LineContent indentDepth={indentDepth + 1} lineIndex={lineIndex} lineLength={lineLength}>
-        <ItemBulletContent bullet={bullet} cursorOn={editMode} indentDepth={indentDepth} lineIndex={lineIndex} />
+    <Line data-styleid={ItemizationConstants.styleId} lineId={lineId}>
+      <LineIndent indentDepth={indent.length} />
+      <ItemBullet bullet={bullet} indentDepth={indent.length} />
+      <LineContent indentDepth={indent.length + 1} lineLength={lineLength}>
+        <ItemBulletContent bullet={bullet} cursorOn={editMode} indentDepth={indent.length} />
         {children.map((child, index) => (
-          <ChildComponent getEditMode={getEditMode} key={index} node={child} textVisual={textVisual} {...rest} />
+          <TextNode editMode={editMode} key={index} node={child} {...rest} />
         ))}
       </LineContent>
     </Line>
   );
 };
+
+export const Itemization: React.FC<ItemizationProps> = React.memo(
+  ItemizationComponent,
+  createTextNodePropsEquals(itemizationNodeEquals)
+);

@@ -1,5 +1,5 @@
 import { EditorQuotationProps } from '../../../../contexts/EditorPropsContext';
-import { LineNode } from '../../../../parser/line/types';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { QuotationMenuConstants, QuotationMenuProps } from '../../../molecules/menu/QuotationMenu';
 import {
   handleOnQuotationButtonClick,

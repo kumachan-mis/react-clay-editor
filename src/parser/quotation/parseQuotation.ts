@@ -1,7 +1,8 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
 import { parseContent } from '../content/parseContent';
 
-import { QuotationNode } from './types';
+import { QuotationNode } from './quotationNode';
 
 export const quotationRegex = /^(?<indent>\s*)(?<meta>> )(?<content>.*)$/;
 
@@ -10,11 +11,12 @@ export function parseQuotation(line: string, context: ParsingContext, options: P
 
   const node: QuotationNode = {
     type: 'quotation',
-    lineIndex: context.lineIndex,
-    indentDepth: indent.length,
-    contentLength: content.length,
+    lineId: context.lineIds[context.lineIndex],
+    indent,
     meta,
+    contentLength: content.length,
     children: parseContent(content, { ...context, charIndex: indent.length + meta.length }, options),
+    _lineIndex: context.lineIndex,
   };
 
   context.lineIndex++;

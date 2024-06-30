@@ -1,6 +1,6 @@
 import { useTextNodesValueContext } from '../../../contexts/TextNodesContext';
 import { useViewerPropsValueContext } from '../../../contexts/ViewerPropsContext';
-import { TextProps } from '../../molecules/text/Text/types';
+import { TextProps } from '../../molecules/text/Text';
 
 export function useText(): TextProps {
   const nodes = useTextNodesValueContext();
@@ -8,7 +8,6 @@ export function useText(): TextProps {
 
   return {
     nodes,
-    textVisual: props.textProps,
     bracketLinkVisual: props.bracketLinkProps,
     hashtagVisual: props.hashtagProps,
     codeVisual: props.codeProps,

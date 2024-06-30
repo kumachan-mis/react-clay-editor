@@ -213,7 +213,6 @@ const TestTargetViewerPage: React.FC<{
         syntax={syntax}
         taggedLinkPropsMap={taggedLinkPropsMap}
         text={text}
-        textProps={textProps}
       >
         <ViewerTextFieldRoot>
           <ViewerTextFieldBody />

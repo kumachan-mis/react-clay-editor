@@ -1,6 +1,6 @@
 import { EditorFormulaProps } from '../../../../contexts/EditorPropsContext';
-import { BlockNode } from '../../../../parser/block/types';
-import { LineNode } from '../../../../parser/line/types';
+import { TopLevelNode } from '../../../../parser';
+import { LineNode } from '../../../../parser/line/lineNode';
 import { FormulaMenuConstants, FormulaMenuProps } from '../../../molecules/menu/FormulaMenu';
 import {
   FormulaMenuHandlerProps,
@@ -22,7 +22,7 @@ const defaultHandlerProps: FormulaMenuHandlerProps = {
 
 export function useFormulaMenu(
   lineNodes: LineNode[],
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   formulaProps: EditorFormulaProps | undefined,

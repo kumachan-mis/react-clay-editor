@@ -8,22 +8,18 @@ import { CodeVisual } from '../types/visual/code';
 import { FormulaVisual } from '../types/visual/formula';
 import { HashtagVisual } from '../types/visual/hashtag';
 import { TaggedLinkVisual } from '../types/visual/taggedLink';
-import { TextVisual } from '../types/visual/text';
 
 import React from 'react';
 
 export type ViewerProps = {
   syntax?: 'bracket' | 'markdown';
   palette?: 'light' | 'dark';
-  textProps?: ViewerTextProps;
   bracketLinkProps?: ViewerBracketLinkProps;
   hashtagProps?: ViewerHashtagProps;
   taggedLinkPropsMap?: Record<string, ViewerTaggedLinkProps>;
   codeProps?: ViewerCodeProps;
   formulaProps?: ViewerFormulaProps;
 };
-
-export type ViewerTextProps = TextVisual;
 
 export type ViewerBracketLinkProps = BracketLinkVisual & BracketLinkParsing;
 

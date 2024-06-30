@@ -2,7 +2,6 @@ import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { HeaderConstants } from '../../../atoms/root/Header';
 import { TextFieldConstants } from '../../../atoms/root/TextField';
 import { CharConstants } from '../../../atoms/text/Char';
-import { getCharAt } from '../../../atoms/text/Char/utils';
 import { CharGroupConstants } from '../../../atoms/text/CharGroup';
 import { LineConstants } from '../../../atoms/text/Line';
 import { LineGroupConstants } from '../../../atoms/text/LineGroup';
@@ -10,6 +9,7 @@ import { LineGroupConstants } from '../../../atoms/text/LineGroup';
 export function positionToCursorCoordinate(
   text: string,
   position: [number, number],
+  lineIdToIndex: Map<string, number>,
   element: HTMLElement
 ): CursorCoordinate | undefined {
   const lines = text.split('\n');
@@ -20,16 +20,16 @@ export function positionToCursorCoordinate(
   const headerElement = findElement(elements, HeaderConstants.selectIdRegex, element);
   if (headerElement) return undefined;
 
-  cursorCoordinate = cursorCoordinateChar(lines, position, elements, element);
+  cursorCoordinate = cursorCoordinateChar(lines, position, lineIdToIndex, elements, element);
   if (cursorCoordinate) return cursorCoordinate;
 
-  cursorCoordinate = cursorCoordinateCharGroup(lines, position, elements, element);
+  cursorCoordinate = cursorCoordinateCharGroup(lines, position, lineIdToIndex, elements, element);
   if (cursorCoordinate) return cursorCoordinate;
 
-  cursorCoordinate = cursorCoordinateLine(lines, position, elements, element);
+  cursorCoordinate = cursorCoordinateLine(lines, position, lineIdToIndex, elements, element);
   if (cursorCoordinate) return cursorCoordinate;
 
-  cursorCoordinate = cursorCoordinateLineGroup(lines, position, elements, element);
+  cursorCoordinate = cursorCoordinateLineGroup(lines, position, lineIdToIndex, elements, element);
   if (cursorCoordinate) return cursorCoordinate;
 
   const marginBottomElement = findElement(elements, TextFieldConstants.selectIdRegex, element);
@@ -40,20 +40,25 @@ export function positionToCursorCoordinate(
 function cursorCoordinateChar(
   lines: string[],
   position: [number, number],
+  lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
   element: HTMLElement
 ): CursorCoordinate | undefined {
+  const lineElement = findElement(elements, LineConstants.selectIdRegex, element);
+  const lineSelectId = lineElement?.getAttribute('data-selectid');
   const charElement = findElement(elements, CharConstants.selectIdRegex, element);
-  const selectId = charElement?.getAttribute('data-selectid');
-  if (!charElement || !selectId) return undefined;
+  const charSelectId = charElement?.getAttribute('data-selectid');
+  if (!lineElement || !lineSelectId || !charElement || !charSelectId) return undefined;
 
-  const groups = selectId.match(CharConstants.selectIdRegex)?.groups as Record<string, string>;
-  const lineIndex = Number.parseInt(groups.lineIndex, 10);
-  const charIndex = Number.parseInt(groups.charIndex, 10);
-  const [x] = position;
+  const lineGroups = lineSelectId.match(LineConstants.selectIdRegex)?.groups as Record<string, string>;
+  const lineIndex = lineIdToIndex.get(lineGroups.lineId) ?? 0;
+
+  const charGroups = charSelectId.match(CharConstants.selectIdRegex)?.groups as Record<string, string>;
+  const charIndex = Number.parseInt(charGroups.charIndex, 10);
 
   if (charIndex === lines[lineIndex].length) return { lineIndex, charIndex };
 
+  const [x] = position;
   const charRect = charElement.getBoundingClientRect();
   if (x <= charRect.left + charRect.width / 2) return { lineIndex, charIndex };
 
@@ -63,21 +68,25 @@ function cursorCoordinateChar(
 function cursorCoordinateCharGroup(
   lines: string[],
   position: [number, number],
+  lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
   element: HTMLElement
 ): CursorCoordinate | undefined {
+  const lineElement = findElement(elements, LineConstants.selectIdRegex, element);
+  const lineSelectId = lineElement?.getAttribute('data-selectid');
   const charGroupElement = findElement(elements, CharGroupConstants.selectIdRegex, element);
-  const selectId = charGroupElement?.getAttribute('data-selectid');
-  if (!charGroupElement || !selectId) return undefined;
+  const charGroupSelectId = charGroupElement?.getAttribute('data-selectid');
+  if (!lineElement || !lineSelectId || !charGroupElement || !charGroupSelectId) return undefined;
 
-  const groups = selectId.match(CharGroupConstants.selectIdRegex)?.groups as Record<string, string>;
-  const lineIndex = Number.parseInt(groups.lineIndex, 10);
-  const firstCharIndex = Number.parseInt(groups.first, 10);
-  const lastCharIndex = Number.parseInt(groups.last, 10);
+  const lineGroups = lineSelectId.match(LineConstants.selectIdRegex)?.groups as Record<string, string>;
+  const lineIndex = lineIdToIndex.get(lineGroups.lineId) ?? 0;
+
+  const charGroupGroups = charGroupSelectId.match(CharGroupConstants.selectIdRegex)?.groups as Record<string, string>;
+  const firstCharIndex = Number.parseInt(charGroupGroups.first, 10);
+  const lastCharIndex = Number.parseInt(charGroupGroups.last, 10);
+
   const [x] = position;
-
   const charGroupRect = charGroupElement.getBoundingClientRect();
-
   if (x <= charGroupRect.left + charGroupRect.width / 2) {
     return { lineIndex, charIndex: firstCharIndex };
   } else {
@@ -88,6 +97,7 @@ function cursorCoordinateCharGroup(
 function cursorCoordinateLine(
   lines: string[],
   position: [number, number],
+  lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
   element: HTMLElement
 ): CursorCoordinate | undefined {
@@ -96,14 +106,14 @@ function cursorCoordinateLine(
   if (!lineElement || !selectId) return undefined;
 
   const groups = selectId.match(LineConstants.selectIdRegex)?.groups as Record<string, string>;
-  const lineIndex = Number.parseInt(groups.lineIndex, 10);
+  const lineIndex = lineIdToIndex.get(groups.lineId) ?? 0;
   const [x, y] = position;
 
   const currentLine = lines[lineIndex];
   let [charIndex, minDistance] = [lines[lineIndex].length, Number.MAX_VALUE];
 
   for (let index = 0; index <= currentLine.length; index++) {
-    const charElement = getCharAt(lineIndex, index, element);
+    const charElement = lineElement.querySelector(`span[data-selectid="${CharConstants.selectId(index)}"]`);
     const charRect = charElement?.getBoundingClientRect();
     if (!charRect) continue;
 
@@ -130,6 +140,7 @@ function cursorCoordinateLine(
 function cursorCoordinateLineGroup(
   lines: string[],
   position: [number, number],
+  lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
   element: HTMLElement
 ): CursorCoordinate | undefined {
@@ -138,8 +149,9 @@ function cursorCoordinateLineGroup(
   if (!lineGroupElement || !selectId) return undefined;
 
   const groups = selectId.match(LineGroupConstants.selectIdRegex)?.groups as Record<string, string>;
-  const firstLineIndex = Number.parseInt(groups.first, 10);
-  const lastLineIndex = Number.parseInt(groups.last, 10);
+
+  const firstLineIndex = lineIdToIndex.get(groups.first) ?? 0;
+  const lastLineIndex = lineIdToIndex.get(groups.last) ?? 0;
   const [, y] = position;
 
   const lineGroupRect = lineGroupElement.getBoundingClientRect();

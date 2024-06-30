@@ -1,5 +1,5 @@
-import { ContentNode } from '../../../../parser/content/types';
-import { PureLineNode } from '../../../../parser/line/types';
+import { ContentNode } from '../../../../parser/content/contentNode';
+import { PureLineNode } from '../../../../parser/line/pureLineNode';
 import { CursorCoordinate } from '../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../types/selection/cursorSelection';
 import { ContentPosition, ContentPositionEndPoint } from '../hooks/contentPosition';
@@ -26,8 +26,11 @@ export function getLineRange(
   cursorSelection: CursorSelection | undefined
 ): [number, number] {
   let [firstLineIndex, lastLineIndex] = [cursorCoordinate.lineIndex, cursorCoordinate.lineIndex];
-  if (cursorSelection)
+  if (cursorSelection) {
     [firstLineIndex, lastLineIndex] = [cursorSelection.fixed.lineIndex, cursorSelection.free.lineIndex];
-  if (firstLineIndex > lastLineIndex) [firstLineIndex, lastLineIndex] = [lastLineIndex, firstLineIndex];
+  }
+  if (firstLineIndex > lastLineIndex) {
+    [firstLineIndex, lastLineIndex] = [lastLineIndex, firstLineIndex];
+  }
   return [firstLineIndex, lastLineIndex];
 }

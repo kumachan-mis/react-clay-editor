@@ -1,8 +1,9 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
+import { ContentNode } from '../content/contentNode';
 import { parseContent } from '../content/parseContent';
-import { ContentNode } from '../content/types';
 
-import { HashtagNode } from './types';
+import { HashtagNode } from './hashtagNode';
 
 export const hashtagRegex = /^(?<left>.*?)#(?<linkName>[^\s!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]+)(?<right>.*)$/;
 
@@ -12,7 +13,6 @@ export function parseHashtag(text: string, context: ParsingContext, options: Par
 
   const node: HashtagNode = {
     type: 'hashtag',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '#',
     linkName,

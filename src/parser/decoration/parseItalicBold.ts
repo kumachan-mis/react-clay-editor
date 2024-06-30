@@ -1,8 +1,9 @@
-import { ParsingContext, ParsingOptions } from '../common/types';
+import { ParsingContext } from '../common/parsingContext';
+import { ParsingOptions } from '../common/parsingOptions';
+import { ContentNode } from '../content/contentNode';
 import { parseContent } from '../content/parseContent';
-import { ContentNode } from '../content/types';
 
-import { DecorationNode } from './types';
+import { DecorationNode } from './decorationNode';
 
 export const italicBoldRegex = /^(?<left>.*?)_\*(?<body>[^_*\s]([^*]*[^*\s])?)\*_(?<right>.*)$/;
 
@@ -12,7 +13,6 @@ export function parseItalicBold(text: string, context: ParsingContext, options: 
 
   const node: DecorationNode = {
     type: 'decoration',
-    lineIndex: context.lineIndex,
     range: [first, last],
     facingMeta: '_*',
     children: parseContent(body, { ...context, charIndex: first + 2, nested: true }, options),

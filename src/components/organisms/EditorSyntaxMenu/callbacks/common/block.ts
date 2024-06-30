@@ -1,7 +1,6 @@
 import { EditorState } from '../../../../../contexts/EditorStateContext';
-import { BlockNode } from '../../../../../parser/block/types';
-import { isBlockNode } from '../../../../../parser/block/utils';
-import { LineNode } from '../../../../../parser/line/types';
+import { TopLevelNode } from '../../../../../parser';
+import { BlockNode, isBlockNode } from '../../../../../parser/block/blockNode';
 import { CursorCoordinate } from '../../../../../types/cursor/cursorCoordinate';
 import { CursorSelection } from '../../../../../types/selection/cursorSelection';
 import { copySelection } from '../../../../molecules/selection/Selection/utils';
@@ -17,7 +16,7 @@ export type BlockMenuConfig = {
 
 export function handleOnBlockMenuClick(
   text: string,
-  nodes: (LineNode | BlockNode)[],
+  nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   menuSwitch: BlockMenuSwitch,
@@ -38,11 +37,11 @@ export function handleOnBlockMenuClick(
     return handleBlockMenuAllInRange(text, state, blockNode);
   }
 
-  const bodyTopIndex = blockNode.range[0] + 1;
-  const topMeta = Array(blockNode.facingMeta.indentDepth + 1).join(' ') + config.meta + '\n';
+  const bodyTopIndex = blockNode._lineRange[0] + 1;
+  const topMeta = Array(blockNode.facingMeta.indent.length + 1).join(' ') + config.meta + '\n';
 
-  const bodyBottomIndex = blockNode.range[1] - (blockNode.trailingMeta ? 1 : 0);
-  const bottomMeta = '\n' + Array(blockNode.facingMeta.indentDepth + 1).join(' ') + config.meta;
+  const bodyBottomIndex = blockNode._lineRange[1] - (blockNode.trailingMeta ? 1 : 0);
+  const bottomMeta = '\n' + Array(blockNode.facingMeta.indent.length + 1).join(' ') + config.meta;
 
   if (firstLineIndex > bodyTopIndex && lastLineIndex < bodyBottomIndex) {
     return handleBlockMenuMiddleRange(text, state, topMeta, bottomMeta);
@@ -102,22 +101,33 @@ function handleBlockMenuAllInRange(text: string, state: EditorState, blockNode: 
   const { cursorCoordinate, cursorSelection } = state;
   const lines = text.split('\n');
 
-  const [start, end] = [blockNode.range[0] + 1, blockNode.range[1]];
-  const insertedText = lines.slice(start, blockNode.trailingMeta ? end : end + 1).join('\n');
+  if (blockNode.children.length === 0) {
+    const blockSelection: CursorSelection = {
+      fixed: { lineIndex: blockNode._lineRange[0], charIndex: 0 },
+      free: { lineIndex: blockNode._lineRange[1], charIndex: lines[blockNode._lineRange[1]].length },
+    };
+    const [newText, newState] = insertText(text, { ...state, cursorSelection: blockSelection }, '');
+    return [newText, newState];
+  }
+
+  const start = blockNode._lineRange[0] + 1;
+  const end = blockNode._lineRange[1] + (blockNode.trailingMeta ? 0 : 1);
+
+  const insertedText = lines.slice(start, end).join('\n');
   const blockSelection: CursorSelection = {
-    fixed: { lineIndex: blockNode.range[0], charIndex: 0 },
-    free: { lineIndex: blockNode.range[1], charIndex: lines[blockNode.range[1]].length },
+    fixed: { lineIndex: blockNode._lineRange[0], charIndex: 0 },
+    free: { lineIndex: blockNode._lineRange[1], charIndex: lines[blockNode._lineRange[1]].length },
   };
   const [newText, newState] = insertText(text, { ...state, cursorSelection: blockSelection }, insertedText);
 
   const getNewCursorCoordinate = (cursorCoordinate: CursorCoordinate): CursorCoordinate => {
-    if (cursorCoordinate.lineIndex < blockNode.range[0]) {
+    if (cursorCoordinate.lineIndex < blockNode._lineRange[0]) {
       return cursorCoordinate;
-    } else if (cursorCoordinate.lineIndex === blockNode.range[0]) {
+    } else if (cursorCoordinate.lineIndex === blockNode._lineRange[0]) {
       return { lineIndex: cursorCoordinate.lineIndex, charIndex: 0 };
-    } else if (cursorCoordinate.lineIndex < blockNode.range[1] || !blockNode.trailingMeta) {
+    } else if (cursorCoordinate.lineIndex < blockNode._lineRange[1] || !blockNode.trailingMeta) {
       return { lineIndex: cursorCoordinate.lineIndex - 1, charIndex: cursorCoordinate.charIndex };
-    } else if (cursorCoordinate.lineIndex === blockNode.range[1]) {
+    } else if (cursorCoordinate.lineIndex === blockNode._lineRange[1]) {
       return { lineIndex: cursorCoordinate.lineIndex - 2, charIndex: lines[cursorCoordinate.lineIndex - 1].length };
     } else {
       return { lineIndex: cursorCoordinate.lineIndex - 2, charIndex: cursorCoordinate.charIndex };
@@ -201,7 +211,7 @@ function handleBlockMenuUpperRange(
   };
 
   if (blockNode.trailingMeta) {
-    const bottom = blockNode.range[1];
+    const bottom = blockNode._lineRange[1];
     const bottomSelection: CursorSelection = {
       fixed: { lineIndex: bottom, charIndex: lines[bottom - 1].length },
       free: { lineIndex: bottom + 1, charIndex: lines[bottom].length },
@@ -251,7 +261,7 @@ function handleBlockMenuLowerRange(
     bottomMeta
   );
 
-  const top = blockNode.range[0];
+  const top = blockNode._lineRange[0];
   const topSelection: CursorSelection = {
     fixed: { lineIndex: top, charIndex: 0 },
     free: { lineIndex: top + 1, charIndex: 0 },
@@ -281,10 +291,12 @@ function handleBlockMenuLowerRange(
 }
 
 function allInRange(blockNode: BlockNode, [firstLineIndex, lastLineIndex]: [number, number]): boolean {
-  const [top, bottom] = blockNode.range;
+  const [top, bottom] = blockNode._lineRange;
   if (firstLineIndex === top && lastLineIndex === top) return true;
   if (!!blockNode.trailingMeta && firstLineIndex === bottom && lastLineIndex === bottom) return true;
-  const topIndexes = [top, top + 1];
+
+  const topIndexes = blockNode.children.length > 0 ? [top, top + 1] : [top];
   const bottomIndexes = blockNode.trailingMeta ? [bottom, bottom - 1] : [bottom];
+
   return topIndexes.includes(firstLineIndex) && bottomIndexes.includes(lastLineIndex);
 }
