@@ -325,7 +325,6 @@ export function handleOnMoveRight(
 export function handleOnMoveWordTop(
   text: string,
   state: EditorState,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
@@ -362,7 +361,6 @@ export function handleOnMoveWordTop(
 export function handleOnMoveWordBottom(
   text: string,
   state: EditorState,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   event: React.KeyboardEvent<HTMLTextAreaElement>
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
