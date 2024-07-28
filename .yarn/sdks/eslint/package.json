@@ -1,6 +1,6 @@
 {
   "name": "eslint",
-  "version": "9.7.0-sdk",
+  "version": "9.8.0-sdk",
   "type": "commonjs",
   "exports": {
     "./package.json": "./package.json",
