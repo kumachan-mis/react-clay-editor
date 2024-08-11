@@ -24,8 +24,8 @@ export default [
       'plugin:react/recommended',
       'plugin:react-hooks/recommended',
       'plugin:storybook/recommended',
-      'prettier',
-    ),
+      'prettier'
+    )
   ),
   {
     languageOptions: {
@@ -118,8 +118,8 @@ export default [
     compat.extends(
       'plugin:@typescript-eslint/strict-type-checked',
       'plugin:@typescript-eslint/stylistic-type-checked',
-      'plugin:import/typescript',
-    ),
+      'plugin:import/typescript'
+    )
   ).map((config) => ({
     ...config,
     files: ['**/*.ts', '**/*.tsx'],
