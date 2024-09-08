@@ -10,7 +10,7 @@ import { displayFormulaRegex, parseDisplayFormula } from '../displayFormula/pars
 import { hashtagRegex, parseHashtag } from '../hashtag/parseHashtag';
 import { inlineCodeRegex, parseInlineCode } from '../inlineCode/parseInlineCode';
 import { inlineFormulaRegex, parseInlineFormula } from '../inlineFormula/parseInlineFormula';
-import { normalRegex, parseNormal } from '../normal/parseNormal';
+import { parseNormal } from '../normal/parseNormal';
 import { parseTaggedLink } from '../taggedLink/parseTaggedLink';
 import { parseUrl, urlRegex } from '../url/parseUrl';
 
@@ -51,7 +51,7 @@ function parseBracketContent(text: string, context: ParsingContext, options: Par
     return parseHashtag(text, context, options);
   } else if (urlRegex.test(text)) {
     return parseUrl(text, context, options);
-  } else if (normalRegex.test(text)) {
+  } else if (text.length > 0) {
     return parseNormal(text, context);
   }
   return [];
@@ -82,7 +82,7 @@ function parseMarkdownContent(text: string, context: ParsingContext, options: Pa
     return parseHashtag(text, context, options);
   } else if (urlRegex.test(text)) {
     return parseUrl(text, context, options);
-  } else if (normalRegex.test(text)) {
+  } else if (text.length > 0) {
     return parseNormal(text, context);
   }
   return [];
