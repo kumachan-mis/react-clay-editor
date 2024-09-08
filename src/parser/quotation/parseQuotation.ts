@@ -7,7 +7,7 @@ import { QuotationNode } from './quotationNode';
 export const quotationRegex = /^(?<indent>\s*)(?<meta>> )(?<content>.*)$/;
 
 export function parseQuotation(line: string, context: ParsingContext, options: ParsingOptions): QuotationNode {
-  const { indent, meta, content } = line.match(quotationRegex)?.groups as Record<string, string>;
+  const { indent, meta, content } = quotationRegex.exec(line)?.groups as Record<string, string>;
 
   const node: QuotationNode = {
     type: 'quotation',

@@ -11,7 +11,7 @@ export function parseMarkdownItemization(
   context: ParsingContext,
   options: ParsingOptions
 ): ItemizationNode {
-  const { indent, bullet, content } = line.match(markdownItemizationRegex)?.groups as Record<string, string>;
+  const { indent, bullet, content } = markdownItemizationRegex.exec(line)?.groups as Record<string, string>;
 
   const node: ItemizationNode = {
     type: 'itemization',

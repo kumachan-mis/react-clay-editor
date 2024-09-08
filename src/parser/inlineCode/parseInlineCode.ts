@@ -8,7 +8,7 @@ import { InlineCodeNode } from './inlineCodeNode';
 export const inlineCodeRegex = /^(?<left>.*?)`(?<code>[^`]+)`(?<right>.*)$/;
 
 export function parseInlineCode(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, code, right } = text.match(inlineCodeRegex)?.groups as Record<string, string>;
+  const { left, code, right } = inlineCodeRegex.exec(text)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: InlineCodeNode = {

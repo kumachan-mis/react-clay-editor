@@ -37,12 +37,17 @@ export default [
       sourceType: 'commonjs',
       parserOptions: {
         project: true,
+        sourceType: 'module',
+        ecmaVersion: 'latest',
         tsconfigRootDir: '.',
       },
     },
     settings: {
       react: {
         version: 'detect',
+      },
+      'import/parsers': {
+        espree: ['.js', '.cjs', '.mjs', '.jsx'],
       },
       'import/resolver': {
         typescript: true,

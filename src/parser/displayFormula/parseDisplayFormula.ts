@@ -8,7 +8,7 @@ import { DisplayFormulaNode } from './displayFormulaNode';
 export const displayFormulaRegex = /^(?<left>.*?)\$\$(?<formula>[^$]+)\$\$(?<right>.*)$/;
 
 export function parseDisplayFormula(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, formula, right } = text.match(displayFormulaRegex)?.groups as Record<string, string>;
+  const { left, formula, right } = displayFormulaRegex.exec(text)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: DisplayFormulaNode = {

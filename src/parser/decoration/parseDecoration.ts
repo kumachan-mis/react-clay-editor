@@ -9,7 +9,7 @@ import { DecorationNode } from './decorationNode';
 export const decorationRegex = /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/;
 
 export function parseDecoration(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, decoration, body, right } = text.match(decorationRegex)?.groups as Record<string, string>;
+  const { left, decoration, body, right } = decorationRegex.exec(text)?.groups as Record<string, string>;
   const config = stringToConfig(decoration);
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 

@@ -8,7 +8,7 @@ import { HashtagNode } from './hashtagNode';
 export const hashtagRegex = /^(?<left>.*?)#(?<linkName>[^\s!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]+)(?<right>.*)$/;
 
 export function parseHashtag(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, linkName, right } = text.match(hashtagRegex)?.groups as Record<string, string>;
+  const { left, linkName, right } = hashtagRegex.exec(text)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: HashtagNode = {

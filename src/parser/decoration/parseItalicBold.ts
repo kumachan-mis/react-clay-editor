@@ -8,7 +8,7 @@ import { DecorationNode } from './decorationNode';
 export const italicBoldRegex = /^(?<left>.*?)_\*(?<body>[^_*\s]([^*]*[^*\s])?)\*_(?<right>.*)$/;
 
 export function parseItalicBold(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, body, right } = text.match(italicBoldRegex)?.groups as Record<string, string>;
+  const { left, body, right } = italicBoldRegex.exec(text)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: DecorationNode = {
