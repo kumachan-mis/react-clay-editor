@@ -8,7 +8,7 @@ import { BracketLinkNode } from './bracketLinkNode';
 export const bracketLinkRegex = /^(?<left>.*?)\[(?<linkName>[^[\]]+)\](?<right>.*)$/;
 
 export function parseBracketLink(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, linkName, right } = text.match(bracketLinkRegex)?.groups as Record<string, string>;
+  const { left, linkName, right } = bracketLinkRegex.exec(text)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: BracketLinkNode = {

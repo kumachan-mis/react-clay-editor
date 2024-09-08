@@ -8,7 +8,7 @@ import { UrlNode } from './urlNode';
 export const urlRegex = /^(?<left>.*?)(?<url>https?:\/\/[\w/:%#$&?()~.=+-]+)(?<right>.*)$/;
 
 export function parseUrl(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, url, right } = text.match(urlRegex)?.groups as Record<string, string>;
+  const { left, url, right } = urlRegex.exec(text)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: UrlNode = {

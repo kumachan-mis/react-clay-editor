@@ -9,7 +9,7 @@ import { DecorationNode } from './decorationNode';
 export const headingRegex = /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/;
 
 export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
-  const { heading, body } = line.match(headingRegex)?.groups as Record<string, string>;
+  const { heading, body } = headingRegex.exec(line)?.groups as Record<string, string>;
   const config = stringToConfig(heading);
 
   const childNode: DecorationNode = {

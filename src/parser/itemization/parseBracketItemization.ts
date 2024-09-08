@@ -11,7 +11,7 @@ export function parseBracketItemization(
   context: ParsingContext,
   options: ParsingOptions
 ): ItemizationNode {
-  const { indent, bullet, content } = line.match(bracketItemizationRegex)?.groups as Record<string, string>;
+  const { indent, bullet, content } = bracketItemizationRegex.exec(line)?.groups as Record<string, string>;
 
   const node: ItemizationNode = {
     type: 'itemization',

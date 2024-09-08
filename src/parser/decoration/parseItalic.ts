@@ -8,7 +8,7 @@ import { DecorationNode } from './decorationNode';
 export const italicRegex = /^(?<left>.*?)_(?<body>[^_\s]([^_]*[^_\s])?)_(?<right>.*)$/;
 
 export function parseItalic(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
-  const { left, body, right } = text.match(italicRegex)?.groups as Record<string, string>;
+  const { left, body, right } = italicRegex.exec(text)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 
   const node: DecorationNode = {
