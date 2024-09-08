@@ -1,7 +1,8 @@
 import { ParsingContext } from '../common/parsingContext';
 import { ParsingOptions } from '../common/parsingOptions';
 import { ContentNode } from '../content/contentNode';
-import { parseContent } from '../content/parseContent';
+import { CONTENT_LIMIT, parseContent } from '../content/parseContent';
+import { parseNormal } from '../normal/parseNormal';
 
 import { TaggedLinkNode } from './taggedLinkNode';
 
@@ -17,6 +18,10 @@ export function parseTaggedLink(
   options: ParsingOptions,
   regex: RegExp
 ): ContentNode[] {
+  if (text.length > CONTENT_LIMIT) {
+    return parseNormal(text, context);
+  }
+
   const { left, tag, linkName, right } = text.match(regex)?.groups as Record<string, string>;
   const [first, last] = [context.charIndex + left.length, context.charIndex + text.length - right.length - 1];
 

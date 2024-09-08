@@ -10,13 +10,19 @@ import { displayFormulaRegex, parseDisplayFormula } from '../displayFormula/pars
 import { hashtagRegex, parseHashtag } from '../hashtag/parseHashtag';
 import { inlineCodeRegex, parseInlineCode } from '../inlineCode/parseInlineCode';
 import { inlineFormulaRegex, parseInlineFormula } from '../inlineFormula/parseInlineFormula';
-import { normalRegex, parseNormal } from '../normal/parseNormal';
+import { parseNormal } from '../normal/parseNormal';
 import { parseTaggedLink } from '../taggedLink/parseTaggedLink';
 import { parseUrl, urlRegex } from '../url/parseUrl';
 
 import { ContentNode } from './contentNode';
 
+export const CONTENT_LIMIT = 10000;
+
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
+  if (text.length > CONTENT_LIMIT) {
+    return parseNormal(text, context);
+  }
+
   if (!options.syntax || options.syntax === 'bracket') {
     // Bracket syntax
     return parseBracketContent(text, context, options);
@@ -45,7 +51,7 @@ function parseBracketContent(text: string, context: ParsingContext, options: Par
     return parseHashtag(text, context, options);
   } else if (urlRegex.test(text)) {
     return parseUrl(text, context, options);
-  } else if (normalRegex.test(text)) {
+  } else if (text.length > 0) {
     return parseNormal(text, context);
   }
   return [];
@@ -76,7 +82,7 @@ function parseMarkdownContent(text: string, context: ParsingContext, options: Pa
     return parseHashtag(text, context, options);
   } else if (urlRegex.test(text)) {
     return parseUrl(text, context, options);
-  } else if (normalRegex.test(text)) {
+  } else if (text.length > 0) {
     return parseNormal(text, context);
   }
   return [];
