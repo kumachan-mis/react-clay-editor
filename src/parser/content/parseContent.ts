@@ -16,7 +16,13 @@ import { parseUrl, urlRegex } from '../url/parseUrl';
 
 import { ContentNode } from './contentNode';
 
+export const CONTENT_LIMIT = 10000;
+
 export function parseContent(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
+  if (text.length > CONTENT_LIMIT) {
+    return parseNormal(text, context);
+  }
+
   if (!options.syntax || options.syntax === 'bracket') {
     // Bracket syntax
     return parseBracketContent(text, context, options);
