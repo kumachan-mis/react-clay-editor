@@ -8,6 +8,11 @@
       {
         "releaseRules": [
           {
+            "type": "build",
+            "scope": "README",
+            "release": "patch"
+          },
+          {
             "type": "docs",
             "scope": "README",
             "release": "patch"
