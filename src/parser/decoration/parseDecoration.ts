@@ -7,7 +7,7 @@ import { parseNormal } from '../normal/parseNormal';
 import { DecorationConfig } from './decorationConfig';
 import { DecorationNode } from './decorationNode';
 
-export const decorationRegex = /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(\[[^\]]+\]|[^\]])+)\](?<right>.*)$/;
+export const decorationRegex = /^(?<left>.*?)\[(?<decoration>[*/_]+) (?<body>(?:\[[^\]]+\]|[^\]])+?)\](?<right>.*)$/;
 
 export function parseDecoration(text: string, context: ParsingContext, options: ParsingOptions): ContentNode[] {
   if (text.length > CONTENT_LIMIT) {
