@@ -1,6 +1,6 @@
 {
   "name": "eslint",
-  "version": "9.10.0-sdk",
+  "version": "9.11.0-sdk",
   "type": "commonjs",
   "exports": {
     ".": {
@@ -14,6 +14,10 @@
     },
     "./rules": {
       "types": "./lib/types/rules/index.d.ts"
+    },
+    "./universal": {
+      "types": "./lib/types/universal.d.ts",
+      "default": "./lib/universal.js"
     }
   },
   "main": "./lib/api.js",
