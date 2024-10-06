@@ -616,6 +616,92 @@ export const commonTestCases: TestCase[] = [
 
 export const branketTestCases: TestCase[] = [
   {
+    name: 'heading text',
+    text: [
+      '[**** Largest Heading]',
+      '[*** Also Largest Heading]',
+      '[** Larger Heading]',
+      '[* Normal Heading]',
+      '[* Heading [Link]]',
+    ].join('\n'),
+    expected: [
+      {
+        type: 'heading',
+        facingMeta: '[**** ',
+        children: [
+          {
+            type: 'normal',
+            range: [6, 20],
+            text: 'Largest Heading',
+          },
+        ],
+        trailingMeta: ']',
+        level: 'largest',
+        _lineIndex: 0,
+      },
+      {
+        type: 'heading',
+        facingMeta: '[*** ',
+        children: [
+          {
+            type: 'normal',
+            text: 'Also Largest Heading',
+          },
+        ],
+        trailingMeta: ']',
+        level: 'largest',
+        _lineIndex: 1,
+      },
+      {
+        type: 'heading',
+        facingMeta: '[** ',
+        children: [
+          {
+            type: 'normal',
+            text: 'Larger Heading',
+          },
+        ],
+        trailingMeta: ']',
+        level: 'larger',
+        _lineIndex: 2,
+      },
+      {
+        type: 'heading',
+        facingMeta: '[* ',
+        children: [
+          {
+            type: 'normal',
+            text: 'Normal Heading',
+          },
+        ],
+        trailingMeta: ']',
+        level: 'normal',
+        _lineIndex: 3,
+      },
+      {
+        type: 'heading',
+        facingMeta: '[* ',
+        children: [
+          {
+            type: 'normal',
+            range: [3, 10],
+            text: 'Heading ',
+          },
+          {
+            type: 'bracketLink',
+            range: [11, 16],
+            facingMeta: '[',
+            linkName: 'Link',
+            trailingMeta: ']',
+          },
+        ],
+        trailingMeta: ']',
+        level: 'normal',
+        _lineIndex: 4,
+      },
+    ],
+  },
+  {
     name: 'decoration text',
     text: [
       '[**** Largest Text][*** Also Largest Text][** Larger Text][* bold text][/ italic text][_ underlined text]',
@@ -1024,103 +1110,98 @@ export const branketTestCases: TestCase[] = [
 
 export const markdownTestCases: TestCase[] = [
   {
-    name: 'decoration text',
+    name: 'heading text',
     text: [
-      '# Largest Text',
-      '## Larger Text',
-      '### Bold Text',
-      '#### Also Bold Text',
-      '*bold text*_italic text_',
-      '*_bold italic text_*',
-      '_*italic bold text*_',
+      '# Largest Header',
+      '## Larger Header',
+      '### Normal Header',
+      '#### Also Normal Header',
+      '### Heading #Link',
     ].join('\n'),
     expected: [
       {
-        type: 'normalLine',
+        type: 'heading',
+        facingMeta: '# ',
         children: [
           {
-            type: 'decoration',
-            range: [0, 13],
-            children: [
-              {
-                type: 'normal',
-                range: [2, 13],
-                text: 'Largest Text',
-              },
-            ],
-            config: {
-              size: 'largest',
-              bold: true,
-              italic: false,
-              underline: false,
-            },
+            type: 'normal',
+            range: [2, 15],
+            text: 'Largest Header',
           },
         ],
+        trailingMeta: '',
+        level: 'largest',
         _lineIndex: 0,
       },
       {
-        type: 'normalLine',
+        type: 'heading',
+        facingMeta: '## ',
         children: [
           {
-            type: 'decoration',
-            children: [
-              {
-                type: 'normal',
-                text: 'Larger Text',
-              },
-            ],
-            config: {
-              size: 'larger',
-              bold: true,
-              italic: false,
-              underline: false,
-            },
+            type: 'normal',
+            range: [3, 15],
+            text: 'Larger Header',
           },
         ],
+        trailingMeta: '',
+        level: 'larger',
         _lineIndex: 1,
       },
       {
-        type: 'normalLine',
+        type: 'heading',
+        facingMeta: '### ',
         children: [
           {
-            type: 'decoration',
-            children: [
-              {
-                type: 'normal',
-                text: 'Bold Text',
-              },
-            ],
-            config: {
-              size: 'normal',
-              bold: true,
-              italic: false,
-              underline: false,
-            },
+            type: 'normal',
+            range: [4, 16],
+            text: 'Normal Header',
           },
         ],
+        trailingMeta: '',
+        level: 'normal',
         _lineIndex: 2,
       },
       {
-        type: 'normalLine',
+        type: 'heading',
+        facingMeta: '#### ',
         children: [
           {
-            type: 'decoration',
-            children: [
-              {
-                type: 'normal',
-                text: 'Also Bold Text',
-              },
-            ],
-            config: {
-              size: 'normal',
-              bold: true,
-              italic: false,
-              underline: false,
-            },
+            type: 'normal',
+            range: [5, 22],
+            text: 'Also Normal Header',
           },
         ],
+        trailingMeta: '',
+        level: 'normal',
         _lineIndex: 3,
       },
+      {
+        type: 'heading',
+        facingMeta: '### ',
+        children: [
+          {
+            type: 'normal',
+            range: [4, 11],
+            text: 'Heading ',
+          },
+          {
+            type: 'hashtag',
+            range: [12, 16],
+            facingMeta: '#',
+            linkName: 'Link',
+            trailingMeta: '',
+          },
+        ],
+        trailingMeta: '',
+        level: 'normal',
+        _lineIndex: 4,
+      },
+    ],
+  },
+  {
+    name: 'decoration text',
+    text: ['*bold text*_italic text_', '*_bold italic text_*', '_*italic bold text*_'].join('\n'),
+    expected: [
       {
         type: 'normalLine',
         children: [
@@ -1159,7 +1240,7 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
-        _lineIndex: 4,
+        _lineIndex: 0,
       },
       {
         type: 'normalLine',
@@ -1182,7 +1263,7 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
-        _lineIndex: 5,
+        _lineIndex: 1,
       },
       {
         type: 'normalLine',
@@ -1205,7 +1286,7 @@ export const markdownTestCases: TestCase[] = [
             },
           },
         ],
-        _lineIndex: 6,
+        _lineIndex: 2,
       },
     ],
   },
