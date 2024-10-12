@@ -5,6 +5,7 @@ import { BracketLink } from '../BracketLink';
 import { ContentFormula } from '../ContentFormula';
 import { Decoration } from '../Decoration';
 import { Hashtag } from '../Hashtag';
+import { Heading } from '../Heading';
 import { InlineCode } from '../InlineCode';
 import { Itemization } from '../Itemization';
 import { Normal } from '../Normal';
@@ -22,6 +23,8 @@ const TextNodeComponent: React.FC<TextNodeProps> = ({ node, ...rest }) => {
       return <BlockCode node={node} {...rest} />;
     case 'blockFormula':
       return <BlockFormula node={node} {...rest} />;
+    case 'heading':
+      return <Heading node={node} {...rest} />;
     case 'quotation':
       return <Quotation node={node} {...rest} />;
     case 'itemization':
