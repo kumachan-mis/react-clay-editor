@@ -1,6 +1,7 @@
 import { ParsingContext } from '../common/parsingContext';
 import { ParsingOptions } from '../common/parsingOptions';
-import { headingRegex, parseHeading } from '../decoration/parseHeading';
+import { bracketHeadingRegex, parseBracketHeading } from '../heading/parseBracketHeading';
+import { markdownHeadingRegex, parseMarkdownHeading } from '../heading/parseMarkdownHeading';
 import { bracketItemizationRegex, parseBracketItemization } from '../itemization/parseBracketItemization';
 import { markdownItemizationRegex, parseMarkdownItemization } from '../itemization/parseMarkdownItemization';
 import { parseNormalLine } from '../normalLine/parseNormalLine';
@@ -19,7 +20,9 @@ export function parseLine(line: string, options: ParsingOptions, context: Parsin
 }
 
 function parseBracketLine(line: string, context: ParsingContext, options: ParsingOptions): PureLineNode {
-  if (quotationRegex.test(line)) {
+  if (bracketHeadingRegex.test(line)) {
+    return parseBracketHeading(line, context, options);
+  } else if (quotationRegex.test(line)) {
     return parseQuotation(line, context, options);
   } else if (bracketItemizationRegex.test(line)) {
     return parseBracketItemization(line, context, options);
@@ -29,8 +32,8 @@ function parseBracketLine(line: string, context: ParsingContext, options: Parsin
 }
 
 function parseMarkdownLine(line: string, context: ParsingContext, options: ParsingOptions): PureLineNode {
-  if (headingRegex.test(line)) {
-    return parseHeading(line, context, options);
+  if (markdownHeadingRegex.test(line)) {
+    return parseMarkdownHeading(line, context, options);
   } else if (quotationRegex.test(line)) {
     return parseQuotation(line, context, options);
   } else if (markdownItemizationRegex.test(line)) {

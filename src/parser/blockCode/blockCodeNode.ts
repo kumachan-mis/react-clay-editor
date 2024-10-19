@@ -27,7 +27,6 @@ export function blockCodeNodeToString(node: BlockCodeNode): string {
     blockCodeMetaNodeToString(node.facingMeta) +
     '\n' +
     node.children.map(blockCodeLineNodeToString).join('\n') +
-    '\n' +
-    (node.trailingMeta ? blockCodeMetaNodeToString(node.trailingMeta) : '')
+    (node.trailingMeta ? '\n' + blockCodeMetaNodeToString(node.trailingMeta) : '')
   );
 }

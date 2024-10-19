@@ -1,15 +1,15 @@
 import { ParsingContext } from '../common/parsingContext';
 import { ParsingOptions } from '../common/parsingOptions';
 import { parseContent } from '../content/parseContent';
-import { NormalLineNode } from '../normalLine/normalLineNode';
+import { DecorationConfig } from '../decoration/decorationConfig';
+import { DecorationNode } from '../decoration/decorationNode';
 
-import { DecorationConfig } from './decorationConfig';
-import { DecorationNode } from './decorationNode';
+import { HeadingNode } from './headingNoode';
 
-export const headingRegex = /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/;
+export const markdownHeadingRegex = /^(?<facingMeta>(?<heading>#+) )(?<body>.+)(?<trailingMeta>)$/;
 
-export function parseHeading(line: string, context: ParsingContext, options: ParsingOptions): NormalLineNode {
-  const { heading, body } = headingRegex.exec(line)?.groups as Record<string, string>;
+export function parseMarkdownHeading(line: string, context: ParsingContext, options: ParsingOptions): HeadingNode {
+  const { heading, body } = markdownHeadingRegex.exec(line)?.groups as Record<string, string>;
   const config = stringToConfig(heading);
 
   const childNode: DecorationNode = {
@@ -25,8 +25,8 @@ export function parseHeading(line: string, context: ParsingContext, options: Par
     config,
   };
 
-  const node: NormalLineNode = {
-    type: 'normalLine',
+  const node: HeadingNode = {
+    type: 'heading',
     lineId: context.lineIds[context.lineIndex],
     contentLength: line.length,
     children: [childNode],

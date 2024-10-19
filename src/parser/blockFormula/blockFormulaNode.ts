@@ -31,7 +31,6 @@ export function blockFormulaNodeToString(node: BlockFormulaNode): string {
     blockFormulaMetaNodeToString(node.facingMeta) +
     '\n' +
     node.children.map(blockFormulaLineNodeToString).join('\n') +
-    '\n' +
-    (node.trailingMeta ? blockFormulaMetaNodeToString(node.trailingMeta) : '')
+    (node.trailingMeta ? '\n' + blockFormulaMetaNodeToString(node.trailingMeta) : '')
   );
 }

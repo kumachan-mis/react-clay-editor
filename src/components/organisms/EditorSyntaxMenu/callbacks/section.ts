@@ -49,7 +49,7 @@ export function handleOnSectionItemClick(
   const { cursorCoordinate, cursorSelection } = state;
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];
   const lineNode = nodes[cursorCoordinate.lineIndex];
-  if (lineNode.type !== 'normalLine') return [text, state];
+  if (!['heading', 'normalLine'].includes(lineNode.type)) return [text, state];
 
   const { facingMeta, sectionName, trailingMeta } = getSectionMeta(props, menuItem);
   const line = text.split('\n')[cursorCoordinate.lineIndex];
@@ -81,8 +81,8 @@ export function handleOnSectionItemClick(
     ];
   }
 
-  const decorationNode = lineNode.children[0];
-  if (decorationNode.type === 'decoration') {
+  if (lineNode.type === 'heading') {
+    const decorationNode = lineNode.children[0];
     const config = menuSwitch === menuItem ? { facingMeta: '', trailingMeta: '' } : { facingMeta, trailingMeta };
     const position: ContentPosition = { type: 'inner', lineIndex: cursorCoordinate.lineIndex, contentIndexes: [0] };
     const [newText, newState] = replaceContentAtCursor(text, nodes, position, dummyState, config);

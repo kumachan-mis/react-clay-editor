@@ -245,7 +245,7 @@ test('section menu: normal, no-selection, section-line (larger text)', async () 
   await linesToBe(page, ['[* WY.SIWYG Editor]']);
 });
 
-test('section menu: button, no-selection, section-like-line', async () => {
+test('section menu: disabled, no-selection, section-like-line (bracket link)', async () => {
   await page.keyboard.insertText(['[** WYSIWYG Editor][bracket]'].join('\n'));
 
   await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]').click();
@@ -259,8 +259,22 @@ test('section menu: button, no-selection, section-like-line', async () => {
   await linesToBe(page, ['[** WYSIWY.G Editor][bracket]']);
 });
 
-test('section menu: disabled, selection, section-like-line', async () => {
-  await page.keyboard.insertText(['[** WYSIWYG Editor][bracket]'].join('\n'));
+test('section menu: disabled, no-selection, section-like-line (spaces)', async () => {
+  await page.keyboard.insertText(['[** WYSIWYG Editor] '].join('\n'));
+
+  await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]').click();
+
+  await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
+
+  await linesToBe(page, ['[** WYSIWYG Editor] ']);
+
+  await page.keyboard.type('.');
+
+  await linesToBe(page, ['[** WYSIWY.G Editor] ']);
+});
+
+test('section menu: disabled, selection, section-like-line (spaces)', async () => {
+  await page.keyboard.insertText(['[** WYSIWYG Editor]  '].join('\n'));
 
   await mouseSelect(
     page,
@@ -270,11 +284,11 @@ test('section menu: disabled, selection, section-like-line', async () => {
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
 
-  await linesToBe(page, ['[** WYSIWYG Editor][bracket]']);
+  await linesToBe(page, ['[** WYSIWYG Editor]  ']);
 
   await page.keyboard.type('.');
 
-  await linesToBe(page, ['[** WYSIWY.bracket]']);
+  await linesToBe(page, ['[** WYSIWY. ']);
 });
 
 test('section menu: button, no-selection, other (line node)', async () => {
