@@ -25,8 +25,7 @@ export function blockCodeNodeEquals(a: BlockCodeNode, b: BlockCodeNode): boolean
 export function blockCodeNodeToString(node: BlockCodeNode): string {
   return (
     blockCodeMetaNodeToString(node.facingMeta) +
-    '\n' +
-    node.children.map(blockCodeLineNodeToString).join('\n') +
+    node.children.map((child) => '\n' + blockCodeLineNodeToString(child)).join('') +
     (node.trailingMeta ? '\n' + blockCodeMetaNodeToString(node.trailingMeta) : '')
   );
 }

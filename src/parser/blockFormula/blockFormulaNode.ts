@@ -29,8 +29,7 @@ export function blockFormulaNodeEquals(prev: BlockFormulaNode, next: BlockFormul
 export function blockFormulaNodeToString(node: BlockFormulaNode): string {
   return (
     blockFormulaMetaNodeToString(node.facingMeta) +
-    '\n' +
-    node.children.map(blockFormulaLineNodeToString).join('\n') +
+    node.children.map((child) => '\n' + blockFormulaLineNodeToString(child)).join('') +
     (node.trailingMeta ? '\n' + blockFormulaMetaNodeToString(node.trailingMeta) : '')
   );
 }

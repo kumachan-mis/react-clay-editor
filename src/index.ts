@@ -33,3 +33,7 @@ export type {
 } from './contexts/ViewerPropsContext';
 
 export { Divider } from './components/organisms/Divider';
+
+export { parseText } from './parser/text/parseText';
+export { textNodeToString } from './parser/text/textNode';
+export { headingContent } from './parser/heading/headingNoode';

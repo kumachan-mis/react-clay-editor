@@ -1,3 +1,4 @@
+import { contentNodeToString } from '../content/contentNode';
 import { DecorationNode, decorationNodeEquals, decorationNodeToString } from '../decoration/decorationNode';
 
 export type HeadingNode = {
@@ -16,4 +17,8 @@ export function headingNodeEquals(a: HeadingNode, b: HeadingNode): boolean {
 
 export function headingNodeToString(node: HeadingNode): string {
   return decorationNodeToString(node.children[0]);
+}
+
+export function headingContent(node: HeadingNode): string {
+  return node.children[0].children.map(contentNodeToString).join('');
 }
