@@ -34,6 +34,6 @@ export type {
 
 export { Divider } from './components/organisms/Divider';
 
-export { headingContent } from './parser/heading/headingNoode';
 export { parseText } from './parser/text/parseText';
 export { textNodeToString } from './parser/text/textNode';
+export { headingContent } from './parser/heading/headingNoode';
