@@ -7,9 +7,7 @@ export type DecorationMenuItemType = 'bold' | 'italic' | 'underline';
 
 export type DecorationMenuSwitchItem = 'on' | 'off' | 'disabled';
 
-export type DecorationMenuSwitch = {
-  [K in DecorationMenuItemType]: DecorationMenuSwitchItem;
-};
+export type DecorationMenuSwitch = Record<DecorationMenuItemType, DecorationMenuSwitchItem>;
 
 export function decorationMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
