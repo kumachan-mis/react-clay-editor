@@ -69,7 +69,6 @@
     "@svgr/cli": "^8.1.0",
     "@types/katex": "^0.16.7",
     "@types/node": "^22.10.2",
-    "@types/prettier": "^3.0.0",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
