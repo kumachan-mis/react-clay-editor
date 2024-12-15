@@ -1,6 +1,8 @@
-import { StorybookConfig } from '@storybook/react-vite';
 import packageJson from '../package.json';
-import remarkGfm from 'remark-gfm';
+
+import { StorybookConfig } from '@storybook/react-vite';
+
+const remarkGfm = import('remark-gfm');
 
 const config: StorybookConfig = {
   stories: [{ directory: '../docs' }],
@@ -23,7 +25,7 @@ const config: StorybookConfig = {
     options: {},
   },
   env: (config) => {
-    const katexVersion = packageJson.devDependencies['katex'].slice(1);
+    const katexVersion = packageJson.devDependencies.katex.slice(1);
     const katexEnvSuffix = config?.NODE_ENV === 'production' ? '.min' : '';
     const STORYBOOK_KATEX_CSS = `https://cdn.jsdelivr.net/npm/katex@${katexVersion}/dist/katex${katexEnvSuffix}.css`;
     return { ...config, STORYBOOK_KATEX_CSS };

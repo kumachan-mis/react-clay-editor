@@ -14,14 +14,17 @@ export type SelectionState = {
   bottomRectProps: SelectionRectProps | undefined;
 };
 
-export function useSelection(props: SelectionProps): { state: SelectionState; ref: React.RefObject<HTMLSpanElement> } {
+export function useSelection(props: SelectionProps): {
+  state: SelectionState;
+  ref: React.RefObject<HTMLSpanElement | null>;
+} {
   const [state, setState] = React.useState<SelectionState>({
     topRectProps: undefined,
     centerRectProps: undefined,
     bottomRectProps: undefined,
   });
 
-  const ref = React.useRef<HTMLSpanElement>(null);
+  const ref = React.useRef<HTMLSpanElement | null>(null);
 
   React.useEffect(() => {
     if (!ref.current) return;

@@ -1,20 +1,12 @@
-import { Preview } from '@storybook/react';
 import theme from './theme';
-import prettier from 'prettier/standalone';
-import prettierBabel from 'prettier/parser-babel';
+
+import { Preview } from '@storybook/react';
 
 const preview: Preview = {
   parameters: {
     docs: {
       theme,
-      source: {
-        transform: (input: string) => {
-          if (input.startsWith('() => ')) {
-            return prettier.format(input, { parser: 'babel', plugins: [prettierBabel] });
-          }
-          return input;
-        },
-      },
+      canvas: { sourceState: 'none' },
     },
     options: {
       storySort: {
