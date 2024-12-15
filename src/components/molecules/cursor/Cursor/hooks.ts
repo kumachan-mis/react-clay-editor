@@ -13,9 +13,9 @@ export type CursorState = {
   cursorSize: number;
 };
 
-export function useCursor(props: CursorProps): { state: CursorState; ref: React.RefObject<HTMLSpanElement> } {
+export function useCursor(props: CursorProps): { state: CursorState; ref: React.RefObject<HTMLSpanElement | null> } {
   const [state, setState] = React.useState<CursorState>({ position: { top: 0, left: 0 }, cursorSize: 0 });
-  const ref = React.useRef<HTMLSpanElement>(null);
+  const ref = React.useRef<HTMLSpanElement | null>(null);
 
   const handleOnScrollOrResize = React.useCallback((): void => {
     if (!ref.current) return;
@@ -65,7 +65,7 @@ function propsToState(props: CursorProps, state: CursorState, element: HTMLEleme
   const charElement = getCharAt(
     props.lineIds[props.cursorCoordinate.lineIndex],
     props.cursorCoordinate.charIndex,
-    element
+    element,
   );
   const charRect = charElement?.getBoundingClientRect();
   if (!charElement || !charRect) return { ...state, position: { top: 0, left: 0 }, cursorSize: 0 };

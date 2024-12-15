@@ -12,11 +12,11 @@ import { handleOnMouseMove, handleOnMouseScrollDown, handleOnMouseScrollUp, hand
 import React from 'react';
 
 type UseWindowProps = {
-  ref: React.RefObject<HTMLDivElement>;
+  ref: React.RefObject<HTMLDivElement | null>;
 };
 
 type UseEditorRootProps = {
-  ref: React.RefObject<HTMLDivElement>;
+  ref: React.RefObject<HTMLDivElement | null>;
 };
 
 type UseEditorRootReturn = {
@@ -49,7 +49,7 @@ export function useWindow({ ref }: UseWindowProps): void {
       if (event.button !== 0) return;
       setState((state) => handleOnMouseMove(text, lineIdToIndex, state, event, ref.current));
     },
-    [setState, text, lineIdToIndex, ref]
+    [setState, text, lineIdToIndex, ref],
   );
 
   const onMouseUp = React.useCallback(
@@ -57,7 +57,7 @@ export function useWindow({ ref }: UseWindowProps): void {
       if (event.button !== 0) return;
       setState((state) => handleOnMouseUp(text, lineIdToIndex, state, event, ref.current));
     },
-    [setState, text, lineIdToIndex, ref]
+    [setState, text, lineIdToIndex, ref],
   );
 
   React.useEffect(() => {
@@ -93,7 +93,7 @@ export function useEditorRoot({ ref }: UseEditorRootProps): UseEditorRootReturn 
       window.addEventListener('mouseup', onWindowMouseUp);
       event.nativeEvent.stopPropagation();
     },
-    [onWindowMouseUp]
+    [onWindowMouseUp],
   );
 
   return { onMouseDown };

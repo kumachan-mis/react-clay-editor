@@ -36,7 +36,7 @@ const EditorRootInner: React.FC<React.PropsWithChildren<{ readonly className?: s
   className,
   children,
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDivElement | null>(null);
   useWindow({ ref });
   useScroll();
   const { onMouseDown } = useEditorRoot({ ref });
