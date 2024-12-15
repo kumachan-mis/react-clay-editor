@@ -25,4 +25,8 @@ extremely simple way is available.
 
 import * as InstallStories from '../ts/Install.stories.tsx';
 
-<Canvas sourceState="shown" of={InstallStories.InstallStory} />
+<Canvas
+  sourceState="shown"
+  of={InstallStories.InstallStory}
+  source={{ code: InstallStories.InstallStory.toSourceCode() }}
+/>

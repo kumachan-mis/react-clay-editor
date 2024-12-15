@@ -9,7 +9,7 @@ const meta: Meta = {
 
 export default meta;
 
-export const InstallStory: React.FC = () => {
+export const InstallStory: React.FC & { toSourceCode: () => string } = () => {
   const [text, setText] = React.useState(
     [
       '[* Simple Usage]',
@@ -19,7 +19,7 @@ export const InstallStory: React.FC = () => {
       '  `EditorTextFieldBody`',
       ' create nested commponent with them',
       ' give `text` and `setText` to `EditorRoot`',
-    ].join('\n')
+    ].join('\n'),
   );
   return (
     <EditorRoot palette="dark" setText={setText} text={text}>
@@ -29,3 +29,24 @@ export const InstallStory: React.FC = () => {
     </EditorRoot>
   );
 };
+
+InstallStory.toSourceCode = () => `() => {
+  const [text, setText] = React.useState(
+    [
+      '[* Simple Usage]',
+      ' import the following components',
+      '  \`EditorRoot\`',
+      '  \`EditorTextFieldRoot\`',
+      '  \`EditorTextFieldBody\`',
+      ' create nested commponent with them',
+      ' give \`text\` and \`setText\` to \`EditorRoot\`',
+    ].join('\\n'),
+  );
+  return (
+    <EditorRoot palette="dark" setText={setText} text={text}>
+      <EditorTextFieldRoot>
+        <EditorTextFieldBody />
+      </EditorTextFieldRoot>
+    </EditorRoot>
+  );
+};`;
