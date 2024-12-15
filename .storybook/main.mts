@@ -1,8 +1,8 @@
+// @ts-ignore: json import
 import packageJson from '../package.json';
 
 import { StorybookConfig } from '@storybook/react-vite';
-
-const remarkGfm = import('remark-gfm');
+import remarkGfm from 'remark-gfm';
 
 const config: StorybookConfig = {
   stories: [{ directory: '../docs' }],
