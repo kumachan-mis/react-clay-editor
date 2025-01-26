@@ -32,5 +32,5 @@ export const TextNodeList = React.memo(
     topLevelNodesEquals(prev.nodes, next.nodes) &&
     prev.getEditMode === next.getEditMode &&
     prev.linkForceClickable === next.linkForceClickable &&
-    textNodeVisualsEquals(prev, next)
+    textNodeVisualsEquals(prev, next),
 );

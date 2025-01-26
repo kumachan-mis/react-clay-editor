@@ -17,7 +17,7 @@ export function useHashtagMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   hashtagProps: EditorHashtagProps | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): HashtagMenuProps {
   const menuSwitch = hashtagProps?.disabled ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'hashtag');
   const handlerProps: LinkMenuHandlerProps = { ...defaultHandlerProps, ...hashtagProps, syntax };
@@ -31,7 +31,7 @@ export function useHashtagMenu(
       state,
       handlerProps,
       menuItem,
-      menuSwitch
+      menuSwitch,
     );
     setText(newText);
     setState(newState);

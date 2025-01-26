@@ -9,7 +9,7 @@ export const markdownItemizationRegex = /^(?<indent>\s*)(?<bullet>[*-] )(?<conte
 export function parseMarkdownItemization(
   line: string,
   context: ParsingContext,
-  options: ParsingOptions
+  options: ParsingOptions,
 ): ItemizationNode {
   const { indent, bullet, content } = markdownItemizationRegex.exec(line)?.groups as Record<string, string>;
 

@@ -21,7 +21,7 @@ const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, codeVisual
       <LineIndent indentDepth={indent.length} />
       <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
-          {[...codeLine].map((char, index) => (
+          {codeLine.split('').map((char, index) => (
             <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
@@ -34,5 +34,5 @@ const BlockCodeLineComponent: React.FC<BlockCodeLineProps> = ({ node, codeVisual
 
 export const BlockCodeLine = React.memo(
   BlockCodeLineComponent,
-  (prev, next) => blockCodeLineNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual
+  (prev, next) => blockCodeLineNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual,
 );

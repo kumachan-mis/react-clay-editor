@@ -9,7 +9,7 @@ export function useEmbededLinkForceClickable(): boolean {
     setLinkForceClickable(
       (!isMacOS() ? event.ctrlKey && !event.metaKey : event.metaKey && !event.ctrlKey) &&
         !event.altKey &&
-        !event.shiftKey
+        !event.shiftKey,
     );
   }, []);
   const handleOnKeyUp = React.useCallback(() => {

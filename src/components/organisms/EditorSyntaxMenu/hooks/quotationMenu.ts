@@ -18,7 +18,7 @@ const defaultHandlerProps: QuotationMenuHandlerProps = {
 export function useQuotationMenu(
   lineNodes: LineNode[],
   quotationProps: EditorQuotationProps | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): QuotationMenuProps {
   const menuSwitch = quotationMenuSwitch(syntax, lineNodes, state);
   const handlerProps: QuotationMenuHandlerProps = { ...defaultHandlerProps, ...quotationProps, syntax };

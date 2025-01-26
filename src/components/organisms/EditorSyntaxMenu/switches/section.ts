@@ -8,7 +8,7 @@ export type SectionMenuSwitch = 'off' | 'normal' | 'larger' | 'largest' | 'disab
 export function sectionMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
-  state: EditorState
+  state: EditorState,
 ): SectionMenuSwitch {
   if (!state.cursorCoordinate) return 'disabled';
 

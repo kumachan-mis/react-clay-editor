@@ -8,7 +8,7 @@ export type BlockFormulaMetaNode = {
 
 export function optinalBlockFormulaMetaNodeEquals(
   a: BlockFormulaMetaNode | undefined,
-  b: BlockFormulaMetaNode | undefined
+  b: BlockFormulaMetaNode | undefined,
 ): boolean {
   if (a === undefined || b === undefined) {
     return a === b;

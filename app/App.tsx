@@ -241,7 +241,7 @@ const Container = styled.div<{ palette: 'light' | 'dark' }>(
   align-items: center;
   position: relative;
   background-color: ${props.palette !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
-`
+`,
 );
 
 const RefreshButton = styled.button<{ palette: 'light' | 'dark' }>(
@@ -256,7 +256,7 @@ const RefreshButton = styled.button<{ palette: 'light' | 'dark' }>(
   &:hover {
     background-color: ${props.palette !== 'dark' ? 'rgba(243, 246, 249, 0.08)' : 'rgba(16, 20, 24, 0.04)'};
   }
-`
+`,
 );
 
 const TextArea = styled.textarea<{ palette: 'light' | 'dark' }>(
@@ -267,7 +267,7 @@ const TextArea = styled.textarea<{ palette: 'light' | 'dark' }>(
   color: ${props.palette !== 'dark' ? 'rgba(16, 20, 24, 0.87)' : 'rgba(243, 246, 249, 1.0)'};
   background-color: ${props.palette !== 'dark' ? 'rgba(243, 246, 249, 1.0)' : 'rgba(24, 24, 24, 1.0)'};
   border-color: ${props.palette !== 'dark' ? 'rgba(16, 20, 24, 0.12)' : 'rgba(243, 246, 249, 0.12)'};
-`
+`,
 );
 
 const MockLines: React.FC<{ readonly text: string }> = ({ text }) => (

@@ -20,7 +20,7 @@ export function handleOnBlockMenuClick(
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   menuSwitch: BlockMenuSwitch,
-  config: BlockMenuConfig
+  config: BlockMenuConfig,
 ): [string, EditorState] {
   if (!state.cursorCoordinate || menuSwitch === 'disabled') return [text, state];
 
@@ -146,7 +146,7 @@ function handleBlockMenuMiddleRange(
   text: string,
   state: EditorState,
   topMeta: string,
-  bottomMeta: string
+  bottomMeta: string,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -160,14 +160,14 @@ function handleBlockMenuMiddleRange(
   [newText, newState] = insertText(
     newText,
     { ...newState, cursorCoordinate: topCoordinate, cursorSelection: undefined },
-    topMeta
+    topMeta,
   );
 
   const bottomCoordinate: CursorCoordinate = { lineIndex: lastLineIndex + 1, charIndex: lines[lastLineIndex].length };
   [newText, newState] = insertText(
     newText,
     { ...newState, cursorCoordinate: bottomCoordinate, cursorSelection: undefined },
-    bottomMeta
+    bottomMeta,
   );
 
   const [newCursorCoordinate, newCursorSelection] = [{ ...cursorCoordinate }, copySelection(cursorSelection)];
@@ -189,7 +189,7 @@ function handleBlockMenuUpperRange(
   text: string,
   state: EditorState,
   blockNode: BlockNode,
-  topMeta: string
+  topMeta: string,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -203,7 +203,7 @@ function handleBlockMenuUpperRange(
   [newText, newState] = insertText(
     newText,
     { ...newState, cursorCoordinate: topCoordinate, cursorSelection: undefined },
-    topMeta
+    topMeta,
   );
   let getNewCursorCoordinate = (cursorCoordinate: CursorCoordinate): CursorCoordinate => {
     if (cursorCoordinate.lineIndex < firstLineIndex) return cursorCoordinate;
@@ -244,7 +244,7 @@ function handleBlockMenuLowerRange(
   text: string,
   state: EditorState,
   blockNode: BlockNode,
-  bottomMeta: string
+  bottomMeta: string,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -258,7 +258,7 @@ function handleBlockMenuLowerRange(
   [newText, newState] = insertText(
     newText,
     { ...newState, cursorCoordinate: bottomCoordinate, cursorSelection: undefined },
-    bottomMeta
+    bottomMeta,
   );
 
   const top = blockNode._lineRange[0];

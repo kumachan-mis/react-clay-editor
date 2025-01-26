@@ -34,5 +34,5 @@ const StyledSelectionRect = styled.div<{
   left: ${props.left}px;
   width: ${props.width}px;
   height: ${props.height}px;
-`
+`,
 );

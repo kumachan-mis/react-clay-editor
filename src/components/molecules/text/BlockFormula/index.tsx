@@ -21,7 +21,7 @@ const BlockFormulaComponent: React.FC<BlockFormulaProps> = ({ node, editMode, fo
   const formula = children.map((child) => child.formulaLine).join('\n');
 
   const firstNode = children.length > 0 ? children[0] : facingMeta;
-  const lastNode = children.length > 0 ? children[children.length - 1] : trailingMeta ?? facingMeta;
+  const lastNode = children.length > 0 ? children[children.length - 1] : (trailingMeta ?? facingMeta);
 
   return !editMode && !/^\s*$/.test(formula) ? (
     <LineGroup data-styleid={BlockFormulaConstants.styleId} firstLineId={firstNode.lineId} lastLineId={lastNode.lineId}>

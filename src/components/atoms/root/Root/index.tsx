@@ -39,7 +39,7 @@ const StyledForwardRefRoot = styled.div(
     margin: 0;
     text-align: inherit;
   }
-`
+`,
 );
 
 export const Root = React.forwardRef(ForwardRefRoot);

@@ -53,7 +53,7 @@ test('formula', async () => {
       '$$',
       '$$',
       '\\int_a^b g(y) dy',
-    ].join('\n')
+    ].join('\n'),
   );
 
   await expect(page.locator('[data-styleid=inline-formula]')).toHaveCount(2);
@@ -75,21 +75,21 @@ test('code', async () => {
       'const AnotherComponent = () => (',
       '  <>another component </>',
       ');',
-    ].join('\n')
+    ].join('\n'),
   );
 
   await expect(page.locator('[data-styleid=inline-code]').nth(0)).toHaveText("import React from 'react';");
   await expect(page.locator('[data-styleid=block-code]').nth(0)).toHaveText(
-    ['```', 'const Component = () => (', '  <>component</>', ');', '```'].join('\n')
+    ['```', 'const Component = () => (', '  <>component</>', ');', '```'].join('\n'),
   );
   await expect(page.locator('[data-styleid=block-code]').nth(1)).toHaveText(
-    ['```', 'const AnotherComponent = () => (', '  <>another component </>', ');'].join('\n')
+    ['```', 'const AnotherComponent = () => (', '  <>another component </>', ');'].join('\n'),
   );
 });
 
 test('quotation', async () => {
   await page.keyboard.insertText('> Genius is one percent inspiration and ninety-nine percent perspiration');
   await expect(page.locator('[data-styleid=quotation]').nth(0)).toHaveText(
-    'Genius is one percent inspiration and ninety-nine percent perspiration'
+    'Genius is one percent inspiration and ninety-nine percent perspiration',
   );
 });

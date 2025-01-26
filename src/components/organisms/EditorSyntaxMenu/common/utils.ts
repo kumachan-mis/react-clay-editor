@@ -10,7 +10,7 @@ export function isEndPoint(contentPosition: ContentPosition): contentPosition is
 
 export function getNestedContentNodeIfNonEndPoint(
   lineNode: PureLineNode,
-  contentPosition: ContentPosition
+  contentPosition: ContentPosition,
 ): ContentNode | undefined {
   if (isEndPoint(contentPosition)) return undefined;
   const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
@@ -23,7 +23,7 @@ export function getNestedContentNodeIfNonEndPoint(
 
 export function getLineRange(
   cursorCoordinate: CursorCoordinate,
-  cursorSelection: CursorSelection | undefined
+  cursorSelection: CursorSelection | undefined,
 ): [number, number] {
   let [firstLineIndex, lastLineIndex] = [cursorCoordinate.lineIndex, cursorCoordinate.lineIndex];
   if (cursorSelection) {

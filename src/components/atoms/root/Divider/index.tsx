@@ -11,5 +11,5 @@ const StyledDivider = styled.div(
   (props) => `
   width: 100%;
   border-bottom: solid 1px ${props.theme.base.dividerColor};
-`
+`,
 );

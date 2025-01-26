@@ -69,7 +69,7 @@ export const DualPanedEditorStory: React.FC = () => {
     [
       '# Dual-Paned Editor',
       'You can implement a dual-paned editor by using the viewer and the standard `<textarea>`.',
-    ].join('\n')
+    ].join('\n'),
   );
   return (
     <div

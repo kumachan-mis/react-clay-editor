@@ -8,7 +8,7 @@ export type ItemizationMenuSwitch = 'alloff' | 'allon' | 'both' | 'disabled';
 export function itemizationMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
-  state: EditorState
+  state: EditorState,
 ): ItemizationMenuSwitch {
   return lineMenuSwitch(syntax, nodes, state, 'itemization');
 }

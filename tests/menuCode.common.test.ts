@@ -124,7 +124,7 @@ test('code menu: inline-code-button, single-line-selection, in-code-all (syntax 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -142,7 +142,7 @@ test('code menu: inline-code-dropdown, single-line-selection, in-code-all (text)
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -161,7 +161,7 @@ test('code menu: inline-code-button, single-line-selection, in-code-all (syntax)
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -179,7 +179,7 @@ test('code menu: inline-code-dropdown, single-line-selection, in-code-left', asy
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -198,7 +198,7 @@ test('code menu: inline-code-button, single-line-selection, in-code-mid', async 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -216,7 +216,7 @@ test('code menu: inline-code-dropdown, single-line-selection, in-code-right', as
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -235,7 +235,7 @@ test('code menu: inline-code-button, single-line-selection, in-normal', async ()
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C24]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C24]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -253,7 +253,7 @@ test('code menu: inline-code-dropdown, single-line-selection, in-normal-with-cod
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C19]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C19]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -272,7 +272,7 @@ test('code menu: inline-code-button, single-line-selection, in-normal-with-code-
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C20]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C26]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C26]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -290,7 +290,7 @@ test('code menu: inline-code-dropdown, single-line-selection, other (mixed with 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -309,7 +309,7 @@ test('code menu: inline-code-button, single-line-selection, other (mixed with fr
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C30]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C30]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -515,7 +515,7 @@ test('code menu: block-code, selection, no-code-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -533,7 +533,7 @@ test('code menu: block-code, selection, all-code-lines (syntax)', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -551,7 +551,7 @@ test('code menu: block-code, selection, all-code-lines (code)', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -570,7 +570,7 @@ test('code menu: block-code, selection, all-code-lines (code and syntax)', async
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C6]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -589,7 +589,7 @@ test('code menu: block-code, selection, all-code-lines-top', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -608,7 +608,7 @@ test('code menu: block-code, selection, in-code-mid', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C8]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C0]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C0]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -627,7 +627,7 @@ test('code menu: block-code, selection, all-code-lines-bottom', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -645,7 +645,7 @@ test('code menu: block-code, selection, all-other-lines', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -664,7 +664,7 @@ test('code menu: block-code, selection, in-other-with-code-above', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C3]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -683,7 +683,7 @@ test('code menu: block-code, selection, in-other-with-code-below', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C9]',
-    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C11]'
+    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C11]',
   );
 
   await page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -702,7 +702,7 @@ test('code menu: block-code, selection, mixed-lines (code and other)', async () 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C6]',
   );
 
   await expect(page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
@@ -720,7 +720,7 @@ test('code menu: block-code, selection, mixed-lines (double code)', async () => 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 4) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]',
   );
 
   await expect(page.locator('[data-selectid=code-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();

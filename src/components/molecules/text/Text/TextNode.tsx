@@ -56,5 +56,5 @@ const TextNodeComponent: React.FC<TextNodeProps> = ({ node, ...rest }) => {
 
 export const TextNode: React.FC<TextNodeProps> = React.memo(
   TextNodeComponent,
-  createTextNodePropsEquals(textNodeEquals)
+  createTextNodePropsEquals(textNodeEquals),
 );

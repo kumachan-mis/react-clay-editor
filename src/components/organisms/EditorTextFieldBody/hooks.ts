@@ -39,7 +39,7 @@ export function useCursor(): CursorProps {
 
   const createEventHandler = React.useCallback(
     <Event>(
-      handler: (text: string, state: EditorState, event: Event) => [string, EditorState]
+      handler: (text: string, state: EditorState, event: Event) => [string, EditorState],
     ): ((event: Event) => void) => {
       return (event) => {
         const [newText, newState] = handler(text, state, event);
@@ -47,12 +47,12 @@ export function useCursor(): CursorProps {
         setText(newText);
       };
     },
-    [text, state, setState, setText]
+    [text, state, setState, setText],
   );
 
   const createEventHandlerWithProps = React.useCallback(
     <Event>(
-      handler: (text: string, props: EditorProps, state: EditorState, event: Event) => [string, EditorState]
+      handler: (text: string, props: EditorProps, state: EditorState, event: Event) => [string, EditorState],
     ): ((event: Event) => void) => {
       return (event) => {
         const [newText, newState] = handler(text, props, state, event);
@@ -60,7 +60,7 @@ export function useCursor(): CursorProps {
         setText(newText);
       };
     },
-    [text, props, state, setState, setText]
+    [text, props, state, setState, setText],
   );
 
   return {

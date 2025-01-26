@@ -12,7 +12,7 @@ export type DecorationMenuSwitch = Record<DecorationMenuItemType, DecorationMenu
 export function decorationMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
-  contentPosition: ContentPosition | undefined
+  contentPosition: ContentPosition | undefined,
 ): DecorationMenuSwitch {
   if (!contentPosition) return { bold: 'disabled', italic: 'disabled', underline: 'disabled' };
 
@@ -45,7 +45,7 @@ function bracketDecorationMenuSwitch(nodes: LineNode[], contentPosition: Content
 
 function markdownDecorationMenuSwitch(
   nodes: LineNode[],
-  contentPosition: ContentPosition
+  contentPosition: ContentPosition,
 ): DecorationMenuSwitch & { underline: 'disabled' } {
   const lineNode = nodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return { bold: 'disabled', italic: 'disabled', underline: 'disabled' };

@@ -260,7 +260,7 @@ test('link menus: tagged-link-dropdown, no-selection, other (block node)', async
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C17]').click();
 
   await expect(
-    page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]')
+    page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]'),
   ).toBeDisabled();
 
   await linesToBe(page, ['$$', '\\sum_{i=0}^{n-1}a_nb_n', '$$']);
@@ -276,7 +276,7 @@ test('link menus: bracket, single-line-selection, in-bracket-link', async () => 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
   );
 
   await page.locator('[data-selectid=bracket-menu]').click();
@@ -294,7 +294,7 @@ test('link menus: bracket, single-line-selection, in-tagged-link', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
   );
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();
@@ -312,7 +312,7 @@ test('link menus: hashtag, single-line-selection, in-hashtag-link', async () => 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
   );
 
   await page.locator('[data-selectid=hashtag-menu]').click();
@@ -330,7 +330,7 @@ test('link menus: hashtag, single-line-selection, in-bracket-link', async () => 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
   );
 
   await expect(page.locator('[data-selectid=hashtag-menu]')).toBeDisabled();
@@ -348,7 +348,7 @@ test('link menus: tagged-link-dropdown, single-line-selection, in-tagged-link', 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]',
   );
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -367,11 +367,11 @@ test('link menus: tagged-link-dropdown, single-line-selection, in-bracket-link',
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C17]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C17]',
   );
 
   await expect(
-    page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]')
+    page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]'),
   ).toBeDisabled();
 
   await linesToBe(page, ['[nothing happend]']);
@@ -387,7 +387,7 @@ test('link menus: bracket, single-line-selection, in-normal', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
   );
 
   await page.locator('[data-selectid=bracket-menu]').click();
@@ -405,7 +405,7 @@ test('link menus: hashtag, single-line-selection, in-normal', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
   );
 
   await page.locator('[data-selectid=hashtag-menu]').click();
@@ -423,7 +423,7 @@ test('link menus: tagged-link-button, single-line-selection, in-normal', async (
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
   );
 
   await page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -441,7 +441,7 @@ test('link menus: tagged-link-button, single-line-selection, other (content node
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
   );
 
   await expect(page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
@@ -459,7 +459,7 @@ test('link menus: bracket, single-line-selection, other (block node)', async () 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C17]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C14]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C14]',
   );
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();
@@ -477,7 +477,7 @@ test('link menus: hashtag, single-line-selection, other (mixed with friend)', as
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]',
   );
 
   await expect(page.locator('[data-selectid=hashtag-menu]')).toBeDisabled();
@@ -495,11 +495,11 @@ test('link menus: tagged-link-dropdown, single-line-selection, other (mixed with
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C19]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C29]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C29]',
   );
 
   await expect(
-    page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]')
+    page.locator('[data-selectid=tagged-link-menu] >> [data-selectid=dropdown-arrow-button]'),
   ).toBeDisabled();
 
   await linesToBe(page, ['[github: nothing_happened] `code string`']);
@@ -515,7 +515,7 @@ test('link menus: bracket, multi-lines-selection', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]',
   );
 
   await expect(page.locator('[data-selectid=bracket-menu]')).toBeDisabled();

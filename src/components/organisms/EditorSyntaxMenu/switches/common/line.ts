@@ -10,7 +10,7 @@ export function lineMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
   state: EditorState,
-  menuItemType: LineMenuItemType
+  menuItemType: LineMenuItemType,
 ): LineMenuSwitch {
   if (!state.cursorCoordinate) return 'disabled';
 

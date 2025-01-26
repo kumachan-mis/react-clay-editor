@@ -22,10 +22,10 @@ const StyledCursorBar = styled.div<{
   top: ${props.position.top}px;
   left: ${props.position.left}px;
   height: ${props.cursorSize}px;
-`
+`,
 );
 
 export const CursorBarRect = styled.rect(
   (props) => `
-  fill: ${props.theme.base.cursorColor};`
+  fill: ${props.theme.base.cursorColor};`,
 );

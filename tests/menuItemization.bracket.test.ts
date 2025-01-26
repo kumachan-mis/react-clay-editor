@@ -91,7 +91,7 @@ test('itemization menu: outdent, selection, normal-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
   );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -124,7 +124,7 @@ test('itemization menu: indent, selection, itemized-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
   );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -230,7 +230,7 @@ test('itemization menu: disabled, no-selection, other-line (line node)', async (
   await page.locator(':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]').click();
 
   await expect(
-    page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]')
+    page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]'),
   ).toBeDisabled();
 
   await linesToBe(page, ['> This is a quotation']);
@@ -246,7 +246,7 @@ test('itemization menu: disabled, no-selection, other-line (block node)', async 
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C6]').click();
 
   await expect(
-    page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]')
+    page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]'),
   ).toBeDisabled();
 
   await linesToBe(page, ['$$', '\\int_a^b f(x) dx', '$$']);
@@ -262,7 +262,7 @@ test('itemization menu: button, selection, all-normal-or-itemized-line', async (
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]',
   );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -280,7 +280,7 @@ test('itemization menu: button, selection, all-itemized-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]',
   );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -298,7 +298,7 @@ test('itemization menu: indent, selection, all-normal-or-itemized-line', async (
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]',
   );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -317,7 +317,7 @@ test('itemization menu: outdent, selection, all-normal-or-itemized-line', async 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]',
   );
 
   await page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -336,7 +336,7 @@ test('itemization menu: button, selection, has-other-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]',
   );
 
   await expect(page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
@@ -354,11 +354,11 @@ test('itemization menu: disabled, selection, has-other-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]',
   );
 
   await expect(
-    page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]')
+    page.locator('[data-selectid=itemization-menu] >> [data-selectid=dropdown-arrow-button]'),
   ).toBeDisabled();
 
   await linesToBe(page, ['This is normal text', ' ```', ' code string', ' ```']);

@@ -22,7 +22,7 @@ const UrlComponent: React.FC<UrlProps> = ({ node, editMode, linkForceClickable }
       editMode={editMode}
       forceClickable={linkForceClickable}
     >
-      {[...url].map((char, index) => (
+      {url.split('').map((char, index) => (
         <Char charIndex={first + index} key={first + index}>
           {char}
         </Char>
@@ -36,5 +36,5 @@ export const Url = React.memo(
   (prev, next) =>
     urlNodeEquals(prev.node, next.node) &&
     prev.editMode === next.editMode &&
-    prev.linkForceClickable === next.linkForceClickable
+    prev.linkForceClickable === next.linkForceClickable,
 );

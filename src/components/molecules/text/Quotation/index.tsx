@@ -22,7 +22,7 @@ const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, ...rest 
     <Line data-styleid={QuotationConstants.styleId} lineId={lineId}>
       <LineIndent indentDepth={indent.length} />
       <QuotationLineContent indentDepth={indent.length} lineLength={lineLength}>
-        {[...meta].map((char, index) => (
+        {meta.split('').map((char, index) => (
           <Char charIndex={indent.length + index} key={indent.length + index}>
             {editMode ? char : ''}
           </Char>
@@ -37,5 +37,5 @@ const QuotationComponent: React.FC<QuotationProps> = ({ node, editMode, ...rest 
 
 export const Quotation: React.FC<QuotationProps> = React.memo(
   QuotationComponent,
-  createTextNodePropsEquals(quotationNodeEquals)
+  createTextNodePropsEquals(quotationNodeEquals),
 );

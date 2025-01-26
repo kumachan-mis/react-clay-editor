@@ -20,7 +20,7 @@ export function useTaggedLinkMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   taggedLinkPropsMap: Record<string, EditorTaggedLinkProps> | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): TaggedLinkMenuProps {
   const tagEntries = Object.entries(taggedLinkPropsMap ?? {});
 
@@ -42,7 +42,7 @@ export function useTaggedLinkMenu(
         state,
         handlerProps,
         menuItem,
-        menuSwitch
+        menuSwitch,
       );
       setText(newText);
       setState(newState);

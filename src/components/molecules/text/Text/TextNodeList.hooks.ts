@@ -12,13 +12,13 @@ export type UseTextNodeListReturn = {
 
 export function useTextNodeList(
   cursorCoordinate?: CursorCoordinate,
-  cursorSelection?: CursorSelection
+  cursorSelection?: CursorSelection,
 ): UseTextNodeListReturn {
   const getEditMode = React.useCallback(
     (node: TopLevelNode) =>
       cursorOnTextNode(node, cursorCoordinate?.lineIndex) ||
       selectionOnTextNode(node, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex),
-    [cursorCoordinate?.lineIndex, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex]
+    [cursorCoordinate?.lineIndex, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex],
   );
 
   const linkForceClickable = useEmbededLinkForceClickable();
@@ -38,7 +38,7 @@ function cursorOnTextNode(node: TopLevelNode, cursorCoordinateLineIndex?: number
 function selectionOnTextNode(
   node: TopLevelNode,
   cursorSelectionFixedLineIndex?: number,
-  cursorSelectionFreeLineIndex?: number
+  cursorSelectionFreeLineIndex?: number,
 ): boolean {
   if (cursorSelectionFixedLineIndex === undefined || cursorSelectionFreeLineIndex === undefined) return false;
   const startLineIndex = Math.min(cursorSelectionFixedLineIndex, cursorSelectionFreeLineIndex);

@@ -109,7 +109,7 @@ test('move word top (ctrl+arrowleft)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
@@ -144,7 +144,7 @@ test('move word bottom (ctrl+arrowright)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
@@ -175,7 +175,7 @@ test('move line top (home)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
@@ -200,7 +200,7 @@ test('move line bottom (end)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
@@ -225,7 +225,7 @@ test('move text top (ctrl+home)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
@@ -247,7 +247,7 @@ test('move text bottom  (ctrl+end)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 

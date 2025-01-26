@@ -9,7 +9,7 @@ export const bracketItemizationRegex = /^(?<indent>\s*)(?<bullet>\s)(?<content>(
 export function parseBracketItemization(
   line: string,
   context: ParsingContext,
-  options: ParsingOptions
+  options: ParsingOptions,
 ): ItemizationNode {
   const { indent, bullet, content } = bracketItemizationRegex.exec(line)?.groups as Record<string, string>;
 

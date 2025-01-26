@@ -95,7 +95,7 @@ export function showIMEBasedSuggestion(
   text: string,
   props: EditorProps,
   state: EditorState,
-  specifiedText: string
+  specifiedText: string,
 ): [string, EditorState] {
   const allSuggestions = props.textProps?.suggestions;
   if (!allSuggestions || allSuggestions.length === 0) return [text, resetSuggestion(state)];
@@ -113,7 +113,7 @@ export function insertSuggestion(
   text: string,
   state: EditorState,
   suggestion: string,
-  start: number
+  start: number,
 ): [string, EditorState] {
   const [newText, newState] = ((): [string, EditorState] => {
     switch (state.suggestionType) {

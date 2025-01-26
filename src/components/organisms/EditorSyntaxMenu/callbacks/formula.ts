@@ -30,7 +30,7 @@ export function handleOnFormulaButtonClick(
   state: EditorState,
   props: FormulaMenuHandlerProps,
   contentMenuSwitch: ContentFormulaMenuSwitch,
-  blockMenuSwitch: BlockFormulaMenuSwitch
+  blockMenuSwitch: BlockFormulaMenuSwitch,
 ): [string, EditorState] {
   switch (contentMenuSwitch) {
     case 'inline':
@@ -49,7 +49,7 @@ export function handleOnContentFormulaItemClick(
   contentPosition: ContentPosition | undefined,
   state: EditorState,
   menuItem: 'inline' | 'display',
-  menuSwitch: ContentFormulaMenuSwitch
+  menuSwitch: ContentFormulaMenuSwitch,
 ): [string, EditorState] {
   if (!state.cursorCoordinate || !contentPosition || menuSwitch === 'disabled') return [text, state];
 
@@ -89,7 +89,7 @@ export function handleOnBlockFormulaItemClick(
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   props: FormulaMenuHandlerProps,
-  menuSwitch: BlockFormulaMenuSwitch
+  menuSwitch: BlockFormulaMenuSwitch,
 ): [string, EditorState] {
   return handleOnBlockMenuClick(text, nodes, blockPosition, state, menuSwitch, { label: props.blockLabel, meta: '$$' });
 }

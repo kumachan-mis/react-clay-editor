@@ -41,7 +41,7 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
         onOpen(event.currentTarget);
       }
     },
-    [open, onClose, onOpen]
+    [open, onClose, onOpen],
   );
 
   const handleOnClickAway = React.useCallback(
@@ -49,7 +49,7 @@ export const DropdownMenuButton: React.FC<DropdownMenuButtonProps> = ({
       if (!arrowRef.current || arrowRef.current.contains(event.target as Node)) return;
       onClose();
     },
-    [onClose, arrowRef]
+    [onClose, arrowRef],
   );
 
   React.useEffect(() => {
@@ -124,7 +124,7 @@ const StyledDropdownBaseButton = styled.button(
       fill: ${props.theme.iconButton.disabledIconColor};
     }
   }
-`
+`,
 );
 
 const StyledDropdownMainButton = styled(StyledDropdownBaseButton)`

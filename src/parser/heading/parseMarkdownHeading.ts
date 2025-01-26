@@ -19,7 +19,7 @@ export function parseMarkdownHeading(line: string, context: ParsingContext, opti
     children: parseContent(
       body,
       { ...context, charIndex: heading.length + 1, nested: true, decorationConfig: config },
-      options
+      options,
     ),
     trailingMeta: '',
     config,

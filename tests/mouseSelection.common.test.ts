@@ -29,7 +29,7 @@ test('one line selection', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C15]',
   );
   await page.keyboard.type('.');
 
@@ -45,7 +45,7 @@ test('two lines selection', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C25]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]',
   );
   await page.keyboard.type('.');
 
@@ -60,7 +60,7 @@ test('three lines selection', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C29]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C10]',
   );
   await page.keyboard.type('.');
 
@@ -98,7 +98,7 @@ test('"down then up without move', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C15]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C15]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C15]',
   );
   await page.keyboard.type('.');
 
@@ -113,7 +113,7 @@ test('move without down and up', async () => {
   await mouseMove(
     page,
     ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C25]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C5]',
   );
   await page.keyboard.type('.');
 

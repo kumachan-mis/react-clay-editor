@@ -35,5 +35,5 @@ const StyledSuggestionListItem = styled.li(
       background-color: ${props.theme.listItem.selectedHoverBackgroundColor};
     }
   }
-`
+`,
 );

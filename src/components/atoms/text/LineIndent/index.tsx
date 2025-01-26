@@ -15,7 +15,7 @@ const StyledLineIndent = styled.span<{
   top: 0;
   position: absolute;
   width: ${1.5 * props.indentDepth}em;
-`
+`,
 );
 
 const StyledLineIndentPad = styled(Char)`

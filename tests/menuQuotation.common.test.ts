@@ -91,7 +91,7 @@ test('quotation menu: outdent, selection, normal-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
   );
 
   await page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -124,7 +124,7 @@ test('quotation menu: indent, selection, quoted-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
   );
 
   await page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -216,7 +216,7 @@ test('quotation menu: button, selection, all-normal-or-quoted-line', async () =>
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]',
   );
 
   await page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -234,7 +234,7 @@ test('quotation menu: button, selection, all-quoted-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C2]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C2]',
   );
 
   await page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -252,7 +252,7 @@ test('quotation menu: indent, selection, all-normal-or-quoted-line', async () =>
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]',
   );
 
   await page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -271,7 +271,7 @@ test('quotation menu: outdent, selection, all-normal-or-quoted-line', async () =
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C1]',
   );
 
   await page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -290,7 +290,7 @@ test('quotation menu: button, selection, has-other-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]',
   );
 
   await expect(page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
@@ -308,7 +308,7 @@ test('quotation menu: disabled, selection, has-other-line', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
-    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 3) [data-selectid=char-C3]',
   );
 
   await expect(page.locator('[data-selectid=quotation-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();

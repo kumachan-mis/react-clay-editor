@@ -23,7 +23,7 @@ export function handleOnDecorationClick(
   state: EditorState,
   props: DecorationMenuHandlerProps,
   menuItem: DecorationMenuItemType,
-  menuSwitch: DecorationMenuSwitch
+  menuSwitch: DecorationMenuSwitch,
 ): [string, EditorState] {
   const menuSwitchItem = menuSwitch[menuItem];
   if (!contentPosition || menuSwitchItem === 'disabled') return [text, state];
@@ -44,13 +44,13 @@ function handleOnBracketDecorationItemClick(
   contentPosition: ContentPosition,
   state: EditorState,
   menuItem: DecorationMenuItemType,
-  menuSwitch: Exclude<DecorationMenuSwitchItem, 'disabled'>
+  menuSwitch: Exclude<DecorationMenuSwitchItem, 'disabled'>,
 ): [string, EditorState] {
   const meta = { bold: '*', italic: '/', underline: '_' }[menuItem];
 
   function handleItemOffWithoutSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (isEndPoint(contentPosition) || contentNode.type === 'normal') {
@@ -69,7 +69,7 @@ function handleOnBracketDecorationItemClick(
 
   function handleItemOnWithoutSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
@@ -89,7 +89,7 @@ function handleOnBracketDecorationItemClick(
 
   function handleItemOffWithSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type === 'normal') {
@@ -108,7 +108,7 @@ function handleOnBracketDecorationItemClick(
 
   function handleItemOnWithSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
@@ -157,13 +157,13 @@ function handleOnMarkdownDecorationItemClick(
   contentPosition: ContentPosition,
   state: EditorState,
   menuItem: 'bold' | 'italic',
-  menuSwitch: 'on' | 'off'
+  menuSwitch: 'on' | 'off',
 ): [string, EditorState] {
   const meta = { bold: '*', italic: '_' }[menuItem];
 
   function handleItemOffWithoutSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (isEndPoint(contentPosition) || contentNode.type === 'normal') {
@@ -183,7 +183,7 @@ function handleOnMarkdownDecorationItemClick(
 
   function handleItemOnWithoutSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];
@@ -203,7 +203,7 @@ function handleOnMarkdownDecorationItemClick(
 
   function handleItemOffWithSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type === 'normal') {
@@ -223,7 +223,7 @@ function handleOnMarkdownDecorationItemClick(
 
   function handleItemOnWithSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = lineNode.children[contentPosition.contentIndexes[0]];
     if (contentNode.type !== 'decoration') return [text, state];

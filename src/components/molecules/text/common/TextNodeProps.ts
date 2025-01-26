@@ -9,7 +9,7 @@ export type TextNodeProps<TTextNode extends TextNode = TextNode> = {
 } & TextNodeVisuals;
 
 export function createTextNodePropsEquals<TTextNode extends TextNode>(
-  nodeEquals: (prevNode: TTextNode, nextNode: TTextNode) => boolean
+  nodeEquals: (prevNode: TTextNode, nextNode: TTextNode) => boolean,
 ): (prev: TextNodeProps<TTextNode>, next: TextNodeProps<TTextNode>) => boolean {
   return (prev, next) =>
     nodeEquals(prev.node, next.node) &&

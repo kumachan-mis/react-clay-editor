@@ -30,7 +30,7 @@ export function handleOnCodeButtonClick(
   state: EditorState,
   props: CodeMenuHandlerProps,
   inlineMenuSwitch: CodeMenuSwitch,
-  blockMenuSwitch: CodeMenuSwitch
+  blockMenuSwitch: CodeMenuSwitch,
 ): [string, EditorState] {
   switch (inlineMenuSwitch) {
     case 'on':
@@ -46,7 +46,7 @@ export function handleOnInlineCodeItemClick(
   nodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   state: EditorState,
-  menuSwitch: CodeMenuSwitch
+  menuSwitch: CodeMenuSwitch,
 ): [string, EditorState] {
   if (!state.cursorCoordinate || !contentPosition || menuSwitch === 'disabled') return [text, state];
 
@@ -79,7 +79,7 @@ export function handleOnBlockCodeItemClick(
   blockPosition: BlockPosition | undefined,
   state: EditorState,
   props: CodeMenuHandlerProps,
-  menuSwitch: CodeMenuSwitch
+  menuSwitch: CodeMenuSwitch,
 ): [string, EditorState] {
   return handleOnBlockMenuClick(text, nodes, blockPosition, state, menuSwitch, {
     label: props.blockLabel,

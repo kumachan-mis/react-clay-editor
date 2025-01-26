@@ -59,7 +59,7 @@ export type ContentPositionNested = {
 export function useContentPosition(
   lineNodes: LineNode[],
   cursorCoordinate: CursorCoordinate | undefined,
-  cursorSelection: CursorSelection | undefined
+  cursorSelection: CursorSelection | undefined,
 ): ContentPosition | undefined {
   const contentPosition = React.useMemo(() => {
     if (!cursorCoordinate) return undefined;
@@ -71,7 +71,7 @@ export function useContentPosition(
 
 function getContentPositionFromCursorSelection(
   lineNodes: LineNode[],
-  cursorSelection: CursorSelection
+  cursorSelection: CursorSelection,
 ): ContentPosition | undefined {
   const { fixed, free } = cursorSelection;
   if (fixed.lineIndex !== free.lineIndex) return undefined;
@@ -82,7 +82,7 @@ function getContentPositionFromCursorSelection(
 
 function recursiveGetContentPositionFromCursorSelection(
   contentNodes: ContentNode[],
-  cursorSelection: CursorSelection
+  cursorSelection: CursorSelection,
 ): ContentPosition | undefined {
   const { fixed, free } = cursorSelection;
   const fixedContentPosition = searchContentPosition(fixed, contentNodes);
@@ -109,7 +109,7 @@ function recursiveGetContentPositionFromCursorSelection(
 
 function getContentPositionFromCursorCoordinate(
   lineNodes: LineNode[],
-  cursorCoordinate: CursorCoordinate
+  cursorCoordinate: CursorCoordinate,
 ): ContentPosition | undefined {
   const lineNode = lineNodes[cursorCoordinate.lineIndex];
   if (!isPureLineNode(lineNode)) return undefined;
@@ -118,7 +118,7 @@ function getContentPositionFromCursorCoordinate(
 
 function recursiveGetContentPositionFromCursorCoordinate(
   contentNodes: ContentNode[],
-  cursorCoordinate: CursorCoordinate
+  cursorCoordinate: CursorCoordinate,
 ): ContentPosition | undefined {
   const contentPosition = searchContentPosition(cursorCoordinate, contentNodes);
   if (!contentPosition || contentPosition.type !== 'inner') return contentPosition;
@@ -136,7 +136,7 @@ function recursiveGetContentPositionFromCursorCoordinate(
 
 function searchContentPosition(
   cursorCoordinate: CursorCoordinate,
-  contentNodes: ContentNode[]
+  contentNodes: ContentNode[],
 ): Exclude<ContentPosition, ContentPositionNested> | undefined {
   const { charIndex, lineIndex } = cursorCoordinate;
   if (contentNodes.length === 0) return { type: 'empty', lineIndex };

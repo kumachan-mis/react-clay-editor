@@ -24,7 +24,7 @@ const StyledDropdownMenuList = styled.div(
   background-color: ${props.theme.list.backgroundColor};
   z-index: 1;
   position: absolute;
-`
+`,
 );
 
 const StyledDropdownMenuListInner = styled.ul`

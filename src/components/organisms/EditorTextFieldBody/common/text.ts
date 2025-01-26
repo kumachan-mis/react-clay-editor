@@ -9,7 +9,7 @@ export function insertText(
   text: string,
   state: EditorState,
   insertedText: string,
-  cursourMoveAmount = insertedText.length
+  cursourMoveAmount = insertedText.length,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 

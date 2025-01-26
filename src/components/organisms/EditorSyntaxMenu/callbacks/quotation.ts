@@ -14,7 +14,7 @@ export function handleOnQuotationButtonClick(
   nodes: LineNode[],
   state: EditorState,
   props: QuotationMenuHandlerProps,
-  menuSwitch: QuotationMenuSwitch
+  menuSwitch: QuotationMenuSwitch,
 ): [string, EditorState] {
   return handleOnLineMenuClick(text, nodes, state, 'button', menuSwitch, { meta: '> ' });
 }
@@ -25,7 +25,7 @@ export function handleOnQuotationItemClick(
   state: EditorState,
   props: QuotationMenuHandlerProps,
   menuItem: 'indent' | 'outdent',
-  menuSwitch: QuotationMenuSwitch
+  menuSwitch: QuotationMenuSwitch,
 ): [string, EditorState] {
   return handleOnLineMenuClick(text, nodes, state, menuItem, menuSwitch, { meta: '> ' });
 }

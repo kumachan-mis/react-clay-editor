@@ -13,7 +13,7 @@ export type BlockPosition = {
 export function useBlockPosition(
   nodes: TopLevelNode[],
   cursorCoordinate: CursorCoordinate | undefined,
-  cursorSelection: CursorSelection | undefined
+  cursorSelection: CursorSelection | undefined,
 ): BlockPosition | undefined {
   const blockPosition = React.useMemo(() => {
     if (!cursorCoordinate) return undefined;

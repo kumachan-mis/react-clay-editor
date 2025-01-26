@@ -8,7 +8,7 @@ export type BlockCodeMetaNode = {
 
 export function optinalBlockCodeMetaNodeEquals(
   a: BlockCodeMetaNode | undefined,
-  b: BlockCodeMetaNode | undefined
+  b: BlockCodeMetaNode | undefined,
 ): boolean {
   if (a === undefined || b === undefined) {
     return a === b;

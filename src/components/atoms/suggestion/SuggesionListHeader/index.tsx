@@ -39,5 +39,5 @@ const StyledSuggestionListHeader = styled.div(
   white-space: nowrap;
   text-align: center;
   font-weight: bold;
-`
+`,
 );

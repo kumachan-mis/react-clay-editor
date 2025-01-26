@@ -1,7 +1,11 @@
 {
   "name": "eslint",
-  "version": "9.17.0-sdk",
+  "version": "9.19.0-sdk",
+  "main": "./lib/api.js",
   "type": "commonjs",
+  "bin": {
+    "eslint": "./bin/eslint.js"
+  },
   "exports": {
     ".": {
       "types": "./lib/types/index.d.ts",
@@ -19,9 +23,5 @@
       "types": "./lib/types/universal.d.ts",
       "default": "./lib/universal.js"
     }
-  },
-  "main": "./lib/api.js",
-  "bin": {
-    "eslint": "./bin/eslint.js"
   }
 }

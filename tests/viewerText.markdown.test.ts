@@ -24,7 +24,7 @@ test('heading', async () => {
       '## Larger Heading',
       '### Normal Heading',
       '#### Also Normal Heading',
-    ].join('\n')
+    ].join('\n'),
   );
 
   await expect(page.locator('[data-styleid=heading-largest]').nth(0)).toHaveText('Largest Heading');
@@ -41,7 +41,7 @@ test('itemization', async () => {
       ' * nested itemized text',
       '- itemized text',
       '\t\t- nested itemized text',
-    ].join('\n')
+    ].join('\n'),
   );
 
   await expect(page.locator('[data-styleid=itemization]').nth(0)).toHaveText(' itemized text');
@@ -55,7 +55,7 @@ test('decoration', async () => {
     [
       // Input text
       '*bold text*_italic text_',
-    ].join('\n')
+    ].join('\n'),
   );
 
   await expect(page.locator('[data-styleid=decoration-normal-bold]').nth(0)).toHaveText('bold text');

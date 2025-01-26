@@ -35,17 +35,17 @@ const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
       editMode={editMode}
       forceClickable={linkForceClickable}
     >
-      {[...facingMeta].map((char, index) => (
+      {facingMeta.split('').map((char, index) => (
         <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
-      {[...tag].map((char, index) => (
+      {tag.split('').map((char, index) => (
         <Char charIndex={first + facingMeta.length + index} key={first + facingMeta.length + index}>
           {editMode || !taggedLinkVisual?.tagHidden ? char : ''}
         </Char>
       ))}
-      {[...linkName].map((char, index) => (
+      {linkName.split('').map((char, index) => (
         <Char
           charIndex={first + facingMeta.length + tag.length + index}
           key={first + facingMeta.length + tag.length + index}
@@ -53,7 +53,7 @@ const TaggedLinkComponent: React.FC<TaggedLinkProps> = ({
           {char}
         </Char>
       ))}
-      {[...trailingMeta].map((char, index) => (
+      {trailingMeta.split('').map((char, index) => (
         <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
@@ -68,5 +68,5 @@ export const TaggedLink = React.memo(
     taggedLinkNodeEquals(prev.node, next.node) &&
     prev.editMode === next.editMode &&
     prev.linkForceClickable === next.linkForceClickable &&
-    prev.taggedLinkVisualMap === next.taggedLinkVisualMap
+    prev.taggedLinkVisualMap === next.taggedLinkVisualMap,
 );

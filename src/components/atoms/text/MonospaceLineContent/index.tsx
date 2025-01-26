@@ -9,5 +9,5 @@ export const MonospaceLineContent = styled(LineContent)(
     font-family: ${props.theme.monospace.fontFamily};
     background-color: unset;
   }
-`
+`,
 );

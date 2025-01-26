@@ -26,7 +26,7 @@ export function useFormulaMenu(
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   formulaProps: EditorFormulaProps | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): FormulaMenuProps {
   const contentMenuSwitch = formulaProps?.disabled ? 'disabled' : contentFormulaMenuSwitch(lineNodes, contentPosition);
   const blockMenuSwitch = formulaProps?.disabled ? 'disabled' : blockFormulaMenuSwitch(nodes, blockPosition, state);
@@ -43,7 +43,7 @@ export function useFormulaMenu(
       state,
       handlerProps,
       contentMenuSwitch,
-      blockMenuSwitch
+      blockMenuSwitch,
     );
     setText(newText);
     setState(newState);
@@ -56,7 +56,7 @@ export function useFormulaMenu(
       contentPosition,
       state,
       'inline',
-      contentMenuSwitch
+      contentMenuSwitch,
     );
     setText(newText);
     setState(newState);
@@ -69,7 +69,7 @@ export function useFormulaMenu(
       contentPosition,
       state,
       'display',
-      contentMenuSwitch
+      contentMenuSwitch,
     );
     setText(newText);
     setState(newState);
@@ -82,7 +82,7 @@ export function useFormulaMenu(
       blockPosition,
       state,
       handlerProps,
-      blockMenuSwitch
+      blockMenuSwitch,
     );
     setText(newText);
     setState(newState);

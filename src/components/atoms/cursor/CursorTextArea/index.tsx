@@ -39,5 +39,5 @@ const StyledCursorTextArea = styled.textarea<{
   font-family: ${props.theme.base.fontFamily};
   color: ${props.theme.base.color};
   background-color: ${props.theme.base.backgroundColor};
-`
+`,
 );

@@ -38,5 +38,5 @@ const StyledDropdownMenuListItem = styled.li(
     background-color: ${props.theme.listItem.disabledBackgroundColor};
     cursor: unset;
   }
-`
+`,
 );

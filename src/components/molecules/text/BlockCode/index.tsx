@@ -17,7 +17,7 @@ const BlockCodeComponent: React.FC<BlockCodeProps> = ({ node, ...rest }) => {
   const { facingMeta, children, trailingMeta } = node;
 
   const firstNode = children.length > 0 ? children[0] : facingMeta;
-  const lastNode = children.length > 0 ? children[children.length - 1] : trailingMeta ?? facingMeta;
+  const lastNode = children.length > 0 ? children[children.length - 1] : (trailingMeta ?? facingMeta);
 
   return (
     <LineGroup data-styleid={BlockCodeConstants.styleId} firstLineId={firstNode.lineId} lastLineId={lastNode.lineId}>

@@ -7,7 +7,7 @@ export function updateSelectionAfterCursorMove(
   cursorSelection: CursorSelection | undefined,
   cursorCoordinate: CursorCoordinate | undefined,
   newCursorCoordinate: CursorCoordinate | undefined,
-  disabled = false
+  disabled = false,
 ): CursorSelection | undefined {
   if (disabled || !cursorCoordinate) return undefined;
   const fixed = cursorSelection ? cursorSelection.fixed : cursorCoordinate;

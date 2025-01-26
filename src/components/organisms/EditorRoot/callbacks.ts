@@ -9,7 +9,7 @@ export function handleOnMouseMove(
   lineIdToIndex: Map<string, number>,
   state: EditorState,
   event: MouseEvent,
-  element: HTMLElement | null
+  element: HTMLElement | null,
 ): EditorState {
   if (!state.cursorCoordinate || state.cursorScroll === 'none' || !element) return state;
 
@@ -39,7 +39,7 @@ export function handleOnMouseUp(
   lineIdToIndex: Map<string, number>,
   state: EditorState,
   event: MouseEvent,
-  element: HTMLElement | null
+  element: HTMLElement | null,
 ): EditorState {
   if (!state.cursorCoordinate || state.cursorScroll === 'none' || !element) return state;
 
