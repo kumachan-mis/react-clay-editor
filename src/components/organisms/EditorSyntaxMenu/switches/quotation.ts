@@ -8,7 +8,7 @@ export type QuotationMenuSwitch = 'alloff' | 'allon' | 'both' | 'disabled';
 export function quotationMenuSwitch(
   syntax: 'bracket' | 'markdown' | undefined,
   nodes: LineNode[],
-  state: EditorState
+  state: EditorState,
 ): QuotationMenuSwitch {
   return lineMenuSwitch(syntax, nodes, state, 'quotation');
 }

@@ -17,7 +17,7 @@ export function useBracketMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
   bracketProps: EditorBracketLinkProps | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): BracketMenuProps {
   const menuSwitch = bracketProps?.disabled ? 'disabled' : linkMenuSwitch(lineNodes, contentPosition, 'bracketLink');
   const handlerProps: LinkMenuHandlerProps = { ...defaultHandlerProps, ...bracketProps, syntax };
@@ -31,7 +31,7 @@ export function useBracketMenu(
       state,
       handlerProps,
       menuItem,
-      menuSwitch
+      menuSwitch,
     );
     setText(newText);
     setState(newState);

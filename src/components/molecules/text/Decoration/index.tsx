@@ -25,7 +25,7 @@ const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ...res
 
   return (
     <DecorationContent {...config} data-styleid={DecorationConstants.styleId(config)}>
-      {[...facingMeta].map((char, index) => (
+      {facingMeta.split('').map((char, index) => (
         <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
@@ -33,7 +33,7 @@ const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ...res
       {children.map((child, index) => (
         <TextNode editMode={editMode} key={index} node={child} {...rest} />
       ))}
-      {[...trailingMeta].map((char, index) => (
+      {trailingMeta.split('').map((char, index) => (
         <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
@@ -44,5 +44,5 @@ const DecorationComponent: React.FC<DecorationProps> = ({ node, editMode, ...res
 
 export const Decoration: React.FC<DecorationProps> = React.memo(
   DecorationComponent,
-  createTextNodePropsEquals(decorationNodeEquals)
+  createTextNodePropsEquals(decorationNodeEquals),
 );

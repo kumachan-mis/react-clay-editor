@@ -15,7 +15,7 @@ const defaultHandlerProps: SectionMenuHandlerProps = {
 export function useSectionMenu(
   lineNodes: LineNode[],
   textProps: EditorTextProps | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): SectionMenuProps {
   const menuSwitch = sectionMenuSwitch(syntax, lineNodes, state);
   const handlerProps: SectionMenuHandlerProps = { ...defaultHandlerProps, ...textProps, syntax };

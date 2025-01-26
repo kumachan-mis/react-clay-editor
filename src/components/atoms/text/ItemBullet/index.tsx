@@ -17,7 +17,7 @@ const StyledItemBullet = styled(Char, {
   position: absolute;
   width: 1.5em;
   margin-left: ${1.5 * props.indentDepth}em;
-`
+`,
 );
 
 const StyledItemBulletInner = styled.span(
@@ -30,7 +30,7 @@ const StyledItemBulletInner = styled.span(
   height: 5px;
   border-radius: 50%;
   background-color: ${props.theme.base.color};
-`
+`,
 );
 
 const ItemBulletComponent: React.FC<ItemBulletProps> = ({ indentDepth }) => (

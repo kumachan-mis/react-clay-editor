@@ -25,7 +25,7 @@ export function parseDecoration(text: string, context: ParsingContext, options: 
     children: parseContent(
       body,
       { ...context, charIndex: first + decoration.length + 2, nested: true, decorationConfig: config },
-      options
+      options,
     ),
     trailingMeta: ']',
     config,

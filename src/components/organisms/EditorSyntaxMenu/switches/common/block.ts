@@ -12,7 +12,7 @@ export function blockMenuSwitch(
   nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
   state: EditorState,
-  menuItemType: BlockMenuItemType
+  menuItemType: BlockMenuItemType,
 ): BlockMenuSwitch {
   if (!state.cursorCoordinate) return 'disabled';
   if (blockPosition) {
@@ -26,7 +26,7 @@ export function blockMenuSwitch(
 
   if (
     nodes.every(
-      (node) => !isBlockNode(node) || node._lineRange[1] < firstLineIndex || lastLineIndex < node._lineRange[0]
+      (node) => !isBlockNode(node) || node._lineRange[1] < firstLineIndex || lastLineIndex < node._lineRange[0],
     )
   ) {
     return 'off';

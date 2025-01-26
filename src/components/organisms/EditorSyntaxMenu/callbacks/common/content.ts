@@ -32,7 +32,7 @@ export function insertContentAtCursor(
   nodes: LineNode[],
   state: EditorState,
   config: ContentMenuConfig,
-  getContent: (rawContent: string) => string = (rawContent) => rawContent
+  getContent: (rawContent: string) => string = (rawContent) => rawContent,
 ): [string, EditorState] {
   const { cursorCoordinate } = state;
   if (!cursorCoordinate || !isPureLineNode(nodes[cursorCoordinate.lineIndex])) return [text, state];
@@ -53,7 +53,7 @@ export function replaceContentAtCursor(
   contentPosition: ContentPosition,
   state: EditorState,
   config: ContentMenuMetaConfig,
-  getContent: (rawContent: string) => string = (rawContent) => rawContent
+  getContent: (rawContent: string) => string = (rawContent) => rawContent,
 ): [string, EditorState] {
   const lineNode = nodes[contentPosition.lineIndex];
   if (!state.cursorCoordinate || !isPureLineNode(lineNode)) return [text, state];
@@ -95,7 +95,7 @@ export function replaceContentAtCursor(
 export function newCharIndexAfterReplacement(
   charIndex: number,
   contentNode: Exclude<ContentNode, TextLikeNode>,
-  config: ContentMenuMetaConfig
+  config: ContentMenuMetaConfig,
 ): number {
   const [start, end] = [contentNode.range[0], contentNode.range[1] + 1];
   if (charIndex <= start) {
@@ -117,7 +117,7 @@ export function createContentByCursorSelection(
   nodes: LineNode[],
   state: EditorState,
   config: ContentMenuMetaConfig,
-  getContent: (rawContent: string) => string = (rawContent) => rawContent
+  getContent: (rawContent: string) => string = (rawContent) => rawContent,
 ): [string, EditorState] {
   const { cursorCoordinate, cursorSelection } = state;
   if (!cursorSelection || cursorSelection.fixed.lineIndex !== cursorSelection.free.lineIndex) return [text, state];
@@ -154,7 +154,7 @@ export function createContentByCursorSelection(
 export function newCharIndexAfterCreation(
   charIndex: number,
   cursorSelection: CursorSelection,
-  config: ContentMenuMetaConfig
+  config: ContentMenuMetaConfig,
 ): number {
   const { start: selectionStart, end: selectionEnd } = selectionToRange(cursorSelection);
   if (charIndex <= selectionStart.charIndex) {
@@ -171,7 +171,7 @@ export function splitContentByCursorSelection(
   contentPosition: ContentPosition,
   state: EditorState,
   config: ContentMenuMetaConfig,
-  getContent: (rawContent: string) => string = (rawContent) => rawContent
+  getContent: (rawContent: string) => string = (rawContent) => rawContent,
 ): [string, EditorState] {
   const lineNode = nodes[contentPosition.lineIndex];
   if (!state.cursorSelection || !isPureLineNode(lineNode)) return [text, state];
@@ -273,7 +273,7 @@ export function splitContentByCursorSelection(
 function getContentNodeIfNonEndPoint(
   lineNode: PureLineNode,
   contentPosition: ContentPosition,
-  nestedSearch: boolean
+  nestedSearch: boolean,
 ): ContentNode | undefined {
   if (isEndPoint(contentPosition)) return undefined;
   const contentNode = lineNode.children[contentPosition.contentIndexes[0]];

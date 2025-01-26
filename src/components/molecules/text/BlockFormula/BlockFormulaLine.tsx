@@ -20,7 +20,7 @@ const BlockFormulaLineComponent: React.FC<BlockFormulaLineProps> = ({ node, form
       <LineIndent indentDepth={indent.length} />
       <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
-          {[...formulaLine].map((char, index) => (
+          {formulaLine.split('').map((char, index) => (
             <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
@@ -33,5 +33,5 @@ const BlockFormulaLineComponent: React.FC<BlockFormulaLineProps> = ({ node, form
 
 export const BlockFormulaLine = React.memo(
   BlockFormulaLineComponent,
-  (prev, next) => blockFormulaLineNodeEquals(prev.node, next.node) && prev.formulaVisual === next.formulaVisual
+  (prev, next) => blockFormulaLineNodeEquals(prev.node, next.node) && prev.formulaVisual === next.formulaVisual,
 );

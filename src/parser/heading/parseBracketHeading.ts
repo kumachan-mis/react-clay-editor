@@ -20,7 +20,7 @@ export function parseBracketHeading(line: string, context: ParsingContext, optio
     children: parseContent(
       body,
       { ...context, charIndex: first + heading.length + 2, nested: true, decorationConfig: config },
-      options
+      options,
     ),
     trailingMeta: ']',
     config,

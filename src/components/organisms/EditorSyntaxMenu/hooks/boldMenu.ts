@@ -9,7 +9,7 @@ import { CommonMenuProps } from './types';
 export function useBoldMenu(
   lineNodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): BoldMenuProps {
   const menuSwitch = decorationMenuSwitch(syntax, lineNodes, contentPosition);
   const handlerProps: DecorationMenuHandlerProps = { syntax };
@@ -22,7 +22,7 @@ export function useBoldMenu(
       state,
       handlerProps,
       'bold',
-      menuSwitch
+      menuSwitch,
     );
     setText(newText);
     setState(newState);

@@ -20,7 +20,7 @@ const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, codeVisual
       <LineIndent indentDepth={indent.length} />
       <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
-          {[...codeMeta].map((char, index) => (
+          {codeMeta.split('').map((char, index) => (
             <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
@@ -33,5 +33,5 @@ const BlockCodeMetaComponent: React.FC<BlockCodeMetaProps> = ({ node, codeVisual
 
 export const BlockCodeMeta = React.memo(
   BlockCodeMetaComponent,
-  (prev, next) => blockCodeMetaNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual
+  (prev, next) => blockCodeMetaNodeEquals(prev.node, next.node) && prev.codeVisual === next.codeVisual,
 );

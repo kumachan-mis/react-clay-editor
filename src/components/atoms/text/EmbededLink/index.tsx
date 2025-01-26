@@ -16,7 +16,7 @@ const StyledEmbededLink = styled.a(
     color: ${props.theme.link.clickableColor};
     cursor: pointer;
   }
-`
+`,
 );
 
 const EmbededLinkComponent: React.FC<EmbededLinkProps> = ({
@@ -35,7 +35,7 @@ const EmbededLinkComponent: React.FC<EmbededLinkProps> = ({
       if (editMode) event.preventDefault();
       onMouseDown?.(event);
     },
-    [editMode, onMouseDown]
+    [editMode, onMouseDown],
   );
 
   const handleOnMouseEnter = React.useCallback(
@@ -43,7 +43,7 @@ const EmbededLinkComponent: React.FC<EmbededLinkProps> = ({
       onMouseEnter?.(event);
       setState({ clickable: !editMode, hover: true });
     },
-    [editMode, onMouseEnter]
+    [editMode, onMouseEnter],
   );
 
   const handleOnMouseLeave = React.useCallback(
@@ -51,7 +51,7 @@ const EmbededLinkComponent: React.FC<EmbededLinkProps> = ({
       onMouseLeave?.(event);
       setState({ clickable: false, hover: false });
     },
-    [onMouseLeave]
+    [onMouseLeave],
   );
 
   const handleOnClick = React.useCallback(
@@ -59,7 +59,7 @@ const EmbededLinkComponent: React.FC<EmbededLinkProps> = ({
       if (clickable) onClick?.(event);
       else event.preventDefault();
     },
-    [clickable, onClick]
+    [clickable, onClick],
   );
 
   return (

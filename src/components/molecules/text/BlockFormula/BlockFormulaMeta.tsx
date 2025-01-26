@@ -20,7 +20,7 @@ const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, form
       <LineIndent indentDepth={indent.length} />
       <MonospaceLineContent indentDepth={indent.length} lineLength={lineLength}>
         <Monospace {...codeElementProps}>
-          {[...formulaMeta].map((char, index) => (
+          {formulaMeta.split('').map((char, index) => (
             <Char charIndex={indent.length + index} key={indent.length + index}>
               {char}
             </Char>
@@ -33,5 +33,5 @@ const BlockFormulaMetaComponent: React.FC<BlockFormulaMetaProps> = ({ node, form
 
 export const BlockFormulaMeta = React.memo(
   BlockFormulaMetaComponent,
-  (prev, next) => blockFormulaMetaNodeEquals(prev.node, next.node) && prev.formulaVisual === next.formulaVisual
+  (prev, next) => blockFormulaMetaNodeEquals(prev.node, next.node) && prev.formulaVisual === next.formulaVisual,
 );

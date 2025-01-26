@@ -31,7 +31,7 @@ export function inlineCodeMenuSwitch(nodes: LineNode[], contentPosition: Content
 export function blockCodeMenuSwitch(
   nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
-  state: EditorState
+  state: EditorState,
 ): CodeMenuSwitch {
   return blockMenuSwitch(nodes, blockPosition, state, 'blockCode');
 }

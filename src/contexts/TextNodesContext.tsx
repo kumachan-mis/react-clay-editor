@@ -39,7 +39,7 @@ export const TextNodesContextProvider: React.FC<
       codeDisabled: props.codeProps?.disabled,
       formulaDisabled: props.formulaProps?.disabled,
       taggedLinkRegexes: Object.entries(props.taggedLinkPropsMap ?? {}).map(([tagName, taggedLinkProps]) =>
-        createTaggedLinkRegex(tagName, taggedLinkProps.linkNameRegex)
+        createTaggedLinkRegex(tagName, taggedLinkProps.linkNameRegex),
       ),
     };
     const hints: ParsingPerformanceHints = {

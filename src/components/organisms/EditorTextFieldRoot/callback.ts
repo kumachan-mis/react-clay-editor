@@ -8,7 +8,7 @@ export function handleOnMouseDown(
   lineIdToIndex: Map<string, number>,
   state: EditorState,
   event: React.MouseEvent,
-  element: HTMLElement | null
+  element: HTMLElement | null,
 ): EditorState {
   if (!element) return state;
 
@@ -23,7 +23,7 @@ export function handleOnClick(
   lineIdToIndex: Map<string, number>,
   state: EditorState,
   event: React.MouseEvent,
-  element: HTMLElement | null
+  element: HTMLElement | null,
 ): EditorState {
   if (!element) return state;
 

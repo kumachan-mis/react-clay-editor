@@ -10,7 +10,7 @@ export function positionToCursorCoordinate(
   text: string,
   position: [number, number],
   lineIdToIndex: Map<string, number>,
-  element: HTMLElement
+  element: HTMLElement,
 ): CursorCoordinate | undefined {
   const lines = text.split('\n');
   const elements = document.elementsFromPoint(...position) as HTMLElement[];
@@ -42,7 +42,7 @@ function cursorCoordinateChar(
   position: [number, number],
   lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
-  element: HTMLElement
+  element: HTMLElement,
 ): CursorCoordinate | undefined {
   const lineElement = findElement(elements, LineConstants.selectIdRegex, element);
   const lineSelectId = lineElement?.getAttribute('data-selectid');
@@ -70,7 +70,7 @@ function cursorCoordinateCharGroup(
   position: [number, number],
   lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
-  element: HTMLElement
+  element: HTMLElement,
 ): CursorCoordinate | undefined {
   const lineElement = findElement(elements, LineConstants.selectIdRegex, element);
   const lineSelectId = lineElement?.getAttribute('data-selectid');
@@ -99,7 +99,7 @@ function cursorCoordinateLine(
   position: [number, number],
   lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
-  element: HTMLElement
+  element: HTMLElement,
 ): CursorCoordinate | undefined {
   const lineElement = findElement(elements, LineConstants.selectIdRegex, element);
   const selectId = lineElement?.getAttribute('data-selectid');
@@ -142,7 +142,7 @@ function cursorCoordinateLineGroup(
   position: [number, number],
   lineIdToIndex: Map<string, number>,
   elements: HTMLElement[],
-  element: HTMLElement
+  element: HTMLElement,
 ): CursorCoordinate | undefined {
   const lineGroupElement = findElement(elements, LineGroupConstants.selectIdRegex, element);
   const selectId = lineGroupElement?.getAttribute('data-selectid');

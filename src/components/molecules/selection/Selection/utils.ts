@@ -6,7 +6,7 @@ import { coordinatesAreEqual, cursorCoordinateToTextIndex } from '../../cursor/C
 
 export function getWordSelection(
   text: string,
-  cursorCoordinate: CursorCoordinate | undefined
+  cursorCoordinate: CursorCoordinate | undefined,
 ): CursorSelection | undefined {
   if (!cursorCoordinate) return undefined;
 
@@ -28,7 +28,7 @@ export function getWordSelection(
 
 export function getLineSelection(
   text: string,
-  cursorCoordinate: CursorCoordinate | undefined
+  cursorCoordinate: CursorCoordinate | undefined,
 ): CursorSelection | undefined {
   if (!cursorCoordinate) return undefined;
 

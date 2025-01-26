@@ -28,5 +28,5 @@ const NormalLineComponent: React.FC<NormalLineProps> = ({ node, ...rest }) => {
 
 export const NormalLine: React.FC<NormalLineProps> = React.memo(
   NormalLineComponent,
-  createTextNodePropsEquals(normalLineNodeEquals)
+  createTextNodePropsEquals(normalLineNodeEquals),
 );

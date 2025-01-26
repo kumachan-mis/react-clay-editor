@@ -25,7 +25,7 @@ export function useCodeMenu(
   contentPosition: ContentPosition | undefined,
   blockPosition: BlockPosition | undefined,
   codeProps: EditorCodeProps | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): CodeMenuProps {
   const inlineMenuSwitch = codeProps?.disabled ? 'disabled' : inlineCodeMenuSwitch(lineNodes, contentPosition);
   const blockMenuSwitch = codeProps?.disabled ? 'disabled' : blockCodeMenuSwitch(nodes, blockPosition, state);
@@ -42,7 +42,7 @@ export function useCodeMenu(
       state,
       handlerProps,
       inlineMenuSwitch,
-      blockMenuSwitch
+      blockMenuSwitch,
     );
     setText(newText);
     setState(newState);
@@ -61,7 +61,7 @@ export function useCodeMenu(
       blockPosition,
       state,
       handlerProps,
-      blockMenuSwitch
+      blockMenuSwitch,
     );
     setText(newText);
     setState(newState);

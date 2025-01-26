@@ -618,7 +618,7 @@ export const branketTestCases: TestCase[] = [
   {
     name: 'heading text',
     text: ['[**** Largest Heading]', '[*** Also Largest Heading]', '[** Larger Heading]', '[* Normal Heading]'].join(
-      '\n'
+      '\n',
     ),
     expected: [
       {

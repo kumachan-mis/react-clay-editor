@@ -24,5 +24,5 @@ const StyledHeader = styled.div<{
   line-height: ${props.theme[props.size].lineHeight};
   font-weight: bold;
   cursor: initial;
-`
+`,
 );

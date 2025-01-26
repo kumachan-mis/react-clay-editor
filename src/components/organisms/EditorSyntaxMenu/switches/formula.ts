@@ -14,7 +14,7 @@ export type BlockFormulaMenuSwitch = 'on' | 'off' | 'disabled';
 
 export function contentFormulaMenuSwitch(
   nodes: LineNode[],
-  contentPosition: ContentPosition | undefined
+  contentPosition: ContentPosition | undefined,
 ): ContentFormulaMenuSwitch {
   if (!contentPosition) return 'disabled';
 
@@ -38,7 +38,7 @@ export function contentFormulaMenuSwitch(
 export function blockFormulaMenuSwitch(
   nodes: TopLevelNode[],
   blockPosition: BlockPosition | undefined,
-  state: EditorState
+  state: EditorState,
 ): BlockFormulaMenuSwitch {
   return blockMenuSwitch(nodes, blockPosition, state, 'blockFormula');
 }

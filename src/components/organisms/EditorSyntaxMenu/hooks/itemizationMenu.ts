@@ -18,7 +18,7 @@ const defaultHandlerProps: ItemizationMenuHandlerProps = {
 export function useItemizationMenu(
   lineNodes: LineNode[],
   itemizationProps: EditorItemizationProps | undefined,
-  { text, state, setText, setState, syntax }: CommonMenuProps
+  { text, state, setText, setState, syntax }: CommonMenuProps,
 ): ItemizationMenuProps {
   const menuSwitch = itemizationMenuSwitch(syntax, lineNodes, state);
   const handlerProps: ItemizationMenuHandlerProps = { ...defaultHandlerProps, ...itemizationProps, syntax };
@@ -37,7 +37,7 @@ export function useItemizationMenu(
       state,
       handlerProps,
       'indent',
-      menuSwitch
+      menuSwitch,
     );
     setText(newText);
     setState(newState);
@@ -50,7 +50,7 @@ export function useItemizationMenu(
       state,
       handlerProps,
       'outdent',
-      menuSwitch
+      menuSwitch,
     );
     setText(newText);
     setState(newState);

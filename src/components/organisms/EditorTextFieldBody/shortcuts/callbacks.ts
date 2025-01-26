@@ -12,7 +12,7 @@ export function handleOnShortcut(
   command: ShortcutCommand | undefined,
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   switch (command) {
     case 'forwardDelete':
@@ -51,7 +51,7 @@ export function handleOnForwardDelete(
   text: string,
   state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
   if (state.cursorSelection) return insertText(text, state, '');
@@ -66,7 +66,7 @@ export function handleOnBackwardDelete(
   text: string,
   state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
   if (state.cursorSelection) return insertText(text, state, '');
@@ -82,7 +82,7 @@ export function handleOnBackwardDelete(
       const [newText, newState] = insertText(
         text,
         { ...state, cursorSelection: { fixed: backward, free: forward } },
-        ''
+        '',
       );
       return [newText, resetSuggestion(newState)];
     }
@@ -90,7 +90,7 @@ export function handleOnBackwardDelete(
       const [newText, newState] = insertText(
         text,
         { ...state, cursorSelection: { fixed: backward, free: current } },
-        ''
+        '',
       );
       return [newText, resetSuggestion(newState)];
     }
@@ -101,7 +101,7 @@ export function handleOnSelectAll(
   text: string,
   state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
   const lines = text.split('\n');
@@ -116,7 +116,7 @@ export function handleOnUndo(
   text: string,
   state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   const { editActionHistory, editActionHistoryHead } = state;
   if (editActionHistoryHead === -1 || state.textAreaValue !== '') return [text, state];
@@ -162,7 +162,7 @@ export function handleOnRedo(
   text: string,
   state: EditorState,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   const { editActionHistory, editActionHistoryHead } = state;
   if (editActionHistoryHead === editActionHistory.length - 1 || state.textAreaValue !== '') {
@@ -210,7 +210,7 @@ export function handleOnMoveUp(
   text: string,
   state: EditorState,
   event?: React.KeyboardEvent<HTMLTextAreaElement>,
-  mouseScroll?: boolean
+  mouseScroll?: boolean,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -231,7 +231,7 @@ export function handleOnMoveUp(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -243,7 +243,7 @@ export function handleOnMoveDown(
   text: string,
   state: EditorState,
   event?: React.KeyboardEvent<HTMLTextAreaElement>,
-  mouseScroll?: boolean
+  mouseScroll?: boolean,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -266,7 +266,7 @@ export function handleOnMoveDown(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -277,7 +277,7 @@ export function handleOnMoveDown(
 export function handleOnMoveLeft(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -290,7 +290,7 @@ export function handleOnMoveLeft(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -301,7 +301,7 @@ export function handleOnMoveLeft(
 export function handleOnMoveRight(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -314,7 +314,7 @@ export function handleOnMoveRight(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -325,7 +325,7 @@ export function handleOnMoveRight(
 export function handleOnMoveWordTop(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -350,7 +350,7 @@ export function handleOnMoveWordTop(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -361,7 +361,7 @@ export function handleOnMoveWordTop(
 export function handleOnMoveWordBottom(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -385,7 +385,7 @@ export function handleOnMoveWordBottom(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -396,7 +396,7 @@ export function handleOnMoveWordBottom(
 export function handleOnMoveLineTop(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -409,7 +409,7 @@ export function handleOnMoveLineTop(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -420,7 +420,7 @@ export function handleOnMoveLineTop(
 export function handleOnMoveLineBottom(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -437,7 +437,7 @@ export function handleOnMoveLineBottom(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -448,7 +448,7 @@ export function handleOnMoveLineBottom(
 export function handleOnMoveTextTop(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -461,7 +461,7 @@ export function handleOnMoveTextTop(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,
@@ -472,7 +472,7 @@ export function handleOnMoveTextTop(
 export function handleOnMoveTextBottom(
   text: string,
   state: EditorState,
-  event: React.KeyboardEvent<HTMLTextAreaElement>
+  event: React.KeyboardEvent<HTMLTextAreaElement>,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -486,7 +486,7 @@ export function handleOnMoveTextBottom(
     cursorSelection,
     cursorCoordinate,
     newCursorCoordinate,
-    disabled
+    disabled,
   );
   return [
     text,

@@ -35,5 +35,5 @@ const ItemizationComponent: React.FC<ItemizationProps> = ({ node, editMode, ...r
 
 export const Itemization: React.FC<ItemizationProps> = React.memo(
   ItemizationComponent,
-  createTextNodePropsEquals(itemizationNodeEquals)
+  createTextNodePropsEquals(itemizationNodeEquals),
 );

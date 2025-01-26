@@ -29,7 +29,7 @@ export function handleOnLinkItemClick(
   state: EditorState,
   props: LinkMenuHandlerProps,
   menuItem: LinkMenuItem,
-  menuSwitch: LinkMenuSwitch
+  menuSwitch: LinkMenuSwitch,
 ): [string, EditorState] {
   const offContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll(' ', '_') + ' ' : content);
   const onContent = (content: string) => (menuItem.type === 'hashtag' ? content.replaceAll('_', ' ') : content);
@@ -41,7 +41,7 @@ export function handleOnLinkItemClick(
 
   function handleItemOnWithoutSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
@@ -58,7 +58,7 @@ export function handleOnLinkItemClick(
 
   function handleItemOnWithSelection(
     lineNode: PureLineNode,
-    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>
+    contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
     if (!contentNode || contentNode.type !== menuItem.type) return [text, state];

@@ -44,7 +44,7 @@ const FixedContainer = styled.div<{ colorized: boolean }>(
   box-sizing: border-box;
   border: solid 6px ${colorized ? colorPalette.fixedContainer : colorPalette.disabledContainer};
   background-color: rgba(243, 246, 249, 1.0);
-`
+`,
 );
 
 const FixedContent = styled.div<{ colorized: boolean }>(
@@ -56,7 +56,7 @@ const FixedContent = styled.div<{ colorized: boolean }>(
   margin: 6px;
   color: ${colorized ? colorPalette.text : colorPalette.disabledText};
   background-color: ${colorized ? colorPalette.fixedContent : colorPalette.disabledContent};
-`
+`,
 );
 
 const ScrollableContainer = styled.div<{ colorized: boolean }>(
@@ -65,7 +65,7 @@ const ScrollableContainer = styled.div<{ colorized: boolean }>(
   overflow-y: scroll;
   margin: 0px 6px 6px 6px;
   border: solid 6px ${colorized ? colorPalette.scrollableContainer : colorPalette.disabledContainer};
-`
+`,
 );
 
 const ScrollableContent = styled.div<{ colorized: boolean }>(
@@ -75,7 +75,7 @@ const ScrollableContent = styled.div<{ colorized: boolean }>(
   margin: 6px;
   color: ${colorized ? colorPalette.text : colorPalette.disabledText};
   background-color: ${colorized ? colorPalette.scrollableContent : colorPalette.disabledContent};
-`
+`,
 );
 
 export default Api;

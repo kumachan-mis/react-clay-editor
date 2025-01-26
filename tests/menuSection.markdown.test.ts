@@ -104,7 +104,7 @@ test('section menu: larger, selection, normal-line (normal text)', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
   );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -137,7 +137,7 @@ test('section menu: largest, selection, normal-line (decorated text)', async () 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]',
   );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -199,7 +199,7 @@ test('section menu: largest, selection, section-line (decorated text)', async ()
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
   );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]').click();
@@ -218,7 +218,7 @@ test('section menu: button, selection, section-line (larger text)', async () => 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C6]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C8]',
   );
 
   await page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]').click();
@@ -293,7 +293,7 @@ test('section menu: disabled, selection, other (block node)', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]',
   );
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();
@@ -307,13 +307,13 @@ test('section menu: disabled, selection, other (block node)', async () => {
 
 test('section menu: button, multi-lines-selection', async () => {
   await page.keyboard.insertText(
-    ['Editor', 'Source code editor, for editing source code', 'Text editor, for editing plain text'].join('\n')
+    ['Editor', 'Source code editor, for editing source code', 'Text editor, for editing plain text'].join('\n'),
   );
 
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C11]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C11]',
   );
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-main-button]')).toBeDisabled();
@@ -335,7 +335,7 @@ test('section menu: disabled, multi-lines-selection', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]',
   );
 
   await expect(page.locator('[data-selectid=section-menu] >> [data-selectid=dropdown-arrow-button]')).toBeDisabled();

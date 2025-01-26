@@ -8,7 +8,7 @@ const StyledMonospace = styled.code(
   display: inline-block;
   font-family: ${props.theme.monospace.fontFamily};
   background-color: ${props.theme.monospace.backgroundColor};
-`
+`,
 );
 
 const MonospaceComponent: React.FC<MonospaceProps> = ({ ...rest }) => <StyledMonospace {...rest} />;

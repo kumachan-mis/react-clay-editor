@@ -13,7 +13,7 @@ const StyledLineContent = styled.div<{
 }>(
   (props) => `
   margin-left: ${1.5 * props.indentDepth}em;
-`
+`,
 );
 
 const LineContentComponent: React.FC<LineContentProps> = ({ lineLength, indentDepth = 0, children, ...rest }) => {

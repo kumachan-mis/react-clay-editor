@@ -8,5 +8,5 @@ export const QuotationLineContent = styled(LineContent)(
   border-left: solid 4px ${props.theme.quotation.markColor};
   padding-left: 4px;
   font-style: italic;
-`
+`,
 );

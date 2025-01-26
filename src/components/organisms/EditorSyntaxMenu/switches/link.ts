@@ -12,7 +12,7 @@ export type LinkMenuItem = { type: 'bracketLink' } | { type: 'taggedLink'; tag: 
 export function linkMenuSwitch(
   nodes: LineNode[],
   contentPosition: ContentPosition | undefined,
-  menuItemType: LinkMenuItemType
+  menuItemType: LinkMenuItemType,
 ): LinkMenuSwitch {
   if (!contentPosition) return 'disabled';
   const lineNode = nodes[contentPosition.lineIndex];

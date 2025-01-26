@@ -23,5 +23,5 @@ const StyledSuggestionList = styled.div<{
   z-index: 1;
   top: ${props.position.top + props.cursorSize + 2}px;
   left: ${props.position.left}px;
-`
+`,
 );

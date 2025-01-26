@@ -17,7 +17,7 @@ export function handleOnLineMenuClick(
   state: EditorState,
   menuItem: 'button' | 'indent' | 'outdent',
   menuSwitch: 'alloff' | 'allon' | 'both' | 'disabled',
-  config: LineMenuConfig
+  config: LineMenuConfig,
 ): [string, EditorState] {
   if (!state.cursorCoordinate || menuSwitch === 'disabled' || (menuItem === 'outdent' && menuSwitch === 'alloff')) {
     return [text, state];
@@ -41,7 +41,7 @@ function handleLineMenuOn(
   text: string,
   nodes: LineNode[],
   state: EditorState,
-  config: LineMenuConfig
+  config: LineMenuConfig,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -91,7 +91,7 @@ function handleLineMenuOffOrBoth(
   text: string,
   nodes: LineNode[],
   state: EditorState,
-  config: LineMenuConfig
+  config: LineMenuConfig,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -108,7 +108,7 @@ function handleLineMenuOffOrBoth(
     [newText, newState] = insertText(
       newText,
       { ...newState, cursorCoordinate, cursorSelection: undefined },
-      config.meta
+      config.meta,
     );
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex += config.meta.length;
@@ -135,7 +135,7 @@ function handleLineMenuIndent(
   text: string,
   nodes: LineNode[],
   state: EditorState,
-  config: LineMenuConfig
+  config: LineMenuConfig,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 
@@ -176,7 +176,7 @@ function handleLineMenuOutdent(
   text: string,
   nodes: LineNode[],
   state: EditorState,
-  config: LineMenuConfig
+  config: LineMenuConfig,
 ): [string, EditorState] {
   if (!state.cursorCoordinate) return [text, state];
 

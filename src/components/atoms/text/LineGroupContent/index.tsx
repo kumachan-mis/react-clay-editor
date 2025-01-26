@@ -10,7 +10,7 @@ const StyledLineGroupContent = styled.div<{
 }>(
   (props) => `
   margin-left: ${1.5 * props.indentDepth}em;
-`
+`,
 );
 
 const LineGroupContentComponent: React.FC<LineGroupContentProps> = ({ indentDepth, ...rest }) => (

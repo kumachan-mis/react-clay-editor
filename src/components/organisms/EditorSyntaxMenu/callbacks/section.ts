@@ -29,7 +29,7 @@ export function handleOnSectionButtonClick(
   nodes: LineNode[],
   state: EditorState,
   props: SectionMenuHandlerProps,
-  menuSwitch: SectionMenuSwitch
+  menuSwitch: SectionMenuSwitch,
 ): [string, EditorState] {
   if (menuSwitch === 'disabled') return [text, state];
 
@@ -44,7 +44,7 @@ export function handleOnSectionItemClick(
   state: EditorState,
   props: SectionMenuHandlerProps,
   menuItem: SectionMenuItemType,
-  menuSwitch: SectionMenuSwitch
+  menuSwitch: SectionMenuSwitch,
 ): [string, EditorState] {
   const { cursorCoordinate, cursorSelection } = state;
   if (!cursorCoordinate || menuSwitch === 'disabled') return [text, state];

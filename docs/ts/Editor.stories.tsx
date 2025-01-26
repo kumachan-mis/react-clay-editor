@@ -30,7 +30,7 @@ export const SimpleEditorStory: React.FC = () => {
 
 export const FullwidthStory: React.FC = () => {
   const [text, setText] = React.useState(
-    ['This is a full-width editor.', '`className` is available to overwrite the default styling.'].join('\n')
+    ['This is a full-width editor.', '`className` is available to overwrite the default styling.'].join('\n'),
   );
   return (
     <EditorRoot
@@ -55,7 +55,7 @@ export const WithSyntaxMenuStory: React.FC = () => {
     [
       'This is an editor with the syntax menu.',
       'The syntax menu helps users who are not familiar with syntactic writing.',
-    ].join('\n')
+    ].join('\n'),
   );
   return (
     <EditorRoot palette="dark" setText={setText} text={text}>
@@ -73,7 +73,7 @@ export const WithFixedHeaderStory: React.FC = () => {
     [
       'This is an editor with the header in a fixed area.',
       'The header is useful to show a fixed title of a document.',
-    ].join('\n')
+    ].join('\n'),
   );
   return (
     <EditorRoot palette="dark" setText={setText} text={text}>
@@ -90,7 +90,7 @@ export const WithScrollableHeaderStory: React.FC = () => {
     [
       'This is an editor with the header in a scrollable area.',
       'The header is useful to show a fixed title of a document.',
-    ].join('\n')
+    ].join('\n'),
   );
   return (
     <EditorRoot palette="dark" setText={setText} text={text}>
@@ -104,7 +104,7 @@ export const WithScrollableHeaderStory: React.FC = () => {
 
 export const WithUserDefinedFooterStory: React.FC = () => {
   const [text, setText] = React.useState(
-    ['This is an editor with an user-defined footer.', 'You can customize the editor as you like.'].join('\n')
+    ['This is an editor with an user-defined footer.', 'You can customize the editor as you like.'].join('\n'),
   );
   return (
     <EditorRoot palette="dark" setText={setText} text={text}>

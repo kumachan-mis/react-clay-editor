@@ -9,5 +9,5 @@ export const DecorationContent = styled.span<DecorationConfig>(
   ${props.bold ? 'font-weight: bold;' : ''}
   ${props.italic ? 'font-style: italic;' : ''}
   ${props.underline ? 'border-bottom: 1px solid;' : ''}
-`
+`,
 );

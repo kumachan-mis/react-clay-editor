@@ -16,7 +16,7 @@ export function parseTaggedLink(
   text: string,
   context: ParsingContext,
   options: ParsingOptions,
-  regex: RegExp
+  regex: RegExp,
 ): ContentNode[] {
   if (text.length > CONTENT_LIMIT) {
     return parseNormal(text, context);

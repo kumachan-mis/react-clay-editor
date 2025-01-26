@@ -22,7 +22,7 @@ const HashtagComponent: React.FC<HashtagProps> = ({ node, editMode, linkForceCli
       editMode={editMode}
       forceClickable={linkForceClickable}
     >
-      {[...facingMeta, ...linkName, ...trailingMeta].map((char, index) => (
+      {[...facingMeta.split(''), ...linkName.split(''), ...trailingMeta.split('')].map((char, index) => (
         <Char charIndex={first + index} key={first + index}>
           {char}
         </Char>
@@ -37,5 +37,5 @@ export const Hashtag = React.memo(
     hashtagNodeEquals(prev.node, next.node) &&
     prev.editMode === next.editMode &&
     prev.linkForceClickable === next.linkForceClickable &&
-    prev.hashtagVisual === next.hashtagVisual
+    prev.hashtagVisual === next.hashtagVisual,
 );

@@ -128,7 +128,7 @@ test('move word top (alt+arrowleft)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
@@ -163,7 +163,7 @@ test('move word bottom (alt+arrowright)', async () => {
       'three words,sentence.',
       'three words,sentence.',
       'three words,sentence.',
-    ].join('\n')
+    ].join('\n'),
   );
   await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
@@ -199,7 +199,7 @@ for (const { name, command } of [
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
-      ].join('\n')
+      ].join('\n'),
     );
     await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
@@ -230,7 +230,7 @@ for (const { name, command } of [
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
-      ].join('\n')
+      ].join('\n'),
     );
     await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 
@@ -260,7 +260,7 @@ for (const { name, command } of [
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
-      ].join('\n')
+      ].join('\n'),
     );
     await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C19]').click();
 
@@ -287,7 +287,7 @@ for (const { name, command } of [
         'three words,sentence.',
         'three words,sentence.',
         'three words,sentence.',
-      ].join('\n')
+      ].join('\n'),
     );
     await page.locator(':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C0]').click();
 

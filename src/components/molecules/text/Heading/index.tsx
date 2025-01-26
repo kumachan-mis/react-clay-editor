@@ -31,5 +31,5 @@ const HeadingComponent: React.FC<HeadingProps> = ({ node, ...rest }) => {
 
 export const Heading: React.FC<HeadingProps> = React.memo(
   HeadingComponent,
-  createTextNodePropsEquals(headingNodeEquals)
+  createTextNodePropsEquals(headingNodeEquals),
 );

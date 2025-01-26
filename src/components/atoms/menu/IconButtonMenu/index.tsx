@@ -47,5 +47,5 @@ const StyledIconButtonMenu = styled.button(
       fill: ${props.theme.iconButton.disabledIconColor};
     }
   }
-`
+`,
 );

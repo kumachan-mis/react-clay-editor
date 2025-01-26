@@ -230,7 +230,7 @@ test('decoration menus: bold, single-line-selection, in-decoration-all', async (
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]',
   );
 
   await page.locator('[data-selectid=bold-menu]').click();
@@ -248,7 +248,7 @@ test('decoration menus: italic, single-line-selection, in-decoration-all', async
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C1]',
   );
 
   await page.locator('[data-selectid=italic-menu]').click();
@@ -266,7 +266,7 @@ test('decoration menus: underline, single-line-selection, in-decoration-all', as
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C4]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C25]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C25]',
   );
 
   await page.locator('[data-selectid=underline-menu]').click();
@@ -284,7 +284,7 @@ test('decoration menus: italic, single-line-selection, in-decoration-left (witho
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C3]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
   );
 
   await page.locator('[data-selectid=italic-menu]').click();
@@ -302,7 +302,7 @@ test('decoration menus: italic, single-line-selection, in-decoration-left (with-
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C0]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
   );
 
   await page.locator('[data-selectid=italic-menu]').click();
@@ -320,7 +320,7 @@ test('decoration menus: underline, single-line-selection, in-decoration-right (w
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C18]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C18]',
   );
 
   await page.locator('[data-selectid=underline-menu]').click();
@@ -338,7 +338,7 @@ test('decoration menus: underline, single-line-selection, in-decoration-right (w
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C19]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C19]',
   );
 
   await page.locator('[data-selectid=underline-menu]').click();
@@ -356,7 +356,7 @@ test('decoration menus: bold, single-line-selection, in-decoration-mid', async (
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C11]',
   );
 
   await page.locator('[data-selectid=bold-menu]').click();
@@ -374,7 +374,7 @@ test('decoration menus: italic, single-line-selection, in-lacked-with-decoration
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C16]',
   );
 
   await page.locator('[data-selectid=italic-menu]').click();
@@ -392,7 +392,7 @@ test('decoration menus: underline, single-line-selection, in-lacked-with-decorat
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C5]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C9]',
   );
 
   await page.locator('[data-selectid=underline-menu]').click();
@@ -410,7 +410,7 @@ test('decoration menus: bold, single-line-selection, in-normal', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]',
   );
 
   await page.locator('[data-selectid=bold-menu]').click();
@@ -428,7 +428,7 @@ test('decoration menus: italic, single-line-selection, in-normal', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]',
   );
 
   await page.locator('[data-selectid=italic-menu]').click();
@@ -446,7 +446,7 @@ test('decoration menus: underline, single-line-selection, in-normal', async () =
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]',
   );
 
   await page.locator('[data-selectid=underline-menu]').click();
@@ -464,7 +464,7 @@ test('decoration menus: italic, single-line-selection, in-normal-with-decoration
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C10]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C13]',
   );
 
   await page.locator('[data-selectid=italic-menu]').click();
@@ -482,7 +482,7 @@ test('decoration menus: bold, single-line-selection, in-normal-with-decoration-r
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C7]',
   );
 
   await page.locator('[data-selectid=bold-menu]').click();
@@ -500,7 +500,7 @@ test('decoration menus: underline, single-line-selection, other (mixed with frie
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]',
   );
 
   await expect(page.locator('[data-selectid=underline-menu]')).toBeDisabled();
@@ -518,7 +518,7 @@ test('decoration menus: italic, single-line-selection, other (mixed with foreign
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]'
+    ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C12]',
   );
 
   await expect(page.locator('[data-selectid=italic-menu]')).toBeDisabled();
@@ -536,7 +536,7 @@ test('decoration menus: bold, multi-lines-selection', async () => {
   await mouseSelect(
     page,
     ':nth-match([data-selectid^=line-L], 1) [data-selectid=char-C2]',
-    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]'
+    ':nth-match([data-selectid^=line-L], 2) [data-selectid=char-C4]',
   );
 
   await expect(page.locator('[data-selectid=bold-menu]')).toBeDisabled();

@@ -18,17 +18,17 @@ const InlineCodeComponent: React.FC<InlineCodeProps> = ({ node, editMode, codeVi
 
   return (
     <Monospace {...codeElementProps} data-styleid={InlineCodeConstants.styleId}>
-      {[...facingMeta].map((char, index) => (
+      {facingMeta.split('').map((char, index) => (
         <Char charIndex={first + index} key={first + index}>
           {editMode ? char : ''}
         </Char>
       ))}
-      {[...code].map((char, index) => (
+      {code.split('').map((char, index) => (
         <Char charIndex={first + facingMeta.length + index} key={first + facingMeta.length + index}>
           {char}
         </Char>
       ))}
-      {[...trailingMeta].map((char, index) => (
+      {trailingMeta.split('').map((char, index) => (
         <Char charIndex={last - (trailingMeta.length - 1) + index} key={last - (trailingMeta.length - 1) + index}>
           {editMode ? char : ''}
         </Char>
@@ -40,5 +40,7 @@ const InlineCodeComponent: React.FC<InlineCodeProps> = ({ node, editMode, codeVi
 export const InlineCode = React.memo(
   InlineCodeComponent,
   (prev, next) =>
-    inlineCodeNodeEquals(prev.node, next.node) && prev.editMode === next.editMode && prev.codeVisual === next.codeVisual
+    inlineCodeNodeEquals(prev.node, next.node) &&
+    prev.editMode === next.editMode &&
+    prev.codeVisual === next.codeVisual,
 );

@@ -29,7 +29,7 @@ const ContentFormulaComponent: React.FC<ContentFormulaProps> = ({ node, editMode
         <KaTeX displayMode={displayMode}>{formula}</KaTeX>
       ) : (
         <Monospace {...codeElementProps}>
-          {[...facingMeta, ...formula, ...trailingMeta].map((char, index) => (
+          {[...facingMeta.split(''), ...formula.split(''), ...trailingMeta.split('')].map((char, index) => (
             <Char charIndex={first + index} key={first + index}>
               {char}
             </Char>
@@ -45,5 +45,5 @@ export const ContentFormula = React.memo(
   (prev, next) =>
     contentFormulaNodeEquals(prev.node, next.node) &&
     prev.editMode === next.editMode &&
-    prev.formulaVisual === next.formulaVisual
+    prev.formulaVisual === next.formulaVisual,
 );
