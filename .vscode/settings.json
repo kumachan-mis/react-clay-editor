@@ -3,23 +3,33 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "[typescript]": {
-    "editor.rulers": [120],
+    "editor.rulers": [
+      120
+    ],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
-    "editor.rulers": [120],
+    "editor.rulers": [
+      120
+    ],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
-    "editor.rulers": [120],
+    "editor.rulers": [
+      120
+    ],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.rulers": [120],
+    "editor.rulers": [
+      120
+    ],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
-    "editor.rulers": [120],
+    "editor.rulers": [
+      120
+    ],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "javascript.suggestionActions.enabled": false,
