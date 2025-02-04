@@ -11,7 +11,7 @@ export function updateSelectionAfterCursorMove(
 ): CursorSelection | undefined {
   if (disabled || !cursorCoordinate) return undefined;
   const fixed = cursorSelection ? cursorSelection.fixed : cursorCoordinate;
-  const free = newCursorCoordinate ? newCursorCoordinate : cursorCoordinate;
+  const free = newCursorCoordinate ?? cursorCoordinate;
   return !coordinatesAreEqual(fixed, free) ? { fixed, free } : undefined;
 }
 
