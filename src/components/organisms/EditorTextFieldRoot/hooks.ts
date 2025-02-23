@@ -8,7 +8,7 @@ import { handleOnMouseDown, handleOnClick } from './callback';
 import React from 'react';
 
 type UseTextFieldReturn = {
-  ref: React.RefObject<HTMLDivElement>;
+  ref: React.RefObject<HTMLDivElement | null>;
   onMouseDown: React.MouseEventHandler<HTMLDivElement>;
   onClick: React.MouseEventHandler<HTMLDivElement>;
 };
