@@ -16,7 +16,7 @@ export type SelectionState = {
 
 export function useSelection(props: SelectionProps): {
   state: SelectionState;
-  ref: React.RefObject<HTMLSpanElement>;
+  ref: React.RefObject<HTMLSpanElement | null>;
 } {
   const [state, setState] = React.useState<SelectionState>({
     topRectProps: undefined,
