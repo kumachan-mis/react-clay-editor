@@ -1,7 +1,6 @@
 import packageJson from '../package.json';
 
 import { StorybookConfig } from '@storybook/react-vite';
-// @ts-expect-error: commonjs module
 import remarkGfm from 'remark-gfm';
 
 const config: StorybookConfig = {
