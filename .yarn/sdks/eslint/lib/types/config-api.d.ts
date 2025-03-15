@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const { existsSync } = require(`fs`);
-const { createRequire, register } = require(`module`);
-const { resolve } = require(`path`);
-const { pathToFileURL } = require(`url`);
+const {existsSync} = require(`fs`);
+const {createRequire, register} = require(`module`);
+const {resolve} = require(`path`);
+const {pathToFileURL} = require(`url`);
 
-const relPnpApiPath = '../../../../../../.pnp.cjs';
+const relPnpApiPath = "../../../../../.pnp.cjs";
 
 const absPnpApiPath = resolve(__dirname, relPnpApiPath);
 const absUserWrapperPath = resolve(__dirname, `./sdk.user.cjs`);
@@ -16,7 +16,7 @@ const isPnpLoaderEnabled = existsSync(absPnpLoaderPath);
 
 if (existsSync(absPnpApiPath)) {
   if (!process.versions.pnp) {
-    // Setup the environment to be able to require eslint/rules
+    // Setup the environment to be able to require eslint/config
     require(absPnpApiPath).setup();
     if (isPnpLoaderEnabled && register) {
       register(pathToFileURL(absPnpLoaderPath));
@@ -25,8 +25,8 @@ if (existsSync(absPnpApiPath)) {
 }
 
 const wrapWithUserWrapper = existsSync(absUserWrapperPath)
-  ? (exports) => absRequire(absUserWrapperPath)(exports)
-  : (exports) => exports;
+  ? exports => absRequire(absUserWrapperPath)(exports)
+  : exports => exports;
 
-// Defer to the real eslint/rules your application uses
-module.exports = wrapWithUserWrapper(absRequire(`eslint/rules`));
+// Defer to the real eslint/config your application uses
+module.exports = wrapWithUserWrapper(absRequire(`eslint/config`));
