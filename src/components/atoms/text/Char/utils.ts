@@ -5,7 +5,7 @@ import { CharConstants } from './index';
 
 export function getCharAt(lineId: string, charIndex: number, element: HTMLElement): HTMLElement | null {
   let rootElement = getRoot(element);
-  if (!rootElement) rootElement = element;
+  rootElement ??= element;
 
   const lineSelector = `div[data-selectid="${LineConstants.selectId(lineId)}"]`;
   const lineElement = rootElement.querySelector<HTMLElement>(lineSelector);
