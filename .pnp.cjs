@@ -59,6 +59,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:16.2.0"],\
           ["husky", "npm:9.1.7"],\
           ["jest", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:30.0.3"],\
+          ["jest-util", "npm:30.0.2"],\
           ["katex", "npm:0.16.22"],\
           ["lint-staged", "npm:16.1.2"],\
           ["prettier", "npm:3.6.2"],\
@@ -9689,6 +9690,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:16.2.0"],\
           ["husky", "npm:9.1.7"],\
           ["jest", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:30.0.3"],\
+          ["jest-util", "npm:30.0.2"],\
           ["katex", "npm:0.16.22"],\
           ["lint-staged", "npm:16.1.2"],\
           ["prettier", "npm:3.6.2"],\
@@ -10902,7 +10904,7 @@ const RAW_RUNTIME_STATE =
           ["esbuild", null],\
           ["fast-json-stable-stringify", "npm:2.1.0"],\
           ["jest", "virtual:f797076653ff0e4a3c85d83bbbfeba55cdc5cdb433e5117619bca2fac30c7ebc4995201736ee46db0e61fa01fe02fac41fc0a060ef8d2dc69b5f6a3f6853f8d8#npm:30.0.3"],\
-          ["jest-util", null],\
+          ["jest-util", "npm:30.0.2"],\
           ["json5", "npm:2.2.3"],\
           ["lodash.memoize", "npm:4.1.2"],\
           ["make-error", "npm:1.3.6"],\
