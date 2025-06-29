@@ -1,6 +1,6 @@
 import { EditorRoot, EditorTextFieldBody, EditorTextFieldRoot } from '../../src';
 
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import React from 'react';
 
 const meta: Meta = {

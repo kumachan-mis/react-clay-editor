@@ -1,7 +1,7 @@
 import { ViewerRoot, ViewerTextFieldBody, ViewerHeader, ViewerTextFieldRoot } from '../../src';
 
 import { css } from '@emotion/css';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-vite';
 import React from 'react';
 
 const meta: Meta = {
