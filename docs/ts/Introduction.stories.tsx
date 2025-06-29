@@ -12,7 +12,7 @@ import {
 } from '../../src';
 
 import { css } from '@emotion/css';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 
 // Prettier-ignore

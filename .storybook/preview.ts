@@ -1,6 +1,6 @@
 import theme from './theme';
 
-import { Preview } from '@storybook/react';
+import { Preview } from '@storybook/react-vite';
 
 const preview: Preview = {
   parameters: {
