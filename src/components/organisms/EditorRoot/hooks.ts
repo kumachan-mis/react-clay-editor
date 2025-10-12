@@ -93,7 +93,8 @@ export function useEditorRoot({ ref }: UseEditorRootProps): UseEditorRootReturn 
       window.addEventListener('mouseup', onWindowMouseUp);
       event.nativeEvent.stopPropagation();
     },
-    [onWindowMouseUp],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ref.current],
   );
 
   return { onMouseDown };

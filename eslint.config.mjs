@@ -1,32 +1,30 @@
-import { fixupConfigRules } from '@eslint/compat';
 import globals from 'globals';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+import eslint from '@eslint/js';
 
-export default [
+import { defineConfig } from 'eslint/config';
+import importPlugin from 'eslint-plugin-import';
+import storybookPlugin from 'eslint-plugin-storybook';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import prettierConfig from 'eslint-config-prettier/flat';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
+
+const __dirname = new URL('.', import.meta.url).pathname;
+
+export default defineConfig(
   {
     ignores: ['**/node_modules/', '**/dist/', '**/storybook-static/', '**/.yarn/', '**/.pnp.cjs', '**/.pnp.loader.mjs'],
   },
-  ...fixupConfigRules(
-    compat.extends(
-      'eslint:recommended',
-      'plugin:import/recommended',
-      'plugin:react/recommended',
-      'plugin:react-hooks/recommended',
-      'plugin:storybook/recommended',
-      'prettier'
-    )
-  ),
+
+  // JavaScript
+  eslint.configs.recommended,
+  importPlugin.flatConfigs.recommended,
+  reactPlugin.configs.flat.recommended,
+  reactHooksPlugin.configs.flat.recommended,
+  storybookPlugin.configs['flat/recommended'],
+  prettierConfig,
   {
     languageOptions: {
       globals: {
@@ -34,13 +32,7 @@ export default [
         ...globals.node,
       },
       ecmaVersion: 'latest',
-      sourceType: 'commonjs',
-      parserOptions: {
-        project: true,
-        sourceType: 'module',
-        ecmaVersion: 'latest',
-        tsconfigRootDir: '.',
-      },
+      sourceType: 'module',
     },
     settings: {
       react: {
@@ -119,16 +111,23 @@ export default [
       'react/react-in-jsx-scope': 'off',
     },
   },
-  ...fixupConfigRules(
-    compat.extends(
-      'plugin:@typescript-eslint/strict-type-checked',
-      'plugin:@typescript-eslint/stylistic-type-checked',
-      'plugin:import/typescript'
-    )
-  ).map((config) => ({
-    ...config,
+
+  // TypeScript
+  {
     files: ['**/*.ts', '**/*.tsx'],
-  })),
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
+  tseslint.configs['flat/strict-type-checked'],
+  tseslint.configs['flat/stylistic-type-checked'],
+  importPlugin.flatConfigs.typescript,
   {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
@@ -149,4 +148,4 @@ export default [
       'no-loop-func': 'off',
     },
   },
-];
+);
