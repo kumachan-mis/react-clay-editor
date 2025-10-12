@@ -15,6 +15,7 @@ export function useTextNodeList(
   cursorSelection?: CursorSelection,
 ): UseTextNodeListReturn {
   const getEditMode = React.useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (node: TopLevelNode) =>
       cursorOnTextNode(node, cursorCoordinate?.lineIndex) ||
       selectionOnTextNode(node, cursorSelection?.fixed.lineIndex, cursorSelection?.free.lineIndex),
