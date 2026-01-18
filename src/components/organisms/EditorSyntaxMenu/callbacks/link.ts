@@ -44,7 +44,7 @@ export function handleOnLinkItemClick(
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
-    if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
+    if (contentNode?.type !== menuItem.type) return [text, state];
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode as TaggedLinkNode)) {
       return replaceContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }
@@ -61,7 +61,7 @@ export function handleOnLinkItemClick(
     contentPosition: Exclude<ContentPosition, ContentPositionEmpty>,
   ): [string, EditorState] {
     const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
-    if (!contentNode || contentNode.type !== menuItem.type) return [text, state];
+    if (contentNode?.type !== menuItem.type) return [text, state];
     if (menuItem.type === 'taggedLink' && menuItem.tag !== getTagName(contentNode as TaggedLinkNode)) {
       return replaceContentAtCursor(text, nodes, contentPosition, state, config, onContent);
     }

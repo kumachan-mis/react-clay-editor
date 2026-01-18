@@ -69,10 +69,10 @@ function handleLineMenuOn(
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     }
-    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+    if (newCursorSelection?.fixed.lineIndex === lineIndex) {
       newCursorSelection.fixed.charIndex = newCharIndex(newCursorSelection.fixed.charIndex);
     }
-    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+    if (newCursorSelection?.free.lineIndex === lineIndex) {
       newCursorSelection.free.charIndex = newCharIndex(newCursorSelection.free.charIndex);
     }
   }
@@ -113,10 +113,10 @@ function handleLineMenuOffOrBoth(
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex += config.meta.length;
     }
-    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+    if (newCursorSelection?.fixed.lineIndex === lineIndex) {
       newCursorSelection.fixed.charIndex += config.meta.length;
     }
-    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+    if (newCursorSelection?.free.lineIndex === lineIndex) {
       newCursorSelection.free.charIndex += config.meta.length;
     }
   }
@@ -154,10 +154,10 @@ function handleLineMenuIndent(
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex += heading.length;
     }
-    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+    if (newCursorSelection?.fixed.lineIndex === lineIndex) {
       newCursorSelection.fixed.charIndex += heading.length;
     }
-    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+    if (newCursorSelection?.free.lineIndex === lineIndex) {
       newCursorSelection.free.charIndex += heading.length;
     }
   }
@@ -203,10 +203,10 @@ function handleLineMenuOutdent(
     if (newCursorCoordinate.lineIndex === lineIndex) {
       newCursorCoordinate.charIndex = newCharIndex(newCursorCoordinate.charIndex);
     }
-    if (newCursorSelection && newCursorSelection.fixed.lineIndex === lineIndex) {
+    if (newCursorSelection?.fixed.lineIndex === lineIndex) {
       newCursorSelection.fixed.charIndex = newCharIndex(newCursorSelection.fixed.charIndex);
     }
-    if (newCursorSelection && newCursorSelection.free.lineIndex === lineIndex) {
+    if (newCursorSelection?.free.lineIndex === lineIndex) {
       newCursorSelection.free.charIndex = newCharIndex(newCursorSelection.free.charIndex);
     }
   }

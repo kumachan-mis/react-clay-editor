@@ -58,6 +58,6 @@ function getActiveTagName(lineNodes: LineNode[], contentPosition: ContentPositio
   const lineNode = lineNodes[contentPosition.lineIndex];
   if (!isPureLineNode(lineNode)) return undefined;
   const contentNode = getNestedContentNodeIfNonEndPoint(lineNode, contentPosition);
-  if (!contentNode || contentNode.type !== 'taggedLink') return undefined;
+  if (contentNode?.type !== 'taggedLink') return undefined;
   return getTagName(contentNode);
 }

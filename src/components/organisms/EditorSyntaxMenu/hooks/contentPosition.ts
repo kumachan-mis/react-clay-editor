@@ -121,7 +121,7 @@ function recursiveGetContentPositionFromCursorCoordinate(
   cursorCoordinate: CursorCoordinate,
 ): ContentPosition | undefined {
   const contentPosition = searchContentPosition(cursorCoordinate, contentNodes);
-  if (!contentPosition || contentPosition.type !== 'inner') return contentPosition;
+  if (contentPosition?.type !== 'inner') return contentPosition;
   const contentNode = contentNodes[contentPosition.contentIndexes[0]];
   if (contentNode.type !== 'decoration') return contentPosition;
   const childPosition = recursiveGetContentPositionFromCursorCoordinate(contentNode.children, cursorCoordinate);
